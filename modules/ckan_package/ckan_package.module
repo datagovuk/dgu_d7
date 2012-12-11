@@ -76,8 +76,8 @@ function ckan_package_entity_info() {
  * issue as loading the model types requires the entity info as well.
  *
  */
-function ckan_package_info_alter(&$entity_info) {
-  foreach (model_get_types() as $type => $info) {
+function ckan_package_entity_info_alter(&$entity_info) {
+  foreach (ckan_package_get_types() as $type => $info) {
     $entity_info['ckan_package']['bundles'][$type] = array(
       'label' => $info->label,
       'admin' => array(
@@ -184,7 +184,7 @@ function ckan_package_get_types($type_name = NULL) {
  *   A model type array or FALSE if $type does not exist.
  */
 function ckan_package_type_load($type) {
-  return model_get_types($type);
+  return ckan_package_get_types($type);
 }
 
 
