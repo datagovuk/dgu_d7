@@ -222,7 +222,7 @@ function ckan_package_load($ckan_id, $reset = FALSE) {
  * @see ckan_package_load()
  */
 function ckan_package_load_multiple($ckan_ids = array(), $conditions = array(), $reset = FALSE) {
-  return entity_load('CKAN', $ckan_ids, $conditions, $reset);
+  return entity_load('ckan_package', $ckan_ids, $conditions, $reset);
 }
 
 
