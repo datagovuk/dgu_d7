@@ -71,8 +71,8 @@ function ckan_package_type_form($form, &$form_state, $ckan_package_type, $op = '
  * Form API submit callback for the type form.
  */
 function ckan_package_type_form_submit(&$form, &$form_state) {
-  $model_type = entity_ui_form_submit_build_entity($form, $form_state);
-  $model_type->save();
+  $ckan_package_type = entity_ui_form_submit_build_entity($form, $form_state);
+  $ckan_package_type->save();
   $form_state['redirect'] = 'admin/structure/ckan_package_type';
 }
 

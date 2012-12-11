@@ -32,8 +32,8 @@ function ckan_package_entity_info() {
     'uri callback' => 'entity_class_uri',
     'creation callback' => 'ckan_package_create',
     'access callback' => 'ckan_package_access',
-    'module' => 'model',
-    // The information below is used by the ModelUIController (which extends the EntityDefaultUIController)
+    'module' => 'ckan_package',
+    // The information below is used by the CKANUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
       'path' => 'admin/content/ckan_package',
       'file' => 'ckan_package.admin.inc',
@@ -59,7 +59,7 @@ function ckan_package_entity_info() {
     'module' => 'ckan_package',
     // Enable the entity API's admin UI.
     'admin ui' => array(
-      'path' => 'admin/structure/ckan_package_types',
+      'path' => 'admin/structure/ckan_package_type',
       'file' => 'ckan_package_type.admin.inc',
       'controller class' => 'CKANTypeUIController',
     ),
@@ -72,8 +72,8 @@ function ckan_package_entity_info() {
 /**
  * Implements hook_entity_info_alter().
  *
- * We are adding the info about the model types via a hook to avoid a recursion
- * issue as loading the model types requires the entity info as well.
+ * We are adding the info about the ckan_package types via a hook to avoid a recursion
+ * issue as loading the ckan package types requires the entity info as well.
  *
  */
 function ckan_package_entity_info_alter(&$entity_info) {
@@ -81,8 +81,8 @@ function ckan_package_entity_info_alter(&$entity_info) {
     $entity_info['ckan_package']['bundles'][$type] = array(
       'label' => $info->label,
       'admin' => array(
-        'path' => 'admin/structure/ckan_package_types/manage/%model_type',
-        'real path' => 'admin/structure/ckan_package_types/manage/' . $type,
+        'path' => 'admin/structure/ckan_package_type/manage/%ckan_package_type',
+        'real path' => 'admin/structure/ckan_package_type/manage/' . $type,
         'bundle argument' => 4,
         'access arguments' => array('administer CKAN types'),
       ),
@@ -111,10 +111,10 @@ function ckan_package_permission() {
   foreach (ckan_package_get_types() as $type) {
     $type_name = check_plain($type->type);
     $permissions += array(
-      "edit any $type_name model" => array(
+      "edit any $type_name CKAN Package" => array(
         'title' => t('%type_name: Edit any CKAN Package', array('%type_name' => $type->label)),
       ),
-      "view any $type_name model" => array(
+      "view any $type_name CKAN Package" => array(
         'title' => t('%type_name: View any CKAN Package', array('%type_name' => $type->label)),
       ),
     );
@@ -124,24 +124,24 @@ function ckan_package_permission() {
 
 
 /**
- * Determines whether the given user has access to a model.
+ * Determines whether the given user has access to a CKAN Package.
  *
  * @param $op
  *   The operation being performed. One of 'view', 'update', 'create', 'delete'
  *   or just 'edit' (being the same as 'create' or 'update').
- * @param $model
- *   Optionally a model or a model type to check access for. If nothing is
- *   given, access for all models is determined.
+ * @param $ckan_package
+ *   Optionally a ckan package or a ckan package type to check access for. If nothing is
+ *   given, access for all ckan packages is determined.
  * @param $account
  *   The user to check for. Leave it to NULL to check for the global user.
  * @return boolean
  *   Whether access is allowed or not.
  */
-function ckan_package_access($op, $model = NULL, $account = NULL) {
+function ckan_package_access($op, $ckan_package = NULL, $account = NULL) {
   if (user_access('administer CKAN', $account)) {
     return TRUE;
   }
-  if (isset($model) && $type_name = $model->type) {
+  if (isset($ckan_package) && $type_name = $ckan_package->type) {
     $op = ($op == 'view') ? 'view' : 'edit';
     if (user_access("$op any $type_name CKAN Package", $account)) {
       return TRUE;
@@ -160,15 +160,15 @@ function ckan_package_type_access($op, $type = NULL, $account = NULL) {
 
 
 /**
- * Gets an array of all model types, keyed by the type name.
+ * Gets an array of all CKAN Package types, keyed by the type name.
  *
  * @param $type_name
  *   If set, the type with the given name is returned.
- * @return ModelType[]
- *   Depending whether $type isset, an array of model types or a single one.
+ * @return CKANType[]
+ *   Depending whether $type isset, an array of CKAN Package types or a single one.
  */
 function ckan_package_get_types($type_name = NULL) {
-  // entity_load will get the Entity controller for our model entity and call the load
+  // entity_load will get the Entity controller for our CKAN Pacakge and call the load
   // function of that object - we are loading entities by name here.
   $types = entity_load_multiple_by_name('ckan_package_type', isset($type_name) ? array($type_name) : FALSE);
   return isset($type_name) ? reset($types) : $types;
@@ -181,7 +181,7 @@ function ckan_package_get_types($type_name = NULL) {
  * @param $type
  *   The machine-readable name of a CKAN type to load.
  * @return
- *   A model type array or FALSE if $type does not exist.
+ *   A CKAN Package type array or FALSE if $type does not exist.
  */
 function ckan_package_type_load($type) {
   return ckan_package_get_types($type);
@@ -200,26 +200,26 @@ function ckan_package_type_load($type) {
  *
  * @see ckan_package_load_multiple()
  */
-function ckan_package_load($model_id, $reset = FALSE) {
-  $models = model_load_multiple(array($model_id), array(), $reset);
-  return reset($models);
+function ckan_package_load($ckan_id, $reset = FALSE) {
+  $ckan_packages = ckan_package_load_multiple(array($ckan_id), array(), $reset);
+  return reset($ckan_packages);
 }
 
 
 /**
  * Load multiple CKAN packages based on certain conditions.
  *
- * @param $model_ids
- *   An array of model IDs.
+ * @param $ckan_ids
+ *   An array of CKAN IDs.
  * @param $conditions
- *   An array of conditions to match against the {model} table.
+ *   An array of conditions to match against the {ckan_package} table.
  * @param $reset
  *   A boolean indicating that the internal cache should be reset.
  * @return
- *   An array of model objects, indexed by model_id.
+ *   An array of CKAN objects, indexed by ckan_id.
  *
  * @see entity_load()
- * @see model_load()
+ * @see ckan_package_load()
  */
 function ckan_package_load_multiple($ckan_ids = array(), $conditions = array(), $reset = FALSE) {
   return entity_load('CKAN', $ckan_ids, $conditions, $reset);
@@ -237,7 +237,7 @@ function ckan_package_delete(CKAN $ckan) {
 /**
  * Delete multiple CKAN Packages.
  *
- * @param $model_ids
+ * @param $ckan_ids
  *   An array of ckan IDs.
  */
 function ckan_package_delete_multiple(array $ckan_ids) {
@@ -259,8 +259,8 @@ function ckan_package_create($values = array()) {
  * @param $ckan
  *   The CKAN Package object.
  */
-function ckan_package_save(CKAN $model) {
-  return $model->save();
+function ckan_package_save(CKAN $ckan) {
+  return $ckan->save();
 }
 
 
@@ -301,7 +301,7 @@ function ckan_package_page_title(CKAN $ckan){
 /**
  * Sets up content to show an individual CKAN Package
  */
-function ckan_page_view($ckan, $view_mode = 'full') {    
+function ckan_package_page_view($ckan, $view_mode = 'full') {    
   $controller = entity_get_controller('ckan_package');  
   $content = $controller->view(array($ckan->ckan_id => $ckan));
   drupal_set_title($ckan->name);
@@ -312,7 +312,7 @@ function ckan_page_view($ckan, $view_mode = 'full') {
 /**
  * Implements hook_views_api().
  */
-function model_views_api() {
+function ckan_package_views_api() {
   return array(
     'api' => 3,
     'path' => drupal_get_path('module', 'ckan_package') . '/views',
@@ -323,7 +323,7 @@ function model_views_api() {
 /**
  * Implement hook_theme().
  */
-function model_theme() {
+function ckan_package_theme() {
   return array(
     'ckan_package_add_list' => array(
       'variables' => array('content' => array()),
@@ -331,7 +331,7 @@ function model_theme() {
     ),
     'ckan_package' => array(
       'render element' => 'elements',
-      'template' => 'model',
+      'template' => 'ckan_package',
     ),
    'ckan_package_sample_data' => array(
       'variables' => array('ckan_package_sample_data', 'ckan_package' => NULL),
@@ -346,7 +346,7 @@ function model_theme() {
 /**
  * Implements hook_menu_local_tasks_alter().
  */
-function model_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+function ckan_package_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   // Add action link 'admin/structure/ckan_package/add' on 'admin/structure/ckan_package'.
   if ($root_path == 'admin/content/ckan_package') {
     $item = menu_get_item('admin/content/ckan_package/add');
@@ -361,12 +361,12 @@ function model_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
 
 /**
- * The class used for model entities
+ * The class used for CKAN Packages
  */
 class CKAN extends Entity {
   
   public function __construct($values = array()) {
-    parent::__construct($values, 'model');
+    parent::__construct($values, 'ckan_package');
   }
 
   protected function defaultLabel() {
@@ -382,7 +382,7 @@ class CKAN extends Entity {
 
 
 /**
- * The class used for model type entities
+ * The class used for CKAN Package type entities
  */
 class CKANType extends Entity {
   
@@ -397,7 +397,7 @@ class CKANType extends Entity {
 
 
 /**
- * The Controller for Model entities
+ * The Controller for CKAN Packages
  */
 class CKANController extends EntityAPIController {
   public function __construct($entityType) {
@@ -407,17 +407,17 @@ class CKANController extends EntityAPIController {
 
   /**
    * Create a CKAN Package - we first set up the values that are specific
-   * to our model schema but then also go through the EntityAPIController
+   * to our ckan_package schema but then also go through the EntityAPIController
    * function.
    * 
    * @param $type
-   *   The machine-readable type of the model.
+   *   The machine-readable type of the ckan package.
    *
    * @return
-   *   A model object with all default fields initialized.
+   *   A ckan package object with all default fields initialized.
    */
   public function create(array $values = array()) {
-    // Add values that are specific to our Model
+    // Add values that are specific to our CKAN Package
     $values += array( 
       'ckan_id' => '',
       'is_new' => TRUE,
@@ -437,7 +437,7 @@ class CKANController extends EntityAPIController {
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
     $content['ckan_package_sample_data'] =  array(
-      '#markup' => theme('ckan_sample_data', array('ckan_sample_data' => check_plain($entity->data['sample_data']), 'model' => $entity)),
+      '#markup' => theme('ckan_sample_data', array('ckan_sample_data' => check_plain($entity->data['sample_data']), 'ckan' => $entity)),
     );
 
     return $content;
@@ -447,7 +447,7 @@ class CKANController extends EntityAPIController {
 
 
 /**
- * The Controller for Model entities
+ * The Controller for CKAN Package types
  */
 class CKANTypeController extends EntityAPIControllerExportable {
   public function __construct($entityType) {
@@ -458,13 +458,13 @@ class CKANTypeController extends EntityAPIControllerExportable {
    * Create a CKAN Package type
    * 
    * @param $type
-   *   The machine-readable type of the model.
+   *   The machine-readable type of the CKAN Package type.
    *
    * @return
-   *   A model type object with all default fields initialized.
+   *   A CKAN Package type object with all default fields initialized.
    */
   public function create(array $values = array()) {
-    // Add values that are specific to our Model
+    // Add values that are specific to our CKAN Package type
     $values += array( 
       'id' => '',
       'is_new' => TRUE,

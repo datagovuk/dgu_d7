@@ -343,7 +343,7 @@ function ckan_package_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Content'), 'admin/content'),
-    l(t('Models'), 'admin/content/ckan_package'),
+    l(t('CKAN Package'), 'admin/content/ckan_package'),
   );
 
   drupal_set_breadcrumb($breadcrumb);

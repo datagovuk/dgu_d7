@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Example tpl file for theming a single model-specific theme
+ * Example tpl file for theming a single CKAN-specific theme
  *
  * Available variables:
  * - $status: The variable to theme (while only show if you tick status)
  * 
  * Helper variables:
- * - $model: The Model object this status is derived from
+ * - $ckan: The CKAN object this status is derived from
  */
 ?>
 
