@@ -56,6 +56,7 @@ projects[email][subdir] = "contrib"
 projects[entity][version] = 1.0-rc3
 projects[entity][type] = "module"
 projects[entity][subdir] = "contrib"
+projects[entity][patch][] = http://drupal.org/files/1514764-fix_entity_conditions-20.patch
 
 projects[entityreference][version] = 1.2
 projects[entityreference][type] = "module"
