@@ -15,7 +15,7 @@ class CKANUIController extends EntityDefaultUIController {
    * parent class hook_menu() is optimized for entity type administration.
    */
   public function hook_menu() {
-    
+  	$items = parent::hook_menu();
     $items = array();
     $id_count = count(explode('/', $this->path));
     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
@@ -204,7 +204,7 @@ function ckan_package_edit_form($form, &$form_state, $ckan) {
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete CKAN Package'),
-      '#suffix' => l(t('Cancel'), 'admin/content/ckan_package'),
+      '#suffix' => l(t('Cancel'), 'admin/content/ckan_packages'),
       '#submit' => $submit + array('ckan_package_form_submit_delete'),
       '#weight' => 45,
     );
@@ -244,14 +244,14 @@ function ckan_package_edit_form_submit(&$form, &$form_state) {
   $ckan->changed = time();
   
   $ckan->save();
-  $form_state['redirect'] = 'admin/content/ckan_package';
+  $form_state['redirect'] = 'admin/content/ckan_packages';
 }
 
 /**
  * Form API submit callback for the delete button.
  */
 function ckan_package_form_submit_delete(&$form, &$form_state) {
-  $form_state['redirect'] = 'admin/content/ckan_package/' . $form_state['ckan_package']->ckan_id . '/delete';
+  $form_state['redirect'] = 'admin/content/ckan_packages/ckan_package' . $form_state['ckan_package']->ckan_id . '/delete';
 }
 
 
@@ -270,7 +270,7 @@ function ckan_package_delete_form($form, &$form_state, $ckan) {
 
   $form = confirm_form($form,
     t('Are you sure you want to delete CKAN Package %name?', array('%name' => $ckan->name)),
-    'admin/content/ckan_package/',
+    'admin/content/ckan_packages/ckan_package/',
     '<p>' . t('This action cannot be undone.') . '</p>',
     t('Delete'),
     t('Cancel'),
@@ -291,7 +291,7 @@ function ckan_package_delete_form_submit($form, &$form_state) {
   drupal_set_message(t('The CKAN Package %name has been deleted.', array('%name' => $ckan->name)));
   watchdog('ckan_package', 'Deleted ckan_package %name.', array('%name' => $ckan->name));
 
-  $form_state['redirect'] = 'admin/content/ckan_package';
+  $form_state['redirect'] = 'admin/content/ckan_packages';
 }
 
 
@@ -343,7 +343,11 @@ function ckan_package_set_breadcrumb() {
     l(t('Home'), '<front>'),
     l(t('Administration'), 'admin'),
     l(t('Content'), 'admin/content'),
-    l(t('CKAN Package'), 'admin/content/ckan_package'),
+<<<<<<< Updated upstream
+    l(t('Models'), 'admin/content/ckan_package'),
+=======
+    l(t('CKAN Package'), 'admin/content/ckan_packages'),
+>>>>>>> Stashed changes
   );
 
   drupal_set_breadcrumb($breadcrumb);
