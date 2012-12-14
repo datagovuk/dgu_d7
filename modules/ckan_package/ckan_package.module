@@ -35,7 +35,7 @@ function ckan_package_entity_info() {
     'module' => 'ckan_package',
     // The information below is used by the CKANUIController (which extends the EntityDefaultUIController)
     'admin ui' => array(
-      'path' => 'admin/content/ckan_package',
+      'path' => 'admin/content/ckan_packages',
       'file' => 'ckan_package.admin.inc',
       'controller class' => 'CKANUIController',
       'menu wildcard' => '%ckan_package',
@@ -316,6 +316,7 @@ function ckan_package_views_api() {
   return array(
     'api' => 3,
     'path' => drupal_get_path('module', 'ckan_package') . '/views',
+    'views_default file' => 'ckan_package.views.inc',
   );
 }
 
@@ -348,8 +349,8 @@ function ckan_package_theme() {
  */
 function ckan_package_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   // Add action link 'admin/structure/ckan_package/add' on 'admin/structure/ckan_package'.
-  if ($root_path == 'admin/content/ckan_package') {
-    $item = menu_get_item('admin/content/ckan_package/add');
+  if ($root_path == 'admin/content/ckan_packages') {
+    $item = menu_get_item('admin/content/ckan_packages/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
         '#theme' => 'menu_local_action',
@@ -431,8 +432,7 @@ class CKANController extends EntityAPIController {
     return $ckan;
   }
   
-  /**
-   * Overriding the buldContent function to add entity specific fields
+  /*MODULENAME_views_api()  * Overriding the buldContent function to add entity specific fields
    */
   public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
