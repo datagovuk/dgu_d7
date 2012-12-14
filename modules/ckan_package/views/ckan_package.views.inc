@@ -54,7 +54,7 @@ function ckan_package_views_default_views() {
   $view->base_table = 'ckan_package';
   $view->human_name = 'CKAN Packages';
   $view->core = 7;
-  $view->api_version = '3';
+  $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
   
   /* Display: Master */
@@ -208,7 +208,7 @@ function ckan_package_views_default_views() {
     t('Operations links'),
     t('Page'),
   );
-  $views[] = $view;
+  $views[$view->name] = $view;
   return $views;
 
 }

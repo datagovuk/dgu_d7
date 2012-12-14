@@ -26,6 +26,6 @@ class ckan_package_handler_edit_link_field extends ckan_package_handler_link_fie
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $ckan_package_id = $values->{$this->aliases['ckan_id']};
     
-    return l($text, 'admin/content/ckan_package/' . $ckan_id . '/edit');
+    return l($text, 'admin/content/ckan_packages/ckan_package/' . $ckan_id . '/edit');
   }
 }

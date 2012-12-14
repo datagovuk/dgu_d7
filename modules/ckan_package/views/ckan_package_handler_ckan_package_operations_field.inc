@@ -18,8 +18,8 @@ class ckan_package_handler_ckan_package_operations_field extends views_handler_f
 
   function render($values) {
 
-    $links = menu_contextual_links('ckan_package', 'admin/content/ckan_package', array($this->get_value($values, 'ckan_id')));
-    
+    $links = menu_contextual_links('ckan_package', 'admin/content/ckan_packages/ckan_package', array($this->get_value($values, 'ckan_id')));
+
     if (!empty($links)) {
       return theme('links', array('links' => $links, 'attributes' => array('class' => array('links', 'inline', 'operations'))));
     }
