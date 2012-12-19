@@ -47,6 +47,6 @@ projects[bootstrap][version] = "2.0-beta2"
 ; ---------
 libraries[jquery][download][type] = "file"
 libraries[jquery][download][url] = "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
-libraries[bootstrap][download][type] = "zip"
+libraries[bootstrap][download][type] = "file"
 libraries[bootstrap][download][url] = "http://twitter.github.com/bootstrap/assets/bootstrap.zip"
 libraries[bootstrap][destination] = "themes/contrib/bootstrap/bootstrap/js/"
