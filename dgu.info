@@ -1,0 +1,22 @@
+name = data_gov_uk
+description = data.gov.uk website
+core = 7.x
+
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options 
+dependencies[] = path
+dependencies[] = taxonomy 
+dependencies[] = search
+dependencies[] = field_ui
+dependencies[] = file
+dependencies[] = admin_menu
+dependencies[] = features
+dependencies[] = strongarm
+
+files[] = dgu.profile
