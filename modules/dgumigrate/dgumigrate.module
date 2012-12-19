@@ -1,0 +1,18 @@
+<?php
+
+include_once("DGU_Taxonomy.inc");
+
+function dgumigrate_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'migrations' => array(
+      'DGUCategory' => array('class_name' => 'DGUCategoryMigration'),
+      'DGUSector' => array('class_name' => 'DGUSectorMigration'),
+      'DGUDocType' => array('class_name' => 'DGUDocTypeMigration'),
+      'DGUNation' => array('class_name' => 'DGUNationMigration'),
+      'DGUPublicBody' => array('class_name' => 'DGUPublicBodyMigration'),
+      'DGUTags' => array('class_name' => 'DGUTagsMigration'),
+    ),
+  );
+  return $api;
+}
