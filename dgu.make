@@ -38,6 +38,14 @@ projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditio
 projects[entityreference][version] = "1.2"
 projects[entityreference][subdir] = "contrib"
 
+projects[migrate][version] = "2.5"
+projects[migrate][subdir] = "contrib"
+
+projects[migrate_extra][version] = "2.5"
+projects[migrate_extra][subdir] = "contrib"
+
+
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
@@ -49,4 +57,4 @@ libraries[jquery][download][type] = "file"
 libraries[jquery][download][url] = "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
 libraries[bootstrap][download][type] = "file"
 libraries[bootstrap][download][url] = "http://twitter.github.com/bootstrap/assets/bootstrap.zip"
-libraries[bootstrap][destination] = "themes/contrib/bootstrap/bootstrap"
+libraries[bootstrap][destination] = "themes/contrib/bootstrap"
