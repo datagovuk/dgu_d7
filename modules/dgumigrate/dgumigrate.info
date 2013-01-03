@@ -6,6 +6,7 @@ dependencies[] = taxonomy
 dependencies[] = image
 dependencies[] = comment
 dependencies[] = migrate
+dependencies[] = migrate_d2d
 dependencies[] = list
 dependencies[] = number
 dependencies[] = entity
@@ -13,3 +14,4 @@ dependencies[] = entityreference
 
 files[] = dgumigrate.module
 files[] = DGU_Taxonomy.inc
+files[] = DGU_Node.inc
