@@ -4,4 +4,4 @@ projects[drupal][version] = 7.17
 
 projects[dgu][type] = "profile"
 projects[dgu][download][type] = "git"
-projects[dgu][download][url] = "https://github.com/noels/dgu_d7.git"
+projects[dgu][download][url] = "git@github.com:datagovuk/dgu_d7.git"
