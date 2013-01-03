@@ -53,5 +53,6 @@ dependencies[] = workbench
 dependencies[] = workbench_media      
 dependencies[] = workbench_moderation 
 dependencies[] = dgu_site_feature
+dependencies[] = field_group
 
 files[] = dgu.profile
