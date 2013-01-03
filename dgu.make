@@ -62,6 +62,9 @@ projects[workbench][subdir] = "contrib"
 projects[workbench_media][version] = "2.1"
 projects[workbench_media][subdir] = "contrib"
 
+projects[field_group][version] = "1.1"
+projects[field_group][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
