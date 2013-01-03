@@ -13,5 +13,4 @@ dependencies[] = entity
 dependencies[] = entityreference
 
 files[] = dgumigrate.module
-files[] = DGU_Taxonomy.inc
 files[] = DGU_Node.inc
