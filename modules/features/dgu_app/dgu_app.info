@@ -1,0 +1,19 @@
+name = DGU App
+description = Content types and functionality relating to Apps on DGU
+core = 7.x
+package = DGU Features
+version = 7.x-1.0
+project = dgu_app
+dependencies[] = dgu_site_feature
+features[features_api][] = api:1
+features[field][] = node-app-body
+features[field][] = node-app-field_app_charge
+features[field][] = node-app-field_app_link
+features[field][] = node-app-field_developed_by
+features[field][] = node-app-field_rating
+features[field][] = node-app-field_screen_shots
+features[field][] = node-app-field_submitter_e_mail
+features[field][] = node-app-field_submitter_name
+features[field][] = node-app-field_uses_dataset
+features[node][] = app
+f
