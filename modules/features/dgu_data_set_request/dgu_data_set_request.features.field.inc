@@ -890,7 +890,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
       'entity_type' => 'node',
       'field_name' => 'field_organisation_name',
       'label' => 'Organisation name',
-      'required' => 0,
+      'required' => 1,
       'settings' => array(
         'text_processing' => '0',
         'user_register_form' => FALSE,
