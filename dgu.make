@@ -44,7 +44,23 @@ projects[migrate][subdir] = "contrib"
 projects[migrate_extra][version] = "2.5"
 projects[migrate_extra][subdir] = "contrib"
 
+projects[fivestar][version] = "2.0-alpha2"
+projects[fivestar][subdir] = "contrib"
 
+projects[workbench_moderation][version] = "1.2"
+projects[workbench_moderation][subdir] = "contrib"
+
+projects[file_entity][version] = "2.0-unstable7"
+projects[file_entity][subdir] = "contrib"
+
+projects[media][version] = "2.0-unstable7"
+projects[media][subdir] = "contrib"
+
+projects[workbench][version] = "1.1"
+projects[workbench][subdir] = "contrib"
+
+projects[workbench_media][version] = "2.1"
+projects[workbench_media][subdir] = "contrib"
 
 ; Themes
 ; --------
