@@ -44,6 +44,9 @@ projects[migrate][subdir] = "contrib"
 projects[migrate_extras][version] = "2.5"
 projects[migrate_extras][subdir] = "contrib"
 
+projects[migrate_d2d][version] = "2.0"
+projects[migrate_d2d][subdir] = "contrib"
+
 projects[fivestar][version] = "2.0-alpha2"
 projects[fivestar][subdir] = "contrib"
 
@@ -55,6 +58,9 @@ projects[file_entity][subdir] = "contrib"
 
 projects[media][version] = "2.0-unstable7"
 projects[media][subdir] = "contrib"
+
+projects[votingapi][version] = "2.10"
+projects[votingapi][subdir] = "contrib"
 
 projects[workbench][version] = "1.1"
 projects[workbench][subdir] = "contrib"
