@@ -649,7 +649,6 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
       ),
     ),
   );
-);
 
   // Translatables
   // Included for use with string extractors like potx.
