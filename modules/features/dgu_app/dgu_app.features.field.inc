@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * dgu_site_feature.features.field.inc
+ * dgu_app.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function dgu_site_feature_field_default_fields() {
+function dgu_app_field_default_fields() {
   $fields = array();
 
   // Exported field: 'node-app-body'.
