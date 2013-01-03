@@ -9,15 +9,7 @@
  */
 function dgu_site_feature_taxonomy_default_vocabularies() {
   return array(
-    'blog' => array(
-      'name' => 'Blog',
-      'machine_name' => 'blog',
-      'description' => 'Blog names',
-      'hierarchy' => '0',
-      'module' => 'taxonomy',
-      'weight' => '0',
-    ),
-    'category' => array(
+   'category' => array(
       'name' => 'Categories',
       'machine_name' => 'category',
       'description' => NULL,
