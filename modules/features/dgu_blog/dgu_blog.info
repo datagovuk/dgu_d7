@@ -20,4 +20,3 @@ features[field][] = node-blog-field_category
 features[field][] = node-blog-field_sector
 features[field][] = node-blog-field_tags
 features[field][] = node-blog-field_video
-features[taxonomy][] = blog
