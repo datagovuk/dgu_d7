@@ -3,4 +3,19 @@
 function dgu_install() {
 	include_once DRUPAL_ROOT . '/profiles/minimal/minimal.install';
 	minimal_install();
+
+
+	$themes = array(
+		'theme_default' => 'bootstrap',
+		'admin_theme' => 'seven'
+	);
+  	theme_enable($themes);
+
+  foreach ($themes as $key => $theme) {
+    if (!is_numeric($key)) {
+      variable_set($key, $theme);
+    }
+  }
+  theme_disable(array('bartik'));
+
 }
