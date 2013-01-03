@@ -3,13 +3,6 @@
 /**
  * @file
  * Import CKAN dataset packages to Drupal 7.
- */
-
-abstract class DGUMigration extends DynamicMigration {
-  public function __construct() {
-    parent::__construct();
-  }
-}
 
 abstract class DGUTaxonomyMigration extends DGUMigration {
   static function createVocabIfNotExists($name, $description){
@@ -84,3 +77,4 @@ class DGUTagsMigration extends DGUTaxonomyMigration {
 		parent::__construct("tags", "Tags", 6);
 	}
 }
+ */
