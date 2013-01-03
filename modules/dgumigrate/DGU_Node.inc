@@ -43,9 +43,10 @@ class DGUAppMigration extends DGUNodeMigration {
 class DGUBlogMigration extends DGUNodeMigration {
   function __construct(array $arguments) {
     parent::__construct($arguments);
-    $this->addFieldMapping('field_audio', 'field_audio');
-    $this->addFieldMapping('field_video', 'field_video')
-     ->callbacks(array($this, 'mapVideo'));
+    $this->addUnmigratedSources(array('field_audio', 'field_audio:value', 'field_audio:provider', 'field_audio:data', 
+          'field_audio:status', 'field_audio:version', 'field_audio:title', 'field_audio:description', 
+          'field_video', 'field_video:value', 'field_video:provider', 'field_video:data', 
+          'field_video:status', 'field_video:version', 'field_video:title', 'field_video:description', 'field_video:duration'));
     $this->addFieldMapping('field_blog', '9');
     $this->addFieldMapping('field_blog:source_type')->defaultValue('tid');
     $this->addFieldMapping('field_blog:create_term')->defaultValue(FALSE);
