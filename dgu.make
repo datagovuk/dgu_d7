@@ -35,14 +35,14 @@ projects[entity][version] = "1.0-rc3"
 projects[entity][subdir] = "contrib"
 projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditions-20.patch"
 
-projects[entityreference][version] = "1.2"
+projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
 projects[migrate][version] = "2.5"
 projects[migrate][subdir] = "contrib"
 
-projects[migrate_extra][version] = "2.5"
-projects[migrate_extra][subdir] = "contrib"
+projects[migrate_extras][version] = "2.5"
+projects[migrate_extras][subdir] = "contrib"
 
 projects[fivestar][version] = "2.0-alpha2"
 projects[fivestar][subdir] = "contrib"
