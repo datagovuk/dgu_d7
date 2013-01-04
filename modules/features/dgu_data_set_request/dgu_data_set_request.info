@@ -37,7 +37,6 @@ features[field][] = node-dataset_request-field_organisation_name
 features[field][] = node-dataset_request-field_organisation_type
 features[field][] = node-dataset_request-field_provide_estimates
 features[field][] = node-dataset_request-field_publication_preference
-features[field][] = node-dataset_request-field_reason
 features[field][] = node-dataset_request-field_review_status
 features[field][] = node-dataset_request-field_submitter_e_mail
 features[field][] = node-dataset_request-field_submitter_name
