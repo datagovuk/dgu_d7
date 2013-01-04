@@ -28,7 +28,6 @@ features[field][] = node-dataset_request-field_benefits_overview
 features[field][] = node-dataset_request-field_data_holder
 features[field][] = node-dataset_request-field_data_set_description
 features[field][] = node-dataset_request-field_data_set_link
-features[field][] = node-dataset_request-field_data_set_name
 features[field][] = node-dataset_request-field_data_themes
 features[field][] = node-dataset_request-field_data_use
 features[field][] = node-dataset_request-field_data_use_detail

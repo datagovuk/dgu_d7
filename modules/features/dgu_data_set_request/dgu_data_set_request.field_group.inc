@@ -51,10 +51,10 @@ function dgu_data_set_request_field_group_info() {
     'weight' => '7',
     'children' => array(
       0 => 'field_issue_type',
-      1 => 'field_reason',
-      2 => 'field_barriers_detail',
-      3 => 'field_barriers_attempted',
-      4 => 'field_barriers_reason',
+      1 => 'field_barriers_detail',
+      2 => 'field_barriers_attempted',
+      3 => 'field_barriers_reason',
+      4 => 'field_reason',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -81,10 +81,10 @@ function dgu_data_set_request_field_group_info() {
     'label' => '2. What data would you like released?',
     'weight' => '6',
     'children' => array(
-      0 => 'field_data_set_name',
-      1 => 'field_data_holder',
-      2 => 'field_data_set_description',
-      3 => 'field_data_themes',
+      0 => 'field_data_holder',
+      1 => 'field_data_set_description',
+      2 => 'field_data_themes',
+      3 => 'title',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
