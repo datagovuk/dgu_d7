@@ -113,7 +113,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
       'body:summary',
       'body:format',
       'field_category',
-      
+
     ));
 
     //unmapped source fields:
@@ -127,6 +127,8 @@ class DGUDataRequestMigration extends DGUNodeMigration {
       'body:language',
       'body:summary',
       'body:format',
+      'teaser',
+      'format',
     ));
   }
 
