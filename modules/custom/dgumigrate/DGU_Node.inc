@@ -69,6 +69,67 @@ class DGUContentPromotionMigration extends DGUNodeMigration {
 }
 
 class DGUDataRequestMigration extends DGUNodeMigration {
+  function __construct( array $arguments){
+    parent::__construct($arguments);
+    $this->addFieldMapping('field_barriers_attempted', 'field_attempted_to_get');
+    $this->addFieldMapping('field_submitter_name', 'field_submitter_name');
+    $this->addFieldMapping('field_submitter_e_mail', 'field_submitter_email');
+    $this->addFieldMapping('field_organisation_type', 'field_organisation_type');
+    $this->addFieldMapping('field_organisation_name', 'field_organisation');
+    $this->addFieldMapping('field_issue_type', 'field_datareq_type');
+    $this->addFieldMapping('field_barriers_reason', 'field_bariers_list');
+    $this->addFieldMapping('field_barriers_detail', 'field_barriers_expl');
+    $this->addFieldMapping('field_data_use', 'field_could_do_with');
+    $this->addFieldMapping('field_data_holder', 'field_data_holder');
+    $this->addFieldMapping('field_data_use_detail', 'field_description_of_use');
+    $this->addFieldMapping('field_benefits_overview', 'field_benefit_overview');
+    $this->addFieldMapping('field_provide_estimates', 'field_provide_estimates');
+    $this->addFieldMapping('field_estimates_detail', 'field_provide_estimates_expl');
+    $this->addFieldMapping('field_data_set_link', 'field_dataset_link');
+    $this->addFieldMapping('field_publication_preference', 'field_publication_preference');
+    $this->addFieldMapping('field_review_status', 'field_review_status');
+    $this->addFieldMapping('field_data_set_description', 'field_data_description');
+
+    $this->addFieldMapping('field_data_themes', '4');
+    $this->addFieldMapping('field_data_themes:source_type')->defaultValue('tid');
+    $this->addFieldMapping('field_data_themes:create_term')->defaultValue(FALSE);
+    $this->addFieldMapping('field_data_themes:ignore_case')->defaultValue(TRUE);
+
+
+    
+    //unmapped dest fields:
+    $this->addUnmigratedDestinations(array(
+      'field_submitter_name:language',
+      'field_organisation_name:language',
+      'field_data_set_name:language',
+      'field_barriers_detail:language',
+      'field_data_holder:language',
+      'field_data_use_detail:language',
+      'field_benefits_overview:language',
+      'field_estimates_detail:language',
+      'field_data_set_description:language',
+      'body',
+      'body:language',
+      'body:summary',
+      'body:format',
+      'field_category',
+      
+    ));
+
+    //unmapped source fields:
+    $this->addUnmigratedSources(array(
+      'field_dataset_link:title',
+      'field_dataset_link:attributes',
+      'field_website',
+      'field_website:title',
+      'field_website:attributes',
+      'body',
+      'body:language',
+      'body:summary',
+      'body:format',
+    ));
+  }
+
 
 }
 
