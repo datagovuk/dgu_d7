@@ -50,12 +50,8 @@ class DGUBlogMigration extends DGUNodeMigration {
     $this->addUnmigratedDestinations(array('field_audio', 'field_audio:file_class', 'field_audio:language', 'field_audio:destination_dir', 
       'field_audio:destination_file', 'field_audio:file_replace', 'field_audio:preserve_files', 'field_audio:source_dir', 'field_audio:title', 'field_audio:data',
       'field_video', 'field_video:file_class', 'field_video:language', 'field_video:destination_dir', 
-      'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir', 'field_video:title', 'field_video:data'));
-    $this->addFieldMapping('field_blog', '9');
-    $this->addFieldMapping('field_blog:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_blog:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_blog:ignore_case')->defaultValue(TRUE);
-
+      'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir', 'field_video:title', 'field_video:data',
+      'field_blog', 'field_blog:source_type', 'field_blog:create_term', 'field_blog:ignore_case' ));
   }
 
 }
