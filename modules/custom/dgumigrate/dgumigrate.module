@@ -157,7 +157,7 @@ function dgumigrate_register_migrations() {
       'description' => t('Migration of Data request nodes from Drupal 6'),
       'machine_name' => 'dataRequest',
       'source_type' => 'data_request',
-      'destination_type' => 'data_request',
+      'destination_type' => 'dataset_request',
     ),
     array(
       'class_name' => 'DGUForumMigration',
