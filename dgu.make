@@ -71,6 +71,9 @@ projects[workbench_media][subdir] = "contrib"
 projects[field_group][version] = "1.1"
 projects[field_group][subdir] = "contrib"
 
+projects[conditional_fields][version] = "3.x-dev"
+projects[conditional_fields][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
