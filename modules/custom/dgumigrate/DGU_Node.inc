@@ -50,12 +50,8 @@ class DGUBlogMigration extends DGUNodeMigration {
     $this->addUnmigratedDestinations(array('field_audio', 'field_audio:file_class', 'field_audio:language', 'field_audio:destination_dir', 
       'field_audio:destination_file', 'field_audio:file_replace', 'field_audio:preserve_files', 'field_audio:source_dir', 'field_audio:title', 'field_audio:data',
       'field_video', 'field_video:file_class', 'field_video:language', 'field_video:destination_dir', 
-      'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir', 'field_video:title', 'field_video:data'));
-    $this->addFieldMapping('field_blog', '9');
-    $this->addFieldMapping('field_blog:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_blog:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_blog:ignore_case')->defaultValue(TRUE);
-
+      'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir', 'field_video:title', 'field_video:data',
+      'field_blog', 'field_blog:source_type', 'field_blog:create_term', 'field_blog:ignore_case' ));
   }
 
 }
@@ -73,6 +69,67 @@ class DGUContentPromotionMigration extends DGUNodeMigration {
 }
 
 class DGUDataRequestMigration extends DGUNodeMigration {
+  function __construct( array $arguments){
+    parent::__construct($arguments);
+    $this->addFieldMapping('field_barriers_attempted', 'field_attempted_to_get');
+    $this->addFieldMapping('field_submitter_name', 'field_submitter_name');
+    $this->addFieldMapping('field_submitter_e_mail', 'field_submitter_email');
+    $this->addFieldMapping('field_organisation_type', 'field_organisation_type');
+    $this->addFieldMapping('field_organisation_name', 'field_organisation');
+    $this->addFieldMapping('field_issue_type', 'field_datareq_type');
+    $this->addFieldMapping('field_barriers_reason', 'field_bariers_list');
+    $this->addFieldMapping('field_barriers_detail', 'field_barriers_expl');
+    $this->addFieldMapping('field_data_use', 'field_could_do_with');
+    $this->addFieldMapping('field_data_holder', 'field_data_holder');
+    $this->addFieldMapping('field_data_use_detail', 'field_description_of_use');
+    $this->addFieldMapping('field_benefits_overview', 'field_benefit_overview');
+    $this->addFieldMapping('field_provide_estimates', 'field_provide_estimates');
+    $this->addFieldMapping('field_estimates_detail', 'field_provide_estimates_expl');
+    $this->addFieldMapping('field_data_set_link', 'field_dataset_link');
+    $this->addFieldMapping('field_publication_preference', 'field_publication_preference');
+    $this->addFieldMapping('field_review_status', 'field_review_status');
+    $this->addFieldMapping('field_data_set_description', 'field_data_description');
+
+    $this->addFieldMapping('field_data_themes', '4');
+    $this->addFieldMapping('field_data_themes:source_type')->defaultValue('tid');
+    $this->addFieldMapping('field_data_themes:create_term')->defaultValue(FALSE);
+    $this->addFieldMapping('field_data_themes:ignore_case')->defaultValue(TRUE);
+
+
+    
+    //unmapped dest fields:
+    $this->addUnmigratedDestinations(array(
+      'field_submitter_name:language',
+      'field_organisation_name:language',
+      'field_data_set_name:language',
+      'field_barriers_detail:language',
+      'field_data_holder:language',
+      'field_data_use_detail:language',
+      'field_benefits_overview:language',
+      'field_estimates_detail:language',
+      'field_data_set_description:language',
+      'body',
+      'body:language',
+      'body:summary',
+      'body:format',
+      'field_category',
+      
+    ));
+
+    //unmapped source fields:
+    $this->addUnmigratedSources(array(
+      'field_dataset_link:title',
+      'field_dataset_link:attributes',
+      'field_website',
+      'field_website:title',
+      'field_website:attributes',
+      'body',
+      'body:language',
+      'body:summary',
+      'body:format',
+    ));
+  }
+
 
 }
 
