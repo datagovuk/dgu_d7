@@ -74,7 +74,7 @@ function dgu_data_set_request_conditional_fields_default_fields() {
     'entity' => 'node',
     'bundle' => 'dataset_request',
     'dependent' => 'field_issue_type',
-    'dependee' => 'field_attempted_to_get',
+    'dependee' => 'field_barriers_attempted',
     'options' => array(
       'state' => 'visible',
       'condition' => 'value',
@@ -131,12 +131,11 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'values' => array(),
     ),
   );
-
   $items[] = array(
     'entity' => 'node',
     'bundle' => 'dataset_request',
-    'dependent' => 'field_reason',
-    'dependee' => 'field_attempted_to_get',
+    'dependent' => 'field_barriers_reason',
+    'dependee' => 'field_barriers_attempted',
     'options' => array(
       'state' => 'visible',
       'condition' => 'value',
@@ -198,7 +197,7 @@ function dgu_data_set_request_conditional_fields_default_fields() {
     'entity' => 'node',
     'bundle' => 'dataset_request',
     'dependent' => 'field_barriers_detail',
-    'dependee' => 'field_attempted_to_get',
+    'dependee' => 'field_barriers_attempted',
     'options' => array(
       'state' => 'visible',
       'condition' => 'value',

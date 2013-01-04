@@ -77,6 +77,73 @@ function dgu_data_set_request_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-dataset_request-field_barriers_attempted'.
+  $fields['node-dataset_request-field_barriers_attempted'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_barriers_attempted',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => 'No',
+          1 => 'Yes',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_boolean',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dataset_request',
+      'default_value' => array(
+        0 => array(
+          'value' => '0',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => 22,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_barriers_attempted',
+      'label' => 'Have you faced challenges in accessing this data?',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '9',
+      ),
+    ),
+  );
+
   // Exported field: 'node-dataset_request-field_barriers_detail'.
   $fields['node-dataset_request-field_barriers_detail'] = array(
     'field_config' => array(
@@ -140,6 +207,76 @@ function dgu_data_set_request_field_default_fields() {
         ),
         'type' => 'text_textarea',
         'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dataset_request-field_barriers_reason'.
+  $fields['node-dataset_request-field_barriers_reason'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_barriers_reason',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          1 => 'The data is supposed to be published but the download links don’t work',
+          2 => 'The data is available but the licensing terms are too restrictive',
+          3 => 'There are financial charges for the data',
+          4 => 'The data is subject to restrictions because of commercial confidentiality',
+          5 => 'The data is subject to restrictions because of personal confidentiality',
+          6 => 'The data is published but not in a format I can download and use (e.g. only displayed onscreen or only downloadable as a PDF rather than CVS)',
+          7 => 'The data is not up-to-date',
+          8 => 'A version of the data is published but I need it in a different version',
+          9 => 'Other',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dataset_request',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Please select a main reason.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => 23,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_barriers_reason',
+      'label' => 'Reason',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_buttons',
+        'weight' => '11',
       ),
     ),
   );

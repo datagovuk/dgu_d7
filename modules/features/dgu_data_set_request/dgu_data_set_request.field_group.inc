@@ -51,9 +51,10 @@ function dgu_data_set_request_field_group_info() {
     'weight' => '7',
     'children' => array(
       0 => 'field_issue_type',
-      1 => 'field_attempted_to_get',
-      2 => 'field_reason',
-      3 => 'field_barriers_detail',
+      1 => 'field_reason',
+      2 => 'field_barriers_detail',
+      3 => 'field_barriers_attempted',
+      4 => 'field_barriers_reason',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
