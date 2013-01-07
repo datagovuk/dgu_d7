@@ -5,15 +5,8 @@ abstract class DGUNodeMigration extends DrupalNode6Migration {
   public function __construct(array $arguments) {
     parent::__construct($arguments);
 
-  //  $this->addFieldMapping('field_legacy_nid', 'nid')
-    //     ->description('We have a common field to save the D6 nid');
-    // map some taxonomy terms
-    $this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
-
-    $this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
-
-    $this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
-
+    //$this->addFieldMapping('field_legacy_nid', 'nid')
+    //  ->description('We have a common field to save the D6 nid');
   }
 
   protected function mapVideo($video){
@@ -34,6 +27,10 @@ class DGUAppMigration extends DGUNodeMigration {
 class DGUBlogMigration extends DGUNodeMigration {
   function __construct(array $arguments) {
     parent::__construct($arguments);
+        // map some taxonomy terms
+    $this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
     $this->addUnmigratedSources(array('field_audio', 'field_audio:value', 'field_audio:provider', 'field_audio:data', 
           'field_audio:status', 'field_audio:version', 'field_audio:title', 'field_audio:description', 
           'field_video', 'field_video:value', 'field_video:provider', 'field_video:data', 
