@@ -139,7 +139,7 @@ function dgu_data_set_request_field_group_info() {
     'weight' => '5',
     'children' => array(
       0 => 'field_submitter_name',
-      1 => 'field_submitter_e_mail',
+      1 => 'field_submitter_email',
       2 => 'field_organisation_type',
       3 => 'field_organisation_name',
     ),
