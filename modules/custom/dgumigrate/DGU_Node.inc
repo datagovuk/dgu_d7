@@ -5,24 +5,8 @@ abstract class DGUNodeMigration extends DrupalNode6Migration {
   public function __construct(array $arguments) {
     parent::__construct($arguments);
 
-  //  $this->addFieldMapping('field_legacy_nid', 'nid')
-    //     ->description('We have a common field to save the D6 nid');
-    // map some taxonomy terms
-    $this->addFieldMapping('field_category', '4');
-    $this->addFieldMapping('field_category:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_category:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_category:ignore_case')->defaultValue(TRUE);
-
-    $this->addFieldMapping('field_tags', '6');
-    $this->addFieldMapping('field_tags:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_tags:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_tags:ignore_case')->defaultValue(TRUE);
-
-    $this->addFieldMapping('field_sector', '13');
-    $this->addFieldMapping('field_sector:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_sector:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_sector:ignore_case')->defaultValue(TRUE);
-
+    //$this->addFieldMapping('field_legacy_nid', 'nid')
+    //  ->description('We have a common field to save the D6 nid');
   }
 
   protected function mapVideo($video){
@@ -43,6 +27,10 @@ class DGUAppMigration extends DGUNodeMigration {
 class DGUBlogMigration extends DGUNodeMigration {
   function __construct(array $arguments) {
     parent::__construct($arguments);
+        // map some taxonomy terms
+    $this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
     $this->addUnmigratedSources(array('field_audio', 'field_audio:value', 'field_audio:provider', 'field_audio:data', 
           'field_audio:status', 'field_audio:version', 'field_audio:title', 'field_audio:description', 
           'field_video', 'field_video:value', 'field_video:provider', 'field_video:data', 
@@ -73,7 +61,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
     parent::__construct($arguments);
     $this->addFieldMapping('field_barriers_attempted', 'field_attempted_to_get');
     $this->addFieldMapping('field_submitter_name', 'field_submitter_name');
-    $this->addFieldMapping('field_submitter_e_mail', 'field_submitter_email');
+    $this->addFieldMapping('field_submitter_email', 'field_submitter_email');
     $this->addFieldMapping('field_organisation_type', 'field_organisation_type');
     $this->addFieldMapping('field_organisation_name', 'field_organisation');
     $this->addFieldMapping('field_issue_type', 'field_datareq_type');
@@ -90,10 +78,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
     $this->addFieldMapping('field_review_status', 'field_review_status');
     $this->addFieldMapping('field_data_set_description', 'field_data_description');
 
-    $this->addFieldMapping('field_data_themes', '4');
-    $this->addFieldMapping('field_data_themes:source_type')->defaultValue('tid');
-    $this->addFieldMapping('field_data_themes:create_term')->defaultValue(FALSE);
-    $this->addFieldMapping('field_data_themes:ignore_case')->defaultValue(TRUE);
+    $this->addFieldMapping('field_data_themes', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 
 
     
