@@ -1174,14 +1174,14 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     ),
   );
 
-  // Exported field: 'node-dataset_request-field_submitter_e_mail'.
-  $fields['node-dataset_request-field_submitter_e_mail'] = array(
+  // Exported field: 'node-dataset_request-field_submitter_email'.
+  $fields['node-dataset_request-field_submitter_email'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_submitter_e_mail',
+      'field_name' => 'field_submitter_email',
       'foreign keys' => array(),
       'indexes' => array(),
       'locked' => '0',
@@ -1211,7 +1211,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_submitter_e_mail',
+      'field_name' => 'field_submitter_email',
       'label' => 'Your e-mail',
       'required' => 1,
       'settings' => array(

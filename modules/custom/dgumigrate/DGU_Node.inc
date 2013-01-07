@@ -61,7 +61,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
     parent::__construct($arguments);
     $this->addFieldMapping('field_barriers_attempted', 'field_attempted_to_get');
     $this->addFieldMapping('field_submitter_name', 'field_submitter_name');
-    $this->addFieldMapping('field_submitter_e_mail', 'field_submitter_email');
+    $this->addFieldMapping('field_submitter_email', 'field_submitter_email');
     $this->addFieldMapping('field_organisation_type', 'field_organisation_type');
     $this->addFieldMapping('field_organisation_name', 'field_organisation');
     $this->addFieldMapping('field_issue_type', 'field_datareq_type');
