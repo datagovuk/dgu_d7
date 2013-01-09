@@ -21,6 +21,31 @@ abstract class DGUNodeMigration extends DrupalNode6Migration {
 }
 
 class DGUAppMigration extends DGUNodeMigration {
+  function __construct(array $arguments){
+    parent::__construct($arguments);
+    $this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
+    $this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
+
+    $this->addFieldMapping('field_app_charge', 'field_app_charge');
+    $this->addFieldMapping('field_app_link', 'field_app_link');
+    $this->addFieldMapping('field_app_link:title', 'field_app_link:title');
+
+    $this->addFieldMapping('field_developed_by', 'field_developed_by');
+    $this->addFieldMapping('field_rating', '');
+    $this->addFieldMapping('field_screen_shots', 'field_screen_shots')->sourceMigration('Files');
+    $this->addFieldMapping('field_screen_shots:file_class')->defaultValue('MigrateFileFid');
+    $this->addFieldMapping('field_screen_shots:source_dir')->defaultValue(variable_get("drupal6files"));
+
+    $this->addFieldMapping('field_submitter_email', '');
+    $this->addFieldMapping('field_submitter_name', '');
+    $this->addFieldMapping('field_uses_dataset', '');
+
+
+    //unmigrated source
+    //unmigrated dest
+    //field_developed_by:language
+  }
 
 }
 
@@ -147,4 +172,30 @@ class DGUPageMigration extends DGUNodeMigration {
 
 class DGUStoryMigration extends DGUNodeMigration {
 
+}
+
+
+
+class DGUFileMigration extends DrupalFile6Migration {
+  function __construct($arguments){
+
+error_log("DGUFileMigration constructor");
+error_log(print_r($arguments, true));
+
+    parent::__construct($arguments);
+    $this->destination = new MigrateDestinationMedia('image');
+
+    $this->addFieldMapping('value', 'filepath')->callbacks(array($this, 'fixUri'));
+    $this->addFieldMapping('destination_file', 'filepath')->callbacks(array($this, 'fixUri'));
+    $this->addFieldMapping('timestamp', 'timestamp');
+    $this->addFieldMapping('uid')->defaultValue(1);
+    $this->addFieldMapping('source_dir')->defaultValue($arguments['source_dir']);
+
+    $this->addUnmigratedDestinations(array('field_image_description:format',
+      'field_image_description:language', 'destination_dir', 'destination_file',
+      'file_replace', 'preserve_files', 'timestamp'));
+    if (module_exists('path')) {
+      $this->addUnmigratedDestinations(array('path'));
+    }      
+  }
 }
