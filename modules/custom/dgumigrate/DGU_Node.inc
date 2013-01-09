@@ -9,15 +9,6 @@ abstract class DGUNodeMigration extends DrupalNode6Migration {
     //  ->description('We have a common field to save the D6 nid');
   }
 
-  protected function mapVideo($video){
-    if (! empty($video[0])){
-
-      error_log(print_r($this->getSource()->current(), true));
-      error_log(print_r($this->getDestination(), true));
-      error_log(print_r($video, true));
-
-    }
-  }
 }
 
 class DGUAppMigration extends DGUNodeMigration {
@@ -37,14 +28,16 @@ class DGUAppMigration extends DGUNodeMigration {
     $this->addFieldMapping('field_screen_shots:file_class')->defaultValue('MigrateFileFid');
     $this->addFieldMapping('field_screen_shots:source_dir')->defaultValue(variable_get("drupal6files"));
 
-    $this->addFieldMapping('field_submitter_email', '');
-    $this->addFieldMapping('field_submitter_name', '');
-    $this->addFieldMapping('field_uses_dataset', '');
+    $this->addFieldMapping('field_submitter_email', 'field_submitter_email');
+    $this->addFieldMapping('field_submitter_name', 'field_submitter_name');
+    $this->addFieldMapping('field_uses_dataset', 'field_package');
 
 
-    //unmigrated source
-    //unmigrated dest
-    //field_developed_by:language
+    $this->addUnmigratedSources(array('field_app_link:attributes', 'field_other_commissioner', 
+      'field_feature_availability', 'field_screen_shots:list', 'field_screen_shots:data'));
+    $this->addUnmigratedDestinations(array('field_developed_by:language', 'field_screen_shots:language', 
+      'field_screen_shots:alt', 'field_screen_shots:title', 'field_submitter_name:language'));
+
   }
 
 }
@@ -178,10 +171,6 @@ class DGUStoryMigration extends DGUNodeMigration {
 
 class DGUFileMigration extends DrupalFile6Migration {
   function __construct($arguments){
-
-error_log("DGUFileMigration constructor");
-error_log(print_r($arguments, true));
-
     parent::__construct($arguments);
     $this->destination = new MigrateDestinationMedia('image');
 
