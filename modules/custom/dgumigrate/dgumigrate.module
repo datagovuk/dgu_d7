@@ -210,8 +210,6 @@ function dgumigrate_register_migrations() {
     'machine_name' => 'Files',
     'source_dir' => variable_get("drupal6files"),
   );
-  error_log("drupal dir is: " . variable_get('drupal6files'));
-  error_log(print_r($file_arguments, true));
   Migration::registerMigration('DGUFileMigration', $file_arguments['machine_name'], $file_arguments);
 
 
