@@ -2,10 +2,9 @@ diff --git a/reply.info b/reply.info
 index 6e12990..06a50ef 100644
 --- a/reply.info
 +++ b/reply.info
-@@ -8,3 +8,6 @@ files[] = views/handlers/views_handler_field_reply_link.inc
-files[] = views/handlers/views_handler_field_reply_link_edit.inc
-files[] = views/handlers/views_handler_field_reply_link_delete.inc
-files[] = views/handlers/views_handler_field_reply_link_reply.inc
+@@ -8,2 +8,5 @@ files[] = views/handlers/views_handler_field_reply_link.inc
+ files[] = views/handlers/views_handler_field_reply_link_edit.inc
+ files[] = views/handlers/views_handler_field_reply_link_delete.inc
 +
 +files[] = reply_bundle.admin.inc
 +files[] = reply_bundle.entity.inc
