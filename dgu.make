@@ -37,6 +37,7 @@ projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditio
 
 projects[reply][version] = "1.x-dev"
 projects[reply][subdir] = "contrib"
+projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
@@ -81,7 +82,7 @@ projects[conditional_fields][subdir] = "contrib"
 ; --------
 projects[bootstrap][subdir] = "contrib"
 projects[bootstrap][version] = "2.0-beta2"
-  
+
 ; Libraries
 ; ---------
 libraries[jquery][download][type] = "file"
