@@ -35,6 +35,9 @@ projects[entity][version] = "1.0-rc3"
 projects[entity][subdir] = "contrib"
 projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditions-20.patch"
 
+projects[reply][version] = "1.x-dev"
+projects[reply][subdir] = "contrib"
+
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
