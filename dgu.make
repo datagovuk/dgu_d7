@@ -35,7 +35,10 @@ projects[entity][version] = "1.0-rc3"
 projects[entity][subdir] = "contrib"
 projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditions-20.patch"
 
-projects[reply][version] = "1.x-dev"
+projects[reply][type] = "module"
+projects[reply][download][type] = "git"
+projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
+projects[reply][download][branch] = "7.x-1.x"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 
