@@ -205,6 +205,15 @@ function dgumigrate_register_migrations() {
                                  $arguments);
   }
 
+  $file_arguments = $common_arguments + array(
+    'description' => t('Migration of files from Drupal 6'),
+    'machine_name' => 'Files',
+    'source_dir' => variable_get("drupal6files"),
+  );
+  Migration::registerMigration('DGUFileMigration', $file_arguments['machine_name'], $file_arguments);
+
+
+
   $menu_arguments = $common_arguments + array(
     'description' => t('Migration of menus from Drupal 6'),
     'machine_name' => 'Menu',
