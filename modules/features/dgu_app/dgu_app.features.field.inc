@@ -231,6 +231,77 @@ function dgu_app_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-app-field_category'.
+  $fields['node-app-field_category'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_category',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'category',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'app',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 9,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_category',
+      'label' => 'Category',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '6',
+      ),
+    ),
+  );
+
   // Exported field: 'node-app-field_developed_by'.
   $fields['node-app-field_developed_by'] = array(
     'field_config' => array(
@@ -449,6 +520,77 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     ),
   );
 
+  // Exported field: 'node-app-field_sector'.
+  $fields['node-app-field_sector'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_sector',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'sector',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'app',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit)',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 11,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_sector',
+      'label' => 'Sector',
+      'required' => 1,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '10',
+      ),
+    ),
+  );
+
   // Exported field: 'node-app-field_submitter_email'.
   $fields['node-app-field_submitter_email'] = array(
     'field_config' => array(
@@ -573,6 +715,80 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     ),
   );
 
+  // Exported field: 'node-app-field_tags'.
+  $fields['node-app-field_tags'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_tags',
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'tags',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'app',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 10,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_tags',
+      'label' => 'Tags',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'taxonomy',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'size' => 60,
+        ),
+        'type' => 'taxonomy_autocomplete',
+        'weight' => '8',
+      ),
+    ),
+  );
+
   // Exported field: 'node-app-field_uses_dataset'.
   $fields['node-app-field_uses_dataset'] = array(
     'field_config' => array(
@@ -652,16 +868,15 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('App Link');
   t('App charge');
-  t('Audio');
-  t('Blog');
-  t('Body');
   t('Category');
   t('Description');
   t('Developed by');
   t('Enter the URL of this app.');
   t('Please provide a helpful summary of your apps for when your app is published data.gov.uk.');
+  t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit)');
   t('Please supply images of your application so that users can see what it does.
 
 The first images will be shown as a small thumbnail (253x140 pixels) in previews of the app.
@@ -675,7 +890,6 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
   t('Tags');
   t('This information will not relayed to other users of the site.');
   t('Uses dataset');
-  t('Video');
   t('rating');
 
   return $fields;
