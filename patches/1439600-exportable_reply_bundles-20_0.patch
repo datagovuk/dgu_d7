@@ -1,0 +1,969 @@
+diff --git a/reply.info b/reply.info
+index 6e12990..06a50ef 100644
+--- a/reply.info
++++ b/reply.info
+@@ -8,2 +8,5 @@ files[] = views/handlers/views_handler_field_reply_link.inc
+ files[] = views/handlers/views_handler_field_reply_link_edit.inc
+ files[] = views/handlers/views_handler_field_reply_link_delete.inc
++
++files[] = reply_bundle.admin.inc
++files[] = reply_bundle.entity.inc
+diff --git a/reply.install b/reply.install
+index 9e68595..599e7b0 100644
+--- a/reply.install
++++ b/reply.install
+@@ -1,226 +1,290 @@
+-<?php
+-
+-/**
+- *  _schema
+- */
+-function reply_schema() {
+-  $schema['reply'] = array(
+-    'description' => 'Reply entity.',
+-    'fields' => array(
+-      'id' => array(
+-        'description' => 'Reply ID.',
+-        'type' => 'serial',
+-        'unsigned' => TRUE,
+-        'not null' => TRUE,
+-      ),
+-      'bundle' => array(
+-        'description' => 'Bundle.',
+-        'type' => 'varchar',
+-        'length' => '64',
+-        'not null' => TRUE,
+-      ),
+-      'parent' => array(
+-        'description' => 'Parent reply.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE,
+-        'default' => 0
+-      ),
+-      'entity_id' => array(
+-        'description' => 'Entity id this reply is attached to.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE
+-      ),
+-      'entity_type' => array(
+-        'description' => 'Type of entity this reply is attached to.',
+-        'type' => 'varchar',
+-        'length' => 64,
+-        'not null' => TRUE
+-      ),
+-      'uid' => array(
+-        'description' => 'Author user id.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE,
+-        'default' => 0
+-      ),
+-      'created' => array(
+-        'description' => 'UNIX timestamp of reply creation.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE,
+-      ),
+-      'changed' => array(
+-        'description' => 'UNIX timestamp of reply change.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE,
+-      ),
+-      'hostname' => array(
+-        'description' => 'Author IP address.',
+-        'type' => 'varchar',
+-        'length' => 15,
+-        'not null' => TRUE
+-      ),
+-      'status' => array(
+-        'description' => 'Reply status.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => 1
+-      ),
+-      'language' => array(
+-        'description' => 'Reply language.',
+-        'type' => 'varchar',
+-        'length' => 12,
+-        'not null' => TRUE,
+-        'default' => LANGUAGE_NONE
+-      ),
+-      'depth' => array(
+-        'description' => 'The depth reply is in in the three.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'not null' => TRUE,
+-        'default' => 0
+-      ),
+-      'instance_id' => array(
+-        'description' => 'Instance id this reply is attached through.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE
+-      ),
+-      'position' => array(
+-        'description' => 'Position of this reply in hierarchy of this entity.',
+-        'type' => 'int',
+-        'length' => 11,
+-        'not null' => TRUE
+-      ),
+-      'deleted' => array(
+-        'description' => 'Indicates this reply has been deleted.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '0'
+-      )
+-    ),
+-    'primary key' => array('id'),
+-    'indexes' => array(
+-      'bundle' => array('bundle'),
+-      'parent' => array('parent'),
+-      'position' => array('position'),
+-      'entity_id' => array('entity_id'),
+-      'entity_type' => array('entity_type'),
+-      'instance_id' => array('instance_id')
+-    )
+-  );
+-// @todo pridat locked pre programatorov
+-  $schema['reply_bundle'] = array(
+-    'description' => 'List of defined reply bundles.',
+-    'fields' => array(
+-      'bundle' => array(
+-        'description' => 'The machine name of bundle.',
+-        'type' => 'varchar',
+-        'length' => 64,
+-        'not null' => TRUE
+-      ),
+-      'name' => array(
+-        'description' => 'The human readable name of bundle.',
+-        'type' => 'varchar',
+-        'length' => 64,
+-        'not null' => TRUE
+-      ),
+-      'access' => array(
+-        'description' => 'Access to replies.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE
+-      ),
+-      'display' => array(
+-        'description' => 'Display flat or threaded list.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE
+-      ),
+-      'description' => array(
+-        'description' => 'The description of this bundle.',
+-        'type' => 'varchar',
+-        'length' => 255,
+-        'not null' => FALSE,
+-        'default' => NULL
+-      ),
+-      'form' => array(
+-        'description' => 'Position of the reply form.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '1'
+-      ),
+-      'allow_reply' => array(
+-        'description' => 'Allow replying on replies.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '1'
+-      ),
+-      'locked' => array(
+-        'description' => 'Protect this bundle against any changes of settings or fields by locking it.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '0'
+-      )
+-    ),
+-    'primary key' => array('bundle'),
+-  );
+-
+-  return $schema;
+-}
+-
+-
+-/**
+- *  _field_schema
+- */
+-function reply_field_schema($field) {
+-  return array(
+-    'columns' => array(
+-      'access' => array(
+-        'description' => '-1 - global, 0 - disabled, 1 - read, 2 - write',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE
+-      ),
+-      'display' => array(
+-        'description' => '-1 - global, 1 - flat list, 2 - threaded list',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE
+-      ),
+-      'form' => array(
+-        'description' => 'Position of the reply form. -1 - global, 1 - on the same page, 2 - on custom page.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '1'
+-      ),
+-      'allow_reply' => array(
+-        'description' => 'Allow replying on replies. -1 global, 0 - deny, 1 - allow.',
+-        'type' => 'int',
+-        'size' => 'tiny',
+-        'length' => 1,
+-        'not null' => TRUE,
+-        'default' => '1'
+-      )
+-    )
+-  );
+-}
+\ No newline at end of file
++<?php
++
++/**
++ *  _schema
++ */
++function reply_schema() {
++  $schema['reply'] = array(
++    'description' => 'Reply entity.',
++    'fields' => array(
++      'id' => array(
++        'description' => 'Reply ID.',
++        'type' => 'serial',
++        'unsigned' => TRUE,
++        'not null' => TRUE,
++      ),
++      'bundle' => array(
++        'description' => 'Bundle.',
++        'type' => 'varchar',
++        'length' => '64',
++        'not null' => TRUE,
++      ),
++      'parent' => array(
++        'description' => 'Parent reply.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE,
++        'default' => 0
++      ),
++      'entity_id' => array(
++        'description' => 'Entity id this reply is attached to.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE
++      ),
++      'entity_type' => array(
++        'description' => 'Type of entity this reply is attached to.',
++        'type' => 'varchar',
++        'length' => 64,
++        'not null' => TRUE
++      ),
++      'uid' => array(
++        'description' => 'Author user id.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE,
++        'default' => 0
++      ),
++      'created' => array(
++        'description' => 'UNIX timestamp of reply creation.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE,
++      ),
++      'changed' => array(
++        'description' => 'UNIX timestamp of reply change.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE,
++      ),
++      'hostname' => array(
++        'description' => 'Author IP address.',
++        'type' => 'varchar',
++        'length' => 15,
++        'not null' => TRUE
++      ),
++      'status' => array(
++        'description' => 'Reply status.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => 1
++      ),
++      'language' => array(
++        'description' => 'Reply language.',
++        'type' => 'varchar',
++        'length' => 12,
++        'not null' => TRUE,
++        'default' => LANGUAGE_NONE
++      ),
++      'depth' => array(
++        'description' => 'The depth reply is in in the three.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'not null' => TRUE,
++        'default' => 0
++      ),
++      'instance_id' => array(
++        'description' => 'Instance id this reply is attached through.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE
++      ),
++      'position' => array(
++        'description' => 'Position of this reply in hierarchy of this entity.',
++        'type' => 'int',
++        'length' => 11,
++        'not null' => TRUE
++      ),
++      'deleted' => array(
++        'description' => 'Indicates this reply has been deleted.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '0'
++      )
++    ),
++    'primary key' => array('id'),
++    'indexes' => array(
++      'bundle' => array('bundle'),
++      'parent' => array('parent'),
++      'position' => array('position'),
++      'entity_id' => array('entity_id'),
++      'entity_type' => array('entity_type'),
++      'instance_id' => array('instance_id')
++    )
++  );
++// @todo pridat locked pre programatorov
++  $schema['reply_bundle'] = array(
++    'description' => 'List of defined reply bundles.',
++    'fields' => array(
++      'id' => array(
++        'type' => 'serial',
++        'not null' => TRUE,
++        'description' => 'Primary Key: Unique reply bundle identifier',
++      ),
++      'bundle' => array(
++        'description' => 'The machine name of bundle.',
++        'type' => 'varchar',
++        'length' => 64,
++        'not null' => TRUE
++      ),
++      'name' => array(
++        'description' => 'The human readable name of bundle.',
++        'type' => 'varchar',
++        'length' => 64,
++        'not null' => TRUE
++      ),
++      'access' => array(
++        'description' => 'Access to replies.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE
++      ),
++      'display' => array(
++        'description' => 'Display flat or threaded list.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE
++      ),
++      'description' => array(
++        'description' => 'The description of this bundle.',
++        'type' => 'varchar',
++        'length' => 255,
++        'not null' => FALSE,
++        'default' => NULL
++      ),
++      'form' => array(
++        'description' => 'Position of the reply form.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '1'
++      ),
++      'allow_reply' => array(
++        'description' => 'Allow replying on replies.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '1'
++      ),
++      'locked' => array(
++        'description' => 'Protect this bundle against any changes of settings or fields by locking it.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '0'
++      ),
++      // Status and module are requirements for the Exportable Entity API
++      'status' => array(
++        'type' => 'int',
++        'not null' => TRUE,
++        // Set the default to ENTITY_CUSTOM without using the constant as it is
++        // not safe to use it at this point.
++        'default' => 0x01,
++        'size' => 'tiny',
++        'description' => 'The exportable status of the entity.',
++      ),
++      'module' => array(
++        'description' => 'The name of the providing module if the entity has been defined in code.',
++        'type' => 'varchar',
++        'length' => 255,
++        'not null' => FALSE,
++      ),
++    ),
++    'primary key' => array('id'),
++    'unique keys' => array(
++      'bundle' => array('bundle'),
++    ),
++  );
++
++  return $schema;
++}
++
++
++/**
++ *  _field_schema
++ */
++function reply_field_schema($field) {
++  return array(
++    'columns' => array(
++      'access' => array(
++        'description' => '-1 - global, 0 - disabled, 1 - read, 2 - write',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE
++      ),
++      'display' => array(
++        'description' => '-1 - global, 1 - flat list, 2 - threaded list',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE
++      ),
++      'form' => array(
++        'description' => 'Position of the reply form. -1 - global, 1 - on the same page, 2 - on custom page.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '1'
++      ),
++      'allow_reply' => array(
++        'description' => 'Allow replying on replies. -1 global, 0 - deny, 1 - allow.',
++        'type' => 'int',
++        'size' => 'tiny',
++        'length' => 1,
++        'not null' => TRUE,
++        'default' => '1'
++      )
++    )
++  );
++}
++
++/**
++ * Add the id field to the reply_bundle table.
++ */
++function reply_update_7001() {
++  db_drop_primary_key('reply_bundle');
++  db_add_field('reply_bundle', 'id', array(
++      'type' => 'serial',
++      'not null' => TRUE,
++      'description' => 'Primary Key: Unique reply bundle identifier',
++    ),
++    array(
++      'primary key' => array('id'),
++      'unique keys' => array(
++        'bundle' => array('bundle'),
++      ),
++    )
++  );
++
++  db_add_field('reply_bundle', 'status', array(
++      'type' => 'int',
++      'not null' => TRUE,
++      // Set the default to ENTITY_CUSTOM without using the constant as it is
++      // not safe to use it at this point.
++      'default' => 0x01,
++      'size' => 'tiny',
++      'description' => 'The exportable status of the entity.',
++    )
++  );
++
++  db_add_field('reply_bundle', 'module', array(
++      'description' => 'The name of the providing module if the entity has been defined in code.',
++      'type' => 'varchar',
++      'length' => 255,
++      'not null' => FALSE,
++    )
++  );
++
++  drupal_flush_all_caches();
++}
+diff --git a/reply.module b/reply.module
+index 2ebbe8f..af17d2b 100644
+--- a/reply.module
++++ b/reply.module
+@@ -119,50 +119,6 @@ function reply_menu() {
+     'type' => MENU_LOCAL_TASK,
+   );
+
+-  $items['admin/structure/reply'] = array(
+-    'title' => 'Replies',
+-    'page callback' => 'reply_page_bundles',
+-    'access arguments' => array('administer reply bundles'),
+-  );
+-
+-  $items['admin/structure/reply/list'] = array(
+-    'title' => 'List',
+-    'type' => MENU_DEFAULT_LOCAL_TASK,
+-    'weight' => -10,
+-  );
+-
+-  $items['admin/structure/reply/%reply_bundle'] = array(
+-    'title callback' => 'reply_bundle_label',
+-    'title arguments' => array(3),
+-    'page callback' => 'drupal_get_form',
+-    'page arguments' => array('reply_bundle_edit_form', 3),
+-    'access arguments' => array('administer reply bundles'),
+-  );
+-
+-  $items['admin/structure/reply/%reply_bundle/edit'] = array(
+-    'title' => 'Edit',
+-    'access arguments' => array('administer reply bundles'),
+-    'type' => MENU_DEFAULT_LOCAL_TASK,
+-    'weight' => -10
+-  );
+-
+-  $items['admin/structure/reply/%reply_bundle/delete'] = array(
+-    'title' => 'Delete',
+-    'page callback' => 'drupal_get_form',
+-    'page arguments' => array('reply_bundle_delete_form', 3),
+-    'access arguments' => array('administer reply bundles'),
+-    'type' => MENU_LOCAL_TASK,
+-    'weight' => 10
+-  );
+-
+-  $items['admin/structure/reply/add'] = array(
+-    'title' => 'Add bundle',
+-    'page callback' => 'drupal_get_form',
+-    'page arguments' => array('reply_bundle_edit_form'),
+-    'access arguments' => array('administer reply bundles'),
+-    'type' => MENU_LOCAL_ACTION,
+-  );
+-
+   return $items;
+ }
+
+@@ -277,19 +233,49 @@ function reply_entity_info() {
+     )
+   );
+
++  $return['reply_bundle'] = array(
++    'label' => t('Reply bundle'),
++    'entity class' => 'ReplyBundle',
++    'controller class' =>  'EntityAPIControllerExportable',
++    'base table' => 'reply_bundle',
++    'fieldable' => FALSE,
++    'bundle of' => 'reply',
++    'exportable' => TRUE,
++    'entity keys' => array(
++      'id' => 'id',
++      'name' => 'bundle',
++      'label' => 'name',
++    ),
++    'access callback' => 'reply_bundle_access',
++    'module' => 'reply',
++    'admin ui' => array(
++      'path' => 'admin/structure/reply',
++      'file' => 'reply_bundle.admin.inc',
++      'controller class' => 'ReplyBundleUIController',
++    ),
++  );
++
++  return $return;
++}
++
++/**
++ * Implements hook_entity_info_alter().
++ *
++ * Build the reply bundles here as reply_load_bundles() needs entity info to be
++ * fully build already.
++ */
++function reply_entity_info_alter(&$info) {
+   foreach (reply_load_bundles() as $bundle) {
+-    $return['reply']['bundles'][$bundle->bundle] = array(
++    $info['reply']['bundles'][$bundle->bundle] = array(
+       'label' => t($bundle->name),
+       'admin' => array(
+-        'path' => 'admin/structure/reply/%reply_bundle',
+-        'bundle argument' => 3,
+-        'real path' => 'admin/structure/reply/'. $bundle->bundle,
++        'path' => 'admin/structure/reply/manage/%reply_bundle',
++        'bundle argument' => 4,
++        'real path' => 'admin/structure/reply/manage/'. $bundle->bundle,
+         'access arguments' => array('administer reply bundles'),
+       ),
+     );
+   }
+-
+-  return $return;
+ }
+
+ /**
+@@ -326,13 +312,7 @@ function reply_load_instance($id) {
+  * @return array
+  */
+ function reply_load_bundles() {
+-  $cache = &drupal_static(__FUNCTION__);
+-
+-  if (!isset($cache)) {
+-    $cache = db_select('reply_bundle', 'rb')->fields('rb')->orderBy('bundle')->execute()->fetchAllAssoc('bundle');
+-  }
+-
+-  return $cache;
++  return entity_load_multiple_by_name('reply_bundle');
+ }
+
+ /**
+@@ -343,14 +323,10 @@ function reply_load_bundles() {
+  * @return object
+  */
+ function reply_bundle_load($bundle) {
+-  $cache = &drupal_static(__FUNCTION__);
+   $bundle = strtr($bundle, array('-' => '_'));
+
+-  if (!isset($cache[$bundle])) {
+-    $cache[$bundle] = db_select('reply_bundle', 'rb')->fields('rb')->condition('bundle', $bundle)->execute()->fetchObject();
+-  }
+-
+-  return $cache[$bundle];
++  $bundles = entity_load_multiple_by_name('reply_bundle', isset($bundle) ? array($bundle) : FALSE);
++  return isset($bundle) ? reset($bundles) : FALSE;
+ }
+
+
+@@ -383,6 +359,12 @@ function reply_bundle_label(&$bundle) {
+   return $bundle->name;
+ }
+
++/**
++ * Access callback for reply bundles.
++ */
++function reply_bundle_access($op, $type = NULL, $account = NULL) {
++  return user_access('administer reply bundles', $account);
++}
+
+ /**
+  * Returns entity label.
+@@ -1391,44 +1373,6 @@ function reply_build_content($reply, $view_mode = 'full', $langcode = NULL) {
+   module_invoke_all('entity_view', $reply, 'reply', $view_mode, $langcode);
+ }
+
+-
+-/**
+- * Page callback to list all defined bundles.
+- */
+-function reply_page_bundles() {
+-  $out = '';
+-  $bundles = reply_load_bundles();
+-  $field_ui = module_exists('field_ui');
+-  $rows = array();
+-
+-  if (!empty($bundles)) {
+-    foreach ($bundles AS $bundle) {
+-      $type_url = str_replace('_', '-', $bundle->bundle);
+-      $row = array();
+-      $info = ($bundle->locked == REPLY_UNLOCKED) ? '' : ' <strong>'. t('This bundle is locked and cannot be edited.') .'</strong>';
+-      $row[] = array('data' => '<b>'. t($bundle->name) .'</b> <small>('. t('Machine name') .': '. check_plain($bundle->bundle) .')</small><div class="description">'. check_plain($bundle->description) . $info .'</div>'); // item toto ma riesene cez thmee funkciu item_admin_overview @TODO oTckovat
+-      $row[] = ($bundle->locked == REPLY_UNLOCKED) ? array('data' => l('edit', 'admin/structure/reply/'. $type_url)) : '';
+-
+-      if ($field_ui && $bundle->locked == REPLY_UNLOCKED) {
+-        // Manage fields.
+-        $row[] = array('data' => l(t('manage fields'), 'admin/structure/reply/'. $type_url .'/fields'));
+-        // Display fields.
+-        $row[] = array('data' => l(t('manage display'), 'admin/structure/reply/'. $type_url .'/display'));
+-      }
+-
+-      $row[] = ($bundle->locked == REPLY_UNLOCKED) ? array('data' => l('delete', 'admin/structure/reply/'. $type_url .'/delete')) : '';
+-      $rows[] = $row;
+-    }
+-  }
+-
+-  $header = array(t('Name'), array('data' => t('Operations'), 'colspan' => $field_ui ? 4 : 2));
+-  $empty = t('You have no bundles. <a href="!link">Add bundle</a>.', array('!link' => url('admin/structure/reply/add')));
+-  $out .= theme('table', array('header' => $header, 'rows' => $rows, 'empty' => $empty));
+-
+-  return $out;
+-}
+-
+-
+ /**
+  * Finds out if bundle exists.
+  *
+@@ -1444,11 +1388,17 @@ function reply_bundle_exists($bundle) {
+ /**
+  * Form for adding or editing an existing entity.
+  */
+-function reply_bundle_edit_form($form, &$form_state, $bundle = NULL) {
++function reply_bundle_form($form, &$form_state, $bundle = NULL, $op = 'edit') {
+   if (isset($bundle) && $bundle->locked == REPLY_LOCKED) {
+     drupal_set_message(t("This bundle is locked and cannot be edited."), 'error');
+     drupal_goto('admin/structure/reply');
+   }
++
++  if ($op == 'clone') {
++    $bundle->name .= ' (cloned)';
++    $bundle->bundle = '';
++  }
++
+   $form['name'] = array(
+     '#type' => 'textfield',
+     '#title' => t('Name'),
+@@ -1531,8 +1481,12 @@ function reply_bundle_edit_form($form, &$form_state, $bundle = NULL) {
+ /**
+  * Submit handler for adding a new or editing an existing entity.
+  */
+-function reply_bundle_edit_form_submit($form, &$form_state) {
+-  reply_save_bundle($form_state['values']);
++function reply_bundle_form_submit($form, &$form_state) {
++  // Build the reply bundle
++  $reply_bundle = entity_ui_form_submit_build_entity($form, $form_state);
++
++  // Save and go back.
++  $reply_bundle->save();
+   $form_state['redirect'] = 'admin/structure/reply';
+ }
+
+@@ -1541,45 +1495,7 @@ function reply_bundle_edit_form_submit($form, &$form_state) {
+  *  Saves new or existing bundle object into database.
+  */
+ function reply_save_bundle($bundle, $verbalise = TRUE) {
+-  $bundle = (object) $bundle;
+-  $exists = reply_bundle_exists($bundle->bundle);
+-  if ($exists) {
+-    //field_attach_rename_bundle('item', $form['#bundle']['type'], $form_state['values']['type']); @todo ?
+-    db_update('reply_bundle')
+-      ->fields(array(
+-        'name' => $bundle->name,
+-        'description' => $bundle->description,
+-        'access' => $bundle->access,
+-        'display' => $bundle->display,
+-        'form' => $bundle->form,
+-        'allow_reply' => $bundle->allow_reply,
+-        'locked' => $bundle->locked
+-      ))
+-    ->condition('bundle', $bundle->bundle)
+-    ->execute();
+-    if ($verbalise) {
+-      drupal_set_message(t('Bundle %bundle was successfully updated.', array('%bundle' => $bundle->name)));
+-    }
+-    return 2;
+-  } else {
+-    db_insert('reply_bundle')
+-      ->fields(array(
+-        'bundle' => $bundle->bundle,
+-        'name' => $bundle->name,
+-        'description' => $bundle->description,
+-        'access' => $bundle->access,
+-        'display' => $bundle->display,
+-        'form' => $bundle->form,
+-        'allow_reply' => $bundle->allow_reply,
+-        'locked' => $bundle->locked
+-      ))
+-    ->execute();
+-    if ($verbalise) {
+-      drupal_set_message(t('Bundle %bundle was successfully created.', array('%bundle' => $bundle->name)));
+-    }
+-    field_attach_create_bundle('reply', $bundle->bundle);
+-    return 1;
+-  }
++  $bundle->save();
+ }
+
+
+@@ -1595,11 +1511,7 @@ function reply_bundle_delete_form($form, &$form_state, $bundle) {
+   $question = t('Are you sure you want do delete bundle %bundle?', array('%bundle' => $bundle->name));
+   $form['bundle'] = array(
+     '#type' => 'value',
+-    '#value' => $bundle->bundle
+-  );
+-  $form['name'] = array(
+-    '#type' => 'value',
+-    '#value' => $bundle->name
++    '#value' => $bundle,
+   );
+   $path = 'admin/structure/reply';
+
+@@ -1611,8 +1523,9 @@ function reply_bundle_delete_form($form, &$form_state, $bundle) {
+  *  Submit handler for deleting an existing bundle form.
+  */
+ function reply_bundle_delete_form_submit($form, &$form_state) {
+-  reply_bundle_delete($form_state['values']['bundle']);
+-  $message = t('Bundle %name was successfully deleted.', array('%name' => $form_state['values']['name']));
++  $bundle = $form_state['values']['bundle'];
++  $message = t('Bundle %name was successfully deleted.', array('%name' => $bundle->name));
++  $bundle->delete();
+   drupal_set_message($message);
+   $form_state['redirect'] = 'admin/structure/reply';
+ }
+@@ -1622,13 +1535,7 @@ function reply_bundle_delete_form_submit($form, &$form_state) {
+  *  Deletes bundle from database.
+  */
+ function reply_bundle_delete($bundle) {
+-  // Deletes bundle object.
+-  db_delete('reply_bundle')->condition('bundle', $bundle)->execute();
+-  // Deletes all entities associated with this bundle.
+-  $ids = db_select('reply', 'r')->fields('r', array('id'))->condition('bundle', $bundle)->execute()->fetchCol();
+-  reply_delete_multiple($ids);
+-  // Deletes all fields associated with this bundle.
+-  field_attach_delete_bundle('reply', $bundle);
++  $bundle->delete();
+ }
+
+
+diff --git a/reply_bundle.admin.inc b/reply_bundle.admin.inc
+new file mode 100644
+index 0000000..e944a41
+--- /dev/null
++++ b/reply_bundle.admin.inc
+@@ -0,0 +1,21 @@
++<?php
++
++/**
++ * @file
++ * Project type editing UI.
++ */
++
++/**
++ * UI controller.
++ */
++class ReplyBundleUIController extends EntityDefaultUIController {
++
++  /**
++   * Overrides hook_menu() defaults.
++   */
++  public function hook_menu() {
++    $items = parent::hook_menu();
++    $items[$this->path]['description'] = 'Manage Reply bundles.';
++    return $items;
++  }
++}
+diff --git a/reply_bundle.entity.inc b/reply_bundle.entity.inc
+new file mode 100644
+index 0000000..18f32ce
+--- /dev/null
++++ b/reply_bundle.entity.inc
+@@ -0,0 +1,82 @@
++<?php
++/**
++ * @file
++ */
++
++/**
++ * Use a separate class for project types so we can specify some defaults
++ * modules may alter.
++ */
++class ReplyBundle extends Entity {
++
++  /**
++   * Machine name of the Reply bundle.
++   *
++   * @var string
++   */
++  public $bundle;
++
++  /**
++   * Human readable name of the Reply bundle.
++   *
++   * @var string
++   */
++  public $name;
++
++  /**
++   * Access to replies.
++   *
++   * @var int
++   */
++  public $access;
++
++  /**
++   * Display a flat or threaded list.
++   *
++   * @var int
++   */
++  public $display;
++
++  /**
++   * The description of this bundle.
++   *
++   * @var string
++   */
++  public $description;
++
++  /**
++   * Position of the reply form.
++   *
++   * @var int
++   */
++  public $form;
++
++  /**
++   * Allow replying on replies.
++   *
++   * @var string
++   */
++  public $allow_reply;
++
++  /**
++   * Project this bundle against any changes of settings or fields by locking
++   * it.
++   *
++   * @var int
++   */
++  public $locked;
++
++  public function __construct($values = array()) {
++    parent::__construct($values, 'reply_bundle');
++  }
++
++  /**
++   * Returns whether the reply bundle is locked, thus may not be deleted or renamed.
++   *
++   * Reply bundles provided in code are automatically treated as locked, as well
++   * as any fixed reply bundle.
++   */
++  public function isLocked() {
++    return $this->locked || (isset($this->status) && empty($this->is_new) && (($this->status & ENTITY_IN_CODE) || ($this->status & ENTITY_FIXED)));
++  }
++}
