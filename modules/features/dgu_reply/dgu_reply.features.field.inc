@@ -10,14 +10,14 @@
 function dgu_reply_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'reply-comment-field_comment'.
-  $fields['reply-comment-field_comment'] = array(
+  // Exported field: 'reply-comment-field_reply_comment'.
+  $fields['reply-comment-field_reply_comment'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_comment',
+      'field_name' => 'field_reply_comment',
       'foreign keys' => array(
         'format' => array(
           'columns' => array(
@@ -52,7 +52,7 @@ function dgu_reply_field_default_fields() {
         ),
       ),
       'entity_type' => 'reply',
-      'field_name' => 'field_comment',
+      'field_name' => 'field_reply_comment',
       'label' => 'Comment',
       'required' => 1,
       'settings' => array(
@@ -71,14 +71,14 @@ function dgu_reply_field_default_fields() {
     ),
   );
 
-  // Exported field: 'reply-comment-field_subject'.
-  $fields['reply-comment-field_subject'] = array(
+  // Exported field: 'reply-comment-field_reply_subject'.
+  $fields['reply-comment-field_reply_subject'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_subject',
+      'field_name' => 'field_reply_subject',
       'foreign keys' => array(
         'format' => array(
           'columns' => array(
@@ -115,7 +115,7 @@ function dgu_reply_field_default_fields() {
         ),
       ),
       'entity_type' => 'reply',
-      'field_name' => 'field_subject',
+      'field_name' => 'field_reply_subject',
       'label' => 'Subject',
       'required' => 0,
       'settings' => array(

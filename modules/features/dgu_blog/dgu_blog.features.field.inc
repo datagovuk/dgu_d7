@@ -79,7 +79,7 @@ function dgu_blog_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => -4,
+        'weight' => '-4',
       ),
     ),
   );
@@ -148,11 +148,11 @@ function dgu_blog_field_default_fields() {
             'public' => 'public',
           ),
           'allowed_types' => array(
-            'image' => 'image',
-            'video' => 0,
-            0 => 0,
             'audio' => 0,
             'document' => 0,
+            0 => 0,
+            'image' => 'image',
+            'video' => 0,
           ),
           'browser_plugins' => array(
             'media_default--media_browser_1' => 0,
@@ -470,7 +470,6 @@ function dgu_blog_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Audio');
-  t('Blog');
   t('Body');
   t('Category');
   t('Sector');
