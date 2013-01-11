@@ -302,6 +302,68 @@ function dgu_app_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-app-field_comment'.
+  $fields['node-app-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '-1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'app',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 12,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '-1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '32',
+      ),
+    ),
+  );
+
   // Exported field: 'node-app-field_developed_by'.
   $fields['node-app-field_developed_by'] = array(
     'field_config' => array(
@@ -872,6 +934,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
   t('App Link');
   t('App charge');
   t('Category');
+  t('Comments');
   t('Description');
   t('Developed by');
   t('Enter the URL of this app.');
