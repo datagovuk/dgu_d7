@@ -13,6 +13,126 @@ abstract class DGUNodeMigration extends DrupalNode6Migration {
 
 }
 
+class DGUCommentMigration extends DrupalMigration {
+	function __construct($arguments){
+		if (!empty($arguments['node_migration'])) {
+			$this->nodeMigration = $arguments['node_migration'];
+			$this->dependencies[] = $this->nodeMigration;
+		}
+		
+		if (!empty($arguments['user_migration'])) {
+			$user_migration = $arguments['user_migration'];
+			$this->dependencies[] = $user_migration;
+		}
+		parent::__construct($arguments);
+		$this->source = new MigrateSourceSQL($this->query(),  $this->sourceFields, NULL, $this->sourceOptions);
+		// we can create different destination reply bundle targets as required (e.g. CKAN Package Comment)
+		$this->destination = new MigrateDestinationReply('comment');
+		$this->map = new MigrateSQLMap($this->machineName,
+				array(
+						'id' => array('type' => 'int',
+								'unsigned' => TRUE,
+								'not null' => TRUE,
+								'description' => 'Source comment ID',
+								'alias' => 'r',
+						),
+				),
+				MigrateDestinationComment::getKeySchema()
+		);
+		
+		// Setup  mappings.
+		$this->addSimpleMappings(array('hostname', 'status', 'language'));
+
+		if (!empty($this->nodeMigration)) {
+			$this->addFieldMapping('nid', 'nid')
+			->sourceMigration($this->nodeMigration);
+		}
+		else {
+			$this->addFieldMapping('nid', 'nid');
+		}
+		
+		if (isset($arguments['default_uid'])) {
+			$default_uid = $arguments['default_uid'];
+		}
+		else {
+			$default_uid = 1;
+		}
+
+		if (isset($user_migration)) {
+			$this->addFieldMapping('uid', 'uid')
+			->sourceMigration($user_migration)
+			->defaultValue($default_uid);
+		}
+		else {
+			$this->addFieldMapping('uid')
+			->defaultValue($default_uid);
+		}		
+	}
+	
+	static public function getKeySchema() {
+		return array(
+				'id' => array(
+						'type' => 'int',
+						'unsigned' => TRUE,
+						'description' => 'ID of reply entity',
+				),
+		);
+	}
+
+	/**
+	 * Returns a list of fields available to be mapped for replies in a particlar bundle
+	 *
+	 * @param Migration $migration
+	 *  Optionally, the migration containing this destination.
+	 * @return array
+	 *  Keys: machine names of the fields (to be passed to addFieldMapping)
+	 *  Values: Human-friendly descriptions of the fields.
+	 */
+	public function fields($migration = NULL) {
+		$fields = array();
+		// First the core (reply table) fields
+		$fields['id'] = t('Reply Id');
+		$fields['bundle'] = t('Bundle that the reply belongs to.');
+		$fields['parent'] = t('The parent reply used for threading');
+		$fields['entity_id'] = t('The entity to which this reply relates');
+		$fields['entity_type'] = t('The entity type to which this reply relates');
+		$fields['uid'] = t('User Id who created this reply');
+		$fields['created'] = t('The date and time when the comment was created.');
+		$fields['changed'] = t('The date and time when the comment was last changed');
+		$fields['hostname'] = t('The hostname or IP address from which the reply was posted.');
+		$fields['status'] = t('Status of reply.');
+		$fields['language'] = t('Language of the reply.');
+		$fields['depth'] = t('Depth of reply in threaded replies.');
+		$fields['instance_id'] = t('Instance Id of the reply.');
+		$fields['position'] = t('Position of the reply in the thread.');
+		$fields['deleted'] = t('Deleted status of the reply');
+
+		// Then add in anything provided by handlers
+		$fields += migrate_handler_invoke_all('Entity', 'fields', $this->entityType, $this->bundle, $migration);
+		$fields += migrate_handler_invoke_all('Comment', 'fields', $this->entityType, $this->bundle, $migration);
+	
+		return $fields;
+	}	
+	
+}
+
+
+class MigrateDestinationReply extends MigrateDestinationEntity{
+	/**
+	 * Basic initialization
+	 *
+	 * @param string $bundle
+	 *  A.k.a. the content type (page, article, etc.) of the ... comment?.
+	 * @param array $options
+	 *  Options applied to comments.
+	 */
+	public function __construct($bundle, array $options = array()) {
+		parent::__construct('reply', $bundle, $options);
+	}
+	
+}
+
+
 class DGUAppMigration extends DGUNodeMigration {
   function __construct(array $arguments){
     parent::__construct($arguments);
