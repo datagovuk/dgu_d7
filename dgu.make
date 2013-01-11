@@ -38,7 +38,7 @@ projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditio
 projects[reply][type] = "module"
 projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
-projects[reply][download][branch] = "7.x-1.x"
+projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 
