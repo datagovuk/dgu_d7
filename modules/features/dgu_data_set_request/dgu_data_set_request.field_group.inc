@@ -50,10 +50,10 @@ function dgu_data_set_request_field_group_info() {
     'label' => '3. Have you faced challenges in accessing this data?',
     'weight' => '7',
     'children' => array(
-      0 => 'field_issue_type',
+      0 => 'field_barriers_attempted',
       1 => 'field_barriers_detail',
-      2 => 'field_barriers_attempted',
-      3 => 'field_barriers_reason',
+      2 => 'field_barriers_reason',
+      3 => 'field_issue_type',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -138,10 +138,10 @@ function dgu_data_set_request_field_group_info() {
     'label' => '1. Who are you?',
     'weight' => '5',
     'children' => array(
-      0 => 'field_submitter_name',
-      1 => 'field_submitter_email',
-      2 => 'field_organisation_type',
-      3 => 'field_organisation_name',
+      0 => 'field_organisation_name',
+      1 => 'field_organisation_type',
+      2 => 'field_submitter_email',
+      3 => 'field_submitter_name',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -168,8 +168,8 @@ function dgu_data_set_request_field_group_info() {
     'label' => '6. Are you able to provide estimates of the economic or financial benefit of data release?',
     'weight' => '10',
     'children' => array(
-      0 => 'field_provide_estimates',
-      1 => 'field_estimates_detail',
+      0 => 'field_estimates_detail',
+      1 => 'field_provide_estimates',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

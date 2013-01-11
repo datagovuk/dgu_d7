@@ -281,6 +281,68 @@ function dgu_data_set_request_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-dataset_request-field_comment'.
+  $fields['node-dataset_request-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '-1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dataset_request',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 24,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '-1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '32',
+      ),
+    ),
+  );
+
   // Exported field: 'node-dataset_request-field_data_holder'.
   $fields['node-dataset_request-field_data_holder'] = array(
     'field_config' => array(
@@ -1302,6 +1364,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   // Included for use with string extractors like potx.
   t('Are you able to provide estimates?');
   t('Benefits overview');
+  t('Comments');
   t('Data holder');
   t('Data set description');
   t('Data set link');
