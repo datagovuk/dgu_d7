@@ -216,6 +216,11 @@ function dgumigrate_register_migrations() {
   Migration::registerMigration('DGUFileMigration', $file_arguments['machine_name'], $file_arguments);
 
 
+  $comment_arguments = $common_arguments + array(
+  		'node_migration' => 'app',
+  		'user_migration' => 'User',
+  );
+  Migration::registerMigration('DGUCommentMigration', 'Comments', $comment_arguments);
 
   $menu_arguments = $common_arguments + array(
     'description' => t('Migration of menus from Drupal 6'),
