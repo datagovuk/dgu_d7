@@ -50,17 +50,22 @@ class DGUCommentMigration extends DrupalMigration {
 				),
 				MigrateDestinationComment::getKeySchema()
 		);
+		//hard coded to app.Needs to be parameterised
+		$instance = field_info_instance('node', 'field_comment', 'app');
 		
 		// Setup  mappings.
-		$this->addSimpleMappings(array('hostname', 'status', 'language'));
-		$this->addFieldMapping('entity_id', 'nid');
-		$this->addFieldMapping('instance_id', 'vid');
+		$this->addSimpleMappings(array('hostname'));
+		$this->addFieldMapping('status')->defaultValue(1);
+		$this->addFieldMapping('language')->defaultValue('en');
+		$this->addFieldMapping('entity_id', 'nid')->sourceMigration($this->nodeMigration)->defaultValue(0);
+		$this->addFieldMapping('instance_id')->defaultValue($instance['id']);
 		$this->addFieldMapping('parent', 'pid')->sourceMigration($arguments['machine_name'])->defaultValue(0);
 		$this->addFieldMapping('entity_type')->defaultValue('node');
 		$this->addFieldMapping('id')->defaultValue(0);
 		$this->addFieldMapping('position')->defaultValue(1);
-		
-		
+		$this->addFieldMapping('field_reply_subject', 'subject');
+		$this->addFieldMapping('field_reply_comment', 'comment');
+				
 		
 
 		if (!empty($this->nodeMigration)) {
@@ -273,6 +278,10 @@ class MigrateDestinationReply extends MigrateDestinationEntity{
 			$return = FALSE;
 		}
 		return $return;
+	}
+	
+	public function bulkRollback(array $ids){
+		
 	}
 	
 	
