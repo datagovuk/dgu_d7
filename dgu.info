@@ -58,4 +58,12 @@ dependencies[] = dgu_site_feature
 dependencies[] = field_group
 dependencies[] = diff
 
+dependencies[] = dgu_app
+dependencies[] = dgu_blog
+dependencies[] = dgu_data_set_request
+dependencies[] = dgu_idea
+dependencies[] = dgu_reply
+
+
+
 files[] = dgu.profile
