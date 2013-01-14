@@ -15,3 +15,10 @@ files[] = views/ckan_package_handler_delete_link_field.inc
 files[] = views/ckan_package_handler_edit_link_field.inc
 files[] = views/ckan_package_handler_ckan_package_operations_field.inc
 
+
+
+; Information added by drush on 2012-12-19
+version = "unknown"
+project = "dgu"
+datestamp = "1355927637"
+
