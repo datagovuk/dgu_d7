@@ -54,6 +54,7 @@ function dgumigrate_register_migrations() {
   $arguments = $common_arguments + array(
     'description' => t('Migration of users from Drupal 6'),
     'machine_name' => 'User',
+    'group' => 'User',
   );
 
   //Register User migration using the base class
@@ -108,6 +109,7 @@ function dgumigrate_register_migrations() {
   $common_vocabulary_arguments = $common_arguments + array(
     'class_name' => 'DrupalTerm6Migration',
     'soft_dependencies' => array('User'),
+    'group' => 'Taxonomy'
   );
 
   foreach ($vocabulary_arguments as $arguments) {
@@ -198,6 +200,7 @@ function dgumigrate_register_migrations() {
   $common_node_arguments = $common_arguments + array(
     'user_migration' => 'User',
     'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
+    'group' => 'Nodes'
   );
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
