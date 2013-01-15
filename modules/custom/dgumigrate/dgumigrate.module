@@ -140,6 +140,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'book',
 					'source_type' => 'book',
 					'destination_type' => 'book',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUBusLinkContractMigration',
@@ -147,6 +148,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'busnessLinkContract',
 					'source_type' => 'business_link_contract',
 					'destination_type' => 'business_link_contract',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUContentPromotionMigration',
@@ -154,6 +156,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'contentPromotion',
 					'source_type' => 'content_promotion',
 					'destination_type' => 'content_promotion',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUDataRequestMigration',
@@ -168,6 +171,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'forum',
 					'source_type' => 'forum',
 					'destination_type' => 'forum',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUIdeaMigration',
@@ -182,6 +186,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'organogram',
 					'source_type' => 'organogram',
 					'destination_type' => 'organogram',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUPageMigration',
@@ -189,6 +194,7 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'page',
 					'source_type' => 'page',
 					'destination_type' => 'page',
+					'ignore_comments' => TRUE,
 			),
 			array(
 					'class_name' => 'DGUStoryMigration',
@@ -196,12 +202,13 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'Page',
 					'source_type' => 'story',
 					'destination_type' => 'page',
+					'ignore_comments' => TRUE,
 			),
 	);
 	$common_node_arguments = $common_arguments + array(
 			'user_migration' => 'User',
 			'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
-			'group' => 'Nodes'
+			'group' => 'Nodes',
 	);
 	foreach ($node_arguments as $arguments) {
 		$arguments = array_merge_recursive($arguments, $common_node_arguments);
@@ -219,7 +226,6 @@ function dgumigrate_register_migrations() {
 
 
 	$comment_arguments = $common_arguments + array(
-			'node_migration' => 'app',
 			'user_migration' => 'User',
 			'destination_field' => 'field_comment',
 			'group' => 'Comments',
@@ -227,9 +233,12 @@ function dgumigrate_register_migrations() {
 	);
 	foreach ($node_arguments as $node_argument){
 		$arguments = array_merge($comment_arguments, array(
+				'node_migration' => $node_argument['machine_name'],
 				'source_type' => $node_argument['source_type'],
 				'destination_type' => $node_argument['destination_type'] ));
-		Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
+		if (!$node_argument['ignore_comments']){
+			Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
+		}
 	}
 
 
