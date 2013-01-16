@@ -45,7 +45,11 @@ projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bun
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
-projects[migrate][version] = "2.5"
+
+projects[migrate][type] = "module"
+projects[migrate][download][type] = "git"
+projects[migrate][download][url] = "http://git.drupal.org/project/migrate.git"
+projects[migrate][download][tag] = "7.x-2.5"
 projects[migrate][subdir] = "contrib"
 projects[migrate][patch][] = "http://drupal.org/files/pass_warn_on_overrides-3.patch"
 
