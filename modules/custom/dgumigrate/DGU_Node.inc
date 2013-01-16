@@ -17,6 +17,7 @@ class DGUCommentMigration extends CommentReplyMigration {
 		$this->addFieldMapping('field_reply_subject', 'subject');
 		$this->addFieldMapping('field_reply_comment', 'comment');
 	}
+	}
 }
 
 class DGUAppMigration extends DGUNodeMigration {
@@ -74,14 +75,6 @@ class DGUBookMigration extends DGUNodeMigration {
 
 }
 
-class DGUBusLinkContractMigration extends DGUNodeMigration {
-
-}
-
-class DGUContentPromotionMigration extends DGUNodeMigration {
-
-}
-
 class DGUDataRequestMigration extends DGUNodeMigration {
 	function __construct( array $arguments){
 		parent::__construct($arguments);
@@ -125,7 +118,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 				'body:format',
 				'field_category',
 
-		));
+		), NULL, FALSE);
 
 		//unmapped source fields:
 		$this->addUnmigratedSources(array(
@@ -140,7 +133,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 				'body:format',
 				'teaser',
 				'format',
-		));
+		), NULL, FALSE);
 	}
 
 
@@ -182,15 +175,15 @@ class DGUFileMigration extends DrupalFile6Migration {
 		parent::__construct($arguments);
 		$this->destination = new MigrateDestinationMedia('image');
 
-		$this->addFieldMapping('value', 'filepath')->callbacks(array($this, 'fixUri'));
-		$this->addFieldMapping('destination_file', 'filepath')->callbacks(array($this, 'fixUri'));
-		$this->addFieldMapping('timestamp', 'timestamp');
-		$this->addFieldMapping('uid')->defaultValue(1);
-		$this->addFieldMapping('source_dir')->defaultValue($arguments['source_dir']);
+		$this->addFieldMapping('value', 'filepath', FALSE)->callbacks(array($this, 'fixUri'));
+		$this->addFieldMapping('destination_file', 'filepath', FALSE)->callbacks(array($this, 'fixUri'));
+		$this->addFieldMapping('timestamp', 'timestamp', FALSE);
+		$this->addFieldMapping('uid', NULL, FALSE)->defaultValue(1);
+		$this->addFieldMapping('source_dir', NULL, FALSE)->defaultValue($arguments['source_dir']);
 
 		$this->addUnmigratedDestinations(array('field_image_description:format',
 				'field_image_description:language', 'destination_dir', 'destination_file',
-				'file_replace', 'preserve_files', 'timestamp'));
+				'file_replace', 'preserve_files', 'timestamp'), NULL, FALSE);
 		if (module_exists('path')) {
 			$this->addUnmigratedDestinations(array('path'));
 		}

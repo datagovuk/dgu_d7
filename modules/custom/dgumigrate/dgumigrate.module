@@ -43,6 +43,7 @@ function dgumigrate_migrate_api() {
  * Implements hook_flush_caches().
  */
 function dgumigrate_flush_caches() {
+  db_truncate('migrate_status');
 	dgumigrate_register_migrations();
 }
 
@@ -70,19 +71,13 @@ function dgumigrate_register_migrations() {
 					'destination_vocabulary' => 'category',
 			),
 			array(
-					'description' => t('Migration of Blog terms from Drupal 6'),
-					'machine_name' => 'blog',
-					'source_vocabulary' => '9',
-					'destination_vocabulary' => 'blog',
-			),
-			array(
 					'description' => t('Migration of Sector terms from Drupal 6'),
 					'machine_name' => 'sector',
 					'source_vocabulary' => '13',
 					'destination_vocabulary' => 'sector',
 			),
 			array(
-					'description' => t('Migration of Sector terms from Drupal 6'),
+					'description' => t('Migration of Document type terms from Drupal 6'),
 					'machine_name' => 'document_type',
 					'source_vocabulary' => '21',
 					'destination_vocabulary' => 'document_type',
@@ -92,12 +87,6 @@ function dgumigrate_register_migrations() {
 					'machine_name' => 'nation',
 					'source_vocabulary' => '8',
 					'destination_vocabulary' => 'nation',
-			),
-			array(
-					'description' => t('Migration of Public Body terms from Drupal 6'),
-					'machine_name' => 'public_body',
-					'source_vocabulary' => '7',
-					'destination_vocabulary' => 'public_body',
 			),
 			array(
 					'description' => t('Migration of Tags terms from Drupal 6'),
@@ -143,22 +132,6 @@ function dgumigrate_register_migrations() {
 					'ignore_comments' => TRUE,
 			),
 			array(
-					'class_name' => 'DGUBusLinkContractMigration',
-					'description' => t('Migration of business_link_contract nodes from Drupal 6'),
-					'machine_name' => 'busnessLinkContract',
-					'source_type' => 'business_link_contract',
-					'destination_type' => 'business_link_contract',
-					'ignore_comments' => TRUE,
-			),
-			array(
-					'class_name' => 'DGUContentPromotionMigration',
-					'description' => t('Migration of content_promotion nodes from Drupal 6'),
-					'machine_name' => 'contentPromotion',
-					'source_type' => 'content_promotion',
-					'destination_type' => 'content_promotion',
-					'ignore_comments' => TRUE,
-			),
-			array(
 					'class_name' => 'DGUDataRequestMigration',
 					'description' => t('Migration of Data request nodes from Drupal 6'),
 					'machine_name' => 'dataRequest',
@@ -191,7 +164,7 @@ function dgumigrate_register_migrations() {
 			array(
 					'class_name' => 'DGUPageMigration',
 					'description' => t('Migration of Page nodes from Drupal 6'),
-					'machine_name' => 'Page',
+					'machine_name' => 'page',
 					'source_type' => 'page',
 					'destination_type' => 'page',
 					'ignore_comments' => TRUE,
@@ -199,7 +172,7 @@ function dgumigrate_register_migrations() {
 			array(
 					'class_name' => 'DGUStoryMigration',
 					'description' => t('Migration of Story nodes from Drupal 6 to pages in Drupal 7'),
-					'machine_name' => 'Story',
+					'machine_name' => 'Page',
 					'source_type' => 'story',
 					'destination_type' => 'page',
 					'ignore_comments' => TRUE,
