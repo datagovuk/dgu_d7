@@ -79,7 +79,7 @@ function dgu_blog_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => -4,
+        'weight' => '-4',
       ),
     ),
   );
@@ -148,11 +148,11 @@ function dgu_blog_field_default_fields() {
             'public' => 'public',
           ),
           'allowed_types' => array(
-            'audio' => 0,
-            'document' => 0,
-            0 => 0,
             'image' => 'image',
             'video' => 0,
+            0 => 0,
+            'audio' => 0,
+            'document' => 0,
           ),
           'browser_plugins' => array(
             'media_default--media_browser_1' => 0,
@@ -235,6 +235,68 @@ function dgu_blog_field_default_fields() {
         'settings' => array(),
         'type' => 'options_select',
         'weight' => '-2',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-blog-field_comment'.
+  $fields['node-blog-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '-1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'blog',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 7,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '-1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '4',
       ),
     ),
   );
@@ -472,6 +534,7 @@ function dgu_blog_field_default_fields() {
   t('Audio');
   t('Body');
   t('Category');
+  t('Comments');
   t('Sector');
   t('Tags');
   t('Video');

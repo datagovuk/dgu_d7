@@ -1,40 +1,40 @@
 <?php
 
 abstract class DGUMigration extends DynamicMigration {
-  public function __construct() {
-    parent::__construct();
-  }
+	public function __construct() {
+		parent::__construct();
+	}
 }
 
 class DGUUserMigration extends DrupalUser6Migration {
-  function query() {
-    //select distinct u.* from users u left join node n on n.uid = u.uid where u.uid > 1 and u.login - u.created > 1 and n.nid is not null and n.type != 'profile';
-    $query = Database::getConnection('default', $this->sourceConnection)
-      ->select('users', 'u')
-      ->distinct(TRUE)
-      ->fields('u')
-      ->condition('u.uid', 1, '>')
-      ->condition('n.type', 'profile', '!=')
-      ->isNotNull('n.nid');
-      $query->leftJoin('node', 'n', 'n.uid = u.uid');
-    return $query;
-  }
+	function query() {
+		//select distinct u.* from users u left join node n on n.uid = u.uid where u.uid > 1 and u.login - u.created > 1 and n.nid is not null and n.type != 'profile';
+		$query = Database::getConnection('default', $this->sourceConnection)
+		->select('users', 'u')
+		->distinct(TRUE)
+		->fields('u')
+		->condition('u.uid', 1, '>')
+		->condition('n.type', 'profile', '!=')
+		->isNotNull('n.nid');
+		$query->leftJoin('node', 'n', 'n.uid = u.uid');
+		return $query;
+	}
 }
 
 function dgumigrate_migrate_api() {
-  $api = array(
-    'api' => 2,
-    /* Now handled in the d2d migration.
-    'migrations' => array(
-      'DGUCategory' => array('class_name' => 'DGUCategoryMigration'),
-      'DGUSector' => array('class_name' => 'DGUSectorMigration'),
-      'DGUDocType' => array('class_name' => 'DGUDocTypeMigration'),
-      'DGUNation' => array('class_name' => 'DGUNationMigration'),
-      'DGUPublicBody' => array('class_name' => 'DGUPublicBodyMigration'),
-      'DGUTags' => array('class_name' => 'DGUTagsMigration'),
-    ),*/
-  );
-  return $api;
+	$api = array(
+			'api' => 2,
+			/* Now handled in the d2d migration.
+			 'migrations' => array(
+			 		'DGUCategory' => array('class_name' => 'DGUCategoryMigration'),
+			 		'DGUSector' => array('class_name' => 'DGUSectorMigration'),
+			 		'DGUDocType' => array('class_name' => 'DGUDocTypeMigration'),
+			 		'DGUNation' => array('class_name' => 'DGUNationMigration'),
+			 		'DGUPublicBody' => array('class_name' => 'DGUPublicBodyMigration'),
+			 		'DGUTags' => array('class_name' => 'DGUTagsMigration'),
+			 ),*/
+	);
+	return $api;
 }
 
 
@@ -43,198 +43,218 @@ function dgumigrate_migrate_api() {
  * Implements hook_flush_caches().
  */
 function dgumigrate_flush_caches() {
- dgumigrate_register_migrations();
+	dgumigrate_register_migrations();
 }
 
 function dgumigrate_register_migrations() {
-  $common_arguments = array(
-    'source_connection' => 'd6source',
-    'source_version' => 6,
-  );
-  $arguments = $common_arguments + array(
-    'description' => t('Migration of users from Drupal 6'),
-    'machine_name' => 'User',
-    'group' => 'User',
-  );
 
-  //Register User migration using the base class
-  Migration::registerMigration('DGUUserMigration', $arguments['machine_name'], $arguments);
+	$common_arguments = array(
+			'source_connection' => 'd6source',
+			'source_version' => 6,
+	);
+	$arguments = $common_arguments + array(
+			'description' => t('Migration of users from Drupal 6'),
+			'machine_name' => 'User',
+			'group' => 'User',
+	);
 
-  //Define all taxonomy vocabularies to be migrated.
-  $vocabulary_arguments = array(
-    array(
-      'description' => t('Migration of Category terms from Drupal 6'),
-      'machine_name' => 'category',
-      'source_vocabulary' => '4',  
-      'destination_vocabulary' => 'category',
-    ),
-     array(
-      'description' => t('Migration of Blog terms from Drupal 6'),
-      'machine_name' => 'blog',
-      'source_vocabulary' => '9',  
-      'destination_vocabulary' => 'blog',
-    ),
-    array(
-      'description' => t('Migration of Sector terms from Drupal 6'),
-      'machine_name' => 'sector',
-      'source_vocabulary' => '13', 
-      'destination_vocabulary' => 'sector',
-    ),
-    array(
-      'description' => t('Migration of Sector terms from Drupal 6'),
-      'machine_name' => 'document_type',
-      'source_vocabulary' => '21', 
-      'destination_vocabulary' => 'document_type',
-    ),
-    array(
-      'description' => t('Migration of Nation terms from Drupal 6'),
-      'machine_name' => 'nation',
-      'source_vocabulary' => '8', 
-      'destination_vocabulary' => 'nation',
-    ),
-    array(
-      'description' => t('Migration of Public Body terms from Drupal 6'),
-      'machine_name' => 'public_body',
-      'source_vocabulary' => '7', 
-      'destination_vocabulary' => 'public_body',
-    ),
-    array(
-      'description' => t('Migration of Tags terms from Drupal 6'),
-      'machine_name' => 'tags',
-      'source_vocabulary' => '6', 
-      'destination_vocabulary' => 'tags',
-    ),
-  );
+	//Register User migration using the base class
+	Migration::registerMigration('DGUUserMigration', $arguments['machine_name'], $arguments);
 
-  $common_vocabulary_arguments = $common_arguments + array(
-    'class_name' => 'DrupalTerm6Migration',
-    'soft_dependencies' => array('User'),
-    'group' => 'Taxonomy'
-  );
+	//Define all taxonomy vocabularies to be migrated.
+	$vocabulary_arguments = array(
+			array(
+					'description' => t('Migration of Category terms from Drupal 6'),
+					'machine_name' => 'category',
+					'source_vocabulary' => '4',
+					'destination_vocabulary' => 'category',
+			),
+			array(
+					'description' => t('Migration of Blog terms from Drupal 6'),
+					'machine_name' => 'blog',
+					'source_vocabulary' => '9',
+					'destination_vocabulary' => 'blog',
+			),
+			array(
+					'description' => t('Migration of Sector terms from Drupal 6'),
+					'machine_name' => 'sector',
+					'source_vocabulary' => '13',
+					'destination_vocabulary' => 'sector',
+			),
+			array(
+					'description' => t('Migration of Sector terms from Drupal 6'),
+					'machine_name' => 'document_type',
+					'source_vocabulary' => '21',
+					'destination_vocabulary' => 'document_type',
+			),
+			array(
+					'description' => t('Migration of Nation terms from Drupal 6'),
+					'machine_name' => 'nation',
+					'source_vocabulary' => '8',
+					'destination_vocabulary' => 'nation',
+			),
+			array(
+					'description' => t('Migration of Public Body terms from Drupal 6'),
+					'machine_name' => 'public_body',
+					'source_vocabulary' => '7',
+					'destination_vocabulary' => 'public_body',
+			),
+			array(
+					'description' => t('Migration of Tags terms from Drupal 6'),
+					'machine_name' => 'tags',
+					'source_vocabulary' => '6',
+					'destination_vocabulary' => 'tags',
+			),
+	);
 
-  foreach ($vocabulary_arguments as $arguments) {
-    $arguments += $common_vocabulary_arguments;
-    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-                                 $arguments);
-  }
+	$common_vocabulary_arguments = $common_arguments + array(
+			'class_name' => 'DrupalTerm6Migration',
+			'soft_dependencies' => array('User'),
+			'group' => 'Taxonomy'
+	);
 
-  $node_arguments = array(
-   array(
-      'class_name' => 'DGUAppMigration',
-      'description' => t('Migration of app nodes from Drupal 6'),
-      'machine_name' => 'app',
-      'source_type' => 'Apps',
-      'destination_type' => 'app',
-    ),
-    array(
-      'class_name' => 'DGUBlogMigration',
-      'description' => t('Migration of blog nodes from Drupal 6'),
-      'machine_name' => 'blog_entry',
-      'source_type' => 'blog',
-      'destination_type' => 'blog',
-    ),
-    array(
-      'class_name' => 'DGUBookMigration',
-      'description' => t('Migration of book nodes from Drupal 6'),
-      'machine_name' => 'book',
-      'source_type' => 'book',
-      'destination_type' => 'book',
-    ),
-    array(
-      'class_name' => 'DGUBusLinkContractMigration',
-      'description' => t('Migration of business_link_contract nodes from Drupal 6'),
-      'machine_name' => 'busnessLinkContract',
-      'source_type' => 'business_link_contract',
-      'destination_type' => 'business_link_contract',
-    ),
-    array(
-      'class_name' => 'DGUContentPromotionMigration',
-      'description' => t('Migration of content_promotion nodes from Drupal 6'),
-      'machine_name' => 'contentPromotion',
-      'source_type' => 'content_promotion',
-      'destination_type' => 'content_promotion',
-    ),
-    array(
-      'class_name' => 'DGUDataRequestMigration',
-      'description' => t('Migration of Data request nodes from Drupal 6'),
-      'machine_name' => 'dataRequest',
-      'source_type' => 'data_request',
-      'destination_type' => 'dataset_request',
-    ),
-    array(
-      'class_name' => 'DGUForumMigration',
-      'description' => t('Migration of Forum nodes from Drupal 6'),
-      'machine_name' => 'forum',
-      'source_type' => 'forum',
-      'destination_type' => 'forum',
-    ),
-    array(
-      'class_name' => 'DGUIdeaMigration',
-      'description' => t('Migration of Ideas nodes from Drupal 6'),
-      'machine_name' => 'idea',
-      'source_type' => 'ideas',
-      'destination_type' => 'idea',
-    ),
-    array(
-      'class_name' => 'DGUOrganogramMigration',
-      'description' => t('Migration of Organogram nodes from Drupal 6'),
-      'machine_name' => 'organogram',
-      'source_type' => 'organogram',
-      'destination_type' => 'organogram',
-    ),
-    array(
-      'class_name' => 'DGUPageMigration',
-      'description' => t('Migration of Page nodes from Drupal 6'),
-      'machine_name' => 'page',
-      'source_type' => 'page',
-      'destination_type' => 'page',
-    ),
-    array(
-      'class_name' => 'DGUStoryMigration',
-      'description' => t('Migration of Story nodes from Drupal 6 to pages in Drupal 7'),
-      'machine_name' => 'Page',
-      'source_type' => 'story',
-      'destination_type' => 'page',
-    ),
-  );
-  $common_node_arguments = $common_arguments + array(
-    'user_migration' => 'User',
-    'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
-    'group' => 'Nodes'
-  );
-  foreach ($node_arguments as $arguments) {
-    $arguments = array_merge_recursive($arguments, $common_node_arguments);
-    Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
-                                 $arguments);
-  }
+	foreach ($vocabulary_arguments as $arguments) {
+		$arguments += $common_vocabulary_arguments;
+		Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+				$arguments);
+	}
 
-  $file_arguments = $common_arguments + array(
-    'description' => t('Migration of files from Drupal 6'),
-    'machine_name' => 'Files',
-    'source_dir' => variable_get("drupal6files"),
-  );
-  Migration::registerMigration('DGUFileMigration', $file_arguments['machine_name'], $file_arguments);
+	$node_arguments = array(
+			array(
+					'class_name' => 'DGUAppMigration',
+					'description' => t('Migration of app nodes from Drupal 6'),
+					'machine_name' => 'app',
+					'source_type' => 'Apps',
+					'destination_type' => 'app',
+			),
+			array(
+					'class_name' => 'DGUBlogMigration',
+					'description' => t('Migration of blog nodes from Drupal 6'),
+					'machine_name' => 'blog_entry',
+					'source_type' => 'blog',
+					'destination_type' => 'blog',
+			),
+			array(
+					'class_name' => 'DGUBookMigration',
+					'description' => t('Migration of book nodes from Drupal 6'),
+					'machine_name' => 'book',
+					'source_type' => 'book',
+					'destination_type' => 'book',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUBusLinkContractMigration',
+					'description' => t('Migration of business_link_contract nodes from Drupal 6'),
+					'machine_name' => 'busnessLinkContract',
+					'source_type' => 'business_link_contract',
+					'destination_type' => 'business_link_contract',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUContentPromotionMigration',
+					'description' => t('Migration of content_promotion nodes from Drupal 6'),
+					'machine_name' => 'contentPromotion',
+					'source_type' => 'content_promotion',
+					'destination_type' => 'content_promotion',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUDataRequestMigration',
+					'description' => t('Migration of Data request nodes from Drupal 6'),
+					'machine_name' => 'dataRequest',
+					'source_type' => 'data_request',
+					'destination_type' => 'dataset_request',
+			),
+			array(
+					'class_name' => 'DGUForumMigration',
+					'description' => t('Migration of Forum nodes from Drupal 6'),
+					'machine_name' => 'forum',
+					'source_type' => 'forum',
+					'destination_type' => 'forum',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUIdeaMigration',
+					'description' => t('Migration of Ideas nodes from Drupal 6'),
+					'machine_name' => 'idea',
+					'source_type' => 'ideas',
+					'destination_type' => 'idea',
+			),
+			array(
+					'class_name' => 'DGUOrganogramMigration',
+					'description' => t('Migration of Organogram nodes from Drupal 6'),
+					'machine_name' => 'organogram',
+					'source_type' => 'organogram',
+					'destination_type' => 'organogram',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUPageMigration',
+					'description' => t('Migration of Page nodes from Drupal 6'),
+					'machine_name' => 'page',
+					'source_type' => 'page',
+					'destination_type' => 'page',
+					'ignore_comments' => TRUE,
+			),
+			array(
+					'class_name' => 'DGUStoryMigration',
+					'description' => t('Migration of Story nodes from Drupal 6 to pages in Drupal 7'),
+					'machine_name' => 'Page',
+					'source_type' => 'story',
+					'destination_type' => 'page',
+					'ignore_comments' => TRUE,
+			),
+	);
+	$common_node_arguments = $common_arguments + array(
+			'user_migration' => 'User',
+			'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
+			'group' => 'Nodes',
+	);
+	foreach ($node_arguments as $arguments) {
+		$arguments = array_merge_recursive($arguments, $common_node_arguments);
+		Migration::registerMigration($arguments['class_name'], $arguments['machine_name'],
+				$arguments);
+	}
+
+	$file_arguments = $common_arguments + array(
+			'description' => t('Migration of files from Drupal 6'),
+			'machine_name' => 'Files',
+			'source_dir' => variable_get("drupal6files"),
+			'group' => 'Files',
+	);
+	Migration::registerMigration('DGUFileMigration', $file_arguments['machine_name'], $file_arguments);
 
 
-  $comment_arguments = $common_arguments + array(
-  		'node_migration' => 'app',
-  		'user_migration' => 'User',
-  );
-  Migration::registerMigration('DGUCommentMigration', 'Comments', $comment_arguments);
+	$comment_arguments = $common_arguments + array(
+			'user_migration' => 'User',
+			'destination_field' => 'field_comment',
+			'group' => 'Comments',
 
-  $menu_arguments = $common_arguments + array(
-    'description' => t('Migration of menus from Drupal 6'),
-    'machine_name' => 'Menu',
-  );
+	);
+	foreach ($node_arguments as $node_argument){
+		$arguments = array_merge($comment_arguments, array(
+				'node_migration' => $node_argument['machine_name'],
+				'source_type' => $node_argument['source_type'],
+				'destination_type' => $node_argument['destination_type'] ));
+		if (!$node_argument['ignore_comments']){
+			Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
+		}
+	}
 
-  Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'],
-                               $menu_arguments);
 
-  $menu_links_arguments = $common_arguments + array(
-    'description' => t('Migration of menu links from Drupal 6'),
-    'machine_name' => 'MenuLinks',
-    'menu_migration' => $menu_arguments['machine_name'],
-  );
-  Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'],
-                               $menu_links_arguments);
+	$menu_arguments = $common_arguments + array(
+			'description' => t('Migration of menus from Drupal 6'),
+			'machine_name' => 'Menu',
+	);
+
+	Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'],
+			$menu_arguments);
+
+	$menu_links_arguments = $common_arguments + array(
+			'description' => t('Migration of menu links from Drupal 6'),
+			'machine_name' => 'MenuLinks',
+			'menu_migration' => $menu_arguments['machine_name'],
+	);
+	Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'],
+			$menu_links_arguments);
 }
