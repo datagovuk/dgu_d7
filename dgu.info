@@ -17,6 +17,7 @@ dependencies[] = search
 dependencies[] = field_ui
 dependencies[] = file
 dependencies[] = overlay
+dependencies[] = rdf
 
 dependencies[] = admin_menu
 dependencies[] = features

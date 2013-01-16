@@ -47,6 +47,7 @@ projects[entityreference][subdir] = "contrib"
 
 projects[migrate][version] = "2.5"
 projects[migrate][subdir] = "contrib"
+projects[reply][patch][] = "http://drupal.org/files/pass_warn_on_overrides-3.patch"
 
 projects[migrate_extras][version] = "2.5"
 projects[migrate_extras][subdir] = "contrib"
