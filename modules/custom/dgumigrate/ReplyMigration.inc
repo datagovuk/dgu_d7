@@ -50,7 +50,7 @@ class CommentReplyMigration extends DrupalMigration {
 			$arguments['description'] = '';
 		}
 		if (!array_key_exists('reply_bundle', $arguments)){
-			$arguments['reply_bundle'] = 'comments';
+			$arguments['reply_bundle'] = 'comment';
 		}
 		parent::__construct($arguments);
 		$instance = field_info_instance('node', $arguments['destination_field'], $arguments['destination_type']);

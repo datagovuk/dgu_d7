@@ -228,7 +228,6 @@ function dgumigrate_register_migrations() {
 	$comment_arguments = $common_arguments + array(
 			'user_migration' => 'User',
 			'destination_field' => 'field_comment',
-			'reply_bundle' => 'Comments',
 			'group' => 'Comments',
 
 	);
