@@ -155,6 +155,68 @@ function dgu_idea_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-idea-field_comment'.
+  $fields['node-idea-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '-1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'idea',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 6,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '-1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '31',
+      ),
+    ),
+  );
+
   // Exported field: 'node-idea-field_sector'.
   $fields['node-idea-field_sector'] = array(
     'field_config' => array(
@@ -427,6 +489,7 @@ function dgu_idea_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Category');
+  t('Comments');
   t('Describe your idea');
   t('Sector');
   t('Submitter e-mail');

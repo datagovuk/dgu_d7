@@ -1,0 +1,14 @@
+name = DGU Reply
+description = Configuration of 'Reply' bundles
+core = 7.x
+package = DGU Features
+php = 5.2.4
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = field_sql_storage
+dependencies[] = reply
+dependencies[] = text
+features[features_api][] = api:1
+features[field][] = reply-comment-field_reply_comment
+features[field][] = reply-comment-field_reply_subject
+features[reply_bundle][] = comment
