@@ -94,6 +94,12 @@ function dgumigrate_register_migrations() {
 					'source_vocabulary' => '6',
 					'destination_vocabulary' => 'tags',
 			),
+			array(
+					'description' => t('Migration of Forums from Drupal 6'),
+					'machine_name' => 'forum',
+					'source_vocabulary' => '2',
+					'destination_vocabulary' => 'forums',
+			),
 	);
 
 	$common_vocabulary_arguments = $common_arguments + array(
@@ -141,9 +147,10 @@ function dgumigrate_register_migrations() {
 			array(
 					'class_name' => 'DGUForumMigration',
 					'description' => t('Migration of Forum nodes from Drupal 6'),
-					'machine_name' => 'forum',
+					'machine_name' => 'forum_topic',
 					'source_type' => 'forum',
 					'destination_type' => 'forum',
+					//These are actual comments, not reply comments.
 					'ignore_comments' => TRUE,
 			),
 			array(
@@ -213,6 +220,13 @@ function dgumigrate_register_migrations() {
 			Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
 		}
 	}
+	
+	$arguments = array_merge($comment_arguments, array(
+				'node_migration' => 'forum_topic',
+				'source_type' => 'forum',
+				'destination_type' => 'forum',
+		));
+	Migration::registerMigration('DrupalComment6Migration', 'forum_comments', $arguments);
 
 
 	$menu_arguments = $common_arguments + array(

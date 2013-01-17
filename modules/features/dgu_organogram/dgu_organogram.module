@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Organogram feature.
+ */
+
+include_once 'dgu_organogram.features.inc';

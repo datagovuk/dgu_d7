@@ -17,7 +17,6 @@ class DGUCommentMigration extends CommentReplyMigration {
 		$this->addFieldMapping('field_reply_subject', 'subject');
 		$this->addFieldMapping('field_reply_comment', 'comment');
 	}
-	}
 }
 
 class DGUAppMigration extends DGUNodeMigration {
@@ -140,6 +139,14 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 }
 
 class DGUForumMigration extends DGUNodeMigration {
+	function __construct(array $arguments){
+		parent::__construct($arguments);
+	
+		$this->addFieldMapping('taxonomy_forums', '2')->sourceMigration('forum')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
+		
+	}
 
 }
 
@@ -157,7 +164,13 @@ class DGUIdeaMigration extends DGUNodeMigration {
 }
 
 class DGUOrganogramMigration extends DGUNodeMigration {
-
+	function __construct(array $arguments) {
+		parent::__construct($arguments);
+		$this->addFieldMapping('field_endpoint', 'field_endpoint');
+		$this->addFieldMapping('field_parent_organogram', 'field_parent_org');
+		$this->addFieldMapping('field_endpoint:language')->defaultValue('en');
+	}
+	
 }
 
 class DGUPageMigration extends DGUNodeMigration {
