@@ -859,7 +859,14 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_uses_dataset',
-      'foreign keys' => array(),
+      'foreign keys' => array(
+        'ckan_package' => array(
+          'columns' => array(
+            'target_id' => 'ckan_id',
+          ),
+          'table' => 'ckan_package',
+        ),
+      ),
       'indexes' => array(
         'target_id' => array(
           0 => 'target_id',
