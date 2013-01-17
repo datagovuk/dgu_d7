@@ -288,7 +288,7 @@ function dgu_library_field_default_fields() {
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'media',
+        'module' => 'file',
         'settings' => array(
           'allowed_schemes' => array(
             'public' => 'public',
@@ -307,7 +307,7 @@ function dgu_library_field_default_fields() {
           ),
           'progress_indicator' => 'throbber',
         ),
-        'type' => 'media_generic',
+        'type' => 'file_generic',
         'weight' => '4',
       ),
     ),
