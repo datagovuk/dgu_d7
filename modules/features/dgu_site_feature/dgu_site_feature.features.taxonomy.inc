@@ -9,7 +9,7 @@
  */
 function dgu_site_feature_taxonomy_default_vocabularies() {
   return array(
-   'category' => array(
+    'category' => array(
       'name' => 'Categories',
       'machine_name' => 'category',
       'description' => NULL,
