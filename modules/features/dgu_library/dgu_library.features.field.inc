@@ -154,14 +154,14 @@ function dgu_library_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-resource-field_documnet_type'.
-  $fields['node-resource-field_documnet_type'] = array(
+  // Exported field: 'node-resource-field_document_type'.
+  $fields['node-resource-field_document_type'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_documnet_type',
+      'field_name' => 'field_document_type',
       'foreign keys' => array(
         'tid' => array(
           'columns' => array(
@@ -199,7 +199,7 @@ function dgu_library_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => 1,
+          'weight' => 6,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -209,8 +209,8 @@ function dgu_library_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_documnet_type',
-      'label' => 'Documnet Type',
+      'field_name' => 'field_document_type',
+      'label' => 'Document Type',
       'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
@@ -220,7 +220,7 @@ function dgu_library_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '-3',
+        'weight' => '5',
       ),
     ),
   );
@@ -463,7 +463,7 @@ function dgu_library_field_default_fields() {
   t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('Body');
   t('Category');
-  t('Documnet Type');
+  t('Document Type');
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit).');
   t('Resource File');
   t('Sector');
