@@ -172,6 +172,24 @@ class DGUOrganogramMigration extends DGUNodeMigration {
 	}
 	
 }
+ 
+class DGUResourceMigration extends DGUNodeMigration {
+
+	function __construct(array $arguments) {
+		parent::__construct($arguments);
+
+		$this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_document_type', '21')->sourceMigration('document_type')->arguments(array('source_type' => 'tid'));
+
+		$this->addFieldMapping('field_resource_file', 'field_resource_file')->sourceMigration('Files');
+		$this->addFieldMapping('field_resource_file:file_class')->defaultValue('MigrateFileFid');
+		$this->addFieldMapping('field_resource_file:source_dir')->defaultValue(variable_get("drupal6files"));
+
+
+	}
+}
 
 class DGUPageMigration extends DGUNodeMigration {
 

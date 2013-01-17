@@ -169,6 +169,14 @@ function dgumigrate_register_migrations() {
 					'ignore_comments' => TRUE,
 			),
 			array(
+					'class_name' => 'DGUResourceMigration',
+					'description' => t('Migration of Library Resources nodes from Drupal 6'),
+					'machine_name' => 'resource',
+					'source_type' => 'resource',
+					'destination_type' => 'resource',
+					'ignore_comments' => TRUE,
+			),
+			array(
 					'class_name' => 'DGUPageMigration',
 					'description' => t('Migration of Page nodes from Drupal 6'),
 					'machine_name' => 'page',
