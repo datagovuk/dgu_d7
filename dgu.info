@@ -66,6 +66,7 @@ dependencies[] = dgu_idea
 dependencies[] = dgu_reply
 dependencies[] = dgu_forum
 dependencies[] = dgu_organogram
+dependencies[] = dgu_library
 
 
 
