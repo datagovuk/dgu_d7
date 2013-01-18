@@ -13,4 +13,3 @@ function dgu_site_feature_ctools_plugin_api() {
     return array("version" => "1");
   }
 }
-

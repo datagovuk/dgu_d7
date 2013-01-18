@@ -35,11 +35,23 @@ projects[entity][version] = "1.0-rc3"
 projects[entity][subdir] = "contrib"
 projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditions-20.patch"
 
+projects[reply][type] = "module"
+projects[reply][download][type] = "git"
+projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
+projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
+projects[reply][subdir] = "contrib"
+projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
+
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
-projects[migrate][version] = "2.5"
+
+projects[migrate][type] = "module"
+projects[migrate][download][type] = "git"
+projects[migrate][download][url] = "http://git.drupal.org/project/migrate.git"
+projects[migrate][download][tag] = "7.x-2.5"
 projects[migrate][subdir] = "contrib"
+projects[migrate][patch][] = "http://drupal.org/files/pass_warn_on_overrides-3.patch"
 
 projects[migrate_extras][version] = "2.5"
 projects[migrate_extras][subdir] = "contrib"
@@ -78,7 +90,7 @@ projects[conditional_fields][subdir] = "contrib"
 ; --------
 projects[bootstrap][subdir] = "contrib"
 projects[bootstrap][version] = "2.0-beta2"
-  
+
 ; Libraries
 ; ---------
 libraries[jquery][download][type] = "file"

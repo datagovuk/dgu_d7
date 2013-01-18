@@ -1,0 +1,15 @@
+name = DGU Forum
+description = Forum setup for data.go.uk
+core = 7.x
+package = DGU Features
+php = 5.2.4
+version = 7.x-1.0
+project = dgu_forum
+dependencies[] = dgu_site_feature
+dependencies[] = features
+dependencies[] = forum
+dependencies[] = options
+dependencies[] = taxonomy
+features[features_api][] = api:1
+features[field][] = node-forum-field_category
+features[field][] = node-forum-field_sector
