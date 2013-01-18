@@ -98,8 +98,6 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 
 		$this->addFieldMapping('field_data_themes', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 
-
-
 		//unmapped dest fields:
 		$this->addUnmigratedDestinations(array(
 				'field_submitter_name:language',
@@ -111,13 +109,23 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 				'field_benefits_overview:language',
 				'field_estimates_detail:language',
 				'field_data_set_description:language',
-				'body',
-				'body:language',
-				'body:summary',
-				'body:format',
 				'field_category',
 
-		), NULL, FALSE);
+		));
+
+
+		$this->addFieldMapping('body', NULL, FALSE)->issueGroup('DNM');
+		$this->addFieldMapping('body:language', NULL, FALSE)->issueGroup('DNM');
+		$this->addFieldMapping('body:summary', NULL, FALSE)->issueGroup('DNM');
+		$this->addFieldMapping('body:format', NULL, FALSE)->issueGroup('DNM');
+
+		$this->addFieldMapping(NULL, 'body', FALSE);
+		$this->addFieldMapping(NULL, 'body:language', FALSE);
+		$this->addFieldMapping(NULL, 'body:summary', FALSE);
+		$this->addFieldMapping(NULL, 'body:format', FALSE);
+		$this->addFieldMapping(NULL, 'teaser', FALSE);
+		$this->addFieldMapping(NULL, 'format', FALSE);
+
 
 		//unmapped source fields:
 		$this->addUnmigratedSources(array(
@@ -126,13 +134,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 				'field_website',
 				'field_website:title',
 				'field_website:attributes',
-				'body',
-				'body:language',
-				'body:summary',
-				'body:format',
-				'teaser',
-				'format',
-		), NULL, FALSE);
+		));
 	}
 
 
@@ -220,9 +222,15 @@ class DGUFileMigration extends DrupalFile6Migration {
 		$this->addFieldMapping('uid', NULL, FALSE)->defaultValue(1);
 		$this->addFieldMapping('source_dir', NULL, FALSE)->defaultValue($arguments['source_dir']);
 
+		$this->addFieldMapping('destination_dir', NULL, FALSE);
+		$this->addFieldMapping('destination_file', NULL, FALSE);
+		$this->addFieldMapping('file_replace', NULL, FALSE);
+		$this->addFieldMapping('preserve_files', NULL, FALSE);
+		$this->addFieldMapping('timestamp', NULL, FALSE);
+
+
 		$this->addUnmigratedDestinations(array('field_image_description:format',
-				'field_image_description:language', 'destination_dir', 'destination_file',
-				'file_replace', 'preserve_files', 'timestamp'), NULL, FALSE);
+				'field_image_description:language'));
 		if (module_exists('path')) {
 			$this->addUnmigratedDestinations(array('path'));
 		}
