@@ -219,27 +219,47 @@ class DGUResourceMigration extends DGUNodeMigration {
 		));
 
 	}
+
 }
 
 class DGUPageMigration extends DGUNodeMigration {
 	function __construct(array $arguments) {
+		
+		$attachment_fields = array(
+  			'attachments_filename' => t('field_file_attachments'),
+		);
+		$this->sourceFields = array_merge($this->sourceFields, $attachment_fields);
 		parent::__construct($arguments);
-
+		
 		$this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
+		$this->addFieldMapping('field_file_attachments', 'field_file_attachments')->sourceMigration('Files');
+		$this->addFieldMapping('field_file_attachments:file_class')->defaultValue('MigrateFileFid');
+
 
 		$this->addUnmigratedDestinations(array(
 			'field_tags:source_type', 'field_tags:create_term', 'field_tags:ignore_case',
 			'field_category:source_type', 'field_category:create_term', 'field_category:ignore_case',
 			'field_sector:source_type', 'field_sector:create_term', 'field_sector:ignore_case',
-			'field_submitter_name:language', 'field_comment',
 		));
-
-
-
 	}
 
+	protected function query() {
+		$query = parent::query();
+		return $query;
+	}
+
+	public function prepareRow(&$current_row) {
+		parent::prepareRow($current_row);
+		$query = Database::getConnection('default', $this->sourceConnection)
+			->select('upload', 'up')->condition('up.vid', $current_row->vid, '=')
+			->fields('up', array('fid'));
+		$result = $query->execute();
+		foreach ($result as $row) {
+			$current_row->field_file_attachments[] = $row->fid;
+		}
+	}
 
 
 }
