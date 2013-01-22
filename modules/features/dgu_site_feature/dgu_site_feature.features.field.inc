@@ -154,6 +154,79 @@ function dgu_site_feature_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-page-field_file_attachments'.
+  $fields['node-page-field_file_attachments'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_file_attachments',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'page',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => 4,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_file_attachments',
+      'label' => 'File Attachments',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => '',
+        'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf',
+        'max_filesize' => '4M',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '3',
+      ),
+    ),
+  );
+
   // Exported field: 'node-page-field_sector'.
   $fields['node-page-field_sector'] = array(
     'field_config' => array(
@@ -303,6 +376,7 @@ function dgu_site_feature_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Body');
   t('Category');
+  t('File Attachments');
   t('Sector');
   t('Tags');
 
