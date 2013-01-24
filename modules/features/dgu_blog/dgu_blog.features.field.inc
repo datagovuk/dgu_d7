@@ -88,12 +88,12 @@ function dgu_blog_field_default_fields() {
   $fields['node-blog-field_audio'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_audio',
       'foreign keys' => array(
-        'file_managed' => array(
+        'fid' => array(
           'columns' => array(
             'fid' => 'fid',
           ),
@@ -106,10 +106,14 @@ function dgu_blog_field_default_fields() {
         ),
       ),
       'locked' => '0',
-      'module' => 'mediafield',
-      'settings' => array(),
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'public',
+      ),
       'translatable' => '0',
-      'type' => 'media',
+      'type' => 'file',
     ),
     'field_instance' => array(
       'bundle' => 'blog',
@@ -118,12 +122,10 @@ function dgu_blog_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'mediafield',
-          'settings' => array(
-            'file_view_mode' => 'default',
-          ),
-          'type' => 'media',
-          'weight' => 5,
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => 9,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -137,7 +139,10 @@ function dgu_blog_field_default_fields() {
       'label' => 'Audio',
       'required' => 0,
       'settings' => array(
+        'description_field' => 0,
+        'file_directory' => '',
         'file_extensions' => 'mp3 ogg oga ogv',
+        'max_filesize' => '',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
@@ -148,11 +153,10 @@ function dgu_blog_field_default_fields() {
             'public' => 'public',
           ),
           'allowed_types' => array(
-            'image' => 'image',
-            'video' => 0,
-            0 => 0,
             'audio' => 0,
             'document' => 0,
+            'image' => 'image',
+            'video' => 0,
           ),
           'browser_plugins' => array(
             'media_default--media_browser_1' => 0,
@@ -163,7 +167,7 @@ function dgu_blog_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'media_generic',
-        'weight' => '1',
+        'weight' => '6',
       ),
     ),
   );
@@ -450,12 +454,12 @@ function dgu_blog_field_default_fields() {
   $fields['node-blog-field_video'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_video',
       'foreign keys' => array(
-        'file_managed' => array(
+        'fid' => array(
           'columns' => array(
             'fid' => 'fid',
           ),
@@ -468,10 +472,14 @@ function dgu_blog_field_default_fields() {
         ),
       ),
       'locked' => '0',
-      'module' => 'mediafield',
-      'settings' => array(),
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'public',
+      ),
       'translatable' => '0',
-      'type' => 'media',
+      'type' => 'file',
     ),
     'field_instance' => array(
       'bundle' => 'blog',
@@ -480,12 +488,10 @@ function dgu_blog_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'mediafield',
-          'settings' => array(
-            'file_view_mode' => 'default',
-          ),
-          'type' => 'media',
-          'weight' => 6,
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => 8,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -499,7 +505,10 @@ function dgu_blog_field_default_fields() {
       'label' => 'Video',
       'required' => 0,
       'settings' => array(
+        'description_field' => 0,
+        'file_directory' => '',
         'file_extensions' => 'mov mp4 m4a m4v mpeg avi',
+        'max_filesize' => '',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
@@ -524,7 +533,7 @@ function dgu_blog_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'media_generic',
-        'weight' => '2',
+        'weight' => '5',
       ),
     ),
   );
