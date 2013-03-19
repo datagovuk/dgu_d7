@@ -254,7 +254,7 @@ function dgu_glossary_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'lexicon_page_per_letter';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['lexicon_page_per_letter'] = $strongarm;
 
   $strongarm = new stdClass();
