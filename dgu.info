@@ -50,6 +50,7 @@ dependencies[] = migrate_ui
 dependencies[] = migrate_d2d
 dependencies[] = migrate_extras
 dependencies[] = votingapi
+dependencies[] = vud
 dependencies[] = workbench
 dependencies[] = workbench_media
 dependencies[] = workbench_moderation
