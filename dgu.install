@@ -48,7 +48,7 @@ function dgu_install() {
 
   //enable themes
 	$themes = array(
-		'theme_default' => 'bootstrap',
+		'theme_default' => 'dguk',
 		'admin_theme' => 'seven'
 	);
   theme_enable($themes);
