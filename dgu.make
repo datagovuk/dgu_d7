@@ -86,9 +86,9 @@ projects[field_group][subdir] = "contrib"
 projects[conditional_fields][version] = "3.x-dev"
 projects[conditional_fields][subdir] = "contrib"
 
-projects[vud][type] = "module"
-projects[vud][version] = "1.0-alpha1"
-projects[vud][subdir] = "contrib"
+projects[vote_up_down][type] = "module"
+projects[vote_up_down][version] = "1.0-alpha1"
+projects[vote_up_down][subdir] = "contrib"
 
 ; Themes
 ; --------
