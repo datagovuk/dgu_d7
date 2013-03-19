@@ -568,69 +568,6 @@ function dgu_glossary_field_default_fields() {
     ),
   );
 
-  // Exported field: 'taxonomy_term-glossary-field_alternate_definitions'.
-  $fields['taxonomy_term-glossary-field_alternate_definitions'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '3',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_alternate_definitions',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'text_long',
-    ),
-    'field_instance' => array(
-      'bundle' => 'glossary',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(
-            'field_comments' => '',
-          ),
-          'type' => 'text_default',
-          'weight' => 3,
-        ),
-      ),
-      'entity_type' => 'taxonomy_term',
-      'field_name' => 'field_alternate_definitions',
-      'label' => 'alternate definitions',
-      'required' => 0,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'rows' => '5',
-        ),
-        'type' => 'text_textarea',
-        'weight' => '34',
-      ),
-    ),
-  );
-
   // Exported field: 'taxonomy_term-glossary-field_comments'.
   $fields['taxonomy_term-glossary-field_comments'] = array(
     'field_config' => array(
@@ -685,6 +622,126 @@ function dgu_glossary_field_default_fields() {
         'settings' => array(),
         'type' => 'reply',
         'weight' => '32',
+      ),
+    ),
+  );
+
+  // Exported field: 'taxonomy_term-glossary-field_endorse'.
+  $fields['taxonomy_term-glossary-field_endorse'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_endorse',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'vud_field',
+      'settings' => array(
+        'votingapi_tag' => 'vote',
+        'vud_widget' => 'updown',
+      ),
+      'translatable' => '0',
+      'type' => 'vud_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'glossary',
+      'default_value' => array(
+        0 => array(
+          'vud_widget' => 'updown',
+          'votingapi_tag' => 'vote',
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'vud_field',
+          'settings' => array(),
+          'type' => 'default',
+          'weight' => 4,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_endorse',
+      'label' => 'endorse',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+        'votingapi_tag' => 'vote',
+        'vud_widget' => 'alternate',
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'vud_field',
+        'settings' => array(),
+        'type' => 'vud_field_default_widget',
+        'weight' => '35',
+      ),
+    ),
+  );
+
+  // Exported field: 'taxonomy_term-glossary-field_quality'.
+  $fields['taxonomy_term-glossary-field_quality'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_quality',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'fivestar',
+      'settings' => array(
+        'axis' => 'vote',
+      ),
+      'translatable' => '0',
+      'type' => 'fivestar',
+    ),
+    'field_instance' => array(
+      'bundle' => 'glossary',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'fivestar',
+          'settings' => array(
+            'expose' => TRUE,
+            'style' => 'average',
+            'text' => 'average',
+            'widget' => array(
+              'fivestar_widget' => NULL,
+            ),
+          ),
+          'type' => 'fivestar_formatter_default',
+          'weight' => 3,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_quality',
+      'label' => 'Quality',
+      'required' => 0,
+      'settings' => array(
+        'allow_clear' => 0,
+        'stars' => '5',
+        'target' => 'none',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'fivestar',
+        'settings' => array(
+          'widget' => array(
+            'fivestar_widget' => 'default',
+          ),
+        ),
+        'type' => 'stars',
+        'weight' => '34',
       ),
     ),
   );
@@ -827,10 +884,11 @@ function dgu_glossary_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Audience');
   t('Benefits overview');
+  t('Quality');
   t('Term');
   t('Term name');
-  t('alternate definitions');
   t('comments');
+  t('endorse');
   t('related terms');
   t('source');
   t('suggested definition');

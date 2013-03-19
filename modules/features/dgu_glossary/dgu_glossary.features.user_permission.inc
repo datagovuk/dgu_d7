@@ -52,6 +52,16 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'workbench_moderation',
   );
 
+  // Exported permission: use vote up/down.
+  $permissions['use vote up/down'] = array(
+    'name' => 'use vote up/down',
+    'roles' => array(
+      0 => 'administrator',
+      1 => 'anonymous user',
+    ),
+    'module' => 'vud',
+  );
+
   // Exported permission: use workbench_moderation needs review tab.
   $permissions['use workbench_moderation needs review tab'] = array(
     'name' => 'use workbench_moderation needs review tab',
