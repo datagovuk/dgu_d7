@@ -19,5 +19,15 @@ function dgu_reply_default_reply_bundle() {
     "allow_reply" : "1",
     "locked" : "0"
   }');
+  $items['field_comment'] = entity_import('reply_bundle', '{
+    "bundle" : "field_comment",
+    "name" : "Field comment",
+    "access" : "2",
+    "display" : "2",
+    "description" : "Comments on fields used in consultation.",
+    "form" : "1",
+    "allow_reply" : "1",
+    "locked" : "0"
+  }');
   return $items;
 }
