@@ -1,0 +1,14 @@
+name = DGU Consultation
+description = Content types and functionality relating to Consultation on DGU
+core = 7.x
+package = DGU Features
+dependencies[] = features
+dependencies[] = field_replies
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:1
+features[field][] = node-book-body
+features[field][] = node-book-field_paragraph
+features[node][] = book
+features[variable][] = field_bundle_settings_node__book
+features[variable][] = node_options_book
