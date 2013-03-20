@@ -42,9 +42,10 @@ projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 
+projects[field_replies][subdir] = "contrib"
+
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
-
 
 projects[migrate][type] = "module"
 projects[migrate][download][type] = "git"
