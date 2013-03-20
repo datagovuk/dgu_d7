@@ -53,6 +53,7 @@ projects[migrate][download][url] = "http://git.drupal.org/project/migrate.git"
 projects[migrate][download][tag] = "7.x-2.5"
 projects[migrate][subdir] = "contrib"
 projects[migrate][patch][] = "http://drupal.org/files/pass_warn_on_overrides-3.patch"
+projects[migrate][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 
 projects[migrate_extras][version] = "2.5"
 projects[migrate_extras][subdir] = "contrib"
