@@ -9,17 +9,11 @@ projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
 projects[pathauto][subdir] = "contrib"
 
-
-
-
-
 projects[admin_menu][version] = "3.0-rc3"
 projects[admin_menu][subdir] = "contrib"
 
-projects[ctools][version] = "1.2"
 projects[ctools][subdir] = "contrib"
 
-projects[features][version] = "1.0"
 projects[features][subdir] = "contrib"
 
 projects[views][version] = "3.5"
