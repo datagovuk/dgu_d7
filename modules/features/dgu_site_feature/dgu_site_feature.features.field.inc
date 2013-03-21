@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * dgu_blog.features.field.inc
+ * dgu_site_feature.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function dgu_blog_field_default_fields() {
+function dgu_site_feature_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-blog-body'.
-  $fields['node-blog-body'] = array(
+  // Exported field: 'node-page-body'.
+  $fields['node-page-body'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
@@ -40,7 +40,7 @@ function dgu_blog_field_default_fields() {
       'type' => 'text_with_summary',
     ),
     'field_instance' => array(
-      'bundle' => 'blog',
+      'bundle' => 'page',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
@@ -65,17 +65,16 @@ function dgu_blog_field_default_fields() {
       'entity_type' => 'node',
       'field_name' => 'body',
       'label' => 'Body',
-      'required' => 0,
+      'required' => FALSE,
       'settings' => array(
-        'display_summary' => 1,
-        'text_processing' => '1',
+        'display_summary' => TRUE,
+        'text_processing' => 1,
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 1,
         'module' => 'text',
         'settings' => array(
-          'rows' => '20',
+          'rows' => 20,
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
@@ -84,96 +83,8 @@ function dgu_blog_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_audio'.
-  $fields['node-blog-field_audio'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_audio',
-      'foreign keys' => array(
-        'fid' => array(
-          'columns' => array(
-            'fid' => 'fid',
-          ),
-          'table' => 'file_managed',
-        ),
-      ),
-      'indexes' => array(
-        'fid' => array(
-          0 => 'fid',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'file',
-      'settings' => array(
-        'display_default' => 0,
-        'display_field' => 0,
-        'uri_scheme' => 'public',
-      ),
-      'translatable' => '0',
-      'type' => 'file',
-    ),
-    'field_instance' => array(
-      'bundle' => 'blog',
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'file',
-          'settings' => array(),
-          'type' => 'file_default',
-          'weight' => 9,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_audio',
-      'label' => 'Audio',
-      'required' => 0,
-      'settings' => array(
-        'description_field' => 0,
-        'file_directory' => '',
-        'file_extensions' => 'mp3 ogg oga ogv',
-        'max_filesize' => '',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'media',
-        'settings' => array(
-          'allowed_schemes' => array(
-            'public' => 'public',
-          ),
-          'allowed_types' => array(
-            'audio' => 0,
-            'document' => 0,
-            'image' => 'image',
-            'video' => 0,
-          ),
-          'browser_plugins' => array(
-            'media_default--media_browser_1' => 0,
-            'media_default--media_browser_my_files' => 0,
-            'media_internet' => 0,
-            'upload' => 0,
-          ),
-          'progress_indicator' => 'throbber',
-        ),
-        'type' => 'media_generic',
-        'weight' => '6',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-blog-field_category'.
-  $fields['node-blog-field_category'] = array(
+  // Exported field: 'node-page-field_category'.
+  $fields['node-page-field_category'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
@@ -207,7 +118,7 @@ function dgu_blog_field_default_fields() {
       'type' => 'taxonomy_term_reference',
     ),
     'field_instance' => array(
-      'bundle' => 'blog',
+      'bundle' => 'page',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
@@ -217,7 +128,7 @@ function dgu_blog_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => 2,
+          'weight' => 1,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -237,45 +148,54 @@ function dgu_blog_field_default_fields() {
         'active' => 1,
         'module' => 'options',
         'settings' => array(),
-        'type' => 'options_select',
+        'type' => 'options_buttons',
         'weight' => '-2',
       ),
     ),
   );
 
-  // Exported field: 'node-blog-field_comment'.
-  $fields['node-blog-field_comment'] = array(
+  // Exported field: 'node-page-field_file_attachments'.
+  $fields['node-page-field_file_attachments'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_comment',
-      'foreign keys' => array(),
-      'indexes' => array(),
+      'field_name' => 'field_file_attachments',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
       'locked' => '0',
-      'module' => 'reply',
+      'module' => 'file',
       'settings' => array(
-        'access' => '-1',
-        'allow_reply' => '-1',
-        'bundle' => 'comment',
-        'display' => '-1',
-        'form' => '-1',
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'public',
       ),
       'translatable' => '0',
-      'type' => 'reply',
+      'type' => 'file',
     ),
     'field_instance' => array(
-      'bundle' => 'blog',
+      'bundle' => 'page',
       'deleted' => '0',
       'description' => '',
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'reply',
+          'module' => 'file',
           'settings' => array(),
-          'type' => 'reply_default',
-          'weight' => 7,
+          'type' => 'file_default',
+          'weight' => 4,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -285,28 +205,30 @@ function dgu_blog_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_comment',
-      'label' => 'Comments',
+      'field_name' => 'field_file_attachments',
+      'label' => 'File Attachments',
       'required' => 0,
       'settings' => array(
-        'access' => '-1',
-        'allow_reply' => '-1',
-        'display' => '-1',
-        'form' => '-1',
+        'description_field' => 0,
+        'file_directory' => '',
+        'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf',
+        'max_filesize' => '4M',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 0,
-        'module' => 'reply',
-        'settings' => array(),
-        'type' => 'reply',
-        'weight' => '4',
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '3',
       ),
     ),
   );
 
-  // Exported field: 'node-blog-field_sector'.
-  $fields['node-blog-field_sector'] = array(
+  // Exported field: 'node-page-field_sector'.
+  $fields['node-page-field_sector'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
@@ -340,7 +262,7 @@ function dgu_blog_field_default_fields() {
       'type' => 'taxonomy_term_reference',
     ),
     'field_instance' => array(
-      'bundle' => 'blog',
+      'bundle' => 'page',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
@@ -350,7 +272,7 @@ function dgu_blog_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => 4,
+          'weight' => 2,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -376,8 +298,8 @@ function dgu_blog_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-blog-field_tags'.
-  $fields['node-blog-field_tags'] = array(
+  // Exported field: 'node-page-field_tags'.
+  $fields['node-page-field_tags'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
@@ -411,7 +333,7 @@ function dgu_blog_field_default_fields() {
       'type' => 'taxonomy_term_reference',
     ),
     'field_instance' => array(
-      'bundle' => 'blog',
+      'bundle' => 'page',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
@@ -445,108 +367,18 @@ function dgu_blog_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '-1',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-blog-field_video'.
-  $fields['node-blog-field_video'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_video',
-      'foreign keys' => array(
-        'fid' => array(
-          'columns' => array(
-            'fid' => 'fid',
-          ),
-          'table' => 'file_managed',
-        ),
-      ),
-      'indexes' => array(
-        'fid' => array(
-          0 => 'fid',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'file',
-      'settings' => array(
-        'display_default' => 0,
-        'display_field' => 0,
-        'uri_scheme' => 'public',
-      ),
-      'translatable' => '0',
-      'type' => 'file',
-    ),
-    'field_instance' => array(
-      'bundle' => 'blog',
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'file',
-          'settings' => array(),
-          'type' => 'file_default',
-          'weight' => 8,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_video',
-      'label' => 'Video',
-      'required' => 0,
-      'settings' => array(
-        'description_field' => 0,
-        'file_directory' => '',
-        'file_extensions' => 'mov mp4 m4a m4v mpeg avi',
-        'max_filesize' => '',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'media',
-        'settings' => array(
-          'allowed_schemes' => array(
-            'public' => 'public',
-          ),
-          'allowed_types' => array(
-            'audio' => 0,
-            'document' => 0,
-            'image' => 'image',
-            'video' => 0,
-          ),
-          'browser_plugins' => array(
-            'media_default--media_browser_1' => 0,
-            'media_default--media_browser_my_files' => 0,
-            'media_internet' => 0,
-            'upload' => 0,
-          ),
-          'progress_indicator' => 'throbber',
-        ),
-        'type' => 'media_generic',
-        'weight' => '5',
+        'weight' => '2',
       ),
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Audio');
   t('Body');
   t('Category');
-  t('Comments');
+  t('File Attachments');
   t('Sector');
   t('Tags');
-  t('Video');
 
   return $fields;
 }

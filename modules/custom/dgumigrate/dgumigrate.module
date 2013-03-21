@@ -94,6 +94,12 @@ function dgumigrate_register_migrations() {
 					'source_vocabulary' => '6',
 					'destination_vocabulary' => 'tags',
 			),
+			array(
+					'description' => t('Migration of Forums from Drupal 6'),
+					'machine_name' => 'forum',
+					'source_vocabulary' => '2',
+					'destination_vocabulary' => 'forums',
+			),
 	);
 
 	$common_vocabulary_arguments = $common_arguments + array(
@@ -141,9 +147,10 @@ function dgumigrate_register_migrations() {
 			array(
 					'class_name' => 'DGUForumMigration',
 					'description' => t('Migration of Forum nodes from Drupal 6'),
-					'machine_name' => 'forum',
+					'machine_name' => 'forum_topic',
 					'source_type' => 'forum',
 					'destination_type' => 'forum',
+					//These are actual comments, not reply comments.
 					'ignore_comments' => TRUE,
 			),
 			array(
@@ -162,6 +169,14 @@ function dgumigrate_register_migrations() {
 					'ignore_comments' => TRUE,
 			),
 			array(
+					'class_name' => 'DGUResourceMigration',
+					'description' => t('Migration of Library Resources nodes from Drupal 6'),
+					'machine_name' => 'resource',
+					'source_type' => 'resource',
+					'destination_type' => 'resource',
+					'ignore_comments' => TRUE,
+			),
+			array(
 					'class_name' => 'DGUPageMigration',
 					'description' => t('Migration of Page nodes from Drupal 6'),
 					'machine_name' => 'page',
@@ -172,7 +187,7 @@ function dgumigrate_register_migrations() {
 			array(
 					'class_name' => 'DGUStoryMigration',
 					'description' => t('Migration of Story nodes from Drupal 6 to pages in Drupal 7'),
-					'machine_name' => 'Page',
+					'machine_name' => 'story',
 					'source_type' => 'story',
 					'destination_type' => 'page',
 					'ignore_comments' => TRUE,
@@ -206,13 +221,22 @@ function dgumigrate_register_migrations() {
 	);
 	foreach ($node_arguments as $node_argument){
 		$arguments = array_merge($comment_arguments, array(
+				'description' => t('Migration of comments on ' . $node_argument['source_type'] . ' nodes from Drupal 6'),
 				'node_migration' => $node_argument['machine_name'],
 				'source_type' => $node_argument['source_type'],
 				'destination_type' => $node_argument['destination_type'] ));
-		if (!$node_argument['ignore_comments']){
+		if (array_key_exists('ignore_comments', $node_argument) && !$node_argument['ignore_comments']){
 			Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
 		}
 	}
+	
+	$arguments = array_merge($comment_arguments, array(
+				'description' => 'Forum comments migration from Drupal 6',
+				'node_migration' => 'forum_topic',
+				'source_type' => 'forum',
+				'destination_type' => 'forum',
+		));
+	Migration::registerMigration('DrupalComment6Migration', 'forum_comments', $arguments);
 
 
 	$menu_arguments = $common_arguments + array(
