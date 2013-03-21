@@ -29,7 +29,7 @@
 ?>
 <dt>
 <a id="<?php print $term->id; ?>"></a>
-  <a href="/taxonomy/term/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
+  <a href="/glossary/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
   <?php if (isset($term->extralinks)) : ?>
     <span class="lexicon-extralinks">
     <?php foreach ($term->extralinks as $link) : ?>
@@ -58,6 +58,7 @@
     <?php endforeach; ?>
   </p>
   <?php endif; ?>
+
   <?php if (isset($term->synonyms)) : ?>
   <p class="lexicon-synonyms">
     <?php print t('Synonyms') . ': '; ?>
@@ -66,5 +67,7 @@
     <?php endforeach; ?>
   </p>
   <?php endif; ?>
+  <?php //print_r($term) ?>
+  <?php //print theme_field($term->field_comments) ?>
   </dd>
 <?php endif; ?>

@@ -10,6 +10,16 @@
 function dgu_glossary_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: access lexicon.
+  $permissions['access lexicon'] = array(
+    'name' => 'access lexicon',
+    'roles' => array(
+      0 => 'administrator',
+      1 => 'anonymous user',
+    ),
+    'module' => 'lexicon',
+  );
+
   // Exported permission: delete any suggested_definition content.
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',

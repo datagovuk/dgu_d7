@@ -36,6 +36,7 @@ features[field][] = taxonomy_term-glossary-field_source
 features[node][] = suggested_definition
 features[node][] = suggested_term
 features[taxonomy][] = glossary
+features[user_permission][] = access lexicon
 features[user_permission][] = delete any suggested_definition content
 features[user_permission][] = delete any suggested_term content
 features[user_permission][] = edit any suggested_definition content
