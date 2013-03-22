@@ -260,15 +260,6 @@ function dgumigrate_register_migrations() {
 		}
 	}
 	
-	$arguments = array_merge($comment_arguments, array(
-				'description' => 'Forum comments migration from Drupal 6',
-				'node_migration' => 'forum_topic',
-				'source_type' => 'forum',
-				'destination_type' => 'forum',
-		));
-	Migration::registerMigration('DrupalComment6Migration', 'forum_comments', $arguments);
-
-
 	$menu_arguments = $common_arguments + array(
 			'description' => t('Migration of menus from Drupal 6'),
 			'machine_name' => 'Menu',
