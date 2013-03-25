@@ -255,7 +255,7 @@ function dgumigrate_register_migrations() {
 				'node_migration' => $node_argument['machine_name'],
 				'source_type' => $node_argument['source_type'],
 				'destination_type' => $node_argument['destination_type'] ));
-		if (array_key_exists('ignore_comments', $node_argument) && !$node_argument['ignore_comments']){
+		if (!array_key_exists('ignore_comments', $node_argument) || !$node_argument['ignore_comments']){
 			Migration::registerMigration('DGUCommentMigration', $node_argument['machine_name'] . '_comments', $arguments);
 		}
 	}
