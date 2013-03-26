@@ -34,7 +34,7 @@ class DGUBookCommentMigration extends CommentReplyMigration {
 			->fields('cf', array('nid', 'vid', 'field', 'delta'));
 		$result = $query->execute()->fetch();
     if($result) {
-      $current_row->comment_on_field = array('field' => $result->field, 'delta' => $result->delta);
+      $current_row->comment_on_field = array('field' => 'field_' . $result->field, 'delta' => $result->delta);
     }
 	}
 
