@@ -89,7 +89,7 @@ function dgu_consultation_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '-4',
+        'weight' => -4,
       ),
     ),
   );
@@ -201,7 +201,7 @@ function dgu_consultation_field_default_fields() {
           'settings' => array(
             'field_replies' => 1,
             'field_replies_settings' => array(
-              'field_replies_instance' => '57',
+              'field_replies_reply_field_name' => 'field_field_comments',
               'field_replies_revision' => 0,
             ),
           ),
