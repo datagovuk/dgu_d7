@@ -17,7 +17,8 @@ function dgu_reply_default_reply_bundle() {
     "description" : "",
     "form" : "2",
     "allow_reply" : "1",
-    "locked" : "0"
+    "locked" : "0",
+    "rdf_mapping" : []
   }');
   $items['field_comment'] = entity_import('reply_bundle', '{
     "bundle" : "field_comment",
@@ -27,7 +28,8 @@ function dgu_reply_default_reply_bundle() {
     "description" : "Comments on fields used in consultation.",
     "form" : "1",
     "allow_reply" : "1",
-    "locked" : "0"
+    "locked" : "0",
+    "rdf_mapping" : []
   }');
   return $items;
 }
