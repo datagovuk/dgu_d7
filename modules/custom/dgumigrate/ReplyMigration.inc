@@ -6,7 +6,7 @@ class CommentReplyMigration extends DrupalMigration {
 	/**
 	 * Contains the content type name for the legacy content type which comments were attached to. Used by
 	 * query() to limit the source data to only the content type we are interested in.
-	 * 
+	 *
 	 * @var String
 	 */
 	protected $source_type;
@@ -21,7 +21,7 @@ class CommentReplyMigration extends DrupalMigration {
 	 *  - destination_type: The name of the content type with which the imported reply should be linked.
 	 *  - reply_bundle: The bundle name to create reply enties with. This defalts to 'comments'
 	 *  - default_uid: user id to use if not specified.
-	 * 
+	 *
 	 * @param array $arguments
 	 * @throws MigrateException
 	 */
@@ -79,8 +79,6 @@ class CommentReplyMigration extends DrupalMigration {
 		$this->addFieldMapping('instance_id')->defaultValue($instance['id']);
 		$this->addFieldMapping('parent', 'pid')->sourceMigration($arguments['machine_name'])->defaultValue(0);
 		$this->addFieldMapping('entity_type')->defaultValue('node');
-		$this->addFieldMapping('id')->defaultValue(0);
-		$this->addFieldMapping('position')->defaultValue(1);
 
 		if (!empty($nodeMigration)) {
 			$this->addFieldMapping('nid', 'nid')
@@ -123,6 +121,7 @@ class CommentReplyMigration extends DrupalMigration {
 				'comment', 'hostname', 'timestamp', 'status', 'thread', 'name',
 				'mail', 'homepage', 'format'));
 		$query->fields('n', array('vid'));
+
 		if ($this->source_type){
 			$query->condition('type', $this->source_type, '=');
 		}
@@ -274,6 +273,13 @@ class MigrateDestinationReply extends MigrateDestinationEntity{
 		else {
 			$updating = FALSE;
 		}
+
+    if($reply->parent) {
+      $parent = reply_load($reply->parent);
+      $reply->depth = $parent->depth;
+      $reply->depth++;
+    }
+
 		migrate_instrument_start('reply_save');
 		reply_save($reply);
 		migrate_instrument_stop('reply_save');
