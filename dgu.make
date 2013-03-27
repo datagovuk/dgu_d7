@@ -40,6 +40,8 @@ projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"
 
+projects[field_replies][download][type] = "git"
+projects[field_replies][download][url] = "http://git.drupal.org/project/field_replies.git"
 projects[field_replies][subdir] = "contrib"
 
 projects[entityreference][version] = "1.0"
