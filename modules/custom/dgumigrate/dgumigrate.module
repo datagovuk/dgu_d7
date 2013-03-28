@@ -53,7 +53,7 @@ function dgumigrate_register_migrations() {
   );
   $arguments = $common_arguments + array(
       'description' => t('Migration of users from Drupal 6'),
-      'machine_name' => 'User',
+      'machine_name' => 'user',
       'group' => 'User',
   );
 
@@ -102,7 +102,7 @@ function dgumigrate_register_migrations() {
 
   $common_vocabulary_arguments = $common_arguments + array(
       'class_name' => 'DrupalTerm6Migration',
-      'soft_dependencies' => array('User'),
+      'soft_dependencies' => array('user'),
       'group' => 'Taxonomy'
   );
 
@@ -137,7 +137,7 @@ function dgumigrate_register_migrations() {
       array(
           'class_name' => 'DGUDataRequestMigration',
           'description' => t('Migration of Data request nodes from Drupal 6'),
-          'machine_name' => 'dataRequest',
+          'machine_name' => 'data_request',
           'source_type' => 'data_request',
           'destination_type' => 'dataset_request',
       ),
@@ -191,7 +191,7 @@ function dgumigrate_register_migrations() {
       ),
   );
   $common_node_arguments = $common_arguments + array(
-      'user_migration' => 'User',
+      'user_migration' => 'user',
       'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
       'group' => 'Nodes',
   );
@@ -202,7 +202,7 @@ function dgumigrate_register_migrations() {
 
   $file_arguments = $common_arguments + array(
       'description' => t('Migration of files from Drupal 6'),
-      'machine_name' => 'Files',
+      'machine_name' => 'files',
       'source_dir' => variable_get("drupal6files"),
       'group' => 'Files',
   );
@@ -210,7 +210,7 @@ function dgumigrate_register_migrations() {
 
 
   $comment_arguments = $common_arguments + array(
-      'user_migration' => 'User',
+      'user_migration' => 'user',
       'destination_field' => 'field_comment',
       'group' => 'Comments',
   );
@@ -243,14 +243,14 @@ function dgumigrate_register_migrations() {
 
   $menu_arguments = $common_arguments + array(
       'description' => t('Migration of menus from Drupal 6'),
-      'machine_name' => 'Menu',
+      'machine_name' => 'menu',
   );
 
   Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'], $menu_arguments);
 
   $menu_links_arguments = $common_arguments + array(
       'description' => t('Migration of menu links from Drupal 6'),
-      'machine_name' => 'MenuLinks',
+      'machine_name' => 'menu_links',
       'menu_migration' => $menu_arguments['machine_name'],
   );
   Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'], $menu_links_arguments);
