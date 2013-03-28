@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Consultation feature.
+ */
+
+include_once 'dgu_consultation.features.inc';
