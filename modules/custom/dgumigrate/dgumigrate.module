@@ -41,7 +41,7 @@ function dgumigrate_migrate_api() {
  * Implements hook_flush_caches().
  */
 function dgumigrate_flush_caches() {
-  db_truncate('migrate_status');
+  db_truncate('migrate_status')->execute();
   dgumigrate_register_migrations();
 }
 
