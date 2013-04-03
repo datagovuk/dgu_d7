@@ -10,14 +10,14 @@
 function dgu_glossary_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-suggested_definition-field_audience'.
-  $fields['node-suggested_definition-field_audience'] = array(
+  // Exported field: 'node-suggested_definition-field_reason_for_change'.
+  $fields['node-suggested_definition-field_reason_for_change'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_audience',
+      'field_name' => 'field_reason_for_change',
       'foreign keys' => array(
         'format' => array(
           'columns' => array(
@@ -41,16 +41,14 @@ function dgu_glossary_field_default_fields() {
       'bundle' => 'suggested_definition',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Briefly describe why you have suggested this change.',
       'display' => array(
         'default' => array(
           'label' => 'above',
           'module' => 'text',
-          'settings' => array(
-            'field_comments' => '',
-          ),
+          'settings' => array(),
           'type' => 'text_default',
-          'weight' => 2,
+          'weight' => 4,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -60,8 +58,8 @@ function dgu_glossary_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_audience',
-      'label' => 'Audience',
+      'field_name' => 'field_reason_for_change',
+      'label' => 'Reason for change',
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
@@ -74,76 +72,7 @@ function dgu_glossary_field_default_fields() {
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '4',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-suggested_definition-field_benefits_overview'.
-  $fields['node-suggested_definition-field_benefits_overview'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_benefits_overview',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'text_long',
-    ),
-    'field_instance' => array(
-      'bundle' => 'suggested_definition',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(
-            'field_comments' => '',
-          ),
-          'type' => 'text_default',
-          'weight' => 1,
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_benefits_overview',
-      'label' => 'Benefits overview',
-      'required' => 0,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'rows' => '5',
-        ),
-        'type' => 'text_textarea',
-        'weight' => '3',
+        'weight' => '31',
       ),
     ),
   );
@@ -253,7 +182,11 @@ function dgu_glossary_field_default_fields() {
     ),
     'field_instance' => array(
       'bundle' => 'suggested_definition',
-      'default_value' => NULL,
+      'default_value' => array(
+        0 => array(
+          'tid' => '8',
+        ),
+      ),
       'deleted' => '0',
       'description' => '',
       'display' => array(
@@ -290,14 +223,14 @@ function dgu_glossary_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-suggested_term-field_audience'.
-  $fields['node-suggested_term-field_audience'] = array(
+  // Exported field: 'node-suggested_term-field_reason_for_change'.
+  $fields['node-suggested_term-field_reason_for_change'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_audience',
+      'field_name' => 'field_reason_for_change',
       'foreign keys' => array(
         'format' => array(
           'columns' => array(
@@ -321,83 +254,12 @@ function dgu_glossary_field_default_fields() {
       'bundle' => 'suggested_term',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Briefly describe why you have suggested this change. If this term comes from an accredited glossary, you should cite it here.',
       'display' => array(
         'default' => array(
           'label' => 'above',
           'module' => 'text',
-          'settings' => array(
-            'field_comments' => '',
-          ),
-          'type' => 'text_default',
-          'weight' => 3,
-        ),
-        'teaser' => array(
-          'label' => 'above',
           'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_audience',
-      'label' => 'Audience',
-      'required' => 0,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'rows' => '5',
-        ),
-        'type' => 'text_textarea',
-        'weight' => '2',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-suggested_term-field_benefits_overview'.
-  $fields['node-suggested_term-field_benefits_overview'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_benefits_overview',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'text_long',
-    ),
-    'field_instance' => array(
-      'bundle' => 'suggested_term',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(
-            'field_comments' => '',
-          ),
           'type' => 'text_default',
           'weight' => 2,
         ),
@@ -409,8 +271,8 @@ function dgu_glossary_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_benefits_overview',
-      'label' => 'Benefits overview',
+      'field_name' => 'field_reason_for_change',
+      'label' => 'Reason for change',
       'required' => 0,
       'settings' => array(
         'text_processing' => '0',
@@ -423,7 +285,7 @@ function dgu_glossary_field_default_fields() {
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '0',
+        'weight' => '32',
       ),
     ),
   );
@@ -882,9 +744,10 @@ function dgu_glossary_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Audience');
-  t('Benefits overview');
+  t('Briefly describe why you have suggested this change.');
+  t('Briefly describe why you have suggested this change. If this term comes from an accredited glossary, you should cite it here.');
   t('Quality');
+  t('Reason for change');
   t('Term');
   t('Term name');
   t('comments');
