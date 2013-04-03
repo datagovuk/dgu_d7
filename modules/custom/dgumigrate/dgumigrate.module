@@ -60,9 +60,13 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
    	$this->addFieldMapping('description', 'Definition');
   }
 
+  public function prepareKey($source_key, $row) {
+  	$row->tid = $row->csvrownum;
+    return parent::prepareKey($source_key, $row);
+  }
+
   public function prepareRow($row) {
   		$row->tid = $row->csvrownum;
-  		error_log(print_r($row, true));
   		return TRUE;
   }
 }
