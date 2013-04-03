@@ -67,7 +67,9 @@
     <?php endforeach; ?>
   </p>
   <?php endif; ?>
-  <?php //print_r($term) ?>
   <?php //print theme_field($term->field_comments) ?>
   </dd>
+<?php endif; ?>
+<?php if ($count > 0) : ?>
+  <a href="/glossary/<?php print $term->tid?>"><?php print"$count comments" ?></a>
 <?php endif; ?>

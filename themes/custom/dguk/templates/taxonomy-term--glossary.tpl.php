@@ -39,11 +39,6 @@
  *
  * @ingroup themeable
  */
-
-$voc = taxonomy_vocabulary_load($term->vid);
-$lex =  _lexicon_overview($voc);//, $term->name[0]);
-$lexicon_overview = $lex['overview']['#lexicon_overview'];
-$lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
 ?>
 
 <?php print $lexicon_alphabar; ?>
@@ -59,4 +54,3 @@ $lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
     </div>
 
   </div>
-
