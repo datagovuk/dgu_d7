@@ -250,7 +250,7 @@ class DGUPageMigration extends DGUNodeMigration {
 		return $query;
 	}
 
-	public function prepareRow(&$current_row) {
+	public function prepareRow($current_row) {
 		parent::prepareRow($current_row);
 		$query = Database::getConnection('default', $this->sourceConnection)
 			->select('upload', 'up')->condition('up.vid', $current_row->vid, '=')
