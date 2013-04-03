@@ -5,6 +5,7 @@ core = 7.x
 dependencies[] = block
 dependencies[] = book
 dependencies[] = contextual
+dependencies[] = comment
 dependencies[] = help
 dependencies[] = image
 dependencies[] = list
@@ -31,6 +32,7 @@ dependencies[] = search
 dependencies[] = syslog
 dependencies[] = dgu
 dependencies[] = ckan_package
+
 dependencies[] = admin_devel
 dependencies[] = admin_menu_toolbar
 dependencies[] = email
@@ -54,19 +56,10 @@ dependencies[] = vud
 dependencies[] = workbench
 dependencies[] = workbench_media
 dependencies[] = workbench_moderation
-dependencies[] = dgu_site_feature
 dependencies[] = field_group
 dependencies[] = diff
 
-dependencies[] = dgu_app
-dependencies[] = dgu_blog
-dependencies[] = dgu_data_set_request
-dependencies[] = dgu_idea
-dependencies[] = dgu_reply
-dependencies[] = dgu_forum
-dependencies[] = dgu_organogram
-dependencies[] = dgu_library
-dependencies[] = dgu_glossary
+
 
 
 
