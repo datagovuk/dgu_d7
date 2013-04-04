@@ -72,8 +72,7 @@ class CommentReplyMigration extends DrupalMigration {
 				MigrateDestinationComment::getKeySchema()
 		);
 		// Setup  mappings.
-		$this->addSimpleMappings(array('hostname'));
-		$this->addFieldMapping('status')->defaultValue(1);
+		$this->addSimpleMappings(array('hostname', 'status'));
 		$this->addFieldMapping('language')->defaultValue('en');
 		$this->addFieldMapping('entity_id', 'nid')->sourceMigration($nodeMigration)->defaultValue(0);
 		$this->addFieldMapping('instance_id')->defaultValue($instance['id']);
@@ -203,6 +202,8 @@ class MigrateDestinationReply extends MigrateDestinationEntity{
 	 */
 	public function import(stdClass $reply, stdClass $row) {
 		$migration = Migration::currentMigration();
+    // In Drupal 6 status=0 means published, reply status=0 means unpublished
+    $reply->status = !$reply->status;
 		// Updating previously-migrated content?
 		if (isset($row->migrate_map_destid1)) {
 			if (isset($reply->id)) {
