@@ -129,8 +129,8 @@ class DGUBookMigration extends DGUNodeMigration {
     $query->join('book', 'b', 'n.nid = b.nid');
     $query->addField('b', 'bid', 'book_id');
     $query->join('menu_links', 'ml', 'b.mlid = ml.mlid');
+    $query->isNotNull('ml.mlid');
     $query->addField('ml', 'weight', 'book_weight');
-
     return $query;
   }
 
