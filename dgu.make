@@ -36,6 +36,7 @@ projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
+projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
 
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"

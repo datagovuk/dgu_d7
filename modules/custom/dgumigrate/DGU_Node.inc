@@ -26,6 +26,17 @@ class DGUBookCommentMigration extends CommentReplyMigration {
 		$this->addFieldMapping('field_reply_comment', 'comment');
 	}
 
+   /**
+   * Overrides parent query to remove corrupted books.
+   */
+  public function query() {
+    $query = parent::query();
+    $query->join('book', 'b', 'n.nid = b.nid');
+    $query->join('menu_links', 'ml', 'b.mlid = ml.mlid');
+    $query->isNotNull('ml.mlid');
+    return $query;
+  }
+
 	public function prepareRow($current_row) {
 		parent::prepareRow($current_row);
 		$query = Database::getConnection('default', $this->sourceConnection)
@@ -129,8 +140,8 @@ class DGUBookMigration extends DGUNodeMigration {
     $query->join('book', 'b', 'n.nid = b.nid');
     $query->addField('b', 'bid', 'book_id');
     $query->join('menu_links', 'ml', 'b.mlid = ml.mlid');
+    $query->isNotNull('ml.mlid');
     $query->addField('ml', 'weight', 'book_weight');
-
     return $query;
   }
 
