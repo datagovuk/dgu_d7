@@ -43,13 +43,33 @@ function dgu_glossary_menu(){
 		return $items;
 }
 
+function dgu_glossary_theme($existing, $type, $theme, $path){
+  error_log("registering glossary theme.");
+  return array(
+	'suggested_definition_list' => array(
+	  'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+	  'template' => 'glossary_suggested_list',
+      'variables' => array(
+      	'nids' => NULL, 
+      ),
+    ),
+	'suggested_definition_item' => array(
+	  'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+	  'template' => 'glossary_suggested_item',
+      'variables' => array(
+      	'node' => NULL, 
+      ),
+    ),
+  );
+}
+
 function dgu_glossary_suggest_definition_page($term){
 	global $user;
     $node = (object) array(
         'uid' => $user->uid,
         'name' => (isset($user->name) ? $user->name : ''),
         'type' => 'suggested_definition',
-        //'language' => LANGUAGE_NONE,
+        'language' => LANGUAGE_NONE,
     );
     drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
     $form_state['build_info']['args'] = array($node);
@@ -58,41 +78,33 @@ function dgu_glossary_suggest_definition_page($term){
 
 	$form['title']['#value'] = t('New suggested term for @term made by @user', 
 		array('@term' => $term->name, '@user' => $user->name));
-	
 	$form['field_term'][LANGUAGE_NONE]['#default_value'] =  array($term->tid);
 	$form['field_term'][LANGUAGE_NONE]['#value'] =  array($term->tid);
-
-	//$form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
-	//$form['#submit'] = array('dgu_glossary_suggested_definition_node_submit');
-	//dsm($form['field_term']);
-	//;
 
 	return $form;
 }
 
 function dgu_glossary_form_alter(&$form, &$form_state, $form_id) {
-	if($form_id == 'suggested_definition_node_form') {
+	if($form_id == 'suggested_definition_node_form' && arg(2) == 'suggest_definition') {
 		global $user;
 		$term = taxonomy_term_load(arg(1));
 		$form['field_term']['#type'] = 'hidden';
+		$form['field_term'][LANGUAGE_NONE]['#default_value'] =  array($term->tid);
+		$form['field_term'][LANGUAGE_NONE]['#value'] =  array($term->tid);
 		$form['title']['#type'] = 'hidden';
 		$form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
 		$form['#submit'] = array('dgu_glossary_suggested_definition_node_submit');
 	}
-	//dsm($form_state['node']);
 }
 
 function dgu_glossary_suggestion_validate($form, &$form_state) {
-
 	error_log("validate called");
-	//dsm($form_state['values'],true);
 }
 
 
 function dgu_glossary_suggested_definition_node_submit($form, &$form_state){
 	error_log('node_submit called');
 	$form_state['redirect'] = 'node/148';
-	dsm($form_state);
 }
 
 
@@ -109,16 +121,33 @@ function dgu_glossary_preprocess(&$variables, $hook){
 			$term = $variables['term'];
 			$voc = taxonomy_vocabulary_load($term->vid);
 			$term_path = $voc->machine_name . '/' . $variables['tid'];
-			error_log(print_r($voc, true));
 			$variables['content']['field_endorse']['#weight'] = 98;
+			$suggest_better_path = $term_path . '/suggest_definition';
+			$make_comment_path = $term_path . '/make_comment';
+			$button_link_options = array('attributes' => array('class' => array('button')));
+			
 			$variables['content']['suggest_def'] = array(
-				'#markup' => l(t('Suggest a better definition'), $term_path . '/suggest_definition'),
+				'#markup' => l(t('Suggest a better definition'), $suggest_better_path, $button_link_options),
 				'#weight' => 99,
 			);
 			$variables['content']['make_comment'] = array(
-				'#markup' => l(t('Make a comment'), $term_path . '/make_comment'),
+				'#markup' => l(t('Make a comment'), $make_comment_path, $button_link_options),
 				'#weight' => 100,
 			);
+			$variables['content']['endorse'] = array(
+				'#markup' => l(t('Endorse'), '#'),//$variables['link_up']),
+				'#weight' => 100
+			);
+			$variables['content']['further_info'] = array(
+				'#markup' => "<p>You can help us refine and improve the definition of the term: Aggregated data.  You can " .
+				  l(t('Suggest a better definition'), $suggest_better_path) . " or you can participate in the conversation and " .
+				  l(t('Make a comment'), $make_comment_path) . ".</p>",
+				'#weight' => 101,
+			);
+
+			$nids = glossary_get_suggested_defs($term);
+			error_log(print_r($nids, true));
+			$variables['suggested_definitions'] = theme('suggested_definition_list', array('nids' =>  $nids));
 			
 			$lex =  _lexicon_overview($voc);
 			$lexicon_overview = $lex['overview']['#lexicon_overview'];
@@ -130,8 +159,37 @@ function dgu_glossary_preprocess(&$variables, $hook){
 			break;
 	}
 	return;
-
 }
+
+
+function glossary_get_suggested_defs($term){
+	$query = new EntityFieldQuery();
+	$query->entityCondition('entity_type', 'node')
+		->entityCondition('bundle', 'suggested_definition')
+		->fieldCondition('field_term', 'tid', $term->tid);
+	$result = $query->execute();
+	$nids = array_keys($result['node']);
+	return $nids;
+}
+
+function template_preprocess_suggested_definition_item(&$variables){
+	error_log('calling preprocess suggested_definitionsitem');
+	$node = $variables['node'];
+	$variables['suggested_definition'] = field_view_field('node', $node, 'field_suggested_definition');
+	$variables['comments'] = field_view_field('node', $node, 'field_comment');	
+}
+
+function template_preprocess_suggested_definition_list(&$variables){
+	error_log('calling preprocess suggested_definitionslist');
+	$defs = array();
+	$nids = $variables['nids'];
+	foreach ($nids as $nid) {
+		$node = node_load($nid);
+		$defs[] = theme('suggested_definition_item', array('node' => $node));
+	}
+	$variables['suggested_definitions'] = $defs;	
+}
+
 
 
 /**
@@ -162,15 +220,13 @@ function glossary_term_page($term) {
 	$breadcrumb[] = l(t('Home'), NULL);
 	$breadcrumb = array_reverse($breadcrumb);
 	drupal_set_breadcrumb($breadcrumb);
-	drupal_add_feed('taxonomy/term/' . $term->tid . '/feed', 'RSS - ' . $term->name);
+	drupal_add_feed('glossary/' . $term->tid . '/feed', 'RSS - ' . $term->name);
 
 	// Set the term path as the canonical URL to prevent duplicate content.
 	$uri = entity_uri('taxonomy_term', $term);
 	drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url($uri['path'], $uri['options'])), TRUE);
 	// Set the non-aliased path as a default shortlink.
 	drupal_add_html_head_link(array('rel' => 'shortlink', 'href' => url($uri['path'], array_merge($uri['options'], array('alias' => TRUE)))), TRUE);
-
-	//dsm(print_r(node_load(1),true));
 
 	// Normally we would call taxonomy_term_show() here, but for backwards
 	// compatibility in Drupal 7 we do not want to do that (it produces different
