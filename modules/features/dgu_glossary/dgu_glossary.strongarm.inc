@@ -56,7 +56,7 @@ function dgu_glossary_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_form_location_suggested_definition';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['comment_form_location_suggested_definition'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -84,7 +84,7 @@ function dgu_glossary_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_subject_field_suggested_definition';
-  $strongarm->value = 1;
+  $strongarm->value = 0;
   $export['comment_subject_field_suggested_definition'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -98,7 +98,7 @@ function dgu_glossary_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_suggested_definition';
-  $strongarm->value = '2';
+  $strongarm->value = '0';
   $export['comment_suggested_definition'] = $strongarm;
 
   $strongarm = new stdClass();

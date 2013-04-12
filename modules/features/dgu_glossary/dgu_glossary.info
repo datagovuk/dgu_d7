@@ -21,6 +21,7 @@ dependencies[] = vud_field
 dependencies[] = workbench_moderation
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
+features[field][] = node-suggested_definition-field_comment
 features[field][] = node-suggested_definition-field_reason_for_change
 features[field][] = node-suggested_definition-field_suggested_definition
 features[field][] = node-suggested_definition-field_term
