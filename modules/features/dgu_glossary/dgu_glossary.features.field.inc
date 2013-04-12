@@ -10,6 +10,68 @@
 function dgu_glossary_field_default_fields() {
   $fields = array();
 
+  // Exported field: 'node-suggested_definition-field_comment'.
+  $fields['node-suggested_definition-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '-1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'suggested_definition',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 5,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '-1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '33',
+      ),
+    ),
+  );
+
   // Exported field: 'node-suggested_definition-field_reason_for_change'.
   $fields['node-suggested_definition-field_reason_for_change'] = array(
     'field_config' => array(
@@ -746,6 +808,7 @@ function dgu_glossary_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Briefly describe why you have suggested this change.');
   t('Briefly describe why you have suggested this change. If this term comes from an accredited glossary, you should cite it here.');
+  t('Comments');
   t('Quality');
   t('Reason for change');
   t('Term');
