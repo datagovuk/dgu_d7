@@ -73,15 +73,8 @@ function dgu_consultation_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'reply',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_instance' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'reply_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'teaser' => array(
