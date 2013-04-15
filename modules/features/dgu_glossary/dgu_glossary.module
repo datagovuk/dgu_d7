@@ -146,7 +146,9 @@ function dgu_glossary_suggestion_validate($form, &$form_state)
 function dgu_glossary_suggested_definition_node_submit($form, &$form_state)
 {
     error_log('node_submit called');
-    $form_state['redirect'] = 'node/148';
+    $tid = $form['field_term'][LANGUAGE_NONE]['#value'][0];
+    $url = "/glossary/$tid/thanks";
+    drupal_goto($url);
 }
 
 function dgu_glossary_template_preprocess_taxonomy_term(&$variables)
@@ -176,6 +178,8 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     //quite work, look into that first.
     $theme_registry['lexicon_overview_item']['template'] = 'lexicon-overview-item';
     $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
+    $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
+    $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
 }
 
 /**
