@@ -172,8 +172,10 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     foreach ($hooks as $hook) {
         _dgu_glossary_insert_after_first_element($theme_registry[$hook]['theme paths'], $module_path);
     }
+    //Note that lexicon sets the theme path to the module's folder - if things don't
+    //quite work, look into that first.
     $theme_registry['lexicon_overview_item']['template'] = 'lexicon-overview-item';
-    $theme_registry['lexicon_overview_item']['path'][] = $module_path . "/templates";
+    $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
 }
 
 /**
