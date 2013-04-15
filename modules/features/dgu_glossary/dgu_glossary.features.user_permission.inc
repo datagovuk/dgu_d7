@@ -34,6 +34,15 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: delete terms in 2.
+  $permissions['delete terms in 2'] = array(
+    'name' => 'delete terms in 2',
+    'roles' => array(
+      0 => 'Glossary moderator',
+    ),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: edit any suggested_definition content.
   $permissions['edit any suggested_definition content'] = array(
     'name' => 'edit any suggested_definition content',
@@ -50,6 +59,15 @@ function dgu_glossary_user_default_permissions() {
       0 => 'Glossary moderator',
     ),
     'module' => 'node',
+  );
+
+  // Exported permission: edit terms in 2.
+  $permissions['edit terms in 2'] = array(
+    'name' => 'edit terms in 2',
+    'roles' => array(
+      0 => 'Glossary moderator',
+    ),
+    'module' => 'taxonomy',
   );
 
   // Exported permission: moderate content from needs_review to published.

@@ -595,7 +595,7 @@ function dgu_glossary_field_default_fields() {
       'settings' => array(
         'user_register_form' => FALSE,
         'votingapi_tag' => 'vote',
-        'vud_widget' => 'alternate',
+        'vud_widget' => 'endorse',
       ),
       'widget' => array(
         'active' => 0,
