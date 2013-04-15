@@ -32,7 +32,7 @@ function dgu_glossary_menu()
                 'access arguments' => array('create content'),
 
             );
-            $items[$term_path . '/thank_you'] = array(
+            $items[$term_path . '/thanks'] = array(
                 'title' => 'Thank you for your suggestion',
                 'page callback' => 'dgu_glossary_suggest_definition_thanks_page',
                 'page arguments' => array(1),
@@ -161,11 +161,12 @@ function dgu_glossary_template_preprocess_taxonomy_term(&$variables)
  * @param $theme_registry - theme registry passed in to be modified.
  *
  */
-function dgu_glossary_theme_registry_alter(&$theme_registry) {
+function dgu_glossary_theme_registry_alter(&$theme_registry)
+{
     global $theme;
     $module_path = drupal_get_path('module', 'dgu_glossary');
     $theme_registry_copy = $theme_registry;
-    _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path."/templates");
+    _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path . "/templates");
     $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
     $hooks = array('node');
     foreach ($hooks as $hook) {
@@ -178,8 +179,9 @@ function dgu_glossary_theme_registry_alter(&$theme_registry) {
 /**
  * Helper function for re-ordering arrays (needed by theme_registry_alter)
  */
-function _dgu_glossary_insert_after_first_element(&$a, $element) {
-    if(is_array($a)) {
+function _dgu_glossary_insert_after_first_element(&$a, $element)
+{
+    if (is_array($a)) {
         $first_element = array_shift($a);
         array_unshift($a, $first_element, $element);
     }
@@ -194,7 +196,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
             $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
-            $variables['directory'] ='profile/dgu/modules/features/dgu_glossary';
+            $variables['directory'] = 'profile/dgu/modules/features/dgu_glossary';
             break;
         case 'taxonomy_term':
             $term = $variables['term'];
@@ -202,7 +204,13 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $term_path = $voc->machine_name . '/' . $variables['tid'];
             $variables['content']['field_endorse']['#weight'] = 98;
             $suggest_better_path = $term_path . '/suggest_definition';
-            $make_comment_path = $term_path . '/make_comment';
+
+            // We need the instance id of the comments field on the glossary definition
+            // in order to properly build a reply add link
+            list(, , $bundle) = entity_extract_ids('taxonomy_term', $term);
+            $instances = field_info_instances('taxonomy_term', $bundle, null);
+            $instance = $instances['field_comments'];
+            $make_comment_path = 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $button_link_options = array('attributes' => array('class' => array('button')));
 
             $variables['content']['suggest_def'] = array(
@@ -228,6 +236,12 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $lexicon_overview = $lex['overview']['#lexicon_overview'];
             $lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
             $variables['lexicon_alphabar'] = $lexicon_alphabar;
+
+            //hide comments so we can display it separately
+            $variables['comments'] = $variables['content']['field_comments'];
+            unset($variables['content']['field_comments']);
+
+            //$variables['comments'] = field_view_field('taxonomy_term', $term, 'field_comments');
             break;
         default:
             # code...
