@@ -154,6 +154,35 @@ function dgu_glossary_template_preprocess_taxonomy_term(&$variables)
     error_log(print_r($variables, true));
 }
 
+/**
+ * Implement hook_theme_registry_alter to allow the theme files for the glossary to reside in
+ * the templates directory of the module.
+ *
+ * @param $theme_registry - theme registry passed in to be modified.
+ *
+ */
+function dgu_glossary_theme_registry_alter(&$theme_registry) {
+    global $theme;
+    $module_path = drupal_get_path('module', 'dgu_glossary');
+    $theme_registry_copy = $theme_registry;
+    _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path."/templates");
+    $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
+    $hooks = array('node');
+    foreach ($hooks as $hook) {
+        _dgu_glossary_insert_after_first_element($theme_registry[$hook]['theme paths'], $module_path);
+    }
+}
+
+/**
+ * Helper function for re-ordering arrays (needed by theme_registry_alter)
+ */
+function _dgu_glossary_insert_after_first_element(&$a, $element) {
+    if(is_array($a)) {
+        $first_element = array_shift($a);
+        array_unshift($a, $first_element, $element);
+    }
+}
+
 function dgu_glossary_preprocess(&$variables, $hook)
 {
     //error_log(print_r($hook, true));
@@ -163,6 +192,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
             $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
+            $variables['theme_hook_suggestions'][] = drupal_get_path('module', 'dgu_glossary') . "/templates/glossary-term-page.tpl.php";
             break;
         case 'taxonomy_term':
             $term = $variables['term'];

@@ -53,6 +53,10 @@
       <?php print render($content); ?>
     </div>
 
+    <div class="source">
+      <?php print render($source); ?>
+    </div>
+
     <div class="suggested-definitions">
       <?php print $suggested_definitions; ?>
     </div>
