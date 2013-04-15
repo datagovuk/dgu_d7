@@ -20,6 +20,16 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'lexicon',
   );
 
+  // Exported permission: access user profiles.
+  $permissions['access user profiles'] = array(
+    'name' => 'access user profiles',
+    'roles' => array(
+      0 => 'Glossary moderator',
+      1 => 'administrator',
+    ),
+    'module' => 'user',
+  );
+
   // Exported permission: delete any suggested_definition content.
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',
