@@ -171,6 +171,8 @@ function dgu_glossary_theme_registry_alter(&$theme_registry) {
     foreach ($hooks as $hook) {
         _dgu_glossary_insert_after_first_element($theme_registry[$hook]['theme paths'], $module_path);
     }
+    $theme_registry['lexicon_overview_item']['template'] = 'lexicon-overview-item';
+    $theme_registry['lexicon_overview_item']['path'][] = $module_path . "/templates";
 }
 
 /**
@@ -192,7 +194,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
             $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
-            $variables['theme_hook_suggestions'][] = drupal_get_path('module', 'dgu_glossary') . "/templates/glossary-term-page.tpl.php";
+            $variables['directory'] ='profile/dgu/modules/features/dgu_glossary';
             break;
         case 'taxonomy_term':
             $term = $variables['term'];
