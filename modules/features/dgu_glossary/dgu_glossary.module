@@ -22,7 +22,7 @@ function dgu_glossary_menu()
                 'title' => 'Suggest a better definition',
                 'page callback' => 'dgu_glossary_suggest_definition_page',
                 'page arguments' => array(1),
-                'access arguments' => array('create content'),
+                'access arguments' => array('suggest new definitions'),
 
             );
             $items[$term_path . '/make_comment'] = array(
@@ -36,7 +36,7 @@ function dgu_glossary_menu()
                 'title' => 'Thank you for your suggestion',
                 'page callback' => 'dgu_glossary_suggest_definition_thanks_page',
                 'page arguments' => array(1),
-                'access arguments' => array('create content'),
+                'access arguments' => array('suggest new definitions'),
 
             );
             $items[$term_path] = array(
@@ -46,6 +46,17 @@ function dgu_glossary_menu()
                 'access arguments' => array('access content'),
             );
         }
+        $items[$lex_path . '/suggest_new'] = array(
+            'title' => 'Suggest a new term and definition',
+            'page callback' => 'dgu_glossary_suggest_new_page',
+            'access arguments' => array('suggest new terms'),
+        );
+        $items[$lex_path . '/thanks'] = array(
+            'title' => 'Thank you for your suggestion',
+            'page callback' => 'dgu_glossary_new_definition_thanks_page',
+            'access arguments' => array('suggest new terms'),
+        );
+
     }
     return $items;
 }
@@ -101,6 +112,14 @@ function dgu_glossary_suggest_definition_thanks_page($term)
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
 }
 
+function dgu_glossary_new_definition_thanks_page()
+{
+    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $lex_path = 'glossary';
+    $links = "Return to the " . l(t("Glossary"), "$lex_path");
+    return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
+}
+
 function dgu_glossary_suggest_definition_page($term)
 {
     global $user;
@@ -134,6 +153,11 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['title']['#type'] = 'hidden';
         $form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
         $form['#submit'] = array('dgu_glossary_suggested_definition_node_submit');
+    } else if ($form_id == 'suggested_term_node_form') {
+        $form['title']['#type'] = 'hidden';
+        $form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
+        $form['#submit'] = array('dgu_glossary_new_definition_node_submit');
+
     }
 }
 
@@ -155,6 +179,25 @@ function dgu_glossary_template_preprocess_taxonomy_term(&$variables)
 {
     error_log(print_r($variables, true));
 }
+
+
+/**
+ * Implemnt hook permissions
+ */
+function dgu_glossary_permission(){
+    return array(
+        'moderate glossary' => array(
+            'title' => t('moderate glossary'),
+        ),
+        'suggest new definitions' => array(
+            'title' => t('suggest new definitions'),
+        ),
+        'suggets new terms' => array(
+            'title' => t('suggest new terms'),
+        ),
+    );
+}
+
 
 /**
  * Implement hook_theme_registry_alter to allow the theme files for the glossary to reside in
@@ -180,6 +223,13 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
     $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
     $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
+    //override the reply template so we can include the commenter's name
+    $theme_registry['reply']['template'] = "reply";
+    $theme_registry['reply']['path'] = $module_path . "/templates";
+    //override the user template
+    $theme_registry['user_profile']['template'] = "user-profile";
+    $theme_registry['user_profile']['path'] = $module_path . "/templates";
+
 }
 
 /**
@@ -195,8 +245,18 @@ function _dgu_glossary_insert_after_first_element(&$a, $element)
 
 function dgu_glossary_preprocess(&$variables, $hook)
 {
-    //error_log(print_r($hook, true));
     switch ($hook) {
+        case 'user_profile':
+            //Add mail variable
+            $account = $variables['elements']['#account'];
+            $variables['mail'] = $account->mail;
+            break;
+        case ('reply'):
+            //error_log(print_r($variables['reply'],true));
+            $author=user_load($variables['reply']->uid);
+
+            $variables["author"] = $author;
+            break;
         case 'lexicon_overview_item':
             $term = $variables['term'];
             $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
@@ -235,8 +295,9 @@ function dgu_glossary_preprocess(&$variables, $hook)
             );
 
             $nids = glossary_get_suggested_defs($term);
-            error_log(print_r($nids, true));
-            $variables['suggested_definitions'] = theme('suggested_definition_list', array('nids' => $nids));
+            if (!empty($nids)){
+                $variables['suggested_definitions'] = theme('suggested_definition_list', array('nids' => $nids));
+            }
 
             $lex = _lexicon_overview($voc);
             $lexicon_overview = $lex['overview']['#lexicon_overview'];
@@ -244,10 +305,10 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['lexicon_alphabar'] = $lexicon_alphabar;
 
             //hide comments so we can display it separately
-            $variables['comments'] = $variables['content']['field_comments'];
             unset($variables['content']['field_comments']);
 
-            //$variables['comments'] = field_view_field('taxonomy_term', $term, 'field_comments');
+            $variables['comments'] = field_view_field('taxonomy_term', $term, 'field_comments', array('label'=>'none'));
+            $variables['comments']['#label_display'] = 'hidden';
             break;
         default:
             # code...
@@ -353,3 +414,39 @@ function glossary_term_page($term)
     }
     return $build;
 }
+
+/**
+ * Theme function to return a form to submit a new suggested_term node
+ *
+ * @param $term
+ * @return array|mixed
+ *
+ *
+ */
+function dgu_glossary_suggest_new_page()
+{
+    global $user;
+    $node = (object)array(
+        'uid' => $user->uid,
+        'name' => (isset($user->name) ? $user->name : ''),
+        'type' => 'suggested_term',
+        'language' => LANGUAGE_NONE,
+    );
+    drupal_set_title(t('Suggest new term and definition.'), PASS_THROUGH);
+    $form_state['build_info']['args'] = array($node);
+    form_load_include($form_state, 'inc', 'node', 'node.pages');
+    $form = drupal_get_form('suggested_term_node_form', $node);
+
+    $form['title']['#value'] = t('New suggested term by @user',
+        array('@term' => $term->name, '@user' => $user->name));
+
+    return $form;
+}
+
+function dgu_glossary_new_definition_node_submit($form, &$form_state)
+{
+    error_log('node_submit called from new defintion submit ');
+    $url = "/glossary/thanks";
+    drupal_goto($url);
+}
+

@@ -16,6 +16,7 @@ function dgu_glossary_user_default_permissions() {
     'roles' => array(
       0 => 'administrator',
       1 => 'anonymous user',
+      2 => 'authenticated user',
     ),
     'module' => 'lexicon',
   );
@@ -88,6 +89,35 @@ function dgu_glossary_user_default_permissions() {
       1 => 'administrator',
     ),
     'module' => 'workbench_moderation',
+  );
+
+  // Exported permission: moderate glossary.
+  $permissions['moderate glossary'] = array(
+    'name' => 'moderate glossary',
+    'roles' => array(
+      0 => 'Glossary moderator',
+    ),
+    'module' => 'dgu_glossary',
+  );
+
+  // Exported permission: suggest new definitions.
+  $permissions['suggest new definitions'] = array(
+    'name' => 'suggest new definitions',
+    'roles' => array(
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
+    ),
+    'module' => 'dgu_glossary',
+  );
+
+  // Exported permission: suggets new terms.
+  $permissions['suggets new terms'] = array(
+    'name' => 'suggets new terms',
+    'roles' => array(
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
+    ),
+    'module' => 'dgu_glossary',
   );
 
   // Exported permission: use vote up/down.

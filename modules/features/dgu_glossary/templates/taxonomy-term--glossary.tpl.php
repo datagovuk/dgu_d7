@@ -57,8 +57,16 @@
       <?php print render($source); ?>
     </div>
 
-    <div class="suggested-definitions">
-      <?php print $suggested_definitions; ?>
+    <div class="comments">
+        <h2>Comments</h2>
+        <?php print render($comments); ?>
     </div>
+
+    <?php if ($suggested_definitions): error_log(print_r($suggested_definitions,true)); ?>
+    <div class="suggested-definitions">
+      <h2>Suggested definitions</h2>
+      <?php print render($suggested_definitions); ?>
+    </div>
+    <?php endif; ?>
 
   </div>
