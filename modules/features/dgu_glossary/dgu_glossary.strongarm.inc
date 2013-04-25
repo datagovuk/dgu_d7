@@ -262,6 +262,19 @@ function dgu_glossary_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'lexicon_introduction_2';
+  $strongarm->value = array(
+    'value' => 'Introductory text, welcoming the user and inviting them to take part in the glossary consultation and letting them know about the [blog] which explains everything.Depending on the priority of suggesting new terms, the copy could contain a link to
+
+
+ [Suggest a new term] and possibly some explaination that feedback can be found by following the link to the individual term page.It should also be pointed out that the terms listed can be "approved" terms and "suggested" new terms.',
+    'format' => 'filtered_html',
+  );
+  $export['lexicon_introduction_2'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'lexicon_introduction_8';
   $strongarm->value = array(
     'value' => '',
@@ -317,6 +330,13 @@ function dgu_glossary_strongarm() {
   $strongarm->name = 'lexicon_page_per_letter';
   $strongarm->value = 0;
   $export['lexicon_page_per_letter'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'lexicon_path_2';
+  $strongarm->value = 'glossary';
+  $export['lexicon_path_2'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -394,6 +414,13 @@ function dgu_glossary_strongarm() {
   $strongarm->name = 'lexicon_term_class';
   $strongarm->value = 'lexicon-term';
   $export['lexicon_term_class'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'lexicon_title_2';
+  $strongarm->value = 'Glossary';
+  $export['lexicon_title_2'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
