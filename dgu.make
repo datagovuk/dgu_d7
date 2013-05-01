@@ -12,6 +12,9 @@ projects[pathauto][subdir] = "contrib"
 projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
 
+projects[module_filter][version] = "1.7"
+projects[module_filter][subdir] = "contrib"
+
 projects[ctools][subdir] = "contrib"
 
 projects[features][subdir] = "contrib"
