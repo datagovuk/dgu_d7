@@ -94,6 +94,9 @@ projects[conditional_fields][subdir] = "contrib"
 projects[logintoboggan][version] = "1.3"
 projects[logintoboggan][subdir] = "contrib"
 
+projects[stringoverrides][version] = "1.8"
+projects[stringoverrides][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
