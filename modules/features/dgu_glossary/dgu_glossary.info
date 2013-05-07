@@ -35,6 +35,7 @@ features[field][] = taxonomy_term-glossary-field_quality
 features[field][] = taxonomy_term-glossary-field_related_terms
 features[field][] = taxonomy_term-glossary-field_source
 features[field][] = taxonomy_term-glossary-field_source_url
+features[filter][] = plain_text
 features[node][] = suggested_definition
 features[node][] = suggested_term
 features[rules_config][] = rules_sugggest_new_definition
