@@ -151,35 +151,11 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
         $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
         $form['title']['#type'] = 'hidden';
-        $form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
-        $form['#submit'] = array('dgu_glossary_suggested_definition_node_submit');
     } else if ($form_id == 'suggested_term_node_form') {
         $form['title']['#type'] = 'hidden';
-        $form['#validate'] = array_merge(array('dgu_glossary_suggestion_validate'), $form['#validate']);
-        $form['#submit'] = array('dgu_glossary_new_definition_node_submit');
 
     }
 }
-
-function dgu_glossary_suggestion_validate($form, &$form_state)
-{
-    error_log("validate called");
-}
-
-
-function dgu_glossary_suggested_definition_node_submit($form, &$form_state)
-{
-    error_log('node_submit called');
-    $tid = $form['field_term'][LANGUAGE_NONE]['#value'][0];
-    $url = "/glossary/$tid/thanks";
-    drupal_goto($url);
-}
-
-function dgu_glossary_template_preprocess_taxonomy_term(&$variables)
-{
-    error_log(print_r($variables, true));
-}
-
 
 /**
  * Implemnt hook permissions
@@ -465,15 +441,7 @@ function dgu_glossary_suggest_new_page()
     $form = drupal_get_form('suggested_term_node_form', $node);
 
     $form['title']['#value'] = t('New suggested term by @user',
-        array('@term' => $term->name, '@user' => $user->name));
+        array('@user' => $user->name));
 
     return $form;
 }
-
-function dgu_glossary_new_definition_node_submit($form, &$form_state)
-{
-    error_log('node_submit called from new defintion submit ');
-    $url = "/glossary/thanks";
-    drupal_goto($url);
-}
-
