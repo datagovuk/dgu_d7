@@ -272,12 +272,12 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $link_options = array();
             $suggest_better_path = $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
-            if(!user_access('create content')){
+            if(!user_access('suggest new definitions')){
                 $destination = array('destination' => $suggest_better_path);
                 $button_link_options += array('query' => $destination);
                 $link_options = array('query' => $destination);
                 $suggest_better_path =  'user/login';
-                $suggest_better = t("Login to suggest a better definition");
+                $suggest_better = t("Log in to suggest a better definition");
 
             }
             $suggest_better_button = l($suggest_better, $suggest_better_path, $button_link_options);
