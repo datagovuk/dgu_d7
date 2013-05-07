@@ -492,6 +492,62 @@ function dgu_glossary_field_default_fields() {
     ),
   );
 
+  // Exported field: 'taxonomy_term-category-field_comment'.
+  $fields['taxonomy_term-category-field_comment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_comment',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'reply',
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'bundle' => 'comment',
+        'display' => '-1',
+        'form' => '1',
+      ),
+      'translatable' => '0',
+      'type' => 'reply',
+    ),
+    'field_instance' => array(
+      'bundle' => 'category',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'reply',
+          'settings' => array(),
+          'type' => 'reply_default',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_comment',
+      'label' => 'Comments',
+      'required' => 0,
+      'settings' => array(
+        'access' => '-1',
+        'allow_reply' => '-1',
+        'display' => '-1',
+        'form' => '1',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'reply',
+        'settings' => array(),
+        'type' => 'reply',
+        'weight' => '32',
+      ),
+    ),
+  );
+
   // Exported field: 'taxonomy_term-glossary-field_comments'.
   $fields['taxonomy_term-glossary-field_comments'] = array(
     'field_config' => array(
@@ -603,6 +659,69 @@ function dgu_glossary_field_default_fields() {
         'settings' => array(),
         'type' => 'vud_field_default_widget',
         'weight' => '35',
+      ),
+    ),
+  );
+
+  // Exported field: 'taxonomy_term-glossary-field_is_new'.
+  $fields['taxonomy_term-glossary-field_is_new'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_is_new',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => '',
+          1 => '',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_boolean',
+    ),
+    'field_instance' => array(
+      'bundle' => 'glossary',
+      'default_value' => array(
+        0 => array(
+          'value' => 0,
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => 6,
+        ),
+      ),
+      'entity_type' => 'taxonomy_term',
+      'field_name' => 'field_is_new',
+      'label' => 'is_new',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'display_label' => 1,
+        ),
+        'type' => 'options_onoff',
+        'weight' => '37',
       ),
     ),
   );
@@ -892,6 +1011,7 @@ function dgu_glossary_field_default_fields() {
   t('Term name');
   t('comments');
   t('endorse');
+  t('is_new');
   t('related terms');
   t('source');
   t('source_url');
