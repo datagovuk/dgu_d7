@@ -167,7 +167,7 @@ function dgu_glossary_permission(){
         'suggest new definitions' => array(
             'title' => t('suggest new definitions'),
         ),
-        'suggets new terms' => array(
+        'suggest new terms' => array(
             'title' => t('suggest new terms'),
         ),
     );

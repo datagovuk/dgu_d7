@@ -130,12 +130,11 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'dgu_glossary',
   );
 
-  // Exported permission: suggets new terms.
-  $permissions['suggets new terms'] = array(
-    'name' => 'suggets new terms',
+  // Exported permission: suggest new terms.
+  $permissions['suggest new terms'] = array(
+    'name' => 'suggest new terms',
     'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'authenticated user',
+      0 => 'authenticated user',
     ),
     'module' => 'dgu_glossary',
   );
