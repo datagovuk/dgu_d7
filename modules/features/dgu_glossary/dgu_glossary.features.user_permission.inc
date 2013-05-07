@@ -31,6 +31,26 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'user',
   );
 
+  // Exported permission: create suggested_definition content.
+  $permissions['create suggested_definition content'] = array(
+    'name' => 'create suggested_definition content',
+    'roles' => array(
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: create suggested_term content.
+  $permissions['create suggested_term content'] = array(
+    'name' => 'create suggested_term content',
+    'roles' => array(
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: delete any suggested_definition content.
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',
