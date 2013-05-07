@@ -43,6 +43,9 @@ projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 
+projects[rules][version] = "2.3"
+projects[rules][subdir] = "contrib"
+
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
