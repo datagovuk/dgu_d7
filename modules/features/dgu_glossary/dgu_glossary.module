@@ -75,7 +75,6 @@ function dgu_glossary_ctools_plugin_directory($module, $plugin)
 
 function dgu_glossary_theme($existing, $type, $theme, $path)
 {
-    error_log("registering glossary theme.");
     return array(
         'suggested_definition_list' => array(
             'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
@@ -228,7 +227,6 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['mail'] = $account->mail;
             break;
         case ('reply'):
-            //error_log(print_r($variables['reply'],true));
             $author=user_load($variables['reply']->uid);
 
             $variables["author"] = $author;
@@ -335,7 +333,6 @@ function glossary_get_suggested_defs($term)
 
 function template_preprocess_suggested_definition_item(&$variables)
 {
-    error_log('calling preprocess suggested_definitionsitem');
     $node = $variables['node'];
     $variables['suggested_definition'] = field_view_field('node', $node, 'field_suggested_definition');
     $variables['comments'] = field_view_field('node', $node, 'field_comment');
@@ -343,7 +340,6 @@ function template_preprocess_suggested_definition_item(&$variables)
 
 function template_preprocess_suggested_definition_list(&$variables)
 {
-    error_log('calling preprocess suggested_definitionslist');
     $defs = array();
     $nids = $variables['nids'];
     foreach ($nids as $nid) {
