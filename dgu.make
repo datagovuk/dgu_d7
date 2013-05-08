@@ -93,6 +93,8 @@ projects[conditional_fields][subdir] = "contrib"
 
 projects[logintoboggan][version] = "1.3"
 projects[logintoboggan][subdir] = "contrib"
+projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
+
 
 projects[stringoverrides][version] = "1.8"
 projects[stringoverrides][subdir] = "contrib"
