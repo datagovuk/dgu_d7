@@ -22,4 +22,5 @@ When(~'^I press login$') { ->
 Then(~'^I can see the admin menu$') { ->
     to AdminPage
     at AdminPage
+    browser.quit()
 }

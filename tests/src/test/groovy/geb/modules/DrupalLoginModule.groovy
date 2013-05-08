@@ -6,7 +6,6 @@ import geb.Page
 
 import geb.pages.AdminPage
 
-
 class DrupalLoginModule extends Module {
 	//static base = { $("form")."user-login-form" }
 	static content = {
@@ -14,6 +13,4 @@ class DrupalLoginModule extends Module {
 		pass {$("input", id: "edit-pass")}
 		loginButton(to: AdminPage) { $("button", id: "edit-submit") }
 	}
-
-
 }
