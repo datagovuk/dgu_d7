@@ -32,5 +32,5 @@ When(~'^I press Create new account button$') { ->
 }
 
 Then(~'^I can see registration confirmation message$') { ->
-    emailVerifyMessage RegiterPage
+    page.emailVerifyMessage()
 }
