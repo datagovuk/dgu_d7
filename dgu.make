@@ -9,17 +9,14 @@ projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
 projects[pathauto][subdir] = "contrib"
 
-
-
-
-
-projects[admin_menu][version] = "3.0-rc3"
+projects[admin_menu][version] = "3.0-rc4"§
 projects[admin_menu][subdir] = "contrib"
 
-projects[ctools][version] = "1.2"
+projects[module_filter][version] = "1.7"
+projects[module_filter][subdir] = "contrib"
+
 projects[ctools][subdir] = "contrib"
 
-projects[features][version] = "1.0"
 projects[features][subdir] = "contrib"
 
 projects[views][version] = "3.5"
@@ -42,13 +39,21 @@ projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
+projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
+projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
+
+projects[field_formatter_settings][version] = "1.0"
+projects[field_formatter_settings][subdir] = "contrib"
+
+projects[field_replies][download][type] = "git"
+projects[field_replies][download][url] = "http://git.drupal.org/project/field_replies.git"
+projects[field_replies][subdir] = "contrib"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
 
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
-
 
 projects[migrate][type] = "module"
 projects[migrate][download][type] = "git"
@@ -96,6 +101,14 @@ projects[conditional_fields][subdir] = "contrib"
 projects[vote_up_down][type] = "module"
 projects[vote_up_down][version] = "1.0-alpha1"
 projects[vote_up_down][subdir] = "contrib"
+
+projects[logintoboggan][version] = "1.3"
+projects[logintoboggan][subdir] = "contrib"
+projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
+
+
+projects[stringoverrides][version] = "1.8"
+projects[stringoverrides][subdir] = "contrib"
 
 ; Themes
 ; --------

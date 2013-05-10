@@ -19,6 +19,56 @@ class DGUCommentMigration extends CommentReplyMigration {
 	}
 }
 
+class DGUBookCommentMigration extends CommentReplyMigration {
+	function __construct($arguments){
+		parent::__construct($arguments);
+		$this->addFieldMapping('field_reply_subject', 'subject');
+		$this->addFieldMapping('field_reply_comment', 'comment');
+	}
+
+   /**
+   * Overrides parent query to remove corrupted books.
+   */
+  public function query() {
+    $query = parent::query();
+    $query->join('book', 'b', 'n.nid = b.nid');
+    $query->join('menu_links', 'ml', 'b.mlid = ml.mlid');
+    $query->isNotNull('ml.mlid');
+    return $query;
+  }
+
+	public function prepareRow($current_row) {
+		parent::prepareRow($current_row);
+		$query = Database::getConnection('default', $this->sourceConnection)
+			->select('comments_field', 'cf')
+      ->condition('cf.cid', $current_row->cid)
+			->fields('cf', array('nid', 'vid', 'field', 'delta'));
+		$result = $query->execute()->fetch();
+    if($result) {
+      $current_row->comment_on_field = array('field' => 'field_' . $result->field, 'delta' => $result->delta);
+    }
+	}
+
+  /**
+   * Actions to take after a reply has been saved.
+   */
+  public function complete($reply, $row) {
+    if(isset($row->comment_on_field)) {
+      db_insert('reply_field')
+      ->fields(array(
+        'reply_id' => $reply->id,
+        'reply_bundle' => $reply->bundle,
+        'entity_id' => $reply->entity_id,
+        'entity_type' => $reply->entity_type,
+        'field' => $row->comment_on_field['field'],
+        'delta' => $row->comment_on_field['delta'],
+      ))
+      ->execute();
+    }
+  }
+}
+
+
 class DGUAppMigration extends DGUNodeMigration {
 	function __construct(array $arguments){
 		parent::__construct($arguments);
@@ -44,7 +94,7 @@ class DGUAppMigration extends DGUNodeMigration {
 				'field_feature_availability', 'field_screen_shots:list', 'field_screen_shots:data', 'field_app_link:title'));
 		$this->addUnmigratedDestinations(array('field_developed_by:language', 'field_screen_shots:language',
 				'field_screen_shots:alt', 'field_screen_shots:title', 'field_submitter_name:language',
-				'field_category:source_type', 'field_category:create_term', 'field_category:ignore_case', 
+				'field_category:source_type', 'field_category:create_term', 'field_category:ignore_case',
 				'field_comment', 'field_sector:source_type', 'field_sector:create_term', 'field_sector:ignore_case',
 				'field_tags:source_type', 'field_tags:create_term', 'field_tags:ignore_case'));
 
@@ -64,18 +114,66 @@ class DGUBlogMigration extends DGUNodeMigration {
 				'field_video', 'field_video:value', 'field_video:provider', 'field_video:data', '9',
 				'field_video:status', 'field_video:version', 'field_video:title', 'field_video:description', 'field_video:duration'));
 		$this->addUnmigratedDestinations(array('field_audio', 'field_audio:file_class', 'field_audio:language', 'field_audio:destination_dir',
-				'field_audio:destination_file', 'field_audio:file_replace', 'field_audio:preserve_files', 'field_audio:source_dir', 'field_audio:title', 
+				'field_audio:destination_file', 'field_audio:file_replace', 'field_audio:preserve_files', 'field_audio:source_dir', 'field_audio:title',
 				'field_audio:data', 'field_category:source_type', 'field_category:create_term', 'field_category:ignore_case', 'field_comment',
 				'field_sector:source_type', 'field_sector:create_term', 'field_sector:ignore_case', 'field_tags:source_type', 'field_tags:create_term',
 				'field_tags:ignore_case','field_video', 'field_video:file_class', 'field_video:language', 'field_video:destination_dir',
-				'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir', 
+				'field_video:destination_file', 'field_video:file_replace', 'field_video:preserve_files', 'field_video:source_dir',
 				'field_video:title', 'field_video:data'));
 	}
 
 }
 
 class DGUBookMigration extends DGUNodeMigration {
+  public function __construct(array $arguments) {
+		parent::__construct($arguments);
+		$this->addFieldMapping('field_paragraph', 'field_paragraph');
+  }
 
+   /**
+   * Overrides parent::nodeQuery to add more data to the source, in our case,
+   * book hierarchy stuff.
+   */
+  public function query() {
+    $query = parent::query();
+    // Add in book parent child relationships.
+    $query->join('book', 'b', 'n.nid = b.nid');
+    $query->addField('b', 'bid', 'book_id');
+    $query->join('menu_links', 'ml', 'b.mlid = ml.mlid');
+    $query->isNotNull('ml.mlid');
+    $query->addField('ml', 'weight', 'book_weight');
+    return $query;
+  }
+
+   /**
+   * Acts right after a book node has been saved. Map the book hierarchy.
+   *
+   * @param object $node
+   *   A node object for the newly migrated book.
+   * @param stdClass $row
+   *   An object representing data from the source row.
+   */
+   public function complete($node, stdClass $row) {
+    // If this is a top-level book, don't set a parent.
+    $book_id = $row->nid == $row->book_id ? $node->nid : $this->lookupMigratedBook($row->book_id);
+    // Book id - effectively, parent nid.
+    $node->book['bid'] = $book_id;
+    $node->book['nid'] = $node->nid;
+    $node->book['weight'] = $row->book_weight;
+    _book_update_outline($node);
+    node_save($node);
+  }
+
+  /**
+   * Returns a mapping for a migrated book.
+   *
+   * @param int $source_book_nid
+   *   Nid of book in source database to lookup.
+   */
+  protected function lookupMigratedBook($source_book_nid) {
+    $dest_book_nid = parent::handleSourceMigration('book', $source_book_nid);
+    return $dest_book_nid;
+  }
 }
 
 class DGUDataRequestMigration extends DGUNodeMigration {
@@ -146,7 +244,7 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 class DGUForumMigration extends DGUNodeMigration {
 	function __construct(array $arguments){
 		parent::__construct($arguments);
-	
+
 		$this->addFieldMapping('taxonomy_forums', '2')->sourceMigration('forum')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
@@ -156,7 +254,7 @@ class DGUForumMigration extends DGUNodeMigration {
 			'field_category:source_type', 'field_category:create_term', 'field_category:ignore_case',
 			'field_sector:source_type', 'field_sector:create_term', 'field_sector:ignore_case',
 		));
-		
+
 	}
 
 }
@@ -189,9 +287,9 @@ class DGUOrganogramMigration extends DGUNodeMigration {
 		$this->addFieldMapping('field_parent_organogram', 'field_parent_org');
 		$this->addFieldMapping('field_endpoint:language')->defaultValue('en');
 	}
-	
+
 }
- 
+
 class DGUResourceMigration extends DGUNodeMigration {
 
 	function __construct(array $arguments) {
@@ -224,13 +322,13 @@ class DGUResourceMigration extends DGUNodeMigration {
 
 class DGUPageMigration extends DGUNodeMigration {
 	function __construct(array $arguments) {
-		
+
 		$attachment_fields = array(
   			'attachments_filename' => t('field_file_attachments'),
 		);
 		$this->sourceFields = array_merge($this->sourceFields, $attachment_fields);
 		parent::__construct($arguments);
-		
+
 		$this->addFieldMapping('field_category', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_tags', '6')->sourceMigration('tags')->arguments(array('source_type' => 'tid'));
 		$this->addFieldMapping('field_sector', '13')->sourceMigration('sector')->arguments(array('source_type' => 'tid'));
@@ -288,8 +386,8 @@ class DGUFileMigration extends DrupalFile6Migration {
 
 
 		$this->addUnmigratedDestinations(array(
-			'field_image_description:format', 'field_image_description:language', 
-			'field_file_image_alt_text', 'field_file_image_alt_text:language', 
+			'field_image_description:format', 'field_image_description:language',
+			'field_file_image_alt_text', 'field_file_image_alt_text:language',
 			'field_file_image_title_text', 'field_file_image_title_text:language',
 		));
 		$this->addUnmigratedSources(array(
