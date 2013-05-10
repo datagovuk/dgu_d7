@@ -228,8 +228,12 @@ function dgu_glossary_preprocess(&$variables, $hook)
             break;
         case ('reply'):
             $author=user_load($variables['reply']->uid);
+            $author_link = $author->name;
+            if (user_access("moderate glossary")){
+                $author_link = l($author->name, "user/" . $author->uid);
+            }
 
-            $variables["author"] = $author;
+            $variables["author"] = $author_link;
             break;
         case 'lexicon_overview_item':
             $term = $variables['term'];
