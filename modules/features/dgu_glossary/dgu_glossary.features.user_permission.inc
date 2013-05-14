@@ -21,16 +21,6 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'lexicon',
   );
 
-  // Exported permission: access user profiles.
-  $permissions['access user profiles'] = array(
-    'name' => 'access user profiles',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'user',
-  );
-
   // Exported permission: create suggested_definition content.
   $permissions['create suggested_definition content'] = array(
     'name' => 'create suggested_definition content',
@@ -101,16 +91,6 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
-  // Exported permission: moderate content from needs_review to published.
-  $permissions['moderate content from needs_review to published'] = array(
-    'name' => 'moderate content from needs_review to published',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
   // Exported permission: moderate glossary.
   $permissions['moderate glossary'] = array(
     'name' => 'moderate glossary',
@@ -147,65 +127,6 @@ function dgu_glossary_user_default_permissions() {
       1 => 'anonymous user',
     ),
     'module' => 'vud',
-  );
-
-  // Exported permission: use workbench_moderation needs review tab.
-  $permissions['use workbench_moderation needs review tab'] = array(
-    'name' => 'use workbench_moderation needs review tab',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: view all unpublished content.
-  $permissions['view all unpublished content'] = array(
-    'name' => 'view all unpublished content',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: view moderation history.
-  $permissions['view moderation history'] = array(
-    'name' => 'view moderation history',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: view moderation messages.
-  $permissions['view moderation messages'] = array(
-    'name' => 'view moderation messages',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: view own unpublished content.
-  $permissions['view own unpublished content'] = array(
-    'name' => 'view own unpublished content',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'node',
-  );
-
-  // Exported permission: view revisions.
-  $permissions['view revisions'] = array(
-    'name' => 'view revisions',
-    'roles' => array(
-      0 => 'Glossary moderator',
-      1 => 'administrator',
-    ),
-    'module' => 'node',
   );
 
   return $permissions;

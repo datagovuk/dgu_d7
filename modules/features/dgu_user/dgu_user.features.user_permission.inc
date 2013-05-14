@@ -78,6 +78,8 @@ function dgu_user_user_default_permissions() {
     'name' => 'access user profiles',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
+
     ),
     'module' => 'user',
   );
@@ -205,6 +207,8 @@ function dgu_user_user_default_permissions() {
     'name' => 'moderate content from draft to needs_review',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
+
     ),
     'module' => 'workbench_moderation',
   );
@@ -260,6 +264,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'use workbench_media add form',
     'roles' => array(
       'administrator' => 'administrator',
+
     ),
     'module' => 'workbench_media',
   );
@@ -278,6 +283,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'workbench_moderation',
   );
@@ -287,6 +293,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'view all unpublished content',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'workbench_moderation',
   );
@@ -296,6 +303,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'view moderation history',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'workbench_moderation',
   );
@@ -305,6 +313,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'administrator' => 'administrator',
+      'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'workbench_moderation',
   );
