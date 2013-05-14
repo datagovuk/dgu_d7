@@ -41,10 +41,10 @@ function ckan_dataset_views_data_alter(&$data) {
 }
 
 
-///**
-// * Implements hook_views_default_views().
-// */
-//function ckan_dataset_views_default_views() {
+/**
+ * Implements hook_views_default_views().
+ */
+function ckan_dataset_views_default_views() {
 //  $views = array();
 //
 //  $view = new view;
@@ -210,12 +210,10 @@ function ckan_dataset_views_data_alter(&$data) {
 //  );
 //  $views[$view->name] = $view;
 //  return $views;
-//
-//}
 
 
 $view = new view();
-$view->name = 'ckan_dataset';
+$view->name = 'ckan_datasets';
 $view->description = 'A list of all CKAN Datasets';
 $view->tag = 'ckan_dataset';
 $view->base_table = 'ckan_dataset';
@@ -261,6 +259,11 @@ $handler->display->display_options['empty']['area']['table'] = 'views';
 $handler->display->display_options['empty']['area']['field'] = 'area';
 $handler->display->display_options['empty']['area']['label'] = 'Empty ';
 $handler->display->display_options['empty']['area']['content'] = 'No Datasets have been created yet';
+/* Field: Dataset: Id */
+$handler->display->display_options['fields']['id']['id'] = 'id';
+$handler->display->display_options['fields']['id']['table'] = 'ckan_dataset';
+$handler->display->display_options['fields']['id']['field'] = 'id';
+$handler->display->display_options['fields']['id']['separator'] = '.';
 /* Field: Dataset: Dataset ID */
 $handler->display->display_options['fields']['ckan_id']['id'] = 'ckan_id';
 $handler->display->display_options['fields']['ckan_id']['table'] = 'ckan_dataset';
@@ -269,6 +272,16 @@ $handler->display->display_options['fields']['ckan_id']['field'] = 'ckan_id';
 $handler->display->display_options['fields']['name']['id'] = 'name';
 $handler->display->display_options['fields']['name']['table'] = 'ckan_dataset';
 $handler->display->display_options['fields']['name']['field'] = 'name';
+/* Field: Dataset: Changed */
+$handler->display->display_options['fields']['changed']['id'] = 'changed';
+$handler->display->display_options['fields']['changed']['table'] = 'ckan_dataset';
+$handler->display->display_options['fields']['changed']['field'] = 'changed';
+$handler->display->display_options['fields']['changed']['separator'] = '.';
+/* Field: Dataset: Created */
+$handler->display->display_options['fields']['created']['id'] = 'created';
+$handler->display->display_options['fields']['created']['table'] = 'ckan_dataset';
+$handler->display->display_options['fields']['created']['field'] = 'created';
+$handler->display->display_options['fields']['created']['separator'] = '.';
 /* Field: Dataset: Link */
 $handler->display->display_options['fields']['link_ckan_dataset']['id'] = 'link_ckan_dataset';
 $handler->display->display_options['fields']['link_ckan_dataset']['table'] = 'ckan_dataset';
@@ -287,3 +300,81 @@ $handler->display->display_options['tab_options']['title'] = 'Datasets';
 $handler->display->display_options['tab_options']['description'] = 'Manage Datasets';
 $handler->display->display_options['tab_options']['weight'] = '0';
 $handler->display->display_options['tab_options']['name'] = 'management';
+
+
+}
+
+
+//$view = new view();
+//$view->name = 'ckan_dataset';
+//$view->description = 'A list of all CKAN Datasets';
+//$view->tag = 'ckan_dataset';
+//$view->base_table = 'ckan_dataset';
+//$view->human_name = 'CKAN Datasets';
+//$view->core = 7;
+//$view->api_version = '3.0';
+//$view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+//
+///* Display: Master */
+//$handler = $view->new_display('default', 'Master', 'default');
+//$handler->display->display_options['title'] = 'Datasets';
+//$handler->display->display_options['use_more_always'] = FALSE;
+//$handler->display->display_options['access']['type'] = 'perm';
+//$handler->display->display_options['access']['perm'] = 'create any CKAN Dataset type';
+//$handler->display->display_options['cache']['type'] = 'none';
+//$handler->display->display_options['query']['type'] = 'views_query';
+//$handler->display->display_options['exposed_form']['type'] = 'basic';
+//$handler->display->display_options['pager']['type'] = 'full';
+//$handler->display->display_options['pager']['options']['items_per_page'] = '10';
+//$handler->display->display_options['style_plugin'] = 'table';
+//$handler->display->display_options['style_options']['columns'] = array(
+//  'name' => 'name',
+//  'ckan_id' => 'ckan_id',
+//);
+//$handler->display->display_options['style_options']['default'] = '-1';
+//$handler->display->display_options['style_options']['info'] = array(
+//  'name' => array(
+//    'sortable' => 0,
+//    'default_sort_order' => 'asc',
+//    'align' => '',
+//    'separator' => '',
+//  ),
+//  'ckan_id' => array(
+//    'sortable' => 0,
+//    'default_sort_order' => 'asc',
+//    'align' => '',
+//    'separator' => '',
+//  ),
+//);
+///* No results behavior: Global: Text area */
+//$handler->display->display_options['empty']['area']['id'] = 'area';
+//$handler->display->display_options['empty']['area']['table'] = 'views';
+//$handler->display->display_options['empty']['area']['field'] = 'area';
+//$handler->display->display_options['empty']['area']['label'] = 'Empty ';
+//$handler->display->display_options['empty']['area']['content'] = 'No Datasets have been created yet';
+///* Field: Dataset: Dataset ID */
+//$handler->display->display_options['fields']['ckan_id']['id'] = 'ckan_id';
+//$handler->display->display_options['fields']['ckan_id']['table'] = 'ckan_dataset';
+//$handler->display->display_options['fields']['ckan_id']['field'] = 'ckan_id';
+///* Field: Dataset: Name */
+//$handler->display->display_options['fields']['name']['id'] = 'name';
+//$handler->display->display_options['fields']['name']['table'] = 'ckan_dataset';
+//$handler->display->display_options['fields']['name']['field'] = 'name';
+///* Field: Dataset: Link */
+//$handler->display->display_options['fields']['link_ckan_dataset']['id'] = 'link_ckan_dataset';
+//$handler->display->display_options['fields']['link_ckan_dataset']['table'] = 'ckan_dataset';
+//$handler->display->display_options['fields']['link_ckan_dataset']['field'] = 'link_ckan_dataset';
+//$handler->display->display_options['fields']['link_ckan_dataset']['label'] = 'View';
+//
+///* Display: Page */
+//$handler = $view->new_display('page', 'Page', 'ckan_dataset_admin_page');
+//$handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+//$handler->display->display_options['path'] = 'admin/content/ckan_datasets/list';
+//$handler->display->display_options['menu']['type'] = 'default tab';
+//$handler->display->display_options['menu']['title'] = 'List';
+//$handler->display->display_options['menu']['weight'] = '-10';
+//$handler->display->display_options['tab_options']['type'] = 'tab';
+//$handler->display->display_options['tab_options']['title'] = 'Datasets';
+//$handler->display->display_options['tab_options']['description'] = 'Manage Datasets';
+//$handler->display->display_options['tab_options']['weight'] = '0';
+//$handler->display->display_options['tab_options']['name'] = 'management';
