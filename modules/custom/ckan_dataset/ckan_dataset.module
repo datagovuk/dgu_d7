@@ -17,7 +17,7 @@ function ckan_dataset_entity_info() {
     'entity class' => 'CKANDataset',
     'controller class' => 'CKANController',
     'base table' => 'ckan_dataset',
-    'fieldable' => TRUE,
+    'fieldable' => FALSE,
     'entity keys' => array(
         'id' => 'ckan_id',
         'bundle' => 'type',
@@ -40,55 +40,8 @@ function ckan_dataset_entity_info() {
     ),
   );
 
-  // The entity that holds information about the entity types
-  $return['ckan_dataset_type'] = array(
-    'label' => t('Dataset Type'),
-    'entity class' => 'CKANType',
-    'controller class' => 'CKANTypeController',
-    'base table' => 'ckan_dataset_type',
-    'fieldable' => FALSE,
-    'bundle of' => 'ckan_dataset',
-    'exportable' => TRUE,
-    'entity keys' => array(
-      'id' => 'id',
-      'name' => 'type',
-      'label' => 'label',
-    ),
-    'access callback' => 'ckan_dataset_type_access',
-    'module' => 'ckan_dataset',
-    // Enable the entity API's admin UI.
-    'admin ui' => array(
-      'path' => 'admin/structure/ckan_dataset_type',
-      'file' => 'ckan_dataset_type.admin.inc',
-      'controller class' => 'CKANTypeUIController',
-    ),
-  );
-
   return $return;
 }
-
-
-/**
- * Implements hook_entity_info_alter().
- *
- * We are adding the info about the ckan_dataset types via a hook to avoid a recursion
- * issue as loading the ckan dataset types requires the entity info as well.
- *
- */
-function ckan_dataset_entity_info_alter(&$entity_info) {
-  foreach (ckan_dataset_get_types() as $type => $info) {
-    $entity_info['ckan_dataset']['bundles'][$type] = array(
-      'label' => $info->label,
-      'admin' => array(
-        'path' => 'admin/structure/ckan_dataset_type/manage/%ckan_dataset_type',
-        'real path' => 'admin/structure/ckan_dataset_type/manage/' . $type,
-        'bundle argument' => 4,
-        'access arguments' => array('administer CKAN types'),
-      ),
-    );
-  }
-}
-
 
 /**
  * Implements hook_permission().
@@ -97,27 +50,11 @@ function ckan_dataset_permission() {
   // We set up permisssions to manage entity types, manage all entities and the
   // permissions for each individual entity
   $permissions = array(
-//    'administer CKAN types' => array(
-//      'title' => t('Administer CKAN types'),
-//      'description' => t('Create and delete fields for CKAN types, and set their permissions.'),
-//    ),
     'administer CKAN' => array(
       'title' => t('Administer CKAN'),
       'description' => t('Administer CKAN entities'),
     ),
   );
-
-  foreach (ckan_dataset_get_types() as $type) {
-    $type_name = check_plain($type->type);
-    $permissions += array(
-      "edit any $type_name CKAN Dataset" => array(
-        'title' => t('%type_name: Edit any CKAN Dataset', array('%type_name' => $type->label)),
-      ),
-      "view any $type_name CKAN Dataset" => array(
-        'title' => t('%type_name: View any CKAN Dataset', array('%type_name' => $type->label)),
-      ),
-    );
-  }
   return $permissions;
 }
 
@@ -172,20 +109,6 @@ function ckan_dataset_get_types($type_name = NULL) {
   $types = entity_load_multiple_by_name('ckan_dataset_type', isset($type_name) ? array($type_name) : FALSE);
   return isset($type_name) ? reset($types) : $types;
 }
-
-
-/**
- * Menu argument loader; Load a CKAN type by string.
- *
- * @param $type
- *   The machine-readable name of a CKAN type to load.
- * @return
- *   A CKAN Dataset type array or FALSE if $type does not exist.
- */
-function ckan_dataset_type_load($type) {
-  return ckan_dataset_get_types($type);
-}
-
 
 /**
  * Fetch a CKAN Dataset object.
@@ -262,23 +185,6 @@ function ckan_dataset_save(CKANDataset $ckan) {
   return $ckan->save();
 }
 
-
-/**
- * Saves a CKAN Dataset type to the db.
- */
-function ckan_dataset_type_save(CKANType $type) {
-  $type->save();
-}
-
-
-/**
- * Deletes a CKAN Dataset type from the db.
- */
-function ckan_dataset_type_delete(CKANType $type) {
-  $type->delete();
-}
-
-
 /**
  * URI callback for CKAN Dataset
  */
@@ -295,7 +201,6 @@ function ckan_dataset_uri(CKANDataset $ckan){
 function ckan_dataset_page_title(CKANDataset $ckan){
   return $ckan->name;
 }
-
 
 /**
  * Sets up content to show an individual CKAN Dataset
@@ -332,24 +237,6 @@ function ckan_dataset_theme() {
   );
 }
 
-
-/**
- * Implements hook_menu_local_tasks_alter().
- */
-function ckan_dataset_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  // Add action link 'admin/structure/ckan_dataset/add' on 'admin/structure/ckan_dataset'.
-  if ($root_path == 'admin/content/ckan_datasets') {
-    $item = menu_get_item('admin/content/ckan_datasets/add');
-    if ($item['access']) {
-      $data['actions']['output'][] = array(
-        '#theme' => 'menu_local_action',
-        '#link' => $item,
-      );
-    }
-  }
-}
-
-
 /**
  * The class used for CKAN Datasets
  */
@@ -366,23 +253,6 @@ class CKANDataset extends Entity {
   protected function defaultUri() {
     return array('path' => 'ckan_dataset/' . $this->ckan_id);
   }
-
-
-}
-
-
-/**
- * The class used for CKAN Dataset type entities
- */
-class CKANType extends Entity {
-
-  public $type;
-  public $label;
-
-  public function __construct($values = array()) {
-    parent::__construct($values, 'ckan_dataset_type');
-  }
-
 }
 
 /**
@@ -426,34 +296,4 @@ class CKANController extends EntityAPIController {
     $content = parent::buildContent($entity, $view_mode, $langcode, $content);
     return $content;
   }
-}
-
-
-/**
- * The Controller for CKAN Dataset types
- */
-class CKANTypeController extends EntityAPIControllerExportable {
-  public function __construct($entityType) {
-    parent::__construct($entityType);
-  }
-   /**
-   * Create a CKAN Dataset type
-   *
-   * @param $type
-   *   The machine-readable type of the CKAN Dataset type.
-   *
-   * @return
-   *   A CKAN Dataset type object with all default fields initialized.
-   */
-  public function create(array $values = array()) {
-    // Add values that are specific to our CKAN Dataset type
-    $values += array(
-      'id' => '',
-      'is_new' => TRUE,
-      'data' => '',
-    );
-    $ckan_dataset_type = parent::create($values);
-    return $ckan_dataset_type;
-  }
-
 }
