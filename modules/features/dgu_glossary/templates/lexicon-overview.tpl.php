@@ -34,11 +34,11 @@
             <?php print $lexicon_overview->introduction; ?>
         </div>
     <?php endif;?>
-    <div class="glossary_filter">
+    <!-- <div class="glossary_filter">
         <input checked="true" type="radio" name="filter_glossary" value="show_approved">Only approved terms</input>
         <input type="radio" name="filter_glossary" value="show_new">Only new terms</input>
         <input type="radio" name="filter_glossary" value="show_both">Both new and approved terms</input>
-    </div>
+    </div> -->
     <a href="glossary/suggest_new" class="button">Suggest a new Term</a>
     <div class="lexicon-list">
         <?php foreach ($lexicon_overview_sections as $section) : ?>
