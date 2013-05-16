@@ -9,6 +9,7 @@
  * Implements hook_views_data()
  */
 function ckan_dataset_views_data_alter(&$data) {
+  $a=1;
   $data['ckan_dataset']['link_ckan_dataset'] = array(
       'field' => array(
           'title' => t('Link'),
@@ -16,13 +17,10 @@ function ckan_dataset_views_data_alter(&$data) {
           'handler' => 'ckan_dataset_handler_link_field',
       ),
   );
-//  $data['ckan_dataset']['edit_ckan_dataset'] = array(
-//    'field' => array(
-//      'title' => t('Edit Link'),
-//      'help' => t('Provide a link to the edit form for the CKAN Dataset.'),
-//      'handler' => 'ckan_dataset_handler_edit_link_field',
-//    ),
-//  );
+  $data['ckan_dataset']['created']['field']['handler'] = 'ckan_dataset_handler_timestamp_field';
+  $data['ckan_dataset']['changed']['field']['handler'] = 'ckan_dataset_handler_timestamp_field';
+
+
 //  $data['ckan_dataset']['delete_ckan_dataset'] = array(
 //    'field' => array(
 //      'title' => t('Delete Link'),
