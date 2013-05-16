@@ -98,6 +98,7 @@ projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unifie
 projects[stringoverrides][version] = "1.8"
 projects[stringoverrides][subdir] = "contrib"
 
+projects[ckan][type] = "module"
 projects[ckan][download][type] = "git"
 projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
 projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
