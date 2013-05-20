@@ -2,25 +2,21 @@
 (function($) {
     $.hideNewTerms = function(){
         $('.term-new').hide();
-        $('.term-existing').show();
     }
     $.showNewTerms = function(){
         $('.term-new').show();
-        $('.term-existing').hide();
     }
     $.showExistingTerms = function(){
         $('.term-existing').show();
-        $('.term-new').hide();
     }
     $.hideExistingTerms = function(){
         $('.term-existing').hide();
-        $('.term-new').show();
-
     }
     $.showAllTerms = function(){
-        $.showNewTerms();
-        $.showExistingTerms();
+        $('.term-existing').show();
+        $('.term-new').show();
     }
+
 
     $.changeTerms = function(){
         $show = $(this).val();
@@ -30,8 +26,7 @@
                 $.hideExistingTerms();
                 break;
             case 'show_both':
-                $.showNewTerms();
-                $.showExistingTerms();
+                $.showAllTerms();
                 break;
             case 'show_approved':
                 $.showExistingTerms();
