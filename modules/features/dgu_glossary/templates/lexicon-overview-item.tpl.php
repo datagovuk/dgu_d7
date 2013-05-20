@@ -27,6 +27,7 @@
  *      ["name"], ["path"] and ["attributes"] per element.
  */
 ?>
+<div class="glossary-term <?php print $term_class ?>" >
 <dt>
 <a id="<?php print $term->id; ?>"></a>
   <a href="/glossary/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
@@ -73,3 +74,4 @@
 <?php if ($count > 0) : ?>
   <a href="/glossary/<?php print $term->tid?>"><?php print"$count comments" ?></a>
 <?php endif; ?>
+</div>
