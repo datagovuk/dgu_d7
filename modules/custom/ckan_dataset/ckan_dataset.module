@@ -19,12 +19,7 @@ function ckan_dataset_entity_info() {
     'base table' => 'ckan_dataset',
     'fieldable' => FALSE,
     'entity keys' => array(
-        'id' => 'ckan_id',
-        'bundle' => 'type',
-    ),
-    'bundles' => array(),
-    'bundle keys' => array(
-      'bundle' => 'type',
+        'id' => 'id',
     ),
     'label callback' => 'entity_class_label',
     'uri callback' => 'entity_class_uri',
