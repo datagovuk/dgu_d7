@@ -29,16 +29,9 @@ function ckan_dataset_schema() {
         'default' => '',
       ),
       'type' => array(
-        'description' => 'The {ckan_dataset_type}.type of this CKAN Dataset.',
+        'description' => 'Redundant, but required by Entity API.',
         'type' => 'varchar',
         'length' => 255,
-        'not null' => TRUE,
-        'default' => '',
-      ),
-      'language' => array(
-        'description' => 'The language of the CKAN Dataset.',
-        'type' => 'varchar',
-        'length' => 32,
         'not null' => TRUE,
         'default' => '',
       ),
@@ -77,7 +70,7 @@ function ckan_dataset_schema() {
     ),
     'primary key' => array('id'),
     'indexes' => array(
-      'type' => array('type'),
+      'ckan_id' => array('ckan_id'),
     ),
   );
 
