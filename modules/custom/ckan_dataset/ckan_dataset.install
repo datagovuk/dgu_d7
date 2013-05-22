@@ -61,6 +61,12 @@ function ckan_dataset_schema() {
         'not null' => TRUE,
         'default' => 0,
       ),
+      'status' => array(
+        'description' => 'Boolean indicating whether the node is published (visible to non-administrators).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
       'data' => array(
         'type' => 'blob',
         'not null' => FALSE,
