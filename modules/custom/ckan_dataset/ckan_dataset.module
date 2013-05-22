@@ -72,37 +72,7 @@ function ckan_dataset_access($op, $ckan_dataset = NULL, $account = NULL) {
   if (user_access('administer CKAN', $account)) {
     return TRUE;
   }
-  if (isset($ckan_dataset) && $type_name = $ckan_dataset->type) {
-    $op = ($op == 'view') ? 'view' : 'edit';
-    if (user_access("$op any $type_name CKAN Dataset", $account)) {
-      return TRUE;
-    }
-  }
   return FALSE;
-}
-
-
-/**
- * Access callback for the entity API.
- */
-function ckan_dataset_type_access($op, $type = NULL, $account = NULL) {
-  return user_access('administer CKAN types', $account);
-}
-
-
-/**
- * Gets an array of all CKAN Dataset types, keyed by the type name.
- *
- * @param $type_name
- *   If set, the type with the given name is returned.
- * @return CKANType[]
- *   Depending whether $type isset, an array of CKAN Dataset types or a single one.
- */
-function ckan_dataset_get_types($type_name = NULL) {
-  // entity_load will get the Entity controller for our CKAN Pacakge and call the load
-  // function of that object - we are loading entities by name here.
-  $types = entity_load_multiple_by_name('ckan_dataset_type', isset($type_name) ? array($type_name) : FALSE);
-  return isset($type_name) ? reset($types) : $types;
 }
 
 /**
@@ -262,9 +232,6 @@ class CKANController extends EntityAPIController {
    * Create a CKAN Dataset - we first set up the values that are specific
    * to our ckan_dataset schema but then also go through the EntityAPIController
    * function.
-   *
-   * @param $type
-   *   The machine-readable type of the ckan dataset.
    *
    * @return
    *   A ckan dataset object with all default fields initialized.
