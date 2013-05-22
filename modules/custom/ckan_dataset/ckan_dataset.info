@@ -8,7 +8,6 @@ dependencies[] = entity
 dependencies[] = views
 
 files[] = ckan_dataset.admin.inc
-files[] = ckan_dataset_type.admin.inc
 files[] = views/ckan_dataset.views.inc
 files[] = views/ckan_dataset_handler_link_field.inc
 files[] = views/ckan_dataset_handler_timestamp_field.inc
