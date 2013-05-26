@@ -30,6 +30,7 @@ dependencies[] = dgu_forum
 dependencies[] = dgu_organogram
 dependencies[] = dgu_library
 dependencies[] = dgu_user
+dependencies[] = dgu_glossary
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
 features[field_base][] = field_file_attachments
