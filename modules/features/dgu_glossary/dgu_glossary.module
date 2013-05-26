@@ -156,6 +156,40 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
     }
 }
 
+function dgu_glossary_node_presave($node){
+    if ($node->type == 'suggested_term'){
+        if (!empty($node->workbench_moderation)) {
+            $vids = variable_get('lexicon_vids', array());
+            foreach ($vids as $vid) {
+                $vocab = taxonomy_vocabulary_load($vid);
+                if ($vocab->name == 'Glossary') {
+                    $glossary_vid = $vid;
+                    break;
+                }
+            }
+            if ($node->workbench_moderation['current']->state == 'published'){
+                // if we are publishing a suggestion, we should first try find a taxonomy term that matches and publish it.
+                $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
+                if (!empty($terms)){
+                    foreach ($terms as $tid => $term) {
+                        taxonomy_term_delete($tid);
+                    }
+                }
+                taxonomy_term_save((object) array(
+                    'name' => $node->field_term_name[LANGUAGE_NONE][0]['value'],
+                    'vid' => $glossary_vid,
+                ));
+            } elseif ($node->workbench_moderation['current']->state == 'draft' && $node->workbench_moderation['current']->from_state == 'published') {
+                $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
+                if (!empty($terms)){
+                    foreach ($terms as $tid => $term) {
+                        taxonomy_term_delete($tid);
+                    }
+                }
+            }
+        }
+    }
+}
 /**
  * Implemnt hook permissions
  */
