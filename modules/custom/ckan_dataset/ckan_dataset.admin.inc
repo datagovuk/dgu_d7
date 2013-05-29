@@ -8,7 +8,7 @@
 /**
  * UI controller.
  */
-class CKANUIController extends EntityDefaultUIController {
+class CKANDatasetUIController extends EntityDefaultUIController {
 
   /**
    * Overrides hook_menu() defaults. Main reason for doing this is that

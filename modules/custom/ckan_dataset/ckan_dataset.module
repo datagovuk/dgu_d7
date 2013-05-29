@@ -17,7 +17,7 @@ function ckan_dataset_entity_info() {
     // The entity class and controller class extend the classes provided by the
     // Entity API
     'entity class' => 'CKANDataset',
-    'controller class' => 'CKANController',
+    'controller class' => 'CKANDatasetController',
     'base table' => 'ckan_dataset',
     'fieldable' => TRUE,
     'entity keys' => array(
@@ -46,7 +46,7 @@ function ckan_dataset_entity_info() {
     'admin ui' => array(
       'path' => 'admin/content/ckan_datasets',
       'file' => 'ckan_dataset.admin.inc',
-      'controller class' => 'CKANUIController',
+      'controller class' => 'CKANDatasetUIController',
       'menu wildcard' => '%ckan_dataset',
     ),
   );
@@ -246,7 +246,7 @@ class CKANDataset extends Entity {
 /**
  * The Controller for CKAN Datasets
  */
-class CKANController extends EntityAPIController {
+class CKANDatasetController extends EntityAPIController {
   public function __construct($entityType) {
     parent::__construct($entityType);
   }
