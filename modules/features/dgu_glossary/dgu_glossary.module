@@ -484,10 +484,3 @@ function dgu_glossary_suggest_new_page()
 
     return $form;
 }
-
-function dgu_glossary_query_alter(QueryAlterableInterface $query) {
-    if (FALSE && (empty($_GET['comments']) && $query->hasTag('comment_filter'))) {
-        $query-> leftJoin('field_data_field_is_new', 'fn', 't.tid = fn.entity_id');
-        $query-> condition(db_or()->condition('field_is_new_value', 0)->isNull('field_status_value'));
-    }
-}
