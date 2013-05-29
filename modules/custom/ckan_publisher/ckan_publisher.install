@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Sets up the base table for CKAN Publishers
+ */
+
+
+/**
+ * Implements hook_schema().
+ */
+function ckan_publisher_schema() {
+  $schema = array();
+
+  $schema['ckan_publisher'] = array(
+    'description' => 'The base table for CKAN Publishers.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Primary Key: Drupal id for a CKAN Publisher.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'ckan_id' => array(
+        'description' => 'CKAN GUID',
+        'type' => 'char',
+        'length' => 36,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'type' => array(
+        'description' => 'Redundant, but required by Entity API.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'name' => array(
+        'description' => 'The name of the CKAN Publisher - a human-readable identifier.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'created' => array(
+        'description' => 'The Unix timestamp when the CKAN Publisher was created.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'status' => array(
+        'description' => 'Boolean indicating whether publisher is published (visible to non-administrators).',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 1,
+      ),
+      'data' => array(
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
+        'description' => 'A serialized array of additional data.',
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'ckan_id' => array('ckan_id'),
+    ),
+  );
+
+  return $schema;
+}

@@ -1,0 +1,267 @@
+<?php
+
+/**
+ * @file
+ * CKAN Publisher Entity
+ */
+
+
+/**
+ * Implements hook_entity_info().
+ */
+function ckan_publisher_entity_info() {
+  $return['ckan_publisher'] = array(
+    'label' => t('Publihser'),
+    // The entity class and controller class extend the classes provided by the
+    // Entity API
+    'entity class' => 'CKANPublisher',
+    'controller class' => 'CKANPublisherController',
+    'base table' => 'ckan_publisher',
+    'fieldable' => FALSE,
+    'entity keys' => array(
+        'id' => 'id',
+    ),
+    'label callback' => 'entity_class_label',
+    'uri callback' => 'entity_class_uri',
+    'creation callback' => 'ckan_publisher_create',
+    'access callback' => 'ckan_publisher_access',
+    'module' => 'ckan_publisher',
+    // The information below is used by the CKANUIController (which extends the EntityDefaultUIController)
+    'admin ui' => array(
+      'path' => 'admin/content/ckan_publishers',
+      'file' => 'ckan_publisher.admin.inc',
+      'controller class' => 'CKANPublisherUIController',
+      'menu wildcard' => '%ckan_publisher',
+    ),
+  );
+
+  return $return;
+}
+
+/**
+ * CKAN Publisher settings form constructor.
+ */
+function ckan_publisher_structure_page () {
+  return 'CKAN Publisher doesn\'t support multiple bundles. You can <a>manage fields</a> and <a>manage display</a> of default bundle.' ;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function ckan_publisher_permission() {
+  // We set up permisssions to manage entity types, manage all entities and the
+  // permissions for each individual entity
+  $permissions = array(
+    'administer CKAN' => array(
+      'title' => t('Administer CKAN'),
+      'description' => t('Administer CKAN entities'),
+    ),
+  );
+  return $permissions;
+}
+
+
+/**
+ * Determines whether the given user has access to a CKAN Publisher.
+ *
+ * @param $op
+ *   The operation being performed. One of 'view', 'update', 'create', 'delete'
+ *   or just 'edit' (being the same as 'create' or 'update').
+ * @param $ckan_publisher
+ *   Optionally a ckan publisher or a ckan publisher type to check access for. If nothing is
+ *   given, access for all ckan publishers is determined.
+ * @param $account
+ *   The user to check for. Leave it to NULL to check for the global user.
+ * @return boolean
+ *   Whether access is allowed or not.
+ */
+function ckan_publisher_access($op, $ckan_publisher = NULL, $account = NULL) {
+  if (user_access('administer CKAN', $account)) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/**
+ * Fetch a CKAN Publisher object.
+ *
+ * @param $ckan_id
+ *   Integer specifying the ckan id.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   A fully-loaded $ckan object or FALSE if it cannot be loaded.
+ *
+ * @see ckan_publisher_load_multiple()
+ */
+function ckan_publisher_load($ckan_id, $reset = FALSE) {
+  $ckan_publishers = ckan_publisher_load_multiple(array($ckan_id), array(), $reset);
+  return reset($ckan_publishers);
+}
+
+
+/**
+ * Load multiple CKAN Publishers based on certain conditions.
+ *
+ * @param $ckan_ids
+ *   An array of CKAN IDs.
+ * @param $conditions
+ *   An array of conditions to match against the {ckan_publisher} table.
+ * @param $reset
+ *   A boolean indicating that the internal cache should be reset.
+ * @return
+ *   An array of CKAN objects, indexed by ckan_id.
+ *
+ * @see entity_load()
+ * @see ckan_publisher_load()
+ */
+function ckan_publisher_load_multiple($ckan_ids = array(), $conditions = array(), $reset = FALSE) {
+  return entity_load('ckan_publisher', $ckan_ids, $conditions, $reset);
+}
+
+
+/**
+ * Deletes a CKAN Publisher.
+ */
+function ckan_publisher_delete(CKANPublisher $ckan) {
+  $ckan->delete();
+}
+
+
+/**
+ * Delete multiple CKAN Publishers.
+ *
+ * @param $ckan_ids
+ *   An array of ckan IDs.
+ */
+function ckan_publisher_delete_multiple(array $ckan_ids) {
+  entity_get_controller('ckan_publisher')->delete($ckan_ids);
+}
+
+
+/**
+ * Create a ckan object.
+ */
+function ckan_publisher_create($values = array()) {
+  return entity_get_controller('ckan_publisher')->create($values);
+}
+
+
+/**
+ * Saves a CKAN Publisher to the database.
+ *
+ * @param $ckan
+ *   The CKAN Publisher object.
+ */
+function ckan_publisher_save(CKANPublisher $ckan) {
+  return $ckan->save();
+}
+
+/**
+ * URI callback for CKAN Publisher
+ */
+function ckan_publisher_uri(CKANPublisher $ckan){
+  return array(
+    'path' => 'ckan_publisher/' . $ckan->ckan_id,
+  );
+}
+
+
+/**
+ * Menu title callback for showing individual entities
+ */
+function ckan_publisher_page_title(CKANPublisher $ckan){
+  return $ckan->name;
+}
+
+/**
+ * Sets up content to show an individual CKAN Publisher
+ */
+function ckan_publisher_page_view($ckan, $view_mode = 'full') {
+  $controller = entity_get_controller('ckan_publisher');
+  $content = $controller->view(array($ckan->ckan_id => $ckan));
+  drupal_set_title($ckan->name);
+  return $content;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function ckan_publisher_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'ckan_publisher') . '/views',
+    'views_default file' => 'ckan_publisher.views.inc',
+  );
+}
+
+
+/**
+ * Implement hook_theme().
+ */
+function ckan_publisher_theme() {
+  return array(
+    'ckan_publisher' => array(
+      'render element' => 'elements',
+      'template' => 'ckan_publisher',
+    ),
+  );
+}
+
+/**
+ * The class used for CKAN Publishers
+ */
+class CKANPublisher extends Entity {
+
+  public function __construct($values = array()) {
+    parent::__construct($values, 'ckan_publisher');
+  }
+
+  protected function defaultLabel() {
+    return $this->name;
+  }
+
+  protected function defaultUri() {
+    return array('path' => 'ckan_publisher/' . $this->ckan_id);
+  }
+}
+
+/**
+ * The Controller for CKAN Publishers
+ */
+class CKANPublisherController extends EntityAPIController {
+  public function __construct($entityType) {
+    parent::__construct($entityType);
+  }
+
+  /**
+   * Create a CKAN Publisher - we first set up the values that are specific
+   * to our ckan_publisher schema but then also go through the EntityAPIController
+   * function.
+   *
+   * @return
+   *   A ckan publisher object with all default fields initialized.
+   */
+  public function create(array $values = array()) {
+    // Add values that are specific to our CKAN Publisher
+    $values += array(
+      'id' => '',
+      'ckan_id' => '',
+      'is_new' => TRUE,
+      'title' => '',
+      'created' => '',
+      'data' => '',
+    );
+
+    $ckan = parent::create($values);
+    return $ckan;
+  }
+
+  /*MODULENAME_views_api()  * Overriding the buldContent function to add entity specific fields
+   */
+  public function buildContent($entity, $view_mode = 'full', $langcode = NULL, $content = array()) {
+    $content = parent::buildContent($entity, $view_mode, $langcode, $content);
+    return $content;
+  }
+}
