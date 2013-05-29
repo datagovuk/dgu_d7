@@ -5,6 +5,8 @@
  * CKAN Dataset Entity
  */
 
+define('ADMIN_PATH', 'admin/structure/ckan_dataset');
+
 
 /**
  * Implements hook_entity_info().
@@ -28,9 +30,9 @@ function ckan_dataset_entity_info() {
       'ckan_dataset' => array( // This is the bundle_key.
         'label' => 'CKAN Dataset',
         'admin' => array(
-          'path' => 'admin/structure/ckan_dataset',
-          'real path' => 'admin/structure/ckan_dataset',
-          'access arguments' => array('Administer CKAN entities'),
+          'path' => ADMIN_PATH,
+          'real path' => ADMIN_PATH,
+          'access arguments' => array('Administer CKAN'),
         ),
       ),
     ),
@@ -55,16 +57,8 @@ function ckan_dataset_entity_info() {
 /**
  * CKAN Dataset settings form constructor.
  */
-function ckan_dataset_settings () {
-    $form['abc'] = array(
-        '#type' => 'textfield',
-        '#size' => 10,
-        '#maxlength' => 10,
-        '#required' => TRUE,
-        '#title' => t('Abc'),
-        '#description' => t('dsfsfsdf'),
-    );
-    return system_settings_form($form);
+function ckan_dataset_structure_page () {
+  return '<p>CKAN Dataset doesn\'t support multiple bundles. You can <a href="/' . ADMIN_PATH . '/fields">manage fields</a> and <a href="/' . ADMIN_PATH . '/display">manage display</a> of default bundle.</p>' ;
 }
 
 /**

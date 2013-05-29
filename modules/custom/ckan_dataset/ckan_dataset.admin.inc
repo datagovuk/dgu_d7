@@ -33,11 +33,9 @@ class CKANUIController extends EntityDefaultUIController {
     );
 
     $items['admin/structure/ckan_dataset'] = array(
-      'title' => 'CKAN Dataset',
-      'description' => t('Ckan Dataset settings.'),
-      'access arguments' => array('Administer CKAN entities'),
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('ckan_dataset_settings'),
+      'title' => 'Datasets',
+      'access arguments' => array('Administer CKAN'),
+      'page callback' => 'ckan_dataset_structure_page',
     );
 
     return $items;
