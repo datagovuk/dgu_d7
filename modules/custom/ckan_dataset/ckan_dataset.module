@@ -17,10 +17,24 @@ function ckan_dataset_entity_info() {
     'entity class' => 'CKANDataset',
     'controller class' => 'CKANController',
     'base table' => 'ckan_dataset',
-    'fieldable' => FALSE,
+    'fieldable' => TRUE,
     'entity keys' => array(
         'id' => 'id',
     ),
+//    'bundle keys' => array(
+//      'bundle' => 'type',
+//    ),
+    'bundles' => array(
+      'ckan_dataset' => array( // This is the bundle_key.
+        'label' => 'CKAN Dataset',
+        'admin' => array(
+          'path' => 'admin/structure/ckan_dataset',
+          'real path' => 'admin/structure/ckan_dataset',
+          'access arguments' => array('Administer CKAN entities'),
+        ),
+      ),
+    ),
+
     'label callback' => 'entity_class_label',
     'uri callback' => 'entity_class_uri',
     'creation callback' => 'ckan_dataset_create',
@@ -36,6 +50,21 @@ function ckan_dataset_entity_info() {
   );
 
   return $return;
+}
+
+/**
+ * CKAN Dataset settings form constructor.
+ */
+function ckan_dataset_settings () {
+    $form['abc'] = array(
+        '#type' => 'textfield',
+        '#size' => 10,
+        '#maxlength' => 10,
+        '#required' => TRUE,
+        '#title' => t('Abc'),
+        '#description' => t('dsfsfsdf'),
+    );
+    return system_settings_form($form);
 }
 
 /**
