@@ -23,9 +23,6 @@ function ckan_dataset_entity_info() {
     'entity keys' => array(
         'id' => 'id',
     ),
-//    'bundle keys' => array(
-//      'bundle' => 'type',
-//    ),
     'bundles' => array(
       'ckan_dataset' => array( // This is the bundle_key.
         'label' => 'CKAN Dataset',
@@ -101,8 +98,8 @@ function ckan_dataset_access($op, $ckan_dataset = NULL, $account = NULL) {
 /**
  * Fetch a CKAN Dataset object.
  *
- * @param $ckan_id
- *   Integer specifying the ckan id.
+ * @param $id
+ *   Integer specifying the ckan id or GUID string.
  * @param $reset
  *   A boolean indicating that the internal cache should be reset.
  * @return
@@ -110,11 +107,18 @@ function ckan_dataset_access($op, $ckan_dataset = NULL, $account = NULL) {
  *
  * @see ckan_dataset_load_multiple()
  */
-function ckan_dataset_load($ckan_id, $reset = FALSE) {
-  $ckan_datasets = ckan_dataset_load_multiple(array($ckan_id), array(), $reset);
+function ckan_dataset_load($id, $reset = FALSE) {
+  // Get Drupal entity id if CKAN UUID is provided.
+  if (strlen($id) == 36) { // UUID length is 36 characters.
+    $query = new EntityFieldQuery();
+    $result = $query->entityCondition('entity_type', 'ckan_dataset')->propertyCondition('ckan_id', $id)->execute();
+    if (isset($result['ckan_dataset']) && !empty($result['ckan_dataset'])) {
+      $id = array_shift($result['ckan_dataset'])->id;
+    }
+  }
+  $ckan_datasets = ckan_dataset_load_multiple(array($id), array(), $reset);
   return reset($ckan_datasets);
 }
-
 
 /**
  * Load multiple CKAN datasets based on certain conditions.
@@ -178,7 +182,7 @@ function ckan_dataset_save(CKANDataset $ckan) {
  */
 function ckan_dataset_uri(CKANDataset $ckan){
   return array(
-    'path' => 'ckan_dataset/' . $ckan->ckan_id,
+    'path' => 'ckan_dataset/' . $ckan->id,
   );
 }
 
@@ -196,6 +200,7 @@ function ckan_dataset_page_title(CKANDataset $ckan){
 function ckan_dataset_page_view($ckan, $view_mode = 'full') {
   $controller = entity_get_controller('ckan_dataset');
   $content = $controller->view(array($ckan->ckan_id => $ckan));
+
   drupal_set_title($ckan->name);
   return $content;
 }

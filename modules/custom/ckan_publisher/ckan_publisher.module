@@ -85,8 +85,8 @@ function ckan_publisher_access($op, $ckan_publisher = NULL, $account = NULL) {
 /**
  * Fetch a CKAN Publisher object.
  *
- * @param $ckan_id
- *   Integer specifying the ckan id.
+ * @param $id
+ *   Integer specifying the ckan id or GUID string.
  * @param $reset
  *   A boolean indicating that the internal cache should be reset.
  * @return
@@ -94,8 +94,17 @@ function ckan_publisher_access($op, $ckan_publisher = NULL, $account = NULL) {
  *
  * @see ckan_publisher_load_multiple()
  */
-function ckan_publisher_load($ckan_id, $reset = FALSE) {
-  $ckan_publishers = ckan_publisher_load_multiple(array($ckan_id), array(), $reset);
+function ckan_publisher_load($id, $reset = FALSE) {
+  // Get Drupal entity id if CKAN UUID is provided.
+  if (strlen($id) == 36) { // UUID length is 36 characters.
+    $query = new EntityFieldQuery();
+    $result = $query->entityCondition('entity_type', 'ckan_publisher')->propertyCondition('ckan_id', $id)->execute();
+    if (isset($result['ckan_publisher']) && !empty($result['ckan_publisher'])) {
+      $id = array_shift($result['ckan_publisher'])->id;
+    }
+  }
+
+  $ckan_publishers = ckan_publisher_load_multiple(array($id), array(), $reset);
   return reset($ckan_publishers);
 }
 
@@ -162,7 +171,7 @@ function ckan_publisher_save(CKANPublisher $ckan) {
  */
 function ckan_publisher_uri(CKANPublisher $ckan){
   return array(
-    'path' => 'ckan_publisher/' . $ckan->ckan_id,
+    'path' => 'ckan_publisher/' . $ckan->id,
   );
 }
 
@@ -223,7 +232,7 @@ class CKANPublisher extends Entity {
   }
 
   protected function defaultUri() {
-    return array('path' => 'ckan_publisher/' . $this->ckan_id);
+    return array('path' => 'ckan_publisher/' . $this->id);
   }
 }
 

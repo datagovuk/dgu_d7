@@ -39,8 +39,6 @@ class ckan_dataset_handler_link_field extends views_handler_field {
 
   function render($values) {
     $text = !empty($this->options['text']) ? $this->options['text'] : t('view');
-    $ckan_id = $values->{$this->aliases['ckan_id']};
-
-    return l($text, 'ckan_dataset/' . $ckan_id);
+    return l($text, 'ckan_dataset/' . $values->id);
   }
 }
