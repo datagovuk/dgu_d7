@@ -57,18 +57,8 @@ dependencies[] = module_filter
 dependencies[] = ckan
 
 dependencies[] = ckan_dataset
+dependencies[] = ckan_publisher
 dependencies[] = dgumigrate
 dependencies[] = dgu_site_feature
-
-dependencies[] = dgu_app
-dependencies[] = dgu_blog
-dependencies[] = dgu_data_set_request
-dependencies[] = dgu_idea
-dependencies[] = dgu_reply
-dependencies[] = dgu_forum
-dependencies[] = dgu_organogram
-dependencies[] = dgu_library
-dependencies[] = dgu_user
-
 
 files[] = dgu.profile
