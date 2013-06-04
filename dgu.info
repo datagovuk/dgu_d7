@@ -29,8 +29,6 @@ dependencies[] = pathauto
 dependencies[] = token
 dependencies[] = search
 dependencies[] = syslog
-dependencies[] = dgu
-dependencies[] = ckan_package
 dependencies[] = admin_devel
 dependencies[] = admin_menu_toolbar
 dependencies[] = email
@@ -41,7 +39,6 @@ dependencies[] = link
 dependencies[] = strongarm
 dependencies[] = views
 dependencies[] = views_ui
-dependencies[] = dgumigrate
 dependencies[] = file_entity
 dependencies[] = fivestar
 dependencies[] = media
@@ -53,19 +50,15 @@ dependencies[] = votingapi
 dependencies[] = workbench
 dependencies[] = workbench_media
 dependencies[] = workbench_moderation
-dependencies[] = dgu_site_feature
 dependencies[] = field_group
 dependencies[] = diff
+dependencies[] = stringoverrides
+dependencies[] = module_filter
+dependencies[] = ckan
 
-dependencies[] = dgu_app
-dependencies[] = dgu_blog
-dependencies[] = dgu_data_set_request
-dependencies[] = dgu_idea
-dependencies[] = dgu_reply
-dependencies[] = dgu_forum
-dependencies[] = dgu_organogram
-dependencies[] = dgu_library
-
-
+dependencies[] = ckan_dataset
+dependencies[] = ckan_publisher
+dependencies[] = dgumigrate
+dependencies[] = dgu_site_feature
 
 files[] = dgu.profile

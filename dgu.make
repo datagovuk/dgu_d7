@@ -9,8 +9,11 @@ projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
 projects[pathauto][subdir] = "contrib"
 
-projects[admin_menu][version] = "3.0-rc3"
+projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
+
+projects[module_filter][version] = "1.7"
+projects[module_filter][subdir] = "contrib"
 
 projects[ctools][subdir] = "contrib"
 
@@ -87,6 +90,22 @@ projects[field_group][subdir] = "contrib"
 
 projects[conditional_fields][version] = "3.x-dev"
 projects[conditional_fields][subdir] = "contrib"
+
+projects[logintoboggan][version] = "1.3"
+projects[logintoboggan][subdir] = "contrib"
+projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
+
+projects[stringoverrides][version] = "1.8"
+projects[stringoverrides][subdir] = "contrib"
+
+projects[ckan][type] = "module"
+projects[ckan][download][type] = "git"
+projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
+projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
+projects[ckan][subdir] = "contrib"
+
+projects[composer_manager][subdir] = "contrib"
+
 
 ; Themes
 ; --------
