@@ -129,5 +129,23 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'vud',
   );
 
+  // Exported permission: view own unpublished content.
+  $permissions['view own unpublished content'] = array(
+    'name' => 'view own unpublished content',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: view revisions.
+  $permissions['view revisions'] = array(
+    'name' => 'view revisions',
+    'roles' => array(
+      0 => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   return $permissions;
 }
