@@ -21,6 +21,7 @@ dependencies[] = options
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
+dependencies[] = dgu_taxonomy
 dependencies[] = dgu_app
 dependencies[] = dgu_blog
 dependencies[] = dgu_data_set_request
