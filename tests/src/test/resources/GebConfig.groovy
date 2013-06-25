@@ -27,4 +27,4 @@ environments {
     }
 
 }
-baseUrl = "http://d7/"
+baseUrl = "http://pawel.d7.co-dev1.dh.bytemark.co.uk/"

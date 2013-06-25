@@ -9,7 +9,7 @@ projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
 projects[pathauto][subdir] = "contrib"
 
-projects[admin_menu][version] = "3.0-rc4"§
+projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
 
 projects[module_filter][version] = "1.7"
@@ -38,7 +38,6 @@ projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
-projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
 projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
 
@@ -48,9 +47,6 @@ projects[field_formatter_settings][subdir] = "contrib"
 projects[field_replies][download][type] = "git"
 projects[field_replies][download][url] = "http://git.drupal.org/project/field_replies.git"
 projects[field_replies][subdir] = "contrib"
-
-projects[rules][version] = "2.3"
-projects[rules][subdir] = "contrib"
 
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
@@ -77,9 +73,6 @@ projects[workbench_moderation][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable7"
 projects[file_entity][subdir] = "contrib"
 
-projects[lexicon][version] = "1.1.0"
-projects[lexicon][version] = "contrib"
-
 projects[media][version] = "2.0-unstable7"
 projects[media][subdir] = "contrib"
 
@@ -98,17 +91,21 @@ projects[field_group][subdir] = "contrib"
 projects[conditional_fields][version] = "3.x-dev"
 projects[conditional_fields][subdir] = "contrib"
 
-projects[vote_up_down][type] = "module"
-projects[vote_up_down][version] = "1.0-alpha1"
-projects[vote_up_down][subdir] = "contrib"
-
 projects[logintoboggan][version] = "1.3"
 projects[logintoboggan][subdir] = "contrib"
 projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
 
-
 projects[stringoverrides][version] = "1.8"
 projects[stringoverrides][subdir] = "contrib"
+
+projects[ckan][type] = "module"
+projects[ckan][download][type] = "git"
+projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
+projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
+projects[ckan][subdir] = "contrib"
+
+projects[composer_manager][subdir] = "contrib"
+
 
 ; Themes
 ; --------

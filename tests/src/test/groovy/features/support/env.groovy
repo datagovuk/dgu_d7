@@ -12,5 +12,5 @@ Before () {
 }
 
 After () {
-    bindingUpdater.remove ()
+    //bindingUpdater.remove ()
 }

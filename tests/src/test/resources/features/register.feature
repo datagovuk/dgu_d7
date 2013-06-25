@@ -3,8 +3,8 @@ Feature: register
   In order to participate
   Users must create an account
 
-  @important
-  Scenario: Admin user
+  @important @creates-user
+  Scenario: Register user
     Given I have entered test into the username box
     And I have entered "test@test.test" into the email box
     And I have entered "test@test.test" into the confirm email box
