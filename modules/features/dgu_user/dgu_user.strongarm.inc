@@ -20,6 +20,13 @@ function dgu_user_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'ckan_publisher_role';
+  $strongarm->value = '5';
+  $export['ckan_publisher_role'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_user__user';
   $strongarm->value = array(
     'view_modes' => array(),
@@ -141,19 +148,6 @@ function dgu_user_strongarm() {
   $strongarm->name = 'pathauto_user_pattern';
   $strongarm->value = 'users/[user:name]';
   $export['pathauto_user_pattern'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'publisher_role';
-  $strongarm->value = array(
-    3 => '3',
-    1 => 0,
-    2 => 0,
-    4 => 0,
-    5 => 0,
-  );
-  $export['publisher_role'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
