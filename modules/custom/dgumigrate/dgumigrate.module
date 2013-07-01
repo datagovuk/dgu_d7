@@ -7,18 +7,24 @@ abstract class DGUMigration extends DynamicMigration {
 }
 
 class DGUUserMigration extends DrupalUser6Migration {
-  function query() {
-    //select distinct u.* from users u left join node n on n.uid = u.uid where u.uid > 1 and u.login - u.created > 1 and n.nid is not null and n.type != 'profile';
-    $query = Database::getConnection('default', $this->sourceConnection)
-            ->select('users', 'u')
-            ->distinct(TRUE)
-            ->fields('u')
-            ->condition('u.uid', 1, '>')
-            ->condition('n.type', 'profile', '!=')
-            ->isNotNull('n.nid');
-    $query->leftJoin('node', 'n', 'n.uid = u.uid');
-    return $query;
+  public function __construct(array $arguments) {
+      parent::__construct($arguments);
+      $this->addFieldMapping('is_new', NULL, FALSE)->defaultValue(TRUE);
+      $this->addFieldMapping('uid', 'uid');
   }
+
+//  function query() {
+//    //select distinct u.* from users u left join node n on n.uid = u.uid where u.uid > 1 and u.login - u.created > 1 and n.nid is not null and n.type != 'profile';
+//    $query = Database::getConnection('default', $this->sourceConnection)
+//            ->select('users', 'u')
+//            ->distinct(TRUE)
+//            ->fields('u')
+//            ->condition('u.uid', 1, '>')
+//            ->condition('n.type', 'profile', '!=')
+//            ->isNotNull('n.nid');
+//    $query->leftJoin('node', 'n', 'n.uid = u.uid');
+//    return $query;
+//  }
 }
 
 function dgumigrate_migrate_api() {
