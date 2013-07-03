@@ -80,6 +80,10 @@ projects[media][subdir] = "contrib"
 projects[votingapi][version] = "2.10"
 projects[votingapi][subdir] = "contrib"
 
+projects[vote_up_down][type] = "module"
+projects[vote_up_down][version] = "1.0-alpha1"
+projects[vote_up_down][subdir] = "contrib"
+
 projects[workbench][version] = "1.1"
 projects[workbench][subdir] = "contrib"
 
