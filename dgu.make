@@ -42,6 +42,9 @@ projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bun
 projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
 
+projects[rules][version] = "2.3"
+projects[rules][subdir] = "contrib"
+
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"
 
