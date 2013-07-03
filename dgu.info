@@ -54,7 +54,6 @@ dependencies[] = field_group
 dependencies[] = diff
 dependencies[] = stringoverrides
 dependencies[] = module_filter
-#dependencies[] = ckan
 
 dependencies[] = ckan_dataset
 dependencies[] = ckan_publisher
