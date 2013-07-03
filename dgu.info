@@ -54,11 +54,10 @@ dependencies[] = field_group
 dependencies[] = diff
 dependencies[] = stringoverrides
 dependencies[] = module_filter
-#dependencies[] = ckan
+dependencies[] = vud
 
 dependencies[] = ckan_dataset
 dependencies[] = ckan_publisher
 dependencies[] = dgumigrate
-dependencies[] = dgu_site_feature
 
 files[] = dgu.profile

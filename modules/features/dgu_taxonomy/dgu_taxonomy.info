@@ -1,0 +1,18 @@
+name = DGU Taxonomy Feature
+description = Contains DGU specific vocabularies.
+core = 7.x
+package = DGU Features
+php = 5.2.4
+version = 7.x-1.0
+project = dgu_taxonomy
+dependencies[] = features
+dependencies[] = taxonomy
+features[features_api][] = api:1
+features[taxonomy][] = category
+features[taxonomy][] = document_type
+features[taxonomy][] = nation
+features[taxonomy][] = public_body
+features[taxonomy][] = sector
+features[taxonomy][] = tags
+
+

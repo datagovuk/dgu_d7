@@ -55,7 +55,7 @@ class CommentReplyMigration extends DrupalMigration {
 		parent::__construct($arguments);
 		$instance = field_info_instance('node', $arguments['destination_field'], $arguments['destination_type']);
 		if (!$instance){
-			throw new MigrateException(t('Could not find !dest in the type: !type. You need to add this field to import comments for this type.',
+			throw new MigrateException(t('Could not find destination field: !dest in the type: !type. You need to add this field to import comments for this type.',
 					array('!dest' => $arguments['destination_field'], '!type' => $arguments['destination_type'])));
 		}
 		$this->source = new MigrateSourceSQL($this->query(),  $this->sourceFields, NULL, $this->sourceOptions);

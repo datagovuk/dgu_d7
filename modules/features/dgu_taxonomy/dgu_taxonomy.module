@@ -1,0 +1,7 @@
+<?php
+/*
+* Implements hook_taxonomy_default_vocabularies().
+*/
+
+
+include_once 'dgu_taxonomy.features.inc';
