@@ -77,7 +77,7 @@ projects[workbench_moderation][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable7"
 projects[file_entity][subdir] = "contrib"
 
-projects[lexicon][version] = "1.1.0"
+projects[lexicon][version] = "1.10"
 projects[lexicon][version] = "contrib"
 
 projects[media][version] = "2.0-unstable7"
@@ -116,6 +116,9 @@ projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
 projects[ckan][subdir] = "contrib"
 
 projects[composer_manager][subdir] = "contrib"
+
+projects[panels][version] = "3.3"
+projects[panels][subdir] = "contrib"
 
 
 ; Themes

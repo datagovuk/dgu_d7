@@ -1,0 +1,13 @@
+name = DGU Data set
+description = Contains the additions to dataset entity
+core = 7.x
+package = DGU Features
+dependencies[] = ctools
+dependencies[] = dgu_shared_fields
+dependencies[] = features
+dependencies[] = reply
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[field_instance][] = ckan_dataset-ckan_dataset-field_comment
+features[variable][] = field_bundle_settings_ckan_dataset__ckan_dataset

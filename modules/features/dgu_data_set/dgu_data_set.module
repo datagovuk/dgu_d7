@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Data set feature.
+ */
+
+include_once 'dgu_data_set.features.inc';
