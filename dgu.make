@@ -78,7 +78,7 @@ projects[file_entity][version] = "2.0-unstable7"
 projects[file_entity][subdir] = "contrib"
 
 projects[lexicon][version] = "1.10"
-projects[lexicon][version] = "contrib"
+projects[lexicon][subdir] = "contrib"
 
 projects[media][version] = "2.0-unstable7"
 projects[media][subdir] = "contrib"
