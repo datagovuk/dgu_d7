@@ -1,10 +1,48 @@
 <?php
 
 function dgu_install() {
-	include_once DRUPAL_ROOT . '/profiles/minimal/minimal.install';
-	minimal_install();
 
-    $filtered_html_format = array(
+  // Enable some standard blocks.
+  $default_theme = variable_get('theme_default', 'bartik');
+  $values = array(
+    array(
+      'module' => 'system',
+      'delta' => 'main',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'content',
+      'pages' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'user',
+      'delta' => 'login',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'sidebar_first',
+      'pages' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'system',
+      'delta' => 'help',
+      'theme' => $default_theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'help',
+      'pages' => '',
+      'cache' => -1,
+    ),
+  );
+  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
+  foreach ($values as $record) {
+    $query->values($record);
+  }
+  $query->execute();
+
+  $filtered_html_format = array(
     'format' => 'filtered_html',
     'name' => 'Filtered HTML',
     'weight' => 0,
@@ -58,7 +96,6 @@ function dgu_install() {
   );
   $full_html_format = (object) $full_html_format;
   filter_format_save($full_html_format);
-
 
   //create some basic types
   $types = array(
@@ -116,6 +153,13 @@ function dgu_install() {
   foreach ($rdf_mappings as $rdf_mapping) {
     rdf_mapping_save($rdf_mapping);
   }
+
+  // Allow visitor account creation, but with administrative approval.
+  variable_set('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL);
+
+  // Enable default permissions for system roles.
+  user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
+  user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
 
   // Create a default role for site administrators, with all available permissions assigned.
   $admin_role = new stdClass();
