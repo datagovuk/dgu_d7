@@ -117,6 +117,9 @@ projects[ckan][subdir] = "contrib"
 
 projects[composer_manager][subdir] = "contrib"
 
+projects[panels][version] = "3.3"
+projects[panels][subdir] = "contrib"
+
 
 ; Themes
 ; --------
