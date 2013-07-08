@@ -133,7 +133,7 @@ function dgu_glossary_suggest_definition_page($term)
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_definition_node_form', $node);
 
-    $form['title']['#value'] = t('New suggested definition for @term made by @user',
+    $form['title']['#value'] = t('New suggested term for @term made by @user',
         array('@term' => $term->name, '@user' => $user->name));
     $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
     $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
@@ -156,46 +156,6 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
     }
 }
 
-function dgu_glossary_workbench_moderation_transition($node, $old_state, $new_state){
-    error_log("transitioning: $old_state -> $new_state" );
-    if ($node->type == 'suggested_term'){
-        // The node will initially be in draft status.  We are only interested if the
-        // old state is not draft.
-        $vids = variable_get('lexicon_vids', array());
-        foreach ($vids as $vid) {
-            $vocab = taxonomy_vocabulary_load($vid);
-            if ($vocab->name == 'Glossary') {
-                $glossary_vid = $vid;
-                break;
-            }
-        }
-        if (($old_state == 'proposed' || $old_state == 'draft') && $new_state == 'accepted'){
-            // delete any existing term with the same name to avoid duplicates
-            $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
-            if (!empty($terms)){
-                foreach ($terms as $tid => $term) {
-                    taxonomy_term_delete($tid);
-                }
-            }
-            taxonomy_term_save((object) array(
-                'name' => $node->field_term_name[LANGUAGE_NONE][0]['value'],
-                'vid' => $glossary_vid,
-                'description' => $node->field_suggested_definition[LANGUAGE_NONE][0]['value'],
-                'field_is_new' => array(LANGUAGE_NONE => array(array('value' => 1))),
-            ));
-        } elseif ($old_state == 'accepted' && ($new_state == 'proposed' || $new_state == 'draft')) {
-            $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
-            if (!empty($terms)){
-                foreach ($terms as $tid => $term) {
-                    taxonomy_term_delete($tid);
-                }
-            }
-        }
-    }
-}
-
-function dgu_glossary_node_presave($node){
-}
 /**
  * Implemnt hook permissions
  */
@@ -489,4 +449,11 @@ function dgu_glossary_suggest_new_page()
         array('@user' => $user->name));
 
     return $form;
+}
+
+function dgu_glossary_query_alter(QueryAlterableInterface $query) {
+    if (FALSE && (empty($_GET['comments']) && $query->hasTag('comment_filter'))) {
+        $query-> leftJoin('field_data_field_is_new', 'fn', 't.tid = fn.entity_id');
+        $query-> condition(db_or()->condition('field_is_new_value', 0)->isNull('field_status_value'));
+    }
 }
