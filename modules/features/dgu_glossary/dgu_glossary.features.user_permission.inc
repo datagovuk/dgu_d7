@@ -14,9 +14,9 @@ function dgu_glossary_user_default_permissions() {
   $permissions['access lexicon'] = array(
     'name' => 'access lexicon',
     'roles' => array(
-      'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
+      0 => 'administrator',
+      1 => 'anonymous user',
+      2 => 'authenticated user',
     ),
     'module' => 'lexicon',
   );
@@ -25,8 +25,8 @@ function dgu_glossary_user_default_permissions() {
   $permissions['create suggested_definition content'] = array(
     'name' => 'create suggested_definition content',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
-      'authenticated user' => 'authenticated user',
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -35,8 +35,8 @@ function dgu_glossary_user_default_permissions() {
   $permissions['create suggested_term content'] = array(
     'name' => 'create suggested_term content',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
-      'authenticated user' => 'authenticated user',
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
     ),
     'module' => 'node',
   );
@@ -59,7 +59,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['delete terms in 2'] = array(
     'name' => 'delete terms in 2',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
+      0 => 'Glossary moderator',
     ),
     'module' => 'taxonomy',
   );
@@ -68,7 +68,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit any suggested_definition content'] = array(
     'name' => 'edit any suggested_definition content',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
+      0 => 'Glossary moderator',
     ),
     'module' => 'node',
   );
@@ -77,7 +77,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit any suggested_term content'] = array(
     'name' => 'edit any suggested_term content',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
+      0 => 'Glossary moderator',
     ),
     'module' => 'node',
   );
@@ -86,7 +86,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit terms in 2'] = array(
     'name' => 'edit terms in 2',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
+      0 => 'Glossary moderator',
     ),
     'module' => 'taxonomy',
   );
@@ -95,7 +95,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['moderate glossary'] = array(
     'name' => 'moderate glossary',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
+      0 => 'Glossary moderator',
     ),
     'module' => 'dgu_glossary',
   );
@@ -104,8 +104,8 @@ function dgu_glossary_user_default_permissions() {
   $permissions['suggest new definitions'] = array(
     'name' => 'suggest new definitions',
     'roles' => array(
-      'Glossary moderator' => 'Glossary moderator',
-      'authenticated user' => 'authenticated user',
+      0 => 'Glossary moderator',
+      1 => 'authenticated user',
     ),
     'module' => 'dgu_glossary',
   );
@@ -114,7 +114,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['suggest new terms'] = array(
     'name' => 'suggest new terms',
     'roles' => array(
-      'authenticated user' => 'authenticated user',
+      0 => 'authenticated user',
     ),
     'module' => 'dgu_glossary',
   );
@@ -123,8 +123,8 @@ function dgu_glossary_user_default_permissions() {
   $permissions['use vote up/down'] = array(
     'name' => 'use vote up/down',
     'roles' => array(
-      'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
+      0 => 'administrator',
+      1 => 'anonymous user',
     ),
     'module' => 'vud',
   );
@@ -133,7 +133,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['view own unpublished content'] = array(
     'name' => 'view own unpublished content',
     'roles' => array(
-      'administrator' => 'administrator',
+      0 => 'administrator',
     ),
     'module' => 'node',
   );
@@ -142,7 +142,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['view revisions'] = array(
     'name' => 'view revisions',
     'roles' => array(
-      'administrator' => 'administrator',
+      0 => 'administrator',
     ),
     'module' => 'node',
   );
