@@ -77,7 +77,7 @@ projects[workbench_moderation][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable7"
 projects[file_entity][subdir] = "contrib"
 
-projects[lexicon][version] = "1.1.0"
+projects[lexicon][version] = "1.10"
 projects[lexicon][version] = "contrib"
 
 projects[media][version] = "2.0-unstable7"
