@@ -11,8 +11,8 @@ function dgu_user_user_default_roles() {
   $roles = array();
 
   // Exported role: publisher.
-  $roles['publisher'] = array(
-    'name' => 'publisher',
+  $roles['data publisher'] = array(
+    'name' => 'data publisher',
     'weight' => 4,
   );
 
