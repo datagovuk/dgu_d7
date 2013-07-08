@@ -47,6 +47,7 @@ dependencies[] = migrate_ui
 dependencies[] = migrate_d2d
 dependencies[] = migrate_extras
 dependencies[] = votingapi
+dependencies[] = vud
 dependencies[] = workbench
 dependencies[] = workbench_media
 dependencies[] = workbench_moderation
@@ -58,10 +59,8 @@ dependencies[] = composer_manager
 
 ;ckan module is enabled via drush as a build step after running 'drush composer-rebuild'to avoid autoload warnings in drush output
 ;dependencies[] = ckan
-
 dependencies[] = ckan_dataset
 dependencies[] = ckan_publisher
 dependencies[] = dgumigrate
-dependencies[] = dgu_site_feature
 
 files[] = dgu.profile

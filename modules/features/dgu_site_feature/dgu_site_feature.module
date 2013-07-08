@@ -4,4 +4,3 @@
  * Code for the DGU Site Feature feature.
  */
 
-include_once 'dgu_site_feature.features.inc';

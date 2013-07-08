@@ -1,0 +1,492 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Glossary feature.
+ */
+
+include_once 'dgu_glossary.features.inc';
+
+function dgu_glossary_menu()
+{
+    // Get all the id's of vocabularies that are configured in the settings.
+    $vids = variable_get('lexicon_vids', array());
+    $items = array();
+    // Create a menu item for terms in each vocabulary
+    foreach ($vids as $vid) {
+        // Don't create menu items for vocabularies that are not Lexicon
+        // vocabularies.
+        if ($vid != 0) {
+            $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
+            $term_path = $lex_path . '/%taxonomy_term';
+            $items[$term_path . '/suggest_definition'] = array(
+                'title' => 'Suggest a better definition',
+                'page callback' => 'dgu_glossary_suggest_definition_page',
+                'page arguments' => array(1),
+                'access arguments' => array('suggest new definitions'),
+
+            );
+            $items[$term_path . '/make_comment'] = array(
+                'title' => 'Suggest a better definition',
+                'page callback' => 'dgu_glossary_suggest_definition_page',
+                'page arguments' => array(1),
+                'access arguments' => array('create content'),
+
+            );
+            $items[$term_path . '/thanks'] = array(
+                'title' => 'Thank you for your suggestion',
+                'page callback' => 'dgu_glossary_suggest_definition_thanks_page',
+                'page arguments' => array(1),
+                'access arguments' => array('suggest new definitions'),
+
+            );
+            $items[$term_path] = array(
+                'title' => 'Term',
+                'page callback' => 'glossary_term_page',
+                'page arguments' => array(1),
+                'access arguments' => array('access content'),
+            );
+        }
+        $items[$lex_path . '/suggest_new'] = array(
+            'title' => 'Suggest a new term and definition',
+            'page callback' => 'dgu_glossary_suggest_new_page',
+            'access arguments' => array('suggest new terms'),
+        );
+        $items[$lex_path . '/thanks'] = array(
+            'title' => 'Thank you for your suggestion',
+            'page callback' => 'dgu_glossary_new_definition_thanks_page',
+            'access arguments' => array('suggest new terms'),
+        );
+
+    }
+    return $items;
+}
+
+
+/**
+ * Implementation of hook_ctools_plugin_dierctory() to let the system
+ * know we implement widget plugins.
+ */
+function dgu_glossary_ctools_plugin_directory($module, $plugin)
+{
+    if ($module == 'vud') {
+        return $plugin;
+    }
+}
+
+function dgu_glossary_theme($existing, $type, $theme, $path)
+{
+    return array(
+        'suggested_definition_list' => array(
+            'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+            'template' => 'glossary_suggested_list',
+            'variables' => array(
+                'nids' => NULL,
+            ),
+        ),
+        'suggested_definition_item' => array(
+            'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+            'template' => 'glossary_suggested_item',
+            'variables' => array(
+                'node' => NULL,
+            ),
+        ),
+        'suggested_definition_thanks' => array(
+            'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+            'template' => 'glossary_thanks_page',
+            'variables' => array(
+                'thanks_text' => null,
+                'links' => null,
+            )
+        ),
+    );
+}
+
+function dgu_glossary_suggest_definition_thanks_page($term)
+{
+    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $vid = $term->vid;
+    $tid = $term->tid;
+    $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
+    $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to " . l($term->name, "$lex_path/$tid");
+    return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
+}
+
+function dgu_glossary_new_definition_thanks_page()
+{
+    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $lex_path = 'glossary';
+    $links = "Return to the " . l(t("Glossary"), "$lex_path");
+    return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
+}
+
+function dgu_glossary_suggest_definition_page($term)
+{
+    global $user;
+    $node = (object)array(
+        'uid' => $user->uid,
+        'name' => (isset($user->name) ? $user->name : ''),
+        'type' => 'suggested_definition',
+        'language' => LANGUAGE_NONE,
+    );
+    drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
+    $form_state['build_info']['args'] = array($node);
+    form_load_include($form_state, 'inc', 'node', 'node.pages');
+    $form = drupal_get_form('suggested_definition_node_form', $node);
+
+    $form['title']['#value'] = t('New suggested definition for @term made by @user',
+        array('@term' => $term->name, '@user' => $user->name));
+    $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
+    $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
+
+    return $form;
+}
+
+function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
+{
+    if ($form_id == 'suggested_definition_node_form' && arg(2) == 'suggest_definition') {
+        global $user;
+        $term = taxonomy_term_load(arg(1));
+        $form['field_term']['#type'] = 'hidden';
+        $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
+        $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
+        $form['title']['#type'] = 'hidden';
+    } else if ($form_id == 'suggested_term_node_form') {
+        $form['title']['#type'] = 'hidden';
+
+    }
+}
+
+function dgu_glossary_workbench_moderation_transition($node, $old_state, $new_state){
+    error_log("transitioning: $old_state -> $new_state" );
+    if ($node->type == 'suggested_term'){
+        // The node will initially be in draft status.  We are only interested if the
+        // old state is not draft.
+        $vids = variable_get('lexicon_vids', array());
+        foreach ($vids as $vid) {
+            $vocab = taxonomy_vocabulary_load($vid);
+            if ($vocab->name == 'Glossary') {
+                $glossary_vid = $vid;
+                break;
+            }
+        }
+        if (($old_state == 'proposed' || $old_state == 'draft') && $new_state == 'accepted'){
+            // delete any existing term with the same name to avoid duplicates
+            $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
+            if (!empty($terms)){
+                foreach ($terms as $tid => $term) {
+                    taxonomy_term_delete($tid);
+                }
+            }
+            taxonomy_term_save((object) array(
+                'name' => $node->field_term_name[LANGUAGE_NONE][0]['value'],
+                'vid' => $glossary_vid,
+                'description' => $node->field_suggested_definition[LANGUAGE_NONE][0]['value'],
+                'field_is_new' => array(LANGUAGE_NONE => array(array('value' => 1))),
+            ));
+        } elseif ($old_state == 'accepted' && ($new_state == 'proposed' || $new_state == 'draft')) {
+            $terms = taxonomy_get_term_by_name($node->field_term_name[LANGUAGE_NONE][0]['value']);
+            if (!empty($terms)){
+                foreach ($terms as $tid => $term) {
+                    taxonomy_term_delete($tid);
+                }
+            }
+        }
+    }
+}
+
+function dgu_glossary_node_presave($node){
+}
+/**
+ * Implemnt hook permissions
+ */
+function dgu_glossary_permission(){
+    return array(
+        'moderate glossary' => array(
+            'title' => t('moderate glossary'),
+        ),
+        'suggest new definitions' => array(
+            'title' => t('suggest new definitions'),
+        ),
+        'suggest new terms' => array(
+            'title' => t('suggest new terms'),
+        ),
+    );
+}
+
+
+/**
+ * Implement hook_theme_registry_alter to allow the theme files for the glossary to reside in
+ * the templates directory of the module.
+ *
+ * @param $theme_registry - theme registry passed in to be modified.
+ *
+ */
+function dgu_glossary_theme_registry_alter(&$theme_registry)
+{
+    global $theme;
+    $module_path = drupal_get_path('module', 'dgu_glossary');
+    $theme_registry_copy = $theme_registry;
+    _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path . "/templates");
+    $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
+    $hooks = array('node');
+    foreach ($hooks as $hook) {
+        _dgu_glossary_insert_after_first_element($theme_registry[$hook]['theme paths'], $module_path);
+    }
+    //Note that lexicon sets the theme path to the module's folder - if things don't
+    //quite work, look into that first.
+    $theme_registry['lexicon_overview_item']['template'] = 'lexicon-overview-item';
+    $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
+    $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
+    $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
+    //override the reply template so we can include the commenter's name
+    $theme_registry['reply']['template'] = "reply";
+    $theme_registry['reply']['path'] = $module_path . "/templates";
+    //override the user template
+    $theme_registry['user_profile']['template'] = "user-profile";
+    $theme_registry['user_profile']['path'] = $module_path . "/templates";
+
+}
+
+/**
+ * Helper function for re-ordering arrays (needed by theme_registry_alter)
+ */
+function _dgu_glossary_insert_after_first_element(&$a, $element)
+{
+    if (is_array($a)) {
+        $first_element = array_shift($a);
+        array_unshift($a, $first_element, $element);
+    }
+}
+
+function dgu_glossary_preprocess(&$variables, $hook)
+{
+    switch ($hook) {
+        case 'lexicon_alphabar':
+            $path = drupal_get_path('module', 'dgu_glossary');
+            drupal_add_js($path . '/js/glossary.js');
+            break;
+        case 'user_profile':
+            //Add mail variable
+            $account = $variables['elements']['#account'];
+            $variables['mail'] = $account->mail;
+            break;
+        case ('reply'):
+            $author=user_load($variables['reply']->uid);
+            $author_link = $author->name;
+            if (user_access("moderate glossary")){
+                $author_link = l($author->name, "user/" . $author->uid);
+            }
+
+            $variables["author"] = $author_link;
+            break;
+        case 'lexicon_overview_item':
+            $term = $variables['term'];
+            $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
+            $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
+            $variables['count'] = count($entity);
+            $variables['directory'] = 'profile/dgu/modules/features/dgu_glossary';
+            $variables['term_class'] = empty($term->field_is_new[LANGUAGE_NONE][0]['value']) ? 'term-existing' : 'term-new';
+            break;
+        case 'taxonomy_term':
+            $term = $variables['term'];
+            $voc = taxonomy_vocabulary_load($term->vid);
+            $term_path = $voc->machine_name . '/' . $variables['tid'];
+            $variables['content']['field_endorse']['#weight'] = 98;
+
+            // We need the instance id of the comments field on the glossary definition
+            // in order to properly build a reply add link
+            list(, , $bundle) = entity_extract_ids('taxonomy_term', $term);
+            $instances = field_info_instances('taxonomy_term', $bundle, null);
+            if (empty($instances['field_comments']))
+                return;
+            $instance = $instances['field_comments'];
+
+            $button_link_options = array('attributes' => array('class' => array('button')));
+            $link_options = array();
+            $make_comment_path = 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
+            $make_comment =  t('Make a comment');
+            if (!user_access('post comments')) {
+                $destination = array('destination' => $make_comment_path);
+                $link_options = array('query' => $destination);
+                $make_comment_path =  'user/login';
+                $make_comment = t('Login to make a comment');
+            }
+            $make_comment_button = l($make_comment, $make_comment_path, $button_link_options);
+            $make_comment_link = l($make_comment , $make_comment_path, $link_options);
+
+
+            $button_link_options = array('attributes' => array('class' => array('button')));
+            $link_options = array();
+            $suggest_better_path = $term_path . '/suggest_definition';
+            $suggest_better = t('Suggest a better definition');
+            if(!user_access('suggest new definitions')){
+                $destination = array('destination' => $suggest_better_path);
+                $button_link_options += array('query' => $destination);
+                $link_options = array('query' => $destination);
+                $suggest_better_path =  'user/login';
+                $suggest_better = t("Log in to suggest a better definition");
+
+            }
+            $suggest_better_button = l($suggest_better, $suggest_better_path, $button_link_options);
+            $suggest_better_link = l($suggest_better, $suggest_better_path, $link_options);
+
+            $variables['content']['suggest_def'] = array(
+                '#markup' => "<div>" . $suggest_better_button . "</div>",
+                '#weight' => 99,
+            );
+            $variables['content']['make_comment'] = array(
+                '#markup' => "<div>" . $make_comment_button  . "</div>",
+                '#weight' => 100,
+            );
+            $variables['content']['further_info'] = array(
+                '#markup' => "<p>You can help us refine and improve the definition of the term: Aggregated data.  You can " .
+                    $suggest_better_link . " or you can participate in the conversation and " .
+                    $make_comment_link . ".</p>",
+                '#weight' => 101,
+            );
+
+            $variables['suggested_definitions'] = '';
+            $nids = glossary_get_suggested_defs($term);
+            if (!empty($nids)){
+                $variables['suggested_definitions'] = theme('suggested_definition_list', array('nids' => $nids));
+            }
+
+            $lex = _lexicon_overview($voc);
+            $lexicon_overview = $lex['overview']['#lexicon_overview'];
+            $lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
+            $variables['lexicon_alphabar'] = $lexicon_alphabar;
+
+            //hide comments in the content section and display separately
+            $variables['comments'] = $variables['content']['field_comments'];
+            $variables['comments']['#label_display'] = 'hidden';
+            unset($variables['content']['field_comments']);
+
+            break;
+        default:
+            # code...
+            break;
+    }
+    return;
+}
+
+function glossary_get_suggested_defs($term)
+{
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+        ->entityCondition('bundle', 'suggested_definition')
+        ->fieldCondition('field_term', 'tid', $term->tid);
+    $result = $query->execute();
+    $nids = empty($result)?array():array_keys($result['node']);
+    return $nids;
+}
+
+function template_preprocess_suggested_definition_item(&$variables)
+{
+    $node = $variables['node'];
+    $variables['suggested_definition'] = field_view_field('node', $node, 'field_suggested_definition');
+    $variables['comments'] = field_view_field('node', $node, 'field_comment');
+}
+
+function template_preprocess_suggested_definition_list(&$variables)
+{
+    $defs = array();
+    $nids = $variables['nids'];
+    foreach ($nids as $nid) {
+        $node = node_load($nid);
+        $defs[] = theme('suggested_definition_item', array('node' => $node));
+    }
+    $variables['suggested_definitions'] = $defs;
+}
+
+/**
+ * Menu callback; displays all nodes associated with a term.
+ *
+ * @param $term
+ *   The taxonomy term.
+ * @return
+ *   The page content.
+ */
+function glossary_term_page($term)
+{
+    // If there is a menu link to this term, the link becomes the last part of
+    // the active trail, and the link name becomes the page title. Thus, we must
+    // explicitly set the page title to be the term title.
+    drupal_set_title('Glossary');
+
+    // Build breadcrumb based on the hierarchy of the term.
+    $current = (object)array(
+        'tid' => $term->tid,
+    );
+    // @todo This overrides any other possible breadcrumb and is a pure hard-coded
+    //   presumption. Make this behavior configurable per vocabulary or term.
+    $breadcrumb = array();
+    while ($parents = taxonomy_get_parents($current->tid)) {
+        $current = array_shift($parents);
+        $breadcrumb[] = l($current->name, 'taxonomy/term/' . $current->tid);
+    }
+    $breadcrumb[] = l(t('Home'), NULL);
+    $breadcrumb = array_reverse($breadcrumb);
+    drupal_set_breadcrumb($breadcrumb);
+    drupal_add_feed('glossary/' . $term->tid . '/feed', 'RSS - ' . $term->name);
+
+    // Set the term path as the canonical URL to prevent duplicate content.
+    $uri = entity_uri('taxonomy_term', $term);
+    drupal_add_html_head_link(array('rel' => 'canonical', 'href' => url($uri['path'], $uri['options'])), TRUE);
+    // Set the non-aliased path as a default shortlink.
+    drupal_add_html_head_link(array('rel' => 'shortlink', 'href' => url($uri['path'], array_merge($uri['options'], array('alias' => TRUE)))), TRUE);
+
+    // Normally we would call taxonomy_term_show() here, but for backwards
+    // compatibility in Drupal 7 we do not want to do that (it produces different
+    // data structures and HTML markup than what Drupal 7 released with). Calling
+    // taxonomy_term_view() directly provides essentially the same thing, but
+    // allows us to wrap the rendered term in our desired array structure.
+    $build['term_heading'] = array(
+        '#prefix' => '<div class="term-listing-heading">',
+        '#suffix' => '</div>',
+        'term' => taxonomy_term_view($term, 'full'),
+    );
+
+    if ($nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 10))) {
+        $nodes = node_load_multiple($nids);
+        $build += node_view_multiple($nodes);
+        $build['pager'] = array(
+            '#theme' => 'pager',
+            '#weight' => 5,
+        );
+    } else {
+        $build['no_content'] = array(
+            '#prefix' => '<p>',
+            '#markup' => t('There is currently no content classified with this term.'),
+            '#suffix' => '</p>',
+        );
+    }
+    return $build;
+}
+
+/**
+ * Theme function to return a form to submit a new suggested_term node
+ *
+ * @param $term
+ * @return array|mixed
+ *
+ *
+ */
+function dgu_glossary_suggest_new_page()
+{
+    global $user;
+    $node = (object)array(
+        'uid' => $user->uid,
+        'name' => (isset($user->name) ? $user->name : ''),
+        'type' => 'suggested_term',
+        'language' => LANGUAGE_NONE,
+    );
+    drupal_set_title(t('Suggest new term and definition.'), PASS_THROUGH);
+    $form_state['build_info']['args'] = array($node);
+    form_load_include($form_state, 'inc', 'node', 'node.pages');
+    $form = drupal_get_form('suggested_term_node_form', $node);
+
+    $form['title']['#value'] = t('New suggested term by @user',
+        array('@user' => $user->name));
+
+    return $form;
+}

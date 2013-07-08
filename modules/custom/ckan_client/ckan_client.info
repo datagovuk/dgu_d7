@@ -1,0 +1,5 @@
+name = CKAN Client
+description = Provides CKAN client for connecting to OKI CKAN
+core = 7.x
+version = "7.x-1.0"
+Package = "CKAN"

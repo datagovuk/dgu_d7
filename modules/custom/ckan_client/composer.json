@@ -1,0 +1,7 @@
+{
+
+    "minimum-stability": "dev",
+    "require": {
+        "silex/ckan_client": "dev-master"
+    }
+}

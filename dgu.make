@@ -37,9 +37,13 @@ projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][revision] = "86da8b1c474de3ca63c4bf62caf976635e1c637c"
 projects[reply][subdir] = "contrib"
+ projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
+
+projects[rules][version] = "2.3"
+projects[rules][subdir] = "contrib"
 
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"
@@ -73,11 +77,18 @@ projects[workbench_moderation][subdir] = "contrib"
 projects[file_entity][version] = "2.0-unstable7"
 projects[file_entity][subdir] = "contrib"
 
+projects[lexicon][version] = "1.1.0"
+projects[lexicon][version] = "contrib"
+
 projects[media][version] = "2.0-unstable7"
 projects[media][subdir] = "contrib"
 
 projects[votingapi][version] = "2.10"
 projects[votingapi][subdir] = "contrib"
+
+projects[vote_up_down][type] = "module"
+projects[vote_up_down][version] = "1.0-alpha1"
+projects[vote_up_down][subdir] = "contrib"
 
 projects[workbench][version] = "1.1"
 projects[workbench][subdir] = "contrib"
