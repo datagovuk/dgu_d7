@@ -13,9 +13,9 @@ function dgu_glossary_taxonomy_default_vocabularies() {
       'name' => 'Glossary',
       'machine_name' => 'glossary',
       'description' => 'DGU Glossary',
-      'hierarchy' => '0',
+      'hierarchy' => 0,
       'module' => 'taxonomy',
-      'weight' => '0',
+      'weight' => 0,
       'rdf_mapping' => array(
         'rdftype' => array(
           0 => 'skos:ConceptScheme',

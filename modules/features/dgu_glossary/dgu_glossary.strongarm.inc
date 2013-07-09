@@ -434,14 +434,14 @@ function dgu_glossary_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'lexicon_vids';
   $strongarm->value = array(
-    8 => '8',
-    2 => 0,
+    2 => '2',
     3 => 0,
-    1 => 0,
     4 => 0,
+    1 => 0,
     5 => 0,
     6 => 0,
     7 => 0,
+    8 => 0,
   );
   $export['lexicon_vids'] = $strongarm;
 
