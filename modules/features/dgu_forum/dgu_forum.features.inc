@@ -13,3 +13,20 @@ function dgu_forum_ctools_plugin_api() {
     return array("version" => "1");
   }
 }
+
+/**
+ * Implements hook_node_info().
+ */
+function dgu_forum_node_info() {
+  $items = array(
+    'forum' => array(
+      'name' => t('Forum topic'),
+      'base' => 'node_content',
+      'description' => t('A <em>forum topic</em> starts a new discussion thread within a forum.'),
+      'has_title' => '1',
+      'title_label' => t('Subject'),
+      'help' => '',
+    ),
+  );
+  return $items;
+}
