@@ -13,55 +13,6 @@ function dgu_organogram_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'comment_anonymous_organogram';
-  $strongarm->value = 0;
-  $export['comment_anonymous_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_default_mode_organogram';
-  $strongarm->value = 1;
-  $export['comment_default_mode_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_default_per_page_organogram';
-  $strongarm->value = '50';
-  $export['comment_default_per_page_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_form_location_organogram';
-  $strongarm->value = 1;
-  $export['comment_form_location_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_organogram';
-  $strongarm->value = '2';
-  $export['comment_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_preview_organogram';
-  $strongarm->value = '1';
-  $export['comment_preview_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'comment_subject_field_organogram';
-  $strongarm->value = 1;
-  $export['comment_subject_field_organogram'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__organogram';
   $strongarm->value = array(
     'view_modes' => array(),
@@ -115,6 +66,13 @@ function dgu_organogram_strongarm() {
   $strongarm->name = 'node_submitted_organogram';
   $strongarm->value = 1;
   $export['node_submitted_organogram'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_organogram_pattern';
+  $strongarm->value = '';
+  $export['pathauto_node_organogram_pattern'] = $strongarm;
 
   return $export;
 }

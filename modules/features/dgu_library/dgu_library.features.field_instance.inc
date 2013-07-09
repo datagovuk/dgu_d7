@@ -108,6 +108,52 @@ function dgu_library_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-resource-field_comment'
+  $field_instances['node-resource-field_comment'] = array(
+    'bundle' => 'resource',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'reply',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'reply_default',
+        'weight' => 7,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_comment',
+    'label' => 'Comments',
+    'required' => 0,
+    'settings' => array(
+      'access' => -1,
+      'allow_reply' => -1,
+      'display' => -1,
+      'form' => -1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'reply',
+      'settings' => array(),
+      'type' => 'reply',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-resource-field_document_type'
   $field_instances['node-resource-field_document_type'] = array(
     'bundle' => 'resource',
@@ -308,6 +354,7 @@ function dgu_library_field_default_field_instances() {
   t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('Body');
   t('Category');
+  t('Comments');
   t('Document Type');
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit).');
   t('Resource File');

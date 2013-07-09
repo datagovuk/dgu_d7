@@ -20,7 +20,7 @@ function dgu_library_ctools_plugin_api() {
 function dgu_library_node_info() {
   $items = array(
     'resource' => array(
-      'name' => t('resource'),
+      'name' => t('Library resource'),
       'base' => 'node_content',
       'description' => t('Library resource'),
       'has_title' => '1',
