@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the DGU Blog Feature feature.
  */
+
+include_once 'dgu_blog.features.inc';

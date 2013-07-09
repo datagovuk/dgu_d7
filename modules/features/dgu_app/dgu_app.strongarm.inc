@@ -30,5 +30,12 @@ function dgu_app_strongarm() {
   );
   $export['field_bundle_settings_node__app'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'pathauto_node_app_pattern';
+  $strongarm->value = 'apps/[node:title]';
+  $export['pathauto_node_app_pattern'] = $strongarm;
+
   return $export;
 }
