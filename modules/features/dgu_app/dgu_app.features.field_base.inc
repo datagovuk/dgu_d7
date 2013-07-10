@@ -152,11 +152,11 @@ function dgu_app_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_uses_dataset',
     'foreign keys' => array(
-      'ckan_package' => array(
+      'ckan_dataset' => array(
         'columns' => array(
-          'target_id' => 'ckan_id',
+          'target_id' => 'id',
         ),
-        'table' => 'ckan_package',
+        'table' => 'ckan_dataset',
       ),
     ),
     'indexes' => array(
@@ -179,7 +179,7 @@ function dgu_app_field_default_field_bases() {
         ),
         'target_bundles' => array(),
       ),
-      'target_type' => 'ckan_package',
+      'target_type' => 'ckan_dataset',
     ),
     'translatable' => 0,
     'type' => 'entityreference',

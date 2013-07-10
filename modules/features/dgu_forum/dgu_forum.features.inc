@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * dgu_library.features.inc
+ * dgu_forum.features.inc
  */
 
 /**
  * Implements hook_ctools_plugin_api().
  */
-function dgu_library_ctools_plugin_api() {
+function dgu_forum_ctools_plugin_api() {
   list($module, $api) = func_get_args();
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
@@ -17,14 +17,14 @@ function dgu_library_ctools_plugin_api() {
 /**
  * Implements hook_node_info().
  */
-function dgu_library_node_info() {
+function dgu_forum_node_info() {
   $items = array(
-    'resource' => array(
-      'name' => t('Library resource'),
+    'forum' => array(
+      'name' => t('Forum topic'),
       'base' => 'node_content',
-      'description' => t('Library resource'),
+      'description' => t('A <em>forum topic</em> starts a new discussion thread within a forum.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Subject'),
       'help' => '',
     ),
   );
