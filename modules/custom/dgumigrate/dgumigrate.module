@@ -30,15 +30,6 @@ class DGUUserMigration extends DrupalUser6Migration {
 function dgumigrate_migrate_api() {
   $api = array(
       'api' => 2,
-          /* Now handled in the d2d migration.
-            'migrations' => array(
-            'DGUCategory' => array('class_name' => 'DGUCategoryMigration'),
-            'DGUSector' => array('class_name' => 'DGUSectorMigration'),
-            'DGUDocType' => array('class_name' => 'DGUDocTypeMigration'),
-            'DGUNation' => array('class_name' => 'DGUNationMigration'),
-            'DGUPublicBody' => array('class_name' => 'DGUPublicBodyMigration'),
-            'DGUTags' => array('class_name' => 'DGUTagsMigration'),
-            ), */
   );
   return $api;
 }
