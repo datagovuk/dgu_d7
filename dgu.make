@@ -40,7 +40,7 @@ projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][revision] = "82d65c17d75e423b90fef7628519aae2aada5dc2"
 
 projects[reply][subdir] = "contrib"
-projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
+;projects[reply][patch][] = "http://drupal.org/files/1983940-reply_login_register.patch"
 projects[reply][patch][] = "http://drupal.org/files/1439600-exportable_reply_bundles-20_0.patch"
 ;projects[reply][patch][] = "http://drupal.org/files/bundle_label_1920358.patch"
 ;projects[reply][patch][] = "http://drupal.org/files/reply_max_depth.patch"
