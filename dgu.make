@@ -99,10 +99,6 @@ projects[workbench_media][subdir] = "contrib"
 projects[field_group][version] = "1.1"
 projects[field_group][subdir] = "contrib"
 
-projects[conditional_fields][type] = "module"
-projects[conditional_fields][version] = "3.x-dev"
-projects[conditional_fields][subdir] = "contrib"
-
 projects[logintoboggan][version] = "1.3"
 projects[logintoboggan][subdir] = "contrib"
 projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
