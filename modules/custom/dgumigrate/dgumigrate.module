@@ -238,7 +238,7 @@ function dgumigrate_register_migrations() {
       'source_type' => 'ckan_package',
       'entity_key' => 'id',
       'entity_type' => 'ckan_dataset',
-      'group' => 'CKAN2',
+      'group' => 'CKANComment',
       'destination_type' => 'ckan_dataset'));
   Migration::registerMigration('DGUCommentMigration', 'ckandataset_comments', $arguments);
 
