@@ -62,7 +62,7 @@ function dgu_app_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => -4,
+      'weight' => 1,
     ),
   );
 
@@ -105,7 +105,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 4,
+      'weight' => 9,
     ),
   );
 
@@ -164,7 +164,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => -2,
+      'weight' => 3,
     ),
   );
 
@@ -207,7 +207,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 6,
+      'weight' => 10,
     ),
   );
 
@@ -253,7 +253,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'reply',
       'settings' => array(),
       'type' => 'reply',
-      'weight' => 32,
+      'weight' => 14,
     ),
   );
 
@@ -299,7 +299,7 @@ function dgu_app_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => -1,
+      'weight' => 4,
     ),
   );
 
@@ -351,7 +351,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'fivestar',
       'settings' => array(),
       'type' => 'exposed',
-      'weight' => -3,
+      'weight' => 2,
     ),
   );
 
@@ -410,7 +410,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 2,
+      'weight' => 7,
     ),
   );
 
@@ -453,7 +453,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 12,
     ),
   );
 
@@ -498,7 +498,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'email_textfield',
-      'weight' => 1,
+      'weight' => 6,
     ),
   );
 
@@ -544,7 +544,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 0,
+      'weight' => 5,
     ),
   );
 
@@ -590,7 +590,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 8,
+      'weight' => 11,
     ),
   );
 
@@ -599,7 +599,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     'bundle' => 'app',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => 'Please tell us which datasets your app uses.',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -613,7 +613,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 7,
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -638,7 +638,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete_tags',
-      'weight' => 3,
+      'weight' => 8,
     ),
   );
 
@@ -659,7 +659,6 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
 The first images will be shown as a small thumbnail (253x140 pixels) in previews of the app.
 
 All images will be shown on your app page with medium sized thumbnails (188 pixels wide) which click through to the full sized image');
-  t('Please tell us which datasets your app uses.');
   t('Screen shots');
   t('Sector');
   t('Submitter Name');

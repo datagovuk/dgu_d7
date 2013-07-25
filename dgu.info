@@ -55,7 +55,6 @@ dependencies[] = field_group
 dependencies[] = diff
 dependencies[] = stringoverrides
 dependencies[] = module_filter
-dependencies[] = composer_manager
 dependencies[] = panels
 dependencies[] = page_manager
 
