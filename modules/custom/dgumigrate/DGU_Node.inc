@@ -87,7 +87,7 @@ class DGUAppMigration extends DGUNodeMigration {
 
 		$this->addFieldMapping('field_submitter_email', 'field_submitter_email');
 		$this->addFieldMapping('field_submitter_name', 'field_submitter_name');
-		$this->addFieldMapping('field_uses_dataset', 'field_package')->sourceMigration('dguckandataset');
+		$this->addFieldMapping('field_uses_dataset', 'field_package')->sourceMigration('ckan_dataset');
 
 
 		$this->addUnmigratedSources(array('field_app_link:attributes', 'field_other_commissioner',
