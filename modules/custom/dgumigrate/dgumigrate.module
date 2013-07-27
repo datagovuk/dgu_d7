@@ -30,15 +30,6 @@ class DGUUserMigration extends DrupalUser6Migration {
 function dgumigrate_migrate_api() {
   $api = array(
       'api' => 2,
-          /* Now handled in the d2d migration.
-            'migrations' => array(
-            'DGUCategory' => array('class_name' => 'DGUCategoryMigration'),
-            'DGUSector' => array('class_name' => 'DGUSectorMigration'),
-            'DGUDocType' => array('class_name' => 'DGUDocTypeMigration'),
-            'DGUNation' => array('class_name' => 'DGUNationMigration'),
-            'DGUPublicBody' => array('class_name' => 'DGUPublicBodyMigration'),
-            'DGUTags' => array('class_name' => 'DGUTagsMigration'),
-            ), */
   );
   return $api;
 }
@@ -235,8 +226,24 @@ function dgumigrate_register_migrations() {
       }
     }
   }
+  $ckan_dataset_arguments = $comment_arguments + array(
+    'source_type' => 'ckan_package',
+    'user_migration' => 'user',
+    'group' => 'CKAN',
+  );
+  Migration::registerMigration('CKANDatsetMigration', 'DGUCKANDataset', $ckan_dataset_arguments);
+  $arguments = array_merge($comment_arguments, array(
+      'description' => t('Migration of comments on ckan dataset nodes from Drupal 6'),
+      'node_migration' => 'DGUCKANDataset',
+      'source_type' => 'ckan_package',
+      'entity_key' => 'id',
+      'entity_type' => 'ckan_dataset',
+      'group' => 'CKANComment',
+      'destination_type' => 'ckan_dataset'));
+  Migration::registerMigration('DGUCommentMigration', 'ckandataset_comments', $arguments);
 
-  $menu_arguments = $common_arguments + array(
+
+    $menu_arguments = $common_arguments + array(
       'description' => t('Migration of menus from Drupal 6'),
       'machine_name' => 'menu',
   );

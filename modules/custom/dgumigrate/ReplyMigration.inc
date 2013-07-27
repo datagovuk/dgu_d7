@@ -33,13 +33,23 @@ class CommentReplyMigration extends DrupalMigration {
 				'type' => 'int',
 		);
 
+        $nodeMigration = null;
+        if (!empty($arguments['node_migration'])) {
+            $nodeMigration = $arguments['node_migration'];
+            $this->dependencies[] = $nodeMigration;
+        }
 
-		if (!empty($arguments['node_migration'])) {
-			$nodeMigration = $arguments['node_migration'];
-			$this->dependencies[] = $nodeMigration;
-		}
+        $entity_type = 'node';
+        if (!empty($arguments['entity_type'])) {
+            $entity_type = $arguments['entity_type'];
+        }
+        $entity_key = 'nid';
+        if (!empty($arguments['entity_key'])) {
+            $entity_key = $arguments['entity_key'];
+        }
 
-		if (!empty($arguments['user_migration'])) {
+
+        if (!empty($arguments['user_migration'])) {
 			$user_migration = $arguments['user_migration'];
 			$this->dependencies[] = $user_migration;
 		}
@@ -53,7 +63,7 @@ class CommentReplyMigration extends DrupalMigration {
 			$arguments['reply_bundle'] = 'comment';
 		}
 		parent::__construct($arguments);
-		$instance = field_info_instance('node', $arguments['destination_field'], $arguments['destination_type']);
+		$instance = field_info_instance($entity_type, $arguments['destination_field'], $arguments['destination_type']);
 		if (!$instance){
 			throw new MigrateException(t('Could not find destination field: !dest in the type: !type. You need to add this field to import comments for this type.',
 					array('!dest' => $arguments['destination_field'], '!type' => $arguments['destination_type'])));
@@ -77,14 +87,14 @@ class CommentReplyMigration extends DrupalMigration {
 		$this->addFieldMapping('entity_id', 'nid')->sourceMigration($nodeMigration)->defaultValue(0);
 		$this->addFieldMapping('instance_id')->defaultValue($instance['id']);
 		$this->addFieldMapping('parent', 'pid')->sourceMigration($arguments['machine_name'])->defaultValue(0);
-		$this->addFieldMapping('entity_type')->defaultValue('node');
+		$this->addFieldMapping('entity_type')->defaultValue($entity_type);
 
 		if (!empty($nodeMigration)) {
-			$this->addFieldMapping('nid', 'nid')
+			$this->addFieldMapping('nid', $entity_key)
 				->sourceMigration($nodeMigration);
 		}
 		else {
-			$this->addFieldMapping('nid', 'nid');
+			$this->addFieldMapping('nid', $entity_key);
 		}
 
 		if (isset($arguments['default_uid'])) {
