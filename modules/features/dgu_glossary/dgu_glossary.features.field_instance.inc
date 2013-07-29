@@ -337,8 +337,8 @@ function dgu_glossary_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'taxonomy_term-glossary-field_comments'
-  $field_instances['taxonomy_term-glossary-field_comments'] = array(
+  // Exported field_instance: 'taxonomy_term-glossary-field_comment'
+  $field_instances['taxonomy_term-glossary-field_comment'] = array(
     'bundle' => 'glossary',
     'deleted' => 0,
     'description' => '',
@@ -347,7 +347,6 @@ function dgu_glossary_field_default_field_instances() {
         'label' => 'above',
         'module' => 'reply',
         'settings' => array(
-          'field_comments' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -355,12 +354,12 @@ function dgu_glossary_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 1,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'taxonomy_term',
-    'field_name' => 'field_comments',
-    'label' => 'comments',
+    'field_name' => 'field_comment',
+    'label' => 'Comments',
     'required' => 0,
     'settings' => array(
       'access' => -1,
@@ -374,7 +373,7 @@ function dgu_glossary_field_default_field_instances() {
       'module' => 'reply',
       'settings' => array(),
       'type' => 'reply',
-      'weight' => 32,
+      'weight' => 4,
     ),
   );
 
@@ -418,7 +417,7 @@ function dgu_glossary_field_default_field_instances() {
       'module' => 'vud_field',
       'settings' => array(),
       'type' => 'vud_field_default_widget',
-      'weight' => 35,
+      'weight' => 8,
     ),
   );
 
@@ -461,7 +460,7 @@ function dgu_glossary_field_default_field_instances() {
         'display_label' => 1,
       ),
       'type' => 'options_onoff',
-      'weight' => 37,
+      'weight' => 10,
     ),
   );
 
@@ -511,7 +510,7 @@ function dgu_glossary_field_default_field_instances() {
         ),
       ),
       'type' => 'stars',
-      'weight' => 34,
+      'weight' => 7,
     ),
   );
 
@@ -552,7 +551,7 @@ function dgu_glossary_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 33,
+      'weight' => 6,
     ),
   );
 
@@ -590,7 +589,7 @@ function dgu_glossary_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 31,
+      'weight' => 3,
     ),
   );
 
@@ -643,7 +642,7 @@ function dgu_glossary_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 36,
+      'weight' => 9,
     ),
   );
 
@@ -656,7 +655,6 @@ function dgu_glossary_field_default_field_instances() {
   t('Reason for change');
   t('Term');
   t('Term name');
-  t('comments');
   t('endorse');
   t('is_new');
   t('related terms');
