@@ -226,13 +226,9 @@ class MigrateDestinationReply extends MigrateDestinationEntity{
 				$reply->id = $row->migrate_map_destid1;
 			}
 		}
-		// Fix up timestamps
-		if (isset($reply->created)) {
-			$reply->created = MigrationBase::timestamp($reply->created);
-		}
-		if (isset($reply->changed)) {
-			$reply->changed = MigrationBase::timestamp($reply->changed);
-		}
+
+    $reply->created = MigrationBase::timestamp($row->timestamp);
+    $reply->changed = MigrationBase::timestamp($row->timestamp);
 
 		if ($migration->getSystemOfRecord() == Migration::DESTINATION) {
 			if (!isset($comment->id)) {
