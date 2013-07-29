@@ -229,21 +229,22 @@ function dgumigrate_register_migrations() {
   $ckan_dataset_arguments = $comment_arguments + array(
     'source_type' => 'ckan_package',
     'user_migration' => 'user',
-    'group' => 'CKAN',
+    'group' => 'Datasets',
   );
-  Migration::registerMigration('CKANDatsetMigration', 'DGUCKANDataset', $ckan_dataset_arguments);
+  Migration::registerMigration('CKANDatsetMigration', 'ckan_dataset', $ckan_dataset_arguments);
+
   $arguments = array_merge($comment_arguments, array(
       'description' => t('Migration of comments on ckan dataset nodes from Drupal 6'),
-      'node_migration' => 'DGUCKANDataset',
+      'node_migration' => 'ckan_dataset',
       'source_type' => 'ckan_package',
       'entity_key' => 'id',
       'entity_type' => 'ckan_dataset',
-      'group' => 'CKANComment',
+      'group' => 'Comments',
       'destination_type' => 'ckan_dataset'));
-  Migration::registerMigration('DGUCommentMigration', 'ckandataset_comments', $arguments);
+  Migration::registerMigration('DGUCommentMigration', 'ckan_dataset_comments', $arguments);
 
 
-    $menu_arguments = $common_arguments + array(
+  $menu_arguments = $common_arguments + array(
       'description' => t('Migration of menus from Drupal 6'),
       'machine_name' => 'menu',
   );
