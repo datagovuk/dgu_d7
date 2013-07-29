@@ -10,28 +10,6 @@
 function dgu_glossary_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_comments'
-  $field_bases['field_comments'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_comments',
-    'foreign keys' => array(),
-    'indexes' => array(),
-    'locked' => 0,
-    'module' => 'reply',
-    'settings' => array(
-      'access' => -1,
-      'allow_reply' => -1,
-      'bundle' => 'comment',
-      'display' => -1,
-      'form' => 1,
-    ),
-    'translatable' => 0,
-    'type' => 'reply',
-  );
-
   // Exported field_base: 'field_endorse'
   $field_bases['field_endorse'] = array(
     'active' => 1,
