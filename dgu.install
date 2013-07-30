@@ -54,6 +54,7 @@ function dgu_install() {
       ),
       // HTML filter.
       'filter_html' => array(
+        'allowed_html' => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <p>',
         'weight' => 1,
         'status' => 1,
       ),
