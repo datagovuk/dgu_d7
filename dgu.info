@@ -22,7 +22,6 @@ dependencies[] = rdf
 dependencies[] = admin_menu
 dependencies[] = features
 dependencies[] = strongarm
-dependencies[] = blog
 dependencies[] = contextual
 dependencies[] = help
 dependencies[] = pathauto
@@ -57,6 +56,7 @@ dependencies[] = stringoverrides
 dependencies[] = module_filter
 dependencies[] = panels
 dependencies[] = page_manager
+dependencies[] = wysiwyg
 
 ;ckan module is enabled via drush as a build step after running 'drush composer-rebuild'to avoid autoload warnings in drush output
 ;dependencies[] = ckan

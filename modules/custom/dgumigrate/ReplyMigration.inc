@@ -287,6 +287,8 @@ class MigrateDestinationReply extends MigrateDestinationEntity{
       $reply->depth++;
     }
 
+    $this->textFormat = 'filtered_html';
+
 		migrate_instrument_start('reply_save');
 		reply_save($reply);
 		migrate_instrument_stop('reply_save');
