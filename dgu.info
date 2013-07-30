@@ -22,7 +22,6 @@ dependencies[] = rdf
 dependencies[] = admin_menu
 dependencies[] = features
 dependencies[] = strongarm
-dependencies[] = blog
 dependencies[] = contextual
 dependencies[] = help
 dependencies[] = pathauto
