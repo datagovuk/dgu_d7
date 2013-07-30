@@ -54,7 +54,6 @@ function dgu_install() {
       ),
       // HTML filter.
       'filter_html' => array(
-        'allowed_html' => '<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <p>',
         'weight' => 1,
         'status' => 1,
       ),
@@ -97,6 +96,23 @@ function dgu_install() {
   );
   $full_html_format = (object) $full_html_format;
   filter_format_save($full_html_format);
+
+  // Add <p> tag to filtered html format.
+  $result = db_select('filter', 'f')
+              ->fields('f', array('settings'))
+              ->condition('name', 'filter_html')
+              ->execute()
+              ->fetchObject();
+  $filter_settings = unserialize($result->settings);
+  $filter_settings['allowed_html'] = $filter_settings['allowed_html'] . ' <p>';
+  $serialised_settings = serialize($filter_settings);
+
+  db_update('filter')
+    ->fields(array(
+      'settings' => $serialised_settings,
+    ))
+    ->condition('name', 'filter_html')
+    ->execute();
 
   //create some basic types
   $types = array(
