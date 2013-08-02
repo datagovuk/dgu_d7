@@ -21,7 +21,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     'type' => 'normal',
     'title' => 'Data requests',
     'name' => 'main-menu',
-    'weight' => '2',
+    'weight' => '0',
     'parent' => array(
       'type' => 'none',
       'title' => '',
