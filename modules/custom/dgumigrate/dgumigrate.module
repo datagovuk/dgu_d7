@@ -11,20 +11,37 @@ class DGUUserMigration extends DrupalUser6Migration {
       parent::__construct($arguments);
       $this->addFieldMapping('is_new', NULL, FALSE)->defaultValue(TRUE);
       $this->addFieldMapping('uid', 'uid');
+      $this->addFieldMapping('field_avatar', 'field_avatar')->sourceMigration('Files');
+      $this->addFieldMapping('field_avatar:file_class')->defaultValue('MigrateFileFid');
+      $this->addFieldMapping('field_avatar:source_dir')->defaultValue(variable_get("drupal6files"));
+      $this->addFieldMapping('picture:file_class')->defaultValue('MigrateFileFid');
+      $this->addFieldMapping('picture:source_dir')->defaultValue(variable_get("drupal6files"));
+      $this->addFieldMapping('field_first_name', 'field_fname');
+      $this->addFieldMapping('field_surname', 'field_sname');
+      $this->addFieldMapping('field_bio', 'field_bio');
+      $this->addFieldMapping('field_twitter', 'field_twitter');
+      $this->addFieldMapping('field_facebook_url', 'field_facebook');
+      $this->addFieldMapping('field_linkedin_url', 'field_linkedin');
+      $this->addFieldMapping('field_job_title', 'field_job_title');
+
+      $this->addUnmigratedDestinations(array("field_publishers", "field_avatar:language"));
   }
 
-//  function query() {
-//    //select distinct u.* from users u left join node n on n.uid = u.uid where u.uid > 1 and u.login - u.created > 1 and n.nid is not null and n.type != 'profile';
-//    $query = Database::getConnection('default', $this->sourceConnection)
-//            ->select('users', 'u')
-//            ->distinct(TRUE)
-//            ->fields('u')
-//            ->condition('u.uid', 1, '>')
-//            ->condition('n.type', 'profile', '!=')
-//            ->isNotNull('n.nid');
-//    $query->leftJoin('node', 'n', 'n.uid = u.uid');
-//    return $query;
-//  }
+  function query() {
+      $query = Database::getConnection('default', $this->sourceConnection)
+          ->select('users', 'u')
+          ->fields('u')
+          ->condition('u.uid', 1, '>');
+      $query->leftJoin('node', 'n', 'n.uid = u.uid');
+      $query->condition('n.type', 'profile');
+      $query->leftJoin('content_type_profile', 'p', 'p.nid = n.nid');
+      $query->fields('p');
+      return $query;
+  }
+
+    public function prepareRow($row) {
+        return parent::prepareRow($row);
+    }
 }
 
 function dgumigrate_migrate_api() {
