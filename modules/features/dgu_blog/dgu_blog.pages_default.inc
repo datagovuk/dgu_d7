@@ -21,7 +21,7 @@ function dgu_blog_default_page_manager_pages() {
     'type' => 'normal',
     'title' => 'Blogs',
     'name' => 'main-menu',
-    'weight' => '0',
+    'weight' => '3',
     'parent' => array(
       'type' => 'none',
       'title' => '',
