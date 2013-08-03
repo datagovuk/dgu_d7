@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Linked Data feature.
+ */
+
+include_once 'dgu_linked_data.features.inc';
