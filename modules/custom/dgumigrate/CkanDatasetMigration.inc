@@ -73,18 +73,20 @@ class CKANDatsetMigration extends DrupalMigration {
      */
     protected function query() {
         $query = Database::getConnection('default', $this->sourceConnection)
-            ->select('node', 'n')
-            ->fields('n', array('nid', 'vid', 'language', 'title',
-                'uid', 'status', 'created', 'changed', 'comment', 'promote',
-                'moderate', 'sticky', 'tnid', 'translate'))
+            ->select('ckan_package', 'cp')
+            ->distinct()
+            ->fields('cp', array('ckan_id', 'ckan_name', 'ckan_version', 'ckan_url'))
             ->condition('type', $this->sourceType)
             ->orderBy('changed');
+        $query->innerJoin('node', 'n', 'n.vid=cp.vid');
+        $query->fields('n', array('nid', 'vid', 'language', 'title',
+            'uid', 'status', 'created', 'changed', 'comment', 'promote',
+            'moderate', 'sticky', 'tnid', 'translate'));
         $query->innerJoin('node_revisions', 'nr', 'n.vid=nr.vid');
         $query->fields('nr', array('body', 'teaser', 'format'));
+        $query->groupBy('cp.ckan_id');
         // Pick up simple CCK fields
         $cck_table = 'content_type_' . $this->sourceType;
-        $query->innerJoin('ckan_package', 'cp', 'n.vid=cp.vid');
-        $query->fields('cp', array('ckan_name', 'ckan_version', 'ckan_id', 'ckan_url'));
         if (Database::getConnection('default', $this->sourceConnection)
             ->schema()->tableExists($cck_table)) {
             $query->leftJoin($cck_table, 'f', 'n.vid=f.vid');

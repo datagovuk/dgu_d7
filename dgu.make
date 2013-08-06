@@ -122,7 +122,6 @@ projects[wysiwyg][download][url] = "http://git.drupal.org/project/wysiwyg.git"
 projects[wysiwyg][download][revision] = "31840cbfd1386f4ce138d74f4d6878a1cfe31d2c"
 projects[wysiwyg][subdir] = "contrib"
 
-
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
