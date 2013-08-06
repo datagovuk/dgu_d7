@@ -320,6 +320,19 @@ class DGUResourceMigration extends DGUNodeMigration {
 
 }
 
+class DGUPromoMigration extends DGUNodeMigration {
+    function __construct(array $arguments){
+        parent::__construct($arguments);
+        $this->addFieldMapping('field_main_image', 'field_promobox_image')->sourceMigration('Files');
+        $this->addFieldMapping('field_main_image:file_class')->defaultValue('MigrateFileFid');
+        $this->addFieldMapping('field_main_image:source_dir')->defaultValue(variable_get("drupal6files"));
+
+        $this->addFieldMapping('field_teaser', 'field_promobox_image');
+        $this->addFieldMapping('field_link', 'field_promobox_link');
+        $this->addFieldMapping('field_use_on', 'field_use');
+    }
+}
+
 class DGUPageMigration extends DGUNodeMigration {
 	function __construct(array $arguments) {
 
@@ -345,6 +358,7 @@ class DGUPageMigration extends DGUNodeMigration {
 
 	protected function query() {
 		$query = parent::query();
+        $query->condition('n.nid', array(3, 38304), 'NOT IN');
 		return $query;
 	}
 
@@ -398,4 +412,9 @@ class DGUFileMigration extends DrupalFile6Migration {
 			$this->addUnmigratedDestinations(array('path'));
 		}
 	}
+    public function prepareRow($current_row) {
+        return parent::prepareRow($current_row);
+
+    }
+
 }
