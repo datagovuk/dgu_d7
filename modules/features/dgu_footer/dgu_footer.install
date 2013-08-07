@@ -1,0 +1,12 @@
+<?php
+
+function dgu_footer_install(){
+  db_update('block')
+  ->fields(array(
+    'region' => 'footer',
+    'status' => 1,
+  ))
+  ->condition('delta', 'menu-footer')
+  ->condition('theme', 'dguk')
+  ->execute();
+}
