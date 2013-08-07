@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Footer feature.
+ */
+
+include_once 'dgu_footer.features.inc';
