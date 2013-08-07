@@ -6,7 +6,9 @@ function dgu_site_feature_install(){
   ->fields(array(
     'category' => 'Questions',
     'recipients' => 'team@data.gov.uk',
+    'reply' => '',
     'weight' => 0,
+    'selected' => 0,
   ))
   ->execute();
 
@@ -14,7 +16,9 @@ function dgu_site_feature_install(){
   ->fields(array(
     'category' => 'Transparency Board',
     'recipients' => 'nick.morgan@cabinet-office.gsi.gov.uk',
+    'reply' => '',
     'weight' => 2,
+    'selected' => 0,
   ))
   ->execute();
 
@@ -22,7 +26,9 @@ function dgu_site_feature_install(){
   ->fields(array(
     'category' => 'Account Suspension',
     'recipients' => 'team@data.gov.uk',
+    'reply' => '',
     'weight' => 4,
+    'selected' => 0,
   ))
   ->execute();
 
@@ -30,8 +36,14 @@ function dgu_site_feature_install(){
   ->fields(array(
     'category' => 'UK Location Programme',
     'recipients' => 'team@data.gov.uk',
+    'reply' => '',
     'weight' => 6,
+    'selected' => 0,
   ))
   ->execute();
+
+  db_delete('contact')
+    ->condition('category', 'Website feedback')
+    ->execute();
 
 }
