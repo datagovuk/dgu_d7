@@ -43,3 +43,4 @@ features[variable][] = pathauto_node_blog_pattern
 features[variable][] = save_continue_blog
 features[variable][] = workbench_moderation_default_state_blog
 features[views_view][] = blogs
+features[views_view][] = frequent_bloggers

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Location feature.
+ */
+
+include_once 'dgu_location.features.inc';
