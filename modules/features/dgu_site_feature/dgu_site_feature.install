@@ -1,0 +1,37 @@
+<?php
+
+function dgu_site_feature_install(){
+
+  db_insert('contact')
+  ->fields(array(
+    'category' => 'Questions',
+    'recipients' => 'team@data.gov.uk',
+    'weight' => 0,
+  ))
+  ->execute();
+
+  db_insert('contact')
+  ->fields(array(
+    'category' => 'Transparency Board',
+    'recipients' => 'nick.morgan@cabinet-office.gsi.gov.uk',
+    'weight' => 2,
+  ))
+  ->execute();
+
+  db_insert('contact')
+  ->fields(array(
+    'category' => 'Account Suspension',
+    'recipients' => 'team@data.gov.uk',
+    'weight' => 4,
+  ))
+  ->execute();
+
+  db_insert('contact')
+  ->fields(array(
+    'category' => 'UK Location Programme',
+    'recipients' => 'team@data.gov.uk',
+    'weight' => 6,
+  ))
+  ->execute();
+
+}
