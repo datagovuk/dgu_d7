@@ -358,7 +358,7 @@ class DGUPageMigration extends DGUNodeMigration {
 
 	protected function query() {
 		$query = parent::query();
-        $query->condition('n.nid', array(3, 38304), 'NOT IN');
+        $query->condition('n.nid', array(3, 38304, 10, 12, 4390, 44819, 2009, 5604, 11), 'NOT IN');
 		return $query;
 	}
 
