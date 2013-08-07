@@ -91,12 +91,13 @@ class MigrateDestinationD7Votes extends MigrateDestination {
     }
 
     public function complete($object, $row){
-        votingapi_recalculate_results('node', $object->entity_id, TRUE);
+        votingapi_recalculate_results($object->entity_type, $object->entity_id, TRUE);
     }
 
     public function rollback(array $key){
         db_delete('votingapi_vote')
-            ->condition('vote_id', $key);
+            ->condition('vote_id', $key['destid1'])
+            ->execute();
     }
 
     public function import(stdClass $object, stdClass $row){
