@@ -276,6 +276,8 @@ function dgumigrate_register_migrations() {
 
   Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'], $menu_arguments);
 
+  Migration::registerMigration('MigrateVotes', 'Votes', array_merge($comment_arguments, array('source_type' => 'apps', 'content_source' => 'app', 'user_migration' => 'user', 'description' => 'Migrate Votes')));
+
   $menu_links_arguments = $common_arguments + array(
       'description' => t('Migration of menu links from Drupal 6'),
       'machine_name' => 'menu_links',
