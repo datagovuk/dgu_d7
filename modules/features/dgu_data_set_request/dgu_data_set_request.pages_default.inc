@@ -252,7 +252,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<a href="/node/add/data-request">Request new data</a><p>This form will allow you to submit a data request.</p>',
+      'body' => '<p><a href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
