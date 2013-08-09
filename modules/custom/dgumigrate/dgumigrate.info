@@ -17,3 +17,4 @@ files[] = DGU_Node.inc
 files[] = ReplyMigration.inc
 files[] = CkanDatasetMigration.inc
 files[] = VotingApi.inc
+files[] = MigratePathRedirect.inc
