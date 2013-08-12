@@ -8,7 +8,7 @@ function dguk_preprocess(&$variables){
     module_load_include('inc', 'lexicon', 'lexicon.pages');
 
     # Add the shared dgu logo.
-    $variables['logo'] = $base_root."/assets/img/dgu-header-cropped.png";
+    $variables['logo'] = '/assets/img/dgu-header-cropped.png';
 
 
     # Add shared CSS and JS. Added here because the info file won't allow inclusion from site root.
