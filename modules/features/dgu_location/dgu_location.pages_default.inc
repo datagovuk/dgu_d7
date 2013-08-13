@@ -16,7 +16,10 @@ function dgu_location_default_page_manager_pages() {
   $page->admin_title = 'Location';
   $page->admin_description = 'Location landing page';
   $page->path = 'location';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Location',

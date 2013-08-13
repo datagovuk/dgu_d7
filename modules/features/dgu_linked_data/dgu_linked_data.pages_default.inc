@@ -16,7 +16,10 @@ function dgu_linked_data_default_page_manager_pages() {
   $page->admin_title = 'Linked data';
   $page->admin_description = 'Linked data landing page';
   $page->path = 'linked-data';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Linked Data',

@@ -16,7 +16,10 @@ function dgu_forum_default_page_manager_pages() {
   $page->admin_title = 'Forum categories';
   $page->admin_description = 'Forum categories - top level forum landing page';
   $page->path = 'forum';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Forum',
@@ -104,7 +107,10 @@ function dgu_forum_default_page_manager_pages() {
   $page->admin_title = 'Forum topics';
   $page->admin_description = 'Forum topics in category';
   $page->path = 'forum/%term';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array(
     'term' => array(

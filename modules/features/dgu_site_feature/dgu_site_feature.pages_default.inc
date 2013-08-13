@@ -16,7 +16,10 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->admin_title = 'About us';
   $page->admin_description = 'About us page.';
   $page->path = 'about-us';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'About us',
@@ -129,7 +132,10 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->admin_title = 'Data';
   $page->admin_description = 'Place holder for CKAN data page ';
   $page->path = 'data';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Data',
@@ -260,7 +266,10 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->admin_title = 'Home';
   $page->admin_description = 'Home page';
   $page->path = 'home';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'none',
     'title' => '',
