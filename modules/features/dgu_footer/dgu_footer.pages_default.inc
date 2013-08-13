@@ -16,7 +16,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Accessibility';
   $page->admin_description = '';
   $page->path = 'accessibility-statement';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Accessibility',
@@ -105,7 +108,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Code of conduct';
   $page->admin_description = '';
   $page->path = 'code-conduct';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Code of conduct',
@@ -194,7 +200,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Cookies policy';
   $page->admin_description = '';
   $page->path = 'cookies-policy';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Cookies policy',
@@ -283,7 +292,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'FAQ';
   $page->admin_description = '';
   $page->path = 'faq';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'FAQ',
@@ -372,7 +384,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Moderation policy';
   $page->admin_description = '';
   $page->path = 'moderation-policy';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Moderation policy',
@@ -461,7 +476,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Privacy';
   $page->admin_description = '';
   $page->path = 'privacy';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Privacy',
@@ -550,7 +568,10 @@ function dgu_footer_default_page_manager_pages() {
   $page->admin_title = 'Terms and conditions';
   $page->admin_description = '';
   $page->path = 'terms-and-conditions';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Terms and conditions',

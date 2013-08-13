@@ -1,7 +1,9 @@
 <?php 
 
 
-
+/**
+ *  Implements theme_preprocess().
+ */
 function dguk_preprocess(&$variables){
     global $base_root;
 
@@ -21,5 +23,4 @@ function dguk_preprocess(&$variables){
       'group' => JS_THEME,
       'every_page' => TRUE,
     ));
-
 }
