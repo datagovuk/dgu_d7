@@ -34,7 +34,7 @@ class MigrateVotes extends DrupalMigration{
                     'alias' => 'v',
                 ),
             ),
-            MigrateDestinationComment::getKeySchema()
+            MigrateDestinationD7Votes::getKeySchema()
         );
         $this->addFieldMapping("vote_id", "vote_id");
         $this->addFieldMapping("entity_type", "content_type");
