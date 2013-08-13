@@ -36,7 +36,8 @@
                 <ul id="dgu-nav" class="nav">
                     <li class="nav-home active"><a href="/">Home</a></li>
                     <li class="nav-data"><a href="/data">Data</a></li>
-                    <li class="nav-participate"><a href="/participate">Participate</a></li>
+                    <li class="nav-blog"><a href="/blog">Blogs</a></li>
+                    <li class="nav-forum"><a href="/forum">Forum</a></li>
                     <li class="nav-data-requests"><a href="/odug">Data Requests</a></li>
                     <li class="nav-apps"><a href="/apps">Apps</a></li>
                     <li class="nav-location"><a href="/location">Location</a></li>
