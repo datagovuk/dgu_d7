@@ -2,7 +2,6 @@ name = DGU User
 description = User account and login settings
 core = 7.x
 package = DGU Features
-php = 5.2.4
 dependencies[] = admin_menu
 dependencies[] = contextual
 dependencies[] = ctools

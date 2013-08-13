@@ -10,7 +10,7 @@
 function dgu_reply_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: administer replies.
+  // Exported permission: 'administer replies'.
   $permissions['administer replies'] = array(
     'name' => 'administer replies',
     'roles' => array(
@@ -19,7 +19,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: administer reply bundles.
+  // Exported permission: 'administer reply bundles'.
   $permissions['administer reply bundles'] = array(
     'name' => 'administer reply bundles',
     'roles' => array(
@@ -28,7 +28,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: delete comment reply.
+  // Exported permission: 'delete comment reply'.
   $permissions['delete comment reply'] = array(
     'name' => 'delete comment reply',
     'roles' => array(
@@ -37,14 +37,14 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: delete field_comment reply.
+  // Exported permission: 'delete field_comment reply'.
   $permissions['delete field_comment reply'] = array(
     'name' => 'delete field_comment reply',
     'roles' => array(),
     'module' => 'reply',
   );
 
-  // Exported permission: delete own comment reply.
+  // Exported permission: 'delete own comment reply'.
   $permissions['delete own comment reply'] = array(
     'name' => 'delete own comment reply',
     'roles' => array(
@@ -53,14 +53,14 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: delete own field_comment reply.
+  // Exported permission: 'delete own field_comment reply'.
   $permissions['delete own field_comment reply'] = array(
     'name' => 'delete own field_comment reply',
     'roles' => array(),
     'module' => 'reply',
   );
 
-  // Exported permission: edit comment reply.
+  // Exported permission: 'edit comment reply'.
   $permissions['edit comment reply'] = array(
     'name' => 'edit comment reply',
     'roles' => array(
@@ -69,14 +69,14 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: edit field_comment reply.
+  // Exported permission: 'edit field_comment reply'.
   $permissions['edit field_comment reply'] = array(
     'name' => 'edit field_comment reply',
     'roles' => array(),
     'module' => 'reply',
   );
 
-  // Exported permission: edit own comment reply.
+  // Exported permission: 'edit own comment reply'.
   $permissions['edit own comment reply'] = array(
     'name' => 'edit own comment reply',
     'roles' => array(
@@ -86,7 +86,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: edit own field_comment reply.
+  // Exported permission: 'edit own field_comment reply'.
   $permissions['edit own field_comment reply'] = array(
     'name' => 'edit own field_comment reply',
     'roles' => array(
@@ -95,7 +95,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: post comment reply.
+  // Exported permission: 'post comment reply'.
   $permissions['post comment reply'] = array(
     'name' => 'post comment reply',
     'roles' => array(
@@ -105,7 +105,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: post field_comment reply.
+  // Exported permission: 'post field_comment reply'.
   $permissions['post field_comment reply'] = array(
     'name' => 'post field_comment reply',
     'roles' => array(
@@ -114,7 +114,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: view comment reply.
+  // Exported permission: 'view comment reply'.
   $permissions['view comment reply'] = array(
     'name' => 'view comment reply',
     'roles' => array(
@@ -125,7 +125,7 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
-  // Exported permission: view field_comment reply.
+  // Exported permission: 'view field_comment reply'.
   $permissions['view field_comment reply'] = array(
     'name' => 'view field_comment reply',
     'roles' => array(

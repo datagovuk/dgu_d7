@@ -16,7 +16,10 @@ function dgu_data_set_request_default_page_manager_pages() {
   $page->admin_title = 'Data requests';
   $page->admin_description = 'Open Data User Group - dataset requests landing page';
   $page->path = 'odug';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Data requests',
