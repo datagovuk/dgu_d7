@@ -7,6 +7,7 @@
     <title><?php print $head_title; ?></title>
     <?php print $styles; ?>
     <link rel="stylesheet" href="/assets/css/datagovuk.min.css" />
+    <script src="/assets/js/vendor.min.js"></script>
     <?php print $scripts; ?>
     <!-- HTML5 element support for IE6-8 -->
     <!--[if lt IE 9]>
