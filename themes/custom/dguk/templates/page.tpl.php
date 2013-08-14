@@ -31,22 +31,7 @@
         </a>
     </div>
     <div class="container">
-        <div class="navbar navbar-inverse">
-            <div class="main-nav-collapse">
-                <ul id="dgu-nav" class="nav">
-                    <li class="nav-home active"><a href="/">Home</a></li>
-                    <li class="nav-data"><a href="/data">Data</a></li>
-                    <li class="nav-blog"><a href="/blog">Blogs</a></li>
-                    <li class="nav-forum"><a href="/forum">Forum</a></li>
-                    <li class="nav-data-requests"><a href="/odug">Data Requests</a></li>
-                    <li class="nav-apps"><a href="/apps">Apps</a></li>
-                    <li class="nav-location"><a href="/location">Location</a></li>
-                    <li class="nav-linked-data"><a href="/linked-data">Linked Data</a></li>
-                    <li class="nav-library"><a href="/library">Library</a></li>
-                    <li class="nav-about"><a href="/about-us">About</a></li>
-                </ul>
-            </div><!--/.main-nav-collapse -->
-        </div>
+      <?php print dguk_get_main_menu() ?>
     </div>
 </div>
 
