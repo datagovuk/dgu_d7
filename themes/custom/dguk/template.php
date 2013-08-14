@@ -32,3 +32,21 @@ function dguk_get_main_menu() {
 
 	return $output;
  }
+
+
+
+/**
+ * Get the output for the footer menu.
+ * Used in template and for ckan to pull in externally.
+ */
+function dguk_get_footer_menu() {
+	$menu = menu_navigation_links('menu-footer');
+	$menu_output = theme('links__menu-footer', array(
+	    'links' => $menu,
+	    'attributes' => array(
+	        'class' => array('links'),
+	    ),
+	 ));
+
+	return $menu_output;
+ }
