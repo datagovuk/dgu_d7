@@ -3,6 +3,5 @@ description = data.gov.uk theme
 version = 7.x-1.0
 core = 7.x
 base theme = bootstrap
-stylesheets[all][] = css/dguk.css
 plugins[panels][layouts] = layouts
 engine = phptemplate
