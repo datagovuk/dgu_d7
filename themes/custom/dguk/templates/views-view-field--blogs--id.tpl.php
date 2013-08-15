@@ -22,4 +22,10 @@
  * the view is modified.
  */
 ?>
-<?php print $output; ?>
+<?php 
+// Add singular or plural comments.
+$output .= ($output == 1) ? ' comment' : ' comments';
+
+print l($output, 'node/' . $row->nid , array('fragment' => 'comments')); 
+
+?>
