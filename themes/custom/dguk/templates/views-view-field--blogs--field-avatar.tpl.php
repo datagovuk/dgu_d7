@@ -22,4 +22,24 @@
  * the view is modified.
  */
 ?>
-<?php print $output; ?>
+
+<?php
+
+// Check if we are missing the avatar image.
+if (empty($output)) {
+
+  // Use custom themer to output images in theme like those uploaded to the drupal files table.
+	$image = theme_image_style_outside_files(array(
+    'style_name' => 'avatar',
+	  'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
+	));
+
+  $linkedimage = l($image, 'users/'.$row->users_node_name, array('html' => true) );
+  print($linkedimage);
+}
+else {
+  // Use the default output from views;
+  print $output;
+}
+
+?>
