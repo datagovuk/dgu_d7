@@ -281,7 +281,6 @@ function dgumigrate_register_migrations() {
     'content_tables' => array(
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
         'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
-        'ckan_package' => array('table' => 'migrate_map_ckan_dataset', 'url' => 'ckan_dataset'),
         'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
       ),
     'description' => 'Migrate Path redirects')
