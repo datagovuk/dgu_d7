@@ -35,15 +35,6 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Relationship: Content: Vote results */
-  $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
-  $handler->display->display_options['relationships']['votingapi_cache']['table'] = 'node';
-  $handler->display->display_options['relationships']['votingapi_cache']['field'] = 'votingapi_cache';
-  $handler->display->display_options['relationships']['votingapi_cache']['votingapi'] = array(
-    'value_type' => '',
-    'tag' => '',
-    'function' => 'average',
-  );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -66,14 +57,26 @@ function dgu_app_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Vote results: Value */
-  $handler->display->display_options['fields']['value']['id'] = 'value';
-  $handler->display->display_options['fields']['value']['table'] = 'votingapi_cache';
-  $handler->display->display_options['fields']['value']['field'] = 'value';
-  $handler->display->display_options['fields']['value']['relationship'] = 'votingapi_cache';
-  $handler->display->display_options['fields']['value']['label'] = '';
-  $handler->display->display_options['fields']['value']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['value']['precision'] = '0';
+  /* Field: Content: rating */
+  $handler->display->display_options['fields']['field_rating']['id'] = 'field_rating';
+  $handler->display->display_options['fields']['field_rating']['table'] = 'field_data_field_rating';
+  $handler->display->display_options['fields']['field_rating']['field'] = 'field_rating';
+  $handler->display->display_options['fields']['field_rating']['label'] = '';
+  $handler->display->display_options['fields']['field_rating']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_rating']['click_sort_column'] = 'rating';
+  $handler->display->display_options['fields']['field_rating']['settings'] = array(
+    'widget' => array(
+      'fivestar_widget' => 'default',
+    ),
+    'expose' => 1,
+    'style' => 'average',
+    'text' => 'none',
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
