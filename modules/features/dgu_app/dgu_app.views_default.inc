@@ -75,7 +75,7 @@ function dgu_app_views_default_views() {
     'widget' => array(
       'fivestar_widget' => 'default',
     ),
-    'expose' => 1,
+    'expose' => 0,
     'style' => 'average',
     'text' => 'none',
     'field_replies' => '',
