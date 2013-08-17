@@ -124,6 +124,10 @@ projects[wysiwyg][subdir] = "contrib"
 
 projects[redirect][subdir] = "contrib"
 
+projects[tagclouds][version] = "1.9"
+projects[tagclouds][subdir] = "contrib"
+
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
