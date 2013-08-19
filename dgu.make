@@ -5,6 +5,7 @@ api = 2
 ; --------
 
 projects[apachesolr][subdir] = "contrib"
+projects[facetapi][subdir] = "contrib"
 
 projects[strongarm][subdir] = "contrib"
 projects[diff][subdir] = "contrib"
