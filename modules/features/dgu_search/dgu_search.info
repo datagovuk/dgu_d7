@@ -1,0 +1,11 @@
+name = dgu search
+description = dgu search
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = dgu_search
+dependencies[] = apachesolr
+dependencies[] = ctools
+features[apachesolr_environment][] = solr
+features[ctools][] = apachesolr:apachesolr_environments:1
+features[features_api][] = api:2

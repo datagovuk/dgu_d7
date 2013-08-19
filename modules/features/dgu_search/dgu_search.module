@@ -1,0 +1,9 @@
+<?php
+/**
+ * @file
+ * Code for the dgu search feature.
+ */
+
+include_once 'dgu_search.features.inc';
+
+
