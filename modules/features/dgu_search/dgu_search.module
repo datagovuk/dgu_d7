@@ -7,3 +7,35 @@
 include_once 'dgu_search.features.inc';
 
 
+// Implements hook_block_info().
+function dgu_search_block_info() {
+  $blocks = array();
+  // This example comes from node.module.
+  $blocks['searchapp'] = array(
+    'info' => t('Search app'),
+  );
+  return $blocks;
+}
+
+
+// Implements hook_block_view().
+function dgu_search_block_view($delta = '') {
+  //The $delta parameter tells us which block is being requested.
+  switch ($delta) {
+    case 'searchapp':
+
+    $searchform = drupal_get_form('search_block_form');
+
+      $block['subject'] = t('Search app)');
+      $block['content'] = $searchform;
+      break;
+  }
+  return $block;
+}
+
+
+// Implements hook_form_alter().
+function dgu_search_form_alter(&$form, &$form_state, $form_id) {
+dsm($form);
+
+}
