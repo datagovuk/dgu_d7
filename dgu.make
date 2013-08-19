@@ -4,6 +4,8 @@ api = 2
 ; Modules
 ; --------
 
+projects[apachesolr][subdir] = "contrib"
+
 projects[strongarm][subdir] = "contrib"
 projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
