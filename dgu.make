@@ -5,6 +5,7 @@ api = 2
 ; --------
 
 projects[apachesolr][subdir] = "contrib"
+projects[apachesolr_autocomplete][subdir] = "contrib"
 projects[facetapi][subdir] = "contrib"
 
 projects[strongarm][subdir] = "contrib"
