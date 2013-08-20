@@ -36,6 +36,20 @@ function dgu_search_block_view($delta = '') {
 
 // Implements hook_form_alter().
 function dgu_search_form_alter(&$form, &$form_state, $form_id) {
-dsm($form);
+  $form['#submit'][] = 'dgu_search_form_search_submit';
+}
 
+
+/**
+ * Added form submit function to retain filters.
+ *
+ * @see apachesolr_search_form_search_submit()
+ */
+function dgu_search_form_search_submit($form, &$form_state) {
+  $fv = $form_state['values'];
+  // Replace keys with their rawurlencoded value
+  if (isset($fv['search_block_form'])) {
+    $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+    $form_state['redirect'] = str_replace($fv['search_block_form'], $raw_keys, $form_state['redirect']);
+  }
 }
