@@ -44,14 +44,25 @@ function dgu_search_block_view($delta = '') {
 
 // Implements hook_form_alter().
 function dgu_search_form_alter(&$form, &$form_state, $form_id) {
+  // Add custom form submition so we can redirect.
   $form['#submit'][] = 'dgu_search_form_search_submit';
 
-  $form['searchtype'] = array(
-    '#type' => 'textfield',
-    '#title' =>  t('searchtype'),
-    '#default_value' => arg(0),
-    //'#type' => 'hidden,'
- );
+  // Add a hidden for value for subsequent search redirection.
+  // @todo We need a better way than just based on url.
+  $search_types = array(
+    'app',      // Apps.
+    'blog',     // Blogs.
+    'forum',    // Forum topic.
+    'resource', // Library resource.
+  ); 
+
+  if (in_array(arg(0), $search_types)) {
+    $form['searchtype'] = array(
+    '#type' => 'hidden', 
+    '#value' => arg(0), 
+    );
+  }
+
 }
 
 
@@ -62,11 +73,19 @@ function dgu_search_form_alter(&$form, &$form_state, $form_id) {
  */
 function dgu_search_form_search_submit($form, &$form_state) {
   $fv = $form_state['values'];
-  // Replace keys with their rawurlencoded value
-  if (isset($fv['search_block_form'])) {
+
+  $search_types = array(
+    'app',      // Apps.
+    'blog',     // Blogs.
+    'forum',    // Forum topic.
+    'resource', // Library resource.
+  ); 
+  
+  if (isset($fv['search_block_form']) && isset($fv['searchtype']) && in_array($fv['searchtype'], $search_types)) {
+    // Replace keys with their rawurlencoded value
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
     // Override redirect with a new bundle specific search.
-    $form_state['redirect'] = "search/type/app/" . $raw_keys;
+    $form_state['redirect'] = "search/type/" . $fv['searchtype']. "/". $raw_keys;
   }
 }
