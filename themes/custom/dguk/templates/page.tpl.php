@@ -86,18 +86,18 @@
     </div><!--/page-->
 
 
-  <div class="footer">
-    <footer role="contentinfo" class="container">
-      <?php 
-        // Print the combined footer menu.
-        print dguk_get_footer_menu();
-      ?>
-      <?php
-        // Print anything else in this region.
-        print render($page['footer']); 
-      ?>
-    </footer>
-  </div> <!-- /footer -->
-
 
 </div><!--/.content-container-->
+
+<div class="footer">
+  <footer role="contentinfo" class="container">
+    <?php 
+      // Print the combined footer menu.
+      print dguk_get_footer_menu();
+    ?>
+    <?php
+      // Print anything else in this region.
+      // print render($page['footer']); 
+    ?>
+  </footer>
+</div> <!-- /footer -->
