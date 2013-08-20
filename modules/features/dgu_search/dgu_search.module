@@ -26,7 +26,7 @@ function dgu_search_block_view($delta = '') {
 
     $searchform = drupal_get_form('search_block_form');
 
-      $block['subject'] = t('Search app)');
+      $block['subject'] = t('Search app');
       $block['content'] = $searchform;
       break;
   }
@@ -50,6 +50,8 @@ function dgu_search_form_search_submit($form, &$form_state) {
   // Replace keys with their rawurlencoded value
   if (isset($fv['search_block_form'])) {
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
-    $form_state['redirect'] = str_replace($fv['search_block_form'], $raw_keys, $form_state['redirect']);
+
+    // Override redirect with a new bundle specific search.
+    $form_state['redirect'] = "search/type/app/" . $raw_keys;
   }
 }
