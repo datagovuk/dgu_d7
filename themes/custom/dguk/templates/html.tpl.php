@@ -7,6 +7,8 @@
     <title><?php print $head_title; ?></title>
     <?php print $styles; ?>
     <link rel="stylesheet" href="/assets/css/datagovuk.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/assets/js/jquery-1.9.1.min.js"><\/script>')</script>
     <script src="/assets/js/vendor.min.js"></script>
     <?php print $scripts; ?>
     <!-- HTML5 element support for IE6-8 -->

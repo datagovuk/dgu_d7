@@ -11,6 +11,17 @@ function dguk_preprocess(&$variables){
     $variables['logo'] = '/assets/img/dgu-header-cropped.png';
 }
 
+/*
+ * Implements theme_js_alter().
+ * Remove unwanted page includes.
+ */
+function dguk_js_alter(&$js){
+    // jQuery is pulled from a CDN (see html.tpl.php)
+    unset($js['misc/jquery.js']);
+    // bootstrap.js is in vendor.min.js. This is just a 404:
+    unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+}
+
 
 /**
  * Get the output for the main menu.
