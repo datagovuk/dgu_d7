@@ -30,16 +30,14 @@ function dgu_search_block_info() {
 
 // Implements hook_block_view().
 function dgu_search_block_view($delta = '') {
-  //The $delta parameter tells us which block is being requested.
-  switch ($delta) {
-    case 'searchapp':
+  // Get the search type from delta.
+  $search_type = substr($delta, 6);
 
-    $searchform = drupal_get_form('search_block_form');
+  $searchform = drupal_get_form('search_block_form');
 
-      $block['subject'] = t('Search app');
-      $block['content'] = $searchform;
-      break;
-  }
+  $block['subject'] = t('Search '. $search_type);
+  $block['content'] = $searchform;
+ 
   return $block;
 }
 
@@ -47,6 +45,13 @@ function dgu_search_block_view($delta = '') {
 // Implements hook_form_alter().
 function dgu_search_form_alter(&$form, &$form_state, $form_id) {
   $form['#submit'][] = 'dgu_search_form_search_submit';
+
+  $form['searchtype'] = array(
+    '#type' => 'textfield',
+    '#title' =>  t('searchtype'),
+    '#default_value' => arg(0),
+    //'#type' => 'hidden,'
+ );
 }
 
 
