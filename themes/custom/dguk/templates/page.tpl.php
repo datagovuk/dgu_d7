@@ -3,20 +3,26 @@
         <div id="hm-government-link" class="retina-img">
             <img src="/assets/img/crown-and-text.png" alt="HM Government" />
         </div>
-            <span class="ckan-logged-in" style="display: none;">
-                <div id="login-or-signup">
-                    You are logged-in as
-                    <a href="${'/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='me')}">${c.userobj.fullname if (c.userobj and c.userobj.fullname) else c.user}</a>.
-                    <a href="${'/logout' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for('/data/user/logout')}">Log out</a>.
-                </div>
-            </span>
-            <span class="ckan-logged-out">
-                <div id="login-or-signup">
-                    <a href="${'/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='login')}">Log in</a>
-                    or
-                    <a href="${'/user/register' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='register')}">sign up</a>
-                </div>
-            </span>
+            <?php
+            global $user;
+            if ($user->uid) {
+            ?>
+              <span class="ckan-logged-in">
+                  <div id="login-or-signup">
+                      You are logged-in as
+                      <a href="/user"><? print $user->name; ?></a>.
+                      <a href="/logout">Log out</a>.
+                  </div>
+              </span>
+            <? } else { ?>
+              <span class="ckan-logged-out">
+                  <div id="login-or-signup">
+                      <a href="/user">Log in</a>
+                      or
+                      <a href="/user/register">sign up</a>
+                  </div>
+              </span>
+            <? } ?>
     </div>
 </div>
 <div id="greenbar" class="">
