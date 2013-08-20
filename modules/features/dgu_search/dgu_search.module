@@ -10,10 +10,20 @@ include_once 'dgu_search.features.inc';
 // Implements hook_block_info().
 function dgu_search_block_info() {
   $blocks = array();
-  // This example comes from node.module.
-  $blocks['searchapp'] = array(
-    'info' => t('Search app'),
-  );
+  $search_types = array(
+    'app',      // Apps.
+    'blog',     // Blogs.
+    'forum',    // Forum topic.
+    'resource', // Library resource.
+  ); 
+
+  // Create a block for each content type to search in solr.
+  foreach ($search_types as $search_type) {
+    $blocks['search' . $search_type] = array(
+      'info' => t('Search ' . $search_type),
+    );
+  }
+
   return $blocks;
 }
 
