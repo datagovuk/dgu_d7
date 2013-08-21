@@ -61,7 +61,6 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
     );
 
     // Add settings for apachesolr_autocomplete's patch to enable filtering by custom search.
-    $form['module']['#value'] = 'apachesolr_search';
     $form['#search_page']['page_id'] = 'search_' . $form_state['searchtype'];
   }
 
