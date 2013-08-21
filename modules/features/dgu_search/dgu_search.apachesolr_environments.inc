@@ -63,8 +63,9 @@ function dgu_search_apachesolr_environments() {
         'last_entity_id' => 0,
       ),
     ),
-    'apachesolr_index_updated' => 1376906795,
-    'apachesolr_last_optimize' => 1376822188,
+    'apachesolr_index_updated' => 1377079718,
+    'apachesolr_last_optimize' => 1377004353,
+    'apachesolr_search_facet_pages' => '',
   );
   $environment->index_bundles = array(
     'node' => array(
