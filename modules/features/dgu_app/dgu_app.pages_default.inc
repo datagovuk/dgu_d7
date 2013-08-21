@@ -72,16 +72,13 @@ function dgu_app_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'left';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'block';
+    $pane->subtype = 'dgu_search-searchapp';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Search Apps',
-      'body' => '<p>Placeholder - Search Apps</p>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
