@@ -33,7 +33,12 @@ function dgu_search_block_view($delta = '') {
   // Get the search type from delta.
   $search_type = substr($delta, 6);
 
-  $searchform = drupal_get_form('search_block_form');
+  // Add the search type into the form state so form can be form_altered correctly.
+  $form_state = array(
+    'searchtype' => $search_type,
+  );
+
+  $searchform = drupal_build_form('search_block_form', $form_state);
 
   $block['subject'] = t('Search '. $search_type);
   $block['content'] = $searchform;
@@ -44,29 +49,22 @@ function dgu_search_block_view($delta = '') {
 
 // Implements hook_form_alter().
 function dgu_search_form_alter(&$form, &$form_state, $form_id) {
+
   // Add custom form submition so we can redirect.
   $form['#submit'][] = 'dgu_search_form_search_submit';
 
-  // Add a hidden for value for subsequent search redirection.
-  // @todo We need a better way than just based on url.
-  $search_types = array(
-    'apps' => 'app',     // Apps.
-    'blog' => 'blog',     // Blogs.
-    'forum' => 'forum',    // Forum topic.
-    'resource' => 'resource', // Library resource.
-  ); 
-
-  if (in_array(arg(0), array_keys($search_types))) {
+  if (isset($form_state['searchtype'])) {
+    // Add a variable into the form so we can redirect to correct solr search on submit.
     $form['searchtype'] = array(
       '#type' => 'hidden', 
-      '#value' => $search_types[arg(0)], 
+      '#value' => $form_state['searchtype'], 
     );
 
-    // Add settings for apachesolr_autocomplete to filter on custom pages
+    // Add settings for apachesolr_autocomplete to filter on custom search page.
     $form['module']['#value'] = 'apachesolr_search';
-    $form['#search_page']['page_id'] = 'search_' . $search_types[arg(0)];
-
+    $form['#search_page']['page_id'] = 'search_' . $form_state['searchtype'];
   }
+
 }
 
 
