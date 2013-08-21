@@ -29,6 +29,12 @@ function dgu_data_set_field_default_field_instances() {
         'type' => 'reply_default',
         'weight' => 0,
       ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
     ),
     'entity_type' => 'ckan_dataset',
     'field_name' => 'field_comment',
@@ -68,6 +74,12 @@ function dgu_data_set_field_default_field_instances() {
         ),
         'type' => 'reply_default',
         'weight' => 1,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'ckan_dataset',
@@ -296,7 +308,11 @@ function dgu_data_set_field_default_field_instances() {
   // Exported field_instance: 'reply-dataset_feedback-field_df_link_to_other'
   $field_instances['reply-dataset_feedback-field_df_link_to_other'] = array(
     'bundle' => 'dataset_feedback',
-    'default_value' => NULL,
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -317,7 +333,7 @@ function dgu_data_set_field_default_field_instances() {
     'entity_type' => 'reply',
     'field_name' => 'field_df_link_to_other',
     'label' => 'Does this dataset contain data which could be used to link it to other datasets?',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
@@ -353,7 +369,7 @@ function dgu_data_set_field_default_field_instances() {
     ),
     'entity_type' => 'reply',
     'field_name' => 'field_df_link_to_other_det',
-    'label' => 'What types of data does it contain?',
+    'label' => 'Please explain further',
     'required' => 0,
     'settings' => array(
       'text_processing' => 0,
@@ -665,11 +681,11 @@ function dgu_data_set_field_default_field_instances() {
   t('Is your organisation');
   t('Organisation name');
   t('Other Benefits');
+  t('Please explain further');
   t('Please give details below of other benefits of releasing this data as open data');
   t('Please give details for selection below');
   t('Social Growth');
   t('We will use the email contact in your data.gov.uk profile.');
-  t('What types of data does it contain?');
   t('i.e. releasing this dataset as open data means that a public service are able to run more effectively by giving greater transparency of its operation to citizens, allowing greater choice or supporting new models of provision of services.');
   t('i.e. releasing this dataset as open data means you or your organisation are able to more easily undertake social action, deliver the services of a community group or charity or has a positive environmental impact.');
   t('i.e. releasing this dataset as open data means you or your organisation are able to provide a commercial product or service or has other positive economic impacts such as better functioning of markets.');
