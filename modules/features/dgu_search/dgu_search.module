@@ -64,7 +64,7 @@ function dgu_search_form_alter(&$form, &$form_state, $form_id) {
 
     // Add settings for apachesolr_autocomplete to filter on custom pages
     $form['module']['#value'] = 'apachesolr_search';
-    $form['#search_page']['page_id'] = 'search_' . arg(0);
+    $form['#search_page']['page_id'] = 'search_' . $search_types[arg(0)];
 
   }
 }
