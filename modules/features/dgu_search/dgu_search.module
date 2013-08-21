@@ -1,0 +1,92 @@
+<?php
+/**
+ * @file
+ * Code for the dgu search feature.
+ */
+
+include_once 'dgu_search.features.inc';
+
+
+// Implements hook_block_info().
+function dgu_search_block_info() {
+  $blocks = array();
+  $search_types = array(
+    'app',      // Apps.
+    'blog',     // Blogs.
+    'forum',    // Forum topic.
+    'resource', // Library resource.
+  ); 
+
+  // Create a block for each content type to search in solr.
+  foreach ($search_types as $search_type) {
+    $blocks['search' . $search_type] = array(
+      'info' => t('Search ' . $search_type),
+    );
+  }
+
+  return $blocks;
+}
+
+
+// Implements hook_block_view().
+function dgu_search_block_view($delta = '') {
+  // Get the search type from delta.
+  $search_type = substr($delta, 6);
+
+  // Add the search type into the form state so form can be form_altered correctly.
+  $form_state = array(
+    'searchtype' => $search_type,
+  );
+
+  $searchform = drupal_build_form('search_block_form', $form_state);
+
+  $block['subject'] = t('Search '. $search_type);
+  $block['content'] = $searchform;
+ 
+  return $block;
+}
+
+
+// Implements hook_form FORM_ID_alter().
+function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+
+  // Add custom form submition so we can redirect.
+  $form['#submit'][] = 'dgu_search_form_search_block_form_submit';
+
+  if (isset($form_state['searchtype'])) {
+    // Add a variable into the form so we can redirect to correct solr search on submit.
+    $form['searchtype'] = array(
+      '#type' => 'hidden', 
+      '#value' => $form_state['searchtype'], 
+    );
+
+    // Add settings for apachesolr_autocomplete's patch to enable filtering by custom search.
+    $form['#search_page']['page_id'] = 'search_' . $form_state['searchtype'];
+  }
+
+}
+
+
+/**
+ * Added form submit function to retain filters.
+ *
+ * @see apachesolr_search_form_search_submit()
+ */
+function dgu_search_form_search_block_form_submit($form, &$form_state) {
+  $fv = $form_state['values'];
+
+  $search_types = array(
+    'app',      // Apps.
+    'blog',     // Blogs.
+    'forum',    // Forum topic.
+    'resource', // Library resource.
+  ); 
+  
+  if (isset($fv['search_block_form']) && isset($fv['searchtype']) && in_array($fv['searchtype'], $search_types)) {
+    // Replace keys with their rawurlencoded value
+    $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+
+    // Override redirect with a new bundle specific search.
+    $form_state['redirect'] = "search/" . $fv['searchtype']. "/". $raw_keys;
+  }
+}
