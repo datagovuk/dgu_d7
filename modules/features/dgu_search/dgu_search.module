@@ -47,11 +47,11 @@ function dgu_search_block_view($delta = '') {
 }
 
 
-// Implements hook_form_alter().
-function dgu_search_form_alter(&$form, &$form_state, $form_id) {
+// Implements hook_form FORM_ID_alter().
+function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 
   // Add custom form submition so we can redirect.
-  $form['#submit'][] = 'dgu_search_form_search_submit';
+  $form['#submit'][] = 'dgu_search_form_search_block_form_submit';
 
   if (isset($form_state['searchtype'])) {
     // Add a variable into the form so we can redirect to correct solr search on submit.
@@ -60,7 +60,7 @@ function dgu_search_form_alter(&$form, &$form_state, $form_id) {
       '#value' => $form_state['searchtype'], 
     );
 
-    // Add settings for apachesolr_autocomplete to filter on custom search page.
+    // Add settings for apachesolr_autocomplete's patch to enable filtering by custom search.
     $form['module']['#value'] = 'apachesolr_search';
     $form['#search_page']['page_id'] = 'search_' . $form_state['searchtype'];
   }
@@ -73,7 +73,7 @@ function dgu_search_form_alter(&$form, &$form_state, $form_id) {
  *
  * @see apachesolr_search_form_search_submit()
  */
-function dgu_search_form_search_submit($form, &$form_state) {
+function dgu_search_form_search_block_form_submit($form, &$form_state) {
   $fv = $form_state['values'];
 
   $search_types = array(
