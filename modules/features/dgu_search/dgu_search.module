@@ -61,8 +61,12 @@ function dgu_search_form_alter(&$form, &$form_state, $form_id) {
       '#type' => 'hidden', 
       '#value' => $search_types[arg(0)], 
     );
-  }
 
+    // Add settings for apachesolr_autocomplete to filter on custom pages
+    $form['module']['#value'] = 'apachesolr_search';
+    $form['#search_page']['page_id'] = 'search_' . arg(0);
+
+  }
 }
 
 
