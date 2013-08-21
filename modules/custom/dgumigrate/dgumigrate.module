@@ -277,6 +277,14 @@ function dgumigrate_register_migrations() {
   Migration::registerMigration('DrupalMenu6Migration', $menu_arguments['machine_name'], $menu_arguments);
 
   Migration::registerMigration('MigrateVotes', 'Votes', array_merge($comment_arguments, array('source_type' => 'apps', 'content_source' => 'app', 'user_migration' => 'user', 'description' => 'Migrate Votes')));
+  Migration::registerMigration('MigratePathRedirect', 'Paths', array_merge($comment_arguments, array(
+    'content_tables' => array(
+        'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
+        'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
+        'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
+      ),
+    'description' => 'Migrate Path redirects')
+  ));
 
   $menu_links_arguments = $common_arguments + array(
       'description' => t('Migration of menu links from Drupal 6'),

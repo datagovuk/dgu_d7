@@ -16,7 +16,10 @@ function dgu_glossary_default_page_manager_pages() {
   $page->admin_title = 'Glossary thank you page';
   $page->admin_description = '';
   $page->path = 'glossary/suggest_definition/thanks';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(

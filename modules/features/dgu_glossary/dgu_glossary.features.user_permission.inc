@@ -10,7 +10,7 @@
 function dgu_glossary_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: access lexicon.
+  // Exported permission: 'access lexicon'.
   $permissions['access lexicon'] = array(
     'name' => 'access lexicon',
     'roles' => array(
@@ -21,7 +21,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'lexicon',
   );
 
-  // Exported permission: create suggested_definition content.
+  // Exported permission: 'create suggested_definition content'.
   $permissions['create suggested_definition content'] = array(
     'name' => 'create suggested_definition content',
     'roles' => array(
@@ -31,7 +31,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: create suggested_term content.
+  // Exported permission: 'create suggested_term content'.
   $permissions['create suggested_term content'] = array(
     'name' => 'create suggested_term content',
     'roles' => array(
@@ -41,30 +41,30 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: delete any suggested_definition content.
+  // Exported permission: 'delete any suggested_definition content'.
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',
     'roles' => array(),
     'module' => 'node',
   );
 
-  // Exported permission: delete any suggested_term content.
+  // Exported permission: 'delete any suggested_term content'.
   $permissions['delete any suggested_term content'] = array(
     'name' => 'delete any suggested_term content',
     'roles' => array(),
     'module' => 'node',
   );
 
-  // Exported permission: delete terms in 2.
-  $permissions['delete terms in 2'] = array(
-    'name' => 'delete terms in 2',
+  // Exported permission: 'delete terms in document_type'.
+  $permissions['delete terms in document_type'] = array(
+    'name' => 'delete terms in document_type',
     'roles' => array(
       'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'taxonomy',
   );
 
-  // Exported permission: edit any suggested_definition content.
+  // Exported permission: 'edit any suggested_definition content'.
   $permissions['edit any suggested_definition content'] = array(
     'name' => 'edit any suggested_definition content',
     'roles' => array(
@@ -73,7 +73,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: edit any suggested_term content.
+  // Exported permission: 'edit any suggested_term content'.
   $permissions['edit any suggested_term content'] = array(
     'name' => 'edit any suggested_term content',
     'roles' => array(
@@ -82,16 +82,16 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: edit terms in 2.
-  $permissions['edit terms in 2'] = array(
-    'name' => 'edit terms in 2',
+  // Exported permission: 'edit terms in document_type'.
+  $permissions['edit terms in document_type'] = array(
+    'name' => 'edit terms in document_type',
     'roles' => array(
       'Glossary moderator' => 'Glossary moderator',
     ),
     'module' => 'taxonomy',
   );
 
-  // Exported permission: moderate glossary.
+  // Exported permission: 'moderate glossary'.
   $permissions['moderate glossary'] = array(
     'name' => 'moderate glossary',
     'roles' => array(
@@ -100,7 +100,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'dgu_glossary',
   );
 
-  // Exported permission: suggest new definitions.
+  // Exported permission: 'suggest new definitions'.
   $permissions['suggest new definitions'] = array(
     'name' => 'suggest new definitions',
     'roles' => array(
@@ -110,7 +110,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'dgu_glossary',
   );
 
-  // Exported permission: suggest new terms.
+  // Exported permission: 'suggest new terms'.
   $permissions['suggest new terms'] = array(
     'name' => 'suggest new terms',
     'roles' => array(
@@ -119,7 +119,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'dgu_glossary',
   );
 
-  // Exported permission: use vote up/down.
+  // Exported permission: 'use vote up/down'.
   $permissions['use vote up/down'] = array(
     'name' => 'use vote up/down',
     'roles' => array(
@@ -129,7 +129,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'vud',
   );
 
-  // Exported permission: view own unpublished content.
+  // Exported permission: 'view own unpublished content'.
   $permissions['view own unpublished content'] = array(
     'name' => 'view own unpublished content',
     'roles' => array(
@@ -138,7 +138,7 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'node',
   );
 
-  // Exported permission: view revisions.
+  // Exported permission: 'view revisions'.
   $permissions['view revisions'] = array(
     'name' => 'view revisions',
     'roles' => array(
