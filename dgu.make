@@ -151,6 +151,3 @@ libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEd
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
 
-libraries[bootstrap][download][type] = "file"
-libraries[bootstrap][download][url] = "http://twitter.github.com/bootstrap/assets/bootstrap.zip"
-libraries[bootstrap][destination] = "themes/contrib/bootstrap"
