@@ -54,8 +54,9 @@ function dguk_get_footer_menu() {
 
 function dguk_js_alter(&$js){
  /**
-  * Remove jquery. 
+  * Remove jquery and bootstrap. 
   * @see dguk/templates/html.tpl.php
   */
   unset($js['misc/jquery.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
 }
