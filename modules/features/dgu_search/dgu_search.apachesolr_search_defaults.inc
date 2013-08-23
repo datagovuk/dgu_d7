@@ -18,7 +18,7 @@ function dgu_search_apachesolr_search_default_searchers() {
   $searcher->description = 'Core Search';
   $searcher->search_path = 'search/site';
   $searcher->page_title = 'Site';
-  $searcher->env_id = '';
+  $searcher->env_id = 'solr';
   $searcher->settings = array(
     'fq' => array(),
     'apachesolr_search_custom_enable' => 0,
