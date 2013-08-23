@@ -21,5 +21,29 @@
 <?php print $page_top; //stuff from modules always render first ?>
 <?php print $page; // uses the page.tpl ?>
 <?php print $page_bottom; //stuff from modules always render last ?>
+
+<!-- Drupal class shim  ::  TODO update core Drupal install to set these correctly -->
+<script>
+  window.$ = window.jQuery;
+  $(function() {
+    $('.page').addClass('row-fluid');
+    $('#main-content').addClass('span9');
+    $('#sidebar1').addClass('span3');
+    $('.breadcrumb').remove();
+
+    $('#main-content > article').addClass('boxed');
+
+    $('.panel-2col .panel-col-first').addClass('span8').removeClass('panel-col-first');
+    $('.panel-2col .panel-col-last').addClass('span4').removeClass('panel-col-last');
+    $('.panel-2col').addClass('row-fluid').removeClass('panel-2col');
+
+    $('.panel-3col-33 .panel-col-first').addClass('span4').removeClass('panel-col-first');
+    $('.panel-3col-33 .panel-col').addClass('span4').removeClass('panel-col');
+    $('.panel-3col-33 .panel-col-last').addClass('span4').removeClass('panel-col-last');
+    $('.panel-3col-33').addClass('row-fluid').removeClass('panel-3col-33');
+
+  });
+</script>
+
 </body>
 </html>
