@@ -18,7 +18,7 @@ function dgu_search_apachesolr_search_default_searchers() {
   $searcher->description = 'Core Search';
   $searcher->search_path = 'search/site';
   $searcher->page_title = 'Site';
-  $searcher->env_id = 'solr';
+  $searcher->env_id = '';
   $searcher->settings = array(
     'fq' => array(),
     'apachesolr_search_custom_enable' => 0,
@@ -39,7 +39,7 @@ function dgu_search_apachesolr_search_default_searchers() {
   $searcher->description = '';
   $searcher->search_path = 'search/app';
   $searcher->page_title = 'Search app';
-  $searcher->env_id = 'solr';
+  $searcher->env_id = '';
   $searcher->settings = array(
     'fq' => array(
       0 => 'bundle:app',
