@@ -39,7 +39,7 @@ function dgu_search_apachesolr_search_default_searchers() {
   $searcher->description = '';
   $searcher->search_path = 'search/app';
   $searcher->page_title = 'Search app';
-  $searcher->env_id = '';
+  $searcher->env_id = 'solr';
   $searcher->settings = array(
     'fq' => array(
       0 => 'bundle:app',
