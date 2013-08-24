@@ -27,7 +27,7 @@
         <a class="btn btn-inverse visible-phone" data-toggle="collapse" data-target=".main-nav-collapse">
             Nav &nbsp;<i class="icon-chevron-down icon-white"></i>
         </a>
-        <a class="brand" href="#" rel="home">
+        <a class="brand" href="/" rel="home">
             <div id="dgu-header" class="retina-img">
                 <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
             </div>
