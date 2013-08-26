@@ -198,13 +198,6 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
     $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
     $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
-    //override the reply template so we can include the commenter's name
-    $theme_registry['reply']['template'] = "reply";
-    $theme_registry['reply']['path'] = $module_path . "/templates";
-    //override the user template
-    $theme_registry['user_profile']['template'] = "user-profile";
-    $theme_registry['user_profile']['path'] = $module_path . "/templates";
-
 }
 
 /**
@@ -224,20 +217,6 @@ function dgu_glossary_preprocess(&$variables, $hook)
         case 'lexicon_alphabar':
             $path = drupal_get_path('module', 'dgu_glossary');
             drupal_add_js($path . '/js/glossary.js');
-            break;
-        case 'user_profile':
-            //Add mail variable
-            $account = $variables['elements']['#account'];
-            $variables['mail'] = $account->mail;
-            break;
-        case ('reply'):
-            $author=user_load($variables['reply']->uid);
-            $author_link = $author->name;
-            if (user_access("moderate glossary")){
-                $author_link = l($author->name, "user/" . $author->uid);
-            }
-
-            $variables["author"] = $author_link;
             break;
         case 'lexicon_overview_item':
             $term = $variables['term'];

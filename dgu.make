@@ -124,6 +124,13 @@ projects[composer_manager][subdir] = "contrib"
 projects[panels][version] = "3.3"
 projects[panels][subdir] = "contrib"
 
+projects[services][version] = "3.5"
+projects[services][subdir] = "contrib"
+projects[services_views][version] = "1.0-beta2"
+projects[services_views][subdir] = "contrib"
+
+projects[libraries][subdir] = "contrib"
+
 projects[wysiwyg][type] = "module"
 projects[wysiwyg][download][type] = "git"
 projects[wysiwyg][download][url] = "http://git.drupal.org/project/wysiwyg.git"
