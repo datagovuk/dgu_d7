@@ -3,20 +3,23 @@
         <div id="hm-government-link" class="retina-img">
             <img src="/assets/img/crown-and-text.png" alt="HM Government" />
         </div>
-            <span class="ckan-logged-in" style="display: none;">
-                <div id="login-or-signup">
-                    You are logged-in as
-                    <a href="${'/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='me')}">${c.userobj.fullname if (c.userobj and c.userobj.fullname) else c.user}</a>.
-                    <a href="${'/logout' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for('/data/user/logout')}">Log out</a>.
-                </div>
-            </span>
-            <span class="ckan-logged-out">
-                <div id="login-or-signup">
-                    <a href="${'/user' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='login')}">Log in</a>
-                    or
-                    <a href="${'/user/register' if ('dgu_drupal_auth' in config['ckan.plugins']) else h.url_for(controller='user',action='register')}">sign up</a>
-                </div>
-            </span>
+            <?php if ($logged_in): ?>
+              <span class="ckan-logged-in">
+                  <div id="login-or-signup">
+                      You are logged-in as
+                      <a href="/user"><? print $user->name; ?></a>.
+                      <a href="/user/logout">Log out</a>.
+                  </div>
+              </span>
+            <? else: ?>
+              <span class="ckan-logged-out">
+                  <div id="login-or-signup">
+                      <a href="/user">Log in</a>
+                      or
+                      <a href="/user/register">sign up</a>
+                  </div>
+              </span>
+            <? endif; ?>
     </div>
 </div>
 <div id="greenbar" class="">
@@ -24,7 +27,7 @@
         <a class="btn btn-inverse visible-phone" data-toggle="collapse" data-target=".main-nav-collapse">
             Nav &nbsp;<i class="icon-chevron-down icon-white"></i>
         </a>
-        <a class="brand" href="#" rel="home">
+        <a class="brand" href="/" rel="home">
             <div id="dgu-header" class="retina-img">
                 <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
             </div>
@@ -40,12 +43,12 @@
     <div class="page">
         <?php print $breadcrumb; ?>
 
-        <?php if($page['highlighted'] OR $messages){ ?>
+        <?php if($page['highlighted'] OR $messages): ?>
             <div class="drupal-messages">
                 <?php print render($page['highlighted']); ?>
                 <?php print $messages; ?>
             </div>
-        <?php } ?>
+        <?php endif; ?>
 
         <div role="main" id="main-content">
 
@@ -86,18 +89,18 @@
     </div><!--/page-->
 
 
-  <div class="footer">
-    <footer role="contentinfo" class="container">
-      <?php 
-        // Print the combined footer menu.
-        print dguk_get_footer_menu();
-      ?>
-      <?php
-        // Print anything else in this region.
-        print render($page['footer']); 
-      ?>
-    </footer>
-  </div> <!-- /footer -->
-
 
 </div><!--/.content-container-->
+
+<div class="footer">
+  <footer role="contentinfo" class="container">
+    <?php 
+      // Print the combined footer menu.
+      print dguk_get_footer_menu();
+    ?>
+    <?php
+      // Print anything else in this region.
+      print render($page['footer']); 
+    ?>
+  </footer>
+</div> <!-- /footer -->
