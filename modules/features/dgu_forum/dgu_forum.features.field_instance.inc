@@ -300,7 +300,7 @@ function dgu_forum_field_default_field_instances() {
   t('Category');
   t('Comments');
   t('Forums');
-  t('Related dataets');
+  t('Related datasets');
   t('Sector');
 
   return $field_instances;

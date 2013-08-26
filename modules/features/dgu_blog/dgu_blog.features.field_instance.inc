@@ -297,7 +297,7 @@ function dgu_blog_field_default_field_instances() {
   t('Body');
   t('Category');
   t('Comments');
-  t('Related dataets');
+  t('Related datasets');
   t('Sector');
   t('Tags');
 
