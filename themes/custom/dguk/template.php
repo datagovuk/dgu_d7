@@ -5,10 +5,10 @@
  *  Implements theme_preprocess().
  */
 function dguk_preprocess(&$variables){
-    module_load_include('inc', 'lexicon', 'lexicon.pages');
+  module_load_include('inc', 'lexicon', 'lexicon.pages');
 
-    # Add the shared dgu logo.
-    $variables['logo'] = '/assets/img/dgu-header-cropped.png';
+  # Add the shared dgu logo.
+  $variables['logo'] = '/assets/img/dgu-header-cropped.png';
 }
 
 
@@ -50,3 +50,13 @@ function dguk_get_footer_menu() {
 
 	return $menu_output;
  }
+
+
+function dguk_js_alter(&$js){
+ /**
+  * Remove jquery and bootstrap. 
+  * @see dguk/templates/html.tpl.php
+  */
+  unset($js['misc/jquery.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+}
