@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 
 /**
  *  Implements theme_preprocess().
@@ -11,6 +10,18 @@ function dguk_preprocess(&$variables){
   $variables['logo'] = '/assets/img/dgu-header-cropped.png';
 }
 
+/**
+ *  Implements hook_preprocess_field().
+ */
+function dguk_preprocess_field(&$variables) {
+
+	if($variables['element']['#field_name'] == 'field_uses_dataset') {
+    // Render direct link to dataset in CKAN instead of dataset copy in Drupal.
+    $title = $variables['element']['#items'][0]['entity']->title;
+    $name = $variables['element']['#items'][0]['entity']->name;
+    $variables['items'][0]['#markup'] = l($title, 'dataset/' . $name);
+  }
+}
 
 /**
  * Get the output for the main menu.
@@ -54,7 +65,7 @@ function dguk_get_footer_menu() {
 
 function dguk_js_alter(&$js){
  /**
-  * Remove jquery and bootstrap. 
+  * Remove jquery and bootstrap.
   * @see dguk/templates/html.tpl.php
   */
   unset($js['misc/jquery.js']);

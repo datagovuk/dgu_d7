@@ -227,7 +227,7 @@ function dgu_forum_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_uses_dataset',
-    'label' => 'Related dataets',
+    'label' => 'Related datasets',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -300,7 +300,7 @@ function dgu_forum_field_default_field_instances() {
   t('Category');
   t('Comments');
   t('Forums');
-  t('Related dataets');
+  t('Related datasets');
   t('Sector');
 
   return $field_instances;
