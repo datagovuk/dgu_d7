@@ -7,11 +7,11 @@
               <span class="ckan-logged-in">
                   <div id="login-or-signup">
                       You are logged-in as
-                      <a href="/user"><? print $user->name; ?></a>.
+                      <a href="/user"><?php print $user->name; ?></a>.
                       <a href="/user/logout">Log out</a>.
                   </div>
               </span>
-            <? else: ?>
+            <?php else: ?>
               <span class="ckan-logged-out">
                   <div id="login-or-signup">
                       <a href="/user">Log in</a>
@@ -19,7 +19,7 @@
                       <a href="/user/register">sign up</a>
                   </div>
               </span>
-            <? endif; ?>
+            <?php endif; ?>
     </div>
 </div>
 <div id="greenbar" class="">
@@ -94,13 +94,13 @@
 
 <div class="footer">
   <footer role="contentinfo" class="container">
-    <?php 
+    <?php
       // Print the combined footer menu.
       print dguk_get_footer_menu();
     ?>
     <?php
       // Print anything else in this region.
-      print render($page['footer']); 
+      print render($page['footer']);
     ?>
   </footer>
 </div> <!-- /footer -->

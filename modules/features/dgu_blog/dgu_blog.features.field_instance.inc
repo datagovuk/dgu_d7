@@ -274,7 +274,7 @@ function dgu_blog_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_uses_dataset',
-    'label' => 'Related dataets',
+    'label' => 'Related datasets',
     'required' => 0,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -297,7 +297,7 @@ function dgu_blog_field_default_field_instances() {
   t('Body');
   t('Category');
   t('Comments');
-  t('Related dataets');
+  t('Related datasets');
   t('Sector');
   t('Tags');
 
