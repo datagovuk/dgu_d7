@@ -31,6 +31,7 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['row_options']['default_field_elements'] = FALSE;
   /* Relationship: Entity Reference: Referenced Entity */
   $handler->display->display_options['relationships']['field_uses_dataset_target_id']['id'] = 'field_uses_dataset_target_id';
   $handler->display->display_options['relationships']['field_uses_dataset_target_id']['table'] = 'field_data_field_uses_dataset';
@@ -51,21 +52,16 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['fields']['path']['id'] = 'path';
   $handler->display->display_options['fields']['path']['table'] = 'node';
   $handler->display->display_options['fields']['path']['field'] = 'path';
+  /* Field: Dataset: Ckan_id */
+  $handler->display->display_options['fields']['ckan_id']['id'] = 'ckan_id';
+  $handler->display->display_options['fields']['ckan_id']['table'] = 'ckan_dataset';
+  $handler->display->display_options['fields']['ckan_id']['field'] = 'ckan_id';
+  $handler->display->display_options['fields']['ckan_id']['relationship'] = 'field_uses_dataset_target_id';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Dataset: Ckan_id */
-  $handler->display->display_options['arguments']['ckan_id']['id'] = 'ckan_id';
-  $handler->display->display_options['arguments']['ckan_id']['table'] = 'ckan_dataset';
-  $handler->display->display_options['arguments']['ckan_id']['field'] = 'ckan_id';
-  $handler->display->display_options['arguments']['ckan_id']['relationship'] = 'field_uses_dataset_target_id';
-  $handler->display->display_options['arguments']['ckan_id']['default_argument_type'] = 'fixed';
-  $handler->display->display_options['arguments']['ckan_id']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['ckan_id']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['ckan_id']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['ckan_id']['limit'] = '0';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -73,6 +69,25 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Dataset: Ckan_id */
+  $handler->display->display_options['filters']['ckan_id']['id'] = 'ckan_id';
+  $handler->display->display_options['filters']['ckan_id']['table'] = 'ckan_dataset';
+  $handler->display->display_options['filters']['ckan_id']['field'] = 'ckan_id';
+  $handler->display->display_options['filters']['ckan_id']['relationship'] = 'field_uses_dataset_target_id';
+  $handler->display->display_options['filters']['ckan_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['ckan_id']['expose']['operator_id'] = 'ckan_id_op';
+  $handler->display->display_options['filters']['ckan_id']['expose']['label'] = 'Ckan_id';
+  $handler->display->display_options['filters']['ckan_id']['expose']['operator'] = 'ckan_id_op';
+  $handler->display->display_options['filters']['ckan_id']['expose']['identifier'] = 'ckan_id';
+  $handler->display->display_options['filters']['ckan_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    6 => 0,
+    7 => 0,
+    5 => 0,
+  );
 
   /* Display: Services */
   $handler = $view->new_display('services', 'Services', 'services_1');

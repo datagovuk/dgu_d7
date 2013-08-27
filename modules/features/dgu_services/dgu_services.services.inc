@@ -17,7 +17,23 @@ function dgu_services_default_services_endpoint() {
   $endpoint->server = 'rest_server';
   $endpoint->path = 'services/rest';
   $endpoint->authentication = array();
-  $endpoint->server_settings = array();
+  $endpoint->server_settings = array(
+    'formatters' => array(
+      'json' => TRUE,
+      'bencode' => FALSE,
+      'jsonp' => FALSE,
+      'php' => FALSE,
+      'xml' => FALSE,
+    ),
+    'parsers' => array(
+      'application/json' => TRUE,
+      'application/vnd.php.serialized' => FALSE,
+      'application/x-www-form-urlencoded' => FALSE,
+      'application/xml' => FALSE,
+      'multipart/form-data' => FALSE,
+      'text/xml' => FALSE,
+    ),
+  );
   $endpoint->resources = array(
     'views' => array(
       'operations' => array(
