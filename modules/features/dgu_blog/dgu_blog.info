@@ -13,6 +13,7 @@ dependencies[] = media
 dependencies[] = mediafield
 dependencies[] = options
 dependencies[] = page_manager
+dependencies[] = panels_node
 dependencies[] = reply
 dependencies[] = strongarm
 dependencies[] = taxonomy
