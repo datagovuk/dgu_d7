@@ -232,6 +232,27 @@ function dgu_library_default_page_manager_pages() {
     $display->panels['left'][6] = 'new-7';
     $pane = new stdClass();
     $pane->pid = 'new-8';
+    $pane->panel = 'left';
+    $pane->type = 'block';
+    $pane->subtype = 'apachesolr_search-sort';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 7;
+    $pane->locks = array();
+    $display->content['new-8'] = $pane;
+    $display->panels['left'][7] = 'new-8';
+    $pane = new stdClass();
+    $pane->pid = 'new-9';
     $pane->panel = 'right';
     $pane->type = 'apachesolr_result';
     $pane->subtype = 'apachesolr_result';
@@ -269,10 +290,10 @@ function dgu_library_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][0] = 'new-8';
+    $display->content['new-9'] = $pane;
+    $display->panels['right'][0] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-10';
     $pane->panel = 'top';
     $pane->type = 'apachesolr_form';
     $pane->subtype = 'apachesolr_form';
@@ -295,8 +316,8 @@ function dgu_library_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['top'][0] = 'new-9';
+    $display->content['new-10'] = $pane;
+    $display->panels['top'][0] = 'new-10';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
