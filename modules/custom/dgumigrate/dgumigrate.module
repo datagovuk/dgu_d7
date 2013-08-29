@@ -282,7 +282,9 @@ function dgumigrate_register_migrations() {
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
         'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
         'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
-      ),
+        'ckan_package' => array('table' => 'migrate_map_ckan_dataset', 'url' => 'ckan_dataset'),
+        'story' => array('table' => 'migrate_map_story', 'url' => 'page'),
+    ),
     'description' => 'Migrate Path redirects')
   ));
 

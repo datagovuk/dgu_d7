@@ -9,6 +9,7 @@ projects[apachesolr][subdir] = "contrib"
 projects[apachesolr_autocomplete][subdir] = "contrib"
 ; In review patch to apachesolr_autocomplete for autocompleting with filters applied.
 projects[apachesolr_autocomplete][patch][] = "http://drupal.org/files/1444038-custom-page-autocomplete-with-panels.patch"
+projects[apachesolr_panels][subdir] = "contrib"
 
 projects[facetapi][subdir] = "contrib"
 
