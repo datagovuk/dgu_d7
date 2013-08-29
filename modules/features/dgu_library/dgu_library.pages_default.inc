@@ -84,11 +84,13 @@ function dgu_library_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'left';
-    $pane->type = 'block';
-    $pane->subtype = 'facetapi-4Zh0ggJMBgeeYbrLPJCe8EML3A6PLE0J';
+    $pane->type = 'apachesolr_info';
+    $pane->subtype = 'apachesolr_info';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'title_override' => FALSE,
+      'title_override_text' => '',
       'override_title' => 0,
       'override_title_text' => '',
     );
@@ -106,7 +108,7 @@ function dgu_library_default_page_manager_pages() {
     $pane->pid = 'new-2';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->subtype = 'facetapi-4Zh0ggJMBgeeYbrLPJCe8EML3A6PLE0J';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -127,7 +129,7 @@ function dgu_library_default_page_manager_pages() {
     $pane->pid = 'new-3';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
+    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -148,7 +150,7 @@ function dgu_library_default_page_manager_pages() {
     $pane->pid = 'new-4';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
+    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -169,7 +171,7 @@ function dgu_library_default_page_manager_pages() {
     $pane->pid = 'new-5';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
+    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -190,7 +192,7 @@ function dgu_library_default_page_manager_pages() {
     $pane->pid = 'new-6';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
+    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -210,13 +212,11 @@ function dgu_library_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-7';
     $pane->panel = 'left';
-    $pane->type = 'apachesolr_info';
-    $pane->subtype = 'apachesolr_info';
+    $pane->type = 'block';
+    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'title_override' => FALSE,
-      'title_override_text' => '',
       'override_title' => 0,
       'override_title_text' => '',
     );
