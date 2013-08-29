@@ -31,13 +31,13 @@ class MigratePathRedirect extends DrupalMigration{
         $this->addFieldMapping("redirect", "redirect");
         $this->addFieldMapping("query", NULL);
         $this->addFieldMapping("fragment", NULL);
-        $this->addFieldMapping("language", "language");
+        $this->addFieldMapping("language", "language")->getDefaultValue(LANGUAGE_NONE);
         $this->addFieldMapping("status_code", "type");
         $this->addFieldMapping("last_used", "access");
 
         //add some defaults
-        $this->addFieldMapping('source_options')->defaultValue('');
-        $this->addFieldMapping('redirect_options')->defaultValue('');
+        $this->addFieldMapping('source_options')->defaultValue(array());
+        $this->addFieldMapping('redirect_options')->defaultValue(array());
         $this->addFieldMapping('uid')->defaultValue(0);
 
 
@@ -117,7 +117,7 @@ class MigrateDestinationRedirect extends MigrateDestination {
         redirect_save($object);
         $this->complete($object, $row);
         if (isset($object->rid) && $object->rid > 0) {
-            $return = array($object->vote_id);
+            $return = array($object->rid);
             if ($updating) {
                 $this->numUpdated++;
             }
@@ -166,9 +166,12 @@ class MigrateDestinationRedirect extends MigrateDestination {
                     ->fields('n', array('type'))
                     ->execute();
                 if ($query->rowCount() == 0){
-                    throw new Exception('Source node %n is not found', $source_nid);
+                    throw new Exception("Source node $source_nid is not found");
                 }
                 $type = $query->fetchField(0);
+                if (!array_key_exists($type, $this->tables)) {
+                    throw new exception("Could not find map table definition for $type");
+                }
                 $table = $this->tables[$type]['table'];
                 $dest_nid = $this->getDestinationNid($source_nid, $table);
                 if (!empty($dest_nid)) {
