@@ -19,8 +19,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'state' => 'visible',
       'condition' => 'value',
       'grouping' => 'AND',
-      'effect' => 'show',
-      'effect_options' => array(),
+      'effect' => 'slide',
+      'effect_options' => array(
+        'speed' => 400,
+      ),
       'element_view' => array(
         1 => 1,
         2 => 2,
@@ -44,6 +46,41 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        3 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -56,6 +93,26 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
         ),
         2 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        3 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        5 => array(
           1 => 1,
           3 => 0,
         ),
@@ -81,8 +138,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'state' => 'visible',
       'condition' => 'value',
       'grouping' => 'AND',
-      'effect' => 'show',
-      'effect_options' => array(),
+      'effect' => 'slide',
+      'effect_options' => array(
+        'speed' => 400,
+      ),
       'element_view' => array(
         1 => 1,
         2 => 2,
@@ -106,6 +165,41 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        3 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -118,6 +212,26 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
         ),
         2 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        3 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        5 => array(
           1 => 1,
           3 => 0,
         ),
@@ -143,8 +257,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'state' => 'visible',
       'condition' => 'value',
       'grouping' => 'AND',
-      'effect' => 'show',
-      'effect_options' => array(),
+      'effect' => 'slide',
+      'effect_options' => array(
+        'speed' => 400,
+      ),
       'element_view' => array(
         1 => 1,
         2 => 2,
@@ -168,6 +284,41 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        3 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -180,6 +331,26 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
         ),
         2 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        3 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        5 => array(
           1 => 1,
           3 => 0,
         ),
@@ -205,8 +376,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'state' => 'visible',
       'condition' => 'value',
       'grouping' => 'AND',
-      'effect' => 'show',
-      'effect_options' => array(),
+      'effect' => 'slide',
+      'effect_options' => array(
+        'speed' => 400,
+      ),
       'element_view' => array(
         1 => 1,
         2 => 2,
@@ -230,6 +403,41 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        3 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -242,6 +450,26 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
         ),
         2 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        3 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        5 => array(
           1 => 1,
           3 => 0,
         ),
@@ -267,8 +495,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
       'state' => 'visible',
       'condition' => 'value',
       'grouping' => 'AND',
-      'effect' => 'show',
-      'effect_options' => array(),
+      'effect' => 'slide',
+      'effect_options' => array(
+        'speed' => 400,
+      ),
       'element_view' => array(
         1 => 1,
         2 => 2,
@@ -292,6 +522,41 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        3 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -307,10 +572,30 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           1 => 1,
           3 => 0,
         ),
+        3 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        4 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        6 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        7 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        5 => array(
+          1 => 1,
+          3 => 0,
+        ),
       ),
       'selector' => '',
       'values_set' => 5,
-      'value_form' => 2,
+      'value_form' => NULL,
       'values' => array(
         0 => 1,
       ),
