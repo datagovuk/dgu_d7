@@ -1,7 +1,94 @@
 <?php
+
 /**
  * @file
  * Code for the DGU Services feature.
  */
-
 include_once 'dgu_services.features.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function dgu_services_menu() {
+  $items = array();
+
+  $items['comment/dataset/%'] = array(
+    'page callback' => 'dgu_services_add_reply',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['comment/get/%'] = array(
+    'page callback' => 'dgu_services_get_replies',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+function dgu_services_add_reply($ckan_id) {
+  if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
+
+    $instance = field_info_instance('ckan_dataset', 'field_comment', 'ckan_dataset');
+
+    drupal_goto('reply/add/' . $dataset->id . '/' . $instance['id'] . '/0' , array());
+  }
+}
+
+function dgu_services_get_replies($ckan_id) {
+  if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
+
+    // Not sure if this is necessary.
+    //field_attach_prepare_view('ckan_dataset', array($dataset->id => $dataset), 'comment');
+
+    $output = field_attach_view('ckan_dataset', $dataset, 'comment');
+
+    if (isset($output['field_comment'][0]['#markup'])) {
+      print $output['field_comment'][0]['#markup'];
+      drupal_exit();
+    }
+  }
+  drupal_not_found();
+}
+
+
+function dgu_services_get_dataset_from_ckan_id($ckan_id) {
+  $dataset_entity = FALSE;
+  if ($dataset_id = dgu_services_get_dataset_id_from_ckan_id($ckan_id)) {
+    $dataset_entity = ckan_dataset_load($dataset_id);
+  }
+  else {
+    // A dataset with this id doesn't exist in Drupal.
+    // Syncing from CKAN on the fly.
+    module_load_include('inc', 'ckan', 'ckan.drush');
+    $client = ckan_get_client();
+    $publisher_role = variable_get('ckan_publisher_role', FALSE);
+
+    try {
+      $dataset = $client->GetDataset(array('id'=>$ckan_id))->toArray();
+      $dataset_entity = ckan_synchronise_dataset($dataset, $publisher_role);
+    }
+    catch (Exception $e) {
+      // Most likely unique keys collision with cron job, trying to get drupal id again.
+      if ($dataset_id = dgu_services_get_dataset_id_from_ckan_id($ckan_id)) {
+        $dataset_entity = ckan_dataset_load($dataset_id);
+      }
+      else {
+        watchdog('comment_get', 'Error synchronising dataset ' . $ckan_id, array(), WATCHDOG_ERROR);
+      }
+    }
+  }
+
+  return $dataset_entity;
+}
+
+function dgu_services_get_dataset_id_from_ckan_id($ckan_id) {
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'ckan_dataset')->propertyCondition('ckan_id', $ckan_id)->execute();
+  if (isset($result['ckan_dataset'])) {
+    return array_shift(array_keys($result['ckan_dataset']));
+  }
+}
