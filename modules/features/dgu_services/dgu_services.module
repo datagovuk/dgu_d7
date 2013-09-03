@@ -31,9 +31,7 @@ function dgu_services_menu() {
 
 function dgu_services_add_reply($ckan_id) {
   if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
-
     $instance = field_info_instance('ckan_dataset', 'field_comment', 'ckan_dataset');
-
     drupal_goto('reply/add/' . $dataset->id . '/' . $instance['id'] . '/0' , array());
   }
 }
@@ -45,7 +43,6 @@ function dgu_services_get_replies($ckan_id) {
     //field_attach_prepare_view('ckan_dataset', array($dataset->id => $dataset), 'comment');
 
     $output = field_attach_view('ckan_dataset', $dataset, 'comment');
-
     if (isset($output['field_comment'][0]['#markup'])) {
       print $output['field_comment'][0]['#markup'];
       drupal_exit();
@@ -56,33 +53,26 @@ function dgu_services_get_replies($ckan_id) {
 
 
 function dgu_services_get_dataset_from_ckan_id($ckan_id) {
-  $dataset_entity = FALSE;
-  if ($dataset_id = dgu_services_get_dataset_id_from_ckan_id($ckan_id)) {
-    $dataset_entity = ckan_dataset_load($dataset_id);
-  }
-  else {
-    // A dataset with this id doesn't exist in Drupal.
-    // Syncing from CKAN on the fly.
-    module_load_include('inc', 'ckan', 'ckan.drush');
-    $client = ckan_get_client();
-    $publisher_role = variable_get('ckan_publisher_role', FALSE);
-
-    try {
-      $dataset = $client->GetDataset(array('id'=>$ckan_id))->toArray();
-      $dataset_entity = ckan_synchronise_dataset($dataset, $publisher_role);
+  for ($tries = 10; $tries > 0; $tries--) {
+    if ($dataset_id = dgu_services_get_dataset_id_from_ckan_id($ckan_id)) {
+      return ckan_dataset_load($dataset_id);
     }
-    catch (Exception $e) {
-      // Most likely unique keys collision with cron job, trying to get drupal id again.
-      if ($dataset_id = dgu_services_get_dataset_id_from_ckan_id($ckan_id)) {
-        $dataset_entity = ckan_dataset_load($dataset_id);
+    else {
+      // A dataset with this id doesn't exist in Drupal.
+      // Syncing from CKAN on the fly.
+      module_load_include('inc', 'ckan', 'ckan.drush');
+      $client = ckan_get_client();
+      $publisher_role = variable_get('ckan_publisher_role', FALSE);
+
+      try {
+        $dataset = $client->GetDataset(array('id'=>$ckan_id))->toArray();
+        ckan_synchronise_dataset($dataset, $publisher_role);
       }
-      else {
+      catch (Exception $e) {
         watchdog('comment_get', 'Error synchronising dataset ' . $ckan_id, array(), WATCHDOG_ERROR);
       }
     }
   }
-
-  return $dataset_entity;
 }
 
 function dgu_services_get_dataset_id_from_ckan_id($ckan_id) {
