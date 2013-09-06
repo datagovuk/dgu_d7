@@ -13,16 +13,16 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'about_us';
   $page->task = 'page';
-  $page->admin_title = 'About us';
+  $page->admin_title = 'About';
   $page->admin_description = 'About us page.';
-  $page->path = 'about-us';
+  $page->path = 'about';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
   );
   $page->menu = array(
     'type' => 'normal',
-    'title' => 'About us',
+    'title' => 'About',
     'name' => 'main-menu',
     'weight' => '100',
     'parent' => array(
@@ -343,29 +343,8 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->locks = array();
     $display->content['new-5'] = $pane;
     $display->panels['left'][0] = 'new-5';
-    $pane = new stdClass();
-    $pane->pid = 'new-6';
-    $pane->panel = 'top';
-    $pane->type = 'block';
-    $pane->subtype = 'system-powered-by';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['top'][0] = 'new-6';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-6';
+  $display->hide_title = PANELS_TITLE_NONE;
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['home'] = $page;
