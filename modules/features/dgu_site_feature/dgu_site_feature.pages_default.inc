@@ -13,16 +13,16 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'about_us';
   $page->task = 'page';
-  $page->admin_title = 'About us';
+  $page->admin_title = 'About';
   $page->admin_description = 'About us page.';
-  $page->path = 'about-us';
+  $page->path = 'about';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
   );
   $page->menu = array(
     'type' => 'normal',
-    'title' => 'About us',
+    'title' => 'About',
     'name' => 'main-menu',
     'weight' => '100',
     'parent' => array(
