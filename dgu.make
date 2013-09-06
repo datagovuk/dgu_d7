@@ -33,6 +33,10 @@ projects[views][subdir] = "contrib"
 
 projects[link][version] = "1.0"
 projects[link][subdir] = "contrib"
+projects[linkchecker][version] = "1.1"
+projects[linkchecker][subdir] = "contrib"
+projects[extlink][version] = "1.13"
+projects[extlink][subdir] = "contrib"
 
 projects[email][version] = "1.2"
 projects[email][subdir] = "contrib"
