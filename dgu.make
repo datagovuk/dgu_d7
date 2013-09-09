@@ -31,7 +31,7 @@ projects[features][subdir] = "contrib"
 projects[views][version] = "3.5"
 projects[views][subdir] = "contrib"
 
-projects[link][version] = "1.0"
+projects[link][version] = "1.1"
 projects[link][subdir] = "contrib"
 projects[linkchecker][version] = "1.1"
 projects[linkchecker][subdir] = "contrib"
