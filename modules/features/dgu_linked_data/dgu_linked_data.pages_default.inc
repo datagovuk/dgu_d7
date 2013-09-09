@@ -128,6 +128,31 @@ function dgu_linked_data_default_page_manager_pages() {
     $pane->locks = array();
     $display->content['new-2'] = $pane;
     $display->panels['middle'][0] = 'new-2';
+    $pane = new stdClass();
+    $pane->pid = 'new-3';
+    $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => 'What is linked data?',
+      'title' => 'What is linked data?',
+      'body' => '<iframe width="300" height="170" src="//www.youtube.com/embed/OM6XIICm_qo?HD=1;rel=0;showinfo=0" frameborder="0" allowfullscreen></iframe>
+Sir Tim Berners-Lee\'s talk from TED2009 on TED.com',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-3'] = $pane;
+    $display->panels['right'][0] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;
