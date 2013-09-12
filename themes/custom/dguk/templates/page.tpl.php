@@ -41,7 +41,7 @@
 <div class="container content-container">
 
     <div class="page">
-        <?php print $breadcrumb; ?>
+        <?php // print $breadcrumb; issue #811: breadcrubms are temporarily removed ?>
 
         <?php if($page['highlighted'] OR $messages): ?>
             <div class="drupal-messages">

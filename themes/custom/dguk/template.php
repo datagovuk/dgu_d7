@@ -1,13 +1,20 @@
 <?php
 
 /**
- *  Implements hook_preprocess().
+ *  Implements hook_preprocess_html().
  */
-function dguk_preprocess(&$variables){
+function dguk_preprocess_html(&$variables){
   module_load_include('inc', 'lexicon', 'lexicon.pages');
 
   # Add the shared dgu logo.
   $variables['logo'] = '/assets/img/dgu-header-cropped.png';
+}
+
+/**
+ *  Implements hook_preprocess_page().
+ */
+function dguk_preprocess_page(&$variables){
+
 }
 
 /**
@@ -36,6 +43,15 @@ function dguk_preprocess_field(&$variables) {
     $variables['items'][0]['#markup'] = l($title, 'dataset/' . $name);
   }
 }
+
+/**
+ *  Implements hook_css_alter().
+ */
+function dguk_css_alter(&$css) {
+  // Remove style.css file added by bootstrap theme - issue #811.
+  unset($css[drupal_get_path('theme', 'bootstrap') . '/css/style.css']);
+}
+
 
 /**
  * Get the output for the main menu.
