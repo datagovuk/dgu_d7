@@ -1,13 +1,27 @@
 <?php
 
 /**
- *  Implements theme_preprocess().
+ *  Implements hook_preprocess().
  */
 function dguk_preprocess(&$variables){
   module_load_include('inc', 'lexicon', 'lexicon.pages');
 
   # Add the shared dgu logo.
   $variables['logo'] = '/assets/img/dgu-header-cropped.png';
+}
+
+/**
+ *  Implements hook_preprocess_node().
+ */
+function dguk_preprocess_node(&$variables) {
+  $variables['classes_array'][] = 'boxed';
+}
+
+/**
+ *  Implements hook_preprocess_panels_pane().
+ */
+function dguk_preprocess_panels_pane(&$variables) {
+  $variables['classes_array'][] = 'boxed';
 }
 
 /**
