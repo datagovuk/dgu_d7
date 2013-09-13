@@ -64,6 +64,16 @@ function dgumigrate_register_migrations() {
   $common_arguments = array(
       'source_connection' => 'd6source',
       'source_version' => 6,
+      'format_mappings' => array(
+          0 => 'plain_text',
+          1 => 'filtered_html',
+          2 => 'full_html',
+          3 => 'plain_text',
+          4 => 'full_html',
+          5 => 'full_html',
+          6 => 'filtered_html',
+          7 => 'full_html'
+      )
   );
   $arguments = $common_arguments + array(
       'description' => t('Migration of users from Drupal 6'),
