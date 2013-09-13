@@ -127,13 +127,6 @@ function dgumigrate_register_migrations() {
 
   $node_arguments = array(
       array(
-          'class_name' => 'DGUAppMigration',
-          'description' => t('Migration of app nodes from Drupal 6'),
-          'machine_name' => 'app',
-          'source_type' => 'Apps',
-          'destination_type' => 'app',
-      ),
-      array(
           'class_name' => 'DGUBlogMigration',
           'description' => t('Migration of blog nodes from Drupal 6'),
           'machine_name' => 'blog_entry',
@@ -215,6 +208,19 @@ function dgumigrate_register_migrations() {
       'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
       'group' => 'Nodes',
   );
+
+    Migration::registerMigration('DGUAppMigration', 'app',
+        array_merge_recursive($common_node_arguments, array(
+            'class_name' => 'DGUAppMigration',
+            'description' => t('Migration of app nodes from Drupal 6'),
+            'machine_name' => 'app',
+            'source_type' => 'Apps',
+            'destination_type' => 'app',
+            'group' => 'Apps',
+            )
+        )
+    );
+
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
     Migration::registerMigration($arguments['class_name'], $arguments['machine_name'], $arguments);
@@ -279,6 +285,7 @@ function dgumigrate_register_migrations() {
   Migration::registerMigration('MigrateVotes', 'Votes', array_merge($comment_arguments, array('source_type' => 'apps', 'content_source' => 'app', 'user_migration' => 'user', 'description' => 'Migrate Votes')));
   Migration::registerMigration('MigratePathRedirect', 'Paths', array_merge($comment_arguments, array(
     'content_tables' => array(
+        'page' => array('table' => 'migrate_map_page', 'url' => 'node'),
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
         'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
         'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
