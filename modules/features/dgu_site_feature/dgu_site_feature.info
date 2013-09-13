@@ -58,7 +58,6 @@ features[variable][] = linkchecker_check_library
 features[variable][] = linkchecker_check_links_interval
 features[variable][] = linkchecker_check_links_types
 features[variable][] = linkchecker_check_useragent
-features[variable][] = linkchecker_cleanup_links_last
 features[variable][] = linkchecker_disable_link_check_for_urls
 features[variable][] = linkchecker_extract_from_a
 features[variable][] = linkchecker_extract_from_audio
