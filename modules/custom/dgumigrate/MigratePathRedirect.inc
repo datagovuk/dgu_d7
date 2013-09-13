@@ -31,7 +31,7 @@ class MigratePathRedirect extends DrupalMigration{
         $this->addFieldMapping("redirect", "redirect");
         $this->addFieldMapping("query", NULL);
         $this->addFieldMapping("fragment", NULL);
-        $this->addFieldMapping("language", "language")->getDefaultValue(LANGUAGE_NONE);
+        $this->addFieldMapping("language", "language")->defaultValue(LANGUAGE_NONE);
         $this->addFieldMapping("status_code", "type");
         $this->addFieldMapping("last_used", "access");
 
@@ -113,7 +113,11 @@ class MigrateDestinationRedirect extends MigrateDestination {
         $object->rid = 0;
         //Add entity bundle type
         $object->type = 'redirect';
-        $this->rewriteRedirect($object);
+        $object = $this->rewriteRedirect($object);
+        // The source of the migration has a language of "" not null, so the defaultValue does not work
+        if (empty($object->language)) {
+            $object->language = LANGUAGE_NONE;
+        }
         redirect_save($object);
         $this->complete($object, $row);
         if (isset($object->rid) && $object->rid > 0) {
@@ -156,7 +160,7 @@ class MigrateDestinationRedirect extends MigrateDestination {
     public function rewriteRedirect(stdClass $object)
     {
         $matches = array();
-        preg_match('/(\w+)\/([0-9]*)\/(\w+)/', $object->redirect, $matches);
+        preg_match('/(\w+)\/([0-9]*)(\/(\w+))?/', $object->redirect, $matches);
         if (!empty($matches)) {
             if ($matches[1] == 'node'){
                 $source_nid = $matches[2];
@@ -185,5 +189,6 @@ class MigrateDestinationRedirect extends MigrateDestination {
                 throw new exception('not yet implemented');
             }
         }
+        return $object;
     }
 }
