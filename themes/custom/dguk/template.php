@@ -1,13 +1,53 @@
 <?php
 
 /**
- *  Implements theme_preprocess().
+ *  Implements hook_preprocess_html().
  */
-function dguk_preprocess(&$variables){
+function dguk_preprocess_html(&$variables){
   module_load_include('inc', 'lexicon', 'lexicon.pages');
 
   # Add the shared dgu logo.
   $variables['logo'] = '/assets/img/dgu-header-cropped.png';
+}
+
+/**
+ *  Implements hook_preprocess_page().
+ */
+function dguk_preprocess_page(&$variables) {
+
+  // If this is a node view page add content type to the template suggestions.
+  if (isset($variables['node'])) {
+    $variables['theme_hook_suggestions'][] = 'page__node__' .$variables['node']->type;
+  }
+
+  // If this is a panel page.
+  if ($panel_page = page_manager_get_current_page()) {
+    // Add a generic suggestion for all panel pages.
+    $variables['theme_hook_suggestions'][] = 'page__panel';
+    // Add the panel page machine name to the template suggestions.
+    $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'];
+
+    // If this is node_view panel
+    if (isset($variables['node'])) {
+      // Add panel page machine name and content type to the template suggestions.
+      // e.g. "page__panel__node_view__blog"
+      $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'] . '__' . $variables['node']->type;
+    }
+  }
+}
+
+/**
+ *  Implements hook_preprocess_node().
+ */
+function dguk_preprocess_node(&$variables) {
+  $variables['classes_array'][] = 'boxed';
+}
+
+/**
+ *  Implements hook_preprocess_panels_pane().
+ */
+function dguk_preprocess_panels_pane(&$variables) {
+  $variables['classes_array'][] = 'boxed';
 }
 
 /**
@@ -22,6 +62,15 @@ function dguk_preprocess_field(&$variables) {
     $variables['items'][0]['#markup'] = l($title, 'dataset/' . $name);
   }
 }
+
+/**
+ *  Implements hook_css_alter().
+ */
+function dguk_css_alter(&$css) {
+  // Remove style.css file added by bootstrap theme - issue #811.
+  unset($css[drupal_get_path('theme', 'bootstrap') . '/css/style.css']);
+}
+
 
 /**
  * Get the output for the main menu.

@@ -17,7 +17,7 @@
  *   - $content['bottom']: Content in the bottom row.
  */
 ?>
-<div class="panel-display panel-3col-33-stacked  clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
+<div class="panel-display panel-3col-33-stacked row-fluid clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
   <?php if ($content['top']): ?>
     <div class="panel-panel panel-col-top">
       <div class="inside"><?php print $content['top']; ?></div>
@@ -25,15 +25,15 @@
   <?php endif ?>
 
   <div class="center-wrapper">
-    <div class="panel-panel panel-col-first">
+    <div class="panel-panel panel-col-first span4">
       <div class="inside"><?php print $content['left']; ?></div>
     </div>
 
-    <div class="panel-panel panel-col">
+    <div class="panel-panel panel-col span4">
       <div class="inside"><?php print $content['middle']; ?></div>
     </div>
 
-    <div class="panel-panel panel-col-last">
+    <div class="panel-panel panel-col-last span4">
       <div class="inside"><?php print $content['right']; ?></div>
     </div>
   </div>
