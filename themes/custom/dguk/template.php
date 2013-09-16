@@ -13,8 +13,27 @@ function dguk_preprocess_html(&$variables){
 /**
  *  Implements hook_preprocess_page().
  */
-function dguk_preprocess_page(&$variables){
+function dguk_preprocess_page(&$variables) {
 
+  // If this is a node view page add content type to the template suggestions.
+  if (isset($variables['node'])) {
+    $variables['theme_hook_suggestions'][] = 'page__node__' .$variables['node']->type;
+  }
+
+  // If this is a panel page.
+  if ($panel_page = page_manager_get_current_page()) {
+    // Add a generic suggestion for all panel pages.
+    $variables['theme_hook_suggestions'][] = 'page__panel';
+    // Add the panel page machine name to the template suggestions.
+    $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'];
+
+    // If this is node_view panel
+    if (isset($variables['node'])) {
+      // Add panel page machine name and content type to the template suggestions.
+      // e.g. "page__panel__node_view__blog"
+      $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'] . '__' . $variables['node']->type;
+    }
+  }
 }
 
 /**
