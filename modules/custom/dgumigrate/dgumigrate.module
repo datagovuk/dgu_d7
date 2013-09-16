@@ -298,6 +298,8 @@ function dgumigrate_register_migrations() {
         'page' => array('table' => 'migrate_map_page', 'url' => 'node'),
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
         'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
+        'resource' => array('table'=> 'migrate_map_resource', 'url' => 'node'),
+        'organogram' => array('table'=> 'migrate_map_organogram', 'url' => 'node'),
         'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
         'ckan_package' => array('table' => 'migrate_map_ckan_dataset', 'url' => 'ckan_dataset'),
         'story' => array('table' => 'migrate_map_story', 'url' => 'page'),
