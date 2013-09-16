@@ -211,7 +211,8 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['relationship'] = 'nid';
   $handler->display->display_options['fields']['id']['group_type'] = 'count_distinct';
-  $handler->display->display_options['fields']['id']['label'] = 'Comments';
+  $handler->display->display_options['fields']['id']['label'] = '';
+  $handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
   /* Field: User: Avatar */
   $handler->display->display_options['fields']['field_avatar']['id'] = 'field_avatar';
   $handler->display->display_options['fields']['field_avatar']['table'] = 'field_data_field_avatar';
@@ -279,7 +280,8 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['relationship'] = 'nid';
   $handler->display->display_options['fields']['id']['group_type'] = 'count_distinct';
-  $handler->display->display_options['fields']['id']['label'] = 'Comments';
+  $handler->display->display_options['fields']['id']['label'] = '';
+  $handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
   /* Field: User: Avatar */
   $handler->display->display_options['fields']['field_avatar']['id'] = 'field_avatar';
   $handler->display->display_options['fields']['field_avatar']['table'] = 'field_data_field_avatar';
