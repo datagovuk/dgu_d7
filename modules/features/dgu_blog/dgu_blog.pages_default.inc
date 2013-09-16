@@ -55,7 +55,7 @@ function dgu_blog_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Blogs';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
@@ -167,7 +167,7 @@ function dgu_blog_default_page_manager_handlers() {
     $pane->locks = array();
     $display->content['new-4'] = $pane;
     $display->panels['right'][2] = 'new-4';
-  $display->hide_title = PANELS_TITLE_NONE;
+  $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $export['node_view_panel_context'] = $handler;
@@ -240,7 +240,7 @@ function dgu_blog_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Blogs';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
