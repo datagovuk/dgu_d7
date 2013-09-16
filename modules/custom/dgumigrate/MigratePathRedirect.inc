@@ -55,7 +55,6 @@ class MigratePathRedirect extends DrupalMigration{
 
 class MigrateDestinationRedirect extends MigrateDestination {
 
-    private $thrown = array();
     private $sourceConnection;
 
     private $tables;
@@ -177,10 +176,7 @@ class MigrateDestinationRedirect extends MigrateDestination {
                 $type = $query->fetchField(0);
                 if (!array_key_exists($type, $this->tables)) {
                     $msg = "Could not find map table definition for $type";
-                    if (array_key_exists($type, $this->thrown)) {
-                        $this->thrown[$type] = $msg;
-                        throw new exception($msg);
-                    }
+                    throw new exception($msg);
                 }
                 $table = $this->tables[$type]['table'];
                 $dest_nid = $this->getDestinationNid($source_nid, $table);
