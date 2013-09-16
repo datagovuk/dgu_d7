@@ -70,7 +70,7 @@ function dgu_forum_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Discussion  Forum';
+  $display->title = 'Discussion Forum';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
@@ -201,10 +201,11 @@ function dgu_forum_default_page_manager_pages() {
       'left' => NULL,
       'right' => NULL,
       'bottom' => NULL,
+      'middle' => NULL,
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Discussion Forum';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
