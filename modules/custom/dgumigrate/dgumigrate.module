@@ -219,6 +219,7 @@ function dgumigrate_register_migrations() {
       'group' => 'Nodes',
   );
 
+    unset($common_node_arguments['group']);
     Migration::registerMigration('DGUAppMigration', 'app',
         array_merge_recursive($common_node_arguments, array(
             'class_name' => 'DGUAppMigration',
