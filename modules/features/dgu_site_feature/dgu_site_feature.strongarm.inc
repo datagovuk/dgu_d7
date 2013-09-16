@@ -156,13 +156,6 @@ function dgu_site_feature_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'linkchecker_cleanup_links_last';
-  $strongarm->value = 1378440442;
-  $export['linkchecker_cleanup_links_last'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'linkchecker_disable_link_check_for_urls';
   $strongarm->value = 'example.com
 example.net
@@ -327,6 +320,13 @@ example.org';
   $strongarm->name = 'node_submitted_page';
   $strongarm->value = 1;
   $export['node_submitted_page'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'page_manager_node_view_disabled';
+  $strongarm->value = FALSE;
+  $export['page_manager_node_view_disabled'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
