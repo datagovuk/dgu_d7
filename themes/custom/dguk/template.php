@@ -74,7 +74,6 @@ function dguk_css_alter(&$css) {
 
 /**
  * Get the output for the main menu.
- * Used in template and for ckan to pull in externally.
  */
 function dguk_get_main_menu() {
 	$menu = dguk_menu_navigation_links('main-menu');
@@ -91,6 +90,28 @@ function dguk_get_main_menu() {
   $output .=  $menu_output;
   $output .= '</div><!--/.main-nav-collapse --></div>';
   $output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
+
+	return $output;
+ }
+
+/**
+ * Get the output for the sub menu (2nd level of main menu).
+ */
+function dguk_get_sub_menu() {
+	$menu = dguk_menu_navigation_links('main-menu', 1);
+//      <li class=""><a href="/home"><div class="nav-icon"></div>Home</a></li>
+	$menu_output = theme('links__sub-menu', array(
+	    'links' => $menu,
+	    'attributes' => array(
+	        'id' => 'dgu-nav',
+	        'class' => array('nav'),
+	    ),
+	 ));
+
+  $output = '<div class="navbar navbar-inverse"> <div class="sub-nav-collapse">';
+  $output .=  $menu_output;
+  $output .= '</div><!--/.sub-nav-collapse --></div>';
+  //$output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
 
 	return $output;
  }
