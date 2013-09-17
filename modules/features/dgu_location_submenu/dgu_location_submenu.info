@@ -1,0 +1,12 @@
+name = DGU Location submenu
+description = This feature is a hack, it will always be 'Overriden'
+core = 7.x
+package = DGU Features
+dependencies[] = dgu_site_feature
+dependencies[] = features
+dependencies[] = menu
+features[features_api][] = api:2
+features[menu_links][] = main-menu:node/3996
+features[menu_links][] = main-menu:node/4026
+features[menu_links][] = main-menu:node/4030
+features[menu_links][] = main-menu:node/4031
