@@ -6,6 +6,42 @@ abstract class DGUMigration extends DynamicMigration {
   }
 }
 
+class DGUGlossaryMigration extends DrupalTerm6Migration {
+    public function __construct(array $arguments) {
+        parent::__construct($arguments);
+        $this->description = t('Glossary Term migration/import');
+        $this->source = new MigrateSourceCSV(DRUPAL_ROOT . '/' . drupal_get_path('module', 'dgumigrate') . '/data/glossary_terms.csv', array(), array('header_rows' => 1));
+        $this->destination = new MigrateDestinationTerm($this->destinationVocabulary);
+        $this->map = new MigrateSQLMap($this->machineName,
+            array(
+                'tid' => array('type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                    'description' => 'Source term ID',
+                ),
+            ),
+            MigrateDestinationTerm::getKeySchema()
+        );
+
+        // Mappings are straight-forward
+        $this->addFieldMapping('name', 'Term');
+        $this->addFieldMapping('description', 'Definition');
+    }
+
+    public function prepareKey($source_key, $row) {
+        $row->tid = $row->csvrownum;
+        return parent::prepareKey($source_key, $row);
+    }
+
+    public function prepareRow($row) {
+        $row->tid = $row->csvrownum;
+        return TRUE;
+    }
+}
+
+
+
+
 class DGUUserMigration extends DrupalUser6Migration {
   public function __construct(array $arguments) {
       parent::__construct($arguments);
@@ -64,6 +100,16 @@ function dgumigrate_register_migrations() {
   $common_arguments = array(
       'source_connection' => 'd6source',
       'source_version' => 6,
+      'format_mappings' => array(
+          0 => 'plain_text',
+          1 => 'filtered_html',
+          2 => 'full_html',
+          3 => 'plain_text',
+          4 => 'full_html',
+          5 => 'full_html',
+          6 => 'filtered_html',
+          7 => 'full_html'
+      )
   );
   $arguments = $common_arguments + array(
       'description' => t('Migration of users from Drupal 6'),
@@ -209,6 +255,7 @@ function dgumigrate_register_migrations() {
       'group' => 'Nodes',
   );
 
+    unset($common_node_arguments['group']);
     Migration::registerMigration('DGUAppMigration', 'app',
         array_merge_recursive($common_node_arguments, array(
             'class_name' => 'DGUAppMigration',
@@ -288,6 +335,8 @@ function dgumigrate_register_migrations() {
         'page' => array('table' => 'migrate_map_page', 'url' => 'node'),
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
         'book' => array('table'=> 'migrate_map_book', 'url' => 'node'),
+        'resource' => array('table'=> 'migrate_map_resource', 'url' => 'node'),
+        'organogram' => array('table'=> 'migrate_map_organogram', 'url' => 'node'),
         'blog' => array('table' => 'migrate_map_blog_entry', 'url' => 'node'),
         'ckan_package' => array('table' => 'migrate_map_ckan_dataset', 'url' => 'ckan_dataset'),
         'story' => array('table' => 'migrate_map_story', 'url' => 'page'),
@@ -299,6 +348,19 @@ function dgumigrate_register_migrations() {
       'description' => t('Migration of menu links from Drupal 6'),
       'machine_name' => 'menu_links',
       'menu_migration' => $menu_arguments['machine_name'],
+      'group' => 'Paths'
   );
   Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'], $menu_links_arguments);
+
+
+  $glossary_args = $common_arguments + array(
+        'class_name' => 'DGUGlossaryMigration',
+        'description' => t('Migration of Glossary terms from csv'),
+        'machine_name' => 'glossary',
+        'destination_vocabulary' => 'glossary',
+        'source_vocabulary' => 'none',
+        'group' => 'Taxonomy',
+  );
+  Migration::registerMigration('DGUGlossaryMigration', 'Glossary', $glossary_args);
+
 }
