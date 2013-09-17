@@ -1,0 +1,32 @@
+Index: includes/menu.inc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- includes/menu.inc	(revision )
++++ includes/menu.inc	(revision )
+@@ -773,14 +773,16 @@
+     $tab_parent_map = explode('/', $router_item['tab_parent']);
+   }
+   for ($i = 0; $i < $router_item['number_parts']; $i++) {
++    if (isset($path_map[$i])){
+-    if ($link_map[$i] == '%') {
+-      $link_map[$i] = $path_map[$i];
+-    }
+-    if (isset($tab_root_map[$i]) && $tab_root_map[$i] == '%') {
+-      $tab_root_map[$i] = $path_map[$i];
+-    }
+-    if (isset($tab_parent_map[$i]) && $tab_parent_map[$i] == '%') {
+-      $tab_parent_map[$i] = $path_map[$i];
++      if ($link_map[$i] == '%') {
++        $link_map[$i] = $path_map[$i];
++      }
++      if (isset($tab_root_map[$i]) && $tab_root_map[$i] == '%') {
++        $tab_root_map[$i] = $path_map[$i];
++      }
++      if (isset($tab_parent_map[$i]) && $tab_parent_map[$i] == '%') {
++        $tab_parent_map[$i] = $path_map[$i];
++      }
+     }
+   }
+   $router_item['href'] = implode('/', $link_map);
