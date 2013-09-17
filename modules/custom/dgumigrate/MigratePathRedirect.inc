@@ -170,11 +170,13 @@ class MigrateDestinationRedirect extends MigrateDestination {
                     ->fields('n', array('type'))
                     ->execute();
                 if ($query->rowCount() == 0){
-                    throw new Exception("Source node $source_nid is not found");
+                    throw new Exception("Source node $source_nid is not found. {$object->source} was redirected  to
+                    {$object->redirect}");
                 }
                 $type = $query->fetchField(0);
                 if (!array_key_exists($type, $this->tables)) {
-                    throw new exception("Could not find map table definition for $type");
+                    $msg = "Could not find map table definition for $type";
+                    throw new exception($msg);
                 }
                 $table = $this->tables[$type]['table'];
                 $dest_nid = $this->getDestinationNid($source_nid, $table);
@@ -186,7 +188,9 @@ class MigrateDestinationRedirect extends MigrateDestination {
                     $object->redirect = $url;
                 }
             } elseif ($matches[1] == 'taxonomy'){
-                throw new exception('not yet implemented');
+                $msg = "Taxonomy path migration not yet implemented.  {$object->source} was redirected  to
+                    {$object->redirect}";
+                throw new exception($msg);
             }
         }
         return $object;
