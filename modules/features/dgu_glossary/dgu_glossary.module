@@ -290,6 +290,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
                 $variables['suggested_definitions'] = theme('suggested_definition_list', array('nids' => $nids));
             }
 
+            module_load_include('inc', 'lexicon', 'lexicon.pages');
             $lex = _lexicon_overview($voc);
             $lexicon_overview = $lex['overview']['#lexicon_overview'];
             $lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
