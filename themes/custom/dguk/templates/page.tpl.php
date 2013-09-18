@@ -8,15 +8,15 @@
                   <div id="login-or-signup">
                       You are logged-in as
                       <a href="/user"><?php print $user->name; ?></a>.
-                      <a href="/user/logout">Log out</a>.
+                      <?php print l('Log out', 'user/logout', array('query' => drupal_get_destination())); ?>
                   </div>
               </span>
             <?php else: ?>
               <span class="ckan-logged-out">
                   <div id="login-or-signup">
-                      <a href="/user">Log in</a>
+                      <?php print l('Log in', 'user', array('query' => drupal_get_destination())); ?>
                       or
-                      <a href="/user/register">sign up</a>
+                      <?php print l('sign up', 'user/register', array('query' => drupal_get_destination())); ?>
                   </div>
               </span>
             <?php endif; ?>
