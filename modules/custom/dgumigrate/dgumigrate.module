@@ -255,24 +255,23 @@ function dgumigrate_register_migrations() {
       'group' => 'Nodes',
   );
 
-    unset($common_node_arguments['group']);
-    Migration::registerMigration('DGUAppMigration', 'app',
-        array_merge_recursive($common_node_arguments, array(
-            'class_name' => 'DGUAppMigration',
-            'description' => t('Migration of app nodes from Drupal 6'),
-            'machine_name' => 'app',
-            'source_type' => 'Apps',
-            'destination_type' => 'app',
-            'group' => 'Apps',
-            )
-        )
-    );
-
   foreach ($node_arguments as $arguments) {
     $arguments = array_merge_recursive($arguments, $common_node_arguments);
     Migration::registerMigration($arguments['class_name'], $arguments['machine_name'], $arguments);
   }
 
+  unset($common_node_arguments['group']);
+  Migration::registerMigration('DGUAppMigration', 'app',
+    array_merge_recursive($common_node_arguments, array(
+        'class_name' => 'DGUAppMigration',
+        'description' => t('Migration of app nodes from Drupal 6'),
+        'machine_name' => 'app',
+        'source_type' => 'Apps',
+        'destination_type' => 'app',
+        'group' => 'Apps',
+      )
+    )
+  );
   $file_arguments = $common_arguments + array(
       'description' => t('Migration of files from Drupal 6'),
       'machine_name' => 'files',
