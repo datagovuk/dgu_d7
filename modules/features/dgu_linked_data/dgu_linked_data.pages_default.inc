@@ -57,7 +57,7 @@ function dgu_linked_data_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_threecol';
+  $display->layout = 'dgu_twocol';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -79,10 +79,11 @@ function dgu_linked_data_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => '10 second tour',
-      'body' => '<div class="item-list"><ul><li><a href="linked-data/overview-of-linked-data"><strong>Overview of Linked Data</strong></a><p>Across government over the last ten years there has been a growing realisation to the power of linked data for exposing, sharing, and connecting pieces of data and information using uniform resource identifiers (URIs).</p></li><li><a href="linked-data/what-is-linked-data"><strong>What is Linked Data?</strong></a><p>Linked Data is data in which real-world things are given addresses on the web (URIs), and data is published about them in machine-readable formats.</p></li><li><a href="linked-data/who-is-doing-what"><strong>Who is doing what?</strong></a><p>Linked Data approaches across the public sector have over the last 12 months have been moving from pilots to proven business as usual.</p></li></ul></div>',
-      'format' => 'filtered_html',
+      'admin_title' => 'What is linked data?',
+      'title' => 'What is linked data?',
+      'body' => '<iframe width="736" height="414" src="//www.youtube.com/embed/OM6XIICm_qo?HD=1;rel=0;showinfo=0" frameborder="0" allowfullscreen></iframe>
+Sir Tim Berners-Lee\'s talk from TED2009 on TED.com',
+      'format' => 'full_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -97,7 +98,31 @@ function dgu_linked_data_default_page_manager_pages() {
     $display->panels['left'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'middle';
+    $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => '',
+      'title' => '10 second tour',
+      'body' => '<div class="item-list"><ul><li><a href="linked-data/overview-of-linked-data"><strong>Overview of Linked Data</strong></a><p>Across government over the last ten years there has been a growing realisation to the power of linked data for exposing, sharing, and connecting pieces of data and information using uniform resource identifiers (URIs).</p></li><li><a href="linked-data/what-is-linked-data"><strong>What is Linked Data?</strong></a><p>Linked Data is data in which real-world things are given addresses on the web (URIs), and data is published about them in machine-readable formats.</p></li><li><a href="linked-data/who-is-doing-what"><strong>Who is doing what?</strong></a><p>Linked Data approaches across the public sector have over the last 12 months have been moving from pilots to proven business as usual.</p></li></ul></div>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-2'] = $pane;
+    $display->panels['right'][0] = 'new-2';
+    $pane = new stdClass();
+    $pane->pid = 'new-3';
+    $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'blogs';
     $pane->shown = TRUE;
@@ -124,37 +149,12 @@ function dgu_linked_data_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['middle'][0] = 'new-2';
-    $pane = new stdClass();
-    $pane->pid = 'new-3';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => 'What is linked data?',
-      'title' => 'What is linked data?',
-      'body' => '<iframe width="300" height="170" src="//www.youtube.com/embed/OM6XIICm_qo?HD=1;rel=0;showinfo=0" frameborder="0" allowfullscreen></iframe>
-Sir Tim Berners-Lee\'s talk from TED2009 on TED.com',
-      'format' => 'full_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $display->content['new-3'] = $pane;
-    $display->panels['right'][0] = 'new-3';
+    $display->panels['right'][1] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-2';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['linked_data'] = $page;
