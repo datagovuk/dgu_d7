@@ -183,7 +183,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '10321',
+    0 => '10392',
   );
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
   $handler->display->display_options['block_description'] = 'Blogs ODUG ';
@@ -252,7 +252,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '6164',
+    0 => '6235',
   );
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
   $handler->display->display_options['block_description'] = 'Blogs Location';
@@ -321,7 +321,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '112',
+    0 => '183',
   );
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
   $handler->display->display_options['block_description'] = 'Blogs Linked Data';
