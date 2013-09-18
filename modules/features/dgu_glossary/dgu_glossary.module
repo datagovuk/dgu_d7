@@ -236,9 +236,9 @@ function dgu_glossary_preprocess(&$variables, $hook)
             // in order to properly build a reply add link
             list(, , $bundle) = entity_extract_ids('taxonomy_term', $term);
             $instances = field_info_instances('taxonomy_term', $bundle, null);
-            if (empty($instances['field_comments']))
+            if (empty($instances['field_comment']))
                 return;
-            $instance = $instances['field_comments'];
+            $instance = $instances['field_comment'];
 
             $button_link_options = array('attributes' => array('class' => array('button')));
             $link_options = array();
