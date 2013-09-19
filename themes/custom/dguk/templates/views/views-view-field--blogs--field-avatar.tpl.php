@@ -30,11 +30,11 @@ if (empty($output)) {
 
   // Use custom themer to output images in theme like those uploaded to the drupal files table.
 	$image = theme_image_style_outside_files(array(
-    'style_name' => 'avatar',
+    'style_name' => $field->options['settings']['image_style'],
 	  'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
 	));
 
-  $linkedimage = l($image, 'users/'.$row->users_node_name, array('html' => true) );
+  $linkedimage = l($image, 'user/'.$row->users_node_uid, array('html' => true) );
   print($linkedimage);
 }
 else {

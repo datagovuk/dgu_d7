@@ -16,7 +16,11 @@ projects[facetapi][subdir] = "contrib"
 projects[strongarm][subdir] = "contrib"
 projects[diff][subdir] = "contrib"
 projects[token][subdir] = "contrib"
+
+projects[pathauto][version] = "1.2"
 projects[pathauto][subdir] = "contrib"
+# Prevent losing manual aliases with node_save() calls https://drupal.org/node/936222
+projects[pathauto][patch][] = "https://drupal.org/files/pathauto-persist-936222-130-pathauto-state.patch"
 
 projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
