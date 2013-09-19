@@ -340,6 +340,9 @@ function dgumigrate_register_migrations() {
         'ckan_package' => array('table' => 'migrate_map_ckan_dataset', 'url' => 'ckan_dataset'),
         'story' => array('table' => 'migrate_map_story', 'url' => 'page'),
     ),
+    'excludes' => array(
+        'library'
+    ),
     'description' => 'Migrate Path redirects')
   ));
 
