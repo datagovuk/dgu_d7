@@ -12,9 +12,13 @@ class MigratePathRedirect extends DrupalMigration{
         if (!empty($arguments['content_tables'])) {
             $tables = $arguments['content_tables'];
         }
+        $excludes = array();
+        if (!empty($arguments['excludes'])){
+            $excludes = $arguments['excludes'];
+        }
 
         $this->source = new MigrateSourceSQL($this->query(),  $this->sourceFields, NULL, $this->sourceOptions);
-        $this->destination = new MigrateDestinationRedirect($this->sourceConnection, $tables);
+        $this->destination = new MigrateDestinationRedirect($this->sourceConnection, $tables, $excludes);
         $this->map = new MigrateSQLMap($this->machineName,
             array(
                 'rid' => array('type' => 'int',
@@ -59,9 +63,12 @@ class MigrateDestinationRedirect extends MigrateDestination {
 
     private $tables;
 
-    public function __construct($connection, $tables){
+    private $excludes;
+
+    public function __construct($connection, $tables, $excludes){
         $this->sourceConnection = $connection;
         $this->tables = $tables;
+        $this->excludes = $excludes;
     }
 
     static public function getKeySchema() {
@@ -108,6 +115,9 @@ class MigrateDestinationRedirect extends MigrateDestination {
     }
 
     public function import(stdClass $object, stdClass $row){
+        if ( array_search($row->source, $this->excludes) ){
+            return FALSE;
+        }
         $updating = FALSE;
         //always make this insert a redirect.
         $object->rid = 0;
