@@ -5,6 +5,125 @@
  */
 
 /**
+ * Implements hook_default_page_manager_handlers().
+ */
+function dgu_location_default_page_manager_handlers() {
+  $export = array();
+
+  $handler = new stdClass();
+  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
+  $handler->api_version = 1;
+  $handler->name = 'node_view_panel_context_2';
+  $handler->task = 'node_view';
+  $handler->subtask = '';
+  $handler->handler = 'panel_context';
+  $handler->weight = 1;
+  $handler->conf = array(
+    'title' => 'Location pages',
+    'no_blocks' => 0,
+    'pipeline' => 'standard',
+    'body_classes_to_remove' => '',
+    'body_classes_to_add' => '',
+    'css_id' => 'location-subpage',
+    'css' => '',
+    'contexts' => array(),
+    'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'node_type',
+          'settings' => array(
+            'type' => array(
+              'page' => 'page',
+            ),
+          ),
+          'context' => 'argument_entity_id:node_1',
+          'not' => FALSE,
+        ),
+        1 => array(
+          'name' => 'path_visibility',
+          'settings' => array(
+            'visibility_setting' => '1',
+            'paths' => 'location/*',
+          ),
+          'context' => 'empty',
+          'not' => FALSE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
+  );
+  $display = new panels_display();
+  $display->layout = 'dgu_twocol';
+  $display->layout_settings = array();
+  $display->panel_settings = array(
+    'style_settings' => array(
+      'default' => NULL,
+      'left' => NULL,
+      'right' => NULL,
+    ),
+  );
+  $display->cache = array();
+  $display->title = 'Location';
+  $display->content = array();
+  $display->panels = array();
+    $pane = new stdClass();
+    $pane->pid = 'new-1';
+    $pane->panel = 'left';
+    $pane->type = 'node';
+    $pane->subtype = 'node';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'nid' => '%1',
+      'links' => 1,
+      'leave_node_title' => 0,
+      'identifier' => '',
+      'build_mode' => 'full',
+      'link_node_title' => 0,
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-1'] = $pane;
+    $display->panels['left'][0] = 'new-1';
+    $pane = new stdClass();
+    $pane->pid = 'new-2';
+    $pane->panel = 'right';
+    $pane->type = 'panels_mini';
+    $pane->subtype = 'uk_location_infrastructure';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-2'] = $pane;
+    $display->panels['right'][0] = 'new-2';
+  $display->hide_title = PANELS_TITLE_FIXED;
+  $display->title_pane = '0';
+  $handler->conf['display'] = $display;
+  $export['node_view_panel_context_2'] = $handler;
+
+  return $export;
+}
+
+/**
  * Implements hook_default_page_manager_pages().
  */
 function dgu_location_default_page_manager_pages() {
@@ -74,16 +193,13 @@ function dgu_location_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'left';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'panels_mini';
+    $pane->subtype = 'uk_location_infrastructure';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'UK Location Infrastructure',
-      'body' => '<div class="item-list"><ul><li><div><strong><a href="/location/uk-location-infrastructure#metadataexplained">Discovery Metadata Service explained</a></strong><p><a href="library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for discovery metadata</a><br><a href="library/uk-location-discovery-metadata-service-operational-guide">Operational Guide for metadata</a><br><a href="/location/map-based-search">Find out more about Map Based Search</a></p></div></li><li><div><strong><a href="/location/uk-location-infrastructure#viewserviceexplained">View Service explained</a></strong><p><a href="library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for view services</a><br><a href="/library/uk-location-view-service-operational-guide">Operational Guide for view services</a><br><a href="/location/preview-on-map">Find out more about Preview on Map</a></p></div></li><li><a href="/location/uk-location-infrastructure#whatscoming"><strong>What\'s coming up next</strong></a></li></ul></div>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -105,7 +221,7 @@ function dgu_location_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Location data in the UK',
-      'body' => '<p>data.gov.uk provides access to over 1000 location datasets and provides services to enable you to access them.</p> <div class="item-list"><ul><li><a href="/data/search?ext_bbox=-20.48,48.79,3.11,62.66">See the list of location data</a></li> <li><a href="/search/apachesolr_search/Location?filters=type%3Aapps">See apps developed with location data</a></li> </ul></div>',
+      'body' => '<p>data.gov.uk provides access to over 1000 location datasets and provides services to enable you to access them.</p><div class="item-list"><ul><li><a href="/data/search?ext_bbox=-20.48,48.79,3.11,62.66">See the list of location data</a></li><li><a href="/search/app/">See apps developed with location data</a></li></ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
