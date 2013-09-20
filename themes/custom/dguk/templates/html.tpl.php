@@ -14,6 +14,18 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!-- IE hacks -->
+    <!--[if lt IE 9]>
+      <link rel="stylesheet" media="all" href="/assets/css/less-than-ie9.min.css" />
+    <![endif]-->
+    <!-- font-awesome ie7 shim -->
+    <!--[if IE 7]>
+      <link rel="stylesheet" media="all" href="/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+    <!-- respond.min.js for IE less than 9 -->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
