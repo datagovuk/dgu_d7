@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/assets/css/dgu-drupal.min.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="/assets/js/vendor.min.js"></script>
+    <script src="/assets/js/dgu-drupal.min.js"></script>
     <?php print $scripts; ?>
     <!-- HTML5 element support for IE6-8 -->
     <!--[if lt IE 9]>
