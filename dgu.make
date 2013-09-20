@@ -135,6 +135,9 @@ projects[composer_manager][subdir] = "contrib"
 projects[panels][version] = "3.3"
 projects[panels][subdir] = "contrib"
 
+projects[context][version] = "3.0-beta7"
+projects[context][subdir] = "contrib"
+
 projects[services][version] = "3.5"
 projects[services][subdir] = "contrib"
 projects[services_views][version] = "1.0-beta2"

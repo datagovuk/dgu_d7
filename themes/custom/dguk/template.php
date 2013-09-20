@@ -75,11 +75,14 @@ function dguk_css_alter(&$css) {
 /**
  * Get the output for the main menu.
  */
-function dguk_get_main_menu() {
-	$menu = dguk_menu_navigation_links('main-menu');
-//      <li class=""><a href="/home"><div class="nav-icon"></div>Home</a></li>
-	$menu_output = theme('links__main-menu', array(
-	    'links' => $menu,
+function dguk_get_main_menu($main_menu) {
+  $menu_new_classes = array();
+  foreach ($main_menu as $key => $item) {
+    $menu_new_classes['nav-' . strtolower(str_replace(' ', '-', $item['title'])) . ' ' . $key] = $item;
+  }
+
+	$menu_output = theme('links__main_menu', array(
+	    'links' => $menu_new_classes,
 	    'attributes' => array(
 	        'id' => 'dgu-nav',
 	        'class' => array('nav'),
@@ -89,7 +92,7 @@ function dguk_get_main_menu() {
   $output = '<div class="navbar navbar-inverse"> <div class="main-nav-collapse">';
   $output .=  $menu_output;
   $output .= '</div><!--/.main-nav-collapse --></div>';
-  $output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
+  $output = str_replace('Home</a>', '<i class="icon-home"></i>Home</a>', $output);
 
 	return $output;
  }
@@ -98,83 +101,16 @@ function dguk_get_main_menu() {
  * Get the output for the sub menu (2nd level of main menu).
  */
 function dguk_get_sub_menu() {
-	$menu = dguk_menu_navigation_links('main-menu', 1);
-//      <li class=""><a href="/home"><div class="nav-icon"></div>Home</a></li>
-	$menu_output = theme('links__sub-menu', array(
+	$menu = menu_navigation_links('main-menu', 1);
+
+	return theme('links__sub_menu', array(
 	    'links' => $menu,
 	    'attributes' => array(
-	        'id' => 'dgu-nav',
-	        'class' => array('nav'),
+	        'id' => 'subnav',
 	    ),
 	 ));
-
-  $output = '<div class="navbar navbar-inverse"> <div class="sub-nav-collapse">';
-  $output .=  $menu_output;
-  $output .= '</div><!--/.sub-nav-collapse --></div>';
-  //$output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
-
-	return $output;
  }
 
-/**
- * Returns an array of links for a navigation menu with
- * classes corresponding with menu items names.
- *
- * @param $menu_name
- *   The name of the menu.
- * @param $level
- *   Optional, the depth of the menu to be returned.
- *
- * @return
- *   An array of links of the specified menu and level.
- */
-function dguk_menu_navigation_links($menu_name, $level = 0) {
-  // Don't even bother querying the menu table if no menu is specified.
-  if (empty($menu_name)) {
-    return array();
-  }
-
-  // Get the menu hierarchy for the current page.
-  $tree = menu_tree_page_data($menu_name, $level + 1);
-
-  // Go down the active trail until the right level is reached.
-  while ($level-- > 0 && $tree) {
-    // Loop through the current level's items until we find one that is in trail.
-    while ($item = array_shift($tree)) {
-      if ($item['link']['in_active_trail']) {
-        // If the item is in the active trail, we continue in the subtree.
-        $tree = empty($item['below']) ? array() : $item['below'];
-        break;
-      }
-    }
-  }
-
-  // Create a single level of links.
-  $router_item = menu_get_item();
-  $links = array();
-  foreach ($tree as $item) {
-    if (!$item['link']['hidden']) {
-      $class = '';
-      $l = $item['link']['localized_options'];
-      $l['href'] = $item['link']['href'];
-      $l['title'] = $item['link']['title'];
-      if ($item['link']['in_active_trail']) {
-        $class = ' active-trail';
-        $l['attributes']['class'][] = 'active-trail';
-      }
-      // Normally, l() compares the href of every link with $_GET['q'] and sets
-      // the active class accordingly. But local tasks do not appear in menu
-      // trees, so if the current path is a local task, and this link is its
-      // tab root, then we have to set the class manually.
-      if ($item['link']['href'] == $router_item['tab_root_href'] && $item['link']['href'] != $_GET['q']) {
-        $l['attributes']['class'][] = 'active';
-      }
-      // Keyed with the unique mlid to generate classes in theme_links().
-      $links['nav-' . strtolower(str_replace(' ', '-', $item['link']['link_title'])) . $class] = $l;
-    }
-  }
-  return $links;
-}
 
 
 /**
@@ -193,6 +129,65 @@ function dguk_get_footer_menu() {
 	return $menu_output;
  }
 
+/**
+ * Returns HTML for sub mnavigation links.
+ */
+function dguk_links__sub_menu($variables) {
+  $links = $variables['links'];
+  $attributes = $variables['attributes'];
+  $output = '';
+
+  if (count($links) > 0) {
+    $output .= '<ul' . drupal_attributes($attributes) . '>';
+
+    $num_links = count($links);
+    $i = 1;
+
+    foreach ($links as $key => $link) {
+      $class = array($key);
+
+      // Add first, last and active classes to the list of links to help out themers.
+      if ($i == 1) {
+        $class[] = 'first';
+      }
+      if ($i == $num_links) {
+        $class[] = 'last';
+      }
+      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
+          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
+        $class[] = 'active';
+      }
+      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
+
+      if (isset($link['href'])) {
+        // Pass in $link as $options, they share the same keys.
+        $output .= l($link['title'], $link['href'], $link);
+      }
+      elseif (!empty($link['title'])) {
+        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
+        if (empty($link['html'])) {
+          $link['title'] = check_plain($link['title']);
+        }
+        $span_attributes = '';
+        if (isset($link['attributes'])) {
+          $span_attributes = drupal_attributes($link['attributes']);
+        }
+        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
+      }
+
+      $i++;
+      $output .= "</li>\n";
+
+      if ($i <= $num_links) {
+        $output .= "<span class=\"divider\">&nbsp;|&nbsp;</span>\n";
+      }
+    }
+
+    $output .= '</ul>';
+  }
+
+  return $output;
+}
 
 function dguk_js_alter(&$js){
  /**
