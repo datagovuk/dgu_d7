@@ -55,7 +55,7 @@ function dgu_forum_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Discussion forum';
+  $display->title = 'Discussion Forum';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
