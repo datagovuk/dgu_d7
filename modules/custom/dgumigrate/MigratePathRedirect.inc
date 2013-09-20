@@ -115,7 +115,8 @@ class MigrateDestinationRedirect extends MigrateDestination {
     }
 
     public function import(stdClass $object, stdClass $row){
-        if ( array_search($row->source, $this->excludes) ){
+        $key = array_search($row->source, $this->excludes);
+        if ( $key !== FALSE ){
             return FALSE;
         }
         $updating = FALSE;
