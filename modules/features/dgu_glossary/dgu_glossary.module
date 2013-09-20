@@ -297,7 +297,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['lexicon_alphabar'] = $lexicon_alphabar;
 
             //hide comments in the content section and display separately
-            $variables['comments'] = $variables['content']['field_comments'];
+            $variables['comments'] = $variables['content']['field_comment'];
             $variables['comments']['#label_display'] = 'hidden';
             unset($variables['content']['field_comments']);
 
