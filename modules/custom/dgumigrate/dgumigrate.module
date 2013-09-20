@@ -341,7 +341,8 @@ function dgumigrate_register_migrations() {
         'story' => array('table' => 'migrate_map_story', 'url' => 'page'),
     ),
     'excludes' => array(
-        'library'
+        'library',
+        'about'
     ),
     'description' => 'Migrate Path redirects')
   ));
