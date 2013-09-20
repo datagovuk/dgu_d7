@@ -33,6 +33,7 @@ features[field_instance][] = node-forum-field_sector
 features[field_instance][] = node-forum-field_uses_dataset
 features[field_instance][] = node-forum-taxonomy_forums
 features[node][] = forum
+features[page_manager_handlers][] = node_view_panel_context_4
 features[page_manager_pages][] = forum_categories
 features[page_manager_pages][] = forum_topics
 features[taxonomy][] = forums
