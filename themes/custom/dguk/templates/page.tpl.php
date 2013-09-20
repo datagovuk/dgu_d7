@@ -34,11 +34,11 @@
         </a>
     </div>
     <div class="container">
-      <?php print dguk_get_main_menu() ?>
+      <?php print dguk_get_main_menu($main_menu);?>
     </div>
-    <div class="container">
-      <?php print dguk_get_sub_menu() ?>
-    </div>
+</div>
+<div class="container">
+  <?php print dguk_get_sub_menu() ?>
 </div>
 
 <div class="container content-container">
