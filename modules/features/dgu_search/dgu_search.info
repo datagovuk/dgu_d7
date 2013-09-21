@@ -11,6 +11,7 @@ dependencies[] = ctools
 dependencies[] = facetapi
 dependencies[] = page_manager
 dependencies[] = strongarm
+dependencies[] = panels
 features[apachesolr_search_page][] = core_search
 features[apachesolr_search_page][] = search_app
 features[apachesolr_search_page][] = search_blog
