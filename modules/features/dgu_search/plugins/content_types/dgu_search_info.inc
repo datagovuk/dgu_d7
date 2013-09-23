@@ -51,13 +51,15 @@ function dgu_search_preprocess(&$variables, $hook){
             }
             //If we are searching for data requests, we need to say how many private (unpublished requests) there are.
             if($content_type == 'dataset_request') {
-                $query = "SELECT count(distinct n.nid)
-                FROM {node} n
-                LEFT JOIN {content_field_could_do_with} cdw ON cdw.vid = n.vid
-                WHERE n.type = 'data_request'
-                AND n.status = 0
-                AND cdw.field_could_do_with_value IS NOT NULL";
-                //$result = db_result(db_query($query));
+                $query = "SELECT count(distinct n.nid) count
+                  FROM node n
+                  LEFT JOIN field_revision_field_data_use du ON du.revision_id = n.vid
+                  WHERE n.type = 'dataset_request'
+                  AND status = 0
+                  AND du.field_data_use_value IS NOT NULL";
+                $result = db_query($query);
+                $dr_count = $result->fetchField(0);
+                $variables['dataset_request_count'] = $dr_count;
             }
             if ($entity){
                 $entity_info = entity_get_info($entity);
