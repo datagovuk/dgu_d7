@@ -7,6 +7,16 @@
 include_once 'dgu_search.features.inc';
 
 
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function dgu_search_ctools_plugin_directory($module, $plugin) {
+    if ($module == 'ctools' && !empty($plugin)) {
+        return "plugins/$plugin";
+    }
+}
+
+
 // Implements hook_block_info().
 function dgu_search_block_info() {
   $blocks = array();
