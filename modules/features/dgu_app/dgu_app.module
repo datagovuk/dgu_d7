@@ -5,3 +5,14 @@
  */
 
 include_once 'dgu_app.features.inc';
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ * Add boxed class and change page title on app node form.
+ */
+function dgu_app_form_node_form_alter(&$form, $form_state) {
+  if ($form['#id'] == 'app-node-form') {
+    $form['#attributes']['class'][] = 'boxed';
+    drupal_set_title(t('Submit an app'));
+  }
+}
