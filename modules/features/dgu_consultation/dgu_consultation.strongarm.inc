@@ -60,7 +60,17 @@ function dgu_consultation_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_reply__field_comment';
   $strongarm->value = array(
-    'view_modes' => array(),
+    'view_modes' => array(
+      'full' => array(
+        'custom_settings' => FALSE,
+      ),
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+    ),
     'extra_fields' => array(
       'form' => array(),
       'display' => array(),
