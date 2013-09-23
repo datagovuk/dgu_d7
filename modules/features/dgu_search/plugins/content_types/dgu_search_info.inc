@@ -58,7 +58,7 @@ function dgu_search_preprocess(&$variables, $hook){
                   AND status = 0
                   AND du.field_data_use_value IS NOT NULL";
                 $result = db_query($query);
-                $dr_count = $result->fetchField(0);
+                $dr_count = $result->fetchField();
                 $variables['dataset_request_count'] = $dr_count;
             }
             if ($entity){
