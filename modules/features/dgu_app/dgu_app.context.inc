@@ -22,7 +22,7 @@ function dgu_app_context_default_contexts() {
         'app' => 'app',
       ),
       'options' => array(
-        'node_form' => '0',
+        'node_form' => '1',
       ),
     ),
   );
