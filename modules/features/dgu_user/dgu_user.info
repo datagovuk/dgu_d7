@@ -102,6 +102,7 @@ features[variable][] = logintoboggan_redirect_on_confirm
 features[variable][] = logintoboggan_redirect_on_register
 features[variable][] = logintoboggan_unified_login
 features[variable][] = pathauto_user_pattern
+features[variable][] = site_403
 features[variable][] = user_admin_role
 features[variable][] = user_cancel_method
 features[variable][] = user_email_verification
