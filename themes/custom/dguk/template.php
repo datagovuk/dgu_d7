@@ -90,6 +90,20 @@ function dguk_preprocess_reply(&$variables) {
 }
 
 /**
+ *  Implements hook_form_alter().
+ */
+function dguk_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_pass':
+    case 'user_login':
+    case 'user_register_form':
+    case 'reply_add_form':
+      $form['#attributes']['class'][] = 'boxed';
+      break;
+  }
+}
+
+/**
  *  Implements hook_css_alter().
  */
 function dguk_css_alter(&$css) {
