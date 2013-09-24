@@ -16,7 +16,10 @@ function dgu_app_default_page_manager_pages() {
   $page->admin_title = 'Apps';
   $page->admin_description = 'Apps landing page';
   $page->path = 'apps';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Apps',
