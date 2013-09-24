@@ -64,6 +64,32 @@ function dguk_preprocess_field(&$variables) {
 }
 
 /**
+ *  Implements hook_preprocess_reply().
+ */
+function dguk_preprocess_reply(&$variables) {
+  $fields = field_info_instances('user', 'user');
+  $field_id = $fields['field_avatar']['field_id'];
+  $user = new stdClass();
+  $user->uid = $variables['reply']->uid;
+  field_attach_load('user', array($variables['reply']->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
+
+  if (!empty($user->field_avatar)) {
+    $field = field_get_items('user', $user, 'field_avatar');
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+  }
+  else {
+    $image = theme_image_style_outside_files(
+    array(
+      'style_name' => 'avatar',
+      'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
+	    )
+    );
+  }
+
+  $variables['avatar'] = l(render($image), 'user/'.$variables['reply']->uid, array('html' => true) );
+}
+
+/**
  *  Implements hook_css_alter().
  */
 function dguk_css_alter(&$css) {
