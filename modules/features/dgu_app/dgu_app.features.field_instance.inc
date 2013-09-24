@@ -28,7 +28,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -84,7 +84,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 8,
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -186,7 +186,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 9,
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -228,7 +228,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 12,
+        'weight' => 10,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -275,7 +275,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 3,
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -378,7 +378,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 6,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -432,7 +432,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 11,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -466,16 +466,9 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'email',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'email_default',
-        'weight' => 5,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -511,16 +504,9 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'text_default',
-        'weight' => 4,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -566,7 +552,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -613,7 +599,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 13,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
