@@ -19,13 +19,14 @@
   <?php
     // Hide comments, tags, and links now so that we can render them later.
     hide($content['links']);
+    hide($content['field_comment']);
     print render($content);
   ?>
-
-  <?php if (!empty($content['links'])): ?>
-    <footer>
-      <?php print render($content['links']); ?>
-    </footer>
-  <?php endif; ?>
-
 </article> <!-- /.node -->
+
+<?php if (!empty($content['links']) || !empty($content['field_comment'])): ?>
+  <footer>
+    <?php print render($content['field_comment']); ?>
+    <?php print render($content['links']); ?>
+  </footer>
+<?php endif; ?>
