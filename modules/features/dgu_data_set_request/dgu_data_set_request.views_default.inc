@@ -146,7 +146,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['label'] = 'Submitter name';
   $handler->display->display_options['fields']['field_submitter_name']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(

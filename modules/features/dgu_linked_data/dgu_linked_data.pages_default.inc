@@ -54,7 +54,7 @@ function dgu_linked_data_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = '';
+  $display->title = 'Linked data';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
