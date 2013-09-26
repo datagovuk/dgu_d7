@@ -111,7 +111,7 @@ function dgu_user_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'logintoboggan_pre_auth_role';
-  $strongarm->value = '4';
+  $strongarm->value = '7';
   $export['logintoboggan_pre_auth_role'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -148,6 +148,13 @@ function dgu_user_strongarm() {
   $strongarm->name = 'pathauto_user_pattern';
   $strongarm->value = 'users/[user:name]';
   $export['pathauto_user_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'site_403';
+  $strongarm->value = 'toboggan/denied';
+  $export['site_403'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

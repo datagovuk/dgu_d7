@@ -41,12 +41,26 @@ function dguk_preprocess_page(&$variables) {
  */
 function dguk_preprocess_node(&$variables) {
   $variables['classes_array'][] = 'boxed';
+  $full_node = node_load($variables['node']->nid);
+  $variables['title'] = $full_node->title;
 }
 
 /**
  *  Implements hook_preprocess_panels_pane().
  */
 function dguk_preprocess_panels_pane(&$variables) {
+  if ($variables['pane']->type != 'node' && $variables['pane']->type != 'node_content') {
+    $variables['classes_array'][] = 'boxed';
+  }
+  else {
+    unset($variables['title']);
+  }
+}
+
+/**
+ *  Implements hook_preprocess_block().
+ */
+function dguk_preprocess_block(&$variables) {
   $variables['classes_array'][] = 'boxed';
 }
 
@@ -67,6 +81,9 @@ function dguk_preprocess_field(&$variables) {
  *  Implements hook_preprocess_reply().
  */
 function dguk_preprocess_reply(&$variables) {
+  $variables['classes_array'][] = 'boxed';
+
+  // Add $avatar variable with rendered user picture linked to user profile;
   $fields = field_info_instances('user', 'user');
   $field_id = $fields['field_avatar']['field_id'];
   $user = new stdClass();
@@ -87,6 +104,20 @@ function dguk_preprocess_reply(&$variables) {
   }
 
   $variables['avatar'] = l(render($image), 'user/'.$variables['reply']->uid, array('html' => true) );
+}
+
+/**
+ *  Implements hook_form_alter().
+ */
+function dguk_form_alter(&$form, &$form_state, $form_id) {
+  switch ($form_id) {
+    case 'user_pass':
+    case 'user_login':
+    case 'user_register_form':
+    case 'reply_add_form':
+      $form['#attributes']['class'][] = 'boxed';
+      break;
+  }
 }
 
 /**
