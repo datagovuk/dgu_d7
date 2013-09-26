@@ -266,7 +266,7 @@ function dgumigrate_register_migrations() {
         'class_name' => 'DGUAppMigration',
         'description' => t('Migration of app nodes from Drupal 6'),
         'machine_name' => 'app',
-        'source_type' => 'Apps',
+        'source_type' => 'apps',
         'destination_type' => 'app',
         'group' => 'Apps',
       )
