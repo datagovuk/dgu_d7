@@ -34,7 +34,7 @@ projects[ctools][patch][] = "http://drupal.org/files/ctools-1925018-61.patch"
 
 projects[features][subdir] = "contrib"
 
-projects[views][version] = "3.5"
+projects[views][version] = "3.7"
 projects[views][subdir] = "contrib"
 
 projects[link][version] = "1.1"
