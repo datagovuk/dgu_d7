@@ -72,6 +72,7 @@ class DGUUserMigration extends DrupalUser6Migration {
       $query->condition('n.type', 'profile');
       $query->leftJoin('content_type_profile', 'p', 'p.nid = n.nid');
       $query->fields('p');
+      $query->range(0,100);
       return $query;
   }
 
@@ -303,7 +304,7 @@ function dgumigrate_register_migrations() {
       }
     }
   }
-  $ckan_dataset_arguments = $comment_arguments + array(
+  $ckan_dataset_arguments = $common_arguments + array(
     'source_type' => 'ckan_package',
     'user_migration' => 'user',
     'group' => 'Datasets',
