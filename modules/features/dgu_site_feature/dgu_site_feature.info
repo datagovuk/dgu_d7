@@ -44,7 +44,6 @@ features[node][] = page
 features[page_manager_handlers][] = node_view_panel_context_8
 features[page_manager_pages][] = about_us
 features[page_manager_pages][] = data
-features[page_manager_pages][] = home
 features[panels_mini][] = what_s_data_gov_uk_all_about_
 features[variable][] = extlink_alert
 features[variable][] = extlink_alert_text
