@@ -321,8 +321,11 @@ function dgumigrate_register_migrations() {
       'destination_type' => 'ckan_dataset'));
   Migration::registerMigration('DGUCommentMigration', 'ckan_dataset_comments', $arguments);
 
-  Migration::registerMigration('MigrateVotes', 'Votes', array_merge($comment_arguments, array('source_type' => 'apps', 'content_source' => 'app', 'user_migration' => 'user', 'description' => 'Migrate Votes')));
-  Migration::registerMigration('MigratePathRedirect', 'Paths', array_merge($comment_arguments, array(
+  $vote_arguments = array_merge($comment_arguments, array('source_type' => 'apps', 'content_source' => 'app',
+      'user_migration' => 'user', 'description' => 'Migrate Votes'));
+  unset($vote_arguments['group']);
+  Migration::registerMigration('MigrateVotes', 'Votes', $vote_arguments);
+  Migration::registerMigration('MigratePathRedirect', 'Paths', array_merge($vote_arguments, array(
     'content_tables' => array(
         'page' => array('table' => 'migrate_map_page', 'url' => 'node'),
         'apps' => array('table' => 'migrate_map_app', 'url' => 'node'),
