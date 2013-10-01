@@ -8,9 +8,19 @@
  * Implements hook_ctools_plugin_api().
  */
 function dgu_organogram_ctools_plugin_api($module = NULL, $api = NULL) {
+  if ($module == "page_manager" && $api == "pages_default") {
+    return array("version" => "1");
+  }
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function dgu_organogram_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
 }
 
 /**
@@ -19,7 +29,7 @@ function dgu_organogram_ctools_plugin_api($module = NULL, $api = NULL) {
 function dgu_organogram_node_info() {
   $items = array(
     'organogram' => array(
-      'name' => t('organogram'),
+      'name' => t('Organogram'),
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
