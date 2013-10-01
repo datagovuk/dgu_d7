@@ -269,7 +269,7 @@ function dgumigrate_register_migrations() {
         'machine_name' => 'app',
         'source_type' => 'apps',
         'destination_type' => 'app',
-        'group' => 'Apps',
+        'group' => 'Nodes',
       )
     )
   );
@@ -342,15 +342,6 @@ function dgumigrate_register_migrations() {
     ),
     'description' => 'Migrate Path redirects')
   ));
-
-  $menu_links_arguments = $common_arguments + array(
-      'description' => t('Migration of menu links from Drupal 6'),
-      'machine_name' => 'menu_links',
-      'menu_migration' => $menu_arguments['machine_name'],
-      'group' => 'Paths'
-  );
-  Migration::registerMigration('DrupalMenuLinks6Migration', $menu_links_arguments['machine_name'], $menu_links_arguments);
-
 
   $glossary_args = $common_arguments + array(
         'class_name' => 'DGUGlossaryMigration',
