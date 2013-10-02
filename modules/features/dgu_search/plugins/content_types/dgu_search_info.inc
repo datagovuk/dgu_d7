@@ -35,6 +35,9 @@ function dgu_search_preprocess(&$variables, $hook){
                 $searcher = $query->getSearcher();
                 $response = apachesolr_static_response_cache($searcher);
             }
+            if (empty($response)){
+                return;
+            }
             $variables['found'] = $response->response->numFound;
             $variables['start'] = $response->response->start + 1;
             $variables['end'] = $response->response->start + count($response->response->docs);

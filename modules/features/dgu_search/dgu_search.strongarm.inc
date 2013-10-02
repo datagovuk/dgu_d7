@@ -81,26 +81,6 @@ function dgu_search_strongarm() {
       'mlt_custom_filters' => '',
       'delta' => 'mlt-001',
     ),
-    'mlt-002' => array(
-      'name' => 'Related apps (more like this)',
-      'mlt_env_id' => 'solr',
-      'num_results' => '5',
-      'mlt_fl' => array(
-        'content' => 'content',
-        'label' => 'label',
-        'taxonomy_names' => 'taxonomy_names',
-      ),
-      'mlt_mintf' => '1',
-      'mlt_mindf' => '1',
-      'mlt_minwl' => '3',
-      'mlt_maxwl' => '15',
-      'mlt_maxqt' => '20',
-      'mlt_type_filters' => array(
-        'app' => 'app',
-      ),
-      'mlt_custom_filters' => '',
-      'delta' => 'mlt-002',
-    ),
   );
   $export['apachesolr_search_mlt_blocks'] = $strongarm;
 
