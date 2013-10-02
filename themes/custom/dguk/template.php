@@ -55,6 +55,10 @@ function dguk_preprocess_panels_pane(&$variables) {
   else {
     unset($variables['title']);
   }
+
+  if($variables['pane']->type == 'apachesolr_form') {
+    $variables['content']['#attributes']['class'][] = 'form-search';
+  }
 }
 
 /**
