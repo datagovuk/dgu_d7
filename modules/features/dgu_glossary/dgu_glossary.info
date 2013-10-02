@@ -5,6 +5,7 @@ package = DGU Features
 version = 7.x-1.0
 project = dgu_glossary
 dependencies[] = ctools
+dependencies[] = dgu_glossary
 dependencies[] = dgu_reply
 dependencies[] = dgu_shared_fields
 dependencies[] = entity

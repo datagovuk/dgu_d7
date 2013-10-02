@@ -72,7 +72,6 @@ class DGUUserMigration extends DrupalUser6Migration {
       $query->condition('n.type', 'profile');
       $query->leftJoin('content_type_profile', 'p', 'p.nid = n.nid');
       $query->fields('p');
-      $query->range(0,100);
       return $query;
   }
 
