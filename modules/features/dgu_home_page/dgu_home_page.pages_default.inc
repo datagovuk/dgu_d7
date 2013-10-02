@@ -172,7 +172,7 @@ function dgu_home_page_default_page_manager_pages() {
       'args' => '',
       'url' => '',
       'display' => 'block',
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => 'Latest blogs & forum posts',
     );
     $pane->cache = array();
