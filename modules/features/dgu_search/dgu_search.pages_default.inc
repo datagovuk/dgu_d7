@@ -52,7 +52,7 @@ function dgu_search_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol_stacked';
+  $display->layout = 'dgu_twocol_stacked_right';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
