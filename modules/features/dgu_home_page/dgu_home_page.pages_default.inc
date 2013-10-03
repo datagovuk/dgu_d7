@@ -57,7 +57,7 @@ function dgu_home_page_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol_stacked';
+  $display->layout = 'dgu_twocol_stacked_50_50';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -173,7 +173,7 @@ function dgu_home_page_default_page_manager_pages() {
       'url' => '',
       'display' => 'block',
       'override_title' => 0,
-      'override_title_text' => '',
+      'override_title_text' => 'Latest blogs & forum posts',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -195,15 +195,7 @@ function dgu_home_page_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Home page tiles',
       'title' => '',
-      'body' => '    <div id="homepage-promo-container">
-      <div id="big_horizontal">
-        <a href="library/open-data-white-paper">
-          <img alt="White paper linking to cabinetoffice.gov" src="sites/default/files/open-data-white-paper-block.png">
-        </a>
-      </div>
-      <div id="big_vertical">
-        <a href="data/search?q=&amp;unpublished=true">
-          <img alt="Suggest a dataset using our new form tool" src="sites/default/files/NII3_3.png">
+      'body' => '<div id="homepage-promo-container"><div id="big_horizontal"><a href="library/open-data-white-paper"><img alt="White paper linking to cabinetoffice.gov" src="sites/default/files/open-data-white-paper-block.png"></a></div><div id="big_vertical"><a href="data/search?q=&amp;unpublished=true"><img alt="Suggest a dataset using our new form tool" src="sites/default/files/NII3_3.png">
         </a>
       </div>
       <div id="small_left">
