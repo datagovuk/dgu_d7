@@ -307,7 +307,7 @@ function dgu_blog_default_page_manager_pages() {
     $pane->configuration = array(
       'override_pager_settings' => 0,
       'use_pager' => 0,
-      'nodes_per_page' => '30',
+      'nodes_per_page' => '15',
       'pager_id' => '0',
       'offset' => '0',
       'more_link' => 0,
@@ -317,8 +317,8 @@ function dgu_blog_default_page_manager_pages() {
       'args' => '',
       'url' => '',
       'display' => 'block',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'override_title' => 1,
+      'override_title_text' => 'Frequent bloggers',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -340,8 +340,8 @@ function dgu_blog_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Featured blogs',
-      'body' => '<div class="item-list"><ul><li><a href="http://www.w3.org/DesignIssues/">Sir Tim Berners-Lee</a></li><li><a href="http://users.ecs.soton.ac.uk/nrs/">Professor Nigel Shadbolt</a></li><li><a href="http://www.number10.gov.uk/">Number 10</a></li><li><a href="http://blogs.cabinetoffice.gov.uk/digitalengagement/">Digital Engagement</a></li><li><a href="http://coi.gov.uk/blogs/digigov/">Digigov (COI)</a></li><li><a href="http://www.jenitennison.com/blog/">Jeni Tennison</a></li></ul></div>',
-      'format' => 'filtered_html',
+      'body' => '<div class="views-row"><a href="http://www.w3.org/DesignIssues/">Sir Tim Berners-Lee</a></div><div class="views-row"><a href="http://users.ecs.soton.ac.uk/nrs/">Professor Nigel Shadbolt</a></div><div class="views-row"><a href="http://www.number10.gov.uk/">Number 10</a></div><div class="views-row"><a href="http://blogs.cabinetoffice.gov.uk/digitalengagement/">Digital Engagement</a></div><div class="views-row"><a href="http://coi.gov.uk/blogs/digigov/">Digigov (COI)</a><a href="http://www.jenitennison.com/blog/">Jeni Tennison</a></div>',
+      'format' => 'full_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
