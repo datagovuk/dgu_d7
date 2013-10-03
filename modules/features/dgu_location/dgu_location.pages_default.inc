@@ -281,8 +281,8 @@ function dgu_location_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block_2',
-      'override_title' => 1,
+      'display' => 'blogs_location',
+      'override_title' => 0,
       'override_title_text' => '',
     );
     $pane->cache = array();

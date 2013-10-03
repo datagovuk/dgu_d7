@@ -267,9 +267,9 @@ function dgu_data_set_request_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block_1',
+      'display' => 'blogs_odug',
       'override_title' => 1,
-      'override_title_text' => '',
+      'override_title_text' => 'ODUG Blogs',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -291,7 +291,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Progress on data requests',
-      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p ><a href="/odug/roadmap">See Dashboard</a></p> <p><a href="/odug/status">Find out more about data request status</a></p>',
+      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p ><a class="btn btn-primary" href="/odug/roadmap">See Dashboard</a></p> <p><a href="/odug/status">Find out more about data request status</a></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -375,7 +375,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<p><a href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
+      'body' => '<p><a class ="btn btn-primary" href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );

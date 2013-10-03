@@ -246,8 +246,8 @@ Sir Tim Berners-Lee\'s talk from TED2009 on TED.com',
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block_3',
-      'override_title' => 1,
+      'display' => 'blogs_linked_data',
+      'override_title' => 0,
       'override_title_text' => '',
     );
     $pane->cache = array();

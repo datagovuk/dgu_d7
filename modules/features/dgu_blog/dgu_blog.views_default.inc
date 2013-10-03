@@ -116,12 +116,12 @@ function dgu_blog_views_default_views() {
   );
 
   /* Display: Latest blog posts  */
-  $handler = $view->new_display('block', 'Latest blog posts ', 'block');
+  $handler = $view->new_display('block', 'Latest blog posts ', 'latest_blog_posts');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['block_description'] = 'Latest blog posts';
 
   /* Display: Blogs ODUG  */
-  $handler = $view->new_display('block', 'Blogs ODUG ', 'block_1');
+  $handler = $view->new_display('block', 'Blogs ODUG ', 'blogs_odug');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Blogs ODUG';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
@@ -143,7 +143,8 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['relationship'] = 'nid';
   $handler->display->display_options['fields']['id']['group_type'] = 'count_distinct';
-  $handler->display->display_options['fields']['id']['label'] = 'Comments';
+  $handler->display->display_options['fields']['id']['label'] = '';
+  $handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
   /* Field: User: Avatar */
   $handler->display->display_options['fields']['field_avatar']['id'] = 'field_avatar';
   $handler->display->display_options['fields']['field_avatar']['table'] = 'field_data_field_avatar';
@@ -189,7 +190,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['block_description'] = 'Blogs ODUG ';
 
   /* Display: Blogs Location */
-  $handler = $view->new_display('block', 'Blogs Location', 'block_2');
+  $handler = $view->new_display('block', 'Blogs Location', 'blogs_location');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Blogs Location';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
@@ -258,7 +259,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['block_description'] = 'Blogs Location';
 
   /* Display: Blogs Linked Data */
-  $handler = $view->new_display('block', 'Blogs Linked Data', 'block_3');
+  $handler = $view->new_display('block', 'Blogs Linked Data', 'blogs_linked_data');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Blogs Linked Data';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
@@ -327,7 +328,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['block_description'] = 'Blogs Linked Data';
 
   /* Display: Blogs by the same author  */
-  $handler = $view->new_display('block', 'Blogs by the same author ', 'block_4');
+  $handler = $view->new_display('block', 'Blogs by the same author ', 'blogs_same_author');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Blog posts by the same author';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
@@ -336,7 +337,6 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['quantity'] = '3';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Content: Reply */
   $handler->display->display_options['relationships']['nid']['id'] = 'nid';
