@@ -25,6 +25,11 @@ function dgu_forum_context_default_contexts() {
         'node_form' => '0',
       ),
     ),
+    'path' => array(
+      'values' => array(
+        'forum/*' => 'forum/*',
+      ),
+    ),
   );
   $context->reactions = array(
     'menu' => 'forum',
