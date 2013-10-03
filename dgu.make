@@ -9,7 +9,13 @@ projects[apachesolr][subdir] = "contrib"
 projects[apachesolr_autocomplete][subdir] = "contrib"
 ; In review patch to apachesolr_autocomplete for autocompleting with filters applied.
 projects[apachesolr_autocomplete][patch][] = "http://drupal.org/files/1444038-custom-page-autocomplete-with-panels.patch"
+
+projects[apachesolr_panels][type] = "module"
+projects[apachesolr_panels][download][type] = "git"
+projects[apachesolr_panels][download][url] = "http://git.drupal.org/project/apachesolr_panels.git"
+projects[apachesolr_panels][download][branch] = "7.x-1.x"
 projects[apachesolr_panels][subdir] = "contrib"
+projects[apachesolr_panels][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-1.patch"
 
 projects[facetapi][subdir] = "contrib"
 
