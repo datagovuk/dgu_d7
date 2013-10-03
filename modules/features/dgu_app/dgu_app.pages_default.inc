@@ -301,7 +301,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know... <a class="green-button" href="/node/add/app">Share your app</a></p>',
+      'body' => '<p>Let us know... <a class="btn btn-primary center-me" href="/node/add/app">Share your app</a></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
