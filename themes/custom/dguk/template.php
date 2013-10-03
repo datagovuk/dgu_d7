@@ -49,6 +49,10 @@ function dguk_preprocess_node(&$variables) {
  *  Implements hook_preprocess_panels_pane().
  */
 function dguk_preprocess_panels_pane(&$variables) {
+
+  //drupal_set_message($variables['pane']->type . ':' . $variables['pane']->subtype);
+
+
   if ($variables['pane']->type != 'node' && $variables['pane']->type != 'node_content') {
     $variables['classes_array'][] = 'boxed';
   }
@@ -56,7 +60,12 @@ function dguk_preprocess_panels_pane(&$variables) {
     unset($variables['title']);
   }
 
-  if($variables['pane']->type == 'apachesolr_form') {
+  // Add form-search class to search forms in panes
+  if($variables['pane']->type == 'apachesolr_form'
+      || ($variables['pane']->type == 'block' && $variables['pane']->subtype == 'dgu_search-searchapp')
+      || ($variables['pane']->type == 'block' && $variables['pane']->subtype == 'dgu_search-searchblog')
+      || ($variables['pane']->type == 'block' && $variables['pane']->subtype == 'dgu_search-searchforum')
+    ) {
     $variables['content']['#attributes']['class'][] = 'form-search';
     $variables['content']['#attributes']['class'][] = 'form-search-solo';
   }
