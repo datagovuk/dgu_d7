@@ -105,9 +105,10 @@ function dgu_blog_default_page_manager_handlers() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block_4',
+      'display' => 'blogs_same_author',
       'context' => array(
         0 => '',
+        1 => '',
       ),
       'override_title' => 0,
       'override_title_text' => '',
