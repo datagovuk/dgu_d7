@@ -192,7 +192,7 @@ function dgu_linked_data_default_page_manager_pages() {
       'admin_title' => 'What is linked data?',
       'title' => 'What is linked data?',
       'body' => '<div class="fluidVideo"><iframe width="736" height="414" src="//www.youtube.com/embed/OM6XIICm_qo?HD=1;rel=0;showinfo=0" frameborder="0" allowfullscreen></iframe></div>
-Sir Tim Berners-Lee\'s talk from TED2009 on TED.com',
+<br /><p>Sir Tim Berners-Lee\'s talk from TED2009 on TED.com</p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
