@@ -147,16 +147,13 @@ function dgu_blog_default_page_manager_handlers() {
     $pane = new stdClass();
     $pane->pid = 'new-4';
     $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'panels_mini';
+    $pane->subtype = 'featured_blogs';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Featured blogs',
-      'body' => '<div class="item-list"><ul> <li><a href="http://www.w3.org/DesignIssues/">Sir Tim Berners-Lee</a></li> <li><a href="http://users.ecs.soton.ac.uk/nrs/">Professor Nigel Shadbolt</a></li> <li><a href="http://www.number10.gov.uk/">Number 10</a></li> <li><a href="http://blogs.cabinetoffice.gov.uk/digitalengagement/">Digital Engagement</a></li> <li><a href="http://coi.gov.uk/blogs/digigov/">Digigov (COI)</a></li> <li><a href="http://www.jenitennison.com/blog/">Jeni Tennison</a></li> </ul></div>',
-      'format' => 'full_html',
-      'substitute' => 0,
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -334,16 +331,13 @@ function dgu_blog_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-4';
     $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'panels_mini';
+    $pane->subtype = 'featured_blogs';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Featured blogs',
-      'body' => '<div class="views-row"><a href="http://www.w3.org/DesignIssues/">Sir Tim Berners-Lee</a></div><div class="views-row"><a href="http://users.ecs.soton.ac.uk/nrs/">Professor Nigel Shadbolt</a></div><div class="views-row"><a href="http://www.number10.gov.uk/">Number 10</a></div><div class="views-row"><a href="http://blogs.cabinetoffice.gov.uk/digitalengagement/">Digital Engagement</a></div><div class="views-row"><a href="http://coi.gov.uk/blogs/digigov/">Digigov (COI)</a><a href="http://www.jenitennison.com/blog/">Jeni Tennison</a></div>',
-      'format' => 'full_html',
-      'substitute' => TRUE,
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
