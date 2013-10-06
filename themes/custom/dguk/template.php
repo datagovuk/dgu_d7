@@ -52,8 +52,11 @@ function dguk_preprocess_panels_pane(&$variables) {
 
   //drupal_set_message($variables['pane']->type . ':' . $variables['pane']->subtype);
 
-
-  if ($variables['pane']->type != 'node' && $variables['pane']->type != 'node_content') {
+  // Add 'boxed' class to all panes apart of these.
+  if ( $variables['pane']->type != 'node'
+    && $variables['pane']->type != 'node_content'
+    && $variables['pane']->type != 'apachesolr_result'
+     ) {
     $variables['classes_array'][] = 'boxed';
   }
   else {
@@ -118,6 +121,15 @@ function dguk_preprocess_reply(&$variables) {
   }
 
   $variables['avatar'] = l(render($image), 'user/'.$variables['reply']->uid, array('html' => true) );
+}
+
+/**
+ *  Implements hook_preprocess_search_result().
+ */
+function dguk_preprocess_search_result(&$variables) {
+  $variables['classes_array'][] = 'boxed';
+  $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
+
 }
 
 /**
