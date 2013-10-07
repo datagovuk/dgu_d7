@@ -29,6 +29,53 @@ function dgu_services_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_services_resources().
+ */
+function dgu_services_services_resources() {
+ $session_resource = array(
+    'session' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'callback' => 'dgu_services_session_get',
+          'args' => array(
+            array(
+              'name' => 'sid',
+              'optional' => FALSE,
+              'source' => array('data' => 'sid'),
+              'type' => 'string',
+              'description' => 'Session ID',
+            ),
+          ),
+          'access callback' => 'dgu_services_session_access',
+        ),
+
+      ),
+    ),
+  );
+  return $session_resource;
+}
+
+// TODO check security
+function dgu_services_session_access() {
+  return TRUE;
+}
+
+function dgu_services_session_get($sid = null) {
+
+// That was in D6, not sure if it's necessary
+//  global $user;
+//  if (!$sid) {
+//    $sid = $user->sid;
+//  }
+
+  return db_select('sessions', 's')
+    ->fields('s', array('uid'))
+    ->condition('sid', $sid)
+    ->execute()
+    ->fetchField();
+}
+
 function dgu_services_add_reply($ckan_id) {
   if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
     $instance = field_info_instance('ckan_dataset', 'field_comment', 'ckan_dataset');
