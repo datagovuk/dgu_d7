@@ -37,19 +37,24 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '75';
+  $handler->display->display_options['fields']['title']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['html'] = TRUE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['alter']['trim_whitespace'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['max_length'] = '150';
   $handler->display->display_options['fields']['body']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['body']['settings'] = array(
-    'trim_length' => '150',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -119,6 +124,11 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['title']['table'] = 'ckan_dataset';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '75';
+  $handler->display->display_options['fields']['title']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: Dataset: Name */
   $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
@@ -131,9 +141,11 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['notes']['table'] = 'ckan_dataset';
   $handler->display->display_options['fields']['notes']['field'] = 'notes';
   $handler->display->display_options['fields']['notes']['label'] = '';
+  $handler->display->display_options['fields']['notes']['alter']['trim_whitespace'] = TRUE;
   $handler->display->display_options['fields']['notes']['alter']['max_length'] = '150';
   $handler->display->display_options['fields']['notes']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['notes']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['notes']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['notes']['element_label_colon'] = FALSE;
   /* Field: Publihser: Title */
   $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
