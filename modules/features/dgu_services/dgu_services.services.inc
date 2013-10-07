@@ -62,6 +62,13 @@ function dgu_services_default_services_endpoint() {
   $endpoint->authentication = array();
   $endpoint->server_settings = array();
   $endpoint->resources = array(
+    'session' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'user' => array(
       'operations' => array(
         'retrieve' => array(
