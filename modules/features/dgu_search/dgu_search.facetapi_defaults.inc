@@ -317,7 +317,7 @@ function dgu_search_facetapi_default_facet_settings() {
   $facet->searcher = 'apachesolr@solr';
   $facet->realm = 'block';
   $facet->facet = 'im_field_data_themes';
-  $facet->enabled = TRUE;
+  $facet->enabled = FALSE;
   $facet->settings = array(
     'weight' => 0,
     'widget' => 'facetapi_links',
