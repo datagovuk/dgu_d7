@@ -128,6 +128,7 @@ class DGUBookMigration extends DGUNodeMigration {
   public function __construct(array $arguments) {
 		parent::__construct($arguments);
 		$this->addFieldMapping('field_paragraph', 'field_paragraph');
+        $this->addFieldMapping('field_paragraph:format', 'field_paragraph:format')->callbacks(array($this, 'mapFormat'));
   }
 
    /**
