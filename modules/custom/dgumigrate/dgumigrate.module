@@ -251,7 +251,6 @@ function dgumigrate_register_migrations() {
   );
   $common_node_arguments = $common_arguments + array(
       'user_migration' => 'user',
-      'format_mappings' => array(1 => "filtered_html", 2 => "filtered_html"),
       'group' => 'Nodes',
   );
 
