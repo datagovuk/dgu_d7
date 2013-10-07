@@ -23,13 +23,12 @@
  *
  * @ingroup views_templates
  */
-$a =1;
 ?>
 
 <div class="views-field views-field-title">
-  <a href="/dataset/<?php print $row->ckan_dataset_name; ?>"><?php print $row->ckan_dataset_title; ?></a>
+  <a href="/dataset/<?php print $row->ckan_dataset_name; ?>"><?php print $fields['title']->content; ?></a>
 </div>
-<div class="views-field views-field-notes"><?php print $row->ckan_dataset_notes; ?></div>
+<div class="views-field views-field-notes"><?php print $fields['notes']->content; ?></div>
 <div class="views-field views-field-publisher">
   Published by: <a href="/publisher/<?php print $row->ckan_publisher_ckan_dataset_name; ?>"><?php print $row->ckan_publisher_ckan_dataset_title; ?></a>
 </div>
