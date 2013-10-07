@@ -161,6 +161,7 @@ projects[redirect][subdir] = "contrib"
 projects[tagclouds][version] = "1.9"
 projects[tagclouds][subdir] = "contrib"
 
+projects[mollom][subdir] = "contrib"
 
 ; Themes
 ; --------

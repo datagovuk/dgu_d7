@@ -1,11 +1,13 @@
 <table class="search-area">
   <tbody><tr>
+      <?php if($count): ?>
       <td class="left">
         <div class="count-wrapper">
           <div class="result-count"><?php print $count; ?></div>
           <div class="result-count-footer">Datasets</div>
         </div>
       </td>
+      <?php endif; ?>
       <td class="right">
         <form accept-charset="UTF-8" id="home-page-data-search-form" class="form-search" method="get" action="/data/search">
           <div class="form-type-textfield form-item controls textbox">
