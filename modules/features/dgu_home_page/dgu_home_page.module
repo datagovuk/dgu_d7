@@ -35,20 +35,21 @@ function dgu_home_page_block_view($delta='') {
  * Home page data search block content constructor.
  */
 function dgu_home_page_data_search_form() {
-  require_once 'sites/all/vendor/autoload.php';
-  $client = Silex\ckan\CkanClient::factory(array(
-      'baseUrl' => variable_get('ckan_url', ''),
-      'apiKey' => variable_get('ckan_apikey', ''),
-      ));
 
-  // Get total number of datasets.
   try {
+    require_once 'sites/all/vendor/autoload.php';
+    $client = Silex\ckan\CkanClient::factory(array(
+        'baseUrl' => variable_get('ckan_url', ''),
+        'apiKey' => variable_get('ckan_apikey', ''),
+        ));
+
+    // Get total number of datasets.
     $count = $client->GetDatasetCount();
   }
   catch (Exception $e) {
     watchdog('ckan_dataset_count', 'Error in getting total number of datasets');
+    $count = FALSE;
   }
-
   return theme('home_page_data_search_box', array('count' => $count));
 }
 
