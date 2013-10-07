@@ -38,7 +38,7 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['max_length'] = '75';
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '70';
   $handler->display->display_options['fields']['title']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['html'] = TRUE;
@@ -49,7 +49,7 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['alter']['trim_whitespace'] = TRUE;
-  $handler->display->display_options['fields']['body']['alter']['max_length'] = '150';
+  $handler->display->display_options['fields']['body']['alter']['max_length'] = '140';
   $handler->display->display_options['fields']['body']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['body']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['body']['alter']['html'] = TRUE;
@@ -125,7 +125,7 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['max_length'] = '75';
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '70';
   $handler->display->display_options['fields']['title']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['html'] = TRUE;
@@ -142,7 +142,7 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['notes']['field'] = 'notes';
   $handler->display->display_options['fields']['notes']['label'] = '';
   $handler->display->display_options['fields']['notes']['alter']['trim_whitespace'] = TRUE;
-  $handler->display->display_options['fields']['notes']['alter']['max_length'] = '150';
+  $handler->display->display_options['fields']['notes']['alter']['max_length'] = '140';
   $handler->display->display_options['fields']['notes']['alter']['strip_tags'] = TRUE;
   $handler->display->display_options['fields']['notes']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['notes']['alter']['html'] = TRUE;
