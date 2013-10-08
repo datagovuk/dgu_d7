@@ -19,14 +19,14 @@
 <div class="panel-2col-stacked-right row-fluid clearfix panel-display" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
   <?php if ($content['top-left'] || $content['top-right']): ?>
     <div class="center-wrapper boxed">
-      <table>
+      <table class="search-area">
         <tr>
-          <td>
+          <td class="left">
             <div class="panel-col-top-left panel-panel">
               <?php print $content['top-left']; ?>
             </div>
           </td>
-          <td>
+          <td class="right">
             <div class="panel-col-top-right panel-panel">
               <?php print $content['top-right']; ?>
             </div>
