@@ -97,6 +97,7 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
     // Override redirect with a new bundle specific search.
-    $form_state['redirect'] = "search/" . $fv['searchtype']. "/". $raw_keys;
+    global $base_url;
+    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
   }
 }
