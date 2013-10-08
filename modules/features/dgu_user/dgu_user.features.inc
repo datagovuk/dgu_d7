@@ -39,6 +39,7 @@ function dgu_user_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'avatar',
   );
 
   // Exported image style: avatar_small.
@@ -61,6 +62,7 @@ function dgu_user_image_default_styles() {
         'weight' => 1,
       ),
     ),
+    'label' => 'avatar_small',
   );
 
   return $styles;
