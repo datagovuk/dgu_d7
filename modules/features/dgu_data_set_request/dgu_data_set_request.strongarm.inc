@@ -76,8 +76,8 @@ function dgu_data_set_request_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'node_options_dataset_request';
   $strongarm->value = array(
-    0 => 'status',
-    1 => 'promote',
+    0 => 'moderation',
+    1 => 'revision',
   );
   $export['node_options_dataset_request'] = $strongarm;
 
