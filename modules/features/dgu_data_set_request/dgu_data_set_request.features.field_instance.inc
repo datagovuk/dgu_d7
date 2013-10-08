@@ -373,6 +373,7 @@ function dgu_data_set_request_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
+      'rel_remove' => 'default',
       'title' => 'optional',
       'title_maxlength' => 128,
       'title_value' => '',
