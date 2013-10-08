@@ -4,7 +4,7 @@
       <td class="left">
         <div class="count-wrapper">
           <div class="result-count"><?php print $count; ?></div>
-          <div class="result-count-footer">Published Datasets</div>
+          <div class="result-count-footer">Datasets</div>
         </div>
       </td>
       <?php endif; ?>
