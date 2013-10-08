@@ -297,11 +297,22 @@ function dgu_app_default_page_manager_pages() {
     $pane->type = 'custom';
     $pane->subtype = 'custom';
     $pane->shown = TRUE;
-    $pane->access = array();
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'create app content',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
     $pane->configuration = array(
-      'admin_title' => '',
+      'admin_title' => 'Share you app (for authenticated users)',
       'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know... <a class="btn btn-primary center-me" href="/node/add/app">Share your app</a></p>',
+      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/node/add/app">Share your app</a>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -317,6 +328,43 @@ function dgu_app_default_page_manager_pages() {
     $display->panels['right'][2] = 'new-5';
     $pane = new stdClass();
     $pane->pid = 'new-6';
+    $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 1,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Share you app (for aunonymous users)',
+      'title' => 'Have you used our data to create an application?',
+      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/user/login?destination=/node/add/app">Login to share your app</a>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['right'][3] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
     $pane->panel = 'top';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -337,8 +385,8 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['top'][0] = 'new-6';
+    $display->content['new-7'] = $pane;
+    $display->panels['top'][0] = 'new-7';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;
