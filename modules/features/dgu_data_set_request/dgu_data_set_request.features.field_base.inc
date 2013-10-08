@@ -496,7 +496,7 @@ function dgu_data_set_request_field_default_field_bases() {
         3 => 'Dataset scheduled for release',
         4 => 'ODUG developing business case',
         5 => 'Dataset released',
-        6 => 'Dataset not released',
+        6 => 'Dataset cannot be released',
         7 => 'Data already available',
       ),
       'allowed_values_function' => '',
