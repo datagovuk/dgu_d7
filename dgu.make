@@ -74,6 +74,9 @@ projects[field_replies][download][type] = "git"
 projects[field_replies][download][url] = "http://git.drupal.org/project/field_replies.git"
 projects[field_replies][subdir] = "contrib"
 
+projects[field_permissions][version] = "1.0-beta2"
+projects[field_permissions][subdir] = "contrib"
+
 projects[entityreference][version] = "1.0"
 projects[entityreference][subdir] = "contrib"
 
