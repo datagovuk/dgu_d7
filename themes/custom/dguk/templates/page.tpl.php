@@ -7,7 +7,7 @@
               <span class="ckan-logged-in">
                   <div id="login-or-signup">
                       You are logged-in as
-                      <a href="/user"><?php print $user->name; ?></a>.
+                      <a href="/admin/workbench"><?php print $user->name; ?></a>.
                       <?php print l('Log out', 'user/logout', array('query' => drupal_get_destination())); ?>
                   </div>
               </span>

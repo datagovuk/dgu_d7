@@ -186,6 +186,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_set_link',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
     'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
@@ -474,6 +477,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_review_status',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -490,7 +496,7 @@ function dgu_data_set_request_field_default_field_bases() {
         3 => 'Dataset scheduled for release',
         4 => 'ODUG developing business case',
         5 => 'Dataset released',
-        6 => 'Dataset not released',
+        6 => 'Dataset cannot be released',
         7 => 'Data already available',
       ),
       'allowed_values_function' => '',
