@@ -400,6 +400,24 @@ function dgu_user_user_default_permissions() {
     'module' => 'workbench_moderation',
   );
 
+  // Exported permission: 'view own unpublished content'.
+  $permissions['view own unpublished content'] = array(
+    'name' => 'view own unpublished content',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: 'view revisions'.
+  $permissions['view revisions'] = array(
+    'name' => 'view revisions',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'view all unpublished content'.
   $permissions['view all unpublished content'] = array(
     'name' => 'view all unpublished content',
