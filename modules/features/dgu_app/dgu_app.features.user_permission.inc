@@ -37,5 +37,16 @@ function dgu_app_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'rate content'.
+  $permissions['rate content'] = array(
+    'name' => 'rate content',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'fivestar',
+  );
+
   return $permissions;
 }
