@@ -79,7 +79,17 @@ function dgu_services_session_get($sid = null) {
 function dgu_services_add_reply($ckan_id) {
   if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
     $instance = field_info_instance('ckan_dataset', 'field_comment', 'ckan_dataset');
-    drupal_goto('reply/add/' . $dataset->id . '/' . $instance['id'] . '/0' , array());
+
+    // Return a link.
+    $href = '/reply/add/' . $dataset->id . '/' . $instance['id'] . '/0';
+    if(user_is_logged_in()) {
+      return '<a href="' . $href. '">Add reply</a>';
+    }
+    else {
+      return '<a href="/user/login?destination=' . $href . '">Log in</a> or <a href="/user/register?destination=' . $href . '">register</a> to post a reply';
+    }
+
+    //drupal_goto('reply/add/' . $dataset->id . '/' . $instance['id'] . '/0' , array()); // Alternatively return rendered form.
   }
 }
 
@@ -126,6 +136,15 @@ function dgu_services_get_dataset_id_from_ckan_id($ckan_id) {
   $query = new EntityFieldQuery();
   $result = $query->entityCondition('entity_type', 'ckan_dataset')->propertyCondition('ckan_id', $ckan_id)->execute();
   if (isset($result['ckan_dataset'])) {
-    return array_shift(array_keys($result['ckan_dataset']));
+    $keys = array_keys($result['ckan_dataset']);
+    return array_shift($keys);
+  }
+}
+
+function dgu_services_form_reply_add_form_alter(&$form, $form_state, $form_id) {
+  if (substr($form['redirect']['#value'], 0, 12) == 'ckan_dataset') {
+    $drupal_dataset_id = substr($form['redirect']['#value'], 13);
+    $dataset = entity_load_single('ckan_dataset', $drupal_dataset_id);
+    $form['redirect']['#value'] = 'dataset/' . $dataset->name;
   }
 }
