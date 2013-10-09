@@ -30,7 +30,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   $form['actions']['submit']['#value'] = 'Save draft';
   $form['#submit'][] = 'dgu_data_set_request_node_submit';
 
-  unset($form['actions']['preview_changes']);
+  unset($form['actions']['preview']);
 
 
   if (!user_access('Dataset Request: Edit any content')){
