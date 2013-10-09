@@ -28,15 +28,6 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: 'create field_review_status'.
-  $permissions['create field_review_status'] = array(
-    'name' => 'create field_review_status',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: 'delete own dataset_request content'.
   $permissions['delete own dataset_request content'] = array(
     'name' => 'delete own dataset_request content',
@@ -49,15 +40,6 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'edit field_data_set_link'.
   $permissions['edit field_data_set_link'] = array(
     'name' => 'edit field_data_set_link',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
-  // Exported permission: 'edit field_review_status'.
-  $permissions['edit field_review_status'] = array(
-    'name' => 'edit field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
     ),
@@ -82,15 +64,6 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: 'edit own field_review_status'.
-  $permissions['edit own field_review_status'] = array(
-    'name' => 'edit own field_review_status',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: 'view field_data_set_link'.
   $permissions['view field_data_set_link'] = array(
     'name' => 'view field_data_set_link',
@@ -100,27 +73,9 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: 'view field_review_status'.
-  $permissions['view field_review_status'] = array(
-    'name' => 'view field_review_status',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: 'view own field_data_set_link'.
   $permissions['view own field_data_set_link'] = array(
     'name' => 'view own field_data_set_link',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
-  // Exported permission: 'view own field_review_status'.
-  $permissions['view own field_review_status'] = array(
-    'name' => 'view own field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
     ),

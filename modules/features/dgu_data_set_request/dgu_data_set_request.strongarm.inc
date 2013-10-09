@@ -49,6 +49,9 @@ function dgu_data_set_request_strongarm() {
         'path' => array(
           'weight' => '30',
         ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(),
     ),
