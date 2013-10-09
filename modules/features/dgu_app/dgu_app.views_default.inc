@@ -56,7 +56,7 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Your name */
+  /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -91,6 +91,11 @@ function dgu_app_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['exclude'] = TRUE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
