@@ -258,20 +258,22 @@ password: Your password
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_mail_register_no_approval_required_body';
-  $strongarm->value = '[user:name],
+  $strongarm->value = 'Congratulations on creating your new account on data.gov.uk. This is now almost ready to use. We just need you to confirm your email address.
 
-Thank you for registering at [site:name]. You may now log in by clicking this link or copying and pasting it to your browser:
+Please confirm your email address by clicking on this link or copying and pasting it in your browser:
 
 [user:one-time-login-url]
 
-This link can only be used once to log in and will lead you to a page where you can set your password.
+This is a one time login for email verification ONLY and you should use your user name and password to login thereafter.
 
-After setting your password, you will be able to log in at [site:login-url] in the future using:
+If you forget your password go to [site:url]/user/password
 
-username: [user:name]
-password: Your password
+Thanks for taking the time to join in.
 
---  [site:name] team';
+Regards
+
+The Data.gov.uk Team
+';
   $export['user_mail_register_no_approval_required_body'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -439,7 +441,7 @@ Your account on [site:name] has been canceled.
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'user_register';
-  $strongarm->value = 2;
+  $strongarm->value = '1';
   $export['user_register'] = $strongarm;
 
   $strongarm = new stdClass();
