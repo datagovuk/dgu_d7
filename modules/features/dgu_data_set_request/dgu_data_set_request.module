@@ -7,7 +7,15 @@
 include_once 'dgu_data_set_request.features.inc';
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ *
+ * Implement Hook hook_form_FORM_ID_alter which:
+ * -  creates our own hidden input for review status and hides the select
+ * box for any user who does not have the "Dataset Request: Edit any content" permission.
+ * - adds a button to submit the data request for moderation.
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
 
@@ -22,7 +30,17 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   $form['actions']['submit']['#value'] = 'Save draft';
   $form['#submit'][] = 'dgu_data_set_request_node_submit';
 
-  unset($form['actions']['preview']);
+  unset($form['actions']['preview_changes']);
+
+
+  if (!user_access('Dataset Request: Edit any content')){
+    $form['field_review_status'] = array(
+      '#type' => 'hidden',
+      '#title' => t('Review status'),
+      '#value' => 0,
+    );
+  }
+
 }
 
 /**

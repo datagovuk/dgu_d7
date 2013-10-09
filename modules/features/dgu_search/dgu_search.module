@@ -97,6 +97,38 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
     // Override redirect with a new bundle specific search.
-    $form_state['redirect'] = "search/" . $fv['searchtype']. "/". $raw_keys;
+    global $base_url;
+    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
   }
+}
+
+
+/**
+ * @param $form
+ * @return the altered form
+ *
+ * Remove the retain-filters element added to the search form by apachesolr_panels
+ *
+ */
+function dgu_search_hide_retain_filters(&$form){
+    unset($form['basic']['retain-filters']);
+    return $form;
+}
+
+/**
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ * Implement Hook hook_form_FORM_ID_alter which creates our own hidden retain filters input and
+ * sets up an after build hook to remove the one provided by apachesolr_panels
+ *
+ */
+function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_state, $form_id){
+    $form['dgu']['retain-filters'] = array(
+        '#type' => 'hidden',
+        '#title' => t('Retain current filters'),
+        '#value' => 1,
+    );
+    $form['#after_build'] = array('dgu_search_hide_retain_filters');
 }

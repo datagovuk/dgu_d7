@@ -115,7 +115,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-3';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -136,7 +136,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-4';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
+    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -157,7 +157,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-5';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
+    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -178,7 +178,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-6';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
+    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -197,27 +197,6 @@ function dgu_search_default_page_manager_pages() {
     $display->panels['left'][5] = 'new-6';
     $pane = new stdClass();
     $pane->pid = 'new-7';
-    $pane->panel = 'left';
-    $pane->type = 'block';
-    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 6;
-    $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['left'][6] = 'new-7';
-    $pane = new stdClass();
-    $pane->pid = 'new-8';
     $pane->panel = 'right';
     $pane->type = 'apachesolr_result';
     $pane->subtype = 'apachesolr_result';
@@ -255,10 +234,10 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][0] = 'new-8';
+    $display->content['new-7'] = $pane;
+    $display->panels['right'][0] = 'new-7';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-8';
     $pane->panel = 'top-left';
     $pane->type = 'dgu_search_info';
     $pane->subtype = 'dgu_search_info';
@@ -276,10 +255,10 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['top-left'][0] = 'new-9';
+    $display->content['new-8'] = $pane;
+    $display->panels['top-left'][0] = 'new-8';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-9';
     $pane->panel = 'top-right';
     $pane->type = 'apachesolr_form';
     $pane->subtype = 'apachesolr_form';
@@ -302,10 +281,10 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['top-right'][0] = 'new-10';
+    $display->content['new-9'] = $pane;
+    $display->panels['top-right'][0] = 'new-9';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-10';
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['search_results'] = $page;
