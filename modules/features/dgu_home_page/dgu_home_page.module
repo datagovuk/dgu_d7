@@ -36,19 +36,22 @@ function dgu_home_page_block_view($delta='') {
  */
 function dgu_home_page_data_search_form() {
 
-  try {
+  $count = FALSE;
+  if (file_exists('sites/all/vendor/autoload.php')) {
     require_once 'sites/all/vendor/autoload.php';
-    $client = Silex\ckan\CkanClient::factory(array(
-        'baseUrl' => variable_get('ckan_url', ''),
-        'apiKey' => variable_get('ckan_apikey', ''),
-        ));
 
-    // Get total number of datasets.
-    $count = $client->GetDatasetCount();
-  }
-  catch (Exception $e) {
-    watchdog('ckan_dataset_count', 'Error in getting total number of datasets');
-    $count = FALSE;
+    try {
+      $client = Silex\ckan\CkanClient::factory(array(
+          'baseUrl' => variable_get('ckan_url', ''),
+          'apiKey' => variable_get('ckan_apikey', ''),
+          ));
+
+      // Get total number of datasets.
+      $count = $client->GetDatasetCount();
+    }
+    catch (Exception $e) {
+      watchdog('ckan_dataset_count', 'Error in getting total number of datasets');
+    }
   }
   return theme('home_page_data_search_box', array('count' => $count));
 }
