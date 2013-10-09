@@ -54,6 +54,7 @@ features[page_manager_pages][] = apps
 features[user_permission][] = create app content
 features[user_permission][] = delete own app content
 features[user_permission][] = edit own app content
+features[user_permission][] = rate content
 features[variable][] = field_bundle_settings_node__app
 features[variable][] = menu_options_app
 features[variable][] = menu_parent_app
