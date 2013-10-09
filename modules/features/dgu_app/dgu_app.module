@@ -57,7 +57,7 @@ function dgu_app_node_submit($form, &$form_state) {
   }
 }
 
-function dgu_data_set_request_exit() {
+function dgu_app_exit() {
   if ($message = &drupal_static('dgu_app_node_submit', NULL)) {
     // Remove all status messages - most likely nothing more than '... has been created/updated'
     drupal_get_messages('status');
