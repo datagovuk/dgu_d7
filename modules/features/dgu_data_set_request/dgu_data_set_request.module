@@ -30,7 +30,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   $form['actions']['submit']['#value'] = 'Save draft';
   $form['#submit'][] = 'dgu_data_set_request_node_submit';
 
-  unset($form['actions']['preview_changes']);
+  unset($form['actions']['preview']);
 
 
   if (!user_access('Dataset Request: Edit any content')){
@@ -48,11 +48,27 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
  */
 function dgu_data_set_request_node_submit($form, &$form_state) {
   if(isset($form_state['clicked_button'])) {
+
+    $action = empty($form['#node']->nid) ? 'created' : 'updated';
+
     if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
       $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
+      $message = &drupal_static(__FUNCTION__, NULL);
+      $message = 'Your Data request has been ' . $action . ' and submitted for moderation. Login to your <a href="/admin/workbench">profile</a> to update this.';
     }
     elseif ($form_state['clicked_button']['#value'] == "Save draft") {
       $form_state['values']['workbench_moderation_state_new'] = 'draft';
+      $message = &drupal_static(__FUNCTION__, NULL);
+      $message = 'Your draft Data request has been ' . $action . '. Login to your <a href="/admin/workbench">profile</a> to update this and submit later.';
     }
+  }
+}
+
+function dgu_data_set_request_exit() {
+  if ($message = &drupal_static('dgu_data_set_request_node_submit', NULL)) {
+    // Remove all status messages - most likely nothing more than '... has been created/updated'
+    drupal_get_messages('status');
+    // Add a message created in dgu_data_set_request_node_submit()
+    drupal_set_message($message);
   }
 }
