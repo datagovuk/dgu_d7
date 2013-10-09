@@ -20,7 +20,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
 
   $form['actions']['submit']['#value'] = 'Save draft';
-  $form['#submit'][] = 'data_set_request_node_submit';
+  $form['#submit'][] = 'dgu_data_set_request_node_submit';
 
   unset($form['actions']['preview_changes']);
 
@@ -29,7 +29,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 /**
  * Custom submit function for challenge content type.
  */
-function data_set_request_node_submit($form, &$form_state) {
+function dgu_data_set_request_node_submit($form, &$form_state) {
   if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
     $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
   }
