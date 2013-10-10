@@ -21,17 +21,17 @@ function dgu_search_ctools_plugin_directory($module, $plugin) {
 function dgu_search_block_info() {
   $blocks = array();
   $search_types = array(
-    'app',      // Apps.
-    'blog',     // Blogs.
-    'forum',    // Forum topic.
-    'resource', // Library resource.
-    'dataset_request', // Dataset Request.
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum Posts'),
+    'resource' => t('Library'),
+    'dataset_request'  => t('Dataset Requests'),
   );
 
   // Create a block for each content type to search in solr.
-  foreach ($search_types as $search_type) {
+  foreach ($search_types as $search_type => $type) {
     $blocks['search' . $search_type] = array(
-      'info' => t('Search ' . $search_type),
+      'info' => t('Search ' . $type),
     );
   }
 
@@ -48,10 +48,17 @@ function dgu_search_block_view($delta = '') {
   $form_state = array(
     'searchtype' => $search_type,
   );
+  $search_types = array(
+        'app' => t('Apps'),
+        'blog' => t('Blogs'),
+        'forum' => t('Forum Posts'),
+        'resource' => t('Library'),
+        'dataset_request'  => t('Dataset Requests'),
+  );
 
   $searchform = drupal_build_form('search_block_form', $form_state);
 
-  $block['subject'] = t('Search '. $search_type);
+  $block['subject'] = t('Search '. $search_types[$search_type]);
   $block['content'] = $searchform;
  
   return $block;
@@ -86,15 +93,15 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
 function dgu_search_form_search_block_form_submit($form, &$form_state) {
   $fv = $form_state['values'];
 
-  $search_types = array(
-    'app',      // Apps.
-    'blog',     // Blogs.
-    'forum',    // Forum topic.
-    'resource', // Library resource.
-    'dataset_request', // Dataset Request
-  ); 
-  
-  if (isset($fv['search_block_form']) && isset($fv['searchtype']) && in_array($fv['searchtype'], $search_types)) {
+    $search_types = array(
+        'app' => t('Apps'),
+        'blog' => t('Blogs'),
+        'forum' => t('Forum Posts'),
+        'resource' => t('Library'),
+        'dataset_request'  => t('Dataset Requests'),
+    );
+
+    if (isset($fv['search_block_form']) && isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
     // Replace keys with their rawurlencoded value
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
