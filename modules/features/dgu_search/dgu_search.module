@@ -25,7 +25,8 @@ function dgu_search_block_info() {
     'blog',     // Blogs.
     'forum',    // Forum topic.
     'resource', // Library resource.
-  ); 
+    'dataset_request', // Dataset Request.
+  );
 
   // Create a block for each content type to search in solr.
   foreach ($search_types as $search_type) {
@@ -90,6 +91,7 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
     'blog',     // Blogs.
     'forum',    // Forum topic.
     'resource', // Library resource.
+    'dataset_request', // Dataset Request
   ); 
   
   if (isset($fv['search_block_form']) && isset($fv['searchtype']) && in_array($fv['searchtype'], $search_types)) {
