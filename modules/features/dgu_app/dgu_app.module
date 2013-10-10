@@ -16,6 +16,7 @@ function dgu_app_form_node_form_alter(&$form, &$form_state, $form_id) {
     drupal_set_title(t('Submit an app'));
   }
 }
+
 /**
  * Implements hook_form_FORM_ID_alter().
  */
