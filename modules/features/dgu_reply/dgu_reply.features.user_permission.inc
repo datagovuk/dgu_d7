@@ -121,6 +121,7 @@ function dgu_reply_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'reply',
   );
@@ -131,6 +132,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'reply',
   );
