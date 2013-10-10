@@ -36,7 +36,6 @@ dependencies[] = entity
 dependencies[] = entityreference
 dependencies[] = reply
 dependencies[] = link
-dependencies[] = linkchecker
 dependencies[] = extlink
 dependencies[] = strongarm
 dependencies[] = views
