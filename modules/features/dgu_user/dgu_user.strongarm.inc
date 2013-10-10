@@ -14,7 +14,7 @@ function dgu_user_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'anonymous';
-  $strongarm->value = 'Anonymous';
+  $strongarm->value = 'Visitor';
   $export['anonymous'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -125,7 +125,7 @@ function dgu_user_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'logintoboggan_redirect_on_confirm';
-  $strongarm->value = '';
+  $strongarm->value = 'admin/workbench';
   $export['logintoboggan_redirect_on_confirm'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -262,7 +262,7 @@ password: Your password
 
 Please confirm your email address by clicking on this link or copying and pasting it in your browser:
 
-[user:one-time-login-url]
+[user:validate-url]
 
 This is a one time login for email verification ONLY and you should use your user name and password to login thereafter.
 
