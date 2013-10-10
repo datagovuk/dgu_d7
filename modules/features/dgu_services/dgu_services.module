@@ -168,3 +168,9 @@ function dgu_services_form_reply_add_form_alter(&$form, $form_state, $form_id) {
     $form['redirect']['#value'] = 'dataset/' . $dataset->name;
   }
 }
+
+// Expose email address for everbody, work around on services_remove_user_data() which requires 'administer users' role to get email
+function dgu_services_services_account_object_alter(&$account) {
+  $account = user_load($account->uid, TRUE);
+  unset($account->pass);
+}
