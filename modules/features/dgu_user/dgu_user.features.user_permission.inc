@@ -426,7 +426,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'workbench_moderation',
   );

@@ -47,12 +47,12 @@ function dgu_app_node_submit($form, &$form_state) {
     if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
       $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
       $message = &drupal_static(__FUNCTION__, NULL);
-      $message = 'Your App has been ' . $action . ' and submitted for moderation. Login to your <a href="/admin/workbench">profile</a> to update this.';
+      $message = 'Your App has been ' . $action . ' and submitted for moderation. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later';
     }
     elseif ($form_state['clicked_button']['#value'] == "Save draft") {
       $form_state['values']['workbench_moderation_state_new'] = 'draft';
       $message = &drupal_static(__FUNCTION__, NULL);
-      $message = 'Your draft App has been ' . $action . '. Login to your <a href="/admin/workbench">profile</a> to update this and submit later.';
+      $message = 'Your draft App has been ' . $action . '. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later';
     }
   }
 }
