@@ -63,19 +63,7 @@ class DGUUserMigration extends DrupalUser6Migration {
       $this->addUnmigratedDestinations(array("field_publishers", "field_avatar:language"));
   }
 
-  function query() {
-      $query = Database::getConnection('default', $this->sourceConnection)
-          ->select('users', 'u')
-          ->fields('u')
-          ->condition('u.uid', 1, '>');
-      $query->leftJoin('node', 'n', 'n.uid = u.uid');
-      $query->condition('n.type', 'profile');
-      $query->leftJoin('content_type_profile', 'p', 'p.nid = n.nid');
-      $query->fields('p');
-      return $query;
-  }
-
-    public function prepareRow($row) {
+  public function prepareRow($row) {
         return parent::prepareRow($row);
     }
 }
