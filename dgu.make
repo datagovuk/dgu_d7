@@ -38,7 +38,7 @@ projects[ctools][subdir] = "contrib"
 # Patch prevents ctools from running filter_xss_admin on an un-rendered array.
 projects[ctools][patch][] = "http://drupal.org/files/ctools-1925018-61.patch"
 
-projects[admin_menu][version] = "2.0-rc3"
+projects[features][version] = "2.0-rc3"
 projects[features][subdir] = "contrib"
 
 projects[views][version] = "3.7"
