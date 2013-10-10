@@ -192,6 +192,9 @@ function dgu_user_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_publishers',
+    'field_permissions' => array(
+      'type' => 1,
+    ),
     'foreign keys' => array(
       'ckan_publisher' => array(
         'columns' => array(

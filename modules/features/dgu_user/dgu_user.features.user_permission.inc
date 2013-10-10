@@ -35,6 +35,7 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'node',
   );
@@ -100,6 +101,7 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'contact',
   );
@@ -111,6 +113,7 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'user',
   );
@@ -423,6 +426,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'workbench_moderation',
   );
