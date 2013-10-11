@@ -68,6 +68,10 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['filter_groups']['groups'] = array(
+    1 => 'AND',
+    2 => 'OR',
+  );
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -82,6 +86,21 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'dataset_request' => 'dataset_request',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_1']['id'] = 'status_1';
+  $handler->display->display_options['filters']['status_1']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_1']['field'] = 'status';
+  $handler->display->display_options['filters']['status_1']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_1']['value']['value'] = '1';
+  $handler->display->display_options['filters']['status_1']['group'] = 2;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_2']['id'] = 'status_2';
+  $handler->display->display_options['filters']['status_2']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_2']['field'] = 'status';
+  $handler->display->display_options['filters']['status_2']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_2']['operator'] = 'empty';
+  $handler->display->display_options['filters']['status_2']['group'] = 2;
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block');
@@ -231,7 +250,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['tid']['table'] = 'taxonomy_index';
   $handler->display->display_options['filters']['tid']['field'] = 'tid';
   $handler->display->display_options['filters']['tid']['value'] = array(
-    0 => '10510',
+    0 => '14709',
   );
   $handler->display->display_options['filters']['tid']['vocabulary'] = 'tags';
 
