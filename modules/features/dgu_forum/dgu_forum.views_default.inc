@@ -115,7 +115,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['id']['table'] = 'reply';
   $handler->display->display_options['fields']['id']['field'] = 'id';
   $handler->display->display_options['fields']['id']['relationship'] = 'nid';
-  $handler->display->display_options['fields']['id']['group_type'] = 'count_distinct';
+  $handler->display->display_options['fields']['id']['group_type'] = 'count';
   $handler->display->display_options['fields']['id']['label'] = 'Replies';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['filter_groups']['groups'] = array(
@@ -137,6 +137,21 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['relationship'] = 'reverse_taxonomy_forums_node';
   $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_2']['id'] = 'status_2';
+  $handler->display->display_options['filters']['status_2']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_2']['field'] = 'status';
+  $handler->display->display_options['filters']['status_2']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_2']['value']['value'] = '1';
+  $handler->display->display_options['filters']['status_2']['group'] = 2;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_1']['id'] = 'status_1';
+  $handler->display->display_options['filters']['status_1']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_1']['field'] = 'status';
+  $handler->display->display_options['filters']['status_1']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_1']['operator'] = 'empty';
+  $handler->display->display_options['filters']['status_1']['group'] = 2;
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block_1');
@@ -391,6 +406,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['filter_groups']['groups'] = array(
     1 => 'AND',
     2 => 'OR',
+    3 => 'OR',
   );
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Published */
@@ -422,6 +438,20 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['filters']['entity_type_1']['relationship'] = 'nid';
   $handler->display->display_options['filters']['entity_type_1']['operator'] = 'empty';
   $handler->display->display_options['filters']['entity_type_1']['group'] = 2;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_1']['id'] = 'status_1';
+  $handler->display->display_options['filters']['status_1']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_1']['field'] = 'status';
+  $handler->display->display_options['filters']['status_1']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_1']['value']['value'] = '1';
+  $handler->display->display_options['filters']['status_1']['group'] = 3;
+  /* Filter criterion: Reply: Status */
+  $handler->display->display_options['filters']['status_2']['id'] = 'status_2';
+  $handler->display->display_options['filters']['status_2']['table'] = 'reply';
+  $handler->display->display_options['filters']['status_2']['field'] = 'status';
+  $handler->display->display_options['filters']['status_2']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['status_2']['operator'] = 'empty';
+  $handler->display->display_options['filters']['status_2']['group'] = 3;
   $handler->display->display_options['argument_input'] = array(
     'taxonomy_forums_tid' => array(
       'type' => 'panel',
