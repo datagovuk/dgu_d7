@@ -99,28 +99,9 @@ function dgu_services_get_replies($ckan_id) {
     // Not sure if this is necessary.
     //field_attach_prepare_view('ckan_dataset', array($dataset->id => $dataset), 'comment');
 
-    $output = field_attach_view('ckan_dataset', $dataset, 'comment');
+    $output = field_attach_view('ckan_dataset', $dataset, 'default');
     if (isset($output['field_comment'][0]['#markup'])) {
-
       $rendered_output = $output['field_comment'][0]['#markup'];
-      $form_start = strpos($rendered_output, '<div class="replies-form">');
-      $rendered_output = substr($rendered_output, 0, $form_start);
-
-
-      if ($dataset = dgu_services_get_dataset_from_ckan_id($ckan_id)) {
-        $instance = field_info_instance('ckan_dataset', 'field_comment', 'ckan_dataset');
-
-        // Return a link.
-        $href = '/reply/add/' . $dataset->id . '/' . $instance['id'] . '/0';
-        if(user_is_logged_in()) {
-          $rendered_output .= '<a href="' . $href. '">Add reply</a>';
-        }
-        else {
-          $rendered_output .= '<a href="/user/login?destination=' . $href . '">Log in</a> or <a href="/user/register?destination=' . $href . '">register</a> to post a reply';
-        }
-      }
-
-
       print $rendered_output;
       drupal_exit();
     }
