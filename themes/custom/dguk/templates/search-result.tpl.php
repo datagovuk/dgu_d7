@@ -70,12 +70,19 @@
     <a href="<?php print $url; ?>"><?php print $title; ?></a>
   </h3>
   <?php print render($title_suffix); ?>
+
+  <?php if (!empty($info_split)): ?>
+    <div class="search-info">
+      <p><?php print $info_split['submitted']; // should always be set at least with creation date?></p>
+      <?php if (isset($info_split['other'])): ?>
+        <p><?php print $info_split['other']; ?></p>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
+
   <div class="search-snippet-info">
     <?php if ($snippet): ?>
       <p class="search-snippet"<?php print $content_attributes; ?>><?php print $snippet; ?></p>
-    <?php endif; ?>
-    <?php if ($info): ?>
-      <p class="search-info"><?php print $info; ?></p>
     <?php endif; ?>
   </div>
 </li>
