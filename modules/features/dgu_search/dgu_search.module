@@ -133,18 +133,6 @@ function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_stat
     $form['#after_build'] = array('dgu_search_hide_retain_filters');
 }
 
-function dgu_search_node_update_index($node) {
-  // When indexing nodes, add field from my custom content type
-  if ($node->type == 'app') {
-    // grab the image URL and the description
-    //$image_uri = $node->field_image['und'][0]['uri'];
-    $developed = $node->field_developed_by['und'][0]['safe_value'];
-    // add the image and description to the document in the solr index
-    //$document->addField('ss_my_contenttype_image', $image_uri);
-    //$document->addField('ss_field_developed_by', $developed);
-  }
-}
-
 /**
  * Implements hook_query_alter().
  */
