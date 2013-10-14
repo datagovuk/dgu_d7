@@ -130,6 +130,29 @@ function dguk_preprocess_search_result(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
 
+  switch ($variables['result']['bundle']) {
+    case 'app':
+      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      if (isset($variables['result']['fields']['sm_field_developed_by'][0])) {
+        $variables['info_split']['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
+      }
+      break;
+    case 'blog':
+      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      break;
+    case 'dataset_request':
+      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      break;
+    case 'forum':
+      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      break;
+    case 'page':
+      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      break;
+    case 'resource':
+      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      break;
+  }
 }
 
 /**

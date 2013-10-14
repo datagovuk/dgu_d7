@@ -60,7 +60,7 @@ function dgu_search_block_view($delta = '') {
 
   $block['subject'] = t('Search '. $search_types[$search_type]);
   $block['content'] = $searchform;
- 
+
   return $block;
 }
 
@@ -74,8 +74,8 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
   if (isset($form_state['searchtype'])) {
     // Add a variable into the form so we can redirect to correct solr search on submit.
     $form['searchtype'] = array(
-      '#type' => 'hidden', 
-      '#value' => $form_state['searchtype'], 
+      '#type' => 'hidden',
+      '#value' => $form_state['searchtype'],
     );
 
     // Add settings for apachesolr_autocomplete's patch to enable filtering by custom search.
@@ -140,4 +140,12 @@ function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_stat
         '#value' => 1,
     );
     $form['#after_build'] = array('dgu_search_hide_retain_filters');
+}
+
+/**
+ * Implements hook_query_alter().
+ */
+function dgu_search_apachesolr_query_alter($query) {
+  // Retrieve 'field_developed_by'.
+  $query->addParam('fl', 'sm_field_developed_by');
 }

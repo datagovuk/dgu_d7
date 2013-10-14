@@ -222,7 +222,7 @@ function dgu_location_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Location data in the UK',
-      'body' => '<p>data.gov.uk provides access to over 1000 location datasets and provides services to enable you to access them.</p><div class="item-list"><ul><li><a href="/data/search?ext_bbox=-20.48,48.79,3.11,62.66">See the list of location data</a></li><li><a href="/search/app/">See apps developed with location data</a></li></ul></div>',
+      'body' => '<p>data.gov.uk provides access to over 1000 location datasets and provides services to enable you to access them.</p><div class="item-list"><ul><li><a href="/data/search?ext_bbox=-20.48,48.79,3.11,62.66">See the list of location data</a></li><li><a href="/search/everything/?f[0]=bundle%3Aapp">See apps developed with location data</a></li></ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
