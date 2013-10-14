@@ -25,7 +25,7 @@ function dgu_search_block_info() {
     'blog',     // Blogs.
     'forum',    // Forum topic.
     'resource', // Library resource.
-  ); 
+  );
 
   // Create a block for each content type to search in solr.
   foreach ($search_types as $search_type) {
@@ -52,7 +52,7 @@ function dgu_search_block_view($delta = '') {
 
   $block['subject'] = t('Search '. $search_type);
   $block['content'] = $searchform;
- 
+
   return $block;
 }
 
@@ -66,8 +66,8 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
   if (isset($form_state['searchtype'])) {
     // Add a variable into the form so we can redirect to correct solr search on submit.
     $form['searchtype'] = array(
-      '#type' => 'hidden', 
-      '#value' => $form_state['searchtype'], 
+      '#type' => 'hidden',
+      '#value' => $form_state['searchtype'],
     );
 
     // Add settings for apachesolr_autocomplete's patch to enable filtering by custom search.
@@ -90,8 +90,8 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
     'blog',     // Blogs.
     'forum',    // Forum topic.
     'resource', // Library resource.
-  ); 
-  
+  );
+
   if (isset($fv['search_block_form']) && isset($fv['searchtype']) && in_array($fv['searchtype'], $search_types)) {
     // Replace keys with their rawurlencoded value
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
@@ -131,4 +131,24 @@ function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_stat
         '#value' => 1,
     );
     $form['#after_build'] = array('dgu_search_hide_retain_filters');
+}
+
+function dgu_search_node_update_index($node) {
+  // When indexing nodes, add field from my custom content type
+  if ($node->type == 'app') {
+    // grab the image URL and the description
+    //$image_uri = $node->field_image['und'][0]['uri'];
+    $developed = $node->field_developed_by['und'][0]['safe_value'];
+    // add the image and description to the document in the solr index
+    //$document->addField('ss_my_contenttype_image', $image_uri);
+    //$document->addField('ss_field_developed_by', $developed);
+  }
+}
+
+/**
+ * Implements hook_query_alter().
+ */
+function dgu_search_apachesolr_query_alter($query) {
+  // Retrieve 'field_developed_by'.
+  $query->addParam('fl', 'sm_field_developed_by');
 }
