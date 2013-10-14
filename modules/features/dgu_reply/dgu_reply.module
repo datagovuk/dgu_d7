@@ -27,17 +27,16 @@ function dgu_reply_form_reply_add_form_alter(&$form, &$form_state, $form_id){
  * the comment to add a subject.  This code is similar to the comment module.
  */
 function dgu_reply_form_submit($form, &$form_state) {
-    $field_reply_comment = $form_state['values']['field_reply_comment'][LANGUAGE_NONE][0];
-    if (isset($field_reply_comment['format'])) {
-        $reply_comment = check_markup($field_reply_comment['value'], $field_reply_comment['format']);
-    }
-    else {
-        $reply_comment = check_plain($field_reply_comment['value']);
-    }
     $reply_subject = trim($form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value']);
     if (empty($reply_subject)) {
+        $field_reply_comment = $form_state['values']['field_reply_comment'][LANGUAGE_NONE][0];
+        if (isset($field_reply_comment['format'])) {
+            $reply_comment = check_markup($field_reply_comment['value'], $field_reply_comment['format']);
+        }
+        else {
+            $reply_comment = check_plain($field_reply_comment['value']);
+        }
         $form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value'] = truncate_utf8(trim(decode_entities(strip_tags($reply_comment))), 29, TRUE);
     }
-
 }
 
