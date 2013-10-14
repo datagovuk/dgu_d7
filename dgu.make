@@ -4,7 +4,9 @@ api = 2
 ; Modules
 ; --------
 
+projects[apachesolr][version] = "1.4"
 projects[apachesolr][subdir] = "contrib"
+projects[apachesolr][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-2.patch"
 
 projects[apachesolr_autocomplete][subdir] = "contrib"
 ; In review patch to apachesolr_autocomplete for autocompleting with filters applied.
