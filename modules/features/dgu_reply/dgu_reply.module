@@ -5,3 +5,39 @@
  */
 
 include_once 'dgu_reply.features.inc';
+
+
+/**
+ * @param $form
+ * @param $form_state
+ * @param $form_id
+ *
+ * Implement hook_FORM_ID_form_alter. Add submit handler to fill in the subject if it's empty.
+ */
+function dgu_reply_form_reply_add_form_alter(&$form, &$form_state, $form_id){
+    $form["#submit"] = array_merge((array) 'dgu_reply_form_submit',$form["#submit"]);
+}
+
+
+/**
+ * @param $form
+ * @param $form_state
+ *
+ * Submit handler for add reply form, which checks whether a subject has been supplied, and if not, uses the body of
+ * the comment to add a subject.  This code is similar to the comment module.
+ */
+function dgu_reply_form_submit($form, &$form_state) {
+    $field_reply_comment = $form_state['values']['field_reply_comment'][LANGUAGE_NONE][0];
+    if (isset($field_reply_comment['format'])) {
+        $reply_comment = check_markup($field_reply_comment['value'], $field_reply_comment['format']);
+    }
+    else {
+        $reply_comment = check_plain($field_reply_comment['value']);
+    }
+    $reply_subject = trim($form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value']);
+    if (empty($reply_subject)) {
+        $form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value'] = truncate_utf8(trim(decode_entities(strip_tags($reply_comment))), 29, TRUE);
+    }
+
+}
+
