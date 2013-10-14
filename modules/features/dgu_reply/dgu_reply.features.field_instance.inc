@@ -74,7 +74,7 @@ function dgu_reply_field_default_field_instances() {
     'entity_type' => 'reply',
     'field_name' => 'field_reply_subject',
     'label' => 'Subject',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'text_processing' => 0,
       'user_register_form' => FALSE,
@@ -154,7 +154,7 @@ function dgu_reply_field_default_field_instances() {
     'entity_type' => 'reply',
     'field_name' => 'field_reply_subject',
     'label' => 'Subject',
-    'required' => 1,
+    'required' => 0,
     'settings' => array(
       'text_processing' => 0,
       'user_register_form' => FALSE,
