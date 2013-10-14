@@ -1,0 +1,17 @@
+diff --git a/apachesolr.module b/apachesolr.module
+index 60f388a..ebec490 100644
+--- a/apachesolr.module
++++ b/apachesolr.module
+@@ -2495,6 +2495,12 @@ function field_apachesolr_field_mappings() {
+       'query type' => 'term',
+       'facet mincount allowed' => TRUE,
+     ),
++    'text' => array(
++      'indexing_callback' => 'apachesolr_fields_default_indexing_callback',
++      'index_type' => 'string',
++      'facets' => TRUE,
++      'facet missing allowed' => TRUE,
++    ),
+   );
+ 
+   return $mappings;
