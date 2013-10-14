@@ -174,6 +174,9 @@ projects[tagclouds][subdir] = "contrib"
 
 projects[mollom][subdir] = "contrib"
 
+projects[google_analytics][subdir] = "contrib"
+
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
