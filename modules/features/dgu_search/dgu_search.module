@@ -103,13 +103,13 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
     );
 
     if (isset($fv['search_block_form']) && isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
-    // Replace keys with their rawurlencoded value
-    $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+        // Replace keys with their rawurlencoded value
+        $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
-    // Override redirect with a new bundle specific search.
-    global $base_url;
-    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
-  }
+        // Override redirect with a new bundle specific search.
+        global $base_url;
+        $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
+    }
 }
 
 
