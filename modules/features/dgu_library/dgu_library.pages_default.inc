@@ -388,15 +388,13 @@ function dgu_library_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-9';
     $pane->panel = 'top-left';
-    $pane->type = 'apachesolr_info';
-    $pane->subtype = 'apachesolr_info';
+    $pane->type = 'dgu_search_info';
+    $pane->subtype = 'dgu_search_info';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'title_override' => FALSE,
       'title_override_text' => '',
-      'override_title' => 0,
-      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
