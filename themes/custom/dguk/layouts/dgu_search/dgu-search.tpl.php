@@ -38,8 +38,8 @@
 
   <div class="center-wrapper">
     <?php if ($content['left']): ?>
-      <div class="panel-col-first panel-panel span4 boxed">
-        <div class="inside"><?php print $content['left']; ?></div>
+      <div class="panel-col-first panel-panel span4">
+        <div class="inside boxed    "><?php print $content['left']; ?></div>
       </div>
     <?php endif; ?>
     <?php if ($content['right']): ?>
