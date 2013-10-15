@@ -195,7 +195,7 @@ function dgu_home_page_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Home page tiles',
       'title' => '',
-      'body' => '<div id="homepage-promo-container"><div id="big_horizontal"><a href="library/open-data-white-paper"><img alt="White paper linking to cabinetoffice.gov" src="sites/default/files/open-data-white-paper-block.png"></a></div><div id="big_vertical"><a href="data/search?q=&amp;unpublished=true"><img alt="Suggest a dataset using our new form tool" src="sites/default/files/NII3_3.png">
+      'body' => '<div id="homepage-promo-container"><div id="big_horizontal"><a href="blog/now-is-the-time-to-collaborate-on-cultural-change"><img alt="Now is the Time to Collaborate on Cultural Change" src="sites/default/files/open-data-white-paper-block_0_0.png"></a></div><div id="big_vertical"><a href="data/search?q=&amp;unpublished=true"><img alt="Suggest a dataset using our new form tool" src="sites/default/files/NII3_3.png">
         </a>
       </div>
       <div id="small_left">

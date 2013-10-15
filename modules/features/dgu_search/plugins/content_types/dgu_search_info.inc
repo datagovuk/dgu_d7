@@ -42,7 +42,7 @@ function dgu_search_preprocess(&$variables, $hook){
             $variables['start'] = $response->response->start + 1;
             $variables['end'] = $response->response->start + count($response->response->docs);
 
-            $content_type = 'Results';
+            $content_type = 'Result';
             $entity = '';
             foreach($query->getFilters() as $filter){
                 if (isset($filter['#name']) && $filter['#name'] == 'entity_type'){
@@ -68,6 +68,16 @@ function dgu_search_preprocess(&$variables, $hook){
                 $entity_info = entity_get_info($entity);
                 if (!empty($entity_info['bundles'][$content_type]['label'])){
                     $content_type = $entity_info['bundles'][$content_type]['label'];
+                }
+            }
+            $plurals = array(
+                'Blog entry' => 'Blog entries',
+            );
+            if ($response->response->numFound > 1){
+                if (array_key_exists($content_type, $plurals)){
+                    $content_type = $plurals[$content_type];
+                } else {
+                    $content_type = $content_type . "s";
                 }
             }
             $variables['type'] = $content_type;

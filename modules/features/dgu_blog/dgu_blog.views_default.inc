@@ -26,7 +26,11 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '300';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '300';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'full';
@@ -208,7 +212,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '14707',
+    0 => '14764',
   );
   $handler->display->display_options['filters']['field_tags_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
@@ -297,7 +301,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '21235',
+    0 => '21324',
   );
   $handler->display->display_options['filters']['field_tags_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
@@ -386,7 +390,7 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['filters']['field_tags_tid']['table'] = 'field_data_field_tags';
   $handler->display->display_options['filters']['field_tags_tid']['field'] = 'field_tags_tid';
   $handler->display->display_options['filters']['field_tags_tid']['value'] = array(
-    0 => '12095',
+    0 => '12140',
   );
   $handler->display->display_options['filters']['field_tags_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_tags_tid']['vocabulary'] = 'tags';
@@ -486,7 +490,11 @@ return $node->uid;
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'access user profiles';
-  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '300';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '300';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['pager']['type'] = 'some';

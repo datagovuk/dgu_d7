@@ -12,7 +12,6 @@ dependencies[] = facetapi
 dependencies[] = page_manager
 dependencies[] = panels
 dependencies[] = strongarm
-features[apachesolr_environment][] = solr
 features[ctools][] = apachesolr:apachesolr_environments:1
 features[ctools][] = apachesolr_search:apachesolr_search_defaults:3
 features[ctools][] = facetapi:facetapi_defaults:1

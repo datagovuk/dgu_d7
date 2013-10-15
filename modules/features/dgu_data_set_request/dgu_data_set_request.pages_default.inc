@@ -64,7 +64,7 @@ function dgu_data_set_request_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Open Data User Group - Your data requests';
+  $display->title = 'Your data requests';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
@@ -188,7 +188,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Open Data User Group - Your data requests';
+  $display->title = 'Your data requests';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
