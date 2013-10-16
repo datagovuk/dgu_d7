@@ -49,6 +49,9 @@ projects[features][subdir] = "contrib"
 projects[views][version] = "3.7"
 projects[views][subdir] = "contrib"
 
+projects[views_data_export][version] = "3.0-beta6"
+projects[views_data_export][subdir] = "contrib"
+
 projects[link][version] = "1.1"
 projects[link][subdir] = "contrib"
 projects[linkchecker][version] = "1.1"
