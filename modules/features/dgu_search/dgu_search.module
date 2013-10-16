@@ -149,4 +149,6 @@ function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_stat
 function dgu_search_apachesolr_query_alter($query) {
   // Retrieve 'field_developed_by'.
   $query->addParam('fl', 'sm_field_developed_by');
+  // Retrieve 'field_review_status'.
+  $query->addParam('fl', 'im_field_review_status');
 }
