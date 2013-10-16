@@ -141,6 +141,15 @@ function dguk_preprocess_search_result(&$variables) {
       $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
       break;
     case 'dataset_request':
+      $review_status_values = &drupal_static('odug_review_statuses');
+      if (!isset($review_status_values)) {
+        $all_fields_info = field_info_fields();
+        $review_status_values = $all_fields_info['field_review_status']['settings']['allowed_values'];
+      }
+      $status_key = $variables['result']['fields']['im_field_review_status'][0];
+      $status_value = $review_status_values[$status_key];
+
+      $variables['info_split']['other'] = 'Review status: ' . $status_value;
       $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
       break;
     case 'forum':
