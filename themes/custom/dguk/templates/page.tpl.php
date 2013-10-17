@@ -1,25 +1,33 @@
 <div id="blackbar">
     <div class="container">
-        <div id="hm-government-link" class="retina-img">
-            <img src="/assets/img/crown-and-text.png" alt="HM Government" />
-        </div>
-            <?php if ($logged_in): ?>
-              <span class="ckan-logged-in">
-                  <div id="login-or-signup">
-                      You are logged-in as
-                      <a href="/admin/workbench"><?php print $user->name; ?></a>.
-                      <?php print l('Log out', 'user/logout', array('query' => drupal_get_destination())); ?>
-                  </div>
+        <a class="brand" href="/" rel="home">
+          <!--
+            <div id="dgu-header" class="retina-img">
+                <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
+            </div>
+            -->
+        </a>
+        <div class="chevron position1"></div>
+        <nav id="dgu-nav">
+          <?php // print dguk_get_main_menu($main_menu);?>
+          <a href="#" class="trigger-subnav nav-home">Home</a>
+          <a href="#" class="trigger-subnav nav-data">Data</a>
+          <a href="#" class="trigger-subnav nav-apps">Apps</a>
+          <a href="#" class="trigger-subnav nav-interact">Interact</a>
+          <div class="nav-search" style="width: 200px;">
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" />
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
               </span>
-            <?php else: ?>
-              <span class="ckan-logged-out">
-                  <div id="login-or-signup">
-                      <?php print l('Log in', 'user', array('query' => drupal_get_destination())); ?>
-                      or
-                      <?php print l('sign up', 'user/register', array('query' => drupal_get_destination())); ?>
-                  </div>
-              </span>
-            <?php endif; ?>
+            </div>
+          </div>
+          <?php if ($logged_in): ?>
+            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn btn-primary'), 'html' => TRUE)); ?>
+          <?php else: ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn btn-primary'), 'html' => TRUE)); ?>
+          <?php endif; ?>
+        </nav>
     </div>
 </div>
 <div id="greenbar" class="">
@@ -34,7 +42,6 @@
         </a>
     </div>
     <div class="container">
-      <?php print dguk_get_main_menu($main_menu);?>
     </div>
 </div>
 <div class="container">
