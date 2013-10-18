@@ -314,11 +314,21 @@ function dguk_js_alter(&$js){
 }
 
 function dguk_breadcrumb($variables) {
-  $sep = ' &#47; ';
   if (count($variables['breadcrumb']) > 0) {
-    return implode($sep, $variables['breadcrumb']) . $sep;
-  }
-  else {
-    return t("Home");
-  }
+    $sep = ' &#47; ';
+    $title = drupal_get_title();
+    $crumbs = '<ul id="breadcrumbs">';
+    $a=1;
+    foreach($variables['breadcrumb'] as $value) {
+      if ($a=1){
+        $crumbs .= '<li><a href="/"><i class="icon-home"></i></a></li>';
+      }
+      else {
+        $crumbs .= '<li>'. implode( ' / ' , $value) . '</li>';
+        $a++;
+      }
+    }
+      $crumbs .= '<li class="spacer">&nbsp;/&nbsp;</li><li>'.$title.'</li></ul>';
+    return $crumbs;
+   }
 }
