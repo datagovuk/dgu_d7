@@ -10,10 +10,10 @@
         <div class="chevron position1"></div>
         <nav id="dgu-nav">
           <?php //print dguk_get_main_menu($main_menu);?>
-          <a href="#" class="trigger-subnav nav-home">Home</a>
-          <a href="#" class="trigger-subnav nav-data">Data</a>
-          <a href="#" class="trigger-subnav nav-apps">Apps</a>
-          <a href="#" class="trigger-subnav nav-interact">Interact</a>
+          <a href="/" class="trigger-subnav nav-home">Home</a>
+          <a href="/data" class="trigger-subnav nav-data">Data</a>
+          <a href="/apps" class="trigger-subnav nav-apps">Apps</a>
+          <a href="/blog" class="trigger-subnav nav-interact">Interact</a>
           <div class="nav-search" style="width: 200px;">
             <div class="input-group input-group-sm">
               <input type="text" class="form-control" />
@@ -35,7 +35,7 @@
       <?php print dguk_get_sub_menu() ?>
     </div>
 </div>
-<div class="container content-container">
+<div class="container">
 
     <div class="page">
         <?php  print $breadcrumb . $title; //issue #811: breadcrubms are temporarily removed ?>
