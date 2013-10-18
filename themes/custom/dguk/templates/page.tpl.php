@@ -32,22 +32,9 @@
 </div>
 <div id="greenbar" class="">
     <div class="container">
-        <a class="btn btn-inverse visible-phone" data-toggle="collapse" data-target=".main-nav-collapse">
-            Nav &nbsp;<i class="icon-chevron-down icon-white"></i>
-        </a>
-        <a class="brand" href="/" rel="home">
-            <div id="dgu-header" class="retina-img">
-                <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
-            </div>
-        </a>
-    </div>
-    <div class="container">
+      <?php print dguk_get_sub_menu() ?>
     </div>
 </div>
-<div class="container">
-  <?php print dguk_get_sub_menu() ?>
-</div>
-
 <div class="container content-container">
 
     <div class="page">
