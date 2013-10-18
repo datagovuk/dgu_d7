@@ -314,7 +314,7 @@ function dguk_js_alter(&$js){
 }
 
 function dguk_breadcrumb($variables) {
-  $sep = ' &gt; ';
+  $sep = ' &#47; ';
   if (count($variables['breadcrumb']) > 0) {
     return implode($sep, $variables['breadcrumb']) . $sep;
   }
