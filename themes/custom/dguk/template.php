@@ -123,6 +123,21 @@ function dguk_preprocess_reply(&$variables) {
   $variables['avatar'] = l(render($image), 'user/'.$variables['reply']->uid, array('html' => true) );
 }
 
+
+
+/**
+ * Implements hook_preprocess_replies().
+ */
+function dguk_preprocess_replies(&$vars) {
+  if (($vars['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $vars['bundle'] .' reply')) {
+     $vars['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $vars['entity_id'] .'/'. $vars['instance_id'] .'/0');
+  } else {
+    $options = array('query' => array('destination' => 'reply/add/'. $vars['entity_id'] .'/'. $vars['instance_id'] .'/0'));
+    $vars['links']['reply_post_forbidden']['#markup'] = l(t('Login'), 'user/login' , $options) . ' to make a comment';
+  }
+}
+
+
 /**
  *  Implements hook_preprocess_search_result().
  */
