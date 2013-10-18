@@ -9,7 +9,7 @@
         </a>
         <div class="chevron position1"></div>
         <nav id="dgu-nav">
-          <?php // print dguk_get_main_menu($main_menu);?>
+          <?php //print dguk_get_main_menu($main_menu);?>
           <a href="#" class="trigger-subnav nav-home">Home</a>
           <a href="#" class="trigger-subnav nav-data">Data</a>
           <a href="#" class="trigger-subnav nav-apps">Apps</a>
@@ -38,7 +38,7 @@
 <div class="container content-container">
 
     <div class="page">
-        <?php // print $breadcrumb; issue #811: breadcrubms are temporarily removed ?>
+        <?php  print $breadcrumb . $title; //issue #811: breadcrubms are temporarily removed ?>
 
         <?php if($page['highlighted'] OR $messages): ?>
             <div class="drupal-messages">

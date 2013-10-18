@@ -312,3 +312,13 @@ function dguk_js_alter(&$js){
   unset($js['misc/jquery.js']);
   unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
 }
+
+function dguk_breadcrumb($variables) {
+  $sep = ' &gt; ';
+  if (count($variables['breadcrumb']) > 0) {
+    return implode($sep, $variables['breadcrumb']) . $sep;
+  }
+  else {
+    return t("Home");
+  }
+}
