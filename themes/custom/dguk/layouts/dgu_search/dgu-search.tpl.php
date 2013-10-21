@@ -16,7 +16,7 @@
  *   - $content['bottom']: Content in the bottom row.
  */
 ?>
-<div class="panel-2col-stacked-right row-fluid clearfix panel-display" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
+<div class="panel-2col-stacked-right row clearfix panel-display" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
   <?php if ($content['top-left'] || $content['top-right']): ?>
     <div class="center-wrapper boxed">
       <table class="search-area">
