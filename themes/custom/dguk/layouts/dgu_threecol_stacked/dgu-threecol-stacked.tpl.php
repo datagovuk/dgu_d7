@@ -25,15 +25,15 @@
   <?php endif ?>
 
   <div class="center-wrapper">
-    <div class="panel-panel panel-col-first span4">
+    <div class="panel-panel panel-col-first col-md-4">
       <div class="inside"><?php print $content['left']; ?></div>
     </div>
 
-    <div class="panel-panel panel-col span4">
+    <div class="panel-panel panel-col col-md-4">
       <div class="inside"><?php print $content['middle']; ?></div>
     </div>
 
-    <div class="panel-panel panel-col-last span4">
+    <div class="panel-panel panel-col-last col-md-4">
       <div class="inside"><?php print $content['right']; ?></div>
     </div>
   </div>
