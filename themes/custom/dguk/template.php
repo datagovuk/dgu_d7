@@ -328,7 +328,7 @@ function dguk_breadcrumb($variables) {
         $a++;
       }
     }
-      $crumbs .= '<li class="spacer">&nbsp;/&nbsp;</li><li>'.$title.'</li></ul>';
+      $crumbs .= '&nbsp;/&nbsp;<li>'.$title.'</li></ul>';
     return $crumbs;
    }
 }

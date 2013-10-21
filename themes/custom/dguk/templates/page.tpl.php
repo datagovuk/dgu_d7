@@ -32,19 +32,41 @@
 </div>
 <div id="greenbar" class="">
     <div class="container">
-      <?php print dguk_get_sub_menu() ?>
+      <?php //print dguk_get_sub_menu() ?>
+      <ul class="subnav subnav-data">
+        <li><a class="" href="/data/search">Datasets</a></li>
+        <li><a class="" href="/data/map-based-search">Map Search</a></li>
+        <li><a class="" href="/odug">Data Requests</a></li>
+        <li><a class="" href="/publisher">Publishers</a></li>
+        <li><a href="/organogram/cabinet-office">Organogram: Public Roles &amp; Salaries</a></li>
+        <li><a class="" href="/data/openspending-browse">OpenSpending Browser</a></li>
+        <li><a class="" href="/data/openspending-report/index">OpenSpending Reports</a></li>
+        <li><a class="" href="/data/site-usage">Site Analytics</a></li>
+      </ul>
+      <ul class="subnav subnav-apps">
+        <li><a href="/apps">Browse Apps</a></li>
+        <li><a href="/search/everything/?f[0]=bundle%3Aapps">Search Apps</a></li>
+        <li><a href="/node/add/apps">Add Your App</a></li>
+      </ul>
+
+      <ul class="subnav subnav-interact">
+        <li><a class="" href="/location">Location</a></li>
+        <li><a class="" href="/linked-data">Linked Data</a></li>
+        <li><a href="/blog">All Blogs</a></li>
+        <li><a href="/forum">All Forums</a></li>
+      </ul>
     </div>
 </div>
-<div class="container">
-  <?php  print $breadcrumb . $title; //issue #811: breadcrubms are temporarily removed ?>
-  <?php if($page['highlighted'] OR $messages): ?>
-      <div class="drupal-messages">
-          <?php print render($page['highlighted']); ?>
-          <?php print $messages; ?>
-      </div>
-  <?php endif; ?>
-</div>
 <div role="main" id="main-content" class="container">
+  <div class="container">
+    <?php  print $breadcrumb; ?>
+    <?php if($page['highlighted'] OR $messages): ?>
+        <div class="drupal-messages">
+            <?php print render($page['highlighted']); ?>
+            <?php print $messages; ?>
+        </div>
+    <?php endif; ?>
+  </div>
   <?php print render($title_prefix); ?>
   <?php if ($title): ?>
       <h1><?php print $title; ?></h1>
