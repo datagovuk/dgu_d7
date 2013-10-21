@@ -44,13 +44,16 @@ function dgu_data_set_request_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '0',
+          'weight' => '14',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '10',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '11',
+        ),
+        'mollom' => array(
+          'weight' => '13',
         ),
       ),
       'display' => array(),
