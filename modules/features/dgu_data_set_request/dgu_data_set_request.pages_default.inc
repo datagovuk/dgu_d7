@@ -214,7 +214,7 @@ function dgu_data_set_request_default_page_manager_pages() {
       'title' => 'Data request administration',
       'body' => '<a href="/admin/all_data_requests">Browse data requests</a>
 <br />
-<a href="/admin/all_data_requests">Download data requests</a>',
+<a href="/admin/all_data_requests/csv">Download data requests</a>',
       'format' => 'unfiltered',
       'substitute' => TRUE,
     );
