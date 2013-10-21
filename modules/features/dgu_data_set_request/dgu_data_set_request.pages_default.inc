@@ -512,7 +512,7 @@ function dgu_data_set_request_default_page_manager_pages() {
 <a href="/users/charlieboundy">Charlie Boundy</a><br/>
 <a href="/users/alex-kafetz">Alex Kafetz</a><br/>
 Duncan Ross<br/>
-Giuseppe Sollazzo<br/>
+<a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
 Tom Smith<br/>
 Carlos Somohano<br/>
 Paul Fenton<br/>
