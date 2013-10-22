@@ -8,3 +8,8 @@ engine = phptemplate
 
 ; Disables Bootstrap parent theme from using bootstrapcdn
 settings[bootstrap_cdn] = ''
+
+; Breadcrumbs
+settings[bootstrap_breadcrumb] = 1
+settings[bootstrap_breadcrumb_home] = 1
+settings[bootstrap_breadcrumb_title] = 0
