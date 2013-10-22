@@ -5,3 +5,6 @@ core = 7.x
 base theme = bootstrap
 plugins[panels][layouts] = layouts
 engine = phptemplate
+
+; Disables Bootstrap parent theme from using bootstrapcdn
+settings[bootstrap_cdn] = ''
