@@ -513,7 +513,7 @@ function dgu_data_set_request_default_page_manager_pages() {
 <a href="/users/alex-kafetz">Alex Kafetz</a><br/>
 Duncan Ross<br/>
 <a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
-Tom Smith<br/>
+<a href="/users/tomsmith">Tom Smith</a><br/>
 Carlos Somohano<br/>
 Paul Fenton<br/>
 <a href="/users/hsavory">Heather Savory</a><br/>
