@@ -178,7 +178,8 @@ projects[tagclouds][subdir] = "contrib"
 projects[mollom][subdir] = "contrib"
 
 projects[google_analytics][subdir] = "contrib"
-
+projects[views_bulk_operations][subdir] = "contrib"
+projects[advuser][subdir] = "contrib"
 
 ; Themes
 ; --------
