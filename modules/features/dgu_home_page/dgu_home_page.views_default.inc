@@ -173,6 +173,11 @@ function dgu_home_page_views_default_views() {
   $handler->display->display_options['fields']['ckan_id']['id'] = 'ckan_id';
   $handler->display->display_options['fields']['ckan_id']['table'] = 'ckan_dataset';
   $handler->display->display_options['fields']['ckan_id']['field'] = 'ckan_id';
+  /* Sort criterion: Dataset: Created */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'ckan_dataset';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block');
