@@ -33,7 +33,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   unset($form['actions']['preview']);
 
 
-  if (!user_access('Dataset Request: Edit any content')){
+  if (!user_access('edit any dataset_request content')){
     $form['field_review_status'] = array(
       '#type' => 'hidden',
       '#title' => t('Review status'),
@@ -70,5 +70,33 @@ function dgu_data_set_request_exit() {
     drupal_get_messages('status');
     // Add a message created in dgu_data_set_request_node_submit()
     drupal_set_message($message);
+  }
+}
+
+function dgu_data_set_request_node_access($node) {
+  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+    return NODE_ACCESS_DENY;
+  }
+}
+
+function dgu_data_set_request_node_access_records($node) {
+  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+  $grants = array(
+      array(
+        'realm' => 'privarte_data_request',
+        'gid' => 123,
+        'grant_view' => 1,
+        'grant_update' => 1,
+        'grant_delete' => 1,
+      )
+    );
+  return $grants;
+  }
+}
+
+function dgu_data_set_request_node_grants($account, $op) {
+  if (user_access('edit any dataset_request content', $account)) {
+    $grants['privarte_data_request'] = array(123);
+    return $grants;
   }
 }
