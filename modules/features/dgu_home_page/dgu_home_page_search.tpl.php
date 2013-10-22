@@ -13,7 +13,7 @@
           <div class="form-type-textfield form-item controls textbox">
             <input type="text" class="form-text" maxlength="128" size="15" value="" name="q" id="home-page-data-search-box" title="Enter the terms you wish to search for." placeholder="search data">
           </div>
-          <button type="submit" value="Search" id="edit-submit" class="btn btn-primary form-submit">Search</button>
+          <button type="submit" value="Search" id="edit-submit" class="btn-default btn btn-primary form-submit">Search</button>
         </form>
       </td>
     </tr>

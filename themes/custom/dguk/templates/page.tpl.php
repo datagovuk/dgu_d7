@@ -18,14 +18,14 @@
             <div class="input-group input-group-sm">
               <input type="text" class="form-control" />
               <span class="input-group-btn">
-                <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
+                <button class="btn-default btn btn-primary" type="button"><i class="icon-search"></i></button>
               </span>
             </div>
           </div>
           <?php if ($logged_in): ?>
-            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn btn-primary'), 'html' => TRUE)); ?>
+            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn-default btn btn-primary'), 'html' => TRUE)); ?>
           <?php else: ?>
-            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn btn-primary'), 'html' => TRUE)); ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn-default btn btn-primary'), 'html' => TRUE)); ?>
           <?php endif; ?>
         </nav>
     </div>

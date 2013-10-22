@@ -291,7 +291,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Progress on data requests',
-      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p ><a class="btn btn-primary center-me" href="/odug/roadmap">See Dashboard</a></p> <p><a href="/odug/status">Find out more about data request status</a></p>',
+      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p ><a class="btn-default btn btn-primary center-me" href="/odug/roadmap">See Dashboard</a></p> <p><a href="/odug/status">Find out more about data request status</a></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -407,7 +407,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Request new data (for authenticated users)',
       'title' => '',
-      'body' => '<p><a class="btn btn-primary center-me" href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
+      'body' => '<p><a class="btn-default btn btn-primary center-me" href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
@@ -444,7 +444,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Request new data (for anonymous users)',
       'title' => '',
-      'body' => '<p><a class="btn btn-primary center-me" href="/user/login?destination=/node/add/dataset-request">Login to request new data</a></p><p>This form will allow you to submit a data request.</p>',
+      'body' => '<p><a class="btn-default btn btn-primary center-me" href="/user/login?destination=/node/add/dataset-request">Login to request new data</a></p><p>This form will allow you to submit a data request.</p>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
