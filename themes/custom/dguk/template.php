@@ -199,6 +199,9 @@ function dguk_form_alter(&$form, &$form_state, $form_id) {
 function dguk_css_alter(&$css) {
   // Remove style.css file added by bootstrap theme - issue #811.
   unset($css[drupal_get_path('theme', 'bootstrap') . '/css/style.css']);
+  // Remove inherited bootstrap files because they are not actually installed or required.
+  unset($css[drupal_get_path('theme', 'bootstrap') . '/bootstrap/css/bootstrap.css']);
+  unset($css[drupal_get_path('theme', 'bootstrap') . '/bootstrap/css/bootstrap-responsive.css']);
 }
 
 
