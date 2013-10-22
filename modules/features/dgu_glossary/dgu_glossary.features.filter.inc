@@ -16,7 +16,7 @@ function dgu_glossary_filter_default_formats() {
     'name' => 'Plain text',
     'cache' => 0,
     'status' => 1,
-    'weight' => 10,
+    'weight' => -7,
     'filters' => array(
       'filter_html_escape' => array(
         'weight' => 0,
