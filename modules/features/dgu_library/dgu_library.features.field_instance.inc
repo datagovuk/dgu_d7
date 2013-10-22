@@ -211,34 +211,19 @@ function dgu_library_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_resource_file',
-    'label' => 'Resource File',
+    'label' => 'Resources',
     'required' => 0,
     'settings' => array(
       'description_field' => 0,
       'file_directory' => 'library',
       'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf doc xls',
-      'max_filesize' => '4M',
+      'max_filesize' => '16M',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'file',
       'settings' => array(
-        'allowed_schemes' => array(
-          'public' => 'public',
-        ),
-        'allowed_types' => array(
-          'audio' => 0,
-          'document' => 0,
-          'image' => 'image',
-          'video' => 0,
-        ),
-        'browser_plugins' => array(
-          'media_default--media_browser_1' => 0,
-          'media_default--media_browser_my_files' => 0,
-          'media_internet' => 0,
-          'upload' => 0,
-        ),
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
@@ -336,7 +321,7 @@ function dgu_library_field_default_field_instances() {
   t('Comments');
   t('Document Type');
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit).');
-  t('Resource File');
+  t('Resources');
   t('Sector');
   t('Tags');
 
