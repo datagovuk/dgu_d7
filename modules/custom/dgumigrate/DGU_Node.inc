@@ -197,6 +197,8 @@ class DGUDataRequestMigration extends DGUNodeMigration {
 		$this->addFieldMapping('field_data_set_link', 'field_dataset_link');
 		$this->addFieldMapping('field_publication_preference', 'field_publication_preference');
 		$this->addFieldMapping('field_review_status', 'field_review_status');
+        $this->addFieldMapping('field_review_notes', 'field_review_notes');
+        $this->addFieldMapping('field_review_notes:format', 'field_review_notes:format')->callbacks(array($this, 'mapFormat'));
 		$this->addFieldMapping('field_data_set_description', 'field_data_description');
 		$this->addFieldMapping('field_data_themes', '4')->sourceMigration('category')->arguments(array('source_type' => 'tid'));
 
