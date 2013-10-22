@@ -83,7 +83,7 @@ function dgu_data_set_request_node_access_records($node) {
   if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
   $grants = array(
       array(
-        'realm' => 'privarte_data_request',
+        'realm' => 'private_data_request',
         'gid' => 123,
         'grant_view' => 1,
         'grant_update' => 1,
@@ -96,7 +96,7 @@ function dgu_data_set_request_node_access_records($node) {
 
 function dgu_data_set_request_node_grants($account, $op) {
   if (user_access('edit any dataset_request content', $account)) {
-    $grants['privarte_data_request'] = array(123);
+    $grants['private_data_request'] = array(123);
     return $grants;
   }
 }
