@@ -318,12 +318,32 @@ function dguk_links__sub_menu($variables) {
 
   return $output;
 }
-
+/**
+ * Remove jquery and bootstrap.
+ * @see dguk/templates/html.tpl.php
+ */
 function dguk_js_alter(&$js){
- /**
-  * Remove jquery and bootstrap.
-  * @see dguk/templates/html.tpl.php
-  */
-  unset($js['misc/jquery.js']);
   unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+
+  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
+  $current_path = current_path();
+  $paths_to_avoid = array(
+      '^admin\/',
+      '^node\/add\/',
+      '^node\/\d*\/edit',
+      '^user\/\d*\/edit',
+    );
+
+  $keep_jquery = FALSE;
+  foreach ($paths_to_avoid as $path_to_avoid) {
+    if(preg_match("/$path_to_avoid/", $current_path)) {
+      $keep_jquery = TRUE;
+      break;
+    }
+  }
+
+  if (!$keep_jquery) {
+    unset($js['misc/jquery.js']);
+  }
+
 }
