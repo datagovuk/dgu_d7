@@ -323,7 +323,6 @@ function dguk_js_alter(&$js){
  */
 function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
-    $sep = ' &#47; ';
     $title = drupal_get_title();
     $crumbs = '<ul id="breadcrumbs">';
     $a=1;
@@ -332,11 +331,11 @@ function dguk_breadcrumb($variables) {
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
       }
       else {
-        $crumbs .= '<li>'. implode( ' / ' , $value) . '</li>';
+        $crumbs .= '<li>'. $value . '</li>';
         $a++;
       }
     }
-      $crumbs .= '&nbsp;/&nbsp;<li>'.$title.'</li></ul>';
+      $crumbs .= '<li>'.$title.'</li></ul>';
     return $crumbs;
    }
 }
