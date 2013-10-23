@@ -313,6 +313,14 @@ function dguk_js_alter(&$js){
   unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
 }
 
+/**
+ * Implements theme_breadcrumb()
+ * Return a themed breadcrumb trail.
+ *
+ * @param $breadcrumb
+ *   An array containing the breadcrumb links.
+ * @return a string containing the breadcrumb output.
+ */
 function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
     $sep = ' &#47; ';
@@ -321,7 +329,7 @@ function dguk_breadcrumb($variables) {
     $a=1;
     foreach($variables['breadcrumb'] as $value) {
       if ($a=1){
-        $crumbs .= '<li><a href="/"><i class="icon-home"></i></a></li>';
+        $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
       }
       else {
         $crumbs .= '<li>'. implode( ' / ' , $value) . '</li>';
