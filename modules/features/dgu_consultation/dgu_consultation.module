@@ -5,3 +5,14 @@
  */
 
 include_once 'dgu_consultation.features.inc';
+
+function dgu_consultation_node_load($nodes, $types){
+  if (in_array('book', $types)){
+    foreach($nodes as $node){
+      if ($node->book['bid'] != $node->nid){
+        $node->parent_book = node_load($node->book['bid']);
+      }
+    }
+  }
+}
+
