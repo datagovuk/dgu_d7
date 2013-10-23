@@ -57,9 +57,17 @@
       </ul>
     </div>
 </div>
+<div id="pre-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <?php  print $breadcrumb; ?>
+      </div>
+    </div>
+  </div>
+</div>
 <div role="main" id="main-content" class="container">
   <div class="container">
-    <?php  print $breadcrumb; ?>
     <?php if($page['highlighted'] OR $messages): ?>
         <div class="drupal-messages">
             <?php print render($page['highlighted']); ?>
