@@ -34,11 +34,6 @@ function dguk_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'] . '__' . $variables['node']->type;
     }
   }
-
-  // If node type is Blog then do not display page $title
-  if (!empty($variables['node']) && $variables['node']->type == 'blog') {
-    $variables['title'] = '';
-  }
 }
 
 /**
