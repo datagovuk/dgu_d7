@@ -312,7 +312,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Share you app (for authenticated users)',
       'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/node/add/app">Share your app</a>',
+      'body' => '<p>Let us know...</p><a class="btn-default btn btn-primary center-me" href="/node/add/app">Share your app</a>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -349,7 +349,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Share you app (for aunonymous users)',
       'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/user/login?destination=/node/add/app">Login to share your app</a>',
+      'body' => '<p>Let us know...</p><a class="btn-default btn btn-primary center-me" href="/user/login?destination=/node/add/app">Login to share your app</a>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
