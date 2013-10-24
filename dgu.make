@@ -48,7 +48,7 @@ projects[features][subdir] = "contrib"
 
 projects[views][version] = "3.7"
 projects[views][subdir] = "contrib"
-projects[views][patch][] = "https://drupal.org/files/views-1511396-110-array_diff_recursive.patch"
+projects[views][patch][] = "http://drupal.org/files/views-1511396-110-array_diff_recursive.patch"
 
 projects[views_data_export][version] = "3.0-beta6"
 projects[views_data_export][subdir] = "contrib"
