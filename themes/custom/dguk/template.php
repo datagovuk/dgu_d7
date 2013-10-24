@@ -34,7 +34,7 @@ function dguk_preprocess_page(&$variables) {
       $variables['theme_hook_suggestions'][] = 'page__panel__' . $panel_page['name'] . '__' . $variables['node']->type;
     }
   }
-  if ($variables['node']->type == 'book' && !empty($variables['node']->parent_book)) {
+  if (!empty($variables['node']) && $variables['node']->type == 'book' && !empty($variables['node']->parent_book)) {
     $variables['title'] = $variables['node']->parent_book->title;
   }
 
