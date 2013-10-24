@@ -29,6 +29,7 @@ features[features_api][] = api:2
 features[field_instance][] = node-blog-body
 features[field_instance][] = node-blog-field_category
 features[field_instance][] = node-blog-field_comment
+features[field_instance][] = node-blog-field_file_attachments
 features[field_instance][] = node-blog-field_sector
 features[field_instance][] = node-blog-field_tags
 features[field_instance][] = node-blog-field_uses_dataset
