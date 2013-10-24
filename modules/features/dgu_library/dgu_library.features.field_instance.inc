@@ -216,7 +216,7 @@ function dgu_library_field_default_field_instances() {
     'settings' => array(
       'description_field' => 0,
       'file_directory' => 'library',
-      'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf doc xls',
+      'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf doc docx xls xlsx ppt',
       'max_filesize' => '16M',
       'user_register_form' => FALSE,
     ),

@@ -155,6 +155,54 @@ function dgu_blog_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-blog-field_file_attachments'
+  $field_instances['node-blog-field_file_attachments'] = array(
+    'bundle' => 'blog',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'file',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'file_default',
+        'weight' => 9,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_file_attachments',
+    'label' => 'File Attachments',
+    'required' => 0,
+    'settings' => array(
+      'description_field' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'pdf txt rtf csv odt ods odp odg odf doc docx xls xlsx ppt',
+      'max_filesize' => '16M',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'file',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+      ),
+      'type' => 'file_generic',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-blog-field_sector'
   $field_instances['node-blog-field_sector'] = array(
     'bundle' => 'blog',
@@ -297,6 +345,7 @@ function dgu_blog_field_default_field_instances() {
   t('Body');
   t('Category');
   t('Comments');
+  t('File Attachments');
   t('Related datasets');
   t('Sector');
   t('Tags');

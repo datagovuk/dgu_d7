@@ -105,7 +105,7 @@ function dgu_data_set_request_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_dataset_request_pattern';
-  $strongarm->value = '';
+  $strongarm->value = 'data-request/[node:title]';
   $export['pathauto_node_dataset_request_pattern'] = $strongarm;
 
   return $export;
