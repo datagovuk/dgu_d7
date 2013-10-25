@@ -45,7 +45,7 @@ function dgu_blog_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol_stacked';
+  $display->layout = 'dgu_twocol';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
