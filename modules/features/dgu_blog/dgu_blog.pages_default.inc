@@ -45,7 +45,7 @@ function dgu_blog_default_page_manager_handlers() {
     ),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol';
+  $display->layout = 'dgu_twocol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -226,7 +226,7 @@ function dgu_blog_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol';
+  $display->layout = 'dgu_twocol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -276,7 +276,7 @@ function dgu_blog_default_page_manager_pages() {
     $display->panels['left'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'right';
+    $pane->panel = 'left';
     $pane->type = 'block';
     $pane->subtype = 'dgu_search-searchblog';
     $pane->shown = TRUE;
@@ -294,7 +294,7 @@ function dgu_blog_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['right'][0] = 'new-2';
+    $display->panels['top'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
     $pane->panel = 'right';
