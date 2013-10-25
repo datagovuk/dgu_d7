@@ -15,6 +15,7 @@
 
     print views_embed_view('organograms', 'block');
   ?>
+  <a class="organogram-full-screen" href="<?php print $content['field_endpoint'][0]['#markup']; ?>"><span><i class="icon-expand-alt"></i></span>Fullscreen</a>
 
   <iframe width='100%' height='700px' src="<?php print $content['field_endpoint'][0]['#markup']; ?>" title="Content from external site: Application-orientated dynamic content, describing structure of government in organogram format"></iframe>
 </article> <!-- /.node -->
