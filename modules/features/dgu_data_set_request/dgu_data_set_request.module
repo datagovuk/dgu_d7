@@ -32,13 +32,19 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 
   unset($form['actions']['preview']);
 
-
+  $form['#attributes']['class'][] = "boxed";
   if (!user_access('edit any dataset_request content')){
-    $form['field_review_status'] = array(
-      '#type' => 'hidden',
-      '#title' => t('Review status'),
-      '#value' => 0,
-    );
+      $form['field_review_status'] = array(
+          '#type' => 'hidden',
+          '#title' => t('Review status'),
+          '#value' => 0,
+      );
+      $form['field_review_notes
+      '] = array(
+          '#type' => 'hidden',
+          '#title' => t('Review Notes'),
+          '#value' => 0,
+      );
   }
 
 }
