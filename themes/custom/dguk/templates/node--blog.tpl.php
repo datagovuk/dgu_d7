@@ -1,4 +1,5 @@
-<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix col-md-10 col-md-offset-2"<?php print $attributes; ?>>
+<article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix col-md-9 col-md-offset-2"<?php print $attributes; ?>>
+  <div class="avatar"><?php print $avatar; ?></div>
   <header>
     <?php print render($title_prefix); ?>
     <?php if (!$page && $title): ?>
@@ -10,7 +11,6 @@
 
     <?php if ($display_submitted): ?>
       <span class="submitted">
-        <?php print $user_picture; ?>
         <?php print $submitted; ?>
       </span>
     <?php endif; ?>
