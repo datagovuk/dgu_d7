@@ -352,5 +352,31 @@ function dguk_js_alter(&$js){
   if (!$keep_jquery) {
     unset($js['misc/jquery.js']);
   }
+}
 
+/**
+ * Implements theme_breadcrumb()
+ * Return a themed breadcrumb trail.
+ *
+ * @param $breadcrumb
+ *   An array containing the breadcrumb links.
+ * @return a string containing the breadcrumb output.
+ */
+function dguk_breadcrumb($variables) {
+  if (count($variables['breadcrumb']) > 0) {
+    $title = drupal_get_title();
+    $crumbs = '<ul id="breadcrumbs">';
+    $a=1;
+    foreach($variables['breadcrumb'] as $value) {
+      if ($a=1){
+        $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
+      }
+      else {
+        $crumbs .= '<li>'. $value . '</li>';
+        $a++;
+      }
+    }
+      $crumbs .= '<li>'.$title.'</li></ul>';
+    return $crumbs;
+   }
 }
