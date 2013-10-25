@@ -279,7 +279,7 @@ function dgu_location_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Map based search',
-      'body' => '<a class="btn btn-primary" href="/data/map-based-search">Conduct Map Based Search</a><p>To find out which location datasets cover a particular location you can use Map Based Search.</p>',
+      'body' => '<a class="btn-default btn btn-primary" href="/data/map-based-search">Conduct Map Based Search</a><p>To find out which location datasets cover a particular location you can use Map Based Search.</p>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
