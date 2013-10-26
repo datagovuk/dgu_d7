@@ -1,5 +1,5 @@
 <?php
-
+$a=1;
 // Plugin definition
 $plugin = array(
   'title' => t('DGU three/two column'),
