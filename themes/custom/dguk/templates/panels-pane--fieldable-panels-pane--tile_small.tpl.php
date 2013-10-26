@@ -23,9 +23,8 @@
   <?php endif; ?>
 
   <div class="pane-content">
-
-    <a href=""><img src="" /></a>
-
-    <?php print render($content); ?>
+    <a href="<?php print $content['field_link'][0]['#element']['url']; ?>">
+    <?php print render($content['field_image_tile_small']); ?>
+    </a>
   </div>
 </div>
