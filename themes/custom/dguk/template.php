@@ -47,6 +47,26 @@ function dguk_preprocess_node(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $full_node = node_load($variables['node']->nid);
   $variables['title'] = $full_node->title;
+
+  $fields = field_info_instances('user', 'user');
+  $field_id = $fields['field_avatar']['field_id'];
+  $user = new stdClass();
+  $user->uid = $variables['node']->uid;
+  field_attach_load('user', array($variables['node']->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
+
+  if (!empty($user->field_avatar)) {
+    $field = field_get_items('user', $user, 'field_avatar');
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+  }
+  else {
+    $image = theme_image_style_outside_files(
+    array(
+      'style_name' => 'avatar',
+      'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
+      )
+    );
+  }
+  $variables['avatar'] = render($image);
 }
 
 /**
