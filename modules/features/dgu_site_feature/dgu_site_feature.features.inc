@@ -23,6 +23,63 @@ function dgu_site_feature_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
+ * Implements hook_image_default_styles().
+ */
+function dgu_site_feature_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: tile_big.
+  $styles['tile_big'] = array(
+    'name' => 'tile_big',
+    'label' => 'tile_big',
+    'effects' => array(
+      1 => array(
+        'label' => 'Crop',
+        'help' => 'Cropping will remove portions of an image to make it the specified dimensions.',
+        'effect callback' => 'image_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_crop_form',
+        'summary theme' => 'image_crop_summary',
+        'module' => 'image',
+        'name' => 'image_crop',
+        'data' => array(
+          'width' => 370,
+          'height' => 500,
+          'anchor' => 'center-center',
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  // Exported image style: tile_small.
+  $styles['tile_small'] = array(
+    'name' => 'tile_small',
+    'label' => 'tile_small',
+    'effects' => array(
+      2 => array(
+        'label' => 'Crop',
+        'help' => 'Cropping will remove portions of an image to make it the specified dimensions.',
+        'effect callback' => 'image_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_crop_form',
+        'summary theme' => 'image_crop_summary',
+        'module' => 'image',
+        'name' => 'image_crop',
+        'data' => array(
+          'width' => 370,
+          'height' => 120,
+          'anchor' => 'center-center',
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
  * Implements hook_node_info().
  */
 function dgu_site_feature_node_info() {
