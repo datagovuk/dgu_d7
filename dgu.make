@@ -187,7 +187,7 @@ projects[advuser][subdir] = "contrib"
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
-projects[bootstrap][version] = "3.0-rc2"
+projects[bootstrap][version] = "2.0-beta2"
 
 ; Libraries
 ; ---------
