@@ -28,9 +28,9 @@ function dgu_site_feature_theme($existing, $type, $theme, $path) {
 /**
  * This theme function is designed to deal with the limitation that
  * theme_image_style does not work with images outside the files directory.
- * 
+ *
  * Usage is the same as theme_image_style.
- * 
+ *
  * @param $variables
  */
 function theme_image_style_outside_files($variables) {
@@ -41,4 +41,33 @@ function theme_image_style_outside_files($variables) {
   }
   $variables['path'] = $styled_path;
   return theme('image', $variables);
+}
+
+function dgu_site_feature_entity_info_alter(&$entity_info) {
+  $entity_info['fieldable_panels_pane']['bundles']['tile_big'] = array(
+    'label' => t('Tile: big'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    //'pane icon' => '/path/to/custom/icon/for/this/pane.png',
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_big',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+  $entity_info['fieldable_panels_pane']['bundles']['tile_small'] = array(
+    'label' => t('Tile: small'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    //'pane icon' => '/path/to/custom/icon/for/this/pane.png',
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_small',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
 }
