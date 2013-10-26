@@ -17,7 +17,7 @@ function dgu_site_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'field_replies' => '',
@@ -26,7 +26,7 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'tile_big',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -68,15 +68,8 @@ function dgu_site_feature_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'link_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
     ),
@@ -120,7 +113,7 @@ function dgu_site_feature_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'field_replies' => '',
@@ -129,7 +122,7 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'tile_small',
         ),
         'type' => 'image',
         'weight' => 1,
@@ -171,15 +164,8 @@ function dgu_site_feature_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'link',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'link_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 0,
       ),
     ),
