@@ -152,6 +152,9 @@ projects[composer_manager][subdir] = "contrib"
 projects[panels][version] = "3.3"
 projects[panels][subdir] = "contrib"
 
+projects[fieldable_panels_panes][version] = "1.5"
+projects[fieldable_panels_panes][subdir] = "contrib"
+
 projects[context][version] = "3.0-beta7"
 projects[context][subdir] = "contrib"
 
@@ -184,7 +187,7 @@ projects[advuser][subdir] = "contrib"
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
-projects[bootstrap][version] = "2.0-beta2"
+projects[bootstrap][version] = "3.0-rc2"
 
 ; Libraries
 ; ---------
