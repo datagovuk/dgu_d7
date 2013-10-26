@@ -23,9 +23,9 @@
             </div>
           </div>
           <?php if ($logged_in): ?>
-            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn-default btn btn-primary'), 'html' => TRUE)); ?>
+            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php else: ?>
-            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => 'nav-user btn-default btn btn-primary'), 'html' => TRUE)); ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php endif; ?>
         </nav>
     </div>
