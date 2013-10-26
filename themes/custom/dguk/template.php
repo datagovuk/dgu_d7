@@ -76,6 +76,10 @@ function dguk_preprocess_panels_pane(&$variables) {
     $variables['content']['#attributes']['class'][] = 'form-search';
     $variables['content']['#attributes']['class'][] = 'form-search-solo';
   }
+
+  if ($variables['pane']->type == 'fieldable_panels_pane') {
+    $variables['theme_hook_suggestions'][] = 'panels_pane__fieldable_panels_pane__' . $variables['content']['#element']->bundle;
+  }
 }
 
 /**
