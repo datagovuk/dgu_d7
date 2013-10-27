@@ -75,7 +75,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 
   $form_state = array();
   $$form = drupal_build_form('dgu_search_form', $form_state);
-  $block->content = drupal_render($variables['form']);
+  $block->content = drupal_render($form);
   return $block;
 }
 
