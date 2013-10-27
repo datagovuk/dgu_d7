@@ -87,6 +87,46 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
 
 
 /**
+ * Implement HOOK_forms
+ *
+ * @return array of forms
+ */
+function dgu_search_forms() {
+  $forms['dgu_search_form'] = array(
+    'callback' => 'dgu_search_search_block',
+  );
+  return $forms;
+}
+
+function dgu_search_search_block($form, &$form_state) {
+  $form['search_block_form'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#title_display' => 'invisible',
+    '#size' => 15,
+    '#default_value' => '',
+    '#attributes' => array('title' => t('Enter the terms you wish to search for.')),
+  );
+  $form['content_type'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['content_type'],
+  );
+  $form['searchtype'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['searchtype'],
+  );
+  $form['count'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['count'],
+  );
+  $form['actions'] = array('#type' => 'actions');
+  $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Search'));
+  $form['#submit'] = array('dgu_search_form_search_block_form_submit');
+  $form['#theme'] = 'dgu_search_form';
+  return $form;
+}
+
+/**
  * Added form submit function to retain filters.
  *
  * @see apachesolr_search_form_search_submit()
