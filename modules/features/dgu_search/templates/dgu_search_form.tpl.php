@@ -1,8 +1,8 @@
 <?php $output = drupal_render_children($form);?>
-<div class="search-area" style="margin-top: 20px; margin-bottom: 30px;">
+<div class="search-area" >
   <div class="clearfix dgu-equal-height" data-selector=".auto-height">
     <div class="left">
-      <div class="left-inner auto-height form-search" style="height: 94px;">
+      <div class="left-inner auto-height form-search">
         <div class="input-group">
         <form action="<?php print $form['#action']?>" method="post" id="<?php print $form['#form_id']?>" >
             <input class="form-control" type="text" name="<?php print $form['search_block_form']['#name'] ?>" value="" results="0" placeholder="Search <?php print $form['content_type']['#value']?>...">
