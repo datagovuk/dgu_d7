@@ -12,8 +12,8 @@
               </button>
             </span>
             <input type="hidden" name="form_build_id" value="<?php print $form['form_build_id']['#value'] ?>">
-          <input type="hidden" name="form_id" value="<?php print $form['form_id']['#value'] ?>">
-          <input type="hidden" name="form_token" value="<?php print $form['form_token']['#default_value'] ?>">
+            <input type="hidden" name="form_id" value="<?php print $form['form_id']['#value'] ?>">
+            <input type="hidden" name="form_token" value="<?php print $form['form_token']['#default_value'] ?>">
             <input type="hidden" name="searchtype" value="<?php print $form['searchtype']['#value'] ?>">
           <input type="hidden" name="submit" value="search">
           </form>
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="right">
-      <div class="right-inner auto-height" style="height: 94px;">
+      <div class="right-inner auto-height">
         <div class="chevron"></div>
         <div class="result-count"><?php print $form['count']['#value']?></div>
         <div class="result-count-footer"><?php print $form['content_type']['#value']?></div>
