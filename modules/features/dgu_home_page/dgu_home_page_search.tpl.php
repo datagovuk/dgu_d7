@@ -1,9 +1,9 @@
-<form accept-charset="UTF-8" id="dgu-search-form" class="search-area" style="margin-top: 20px; margin-bottom: 30px;" method="get" action="/data/search">
+<form accept-charset="UTF-8" id="dgu-search-form" class="search-area" method="get" action="/data/search">
   <div>
     <div  class="search-area">
       <div data-selector=".auto-height" class="clearfix dgu-equal-height">
         <div class="left">
-          <div style="height: 90px;" class="left-inner auto-height form-search">
+          <div class="left-inner auto-height form-search">
             <div class="input-group">
                 <input type="text" placeholder="Search for datasets..." results="0" value="" name="search_block_form" class="form-control">
                 <span class="input-group-btn">
@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="right">
-          <div style="height: 90px;" class="right-inner auto-height">
+          <div class="right-inner auto-height">
             <div class="chevron"></div>
             <?php if($count): ?>
               <div class="result-count"><?php print $count; ?></div>
