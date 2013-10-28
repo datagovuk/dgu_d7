@@ -56,12 +56,12 @@ function dguk_preprocess_node(&$variables) {
 
   if (!empty($user->field_avatar)) {
     $field = field_get_items('user', $user, 'field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'profile')));
   }
   else {
     $image = theme_image_style_outside_files(
     array(
-      'style_name' => 'avatar',
+      'style_name' => 'profile',
       'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
       )
     );
