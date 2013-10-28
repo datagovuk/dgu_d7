@@ -1,20 +1,29 @@
-<table class="search-area">
-  <tbody><tr>
-      <?php if($count): ?>
-      <td class="left">
-        <div class="count-wrapper">
-          <div class="result-count"><?php print $count; ?></div>
-          <div class="result-count-footer">Datasets</div>
-        </div>
-      </td>
-      <?php endif; ?>
-      <td class="right">
-        <form accept-charset="UTF-8" id="home-page-data-search-form" class="form-search" method="get" action="/data/search">
-          <div class="form-type-textfield form-item controls textbox">
-            <input type="text" class="form-text" maxlength="128" size="15" value="" name="q" id="home-page-data-search-box" title="Enter the terms you wish to search for." placeholder="search data">
+<form accept-charset="UTF-8" id="dgu-search-form" class="search-area" method="get" action="/data/search">
+  <div>
+    <div  class="search-area">
+      <div data-selector=".auto-height" class="clearfix dgu-equal-height">
+        <div class="left">
+          <div class="left-inner auto-height form-search">
+            <div class="input-group">
+                <input type="text" placeholder="Search for datasets..." results="0" value="" name="search_block_form" class="form-control">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">
+                    <i class="icon-search"></i>
+                  </button>
+                </span>
+            </div>
           </div>
-          <button type="submit" value="Search" id="edit-submit" class="btn-default btn btn-primary form-submit">Search</button>
-        </form>
-      </td>
-    </tr>
-</table>
+        </div>
+        <div class="right">
+          <div class="right-inner auto-height">
+            <div class="chevron"></div>
+            <?php if($count): ?>
+              <div class="result-count"><?php print $count; ?></div>
+              <div class="result-count-footer">Datasets</div>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
