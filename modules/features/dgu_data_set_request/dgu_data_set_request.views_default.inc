@@ -69,7 +69,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Submitter name */
+  /* Field: Content: Your name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -504,7 +504,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Submitter name */
+  /* Field: Content: Your name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -1172,7 +1172,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Submitter name */
+  /* Field: Content: Your name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
