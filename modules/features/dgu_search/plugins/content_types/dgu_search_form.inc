@@ -7,6 +7,7 @@ if (module_exists('apachesolr_search')) {
     'description' => t('Sorl search form which includes the number of documents in the index/facet.'),
     'icon' => 'icon_search.png',
     'category' => t('Apache Solr Search'),
+    'hook theme' => 'dgu_search_form_theme',
     'defaults' => array(
       'title_override' => FALSE,
       'title_override_text' => '',
