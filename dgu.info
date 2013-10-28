@@ -69,7 +69,4 @@ dependencies[] = ckan_dataset
 dependencies[] = ckan_publisher
 dependencies[] = dgumigrate
 
-;enable new features
-dependencies[] = dgu_interact
-
 files[] = dgu.profile
