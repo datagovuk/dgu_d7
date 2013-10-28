@@ -43,7 +43,7 @@ function dgu_site_feature_image_default_styles() {
         'module' => 'image',
         'name' => 'image_crop',
         'data' => array(
-          'width' => 370,
+          'width' => 330,
           'height' => 500,
           'anchor' => 'center-center',
         ),
@@ -67,7 +67,7 @@ function dgu_site_feature_image_default_styles() {
         'module' => 'image',
         'name' => 'image_crop',
         'data' => array(
-          'width' => 370,
+          'width' => 330,
           'height' => 120,
           'anchor' => 'center-center',
         ),
