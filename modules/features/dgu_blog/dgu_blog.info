@@ -10,6 +10,7 @@ dependencies[] = dgu_reply
 dependencies[] = dgu_shared_fields
 dependencies[] = entityreference
 dependencies[] = features
+dependencies[] = file
 dependencies[] = media
 dependencies[] = mediafield
 dependencies[] = options
