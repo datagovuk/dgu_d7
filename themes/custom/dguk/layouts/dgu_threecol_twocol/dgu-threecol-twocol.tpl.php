@@ -18,26 +18,11 @@
     </div>
   </div>
 
-  <div class="center-wrapper row-middle">
-    <div class="panel-panel panel-col-first col-md-4">
-      <div class="inside"><?php print $content['middle_left']; ?></div>
-    </div>
-    <div class="panel-panel panel-col col-md-4">
-      <div class="inside"><?php print $content['middle_middle']; ?></div>
-    </div>
-    <div class="panel-panel panel-col-last col-md-4">
-      <div class="inside"><?php print $content['middle_right']; ?></div>
-    </div>
-  </div>
-
   <div class="center-wrapper row-bottom">
-    <div class="panel-panel panel-col-first col-md-4">
+    <div class="panel-panel panel-col-first col-md-6">
       <div class="inside"><?php print $content['bottom_left']; ?></div>
     </div>
-    <div class="panel-panel panel-col col-md-4">
-      <div class="inside"><?php print $content['bottom_middle']; ?></div>
-    </div>
-    <div class="panel-panel panel-col-last col-md-4">
+    <div class="panel-panel panel-col-last col-md-6">
       <div class="inside"><?php print $content['bottom_right']; ?></div>
     </div>
   </div>
@@ -49,4 +34,3 @@
   <?php endif ?>
 
 </div>
-
