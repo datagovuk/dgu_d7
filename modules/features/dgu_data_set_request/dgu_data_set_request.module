@@ -78,8 +78,8 @@ function dgu_data_set_request_exit() {
   }
 }
 
-function dgu_data_set_request_node_access($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+function dgu_data_set_request_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
     return NODE_ACCESS_DENY;
   }
 }
