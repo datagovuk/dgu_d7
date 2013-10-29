@@ -19,6 +19,7 @@ include_once 'dgu_data_set_request.features.inc';
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
 
+  drupal_set_title('Create a dataset request');
   $form['revision_information']['#type'] = 'hidden';
 
   $form['actions']['publish']['#access'] = TRUE;
