@@ -241,13 +241,16 @@ function dgu_forum_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'middle';
-    $pane->type = 'block';
-    $pane->subtype = 'dgu_search-searchforum';
+    $pane->type = 'dgu_search_form';
+    $pane->subtype = 'dgu_search_form';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Search Forum',
+      'title_override' => NULL,
+      'title_override_text' => NULL,
+      'content_type' => 'forum',
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
