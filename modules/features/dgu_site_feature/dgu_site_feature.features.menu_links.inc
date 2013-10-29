@@ -28,20 +28,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => -50,
   );
-  // Exported menu link: main-menu:about
-  $menu_links['main-menu:about'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'about',
-    'router_path' => 'about',
-    'link_title' => 'About',
-    'options' => array(),
-    'module' => 'system',
-    'hidden' => 1,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -40,
-  );
   // Exported menu link: main-menu:apps
   $menu_links['main-menu:apps'] = array(
     'menu_name' => 'main-menu',
@@ -68,7 +54,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => 3,
     'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:data
@@ -97,7 +83,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -48,
+    'weight' => 4,
     'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:interact
@@ -126,7 +112,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => 5,
     'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:linked-data
@@ -141,7 +127,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -45,
+    'weight' => 7,
     'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:location
@@ -154,70 +140,10 @@ function dgu_site_feature_menu_default_menu_links() {
     'module' => 'system',
     'hidden' => 0,
     'external' => 0,
-    'has_children' => 1,
+    'has_children' => 0,
     'expanded' => 0,
-    'weight' => -46,
+    'weight' => 6,
     'parent_path' => 'interact',
-  );
-  // Exported menu link: main-menu:node/2347
-  $menu_links['main-menu:node/2347'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/2347',
-    'router_path' => 'node/%',
-    'link_title' => 'Map based search',
-    'options' => array(),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 3,
-    'parent_path' => 'location',
-  );
-  // Exported menu link: main-menu:node/2379
-  $menu_links['main-menu:node/2379'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/2379',
-    'router_path' => 'node/%',
-    'link_title' => 'Contact Points',
-    'options' => array(),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 2,
-    'parent_path' => 'location',
-  );
-  // Exported menu link: main-menu:node/2380
-  $menu_links['main-menu:node/2380'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/2380',
-    'router_path' => 'node/%',
-    'link_title' => 'INSPIRE',
-    'options' => array(),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-    'parent_path' => 'location',
-  );
-  // Exported menu link: main-menu:node/2381
-  $menu_links['main-menu:node/2381'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'node/2381',
-    'router_path' => 'node/%',
-    'link_title' => 'Guidance and Tools',
-    'options' => array(),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 1,
-    'parent_path' => 'location',
   );
   // Exported menu link: main-menu:odug
   $menu_links['main-menu:odug'] = array(
@@ -231,26 +157,21 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -50,
+    'weight' => 2,
     'parent_path' => 'interact',
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('About');
   t('Apps');
   t('Blogs');
-  t('Contact Points');
   t('Data');
   t('Data requests');
   t('Forum');
-  t('Guidance and Tools');
   t('Home');
-  t('INSPIRE');
   t('Interact');
   t('Library');
   t('Linked Data');
   t('Location');
-  t('Map based search');
 
 
   return $menu_links;
