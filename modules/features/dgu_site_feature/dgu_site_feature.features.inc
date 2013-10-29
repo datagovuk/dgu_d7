@@ -28,6 +28,29 @@ function dgu_site_feature_ctools_plugin_api($module = NULL, $api = NULL) {
 function dgu_site_feature_image_default_styles() {
   $styles = array();
 
+  // Exported image style: profile.
+  $styles['profile'] = array(
+    'name' => 'profile',
+    'label' => 'Profile',
+    'effects' => array(
+      1 => array(
+        'label' => 'Scale and crop',
+        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => 115,
+          'height' => 115,
+        ),
+        'weight' => 1,
+      ),
+    ),
+  );
+
   // Exported image style: tile_big.
   $styles['tile_big'] = array(
     'name' => 'tile_big',
