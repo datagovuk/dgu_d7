@@ -381,7 +381,11 @@ function dguk_links__sub_menu($variables) {
  * @see dguk/templates/html.tpl.php
  */
 function dguk_js_alter(&$js){
-  unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
 
   // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
   $current_path = current_path();
