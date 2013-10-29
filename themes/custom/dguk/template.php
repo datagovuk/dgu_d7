@@ -250,12 +250,7 @@ function dguk_get_main_menu($main_menu) {
 	    ),
 	 ));
 
-  $output = '<div class="navbar navbar-inverse"> <div class="main-nav-collapse">';
-  $output .=  $menu_output;
-  $output .= '</div><!--/.main-nav-collapse --></div>';
-  $output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
-
-	return $output;
+	return $menu_output;
  }
 
 /**
