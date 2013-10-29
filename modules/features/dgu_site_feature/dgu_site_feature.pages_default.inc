@@ -144,7 +144,7 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->menu = array(
     'type' => 'normal',
     'title' => 'About',
-    'name' => 'main-menu',
+    'name' => 'menu-footer',
     'weight' => '100',
     'parent' => array(
       'type' => 'none',

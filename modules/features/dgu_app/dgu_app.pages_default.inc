@@ -257,11 +257,14 @@ function dgu_app_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-3';
     $pane->panel = 'top';
-    $pane->type = 'block';
-    $pane->subtype = 'dgu_search-searchapp';
+    $pane->type = 'dgu_search_form';
+    $pane->subtype = 'dgu_search_form';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'title_override' => NULL,
+      'title_override_text' => NULL,
+      'content_type' => 'app',
       'override_title' => 0,
       'override_title_text' => '',
     );
