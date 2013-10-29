@@ -264,7 +264,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->configuration = array(
       'title_override' => NULL,
       'title_override_text' => NULL,
-      'content_type' => 'all',
+      'content_type' => 'app',
       'override_title' => 0,
       'override_title_text' => '',
     );
