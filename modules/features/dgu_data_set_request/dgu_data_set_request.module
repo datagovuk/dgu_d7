@@ -19,6 +19,7 @@ include_once 'dgu_data_set_request.features.inc';
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
 
+  drupal_set_title('Create a dataset request');
   $form['revision_information']['#type'] = 'hidden';
 
   $form['actions']['publish']['#access'] = TRUE;
@@ -78,8 +79,8 @@ function dgu_data_set_request_exit() {
   }
 }
 
-function dgu_data_set_request_node_access($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+function dgu_data_set_request_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
     return NODE_ACCESS_DENY;
   }
 }

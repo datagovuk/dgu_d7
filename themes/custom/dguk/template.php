@@ -56,12 +56,12 @@ function dguk_preprocess_node(&$variables) {
 
   if (!empty($user->field_avatar)) {
     $field = field_get_items('user', $user, 'field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'profile')));
   }
   else {
     $image = theme_image_style_outside_files(
     array(
-      'style_name' => 'avatar',
+      'style_name' => 'profile',
       'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
       )
     );
@@ -250,12 +250,7 @@ function dguk_get_main_menu($main_menu) {
 	    ),
 	 ));
 
-  $output = '<div class="navbar navbar-inverse"> <div class="main-nav-collapse">';
-  $output .=  $menu_output;
-  $output .= '</div><!--/.main-nav-collapse --></div>';
-  $output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
-
-	return $output;
+	return $menu_output;
  }
 
 /**
