@@ -431,3 +431,22 @@ function dguk_breadcrumb($variables) {
     return $crumbs;
    }
 }
+
+function dguk_preprocess_user_profile(&$variables) {
+  $avatar = array(
+      'style_name' => 'profile',
+      'path' => $user->field_avatar[0]['uri'],
+    );
+  $variables['profile_image'] = theme('image_style', $avatar);
+
+  $variables['first_name'] = $variables['field_first_name'][0]['safe_value'];
+  $variables['surname'] = $variables['field_surname'][0]['safe_value'];
+  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  $variables['member_for'] = $user_profile['summary']['member_for']['#markup'];
+  $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
+  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  $variables['linkedin_url'] = $variables['field_linkedin_url'][0]['url'];
+  $variables['linkedin'] = l($linkedin_url, $linkedin_url);
+  $variables['facebook_url'] = $variables['field_facebook_url'][0]['url'];
+  $variables['facebook'] = l($facebook_url, $facebook_url);
+}
