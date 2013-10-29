@@ -237,21 +237,8 @@ function dguk_css_alter(&$css) {
  * Get the output for the main menu.
  */
 function dguk_get_main_menu($main_menu) {
-  $menu_new_classes = array();
-  foreach ($main_menu as $key => $item) {
-    $menu_new_classes['nav-' . strtolower(str_replace(' ', '-', $item['title'])) . ' ' . $key] = $item;
-  }
-
-	$menu_output = theme('links__main_menu', array(
-	    'links' => $menu_new_classes,
-	    'attributes' => array(
-	        'id' => 'dgu-nav',
-	        'class' => array('nav'),
-	    ),
-	 ));
-
-	return $menu_output;
- }
+	return theme('links__main_menu', array('links' => $main_menu));
+}
 
 /**
  * Get the output for the sub menu (2nd level of main menu).
@@ -284,6 +271,51 @@ function dguk_get_footer_menu() {
 
 	return $menu_output;
  }
+
+
+/**
+ * Returns HTML for main mnavigation links.
+ */
+function dguk_links__main_menu($variables) {
+  $links = $variables['links'];
+  global $language_url;
+  $output = '';
+
+  if (count($links) > 0) {
+    foreach ($links as $link) {
+      if (!isset($link['attributes']['class'])) {
+        $link['attributes']['class'] = array();
+      }
+      $link['attributes']['class'] = array('trigger-subnav' ,'nav-' . strtolower(str_replace(' ', '-', $link['title'])));
+
+      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
+          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
+        $link['attributes']['class'][] = 'active';
+      }
+
+      if (isset($link['href'])) {
+        // Pass in $link as $options, they share the same keys.
+        $output .= l($link['title'], $link['href'], $link);
+      }
+
+      elseif (!empty($link['title'])) {
+        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
+        if (empty($link['html'])) {
+          $link['title'] = check_plain($link['title']);
+        }
+        $span_attributes = '';
+        if (isset($link['attributes'])) {
+          $span_attributes = drupal_attributes($link['attributes']);
+        }
+        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
+      }
+
+    }
+  }
+
+  return $output;
+}
+
 
 /**
  * Returns HTML for sub mnavigation links.
