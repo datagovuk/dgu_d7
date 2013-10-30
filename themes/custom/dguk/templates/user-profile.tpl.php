@@ -60,7 +60,7 @@ kpr($user_profile);
     <?php if($twitter): ?>
       <dl class="clearfix">
         <dt><?php print t('Twitter'); ?></dt>
-        <dd><?php print l('@' . $twitter, 'http://twitter.com' . $twitter); ?></dd>
+        <dd><?php print l('@' . $twitter, 'http://twitter.com/' . $twitter); ?></dd>
       </dl>
     <?php endif; ?>
     <?php if($job_title): ?>
