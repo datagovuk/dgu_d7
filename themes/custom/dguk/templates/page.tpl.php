@@ -31,12 +31,12 @@
 
 
           <div class="nav-search" style="width: 200px;">
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control" />
+            <form class="input-group input-group-sm" action="/data/search">
+              <input type="text" class="form-control" name="q" />
               <span class="input-group-btn">
-                <button class="btn-default btn btn-primary" type="button"><i class="icon-search"></i></button>
+                <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
               </span>
-            </div>
+            </form>
           </div>
           <?php if ($logged_in): ?>
             <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
