@@ -11,8 +11,8 @@
         <?php
           // $main_menu is set to menu-interact and $secondary_menu is set to menu-apps
           // otherwise context doesn't work
-          $apps_menu = dguk_get_apps_menu($main_menu);
-          $interact_menu = dguk_get_interact_menu($secondary_menu);
+          $interact_menu = dguk_get_interact_menu($main_menu);
+          $apps_menu = dguk_get_apps_menu($secondary_menu);
           $active = 1;
           if(strpos($apps_menu, 'subnav-apps active')) {
             $active = 3;
