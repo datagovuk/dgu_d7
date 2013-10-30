@@ -1,3 +1,4 @@
+<?php global $user; ?>
 <div id="blackbar">
     <div class="container">
         <a class="brand" href="/" rel="home">
@@ -41,7 +42,13 @@
             </form>
           </div>
           <?php if ($logged_in): ?>
-            <?php print l('<i class="icon-user"></i>', 'admin/workbench', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
+            <span class="dropdown">
+              <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
+              <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
+                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s profile</a></li>
+                <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
+              </ul>
+            </span>
           <?php else: ?>
             <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php endif; ?>
@@ -60,7 +67,7 @@
         <li><a class="" href="/data/openspending-browse">OpenSpending</a></li>
         <li><a class="" href="/data/openspending-report/index">Spend Reports</a></li>
         <li><a class="" href="/data/site-usage">Site Analytics</a></li>
-        <?php global $user; ?>
+
         <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
           <span class="divider-section">Publisher tools:</span>
           <li><a class="btn btn-mini btn-info" href="/dataset/new">Add a Dataset</a></li>
