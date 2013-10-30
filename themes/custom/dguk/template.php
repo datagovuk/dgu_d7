@@ -539,6 +539,13 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
           $tid = $item['map'][$key]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
           $forum = taxonomy_term_load($tid);
           $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+          break;
+        default:
+          $alias = drupal_get_path_alias('node/' . $crumb['map'][$key]->nid);
+          $parts =  explode('/', $alias);
+          $parent_path =  $parts[0];
+          break;
+
       }
       //Set the current crumb to the page title
       $crumb['title'] = $title;
