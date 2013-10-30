@@ -474,7 +474,11 @@ function dguk_get_footer_menu() {
  * @see dguk/templates/html.tpl.php
  */
 function dguk_js_alter(&$js){
-  unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
+  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
 
   // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
   $current_path = current_path();
@@ -498,6 +502,56 @@ function dguk_js_alter(&$js){
   }
 }
 
+function dguk_menu_breadcrumb_alter(&$active_trail, $item){
+  $end = end($active_trail);
+  foreach ($active_trail as $key => $crumb){
+    if (!empty($crumb['path']) && $crumb['path'] == 'forum/%') {
+      //special processing for forum items
+      //Set the title and href and replace the current item with a link to forums
+      $crumb['title'] = 'Discussion Forum';
+      $crumb['href'] = 'forum';
+      $active_trail[$key] = $crumb;
+      //Set the title of the page to the current item's title which is appended to the crumbs link
+      drupal_set_title($crumb['map'][$key]->title);
+      //append an item to the active trail to prevent drupal from removing the last crumb
+      $active_trail[] = $end;
+    } elseif (!empty($crumb['link_path']) && $crumb['link_path'] == 'node/%'){
+      //special processing for nodes
+      $parent_path = '';
+      $title = drupal_get_title();
+      switch($item['map'][$key]->type){
+        case 'app':
+          $parent_path = 'apps';
+          break;
+        case 'blog':
+          $parent_path = 'blog';
+          break;
+        case 'resource':
+          $parent_path = 'library';
+          break;
+        case 'forum':
+          //forum items need a link to the parent forum
+          //Set the title and href and replace the current item with a link to forums
+          $crumb['title'] = 'Discussion Forum';
+          $parent_path = 'forum';
+          $active_trail[$key] = $crumb;
+
+          $tid = $item['map'][$key]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
+          $forum = taxonomy_term_load($tid);
+          $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+      }
+      //Set the current crumb to the page title
+      $crumb['title'] = $title;
+      $crumb['href'] = $parent_path;
+      $active_trail[$key] = $crumb;
+      //Set the page title to the node title
+      drupal_set_title($crumb['map'][$key]->title);
+      //append an item to the active trail to prevent drupal from removing the last crumb
+      $active_trail[] = $end;
+    }
+  }
+}
+
 /**
  * Implements theme_breadcrumb()
  * Return a themed breadcrumb trail.
@@ -508,19 +562,40 @@ function dguk_js_alter(&$js){
  */
 function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
-    $title = drupal_get_title();
     $crumbs = '<ul id="breadcrumbs">';
-    $a=1;
+    $a=0;
     foreach($variables['breadcrumb'] as $value) {
-      if ($a=1){
+      if ($a==0){
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
       }
       else {
-        $crumbs .= '<li>'. $value . '</li>';
-        $a++;
+        if ($value != '*:*'){
+          $crumbs .= '<li>'. $value . '</li>';
+        }
       }
+      $a++;
     }
-      $crumbs .= '<li>'.$title.'</li></ul>';
+    $title = drupal_get_title();
+    $crumbs .= '<li>' . $title . '</li>';
     return $crumbs;
    }
+}
+
+function dguk_preprocess_user_profile(&$variables) {
+  $avatar = array(
+      'style_name' => 'profile',
+      'path' => $user->field_avatar[0]['uri'],
+    );
+  $variables['profile_image'] = theme('image_style', $avatar);
+
+  $variables['first_name'] = $variables['field_first_name'][0]['safe_value'];
+  $variables['surname'] = $variables['field_surname'][0]['safe_value'];
+  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  $variables['member_for'] = $user_profile['summary']['member_for']['#markup'];
+  $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
+  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  $variables['linkedin_url'] = $variables['field_linkedin_url'][0]['url'];
+  $variables['linkedin'] = l($linkedin_url, $linkedin_url);
+  $variables['facebook_url'] = $variables['field_facebook_url'][0]['url'];
+  $variables['facebook'] = l($facebook_url, $facebook_url);
 }
