@@ -244,24 +244,6 @@ function dgu_blog_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: User: Avatar */
-  $handler->display->display_options['fields']['field_avatar']['id'] = 'field_avatar';
-  $handler->display->display_options['fields']['field_avatar']['table'] = 'field_data_field_avatar';
-  $handler->display->display_options['fields']['field_avatar']['field'] = 'field_avatar';
-  $handler->display->display_options['fields']['field_avatar']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_avatar']['label'] = '';
-  $handler->display->display_options['fields']['field_avatar']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_avatar']['settings'] = array(
-    'image_style' => 'avatar_small',
-    'image_link' => 'content',
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  $handler->display->display_options['fields']['field_avatar']['group_column'] = 'entity_id';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
