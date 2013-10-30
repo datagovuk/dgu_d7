@@ -146,7 +146,7 @@ function dgu_home_page_default_page_manager_pages() {
     $pane->panel = 'top';
     $pane->type = 'block';
     $pane->subtype = 'dgu_home_page-dgu_home_page_data_search';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,

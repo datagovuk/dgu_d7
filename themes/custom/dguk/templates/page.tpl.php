@@ -7,9 +7,29 @@
             </div>
             -->
         </a>
-        <div class="chevron position1"></div>
+
+        <?php
+          $apps_menu = dguk_get_apps_menu();
+          $interact_menu = dguk_get_interact_menu();
+          $active = 1;
+          if(strpos($apps_menu, 'subnav-apps active')) {
+            $active = 3;
+          }
+          if(strpos($interact_menu, 'subnav-interact active')) {
+            $active = 4;
+          }
+        ?>
+
+      <div class="chevron position<?php print $active;?>"></div>
         <nav id="dgu-nav">
-          <?php print dguk_get_main_menu($main_menu);?>
+          <?php //print dguk_get_main_menu($main_menu);?>
+
+          <a href="/" title="" class="trigger-subnav nav-home <?php if($active == 1) print 'active'; ?>">Home</a>
+          <a href="/data" class="trigger-subnav nav-data <?php if($active == 2) print 'active'; ?>">Data</a>
+          <a href="/apps" class="trigger-subnav nav-apps <?php if($active == 3) print 'active'; ?>">Apps</a>
+          <a href="/interact" class="trigger-subnav nav-interact <?php if($active == 4) print 'active'; ?>">Interact</a>
+
+
           <div class="nav-search" style="width: 200px;">
             <div class="input-group input-group-sm">
               <input type="text" class="form-control" />
@@ -28,7 +48,18 @@
 </div>
 <div id="greenbar" class="">
     <div class="container">
-      <?php print dguk_get_sub_menu() ?>
+      <ul class="subnav subnav-data">
+        <li><a class="active" href="/data/search">Datasets</a></li>
+        <li><a class="" href="/data/map-based-search">Map Search</a></li>
+        <li><a class="" href="/odug">Data Requests</a></li>
+        <li><a class="" href="/publisher">Publishers</a></li>
+        <li><a href="/organogram/cabinet-office">Public Roles &amp; Salaries</a></li>
+        <li><a class="" href="/data/openspending-browse">OpenSpending</a></li>
+        <li><a class="" href="/data/openspending-report/index">Spend Reports</a></li>
+        <li><a class="" href="/data/site-usage">Site Analytics</a></li>
+      </ul>
+      <?php print $apps_menu; ?>
+      <?php print $interact_menu; ?>
     </div>
 </div>
 <div id="pre-content">
