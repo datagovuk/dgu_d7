@@ -55,10 +55,22 @@
         <li><a class="" href="/data/map-based-search">Map Search</a></li>
         <li><a class="" href="/odug">Data Requests</a></li>
         <li><a class="" href="/publisher">Publishers</a></li>
+        <!--<li><a class="${'active' if c.environ.get('CKAN_CURRENT_URL').startswith('/data/tag') else ''}" href="${h.url(controller='ckanext.dgu.controllers.tag:TagController', action='index')}">Tags</a></li>-->
         <li><a href="/organogram/cabinet-office">Public Roles &amp; Salaries</a></li>
         <li><a class="" href="/data/openspending-browse">OpenSpending</a></li>
         <li><a class="" href="/data/openspending-report/index">Spend Reports</a></li>
         <li><a class="" href="/data/site-usage">Site Analytics</a></li>
+        <?php global $user; ?>
+        <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
+          <span class="divider-section">Publisher tools:</span>
+          <li><a class="btn btn-mini btn-info" href="/dataset/new">Add a Dataset</a></li>
+        <?php endif; ?>
+        <?php if ($user->uid == 1 || in_array('ckan adminstrator', array_values($user->roles))): ?>
+          <span class="divider-section">&nbsp; Sys Admin:</span>
+          <li><a class="" href="/data/system_dashboard">System Dashboard</a></li>
+          <li><a class="" href="/harvest">Harvest Sources</a></li>
+          <li><a class="" href="/data/feedback/moderation">Feedback moderation</a></li>
+        <?php endif; ?>
       </ul>
       <?php print $apps_menu; ?>
       <?php print $interact_menu; ?>
