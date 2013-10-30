@@ -119,6 +119,10 @@ function dgu_search_search_block($form, &$form_state) {
     '#type' => 'hidden',
     '#value' => $form_state['count'],
   );
+  $form['f'] = array(
+    '#type' => 'value',
+    '#value' => $form_state['f'],
+  );
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Search'));
   $form['#submit'] = array('dgu_search_form_search_block_form_submit');
@@ -133,23 +137,41 @@ function dgu_search_search_block($form, &$form_state) {
  */
 function dgu_search_form_search_block_form_submit($form, &$form_state) {
   $fv = $form_state['values'];
+  $form_state['values']['search_block_form'] = $fv['search_block_form'];
+  $form_state['values']['dgu_search_form'] = $fv['search_block_form'];
+  search_box_form_submit($form, $form_state);
 
-    $search_types = array(
-        'app' => t('Apps'),
-        'blog' => t('Blogs'),
-        'forum' => t('Forum Posts'),
-        'resource' => t('Library'),
-        'dataset_request'  => t('Dataset Requests'),
-    );
+  $search_types = array(
+      'app' => t('Apps'),
+      'blog' => t('Blogs'),
+      'forum' => t('Forum Posts'),
+      'resource' => t('Library'),
+      'dataset_request'  => t('Dataset Requests'),
+  );
 
-    if (isset($fv['search_block_form']) && isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
-        // Replace keys with their rawurlencoded value
-        $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
-
-        // Override redirect with a new bundle specific search.
-        global $base_url;
-        $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
+  if (isset($fv['search_block_form'])) {
+    $facets = '';
+    if (isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
+      $facets =  "?f[0]=bundle%3A" . $fv['searchtype'];
     }
+    if (!empty($fv['f'])) {
+      if (!empty($facets)){
+        $facets .= '&';
+      } else {
+        $facets = '?';
+      }
+      foreach($fv['f'] as $i => $facet){
+        $facets .= 'f[' . $i . ']=' . $facet . '&';
+      }
+    }
+
+    // Replace keys with their rawurlencoded value
+    $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+
+    // Override redirect with a new bundle specific search.
+    global $base_url;
+    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . $facets;
+  }
 }
 
 

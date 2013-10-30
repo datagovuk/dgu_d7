@@ -58,12 +58,14 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   if ($conf['content_type'] == 'all') {
     $form_state['content_type'] = "Documents";
     $form_state['searchtype'] = '';
-    $params['q'] = "*:*";
+    $params['fq'] = empty($_GET['f'])? array() : $_GET['f'];
+    $form_state['f'] = $params['fq'];
   } else {
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
-    $params['q'] = "bundle:".$conf['content_type'];
+    $params['fq'] = "bundle:".$conf['content_type'];
   }
+
   try {
     $query = new SolrBaseQuery('apachesolr', $solr, $params, '', '');
     list($final_query, $response) = apachesolr_do_query($query);
