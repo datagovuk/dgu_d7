@@ -178,24 +178,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => 0,
   );
-  // Exported menu link: menu-apps:node/add/app
-  $menu_links['menu-apps:node/add/app'] = array(
-    'menu_name' => 'menu-apps',
-    'link_path' => 'node/add/app',
-    'router_path' => 'node/add/app',
-    'link_title' => 'Add your app',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-  );
   // Exported menu link: menu-apps:search/everything/
   $menu_links['menu-apps:search/everything/'] = array(
     'menu_name' => 'menu-apps',
@@ -222,25 +204,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'menu_name' => 'menu-interact',
     'link_path' => 'blog',
     'router_path' => 'blog',
-    'link_title' => 'Blogs',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => -49,
-  );
-  // Exported menu link: menu-interact:forum
-  $menu_links['menu-interact:forum'] = array(
-    'menu_name' => 'menu-interact',
-    'link_path' => 'forum',
-    'router_path' => 'forum',
-    'link_title' => 'Forum',
+    'link_title' => 'All Blogs',
     'options' => array(
       'attributes' => array(
         'title' => '',
@@ -252,6 +216,24 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => -48,
+  );
+  // Exported menu link: menu-interact:forum
+  $menu_links['menu-interact:forum'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'forum',
+    'router_path' => 'forum',
+    'link_title' => 'All Forums',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -47,
   );
   // Exported menu link: menu-interact:library
   $menu_links['menu-interact:library'] = array(
@@ -269,7 +251,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => -46,
   );
   // Exported menu link: menu-interact:linked-data
   $menu_links['menu-interact:linked-data'] = array(
@@ -287,7 +269,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -46,
+    'weight' => -49,
   );
   // Exported menu link: menu-interact:location
   $menu_links['menu-interact:location'] = array(
@@ -305,29 +287,12 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -45,
-  );
-  // Exported menu link: menu-interact:odug
-  $menu_links['menu-interact:odug'] = array(
-    'menu_name' => 'menu-interact',
-    'link_path' => 'odug',
-    'router_path' => 'odug',
-    'link_title' => 'Data requests',
-    'options' => array(
-      'attributes' => array(
-        'title' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
     'weight' => -50,
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('Add your app');
+  t('All Blogs');
+  t('All Forums');
   t('Apps');
   t('Blogs');
   t('Browse Apps');
