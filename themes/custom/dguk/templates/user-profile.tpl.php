@@ -33,8 +33,6 @@
  *
  * @ingroup themeable
  */
-kpr($variables);
-kpr($user_profile);
 ?>
 <div class="profile clearfix"<?php print $attributes; ?>>
   <div class="avatar"><?php print render($user_profile['field_avatar']); ?></div>
