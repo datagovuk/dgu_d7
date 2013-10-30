@@ -40,7 +40,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -48,
+    'weight' => 3,
   );
   // Exported menu link: main-menu:blog
   $menu_links['main-menu:blog'] = array(
@@ -69,7 +69,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -49,
+    'weight' => 1,
   );
   // Exported menu link: main-menu:forum
   $menu_links['main-menu:forum'] = array(
@@ -98,7 +98,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 1,
     'expanded' => 0,
-    'weight' => -47,
+    'weight' => 0,
   );
   // Exported menu link: main-menu:library
   $menu_links['main-menu:library'] = array(
@@ -160,10 +160,177 @@ function dgu_site_feature_menu_default_menu_links() {
     'weight' => 2,
     'parent_path' => 'interact',
   );
+  // Exported menu link: menu-apps:apps
+  $menu_links['menu-apps:apps'] = array(
+    'menu_name' => 'menu-apps',
+    'link_path' => 'apps',
+    'router_path' => 'apps',
+    'link_title' => 'Browse Apps',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 0,
+  );
+  // Exported menu link: menu-apps:node/add/app
+  $menu_links['menu-apps:node/add/app'] = array(
+    'menu_name' => 'menu-apps',
+    'link_path' => 'node/add/app',
+    'router_path' => 'node/add/app',
+    'link_title' => 'Add your app',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 0,
+  );
+  // Exported menu link: menu-apps:search/everything/
+  $menu_links['menu-apps:search/everything/'] = array(
+    'menu_name' => 'menu-apps',
+    'link_path' => 'search/everything/',
+    'router_path' => 'search/everything',
+    'link_title' => 'Search apps',
+    'options' => array(
+      'query' => array(
+        'f[0]' => 'bundle:app',
+      ),
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 0,
+  );
+  // Exported menu link: menu-interact:blog
+  $menu_links['menu-interact:blog'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'blog',
+    'router_path' => 'blog',
+    'link_title' => 'Blogs',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -49,
+  );
+  // Exported menu link: menu-interact:forum
+  $menu_links['menu-interact:forum'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'forum',
+    'router_path' => 'forum',
+    'link_title' => 'Forum',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -48,
+  );
+  // Exported menu link: menu-interact:library
+  $menu_links['menu-interact:library'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'library',
+    'router_path' => 'library',
+    'link_title' => 'Library',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -47,
+  );
+  // Exported menu link: menu-interact:linked-data
+  $menu_links['menu-interact:linked-data'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'linked-data',
+    'router_path' => 'linked-data',
+    'link_title' => 'Linked Data',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -46,
+  );
+  // Exported menu link: menu-interact:location
+  $menu_links['menu-interact:location'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'location',
+    'router_path' => 'location',
+    'link_title' => 'Location',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -45,
+  );
+  // Exported menu link: menu-interact:odug
+  $menu_links['menu-interact:odug'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'odug',
+    'router_path' => 'odug',
+    'link_title' => 'Data requests',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -50,
+  );
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add your app');
   t('Apps');
   t('Blogs');
+  t('Browse Apps');
   t('Data');
   t('Data requests');
   t('Forum');
@@ -172,6 +339,7 @@ function dgu_site_feature_menu_default_menu_links() {
   t('Library');
   t('Linked Data');
   t('Location');
+  t('Search apps');
 
 
   return $menu_links;

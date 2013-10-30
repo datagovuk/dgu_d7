@@ -233,28 +233,114 @@ function dguk_css_alter(&$css) {
 }
 
 
-/**
- * Get the output for the main menu.
- */
-function dguk_get_main_menu($main_menu) {
-	return theme('links__main_menu', array('links' => $main_menu));
-}
+///**
+// * Get the output for the main menu.
+// */
+//function dguk_get_main_menu($main_menu2) {
+//
+//  $x = menu_tree_page_data('main-menu', 2);
+//
+//  //TODO add access control or check why menu_build_tree() remove the links
+//  $menu = _menu_build_tree('main-menu');
+//  $main_menu = array();
+//
+//  $active_path = menu_tree_get_path($menu_name);
+//  $active_link = menu_link_get_preferred($active_path, $menu_name);
+//  $router_item = menu_get_item();
+//
+//  $active_trail = array();
+//  if (isset($active_link['menu_name']) && $active_link['menu_name'] == 'main-menu') {
+//    // Check 4 level deep.
+//    for ($i = 1; $i < 5; $i++) {
+//      if ($active_link['p' . $i]) {
+//        $active_trail[] = (int)$active_link['p' . $i];
+//      }
+//    }
+//  }
+//
+//
+//  foreach ($menu['tree'] as $item) {
+//    if (!$item['link']['hidden']) {
+//      $class = '';
+//      $l = $item['link']['localized_options'];
+//      $l['href'] = $item['link']['link_path'];
+//      $l['title'] = $item['link']['title'];
+//      if (in_array($item['link']['mlid'], $active_trail)) {
+//        $class = ' active-trail';
+//        $l['attributes']['class'][] = 'active-trail';
+//      }
+//      if ($item['link']['href'] == $router_item['tab_root_href'] && $item['link']['href'] != $_GET['q']) {
+//        $l['attributes']['class'][] = 'active';
+//      }
+//      // Keyed with the unique mlid to generate classes in theme_links().
+//      $main_menu['menu-' . $item['link']['mlid'] . $class] = $l;
+//    }
+//  }
+//
+//  $v = $main_menu['menu-770 active-trail'];
+//
+//	return theme('links__main_menu', array('links' => $main_menu));
+//}
+//
+///**
+// * Get the output for the sub menu (2nd level of main menu).
+// */
+//function dguk_get_sub_menu() {
+//	$menu = menu_navigation_links('main-menu', 1);
+//
+//	return theme('links__sub_menu', array(
+//	    'links' => $menu,
+//	    'attributes' => array(
+//	        'id' => 'subnav',
+//	    ),
+//	 ));
+// }
 
 /**
- * Get the output for the sub menu (2nd level of main menu).
+ * Get the output for Apps menu.
  */
-function dguk_get_sub_menu() {
-	$menu = menu_navigation_links('main-menu', 1);
+function dguk_get_apps_menu() {
+	$menu = menu_navigation_links('menu-apps');
+  $classes = array('subnav', 'subnav-apps');
 
-	return theme('links__sub_menu', array(
+  foreach ($menu as $menu_item) {
+    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+      $classes[] = 'active';
+    }
+  }
+
+	$menu_output = theme('links__menu-apps', array(
 	    'links' => $menu,
 	    'attributes' => array(
-	        'id' => 'subnav',
+	        'class' => $classes,
 	    ),
 	 ));
+
+	return $menu_output;
  }
 
+/**
+ * Get the output for Apps menu.
+ */
+function dguk_get_interact_menu() {
+	$menu = menu_navigation_links('menu-interact');
+  $classes = array('subnav', 'subnav-interact');
 
+  foreach ($menu as $menu_item) {
+    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+      $classes[] = 'active';
+    }
+  }
+
+	$menu_output = theme('links__menu-interact', array(
+	    'links' => $menu,
+	    'attributes' => array(
+	        'class' => $classes,
+	    ),
+	 ));
+
+	return $menu_output;
+ }
 
 /**
  * Get the output for the footer menu.
@@ -273,109 +359,116 @@ function dguk_get_footer_menu() {
  }
 
 
-/**
- * Returns HTML for main mnavigation links.
- */
-function dguk_links__main_menu($variables) {
-  $links = $variables['links'];
-  global $language_url;
-  $output = '';
+///**
+// * Returns HTML for main mnavigation links.
+// */
+//function dguk_links__main_menu($variables) {
+//
+//  $v = $variables['links']['menu-770 active-trail'];
+//
+//  $links = $variables['links'];
+//  global $language_url;
+//  $output = '';
+//
+//  if (count($links) > 0) {
+//    foreach ($links as $link) {
+//      if (!isset($link['attributes']['class'])) {
+//        $link['attributes']['class'] = array();
+//      }
+//      $link['attributes']['class'][] = 'trigger-subnav';
+//      $link['attributes']['class'][] = 'nav-' . strtolower(str_replace(' ', '-', $link['title']));
+//
+//      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
+//          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
+//        $link['attributes']['class'][] = 'active';
+//      }
+//
+//      if (isset($link['href'])) {
+//        // Pass in $link as $options, they share the same keys.
+//        $output .= l($link['title'], $link['href'], $link);
+//      }
+//
+//      elseif (!empty($link['title'])) {
+//        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
+//        if (empty($link['html'])) {
+//          $link['title'] = check_plain($link['title']);
+//        }
+//        $span_attributes = '';
+//        if (isset($link['attributes'])) {
+//          $span_attributes = drupal_attributes($link['attributes']);
+//        }
+//        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
+//      }
+//
+//    }
+//  }
+//
+//  return $output;
+//}
 
-  if (count($links) > 0) {
-    foreach ($links as $link) {
-      if (!isset($link['attributes']['class'])) {
-        $link['attributes']['class'] = array();
-      }
-      $link['attributes']['class'] = array('trigger-subnav' ,'nav-' . strtolower(str_replace(' ', '-', $link['title'])));
 
-      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
-          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
-        $link['attributes']['class'][] = 'active';
-      }
+///**
+// * Returns HTML for sub mnavigation links.
+// */
+//function dguk_links__sub_menu($variables) {
+//  $links = $variables['links'];
+//  $attributes = $variables['attributes'];
+//  $output = '';
+//
+//  if (count($links) > 0) {
+//    $output .= '<ul' . drupal_attributes($attributes) . '>';
+//
+//    $num_links = count($links);
+//    $i = 1;
+//
+//    foreach ($links as $key => $link) {
+//      $class = array($key);
+//
+//      // Add first, last and active classes to the list of links to help out themers.
+//      if ($i == 1) {
+//        $class[] = 'first';
+//      }
+//      if ($i == $num_links) {
+//        $class[] = 'last';
+//      }
+//      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
+//          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
+//        $class[] = 'active';
+//      }
+//      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
+//
+//      if (isset($link['href'])) {
+//        // Pass in $link as $options, they share the same keys.
+//        $output .= l($link['title'], $link['href'], $link);
+//      }
+//      elseif (!empty($link['title'])) {
+//        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
+//        if (empty($link['html'])) {
+//          $link['title'] = check_plain($link['title']);
+//        }
+//        $span_attributes = '';
+//        if (isset($link['attributes'])) {
+//          $span_attributes = drupal_attributes($link['attributes']);
+//        }
+//        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
+//      }
+//
+//      $i++;
+//      $output .= "</li>\n";
+//
+//      if ($i <= $num_links) {
+//        $output .= "<span class=\"divider\">&nbsp;|&nbsp;</span>\n";
+//      }
+//    }
+//
+//    $output .= '</ul>';
+//  }
+//
+//  return $output;
+//}
 
-      if (isset($link['href'])) {
-        // Pass in $link as $options, they share the same keys.
-        $output .= l($link['title'], $link['href'], $link);
-      }
-
-      elseif (!empty($link['title'])) {
-        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
-        if (empty($link['html'])) {
-          $link['title'] = check_plain($link['title']);
-        }
-        $span_attributes = '';
-        if (isset($link['attributes'])) {
-          $span_attributes = drupal_attributes($link['attributes']);
-        }
-        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
-      }
-
-    }
-  }
-
-  return $output;
-}
 
 
-/**
- * Returns HTML for sub mnavigation links.
- */
-function dguk_links__sub_menu($variables) {
-  $links = $variables['links'];
-  $attributes = $variables['attributes'];
-  $output = '';
-
-  if (count($links) > 0) {
-    $output .= '<ul' . drupal_attributes($attributes) . '>';
-
-    $num_links = count($links);
-    $i = 1;
-
-    foreach ($links as $key => $link) {
-      $class = array($key);
-
-      // Add first, last and active classes to the list of links to help out themers.
-      if ($i == 1) {
-        $class[] = 'first';
-      }
-      if ($i == $num_links) {
-        $class[] = 'last';
-      }
-      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
-          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
-        $class[] = 'active';
-      }
-      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
-
-      if (isset($link['href'])) {
-        // Pass in $link as $options, they share the same keys.
-        $output .= l($link['title'], $link['href'], $link);
-      }
-      elseif (!empty($link['title'])) {
-        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
-        if (empty($link['html'])) {
-          $link['title'] = check_plain($link['title']);
-        }
-        $span_attributes = '';
-        if (isset($link['attributes'])) {
-          $span_attributes = drupal_attributes($link['attributes']);
-        }
-        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
-      }
-
-      $i++;
-      $output .= "</li>\n";
-
-      if ($i <= $num_links) {
-        $output .= "<span class=\"divider\">&nbsp;|&nbsp;</span>\n";
-      }
-    }
-
-    $output .= '</ul>';
-  }
-
-  return $output;
-}
 /**
  * Remove jquery and bootstrap.
  * @see dguk/templates/html.tpl.php
