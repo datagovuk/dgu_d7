@@ -33,10 +33,11 @@
  *
  * @ingroup themeable
  */
+kpr($variables);
+kpr($user_profile);
 ?>
 <div class="profile clearfix"<?php print $attributes; ?>>
-  <div class="avatar"><?php print $profile_image; ?>
-  </div>
+  <div class="avatar"><?php print render($user_profile['field_avatar']); ?></div>
   <div class="col-md-8 col-md-offset-2">
       <dl class="clearfix">
         <dt><?php print t('First name'); ?></dt>
@@ -54,12 +55,12 @@
     <?php endif; ?>
       <dl class="clearfix">
         <dt><?php print t('History'); ?></dt>
-        <dd><?php print t('Member for ' . $member_for . ''); ?></dd>
+        <dd><?php print t('Member for ') . render($user_profile['summary']['member_for']['#markup']); ?></dd>
       </dl>
     <?php if($twitter): ?>
       <dl class="clearfix">
         <dt><?php print t('Twitter'); ?></dt>
-        <dd>&#64;<?php print $twitter; ?></dd>
+        <dd><?php print l('@' . $twitter, 'http://twitter.com/' . $twitter); ?></dd>
       </dl>
     <?php endif; ?>
     <?php if($job_title): ?>
@@ -71,13 +72,13 @@
     <?php if($linkedin): ?>
       <dl class="clearfix">
         <dt><?php print t('LinkedIn'); ?></dt>
-        <dd><?php print $linkedin; ?></dd>
+        <dd><?php print l($linkedin, $linkedin); ?></dd>
       </dl>
     <?php endif; ?>
     <?php if($facebook): ?>
       <dl class="clearfix">
         <dt><?php print t('Facebook'); ?></dt>
-        <dd><?php print $facebook; ?></dd>
+        <dd><?php print l($facebook, $facebook); ?></dd>
       </dl>
     <?php endif; ?>
   </div>
