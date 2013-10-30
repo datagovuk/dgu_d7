@@ -18,6 +18,7 @@
           <input type="hidden" name="submit" value="search">
           </form>
         </div>
+        <span class="search-all-label">Click search now to see all content in this category</span>
       </div>
     </div>
     <div class="right">
