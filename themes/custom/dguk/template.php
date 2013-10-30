@@ -548,7 +548,7 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
 
       }
       //Set the current crumb to the page title
-      $crumb['title'] = $title;
+      $crumb['title'] = htmlspecialchars_decode($title);
       $crumb['href'] = $parent_path;
       $active_trail[$key] = $crumb;
       //Set the page title to the node title
