@@ -66,12 +66,12 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   if ($conf['content_type'] == 'all') {
     $form_state['content_type'] = "Documents";
     $form_state['searchtype'] = '';
-    $params['fq'] = empty($_GET['f'])? array() : $_GET['f'];
+    $search['fq'] = empty($_GET['f'])? array() : $_GET['f'];
     $form_state['f'] = $params['fq'];
   } else {
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
-    $params['fq'] = "bundle:".$conf['content_type'];
+    $search['fq'] = "bundle:".$conf['content_type'];
   }
 
   $menu_item = menu_get_item();
