@@ -37,6 +37,21 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   $block->delta   = 'dgu_search_form';
   $block->title   = '';
 
+
+  $search = array(
+    'rows' => 0,
+    'qt' => 'standard',
+    'start' => 0,
+    'keys' => '',
+    'filters' => isset($_GET['filters']) ? $_GET['filters'] : '',
+    'sort' => isset($_GET['solrsort']) ? $_GET['solrsort'] : '',
+  );
+
+  // Use keywords from the selected context if set to do so.
+  if (!empty($context) && !empty($context->data)) {
+    $search['keys'] = $context->data;
+  }
+
   $search_types = array(
     'app' => t('Apps'),
     'blog' => t('Blogs'),
@@ -47,26 +62,38 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 
 
   $form_state = array();
-  //do a solr search
-  $solr = apachesolr_get_solr(variable_get('apachesolr_default_environment', 'solr'));
 
-  $params = array(
-    'rows' => 0,
-    'qt' => 'standard',
-    'start' => 0,
-  );
   if ($conf['content_type'] == 'all') {
     $form_state['content_type'] = "Documents";
     $form_state['searchtype'] = '';
-    $params['q'] = "*:*";
+    $params['fq'] = empty($_GET['f'])? array() : $_GET['f'];
+    $form_state['f'] = $params['fq'];
   } else {
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
-    $params['q'] = "bundle:".$conf['content_type'];
+    $params['fq'] = "bundle:".$conf['content_type'];
   }
+
+  $menu_item = menu_get_item();
+  $search['path'] = $menu_item['href'];
+  $search['page'] = pager_find_page();
+  $search['rows'] = isset($conf['rows']) ? $conf['rows'] : 10;
+  $search['env_id'] = isset($conf['env_id']) ? $conf['env_id'] : '';
+
   try {
-    $query = new SolrBaseQuery('apachesolr', $solr, $params, '', '');
+
+    $solr = apachesolr_get_solr($search['env_id']);
+    $name = 'apachesolr';
+    $params = array_filter(array('q' => $search['keys'], 'fq' => $search['filters'], 'rows' => $search['rows']));
+    $solrsort =  $search['sort'];
+    $base_path = $search['path'];
+
+    $query = apachesolr_drupal_query($name, $params, $solrsort, $base_path, $solr, $context);
+
     list($final_query, $response) = apachesolr_do_query($query);
+    $env_id = $query->solr('getId');
+    apachesolr_has_searched($env_id, TRUE);
+
     if (isset($response->code) && ($response->code == 200) && isset($response->response->numFound)) {
       $form_state['count'] = $response->response->numFound;
     }
