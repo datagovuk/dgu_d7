@@ -67,36 +67,20 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $form_state['content_type'] = "Documents";
     $form_state['searchtype'] = '';
     $search['filters'] = empty($_GET['f'])? array() : $_GET['f'];
-    $form_state['f'] = $search['filters'];
+    $form_state['f'] = $params['fq'];
   } else {
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
-    $search['filters']= "bundle:".$conf['content_type'];
+    $search['filters'] = "bundle:".$conf['content_type'];
   }
 
-  $env_id = variable_get('apachesolr_default_environment', 'solr');
   $menu_item = menu_get_item();
   $search['path'] = $menu_item['href'];
   $search['page'] = pager_find_page();
   $search['rows'] = isset($conf['rows']) ? $conf['rows'] : 10;
-  $search['env_id'] = isset($conf['env_id']) ? $conf['env_id'] : $env_id;
+  $search['env_id'] = isset($conf['env_id']) ? $conf['env_id'] : '';
 
   try {
-
-    if (apachesolr_has_searched($env_id)) {
-      $query = apachesolr_current_query($env_id);
-      $fq = $query->getParam('fq');
-      foreach ($fq as $string){
-        $name = '';
-        if (strstr($string, ':')) {
-          list($name, $value) = explode(":", $string, 2);
-        }
-        if ($name == 'bundle'){
-          $form_state['content_type'] = $search_types[$value];
-          $form_state['searchtype'] = $value;
-        }
-      }
-    }
 
     $solr = apachesolr_get_solr($search['env_id']);
     $name = 'apachesolr';

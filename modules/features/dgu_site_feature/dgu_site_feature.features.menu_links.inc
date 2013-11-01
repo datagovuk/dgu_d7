@@ -55,7 +55,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 3,
-    'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:data
   $menu_links['main-menu:data'] = array(
@@ -84,21 +83,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 4,
-    'parent_path' => 'interact',
-  );
-  // Exported menu link: main-menu:interact
-  $menu_links['main-menu:interact'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'interact',
-    'router_path' => 'interact',
-    'link_title' => 'Interact',
-    'options' => array(),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 1,
-    'expanded' => 0,
-    'weight' => 0,
   );
   // Exported menu link: main-menu:library
   $menu_links['main-menu:library'] = array(
@@ -113,7 +97,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 5,
-    'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:linked-data
   $menu_links['main-menu:linked-data'] = array(
@@ -128,7 +111,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 7,
-    'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:location
   $menu_links['main-menu:location'] = array(
@@ -143,7 +125,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 6,
-    'parent_path' => 'interact',
   );
   // Exported menu link: main-menu:odug
   $menu_links['main-menu:odug'] = array(
@@ -158,7 +139,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'has_children' => 0,
     'expanded' => 0,
     'weight' => 2,
-    'parent_path' => 'interact',
   );
   // Exported menu link: menu-apps:apps
   $menu_links['menu-apps:apps'] = array(
@@ -300,7 +280,6 @@ function dgu_site_feature_menu_default_menu_links() {
   t('Data requests');
   t('Forum');
   t('Home');
-  t('Interact');
   t('Library');
   t('Linked Data');
   t('Location');

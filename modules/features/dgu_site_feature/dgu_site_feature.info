@@ -60,7 +60,6 @@ features[menu_links][] = main-menu:apps
 features[menu_links][] = main-menu:blog
 features[menu_links][] = main-menu:data
 features[menu_links][] = main-menu:forum
-features[menu_links][] = main-menu:interact
 features[menu_links][] = main-menu:library
 features[menu_links][] = main-menu:linked-data
 features[menu_links][] = main-menu:location

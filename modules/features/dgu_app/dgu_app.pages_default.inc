@@ -132,9 +132,9 @@ function dgu_app_default_page_manager_pages() {
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'normal',
+    'type' => 'none',
     'title' => 'Apps',
-    'name' => 'main-menu',
+    'name' => 'menu-apps',
     'weight' => '3',
     'parent' => array(
       'type' => 'none',
@@ -282,7 +282,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->pid = 'new-4';
     $pane->panel = 'top_left';
     $pane->type = 'fieldable_panels_pane';
-    $pane->subtype = 'fpid:1';
+    $pane->subtype = 'fpid:7';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -302,7 +302,7 @@ function dgu_app_default_page_manager_pages() {
     $pane->pid = 'new-5';
     $pane->panel = 'top_middle';
     $pane->type = 'fieldable_panels_pane';
-    $pane->subtype = 'fpid:2';
+    $pane->subtype = 'fpid:8';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -318,6 +318,26 @@ function dgu_app_default_page_manager_pages() {
     $pane->locks = array();
     $display->content['new-5'] = $pane;
     $display->panels['top_middle'][0] = 'new-5';
+    $pane = new stdClass();
+    $pane->pid = 'new-6';
+    $pane->panel = 'top_right';
+    $pane->type = 'fieldable_panels_pane';
+    $pane->subtype = 'fpid:9';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'view_mode' => 'full',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['top_right'][0] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;

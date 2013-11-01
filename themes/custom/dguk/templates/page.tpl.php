@@ -45,7 +45,7 @@
             <span class="dropdown">
               <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
-                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s profile</a></li>
+                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s workbench</a></li>
                 <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
               </ul>
             </span>
