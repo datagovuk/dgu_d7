@@ -14,7 +14,7 @@ function dgu_site_feature_field_default_field_instances() {
   $field_instances['fieldable_panels_pane-tile_big-field_image_tile_big'] = array(
     'bundle' => 'tile_big',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Image will be cropped to 370x370px, which are also the minimum size requirements',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -42,8 +42,8 @@ function dgu_site_feature_field_default_field_instances() {
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '150 KB',
-      'max_resolution' => '370x500',
-      'min_resolution' => '370x500',
+      'max_resolution' => '',
+      'min_resolution' => '370x370',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -117,7 +117,7 @@ function dgu_site_feature_field_default_field_instances() {
   $field_instances['fieldable_panels_pane-tile_small-field_image_tile_small'] = array(
     'bundle' => 'tile_small',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'Image will be cropped to 120x120px, which are also the minimum size requirements',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -140,13 +140,13 @@ function dgu_site_feature_field_default_field_instances() {
     'label' => 'Image',
     'required' => 1,
     'settings' => array(
-      'alt_field' => 0,
+      'alt_field' => 1,
       'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '50 KB',
-      'max_resolution' => '370x120',
-      'min_resolution' => '370x120',
+      'max_resolution' => '',
+      'min_resolution' => '120x120',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -615,6 +615,8 @@ function dgu_site_feature_field_default_field_instances() {
   t('Category');
   t('File Attachments');
   t('Image');
+  t('Image will be cropped to 120x120px, which are also the minimum size requirements');
+  t('Image will be cropped to 370x370px, which are also the minimum size requirements');
   t('Link');
   t('Sector');
   t('Tags');
