@@ -396,18 +396,18 @@ function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
     $crumbs = '<ul id="breadcrumbs">';
     $a=0;
+    $title = drupal_get_title();
     foreach($variables['breadcrumb'] as $value) {
       if ($a==0){
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
       }
       else {
-        if ($value != '*:*'){
+        if ($value != '*:*' && $title != 'Library'){
           $crumbs .= '<li>'. $value . '</li>';
         }
       }
       $a++;
     }
-    $title = drupal_get_title();
     $crumbs .= '<li>' . $title . '</li>';
     return $crumbs;
    }
