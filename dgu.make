@@ -190,6 +190,7 @@ projects[jquery_update][subdir] = "contrib"
 
 ; Themes
 ; --------
+projects[bootstrap][type] = "theme"
 projects[bootstrap][subdir] = "contrib"
 projects[bootstrap][version] = "3.0-rc2"
 
