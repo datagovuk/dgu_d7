@@ -185,6 +185,9 @@ projects[google_analytics][subdir] = "contrib"
 projects[views_bulk_operations][subdir] = "contrib"
 projects[advuser][subdir] = "contrib"
 
+projects[jquery_update][version] = "2.3"
+projects[jquery_update][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][subdir] = "contrib"
