@@ -24,6 +24,7 @@ dependencies[] = panels_mini
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
+dependencies[] = jquery_update
 features[context][] = about_active_menu
 features[ctools][] = context:context:3
 features[ctools][] = page_manager:pages_default:1
