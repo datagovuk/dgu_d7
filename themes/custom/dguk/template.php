@@ -326,6 +326,9 @@ function dguk_js_alter(&$js){
 //    unset($js['misc/jquery.js']);
 //  }
   unset($js['misc/jquery.js']);
+  unset($js['profiles/dgu/modules/contrib/jquery_update/replace/jquery/1.8/jquery.min.js']);
+
+
 
 }
 
