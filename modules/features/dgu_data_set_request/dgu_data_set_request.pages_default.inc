@@ -196,6 +196,43 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'left';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'edit any dataset_request content',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => '',
+      'title' => 'Data request administration',
+      'body' => '<a href="/admin/all_data_requests">Browse data requests</a>
+<br />
+<a href="/admin/all_data_requests/csv">Download data requests</a>',
+      'format' => 'unfiltered',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-1'] = $pane;
+    $display->panels['left'][0] = 'new-1';
+    $pane = new stdClass();
+    $pane->pid = 'new-2';
+    $pane->panel = 'left';
     $pane->type = 'views';
     $pane->subtype = 'dataset_requests';
     $pane->shown = TRUE;
@@ -222,12 +259,12 @@ function dgu_data_set_request_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['left'][0] = 'new-1';
+    $display->content['new-2'] = $pane;
+    $display->panels['left'][1] = 'new-2';
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-3';
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -236,22 +273,21 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'ODUG Members',
-      'body' => '<a href="/users/robert_barr">Robert Barr</a>
-<a href="/users/jcampbell">Jennie Campbell</a>
-<a href="/users/mcory">Mick Cory</a>
-<a href="/users/shitchcock">Sarah Hitchcock</a>
-<a href="/users/dlazanski">Dominique Lazanski</a>
-<a href="/users/amackenzie">Andrew Mackenzie</a>
-<a href="/users/pmalyon">Paul Malyon</a>
-<a href="/users/croyles">Christopher Royles</a>
-<a href="/users/hsavory">Heather Savory</a>
-<a href="/users/gschimd">Gesche Schmid</a>
-<a href="/users/jacqui-taylor">Jacqui Taylor</a>
-<a href="/users/rtaylor">Roger Taylor</a>
-<a href="/users/jenit">Jeni Tennison</a>
-<a href="/users/atickell">Adam Tickell</a>
-',
-      'format' => 'filtered_html',
+      'body' => '<a href="/users/dlazanski">Dominique Lazanski</a><br/>
+<a href="/users/gschimd">Gesche Schmid</a><br/>
+<a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
+<a href="/users/charlieboundy">Charlie Boundy</a><br/>
+<a href="/users/alex-kafetz">Alex Kafetz</a><br/>
+Duncan Ross<br/>
+<a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
+<a href="/users/tomsmith">Tom Smith</a><br/>
+Carlos Somohano<br/>
+Paul Fenton<br/>
+<a href="/users/hsavory">Heather Savory</a><br/>
+<a href="/users/pmalyon">Paul Malyon</a><br/>
+<a href="/users/jenit">Jeni Tennison</a><br/>
+<a href="/users/harveylewis">Harvey Lewis</a><br/>',
+      'format' => 'unfiltered',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -260,12 +296,12 @@ function dgu_data_set_request_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['left'][1] = 'new-2';
+    $display->content['new-3'] = $pane;
+    $display->panels['left'][2] = 'new-3';
     $pane = new stdClass();
-    $pane->pid = 'new-3';
+    $pane->pid = 'new-4';
     $pane->panel = 'middle';
     $pane->type = 'views';
     $pane->subtype = 'blogs';
@@ -295,10 +331,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['middle'][0] = 'new-3';
+    $display->content['new-4'] = $pane;
+    $display->panels['middle'][0] = 'new-4';
     $pane = new stdClass();
-    $pane->pid = 'new-4';
+    $pane->pid = 'new-5';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -319,10 +355,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['middle'][1] = 'new-4';
+    $display->content['new-5'] = $pane;
+    $display->panels['middle'][1] = 'new-5';
     $pane = new stdClass();
-    $pane->pid = 'new-5';
+    $pane->pid = 'new-6';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -346,10 +382,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['middle'][2] = 'new-5';
+    $display->content['new-6'] = $pane;
+    $display->panels['middle'][2] = 'new-6';
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-7';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -381,10 +417,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['right'][0] = 'new-6';
+    $display->content['new-7'] = $pane;
+    $display->panels['right'][0] = 'new-7';
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-8';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -418,10 +454,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['right'][1] = 'new-7';
+    $display->content['new-8'] = $pane;
+    $display->panels['right'][1] = 'new-8';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-9';
     $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'minutes';
@@ -451,10 +487,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][2] = 'new-8';
+    $display->content['new-9'] = $pane;
+    $display->panels['right'][2] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-10';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -475,10 +511,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['right'][3] = 'new-9';
+    $display->content['new-10'] = $pane;
+    $display->panels['right'][3] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-11';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -499,10 +535,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['top'][0] = 'new-10';
+    $display->content['new-11'] = $pane;
+    $display->panels['top'][0] = 'new-11';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-6';
+  $display->title_pane = 'new-7';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data_requests'] = $page;

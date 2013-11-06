@@ -259,7 +259,7 @@ function dguk_get_apps_menu($menu) {
  * Get the output for Apps menu.
  */
 function dguk_get_interact_menu($menu) {
-	//$menu = menu_navigation_links('menu-interact');
+  //$menu = menu_navigation_links('menu-interact');
   $classes = array('subnav', 'subnav-interact');
 
   foreach ($menu as $menu_item) {
@@ -299,32 +299,37 @@ function dguk_get_footer_menu() {
  * @see dguk/templates/html.tpl.php
  */
 function dguk_js_alter(&$js){
-  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
-  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
-  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
-  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
-  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
+//
+//  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
+//  $current_path = current_path();
+//  $paths_to_avoid = array(
+//      '^admin\/',
+//      '^node\/add\/',
+//      '^node\/\d*\/edit',
+//      '^user\/\d*\/edit',
+//    );
+//
+//  $keep_jquery = FALSE;
+//  foreach ($paths_to_avoid as $path_to_avoid) {
+//    if(preg_match("/$path_to_avoid/", $current_path)) {
+//      $keep_jquery = TRUE;
+//      break;
+//    }
+//  }
+//
+//  if (!$keep_jquery) {
+//    unset($js['misc/jquery.js']);
+//  }
+  unset($js['misc/jquery.js']);
+  unset($js['profiles/dgu/modules/contrib/jquery_update/replace/jquery/1.8/jquery.min.js']);
 
-  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
-  $current_path = current_path();
-  $paths_to_avoid = array(
-      '^admin\/',
-      '^node\/add\/',
-      '^node\/\d*\/edit',
-      '^user\/\d*\/edit',
-    );
 
-  $keep_jquery = FALSE;
-  foreach ($paths_to_avoid as $path_to_avoid) {
-    if(preg_match("/$path_to_avoid/", $current_path)) {
-      $keep_jquery = TRUE;
-      break;
-    }
-  }
 
-  if (!$keep_jquery) {
-    unset($js['misc/jquery.js']);
-  }
 }
 
 function dguk_menu_breadcrumb_alter(&$active_trail, $item){
