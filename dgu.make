@@ -38,7 +38,7 @@ projects[token][subdir] = "contrib"
 projects[pathauto][version] = "1.2"
 projects[pathauto][subdir] = "contrib"
 # Prevent losing manual aliases with node_save() calls https://drupal.org/node/936222
-projects[pathauto][patch][] = "https://drupal.org/files/pathauto-persist-936222-130-pathauto-state.patch"
+projects[pathauto][patch][] = "http://drupal.org/files/pathauto-persist-936222-130-pathauto-state.patch"
 
 projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
@@ -80,7 +80,7 @@ projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][branch] = "7.x-1.x"
 projects[reply][subdir] = "contrib"
-projects[reply][patch][] = "https://drupal.org/files/issues/reply-use_hook_menu_breadcrumb_alter-2128203.patch"
+projects[reply][patch][] = "http://drupal.org/files/issues/reply-use_hook_menu_breadcrumb_alter-2128203.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
