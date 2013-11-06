@@ -140,7 +140,11 @@ projects[workbench_media][subdir] = "contrib"
 projects[field_group][version] = "1.1"
 projects[field_group][subdir] = "contrib"
 
-projects[conditional_fields][version] = "3.x-dev"
+projects[conditional_fields][type] = "module"
+projects[conditional_fields][download][type] = "git"
+projects[conditional_fields][download][url] = "http://git.drupal.org/project/conditional_fields.git"
+projects[conditional_fields][download][revision] = "cd29b003a592d375f3fdb4c46f5639d0f26ed0be"
+projects[conditional_fields][patch][] = "http://drupal.org/files/issues/conditional_fields-jquery_update_1.7_states_incompatible-1815896.patch"
 projects[conditional_fields][subdir] = "contrib"
 
 projects[logintoboggan][version] = "1.3"
