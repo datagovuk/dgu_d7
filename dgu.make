@@ -80,6 +80,7 @@ projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][branch] = "7.x-1.x"
 projects[reply][subdir] = "contrib"
+projects[reply][patch][] = "https://drupal.org/files/issues/reply-use_hook_menu_breadcrumb_alter-2128203.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"

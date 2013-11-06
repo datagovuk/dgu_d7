@@ -369,15 +369,42 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
           $tid = $item['map'][$key]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
           $forum = taxonomy_term_load($tid);
           $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+          break;
+        default:
+          $alias = drupal_get_path_alias('node/' . $crumb['map'][$key]->nid);
+          $parts =  explode('/', $alias);
+          $parent_path =  $parts[0];
+          break;
+
       }
       //Set the current crumb to the page title
-      $crumb['title'] = $title;
+      $crumb['title'] = htmlspecialchars_decode($title);
       $crumb['href'] = $parent_path;
       $active_trail[$key] = $crumb;
       //Set the page title to the node title
       drupal_set_title($crumb['map'][$key]->title);
       //append an item to the active trail to prevent drupal from removing the last crumb
       $active_trail[] = $end;
+    }  elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
+      $instance_id = $item['page_arguments'][1];
+      $instance = reply_load_instance($instance_id);
+      $entity_type = $instance->entity_type;
+      $entity = entity_load($entity_type, array($item['page_arguments'][0]));
+      $entity = reset($entity);
+      $alias = drupal_get_path_alias($entity_type . '/' . $entity->nid);
+      $parts =  explode('/', $alias);
+
+      //set the parent path
+      $parent_path =  $parts[0];
+      $parent_menu = menu_get_item($parent_path);
+      $crumb['title'] = htmlspecialchars_decode($parent_menu['title']);
+      $crumb['href'] = $parent_path;
+      $active_trail[$key] = $crumb;
+
+      //Set the current crumb to the page title
+      $crumb['title'] = htmlspecialchars_decode($entity->title);
+      $crumb['href'] = $alias;
+      $active_trail[] = $crumb;
     }
   }
 }
@@ -394,38 +421,29 @@ function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
     $crumbs = '<ul id="breadcrumbs">';
     $a=0;
+    $title = drupal_get_title();
     foreach($variables['breadcrumb'] as $value) {
       if ($a==0){
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
       }
       else {
-        if ($value != '*:*'){
+        if ($value != '*:*' && $title != 'Library'){
           $crumbs .= '<li>'. $value . '</li>';
         }
       }
       $a++;
     }
-    $title = drupal_get_title();
     $crumbs .= '<li>' . $title . '</li>';
     return $crumbs;
    }
 }
 
 function dguk_preprocess_user_profile(&$variables) {
-  $avatar = array(
-      'style_name' => 'profile',
-      'path' => $user->field_avatar[0]['uri'],
-    );
-  $variables['profile_image'] = theme('image_style', $avatar);
-
   $variables['first_name'] = $variables['field_first_name'][0]['safe_value'];
   $variables['surname'] = $variables['field_surname'][0]['safe_value'];
   $variables['bio'] = $variables['field_bio'][0]['safe_value'];
-  $variables['member_for'] = $user_profile['summary']['member_for']['#markup'];
   $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
   $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
-  $variables['linkedin_url'] = $variables['field_linkedin_url'][0]['url'];
-  $variables['linkedin'] = l($linkedin_url, $linkedin_url);
-  $variables['facebook_url'] = $variables['field_facebook_url'][0]['url'];
-  $variables['facebook'] = l($facebook_url, $facebook_url);
+  $variables['linkedin'] = $variables['field_linkedin_url'][0]['url'];
+  $variables['facebook'] = $variables['field_facebook_url'][0]['url'];
 }
