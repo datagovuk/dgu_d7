@@ -11,6 +11,7 @@ projects[apachesolr][download][tag] = "7.x-1.4"
 projects[apachesolr][subdir] = "contrib"
 projects[apachesolr][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/apachesolr-text-field-mapping.patch"
 
+projects[apachesolr_autocomplete][version] = "1.3"
 projects[apachesolr_autocomplete][subdir] = "contrib"
 ; In review patch to apachesolr_autocomplete for autocompleting with filters applied.
 projects[apachesolr_autocomplete][patch][] = "http://drupal.org/files/1444038-custom-page-autocomplete-with-panels.patch"
@@ -22,10 +23,16 @@ projects[apachesolr_panels][download][branch] = "7.x-1.x"
 projects[apachesolr_panels][subdir] = "contrib"
 projects[apachesolr_panels][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-2.patch"
 
+projects[facetapi][version] = "1.3"
 projects[facetapi][subdir] = "contrib"
 
+projects[strongarm][version] = "2.0"
 projects[strongarm][subdir] = "contrib"
+
+projects[diff][version] = "3.2"
 projects[diff][subdir] = "contrib"
+
+projects[token][version] = "1.5"
 projects[token][subdir] = "contrib"
 
 projects[pathauto][version] = "1.2"
@@ -39,6 +46,7 @@ projects[admin_menu][subdir] = "contrib"
 projects[module_filter][version] = "1.7"
 projects[module_filter][subdir] = "contrib"
 
+projects[ctools][version] = "1.3"
 projects[ctools][subdir] = "contrib"
 # Patch prevents ctools from running filter_xss_admin on an un-rendered array.
 projects[ctools][patch][] = "http://drupal.org/files/ctools-1925018-61.patch"
@@ -148,6 +156,7 @@ projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
 projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
 projects[ckan][subdir] = "contrib"
 
+projects[composer_manager][version] = "1.0-beta7"
 projects[composer_manager][subdir] = "contrib"
 
 projects[panels][version] = "3.3"
@@ -164,6 +173,7 @@ projects[services][subdir] = "contrib"
 projects[services_views][version] = "1.0-beta2"
 projects[services_views][subdir] = "contrib"
 
+projects[libraries][version] = "2.1"
 projects[libraries][subdir] = "contrib"
 
 projects[wysiwyg][type] = "module"
@@ -179,10 +189,16 @@ projects[redirect][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/pat
 projects[tagclouds][version] = "1.9"
 projects[tagclouds][subdir] = "contrib"
 
+projects[mollom][subdir] = "2.7"
 projects[mollom][subdir] = "contrib"
 
+projects[google_analytics][version] = "1.4"
 projects[google_analytics][subdir] = "contrib"
+
+projects[views_bulk_operations][version] = "3.1"
 projects[views_bulk_operations][subdir] = "contrib"
+
+projects[advuser][version] = "3.0-beta1"
 projects[advuser][subdir] = "contrib"
 
 projects[jquery_update][version] = "2.3"
@@ -196,13 +212,8 @@ projects[bootstrap][download][type] = "git"
 projects[bootstrap][download][url] = "http://git.drupal.org/project/bootstrap.git"
 projects[bootstrap][download][tag] = "7.x-3.0-rc2"
 
-; Libraries
-; ---------
-libraries[jquery][download][type] = "file"
-libraries[jquery][download][url] = "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
 
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.2/ckeditor_4.2_full.zip"
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
-
