@@ -19,7 +19,7 @@ projects[apachesolr_autocomplete][patch][] = "http://drupal.org/files/1444038-cu
 projects[apachesolr_panels][type] = "module"
 projects[apachesolr_panels][download][type] = "git"
 projects[apachesolr_panels][download][url] = "http://git.drupal.org/project/apachesolr_panels.git"
-projects[apachesolr_panels][download][branch] = "7.x-1.x"
+projects[apachesolr_panels][download][revision] = "7b49e370f22866283d8fe2c88bb66e8421d65516"
 projects[apachesolr_panels][subdir] = "contrib"
 projects[apachesolr_panels][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-2.patch"
 
