@@ -72,6 +72,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
     $search['filters']= "bundle:".$conf['content_type'];
+    $form_state['f'] = array();
   }
 
   $env_id = variable_get('apachesolr_default_environment', 'solr');
@@ -115,6 +116,19 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     }
   } catch (Exception $e) {
     error_log("Exception occurred talking to solr: ".$e->getMessage());
+  }
+
+  //If we are searching for data requests, we need to say how many private (unpublished requests) there are.
+  if($form_state['searchtype'] == 'dataset_request') {
+    $query = "SELECT count(distinct n.nid) count
+                  FROM node n
+                  LEFT JOIN field_revision_field_data_use du ON du.revision_id = n.vid
+                  WHERE n.type = 'dataset_request'
+                  AND status = 0
+                  AND du.field_data_use_value IS NOT NULL";
+    $result = db_query($query);
+    $dr_count = $result->fetchField();
+    $form_state['dataset_request_count'] = $dr_count;
   }
 
   $form = drupal_build_form('dgu_search_form', $form_state);
