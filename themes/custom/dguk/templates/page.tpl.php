@@ -1,5 +1,11 @@
-<?php global $user; ?>
-<div id="blackbar">
+<?php
+  global $user;
+  if (in_array('data publisher', array_values($user->roles))) {
+    $user = user_load($user->uid);
+  }
+?>
+
+<div id="blackbar" class="<?php print ($user->uid == 1 || in_array('data publisher', array_values($user->roles))) ? 'with' : 'without' ?>-publisher">
     <div class="container">
         <a class="brand" href="/" rel="home">
           <!--
@@ -26,13 +32,12 @@
       <div class="chevron position<?php print $active;?>"></div>
         <nav id="dgu-nav">
           <?php //print dguk_get_main_menu($main_menu);?>
-
-          <a href="/" title="" class="trigger-subnav nav-home <?php if($active == 1) print 'active'; ?>">Home</a>
-          <a href="/data" class="trigger-subnav nav-data <?php if($active == 2) print 'active'; ?>">Data</a>
-          <a href="/apps" class="trigger-subnav nav-apps <?php if($active == 3) print 'active'; ?>">Apps</a>
-          <a href="/interact" class="trigger-subnav nav-interact <?php if($active == 4) print 'active'; ?>">Interact</a>
-
-
+          <div class="text-links">
+            <a href="/" title="" class="trigger-subnav nav-home <?php if($active == 1) print 'active'; ?>">Home</a>
+            <a href="/data" class="trigger-subnav nav-data <?php if($active == 2) print 'active'; ?>">Data</a>
+            <a href="/apps" class="trigger-subnav nav-apps <?php if($active == 3) print 'active'; ?>">Apps</a>
+            <a href="/interact" class="trigger-subnav nav-interact <?php if($active == 4) print 'active'; ?>">Interact</a>
+          </div>
           <div class="nav-search" style="width: 200px;">
             <form class="input-group input-group-sm" action="/data/search">
               <input type="text" class="form-control" name="q" />
@@ -52,6 +57,26 @@
           <?php else: ?>
             <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php endif; ?>
+
+          <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
+            <span class="dropdown">
+              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#"><i class="icon-lock"></i></a>
+              <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
+                <li role="presentation" class="dropdown-header">Tools</li>
+                <li><a href="/dataset/new">Add a Dataset</a></li>
+                <li><a href="/harvest">Dataset Harvesting</a></li>
+                <li role="presentation" class="dropdown-header">My publishers</li>
+                <?php foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
+
+                  <?php $publisher = entity_load_single('ckan_publisher', $publisher_ref['target_id']); ?>
+
+                  <li><a href="/publisher/<?php print $publisher->name?>"><?php print $publisher->title?></a></li>
+                <?php endforeach; ?>
+              </ul>
+            </span>
+          <?php endif; ?>
+
+
         </nav>
     </div>
 </div>
@@ -67,10 +92,6 @@
         <li><a class="" href="/data/openspending-report/index">Spend Reports</a></li>
         <li><a class="" href="/data/site-usage">Site Analytics</a></li>
 
-        <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
-          <span class="divider-section">Publisher tools:</span>
-          <li><a class="btn btn-mini btn-info" href="/dataset/new">Add a Dataset</a></li>
-        <?php endif; ?>
         <?php if ($user->uid == 1 || in_array('ckan adminstrator', array_values($user->roles))): ?>
           <span class="divider-section">&nbsp; Sys Admin:</span>
           <li><a class="" href="/data/system_dashboard">System Dashboard</a></li>
