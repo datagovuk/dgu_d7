@@ -107,6 +107,10 @@ function dgu_search_search_block($form, &$form_state) {
     '#default_value' => '',
     '#attributes' => array('title' => t('Enter the terms you wish to search for.')),
   );
+  $form['dataset_request_count']= array(
+    '#type' => 'hidden',
+    '#value' => $form_state['dataset_request_count'],
+  );
   $form['content_type'] = array(
     '#type' => 'hidden',
     '#value' => $form_state['content_type'],
