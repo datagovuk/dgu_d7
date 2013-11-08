@@ -24,7 +24,11 @@
 
   <div class="pane-content">
     <a href="<?php print $content['field_link'][0]['#element']['url']; ?>">
-    <?php print render($content['field_image_tile_big']); ?>
+      <?php print render($content['field_image_tile_big']); ?>
+    </a>
+    <a class="tile-text" href="<?php print $content['field_link'][0]['#element']['url']; ?>">
+      <h2><?php print $title; ?></h2>
+      <p><?php print $content['field_description'][0]['#markup']; ?></p>
     </a>
   </div>
 </div>

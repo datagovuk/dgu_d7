@@ -123,7 +123,7 @@ function dgu_site_feature_strongarm() {
         'title' => array(
           'default' => array(
             'weight' => '-5',
-            'visible' => FALSE,
+            'visible' => TRUE,
           ),
         ),
       ),
@@ -157,7 +157,7 @@ function dgu_site_feature_strongarm() {
         'title' => array(
           'default' => array(
             'weight' => '-5',
-            'visible' => FALSE,
+            'visible' => TRUE,
           ),
         ),
       ),

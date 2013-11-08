@@ -56,7 +56,7 @@ function dgu_site_feature_image_default_styles() {
     'name' => 'tile_big',
     'label' => 'tile_big',
     'effects' => array(
-      1 => array(
+      2 => array(
         'label' => 'Crop',
         'help' => 'Cropping will remove portions of an image to make it the specified dimensions.',
         'effect callback' => 'image_crop_effect',
@@ -67,7 +67,7 @@ function dgu_site_feature_image_default_styles() {
         'name' => 'image_crop',
         'data' => array(
           'width' => 370,
-          'height' => 500,
+          'height' => 370,
           'anchor' => 'center-center',
         ),
         'weight' => 1,
@@ -80,7 +80,7 @@ function dgu_site_feature_image_default_styles() {
     'name' => 'tile_small',
     'label' => 'tile_small',
     'effects' => array(
-      2 => array(
+      1 => array(
         'label' => 'Crop',
         'help' => 'Cropping will remove portions of an image to make it the specified dimensions.',
         'effect callback' => 'image_crop_effect',
@@ -90,7 +90,7 @@ function dgu_site_feature_image_default_styles() {
         'module' => 'image',
         'name' => 'image_crop',
         'data' => array(
-          'width' => 370,
+          'width' => 120,
           'height' => 120,
           'anchor' => 'center-center',
         ),
