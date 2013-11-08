@@ -18,9 +18,13 @@
         <?php
           // $main_menu is set to menu-interact and $secondary_menu is set to menu-apps
           // otherwise context doesn't work
-          $interact_menu = dguk_get_interact_menu($main_menu);
+          $data_menu = dguk_get_data_menu();
           $apps_menu = dguk_get_apps_menu($secondary_menu);
+          $interact_menu = dguk_get_interact_menu($main_menu);
           $active = 1;
+          if(strpos($data_menu, 'subnav-data active')) {
+            $active = 2;
+          }
           if(strpos($apps_menu, 'subnav-apps active')) {
             $active = 3;
           }
@@ -82,23 +86,7 @@
 </div>
 <div id="greenbar" class="">
     <div class="container">
-      <ul class="subnav subnav-data">
-        <li><a class="active" href="/data/search">Datasets</a></li>
-        <li><a class="" href="/data/map-based-search">Map Search</a></li>
-        <li><a class="" href="/odug">Data Requests</a></li>
-        <li><a class="" href="/publisher">Publishers</a></li>
-        <li><a href="/organogram/cabinet-office">Public Roles &amp; Salaries</a></li>
-        <li><a class="" href="/data/openspending-browse">OpenSpending</a></li>
-        <li><a class="" href="/data/openspending-report/index">Spend Reports</a></li>
-        <li><a class="" href="/data/site-usage">Site Analytics</a></li>
-
-        <?php if ($user->uid == 1 || in_array('ckan adminstrator', array_values($user->roles))): ?>
-          <span class="divider-section">&nbsp; Sys Admin:</span>
-          <li><a class="" href="/data/system_dashboard">System Dashboard</a></li>
-          <li><a class="" href="/harvest">Harvest Sources</a></li>
-          <li><a class="" href="/data/feedback/moderation">Feedback moderation</a></li>
-        <?php endif; ?>
-      </ul>
+      <?php print $data_menu; ?>
       <?php print $apps_menu; ?>
       <?php print $interact_menu; ?>
     </div>

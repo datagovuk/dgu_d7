@@ -233,6 +233,95 @@ function dguk_css_alter(&$css) {
 }
 
 /**
+ * Get the output for Data menu.
+ */
+function dguk_get_data_menu() {
+  $menu = menu_navigation_links('menu-apps');
+
+  $menu = array(
+    'menu-datasets' => array(
+      'title' => 'Datasets',
+      'href' => 'data/search',
+    ),
+    'menu-map-search' => array(
+      'title' => 'Map Search',
+      'href' => 'data/map-based-search',
+    ),
+    'menu-data-requests' => array(
+      'title' => 'Data Requests',
+      'href' => 'odug',
+    ),
+    'menu-publishers' => array(
+      'title' => 'Publishers',
+      'href' => 'publisher',
+    ),
+    'menu-organogram' => array(
+      'title' => 'Public Roles & Salaries',
+      'href' => 'organogram/cabinet-office',
+    ),
+    'menu-openspending' => array(
+      'title' => 'OpenSpending',
+      'href' => 'data/openspending-browse',
+    ),
+    'menu-openspending-report' => array(
+      'title' => 'Spend Reports',
+      'href' => 'data/openspending-report/index',
+    ),
+    'menu-site-usage' => array(
+      'title' => 'Site Analytics',
+      'href' => 'data/site-usage',
+    ),
+  );
+
+  global $user;
+  if ($user->uid == 1 || in_array('ckan adminstrator', array_values($user->roles))) {
+    $admin_menu = array(
+      'divider-section' => array(
+        'title' => 'Sys Admin:',
+      ),
+
+      'menu-system-dashboard' => array(
+        'title' => 'System Dashboard',
+        'href' => 'data/system_dashboard',
+      ),
+      'menu-harvest' => array(
+        'title' => 'Harvest Sources',
+        'href' => 'harvest',
+      ),
+      'menu-feedback-moderation' => array(
+        'title' => 'Feedback moderation',
+        'href' => 'data/feedback/moderation',
+      ),
+    );
+    $menu = array_merge($menu, $admin_menu);
+  }
+
+  $classes = array('subnav', 'subnav-data');
+  $current_path = $_SERVER['REQUEST_URI'];
+  $a = strpos($current_path, 'odug');
+  $b = strpos($current_path, 'data-request');
+
+  // $current_path always starts from "/"
+  if (strpos($current_path, 'odug') == 1 || strpos($current_path, 'data-request') == 1) {
+    $menu['menu-data-requests']['attributes']['class'][] = 'active';
+    $classes[] = 'active';
+  }
+  if (strpos($current_path, 'organogram') == 1) {
+    $menu['menu-organogram']['attributes']['class'][] = 'active';
+    $classes[] = 'active';
+  }
+
+	$menu_output = theme('links__menu-data', array(
+	    'links' => $menu,
+	    'attributes' => array(
+	        'class' => $classes,
+	    ),
+	 ));
+
+	return $menu_output;
+ }
+
+/**
  * Get the output for Apps menu.
  */
 function dguk_get_apps_menu($menu) {
@@ -246,10 +335,10 @@ function dguk_get_apps_menu($menu) {
   }
 
 	$menu_output = theme('links__menu-apps', array(
-	    'links' => $menu,
-	    'attributes' => array(
-	        'class' => $classes,
-	    ),
+    'links' => $menu,
+    'attributes' => array(
+      'class' => $classes,
+    ),
 	 ));
 
 	return $menu_output;
@@ -269,10 +358,10 @@ function dguk_get_interact_menu($menu) {
   }
 
 	$menu_output = theme('links__menu-interact', array(
-	    'links' => $menu,
-	    'attributes' => array(
-	        'class' => $classes,
-	    ),
+    'links' => $menu,
+    'attributes' => array(
+      'class' => $classes,
+    ),
 	 ));
 
 	return $menu_output;
