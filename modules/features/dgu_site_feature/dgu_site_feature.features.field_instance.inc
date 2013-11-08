@@ -10,6 +10,46 @@
 function dgu_site_feature_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'fieldable_panels_pane-tile_big-field_description'
+  $field_instances['fieldable_panels_pane-tile_big-field_description'] = array(
+    'bundle' => 'tile_big',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'sub heading to describe title or the target content author. Only 35 characters allowed',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'fieldable_panels_pane',
+    'field_name' => 'field_description',
+    'label' => 'Description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 35,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 0,
+    ),
+  );
+
   // Exported field_instance: 'fieldable_panels_pane-tile_big-field_image_tile_big'
   $field_instances['fieldable_panels_pane-tile_big-field_image_tile_big'] = array(
     'bundle' => 'tile_big',
@@ -110,6 +150,46 @@ function dgu_site_feature_field_default_field_instances() {
       'settings' => array(),
       'type' => 'link_field',
       'weight' => -3,
+    ),
+  );
+
+  // Exported field_instance: 'fieldable_panels_pane-tile_small-field_description'
+  $field_instances['fieldable_panels_pane-tile_small-field_description'] = array(
+    'bundle' => 'tile_small',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'sub heading to describe title or the target content author. Only 35 characters allowed',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+    ),
+    'entity_type' => 'fieldable_panels_pane',
+    'field_name' => 'field_description',
+    'label' => 'Description',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 35,
+      ),
+      'type' => 'text_textfield',
+      'weight' => -1,
     ),
   );
 
@@ -613,6 +693,7 @@ function dgu_site_feature_field_default_field_instances() {
   t('Alt Text');
   t('Body');
   t('Category');
+  t('Description');
   t('File Attachments');
   t('Image');
   t('Image will be cropped to 120x120px, which are also the minimum size requirements');
@@ -622,6 +703,7 @@ function dgu_site_feature_field_default_field_instances() {
   t('Tags');
   t('Title Text');
   t('Title text attribute');
+  t('sub heading to describe title or the target content author. Only 35 characters allowed');
 
   return $field_instances;
 }
