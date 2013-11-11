@@ -302,7 +302,7 @@ function dguk_get_data_menu() {
   $b = strpos($current_path, 'data-request');
 
   // $current_path always starts from "/"
-  if (strpos($current_path, 'odug') == 1 || strpos($current_path, 'data-request') == 1) {
+  if (strpos($current_path, 'odug') == 1 || strpos($current_path, 'data-request') == 1 || strpos($current_path, 'node/add/dataset-request') == 1) {
     $menu['menu-data-requests']['attributes']['class'][] = 'active';
     $classes[] = 'active';
   }
