@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the DGU Promo Items feature.
- */
-
-include_once 'dgu_promo_items.features.inc';
