@@ -7,7 +7,6 @@ dependencies[] = views
 features[ctools][] = page_manager:pages_default:1
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
-features[page_manager_pages][] = home
 features[views_view][] = latest_blogs_and_forums
 features[views_view][] = latest_datasets
 features_exclude[dependencies][ctools] = ctools
