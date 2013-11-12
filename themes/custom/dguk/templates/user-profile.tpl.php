@@ -36,7 +36,7 @@
 ?>
 <div class="profile clearfix"<?php print $attributes; ?>>
   <div class="avatar"><?php print render($user_profile['field_avatar']); ?></div>
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-10 col-md-offset-2 col-sm-9 col-sm-offset-3">
       <dl class="clearfix">
         <dt><?php print t('First name'); ?></dt>
         <dd><?php print $first_name; ?></dd>
