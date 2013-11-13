@@ -290,6 +290,13 @@ function dgumigrate_register_migrations() {
       }
     }
   }
+  $arguments = array_merge($comment_arguments, array(
+    'description' => t('Migration of comments on App nodes from Drupal 6'),
+    'node_migration' =>'app',
+    'source_type' => 'apps',
+    'destination_type' => 'app'));
+  Migration::registerMigration('DGUCommentMigration', 'app_comments', $arguments);
+
   $ckan_dataset_arguments = $common_arguments + array(
     'source_type' => 'ckan_package',
     'user_migration' => 'user',
