@@ -95,6 +95,7 @@ features[variable][] = node_options_dataset_request
 features[variable][] = node_preview_dataset_request
 features[variable][] = node_submitted_dataset_request
 features[variable][] = pathauto_node_dataset_request_pattern
+features[views_view][] = dataset_request_extract
 features[views_view][] = dataset_requests
 features[views_view][] = minutes
 features_exclude[variable][comment_anonymous_dataset_request] = comment_anonymous_dataset_request
