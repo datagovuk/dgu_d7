@@ -47,6 +47,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access content overview',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -56,6 +57,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access contextual links',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'contextual',
   );
@@ -162,6 +164,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'administer nodes',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -225,6 +228,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'bypass node access',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -281,6 +285,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'delete revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -329,6 +334,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'revert revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
