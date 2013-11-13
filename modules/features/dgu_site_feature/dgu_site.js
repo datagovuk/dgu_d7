@@ -4,7 +4,7 @@
     attach: function (context) {
       $('button.form-submit').click(function(){
         $(this).parents('form').submit();
-        $(this).attr("disabled", true);
+        $('button.form-submit').attr("disabled", true);
       });
     }
   };
