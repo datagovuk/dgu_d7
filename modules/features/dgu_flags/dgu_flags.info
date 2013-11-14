@@ -1,0 +1,15 @@
+name = DGU Flags
+description = Functionality relating to flags on DGU
+core = 7.x
+package = DGU Features
+dependencies[] = features
+dependencies[] = flag
+features[features_api][] = api:2
+features[flag][] = spam_node
+features[flag][] = spam_reply
+features[user_permission][] = administer flags
+features[user_permission][] = flag spam_node
+features[user_permission][] = flag spam_reply
+features[user_permission][] = unflag spam_node
+features[user_permission][] = unflag spam_reply
+features[user_permission][] = use flag import
