@@ -37,7 +37,6 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   $block->delta   = 'dgu_search_form';
   $block->title   = '';
 
-
   $search = array(
     'rows' => 0,
     'qt' => 'standard',
@@ -52,14 +51,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $search['keys'] = $context->data;
   }
 
-  $search_types = array(
-    'app' => t('Apps'),
-    'blog' => t('Blogs'),
-    'forum' => t('Forum Posts'),
-    'resource' => t('Library'),
-    'dataset_request'  => t('Dataset Requests'),
-  );
-
+  $search_types = get_search_types();
 
   $form_state = array();
 
