@@ -1,0 +1,15 @@
+
+
+.glossary_filter {
+    float: right;
+}
+
+.glossary_filter input {
+    float: left;
+    clear: left;
+}
+
+.lexicon-alphabar-instructions {
+    padding: 10px;
+    text-align: center;
+}
