@@ -175,8 +175,6 @@ function dgu_search_menu_breadcrumb_alter(&$active_trail, $item){
         $active_trail[] = array('title' => t('Search'), 'href' => 'search/everything', 'localized_options' => array());
         drupal_set_title($search_types[$value]);
         break;
-        //$breadcrumb[] = l($search_types[$value], 'search/everything/?f[0]=bundle%3A' . $value);
-
       }
     }
   }
