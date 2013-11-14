@@ -37,13 +37,13 @@
 
     <div id="glossary_filter" class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary">
-          <input type="radio" id="show_approved">Only approved terms</input>
+          <input type="radio" id="show_approved" name="filter_glossary">Only approved terms</input>
         </label>
         <label class="btn btn-primary">
-          <input type="radio" id="show_new">Only new terms</input>
+          <input type="radio" id="show_new" name="filter_glossary">Only new terms</input>
         </label>
         <label class="btn btn-primary active">
-          <input type="radio" id="show_both">Both new and approved terms</input>
+          <input type="radio" id="show_both" name="filter_glossary">Both new and approved terms</input>
         </label>
     </div>
     <a href="glossary/suggest_new" class="btn btn-mini btn-info">Suggest a new Term</a>
