@@ -214,6 +214,10 @@ function _dgu_glossary_insert_after_first_element(&$a, $element)
 function dgu_glossary_preprocess(&$variables, $hook)
 {
     switch ($hook) {
+        case 'lexicon_overview':
+          $path = drupal_get_path('module', 'dgu_glossary');
+          drupal_add_css($path . '/css/dgu_glossary.css');
+            break;
         case 'lexicon_alphabar':
             $path = drupal_get_path('module', 'dgu_glossary');
             drupal_add_js($path . '/js/glossary.js');
