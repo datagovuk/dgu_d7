@@ -50,7 +50,14 @@ function dgu_app_strongarm() {
           'weight' => '13',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'flag_spam_node' => array(
+          'default' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__app'] = $strongarm;
