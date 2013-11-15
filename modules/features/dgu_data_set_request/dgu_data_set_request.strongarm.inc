@@ -53,7 +53,14 @@ function dgu_data_set_request_strongarm() {
           'weight' => '30',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'flag_spam_node' => array(
+          'default' => array(
+            'weight' => '19',
+            'visible' => TRUE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__dataset_request'] = $strongarm;

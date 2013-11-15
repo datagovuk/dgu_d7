@@ -209,7 +209,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 19,
+        'weight' => 20,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -892,7 +892,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 20,
+        'weight' => 21,
       ),
       'teaser' => array(
         'label' => 'above',

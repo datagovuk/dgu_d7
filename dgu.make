@@ -209,6 +209,12 @@ projects[advuser][subdir] = "contrib"
 projects[jquery_update][version] = "2.3"
 projects[jquery_update][subdir] = "contrib"
 
+projects[flag][version] = "3.2"
+projects[flag][subdir] = "contrib"
+
+projects[session_api][version] = "1.0-rc1"
+projects[session_api][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
