@@ -5,6 +5,13 @@
  */
 
 /**
+ * Implements hook_views_api().
+ */
+function dgu_flags_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
+
+/**
  * Implements hook_flag_default_flags().
  */
 function dgu_flags_flag_default_flags() {
@@ -43,11 +50,11 @@ function dgu_flags_flag_default_flags() {
     'access_author' => '',
     'show_contextual_link' => 0,
     'i18n' => 0,
-    'api_version' => 3,
     'module' => 'dgu_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   // Exported flag: "Spam reply".
   $flags['spam_reply'] = array(
@@ -76,11 +83,11 @@ function dgu_flags_flag_default_flags() {
     'show_on_form' => 0,
     'access_author' => '',
     'show_contextual_link' => 0,
-    'api_version' => 3,
     'module' => 'dgu_flags',
     'locked' => array(
       0 => 'name',
     ),
+    'api_version' => 3,
   );
   return $flags;
 
