@@ -198,6 +198,9 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
     $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
     $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
+    $theme_registry['lexicon_alphabar']['template'] = 'lexicon-alphabar';
+    $theme_registry['lexicon_alphabar']['path'] = $module_path . "/templates";
+
 }
 
 /**
