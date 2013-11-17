@@ -253,7 +253,6 @@ function dgu_glossary_preprocess(&$variables, $hook)
                 return;
             $instance = $instances['field_comment'];
 
-            $comment_link_options = array();
             $make_comment_path = 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $make_comment =  t('Make a comment');
             if (!user_access('post comments')) {
