@@ -299,6 +299,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['comments'] = $variables['content']['field_comment'];
             $variables['comments']['#label_display'] = 'hidden';
             unset($variables['content']['field_comment']);
+            unset($variables['content']['field_is_new']);
 
             break;
         default:
