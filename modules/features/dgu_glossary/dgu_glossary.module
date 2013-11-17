@@ -258,20 +258,16 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $make_comment =  t('Make a comment');
             if (!user_access('post comments')) {
                 $destination = array('destination' => $make_comment_path);
-                $comment_link_options = array('query' => $destination);
-                $make_comment_path =  'user/login';
+                $make_comment_path = "user/login?destination=$destination";
                 $make_comment = t('Login to make a comment');
             }
 
 
-            $button_link_options = array('attributes' => array('class' => array('button')));
-            $suggest_link_options = array();
             $suggest_better_path = $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
             if(!user_access('suggest new definitions')){
                 $destination = array('destination' => $suggest_better_path);
-                $suggest_link_options = array('query' => $destination);
-                $suggest_better_path =  'user/login';
+                $suggest_better_path = "user/login?destination=$destination";
                 $suggest_better = t("Log in to suggest a better definition");
 
             }
@@ -280,10 +276,8 @@ function dgu_glossary_preprocess(&$variables, $hook)
               '#markup' => theme('glossary_item_actions', array(
                 'comment_path' => $make_comment_path,
                 'comment_text' => $make_comment,
-                'comment_link_options' => $comment_link_options,
                 'suggest_path' => $suggest_better_path,
                 'suggest_text' => $suggest_better,
-                'suggest_link_options' => $suggest_link_options,
                 )
               ),
               '#weight' => 99,
