@@ -244,6 +244,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $voc = taxonomy_vocabulary_load($term->vid);
             $term_path = $voc->machine_name . '/' . $variables['tid'];
             $variables['content']['field_endorse']['#weight'] = 98;
+            $variables['content']['field_endorse']['#label_display'] = 'hidden';
 
             // We need the instance id of the comments field on the glossary definition
             // in order to properly build a reply add link
