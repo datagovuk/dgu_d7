@@ -282,20 +282,6 @@ function dgu_glossary_preprocess(&$variables, $hook)
               ),
               '#weight' => 99,
             );
-            /*$variables['content']['suggest_def'] = array(
-                '#markup' => "<div>" . $suggest_better_button . "</div>",
-                '#weight' => 99,
-            );
-            $variables['content']['make_comment'] = array(
-                '#markup' => "<div>" . $make_comment_button  . "</div>",
-                '#weight' => 100,
-            );
-            $variables['content']['further_info'] = array(
-                '#markup' => "<p>You can help us refine and improve the definition of the term: Aggregated data.  You can " .
-                    $suggest_better_link . " or you can participate in the conversation and " .
-                    $make_comment_link . ".</p>",
-                '#weight' => 101,
-            );*/
 
             $variables['suggested_definitions'] = '';
             $nids = glossary_get_suggested_defs($term);
