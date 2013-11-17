@@ -298,7 +298,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             //hide comments in the content section and display separately
             $variables['comments'] = $variables['content']['field_comment'];
             $variables['comments']['#label_display'] = 'hidden';
-            unset($variables['content']['field_comments']);
+            unset($variables['content']['field_comment']);
 
             break;
         default:
