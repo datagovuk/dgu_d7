@@ -90,14 +90,20 @@ function dgu_glossary_theme($existing, $type, $theme, $path)
                 'node' => NULL,
             ),
         ),
-        'suggested_definition_thanks' => array(
-            'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
-            'template' => 'glossary_thanks_page',
-            'variables' => array(
-                'thanks_text' => null,
-                'links' => null,
-            )
-        ),
+      'suggested_definition_thanks' => array(
+        'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+        'template' => 'glossary_thanks_page',
+        'variables' => array(
+          'thanks_text' => null,
+          'links' => null,
+        )
+      ),
+      'glossary_item_actions' => array(
+        'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+        'template' => 'glossary_item_actions',
+        'variables' => array(
+        )
+      ),
     );
 }
 
@@ -247,36 +253,42 @@ function dgu_glossary_preprocess(&$variables, $hook)
                 return;
             $instance = $instances['field_comment'];
 
-            $button_link_options = array('attributes' => array('class' => array('button')));
-            $link_options = array();
+            $comment_link_options = array();
             $make_comment_path = 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $make_comment =  t('Make a comment');
             if (!user_access('post comments')) {
                 $destination = array('destination' => $make_comment_path);
-                $link_options = array('query' => $destination);
+                $comment_link_options = array('query' => $destination);
                 $make_comment_path =  'user/login';
                 $make_comment = t('Login to make a comment');
             }
-            $make_comment_button = l($make_comment, $make_comment_path, $button_link_options);
-            $make_comment_link = l($make_comment , $make_comment_path, $link_options);
 
 
             $button_link_options = array('attributes' => array('class' => array('button')));
-            $link_options = array();
+            $suggest_link_options = array();
             $suggest_better_path = $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
             if(!user_access('suggest new definitions')){
                 $destination = array('destination' => $suggest_better_path);
-                $button_link_options += array('query' => $destination);
-                $link_options = array('query' => $destination);
+                $suggest_link_options = array('query' => $destination);
                 $suggest_better_path =  'user/login';
                 $suggest_better = t("Log in to suggest a better definition");
 
             }
-            $suggest_better_button = l($suggest_better, $suggest_better_path, $button_link_options);
-            $suggest_better_link = l($suggest_better, $suggest_better_path, $link_options);
 
-            $variables['content']['suggest_def'] = array(
+            $variables['content']['glossary_item_actions'] = array(
+              '#markup' => theme('glossary_item_actions', array(
+                'comment_path' => $make_comment_path,
+                'comment_text' => $make_comment,
+                'comment_link_options' => $comment_link_options,
+                'suggest_path' => $suggest_better_path,
+                'suggest_text' => $suggest_better,
+                'suggest_link_options' => $suggest_link_options,
+                )
+              ),
+              '#weight' => 99,
+            );
+            /*$variables['content']['suggest_def'] = array(
                 '#markup' => "<div>" . $suggest_better_button . "</div>",
                 '#weight' => 99,
             );
@@ -289,7 +301,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
                     $suggest_better_link . " or you can participate in the conversation and " .
                     $make_comment_link . ".</p>",
                 '#weight' => 101,
-            );
+            );*/
 
             $variables['suggested_definitions'] = '';
             $nids = glossary_get_suggested_defs($term);
