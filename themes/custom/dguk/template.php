@@ -448,6 +448,9 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
         case 'resource':
           $parent_path = 'library';
           break;
+        case 'dataset_request':
+          $parent_path = 'odug';
+          break;
         case 'forum':
           //forum items need a link to the parent forum
           //Set the title and href and replace the current item with a link to forums
