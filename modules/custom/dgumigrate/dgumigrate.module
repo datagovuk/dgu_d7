@@ -40,7 +40,8 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
     }
 
     public function mapScore($value){
-      return preg_match_all('/\*/', $value, $m) + 0;
+      // Quality score is expressed as a percentage as it's a five star field.
+      return (preg_match_all('/\*/', $value, $m)/5) * 100;
     }
 }
 
