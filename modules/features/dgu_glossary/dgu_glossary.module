@@ -243,7 +243,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $term = $variables['term'];
             $voc = taxonomy_vocabulary_load($term->vid);
             global $base_url;
-            $term_path = $base_url . '/' . $voc->machine_name . '/' . $variables['tid'];
+            $term_path = '/' . $voc->machine_name . '/' . $variables['tid'];
             $variables['content']['field_endorse']['#weight'] = 98;
             $variables['content']['field_endorse']['#label_display'] = 'hidden';
 
@@ -258,17 +258,15 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $make_comment_path = $base_url . '/' . 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $make_comment =  t('Make a comment');
             if (!user_access('post comments')) {
-                $destination = array('destination' => $make_comment_path);
-                $make_comment_path = "user/login?destination=$destination";
+                $make_comment_path = $base_url . "/user/login?destination=/reply/add/{$term->tid}/{$instance['id']}/0";
                 $make_comment = t('Login to make a comment');
             }
 
 
-            $suggest_better_path = $term_path . '/suggest_definition';
+            $suggest_better_path = $base_url . '/' . $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
             if(!user_access('suggest new definitions')){
-                $destination = array('destination' => $suggest_better_path);
-                $suggest_better_path = "user/login?destination=$destination";
+                $suggest_better_path = $base_url . "/user/login?destination=$term_path/suggest_better";
                 $suggest_better = t("Log in to suggest a better definition");
 
             }
