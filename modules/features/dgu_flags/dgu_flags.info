@@ -4,6 +4,7 @@ core = 7.x
 package = DGU Features
 dependencies[] = features
 dependencies[] = flag
+dependencies[] = session_api
 dependencies[] = views
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:2
