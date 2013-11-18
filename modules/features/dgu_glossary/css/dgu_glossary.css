@@ -17,3 +17,7 @@
 .vud-widget {
     float: left;
 }
+
+.field-name-field-quality .fivestar-summary {
+    display: none;
+}
