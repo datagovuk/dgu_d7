@@ -225,6 +225,9 @@ function dgu_glossary_preprocess(&$variables, $hook)
     $path = drupal_get_path('module', 'dgu_glossary');
     drupal_add_css($path . '/css/dgu_glossary.css');
     switch ($hook) {
+        case 'lexicon_overview_section':
+            $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . "<a href='#glossary'>go to top</a>";
+            break;
         case 'lexicon_overview':
             break;
         case 'lexicon_alphabar':
