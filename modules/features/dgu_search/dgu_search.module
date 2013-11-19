@@ -6,7 +6,15 @@
 
 include_once 'dgu_search.features.inc';
 
-
+/**
+* Implements hook_apachesolr_prepare_query().
+*/
+function dgu_search_apachesolr_query_prepare($query, $caller) {
+  $query->removeAvailableSort('ds_created');
+  $query->removeAvailableSort('score');
+  $query->setAvailableSort('score', array('title' => t('Relevance'), 'default' => 'desc'));
+  $query->setAvailableSort('ds_changed', array('title' => t('Last updated'), 'default' => 'desc'));
+}
 
 function get_search_types(){
   return array(
