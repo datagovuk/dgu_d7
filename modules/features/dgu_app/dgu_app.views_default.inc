@@ -110,11 +110,6 @@ function dgu_app_views_default_views() {
   $handler = $view->new_display('block', 'Latest apps', 'block');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: Global: Unfiltered text */
-  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
-  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<a href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>';
   $handler->display->display_options['block_description'] = 'apps/latest/rss.xml';
 
   /* Display: Top rated apps */
@@ -123,11 +118,6 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['title'] = 'Top rated apps';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: Global: Unfiltered text */
-  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
-  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<a href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Votes average */
   $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';

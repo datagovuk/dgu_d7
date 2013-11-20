@@ -140,11 +140,6 @@ function dgu_blog_views_default_views() {
   $handler = $view->new_display('block', 'Latest blog posts ', 'latest_blog_posts');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: Global: Unfiltered text */
-  $handler->display->display_options['header']['area_text_custom']['id'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['table'] = 'views';
-  $handler->display->display_options['header']['area_text_custom']['field'] = 'area_text_custom';
-  $handler->display->display_options['header']['area_text_custom']['content'] = '<a href="/blog/rss.xml"><i class="icon-rss-sign"></i></a>';
   $handler->display->display_options['block_description'] = 'Latest blog posts';
 
   /* Display: Blogs ODUG  */

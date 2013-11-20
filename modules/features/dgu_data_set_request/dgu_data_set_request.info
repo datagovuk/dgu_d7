@@ -80,6 +80,7 @@ features[field_instance][] = node-dataset_request-field_submitter_email
 features[field_instance][] = node-dataset_request-field_submitter_name
 features[node][] = dataset_request
 features[page_manager_handlers][] = node_view_panel_context_6
+features[page_manager_pages][] = data_requests
 features[user_permission][] = create dataset_request content
 features[user_permission][] = create field_data_set_link
 features[user_permission][] = delete own dataset_request content
