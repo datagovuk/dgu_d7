@@ -124,6 +124,12 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   }
 
   $form = drupal_build_form('dgu_search_form', $form_state);
+
+  // Statcically cached keyword in dgu_search.module:dgu_search_apachesolr_query_prepare()
+  if ($keyword = &drupal_static('dgu_search_keyword')) {
+    $form['keyword']['#value'] = $keyword;
+  }
+
   $block->content = drupal_render($form);
   return $block;
 }

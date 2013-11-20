@@ -10,9 +10,23 @@ include_once 'dgu_search.features.inc';
 * Implements hook_apachesolr_prepare_query().
 */
 function dgu_search_apachesolr_query_prepare($query, $caller) {
-  $query->removeAvailableSort('ds_created');
+
+  // Remove 'Relevancy' sort.
   $query->removeAvailableSort('score');
-  $query->setAvailableSort('score', array('title' => t('Relevance'), 'default' => 'desc'));
+
+  // Search is performed twice during single request (?), in second search keyword gets lost.
+  // We cache the keyword from first search if exist
+  $keyword = &drupal_static('dgu_search_keyword');
+  if (!isset($keyword)) {
+    $keyword = $query->getParam('q');
+  }
+
+  if (!empty($keyword)) {
+    // Add 'Relevance' sort only if user did put a keyword in to search box.
+    $query->setAvailableSort('score', array('title' => t('Relevance'), 'default' => 'desc'));
+  }
+
+  $query->removeAvailableSort('ds_created');
   $query->setAvailableSort('ds_changed', array('title' => t('Last updated'), 'default' => 'desc'));
 }
 
