@@ -135,6 +135,7 @@ function dgu_glossary_suggest_definition_page($term)
         'language' => LANGUAGE_NONE,
     );
     drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
+    drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
     $form_state['build_info']['args'] = array($node);
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_definition_node_form', $node);
@@ -424,13 +425,13 @@ function dgu_glossary_suggest_new_page()
         'language' => LANGUAGE_NONE,
     );
     drupal_set_title(t('Suggest new term and definition.'), PASS_THROUGH);
+    drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
     $form_state['build_info']['args'] = array($node);
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_term_node_form', $node);
-
     $form['title']['#value'] = t('New suggested term by @user',
         array('@user' => $user->name));
-
+    unset($form['additional_settings']);
     return $form;
 }
 
