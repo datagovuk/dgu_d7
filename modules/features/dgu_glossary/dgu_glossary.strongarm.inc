@@ -527,5 +527,19 @@ function dgu_glossary_strongarm() {
   $strongarm->value = 1;
   $export['node_submitted_suggested_term'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'workbench_moderation_default_state_suggested_definition';
+  $strongarm->value = 'needs_review';
+  $export['workbench_moderation_default_state_suggested_definition'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'workbench_moderation_default_state_suggested_term';
+  $strongarm->value = 'needs_review';
+  $export['workbench_moderation_default_state_suggested_term'] = $strongarm;
+
   return $export;
 }
