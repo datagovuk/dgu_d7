@@ -23,7 +23,7 @@ function dgu_app_strongarm() {
         'custom_settings' => FALSE,
       ),
       'rss' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'search_index' => array(
         'custom_settings' => FALSE,
@@ -55,6 +55,10 @@ function dgu_app_strongarm() {
           'default' => array(
             'weight' => '10',
             'visible' => TRUE,
+          ),
+          'rss' => array(
+            'weight' => '8',
+            'visible' => FALSE,
           ),
         ),
       ),
