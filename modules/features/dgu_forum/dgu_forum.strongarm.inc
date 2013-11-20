@@ -23,7 +23,7 @@ function dgu_forum_strongarm() {
         'custom_settings' => FALSE,
       ),
       'rss' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'search_index' => array(
         'custom_settings' => FALSE,
@@ -55,6 +55,10 @@ function dgu_forum_strongarm() {
           'default' => array(
             'weight' => '3',
             'visible' => TRUE,
+          ),
+          'rss' => array(
+            'weight' => '4',
+            'visible' => FALSE,
           ),
         ),
       ),
