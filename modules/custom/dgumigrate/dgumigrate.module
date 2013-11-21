@@ -26,6 +26,7 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
         // Mappings are straight-forward
         $this->addFieldMapping('name', 'Term');
         $this->addFieldMapping('description', 'Definition');
+        $this->addFieldMapping('field_quality', 'Score')->callbacks(array($this, 'mapScore'));
     }
 
     public function prepareKey($source_key, $row) {
@@ -36,6 +37,11 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
     public function prepareRow($row) {
         $row->tid = $row->csvrownum;
         return TRUE;
+    }
+
+    public function mapScore($value){
+      // Quality score is expressed as a percentage as it's a five star field.
+      return (preg_match_all('/\*/', $value, $m)/5) * 100;
     }
 }
 
