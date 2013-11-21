@@ -71,6 +71,7 @@ features[user_permission][] = edit any suggested_definition content
 features[user_permission][] = edit any suggested_term content
 features[user_permission][] = edit terms in document_type
 features[user_permission][] = moderate glossary
+features[user_permission][] = reset vote up/down votes
 features[user_permission][] = suggest new definitions
 features[user_permission][] = suggest new terms
 features[user_permission][] = use vote up/down

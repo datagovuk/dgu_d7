@@ -100,6 +100,18 @@ function dgu_glossary_user_default_permissions() {
     'module' => 'dgu_glossary',
   );
 
+  // Exported permission: 'reset vote up/down votes'.
+  $permissions['reset vote up/down votes'] = array(
+    'name' => 'reset vote up/down votes',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
+    ),
+    'module' => 'vud',
+  );
+
   // Exported permission: 'suggest new definitions'.
   $permissions['suggest new definitions'] = array(
     'name' => 'suggest new definitions',
@@ -126,6 +138,7 @@ function dgu_glossary_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'vud',
   );
