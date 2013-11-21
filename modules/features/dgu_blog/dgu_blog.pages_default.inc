@@ -239,9 +239,9 @@ function dgu_blog_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'display' => 'latest_blog_posts',
+      'override_title' => 1,
+      'override_title_text' => 'Latest blog posts <a href="/blog/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -311,7 +311,7 @@ function dgu_blog_default_page_manager_pages() {
     $display->content['new-3'] = $pane;
     $display->panels['top'][0] = 'new-3';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['blog'] = $page;
