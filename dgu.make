@@ -80,7 +80,7 @@ projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][branch] = "7.x-1.x"
 projects[reply][subdir] = "contrib"
-;projects[reply][patch][] = ""
+projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
