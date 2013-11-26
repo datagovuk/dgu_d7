@@ -9,8 +9,8 @@
 <div class="vud-widget vud-widget-endorse" id="<?php print $id; ?>">
 <?php if ($class_up) : ?>
   <?php if ($show_links): ?>
-    <?php if ($reset_access|$show_down_as_link): ?>
-        <a href="<?php print $link_down; ?>" rel="nofollow" class="<?php print $link_class_reset; ?>"
+    <?php if ($show_reset): ?>
+        <a href="<?php print $link_reset; ?>" rel="nofollow" class="<?php print $link_class_reset; ?>"
            title="<?php print $reset_long_text; ?>">
           <button type="button" class="btn btn-default">
             <i class="icon-thumbs-down"></i>
