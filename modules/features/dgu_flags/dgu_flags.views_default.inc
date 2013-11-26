@@ -235,6 +235,11 @@ function dgu_flags_views_default_views() {
   $handler->display->display_options['fields']['edit_reply']['field'] = 'edit_reply';
   $handler->display->display_options['fields']['edit_reply']['label'] = '';
   $handler->display->display_options['fields']['edit_reply']['element_label_colon'] = FALSE;
+  /* Field: Flags: Flag link */
+  $handler->display->display_options['fields']['ops']['id'] = 'ops';
+  $handler->display->display_options['fields']['ops']['table'] = 'flagging';
+  $handler->display->display_options['fields']['ops']['field'] = 'ops';
+  $handler->display->display_options['fields']['ops']['relationship'] = 'flag_content_rel';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
