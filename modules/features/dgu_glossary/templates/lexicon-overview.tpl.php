@@ -46,7 +46,7 @@
           <input type="radio" id="show_both" name="filter_glossary">Both new and approved terms</input>
         </label>
     </div>
-    <a href="glossary/suggest_new" class="btn btn-mini btn-info">Suggest a new Term</a>
+    <a href="<?php print $suggest_new_term_link ?>" class="btn btn-mini btn-info"><?php print $suggest_new_term_text ?></a>
     <div class="lexicon-list">
         <?php foreach ($lexicon_overview_sections as $section) : ?>
             <?php print $section; ?>
