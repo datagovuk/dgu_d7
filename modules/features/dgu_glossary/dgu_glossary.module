@@ -305,8 +305,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['comments']['#label_display'] = 'hidden';
             unset($variables['content']['field_comment']);
             unset($variables['content']['field_is_new']);
-            $variables['content']['field_quality']['#title'] = "APSI quality score";
-
+            $variables['content']['field_quality']['#title'] = 'APSI quality score';
             break;
         default:
             # code...
@@ -442,4 +441,12 @@ function dgu_glossary_query_alter(QueryAlterableInterface $query) {
         $query-> leftJoin('field_data_field_is_new', 'fn', 't.tid = fn.entity_id');
         $query-> condition(db_or()->condition('field_is_new_value', 0)->isNull('field_status_value'));
     }
+}
+
+
+function dgu_glossary_fivestar_widgets() {
+  $widgets = array(
+    drupal_get_path('module', 'dgu_glossary') . '/css/appsi_quality_score.css' => 'appsi_quality_score',
+  );
+  return $widgets;
 }
