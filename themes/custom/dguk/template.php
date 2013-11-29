@@ -539,3 +539,28 @@ function dguk_preprocess_user_profile(&$variables) {
   $variables['linkedin'] = $variables['field_linkedin_url'][0]['url'];
   $variables['facebook'] = $variables['field_facebook_url'][0]['url'];
 }
+
+
+function dguk_field__field_quality__glossary($variables){
+  $output = '';
+
+  // Render the label, if it's not hidden.
+  if (!$variables['label_hidden']) {
+    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label']
+      . '&nbsp;<a class="lexicon-term" href="/glossary/63" title="The APPSI quality score reflects our confidence in the accuracy and quality of a term and it\'s definition">(What is this?)</a>'
+      . ':&nbsp;</div>';
+  }
+
+  // Render the items.
+  $output .= '<div class="field-items"' . $variables['content_attributes'] . '>';
+  foreach ($variables['items'] as $delta => $item) {
+    $classes = 'field-item ' . ($delta % 2 ? 'odd' : 'even');
+    $output .= '<div class="' . $classes . '"' . $variables['item_attributes'][$delta] . '>' . drupal_render($item) . '</div>';
+  }
+  $output .= '</div>';
+
+  // Render the top-level DIV.
+  $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
+
+  return $output;
+}
