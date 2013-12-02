@@ -26,3 +26,17 @@
     margin-top: -65px;
     margin-left: 350px;
 }
+
+.glossary-term dt {
+    font-size: 1.2em;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    text-transform: uppercase;
+    padding-bottom: 8px;
+}
+.glossary-term dt .lexicon-extralinks {
+    font-size: 0.8em;
+}
+
+.glossary-term dd {
+    padding-bottom: 10px;
+}
