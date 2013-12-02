@@ -21,3 +21,8 @@
 .field-name-field-quality .fivestar-summary {
     display: none;
 }
+
+.suggest-new {
+    margin-top: -65px;
+    margin-left: 350px;
+}
