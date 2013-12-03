@@ -40,3 +40,22 @@
 .glossary-term dd {
     padding-bottom: 10px;
 }
+
+
+.glossary-header {
+    min-height: 60px;
+    background: #549df9;
+    padding: 10px 14px;
+    color: #fff;
+}
+
+.glossary-appsi-quality {
+    float: right;
+    margin-top: -33px;
+    clear: left;
+    display: block;
+}
+
+.glossary-header h2 {
+    float: left;
+}

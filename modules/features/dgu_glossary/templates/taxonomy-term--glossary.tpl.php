@@ -48,6 +48,7 @@
     <?php if (!$page): ?>
       <div class="glossary-header">
         <h2><?php print $term_name; ?></h2>
+        <span class="glossary-appsi-quality"><?php print $quality_score; ?></span>
       </div>
     <?php endif; ?>
 
