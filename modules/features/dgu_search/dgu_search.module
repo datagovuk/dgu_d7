@@ -398,29 +398,10 @@ function dgu_search_theme() {
   );
 }
 
-/*    <form class="form-inline pull-right" id="search-sort-by">
-      <label>Sort by:</label>
-      <select name="dataset-results-sort" class="form-control" style="display:inline-block;">
-        <!-- Can optimise this bit of the template, particularly results_sort_by -->
-        <option value="/data/search?sort=rank+desc" disabled="disabled">Relevance</option>
-        <option value="/data/search?sort=popularity+desc">Popularity</option>
-        <option value="/data/search?sort=title_string+asc" selected="selected">Title</option>
-        <option value="/data/search?sort=last_major_modification+desc">Last Updated</option>
-        <option value="/data/search?sort=spatial+desc" disabled="disabled">Location</option>
-      </select>
-      <a class="feed-icon" href="/feeds/custom.atom?sort=title_string+asc">
-        <i class="icon-rss-sign"></i>
-      </a>
-    </form>
-*/
-
 function theme_dgu_search_select($options) {
-  $output = '<form class="form-inline pull-right" id="search-sort-by">
-      <label style="display:inline-block;">Sort by:</label>';
-  $output .= '<select name="search-results-sort" class="form-control" style="display:inline-block; width: 150px; margin: 0 0 0 5px;">';
-//<select name="dataset-results-sort" class="form-control" style="display:inline-block;"></select>
+  $output = '<form class="form-inline pull-right" id="search-sort-by"><label>Sort by:</label>';
+  $output .= '<select name="search-results-sort" class="form-control">';
   $select_options = $options['select_options'];
-//print_r($options); die;
   foreach ($select_options as $key => $values) {
     $disabled =  $values['disabled'] ? ' disabled="disabled" ' : '';
     $selected =  $values['selected'] ? ' selected="selected" ' : '';
