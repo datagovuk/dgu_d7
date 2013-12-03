@@ -102,10 +102,10 @@
 </div>
 <div role="main" id="main-content">
   <div class="container">
-    <?php if($page['highlighted'] OR $messages): ?>
+    <?php if(TRUE or $page['highlighted'] OR $messages): ?>
         <div class="drupal-messages">
             <?php print render($page['highlighted']); ?>
-            <?php print $messages; ?>
+            <div id="messages" ><?php print $messages; ?></div>
         </div>
     <?php endif; ?>
     <?php print render($title_prefix); ?>
