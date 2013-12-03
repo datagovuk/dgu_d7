@@ -113,7 +113,7 @@ function dgu_glossary_suggest_definition_thanks_page($term)
     $vid = $term->vid;
     $tid = $term->tid;
     $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
-    $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to " . l($term->name, "$lex_path/$tid");
+    $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to the term: " . l($term->name, "$lex_path/$tid");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
 }
 
