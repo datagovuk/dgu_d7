@@ -102,12 +102,14 @@
 </div>
 <div role="main" id="main-content">
   <div class="container">
-    <?php if(TRUE or $page['highlighted'] OR $messages): ?>
-        <div class="drupal-messages">
-            <?php print render($page['highlighted']); ?>
-            <div id="messages" ><?php print $messages; ?></div>
-        </div>
-    <?php endif; ?>
+    <div class="drupal-messages">
+        <?php if($page['highlighted']): ?>
+          <?php print render($page['highlighted']); ?>
+        <?php endif; ?>
+        <?php if($messages): ?>
+          <div id="messages" ><?php print $messages; ?></div>
+        <?php endif; ?>
+    </div>
     <?php print render($title_prefix); ?>
     <?php if ($title): ?>
         <h1><?php print $title; ?></h1>
