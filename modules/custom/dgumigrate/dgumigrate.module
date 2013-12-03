@@ -224,7 +224,6 @@ function dgumigrate_register_migrations() {
           'machine_name' => 'page',
           'source_type' => 'page',
           'destination_type' => 'page',
-          'ignore_comments' => TRUE,
       ),
       array(
           'class_name' => 'DGUStoryMigration',
