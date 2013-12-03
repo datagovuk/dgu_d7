@@ -67,6 +67,13 @@ function dguk_preprocess_node(&$variables) {
     );
   }
   $variables['avatar'] = render($image);
+
+
+  if ($variables['created'] != $variables['changed']) {
+    $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
+
+  }
+
 }
 
 /**
@@ -113,12 +120,13 @@ function dguk_preprocess_block(&$variables) {
  *  Implements hook_preprocess_field().
  */
 function dguk_preprocess_field(&$variables) {
-
 	if($variables['element']['#field_name'] == 'field_uses_dataset') {
     // Render direct link to dataset in CKAN instead of dataset copy in Drupal.
-    $title = $variables['element']['#items'][0]['entity']->title;
-    $name = $variables['element']['#items'][0]['entity']->name;
-    $variables['items'][0]['#markup'] = l($title, 'dataset/' . $name);
+    foreach ($variables['element']['#items'] as $index => $item){
+      $title = $item['entity']->title;
+      $name = $item['entity']->name;
+      $variables['items'][$index]['#markup'] = l($title, 'dataset/' . $name);
+    }
   }
 }
 
@@ -173,15 +181,24 @@ function dguk_preprocess_search_result(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
 
+
+  $variables['info_split']['changed'] = $variables['info_split']['date'];
+  unset($variables['info_split']['date']);
+  $variables['info_split']['created'] = format_date($variables['result']['fields']['created'], 'short');
+
+
   switch ($variables['result']['bundle']) {
     case 'app':
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+
       if (isset($variables['result']['fields']['sm_field_developed_by'][0])) {
-        $variables['info_split']['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
+        $variables['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
       }
       break;
     case 'blog':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
       break;
     case 'dataset_request':
       $review_status_values = &drupal_static('odug_review_statuses');
@@ -192,17 +209,25 @@ function dguk_preprocess_search_result(&$variables) {
       $status_key = $variables['result']['fields']['im_field_review_status'][0];
       $status_value = $review_status_values[$status_key];
 
-      $variables['info_split']['other'] = 'Review status: ' . $status_value;
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['other'] = 'Review status: ' . $status_value;
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+
       break;
     case 'forum':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
       break;
     case 'page':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['created'];
+      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
+        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+      }
       break;
     case 'resource':
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
+      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
+        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+      }
       break;
   }
 }
