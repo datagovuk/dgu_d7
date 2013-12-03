@@ -81,28 +81,39 @@ function dgu_data_set_request_exit() {
 
 function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-    return NODE_ACCESS_DENY;
+    if($node->uid != $account->uid) {
+      return NODE_ACCESS_DENY;
+    }
   }
 }
 
 function dgu_data_set_request_node_access_records($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-  $grants = array(
-      array(
-        'realm' => 'private_data_request',
-        'gid' => 123,
-        'grant_view' => 1,
-        'grant_update' => 1,
-        'grant_delete' => 1,
-      )
+  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) { //0 private, 1 public
+    $grants = array();
+    $grants[] = array(
+      'realm' => 'private_data_request',
+      'gid' => 0,
+      'grant_view' => 1,
+      'grant_update' => 1,
+      'grant_delete' => 1,
     );
-  return $grants;
+    $grants[] = array(
+      'realm' => 'private_data_request',
+      'gid' => $node->uid,
+      'grant_view' => 1,
+      'grant_update' => 1,
+      'grant_delete' => 1,
+      );
+
+    return $grants;
   }
 }
 
 function dgu_data_set_request_node_grants($account, $op) {
+  $grants = array();
+  $grants['private_data_request'] = array($account->uid);
   if (user_access('edit any dataset_request content', $account)) {
-    $grants['private_data_request'] = array(123);
-    return $grants;
+    $grants['private_data_request'] = array(0);
   }
+  return $grants;
 }
