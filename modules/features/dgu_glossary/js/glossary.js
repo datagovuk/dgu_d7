@@ -23,7 +23,7 @@
     }
 
     $.changeTerms = function(e){
-        show = $(e.srcElement).find('input').attr('id');
+        show = $(e.srcElement).attr('id');
         switch (show) {
             case 'show_new':
                 $.showNewTerms();
@@ -41,7 +41,7 @@
     }
 
     $(document).ready(function() {
-        $("#glossary_filter").on('click', $.changeTerms);
+        $("#glossary_filter li").on('click', $.changeTerms);
     });
 })(jQuery);
 

@@ -21,3 +21,41 @@
 .field-name-field-quality .fivestar-summary {
     display: none;
 }
+
+.suggest-new {
+    margin-top: -65px;
+    margin-left: 350px;
+}
+
+.glossary-term dt {
+    font-size: 1.2em;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    text-transform: uppercase;
+    padding-bottom: 8px;
+}
+.glossary-term dt .lexicon-extralinks {
+    font-size: 0.8em;
+}
+
+.glossary-term dd {
+    padding-bottom: 10px;
+}
+
+
+.glossary-header {
+    min-height: 60px;
+    background: #549df9;
+    padding: 10px 14px;
+    color: #fff;
+}
+
+.glossary-appsi-quality {
+    float: right;
+    margin-top: -33px;
+    clear: left;
+    display: block;
+}
+
+.glossary-header h2 {
+    float: left;
+}

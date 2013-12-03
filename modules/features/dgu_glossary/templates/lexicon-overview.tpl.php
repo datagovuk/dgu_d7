@@ -35,18 +35,16 @@
         </div>
     <?php endif;?>
 
-    <div id="glossary_filter" class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" id="show_approved" name="filter_glossary">Only approved terms</input>
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" id="show_new" name="filter_glossary">Only new terms</input>
-        </label>
-        <label class="btn btn-primary active">
-          <input type="radio" id="show_both" name="filter_glossary">Both new and approved terms</input>
-        </label>
+
+    <div id="glossary_filter">
+      <ul class="nav nav-tabs">
+        <li><a href="#approved" id="show_approved" data-toggle="tab">Approved terms</a></li>
+        <li><a href="#new" id="show_new" data-toggle="tab">New terms</a></li>
+        <li class="active"><a href="#both" id="show_both" data-toggle="tab">All terms</a></li>
+
+      </ul>
+      <a href="<?php print $suggest_new_term_link ?>" class="suggest-new btn btn-mini btn-primary"><?php print $suggest_new_term_text ?></a>
     </div>
-    <a href="<?php print $suggest_new_term_link ?>" class="btn btn-mini btn-info"><?php print $suggest_new_term_text ?></a>
     <div class="lexicon-list">
         <?php foreach ($lexicon_overview_sections as $section) : ?>
             <?php print $section; ?>
