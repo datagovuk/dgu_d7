@@ -24,6 +24,7 @@
  */
 ?>
 <?php if ($search_results): ?>
+  <?php print $sort_dropdown; ?>
   <ul class="search-results <?php print $module; ?>-results">
     <?php print $search_results; ?>
   </ul>
