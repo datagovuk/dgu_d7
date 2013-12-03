@@ -230,6 +230,8 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . "<a href='#glossary'>go to top</a>";
             break;
         case 'lexicon_overview':
+          $variables['suggest_new_term_link'] = user_access('suggest new terms') ? 'glossary/suggest_new' : '/user/login?destination=glossary/suggest_new';
+          $variables['suggest_new_term_text'] = user_access('suggest new terms') ? 'Suggest a new Term' : 'Log in to Suggest a new Term';
             break;
         case 'lexicon_alphabar':
             $path = drupal_get_path('module', 'dgu_glossary');
