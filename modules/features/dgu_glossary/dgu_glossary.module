@@ -452,3 +452,7 @@ function dgu_glossary_fivestar_widgets() {
   );
   return $widgets;
 }
+
+function dgu_glossary_vud_votes_alter(&$votes) {
+  drupal_set_message("Your vote has been recorded");
+}
