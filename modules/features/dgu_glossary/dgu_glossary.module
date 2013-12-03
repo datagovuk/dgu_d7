@@ -306,6 +306,8 @@ function dgu_glossary_preprocess(&$variables, $hook)
             unset($variables['content']['field_comment']);
             unset($variables['content']['field_is_new']);
             $variables['content']['field_quality']['#title'] = 'APSI quality score';
+            $variables['quality_score'] = $variables['content']['field_quality'];
+            hide($variables['content']['field_quality']);
             break;
         default:
             # code...

@@ -46,7 +46,9 @@
   <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">
 
     <?php if (!$page): ?>
-      <h2><?php print $term_name; ?></h2>
+      <div class="glossary-header">
+        <h2><?php print $term_name; ?></h2>
+      </div>
     <?php endif; ?>
 
     <div class="content">
