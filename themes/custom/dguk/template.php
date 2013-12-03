@@ -564,3 +564,9 @@ function dguk_field__field_quality__glossary($variables){
 
   return $output;
 }
+
+
+function dguk_ajax_render_alter(&$commands) {
+  $commands[] = ajax_command_remove('#messages');
+  $commands[] = ajax_command_prepend('.drupal-messages', '<div id="messages">' . theme('status_messages') . '</div>');
+}
