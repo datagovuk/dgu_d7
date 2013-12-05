@@ -114,10 +114,9 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   if($form_state['searchtype'] == 'dataset_request') {
     $query = "SELECT count(distinct n.nid) count
                   FROM node n
-                  LEFT JOIN field_revision_field_data_use du ON du.revision_id = n.vid
+                  LEFT JOIN field_data_field_publication_preference pp ON pp.entity_id = n.nid
                   WHERE n.type = 'dataset_request'
-                  AND status = 0
-                  AND du.field_data_use_value IS NOT NULL";
+                  AND pp.field_publication_preference_value = 0";
     $result = db_query($query);
     $dr_count = $result->fetchField();
     $form_state['dataset_request_count'] = $dr_count;

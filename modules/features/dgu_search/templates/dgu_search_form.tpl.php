@@ -30,8 +30,14 @@
         <div class="result-count"><?php print $form['count']['#value']?></div>
         <div class="result-count-footer"><?php print $form['content_type']['#value']?>
         <?php if (isset($form['dataset_request_count']['#value'])): ?>
-          <div class="result-private-dataset-request">+ <?php print$form['dataset_request_count']['#value'] ?> private data requests</div>
-        <?php endif ?>
+          <div class="result-private-dataset-request">
+          <?php if (user_access('edit any dataset_request content')): ?>
+            including
+          <?php else: ?>
+            +
+          <?php endif; ?>
+            <?php print$form['dataset_request_count']['#value'] ?> confidential requests</div>
+        <?php endif; ?>
         </div>
       </div>
     </div>
