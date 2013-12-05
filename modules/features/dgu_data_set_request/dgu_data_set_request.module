@@ -126,7 +126,7 @@ function dgu_data_set_request_node_access_records($node) {
       if ($node->status == 1) {
         $grants[] = array(
           'realm' => 'public_data_request',
-          'gid' => 4294967295, // maximum possible value to avoid conflict with $node->uid
+          'gid' => 2147483647, // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
           'grant_view' => 1,
           'grant_update' => 1,
           'grant_delete' => 1,
@@ -140,7 +140,7 @@ function dgu_data_set_request_node_access_records($node) {
 function dgu_data_set_request_node_grants($account, $op) {
   $grants = array();
   $grants['private_data_request'] = array($account->uid);
-  $grants['public_data_request'] = array($account->uid, 4294967295);
+  $grants['public_data_request'] = array($account->uid, 2147483647);
   if (user_access('edit any dataset_request content', $account)) {
     $grants['private_data_request'] = array(0);
     $grants['public_data_request'] = array(0);
