@@ -37,7 +37,12 @@
       <?php print l($link["name"], $link["path"], $link["attributes"]); ?>
     <?php endforeach; ?>
     </span>
+
   <?php endif; ?>
+  <?php if ($term->field_is_new[LANGUAGE_NONE][0]['value']): ?>
+  <span class="glossary-new-term">New</span>
+  <?php endif; ?>
+
 </dt>
 <?php if (isset($term->safe_description) || isset($term->synonyms) || isset($term->image) || isset ($term->related)) : ?>
   <dd>
