@@ -717,6 +717,52 @@ function dgu_site_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-page-field_comment'
+  $field_instances['node-page-field_comment'] = array(
+    'bundle' => 'page',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'reply',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'reply_default',
+        'weight' => 5,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_comment',
+    'label' => 'Comments',
+    'required' => 0,
+    'settings' => array(
+      'access' => -1,
+      'allow_reply' => -1,
+      'display' => -1,
+      'form' => -1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'reply',
+      'settings' => array(),
+      'type' => 'reply',
+      'weight' => 32,
+    ),
+  );
+
   // Exported field_instance: 'node-page-field_file_attachments'
   $field_instances['node-page-field_file_attachments'] = array(
     'bundle' => 'page',
@@ -859,6 +905,7 @@ function dgu_site_feature_field_default_field_instances() {
   t('Alt Text');
   t('Body');
   t('Category');
+  t('Comments');
   t('Description');
   t('File Attachments');
   t('Image');

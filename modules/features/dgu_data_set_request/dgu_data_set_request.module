@@ -4,6 +4,9 @@
  * Code for the DGU Data set request feature.
  */
 
+define('PUBLIC_DATA_REQUEST_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
 include_once 'dgu_data_set_request.features.inc';
 
 /**
@@ -94,7 +97,7 @@ function dgu_data_set_request_node_access_records($node) {
       // Private request
       $grants[] = array(
         'realm' => 'private_data_request',
-        'gid' => 0,
+        'gid' => DATA_REQUEST_MODERATOR_GRANT,
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
@@ -111,7 +114,7 @@ function dgu_data_set_request_node_access_records($node) {
       // Public request
       $grants[] = array(
         'realm' => 'public_data_request',
-        'gid' => 0,
+        'gid' => DATA_REQUEST_MODERATOR_GRANT,
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
@@ -126,7 +129,7 @@ function dgu_data_set_request_node_access_records($node) {
       if ($node->status == 1) {
         $grants[] = array(
           'realm' => 'public_data_request',
-          'gid' => 2147483647, // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+          'gid' => PUBLIC_DATA_REQUEST_GRANT,
           'grant_view' => 1,
           'grant_update' => 1,
           'grant_delete' => 1,
@@ -140,10 +143,10 @@ function dgu_data_set_request_node_access_records($node) {
 function dgu_data_set_request_node_grants($account, $op) {
   $grants = array();
   $grants['private_data_request'] = array($account->uid);
-  $grants['public_data_request'] = array($account->uid, 2147483647);
+  $grants['public_data_request'] = array($account->uid, PUBLIC_DATA_REQUEST_GRANT);
   if (user_access('edit any dataset_request content', $account)) {
-    $grants['private_data_request'] = array(0);
-    $grants['public_data_request'] = array(0);
+    $grants['private_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
+    $grants['public_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
   }
   return $grants;
 }
