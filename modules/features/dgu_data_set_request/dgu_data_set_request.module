@@ -4,6 +4,9 @@
  * Code for the DGU Data set request feature.
  */
 
+
+define('DATA_REQUEST_MODERATION_PERMISSION', 'edit any dataset_request content');
+
 define('PUBLIC_DATA_REQUEST_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
 define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
 
@@ -23,31 +26,30 @@ include_once 'dgu_data_set_request.features.inc';
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
 
   drupal_set_title('Create a dataset request');
-  $form['revision_information']['#type'] = 'hidden';
-
-  $form['actions']['publish']['#access'] = TRUE;
-  $form['actions']['publish']['#value'] = 'Submit for moderation';
-  $form['actions']['publish']['#type'] = 'submit';
-  $form['actions']['publish']['#weight'] = 6;
-  $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
-
-  $form['actions']['submit']['#value'] = 'Save draft';
-  $form['#submit'][] = 'dgu_data_set_request_node_submit';
 
   unset($form['actions']['preview']);
 
   $form['#attributes']['class'][] = "boxed";
-  if (!user_access('edit any dataset_request content')){
-      $form['field_review_status'] = array(
-          '#type' => 'hidden',
-          '#title' => t('Review status'),
-          '#value' => 0,
-      );
-      $form['field_review_notes'] = array(
-          '#type' => 'hidden',
-          '#title' => t('Review Notes'),
-          '#value' => 0,
-      );
+  if (!user_access(DATA_REQUEST_MODERATION_PERMISSION)){
+    $form['revision_information']['#type'] = 'hidden';
+    $form['actions']['publish']['#access'] = TRUE;
+    $form['actions']['publish']['#value'] = 'Submit for moderation';
+    $form['actions']['publish']['#type'] = 'submit';
+    $form['actions']['publish']['#weight'] = 6;
+    $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
+    $form['actions']['submit']['#value'] = 'Save draft';
+    $form['#submit'][] = 'dgu_data_set_request_node_submit';
+
+    $form['field_review_status'] = array(
+        '#type' => 'hidden',
+        '#title' => t('Review status'),
+        '#value' => 0,
+    );
+    $form['field_review_notes'] = array(
+        '#type' => 'hidden',
+        '#title' => t('Review Notes'),
+        '#value' => 0,
+    );
   }
 
 }
@@ -144,7 +146,7 @@ function dgu_data_set_request_node_grants($account, $op) {
   $grants = array();
   $grants['private_data_request'] = array($account->uid);
   $grants['public_data_request'] = array($account->uid, PUBLIC_DATA_REQUEST_GRANT);
-  if (user_access('edit any dataset_request content', $account)) {
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION, $account)) {
     $grants['private_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
     $grants['public_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
   }
