@@ -15,10 +15,12 @@
     hide($content['field_comment']);
     print render($content);
   ?>
+  <?php if ($view_mode != "search_result"): ?>
   <div class="disclaimer disclaimer-app">
     Apps submitted to data.gov.uk are currently approved for publication on the general level of their context and appropriateness.
     Whilst we review these on a periodical basis, we do not own responsibility for the regular update and maintenance of these apps. Any queries about individual apps or tools published need to be directed to the originator.
   </div>
+  <?php endif; ?>
 </article> <!-- /.node -->
 
 <?php if (!empty($content['links']) || !empty($content['field_comment'])): ?>
