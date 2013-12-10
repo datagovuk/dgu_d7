@@ -12,13 +12,74 @@ define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (a
 
 include_once 'dgu_data_set_request.features.inc';
 
+
+/**
+ * Implements hook_menu_alter().
+ */
+function dgu_data_set_request_menu_alter(&$items) {
+  // Override the node edit menu item title.
+  $items['node/%node/edit']['title callback'] = 'dgu_data_set_request_edit_tab_title';
+  $items['node/%node/edit']['title arguments'] = array(1);
+
+  // Override the node view menu item title.
+  $items['node/%node/view']['title callback'] = 'dgu_data_set_request_view_tab_title';
+  $items['node/%node/view']['title arguments'] = array(1);
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_data_set_request_edit_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    return t('Edit');
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_edit_tab_title($node);
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_data_set_request_view_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    return t('View');
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_view_tab_title($node);
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function dgu_data_set_request_page_alter(&$page) {
+  if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['form_id']) && $page['content']['system_main']['#form_id'] == 'dataset_request_node_form' && user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    unset($page['content']['workbench_block']);
+    unset($page['help']['system_help']);
+
+  }
+}
+
 /**
  * @param $form
  * @param $form_state
  * @param $form_id
  *
  *
- * Implement Hook hook_form_FORM_ID_alter which:
+ * Implements Hook hook_form_FORM_ID_alter which:
  * -  creates our own hidden input for review status and hides the select
  * box for any user who does not have the "Dataset Request: Edit any content" permission.
  * - adds a button to submit the data request for moderation.
@@ -50,6 +111,9 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
         '#title' => t('Review Notes'),
         '#value' => 0,
     );
+  }
+  else {
+    $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
   }
 
 }
