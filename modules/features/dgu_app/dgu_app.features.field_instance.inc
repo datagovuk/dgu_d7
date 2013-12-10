@@ -47,14 +47,15 @@ function dgu_app_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
-          'field_replies' => '',
+          'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'trim_length' => 250,
         ),
-        'type' => 'text_default',
-        'weight' => 7,
+        'type' => 'text_trimmed',
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -120,9 +121,16 @@ function dgu_app_field_default_field_instances() {
       ),
       'search_result' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 3,
+        'module' => 'list',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'list_default',
+        'weight' => 2,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -175,9 +183,16 @@ function dgu_app_field_default_field_instances() {
       ),
       'search_result' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 2,
+        'module' => 'link',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'link_default',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -241,7 +256,7 @@ function dgu_app_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -295,7 +310,7 @@ function dgu_app_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 10,
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -359,8 +374,15 @@ function dgu_app_field_default_field_instances() {
       ),
       'search_result' => array(
         'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'text_default',
         'weight' => 0,
       ),
       'teaser' => array(
@@ -432,7 +454,7 @@ function dgu_app_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -554,7 +576,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -602,7 +624,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -652,7 +674,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -710,7 +732,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -774,10 +796,18 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'weight' => 2,
       ),
       'search_result' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 8,
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
