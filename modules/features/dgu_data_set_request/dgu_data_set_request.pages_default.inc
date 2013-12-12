@@ -279,7 +279,7 @@ function dgu_data_set_request_default_page_manager_pages() {
 <a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
 <a href="/users/charlieboundy">Charlie Boundy</a><br/>
 <a href="/users/alex-kafetz">Alex Kafetz</a><br/>
-Duncan Ross<br/>
+<a href="/users/duncan3ross">Duncan Ross</a><br/>
 <a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
 <a href="/users/tomsmith">Tom Smith</a><br/>
 Carlos Somohano<br/>
