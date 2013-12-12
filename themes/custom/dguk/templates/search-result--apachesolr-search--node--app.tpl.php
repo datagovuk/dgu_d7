@@ -63,7 +63,7 @@
  *
  * @ingroup themeable
  */
-?>adfadsf
+?>
 <li class="<?php print $classes; // .boxed and .node-type-<bundle> classes added in dguk_preprocess_search_result() ?>"<?php print $attributes; ?>>
   <?php
     print $result['fields']['tm_rendered_node'][0];
