@@ -23,11 +23,6 @@ projects[apachesolr_panels][download][revision] = "7b49e370f22866283d8fe2c88bb66
 projects[apachesolr_panels][subdir] = "contrib"
 projects[apachesolr_panels][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-2.patch"
 
-projects[apache_solr_search_view_modes][subdir] = "contrib"
-projects[apache_solr_search_view_modes][download][type] = "git"
-projects[apache_solr_search_view_modes][download][url] = "http://git.drupal.org//project/apache_solr_search_view_modes.git"
-projects[apache_solr_search_view_modes][download][revision] = "1c102e1b50ff1f4ad69e981b45476fcb27667937"
-
 projects[facetapi][version] = "1.3"
 projects[facetapi][subdir] = "contrib"
 
