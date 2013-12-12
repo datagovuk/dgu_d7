@@ -127,7 +127,7 @@ projects[file_entity][subdir] = "contrib"
 projects[lexicon][version] = "1.10"
 projects[lexicon][subdir] = "contrib"
 
-projects[media][version] = "2.0-unstable7"
+projects[media][version] = "2.0-alpha3"
 projects[media][subdir] = "contrib"
 
 projects[votingapi][version] = "2.10"
@@ -214,7 +214,10 @@ projects[views_bulk_operations][subdir] = "contrib"
 projects[advuser][version] = "3.0-beta1"
 projects[advuser][subdir] = "contrib"
 
-projects[jquery_update][version] = "2.3"
+projects[jquery_update][type] = "module"
+projects[jquery_update][download][type] = "git"
+projects[jquery_update][download][url] = "http://git.drupal.org/project/jquery_update.git"
+projects[jquery_update][download][revision] = "65eecb0f1fc69cf6831a66440f72e33a1effb1f3"
 projects[jquery_update][subdir] = "contrib"
 
 projects[flag][version] = "3.2"
