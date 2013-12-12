@@ -7,6 +7,19 @@
       <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
+    <?php if ($display_submitted): ?>
+      <?php if ($updated): ?>
+        <span class="submitted">
+          <?php print $updated; ?>
+        </span>
+      <?php endif; ?>
+
+      <span class="submitted">
+        <?php print $user_picture; ?>
+        <?php print $submitted; ?>
+      </span>
+
+    <?php endif; ?>
   </header>
 
   <?php

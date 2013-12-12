@@ -266,6 +266,7 @@ function dgu_search_apachesolr_query_alter($query) {
   $query->addParam('fl', 'sm_field_developed_by');
   // Retrieve 'field_review_status'.
   $query->addParam('fl', 'im_field_review_status');
+  $query->addParam('fl', 'tm_rendered_node');
 }
 
 
@@ -411,4 +412,27 @@ function theme_dgu_search_select($options) {
   $output .= '</select></form>';
 
   return $output;
+}
+
+
+/**
+ * @param $node
+ * @return string
+ *
+ * Render the node using the search_results view mode. This gets added to the index without having the markup
+ * stripped from it.
+ */
+function dgu_search_apachesolr_index_document_build(ApacheSolrDocument $document, $entity, $entity_type, $env_id) {
+  $field = $document->getField('entity_type');
+  if ($field['value'] == 'node'){
+    $field = $document->getField('entity_id');
+    $nid = $field['value'];
+    $node = node_load($nid);
+    if (isset($node)){
+      $build = node_view($node, 'search_result');
+      $build['links']['#access'] = FALSE;
+      $document->addField('tm_rendered_node',render($build));
+    }
+  }
+
 }
