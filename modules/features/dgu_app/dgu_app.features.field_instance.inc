@@ -515,8 +515,17 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
       ),
       'search_result' => array(
         'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'field_replies' => 0,
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'image_link' => '',
+          'image_style' => 'medium',
+        ),
+        'type' => 'image',
         'weight' => 9,
       ),
       'teaser' => array(

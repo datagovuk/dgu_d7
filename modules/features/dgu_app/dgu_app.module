@@ -58,7 +58,7 @@ function dgu_app_exit() {
   }
 }
 
-function dgu_app_preprocess_node(&$variables) {
+function dgu_app_preprocess_node_app(&$variables) {
   if ($variables['view_mode'] == 'search_result'){
     $variables['submitted'] = 'Submitted on ' . $variables['date'];
     if ($variables['created'] != $variables['changed']) {
