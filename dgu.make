@@ -116,12 +116,11 @@ projects[fivestar][subdir] = "contrib"
 projects[workbench_moderation][version] = "1.2"
 projects[workbench_moderation][subdir] = "contrib"
 
-projects[file_entity][version] = "2.0-unstable7"
-projects[file_entity][subdir] = "contrib"
-
 projects[lexicon][version] = "1.10"
 projects[lexicon][subdir] = "contrib"
 
+projects[file_entity][version] = "2.0-alpha3"
+projects[file_entity][subdir] = "contrib"
 projects[media][version] = "2.0-alpha3"
 projects[media][subdir] = "contrib"
 
