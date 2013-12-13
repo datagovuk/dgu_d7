@@ -428,6 +428,7 @@ function dgu_search_apachesolr_index_document_build(ApacheSolrDocument $document
     $field = $document->getField('entity_id');
     $nid = $field['value'];
     $node = node_load($nid);
+
     if (isset($node)){
       $build = node_view($node, 'search_result');
       $build['links']['#access'] = FALSE;
@@ -435,4 +436,10 @@ function dgu_search_apachesolr_index_document_build(ApacheSolrDocument $document
     }
   }
 
+}
+
+function dgu_search_batch_alter(&$batch){
+  if ($batch['source_url'] == 'admin/config/search/apachesolr/settings/solr/index/remaining'){
+    $batch['theme'] = 'dguk';
+  }
 }
