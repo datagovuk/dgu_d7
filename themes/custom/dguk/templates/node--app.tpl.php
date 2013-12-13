@@ -2,7 +2,11 @@
   <header>
     <?php print render($title_prefix); ?>
     <?php if (!$page && $title): ?>
-      <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+      <?php if ($view_mode == "search_result"): ?>
+        <h3<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h3>
+      <? else: ?>
+        <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+      <? endif; ?>
     <?php elseif ($title): ?>
       <h2<?php print $title_attributes; ?>><?php print $title; ?></h2>
     <?php endif; ?>
