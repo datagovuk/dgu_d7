@@ -62,7 +62,7 @@ function dgu_app_preprocess_node(&$variables) {
   if ($variables['type'] == 'app'){
     if ($variables['view_mode'] == 'search_result'){
       $variables['directory'] = 'profile/dgu/themes/custom/dguk/templates/';
-
+      $variables['classes_array'] = array("node", "node-app-searchresult");
       $variables['submitted'] = 'Submitted on ' . $variables['date'];
       if ($variables['created'] != $variables['changed']) {
         $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
