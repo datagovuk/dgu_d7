@@ -523,7 +523,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
             'field_replies_revision' => '',
           ),
           'image_link' => '',
-          'image_style' => 'medium',
+          'image_style' => 'thumbnail',
         ),
         'type' => 'image',
         'weight' => 9,

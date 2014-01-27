@@ -35,6 +35,10 @@ function dgu_search_apachesolr_environments() {
         'last_changed' => 0,
         'last_entity_id' => 0,
       ),
+      'node' => array(
+        'last_changed' => '1390383020',
+        'last_entity_id' => '2902',
+      ),
       'redirect' => array(
         'last_changed' => 0,
         'last_entity_id' => 0,
@@ -71,13 +75,9 @@ function dgu_search_apachesolr_environments() {
         'last_changed' => 0,
         'last_entity_id' => 0,
       ),
-      'node' => array(
-        'last_changed' => '1385461321',
-        'last_entity_id' => '2793',
-      ),
     ),
-    'apachesolr_index_updated' => 1385461321,
-    'apachesolr_last_optimize' => 1385445123,
+    'apachesolr_index_updated' => 1390827730,
+    'apachesolr_last_optimize' => 1390753338,
     'apachesolr_read_only' => '0',
   );
   $environment->index_bundles = array(
