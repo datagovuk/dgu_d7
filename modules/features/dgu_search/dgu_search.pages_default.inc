@@ -242,7 +242,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->panel = 'left';
     $pane->type = 'block';
     $pane->subtype = 'apachesolr_search-sort';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,

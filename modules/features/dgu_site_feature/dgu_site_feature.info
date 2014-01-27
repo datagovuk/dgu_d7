@@ -23,6 +23,7 @@ dependencies[] = menu
 dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = panels_mini
+dependencies[] = reply
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text
