@@ -15,6 +15,9 @@ use Behat\Behat\Context\Step\Given,
 
 use Behat\Behat\Exception\PendingException;
 
+use Behat\Mink\Exception\ElementException,
+    Behat\Mink\Exception\ElementNotFoundException;
+
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
@@ -92,6 +95,31 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     {
         // Initialize your context here
     }
+
+    public function fillField($field, $value)
+    {
+      $locator = $this->fixStepArgument($field);
+      $value = $this->fixStepArgument($value);
+      $nodes = $this->getSession()->getPage()->findAll('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($locator)));
+
+      if (null === $nodes) {
+        throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $locator);
+      }
+
+      foreach ($nodes as $node) {
+        if($node->isVisible()) {
+          $xpath = $node->getXpath();
+          try {
+            $node->getSession()->getDriver()->setValue($xpath, $value);
+          }
+          catch (\Exception $exception) {
+            throw new ElementException($node, $exception);
+          }
+          break;
+        }
+      }
+    }
+
 
   /**
    * Hold the execution until the page is/resource are completely loaded OR timeout

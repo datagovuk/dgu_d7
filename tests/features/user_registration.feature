@@ -23,11 +23,12 @@ Feature: Register an account on data.gov.uk with valid username and email
     | Password                   |
 
   Scenario: Create an account
-    When I follow "I want to create an account"
+    When I click "I want to create an account"
     And I wait 1 second
-    And I wait until the page loads
-    And I fill in "Username " with "user"
-    #And I fill in "Username " with random text
-    And I break
+    And I fill in "Username " with random text
+    And I fill in "E-mail address" with a random address
+    And I fill in "Confirm password" with random text
+    And I fill in "Password" with random text
     And I press "Create new account"
-    Then I should see "A welcome message with further instructions has been sent to your e-mail address."
+    And I break
+    Then I should see "Thanks for registering with data.gov.uk - to complete registration - you will soon get an email to verify the email you supplied."
