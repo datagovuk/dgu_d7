@@ -112,7 +112,7 @@ function dgu_glossary_theme($existing, $type, $theme, $path)
 
 function dgu_glossary_suggest_definition_thanks_page($term)
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $vid = $term->vid;
     $tid = $term->tid;
     $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
@@ -122,7 +122,7 @@ function dgu_glossary_suggest_definition_thanks_page($term)
 
 function dgu_glossary_new_definition_thanks_page()
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $lex_path = 'glossary';
     $links = "Return to the " . l(t("Glossary"), "$lex_path");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
@@ -143,6 +143,7 @@ function dgu_glossary_suggest_definition_page($term)
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_definition_node_form', $node);
 
+    $form['current_def']['#markup'] = "<label>Current definition</label><p>{$term->description}</p>";
     $form['title']['#value'] = t('New suggested term for @term made by @user',
         array('@term' => $term->name, '@user' => $user->name));
     $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
@@ -308,7 +309,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['comments']['#label_display'] = 'hidden';
             unset($variables['content']['field_comment']);
             unset($variables['content']['field_is_new']);
-            $variables['content']['field_quality']['#title'] = 'APSI quality score';
+            $variables['content']['field_quality']['#title'] = 'APPSI quality score';
             $variables['quality_score'] = render($variables['content']['field_quality']);
             hide($variables['content']['field_quality']);
             break;
