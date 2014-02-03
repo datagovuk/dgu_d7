@@ -112,7 +112,7 @@ function dgu_glossary_theme($existing, $type, $theme, $path)
 
 function dgu_glossary_suggest_definition_thanks_page($term)
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $vid = $term->vid;
     $tid = $term->tid;
     $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
@@ -122,7 +122,7 @@ function dgu_glossary_suggest_definition_thanks_page($term)
 
 function dgu_glossary_new_definition_thanks_page()
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $lex_path = 'glossary';
     $links = "Return to the " . l(t("Glossary"), "$lex_path");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
