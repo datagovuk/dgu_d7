@@ -85,40 +85,45 @@ class LocalDataRegistry {
 // class FeatureContext extends BehatContext
 class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 {
-    /**
-     * Initializes context.
-     * Every scenario gets its own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
-     */
-    public function __construct(array $parameters)
-    {
-        // Initialize your context here
+  /**
+   * Initializes context.
+   * Every scenario gets its own context object.
+   *
+   * @param array $parameters context parameters (set them up through behat.yml)
+   */
+  public function __construct(array $parameters)
+  {
+    $this->dataRegistry = new LocalDataRegistry();
+    if (isset($parameters['drupal_users'])) {
+      $this->drupal_users = $parameters['drupal_users'];
     }
+    if (isset($parameters['email'])) {
+      $this->email = $parameters['email'];
+    }
+    $this->mailAddresses = array();
+    $this->mailMessages = array();
 
-    public function fillField($field, $value)
-    {
-      $locator = $this->fixStepArgument($field);
-      $value = $this->fixStepArgument($value);
-      $nodes = $this->getSession()->getPage()->findAll('named', array('field', $this->getSession()->getSelectorsHandler()->xpathLiteral($locator)));
+  }
 
-      if (null === $nodes) {
-        throw new ElementNotFoundException($this->getSession(), 'form field', 'id|name|label|value', $locator);
+  /**
+  * Override Element::find().
+  *
+  * To manipulate only visible elements
+  */
+  public function find($selector, $locator)
+  {
+      $items = $this->findAll($selector, $locator);
+
+      if (count($items) && !method_exists(current($items), 'isVisible')) {
+        return current($items);
       }
 
-      foreach ($nodes as $node) {
-        if($node->isVisible()) {
-          $xpath = $node->getXpath();
-          try {
-            $node->getSession()->getDriver()->setValue($xpath, $value);
-          }
-          catch (\Exception $exception) {
-            throw new ElementException($node, $exception);
-          }
-          break;
+      foreach ($items as $item) {
+        if ($item->isVisible()) {
+          return $item;
         }
       }
-    }
+  }
 
 
   /**
@@ -171,6 +176,40 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     sleep($arg1);
   }
 
+
+  /**
+   * @Given /^I should not be logged in$/
+   */
+  public function iShouldNotBeLoggedIn() {
+    if ($this->loggedIn()) {
+      return false;
+    }
+  }
+
+
+  /**
+   * Authenticates a user with password from configuration.
+   *
+   * @Given /^I am logged in as (?:|the )"([^"]*)"(?:| user)$/
+   * @Given /^I log in as (?:|the )"([^"]*)"(?:| user)$/
+   */
+  public function iAmLoggedInAs($username) {
+    $password = $this->drupal_users[$username];
+    return $this->iAmLoggedInAsTheWithThePassword($username, $password);
+  }
+
+  /**
+   * @Given /^I am logged in as the "([^"]*)" with the password "([^"]*)"$/
+   * @Given /^I log in as the "([^"]*)" with the password "([^"]*)"$/
+   */
+  public function iAmLoggedInAsTheWithThePassword($username, $password) {
+    return array (
+      new Given("I fill in \"Username or e-mail address\" with \"$username\""),
+      new Given("I fill in \"Password\" with \"$password\""),
+      new Given("I press \"Log in\""),
+    );
+  }
+
   /**
    * @Given /^I follow login link$/
    */
@@ -184,6 +223,19 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
 
+  //TODO - add class to rss link
+
+  /**
+   * @Given /^I follow RSS link$/
+   */
+  public function iFollowRSSLink() {
+    $page = $this->getSession()->getPage();
+    $link = $page->find('css','pane-forum-categories > a');
+    if(empty($link)) {
+      throw new Exception("RSS link not found");
+    }
+    $link->click();
+  }
 
 
 
@@ -199,24 +251,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $step = "I fill in \"$label\" with \"$randomString\"";
     return new Then($step);
   }
-
-  /**
-   * @Given /^I fill in "([^"]*)" with a random address$/
-   */
-  public function iFillInWithARandomAddress($label) {
-    // A @Tranform would be more elegant.
-    $randomString = strtolower(Random::name(10)) . "@example.com";
-    // Save this for later retrieval.
-    HackyDataRegistry::set('random:' . $label, $randomString);
-    $step = "I fill in \"$label\" with \"$randomString\"";
-    return new Then($step);
-  }
-
-
-
-
-
-
 
 
    /**
@@ -330,58 +364,125 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 //    print "\n";
 //    die;
 
-/*
 
-    // If a logout link is found, we are logged in. While not perfect, this is
-    // how Drupal SimpleTests currently work as well.
-    $element = $session->getPage();
-    return $element->findLink($this->getDrupalText('log_out'));
+  /**
+   * Return email address for given user role.
+   */
+  protected function getMailAddress($user) {
+
+    if(empty($this->mailAddresses[$user])) {
+      $this->mailAddresses[$user] = $this->email['username'] . '+' . str_replace('_', '.', $user) . '.'  . Random::name(8) . '@'. $this->email['host'];
+    }
+
+    return $this->mailAddresses[$user];
+  }
+
+  /**
+   * @Given /^I fill in "([^"]*)" with "([^"]*)" address$/
+   */
+  public function iFillInWithAddress($label, $user) {
+    $mail_address = $this->getMailAddress($user);
+    $step = "I fill in \"$label\" with \"$mail_address\"";
+    return new Then($step);
+  }
+
+  /**
+   * @Given /^the "([^"]*)" user received an email "([^"]*)"$/
+   */
+  public function theUserReceivedAnEmail($user, $title) {
+
+    $mail_address = $this->getMailAddress($user);
+    $title = $this->fixStepArgument($title);
+
+    $mbox = imap_open( $this->email['mailbox'], $mail_address,  $this->email['password']);
+
+    $all = imap_check($mbox);
+
+    $received = false;
+    // Trying 30 times with one second pause
+    for ($attempts = 0; $attempts++ < 30; ) {
+
+      if ($all->Nmsgs) {
+        foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
+
+          if ($msg->to == $mail_address && $msg->subject == $title) {
+            $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
+            // Consider if we start sending HTML emails.
+            //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
+            $this->mailMessages[$user][] = $msg;
+            imap_delete($mbox, $msg->msgno);
+            $received = true;
+            break 2;
+          }
+        }
+      }
+      sleep(1);
+    }
+    imap_close($mbox);
+    // Throw Exception if message not found.
+    if (!$received) {
+      throw new \Exception('Email "' . $title . '" to "' . $mail_address . '" not received.');
+    }
+  }
+
+  /**
+   * @When /^user "([^"]*)" clicks link containing "(?P<link>[^"]*)" in mail(?: (?:titled )?"(?P<title>[^"]*)")?$/
+   */
+  public function userClickLinkContainingInMail($user, $link_substring, $title = NULL) {
+
+    $link_substring = $this->fixStepArgument($link_substring);
+    $title = $title ? $this->fixStepArgument($title) : NULL;
+
+    foreach ($this->mailMessages[$user] as $msg) {
+      if ($title && $msg->subject == $title) {
+
+        if (!empty($msg->body)) {
+
+          // Look for matching link text.
+          $body = str_replace('\n', '', $msg->body);
+
+          // Get all links.
+          if (preg_match_all('/https?:\/\/.*/i', $body, $matches)) {
+            $links = array_shift($matches);
+
+            foreach ($links as $link) {
+              if (strpos($link, $link_substring) !== false) {
+                $this->getSession()->visit($link);
+              }
+            }
+          }
+        }
+      }
+    }
+//    throw new \Exception('Email "' . $title . '" does not have a link with the text "' . $link_substring . '".');
+//    throw new \Exception('Email "' . $title . '" not received.');
+//    throw new \Exception('Email "' . $title . '" does not have any links.');
+  }
+
+  /**
+   * @Given /^that the user "([^"]*)" is not registered$/
+   */
+  public function thatTheUserIsNotRegistered($user_name) {
+    try {
+      $this->getDriver()->drush('user-cancel', array($user_name), array('yes' => NULL, 'delete-content' => NULL));
+    }
+    catch (Exception $e) {
+      if(strpos($e->getMessage(), "Could not find a user account with the name $user_name!") !== 0){
+        // Print exception message if exception is different than expected
+        print $e->getMessage();
+      }
+    }
+  }
+
+  /**
+   * @Given /^TEST$/
+   */
+  public function test() {
+
+
+  }
 
 
 
 
-
-  @javascript
-  Scenario: Comment login link
-    Given I am not logged in
-    And I am on "/meetings"
-    And I click on the element with css selector "h1.article-title a"
-    And I click "Login"
-    Then I should be on "/user/login"
-
-  @javascript
-  Scenario: Logging in and out
-    Given I am on "/user/login"
-    And I fill in the following:
-      | Username | admin |
-      | Password | pass |
-    When I press "Log in"
-    Then I should see the link "Logout"
-
-  @javascript
-  Scenario: Logging out
-    Given I am on "/user/login"
-    And I fill in the following:
-      | Username | admin |
-      | Password | pass |
-    When I press "Log in"
-    And I click "Logout"
-    Then I should not see the link "Logout"
-
-  @javascript
-  Scenario: Error messages
-   Given I am on "/user"
-   When I press "Log in"
-   Then I should see the error message "Password field is required"
-   And I should not see the error message "Sorry, unrecognized username or password"
-   And I should see the following <error messages>
-   | error messages             |
-   | Username field is required |
-   | Password field is required |
-   And I should not see the following <error messages>
-   | error messages                                                                |
-   | Sorry, unrecognized username or password                                      |
-   | Unable to send e-mail. Contact the site administrator if the problem persists |
-
- */
 }
