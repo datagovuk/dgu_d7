@@ -364,15 +364,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 //    print "\n";
 //    die;
 
-/*
-
-    // If a logout link is found, we are logged in. While not perfect, this is
-    // how Drupal SimpleTests currently work as well.
-    $element = $session->getPage();
-    return $element->findLink($this->getDrupalText('log_out'));
- */
-
-
 
   /**
    * Return email address for given user role.
@@ -394,66 +385,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $step = "I fill in \"$label\" with \"$mail_address\"";
     return new Then($step);
   }
-
-//   /**
-//   * Check that the mail is received.
-//   *
-//   * @Then /^ (?:(?:do|should) )?receive mail (titled )?"(?P<title>[^"]*)"$/
-//   *
-//   * @param $title
-//   *   The email title to look for.
-//   */
-//  public function iShouldReceiveMail($title, $user) {
-//    if (!function_exists('imap_open')) {
-//      throw new \Exception('PHP imap not installed.');
-//    }
-//    $title = $this->fixStepArgument($title);
-//
-//    // Open the IMAP mailbox.
-//    $mail_address = $this->getMailAddress('anonymous_user');
-//    $mbox = imap_open( $this->email['mailbox'], $mail_address,  $this->email['password']);
-//
-//
-//    $mail_creds = $this->getMailCreds();
-//    $mbox = imap_open('{' . $mail_creds['imap'] . '/imap/ssl}INBOX', $mail_creds['user'], $mail_creds['pass']);
-//    if ($mbox) {
-//      $trials = 300;
-//      for ($attempts = 0; $attempts++ < $wait; ) {
-//        // Read all of the messages.
-//        $all = imap_check($mbox);
-//        if ($all->Nmsgs) {
-//          foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-//            if ($msg->to == $mail_creds['email'] && $msg->subject == $title) {
-//              $msg->body['text'] = imap_fetchbody($mbox, $msg->msgno, 1);
-//              $msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
-//              $this->mailMessages[] = $msg;
-//              imap_delete($mbox, $msg->msgno);
-//              break 2;
-//            }
-//          }
-//        }
-//
-//        // Wait a second and try again.
-//        usleep(1000000);
-//        if ($affirmative && ($attempts % 60) == 1) {
-//          print "    Waiting for mail to " . $mail_creds['email'] . "\n";
-//        }
-//      }
-//
-//      // Close the mailbox.
-//      imap_close($mbox);
-//
-//      // Throw Exception when the message is not found.
-//      if ($attempts >= $wait) {
-//        if ($affirmative) {
-//          throw new \Exception('Email "' . $title . '" not found.');
-//        }
-//      }
-//      elseif (!$affirmative) {
-//        throw new \Exception('Email "' . $title . '" received, and should not of been.');
-//      }
-//    }
-//  }
 
   /**
    * @Given /^the "([^"]*)" user received an email "([^"]*)"$/
