@@ -4,6 +4,9 @@
  * Code for the DGU Glossary feature.
  */
 
+define('PUBLIC_GLOSSARY_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('GLOSSARY_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
 include_once 'dgu_glossary.features.inc';
 
 function dgu_glossary_menu()
@@ -109,7 +112,7 @@ function dgu_glossary_theme($existing, $type, $theme, $path)
 
 function dgu_glossary_suggest_definition_thanks_page($term)
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $vid = $term->vid;
     $tid = $term->tid;
     $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
@@ -119,7 +122,7 @@ function dgu_glossary_suggest_definition_thanks_page($term)
 
 function dgu_glossary_new_definition_thanks_page()
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $lex_path = 'glossary';
     $links = "Return to the " . l(t("Glossary"), "$lex_path");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
@@ -140,6 +143,7 @@ function dgu_glossary_suggest_definition_page($term)
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_definition_node_form', $node);
 
+    $form['current_def']['#markup'] = "<label>Current definition</label><p>{$term->description}</p>";
     $form['title']['#value'] = t('New suggested term for @term made by @user',
         array('@term' => $term->name, '@user' => $user->name));
     $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
@@ -305,7 +309,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['comments']['#label_display'] = 'hidden';
             unset($variables['content']['field_comment']);
             unset($variables['content']['field_is_new']);
-            $variables['content']['field_quality']['#title'] = 'APSI quality score';
+            $variables['content']['field_quality']['#title'] = 'APPSI quality score';
             $variables['quality_score'] = render($variables['content']['field_quality']);
             hide($variables['content']['field_quality']);
             break;
@@ -455,4 +459,47 @@ function dgu_glossary_fivestar_widgets() {
 
 function dgu_glossary_vud_votes_alter(&$votes) {
   drupal_set_message("Your vote has been recorded");
+}
+
+
+function dgu_glossary_node_access_records($node) {
+  if (($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
+  $grants = array();
+  // Public request
+  $grants[] = array(
+    'realm' => 'glossary_moderator',
+    'gid' => GLOSSARY_MODERATOR_GRANT,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  $grants[] = array(
+    'realm' => 'glossary_moderator',
+    'gid' => $node->uid,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  if ($node->status == 1) {
+    $grants[] = array(
+      'realm' => 'glossary_moderator',
+      'gid' => PUBLIC_GLOSSARY_GRANT,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+    );
+  }
+    return $grants;
+  }
+}
+
+function dgu_glossary_node_grants($account, $op) {
+  $grants = array();
+  $grants['glossary_moderator'] = array($account->uid);
+  $grants['glossary_moderator'] = array($account->uid, PUBLIC_GLOSSARY_GRANT);
+  if (user_access('moderate glossary', $account)) {
+    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
+    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
+  }
+  return $grants;
 }

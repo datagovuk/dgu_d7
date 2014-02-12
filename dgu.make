@@ -78,9 +78,9 @@ projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditio
 projects[reply][type] = "module"
 projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
-projects[reply][download][branch] = "7.x-1.x"
+projects[reply][download][revision] = "7012839b9eb828f089f2cee02f6e719308eb1569"
 projects[reply][subdir] = "contrib"
-projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
+#projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
