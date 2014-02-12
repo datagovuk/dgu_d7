@@ -177,7 +177,7 @@ projects[services][subdir] = "contrib"
 projects[services_views][version] = "1.0-beta2"
 projects[services_views][subdir] = "contrib"
 
-projects[smtp][version] = "contrib"
+projects[smtp][version] = "1.0"
 projects[smtp][subdir] = "contrib"
 
 projects[libraries][version] = "2.1"
