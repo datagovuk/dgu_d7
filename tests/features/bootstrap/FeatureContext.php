@@ -23,6 +23,7 @@ use Behat\Gherkin\Node\PyStringNode,
 
 use Drupal\Component\Utility\Random;
 
+
 /**
  * Some of our features need to run their scenarios sequentially
  * and we need a way to pass relevant data (like generated node id)
@@ -105,26 +106,24 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
   }
 
-  /**
-  * Override Element::find().
-  *
-  * To manipulate only visible elements
-  */
-  public function find($selector, $locator)
-  {
-      $items = $this->findAll($selector, $locator);
+    /**
+     * @BeforeFeature
+     */
+    public static function prepare(FeatureEvent $event)
+    {
+        //$cmd = 'drush @standards.test ev \'$query = new EntityFieldQuery(); $result = $query->entityCondition("entity_type", "node")->propertyCondition("title", "Test ", "STARTS_WITH")->execute(); if (isset($result["node"])) {$nids = array_keys($result["node"]); foreach ($nids as $nid) {node_delete($nid);}}\'';
+        //shell_exec($cmd);
+    }
 
-      if (count($items) && !method_exists(current($items), 'isVisible')) {
-        return current($items);
-      }
-
-      foreach ($items as $item) {
-        if ($item->isVisible()) {
-          return $item;
+    public function getSession($name = null)
+    {
+        $session = $this->getMink()->getSession($name);
+        $page = $session->getPage();
+        if ($page instanceof Behat\Mink\Element\DocumentElement) {
+            $a=1;
         }
-      }
-  }
-
+        return $session;
+    }
 
   /**
    * Hold the execution until the page is/resource are completely loaded OR timeout
