@@ -115,16 +115,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
         //shell_exec($cmd);
     }
 
-    public function getSession($name = null)
-    {
-        $session = $this->getMink()->getSession($name);
-        $page = $session->getPage();
-        if ($page instanceof Behat\Mink\Element\DocumentElement) {
-            $a=1;
-        }
-        return $session;
-    }
-
   /**
    * Hold the execution until the page is/resource are completely loaded OR timeout
    *
