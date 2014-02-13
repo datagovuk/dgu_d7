@@ -43,9 +43,8 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     'start' => 0,
     'keys' => '',
     'filters' => isset($_GET['filters']) ? $_GET['filters'] : '',
-    'sort' => isset($_GET['solrsort']) ? $_GET['solrsort'] : '',
+    'sort' => isset($_GET['solrsort']) ? $_GET['solrsort'] : 'score',
   );
-
   // Use keywords from the selected context if set to do so.
   if (!empty($context) && !empty($context->data)) {
     $search['keys'] = $context->data;
@@ -60,6 +59,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $form_state['searchtype'] = '';
     $search['filters'] = empty($_GET['f'])? array() : $_GET['f'];
     $form_state['f'] = $search['filters'];
+
   } else {
     $form_state['content_type'] = $search_types[$conf['content_type']];
     $form_state['searchtype'] = $conf['content_type'];
@@ -121,7 +121,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $dr_count = $result->fetchField();
     $form_state['dataset_request_count'] = $dr_count;
   }
-
+  $form_state['solrsort'] = $solrsort;
   $form = drupal_build_form('dgu_search_form', $form_state);
 
   // Statcically cached keyword in dgu_search.module:dgu_search_apachesolr_query_prepare()

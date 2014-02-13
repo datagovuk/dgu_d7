@@ -18,6 +18,7 @@
             <input type="hidden" name="f[<?php print $i; ?>]" value="<?php print $value ?>">
             <?php endforeach ?>
             <input type="hidden" name="searchtype" value="<?php print $form['searchtype']['#value'] ?>">
+            <input type="hidden" name="solrsort" value="<?php print $form['solrsort']['#value'] ?>">
             <input type="hidden" name="submit" value="search">
           </form>
         </div>

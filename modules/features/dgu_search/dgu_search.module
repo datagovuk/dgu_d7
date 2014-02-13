@@ -133,6 +133,10 @@ function dgu_search_search_block($form, &$form_state) {
     '#type' => 'hidden',
     '#value' => $form_state['searchtype'],
   );
+  $form['solrsort'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['solrsort'],
+  );
   $form['count'] = array(
     '#type' => 'hidden',
     '#value' => $form_state['count'],
@@ -218,12 +222,21 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
       }
     }
 
+    $solrsort = '';
+    if (isset($fv['solrsort']) ){
+      if ($facets)
+        $solrsort = "";
+      else
+        $solrsort = "?";
+      $solrsort = $solrsort . "solrsort=${fv['solrsort']}";
+    }
+
     // Replace keys with their rawurlencoded value
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
 
     // Override redirect with a new bundle specific search.
     global $base_url;
-    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . $facets;
+    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . $facets . $solrsort;
   }
 }
 
