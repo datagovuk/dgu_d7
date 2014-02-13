@@ -58,13 +58,14 @@ default:
         username_field: 'Username or e-mail address '
       drush:
         alias: 'self'
+    features/extensions/DGUExtension.php: ~
 local:
   extensions:
     Behat\MinkExtension\Extension:
-      base_url: 'http://d7'
+      base_url: 'http://dgu_d7'
     Drupal\DrupalExtension\Extension:
       drush:
-        root: '/var/jenkins-builds/std_dev2/'
+        root: '/home/pawel/PhpstormProjects/dgu_d7'
 dev:
   extensions:
     Behat\MinkExtension\Extension:
