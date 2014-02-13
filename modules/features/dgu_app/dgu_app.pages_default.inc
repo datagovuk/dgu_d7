@@ -209,7 +209,7 @@ function dgu_app_default_page_manager_pages() {
       'url' => '',
       'display' => 'block',
       'override_title' => 1,
-      'override_title_text' => 'Latest apps <a href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => 'Latest apps <a class="rss-icon" href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -242,7 +242,7 @@ function dgu_app_default_page_manager_pages() {
       'url' => '',
       'display' => 'block_1',
       'override_title' => 1,
-      'override_title_text' => 'Top rated apps <a href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => 'Top rated apps <a class="rss-icon" href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
