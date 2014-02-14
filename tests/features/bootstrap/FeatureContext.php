@@ -175,6 +175,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * Determine if the a user is already logged in.
+   * Override DrupalContext::loggedIn() because we display logout link in the dropdown.
+   */
+  public function loggedIn() {
+    $session = $this->getSession();
+    $session->visit($this->locatePath('/'));
+    $user_icon = $session->getPage()->find('css','#dgu-nav a.nav-user');
+    if(empty($user_icon)) {
+      throw new Exception("User icon on the top black bar not found");
+    }
+    $user_icon->click();
+    $dropdown = $session->getPage()->find('css','#dgu-nav ul.dgu-user-dropdown');
+    // If a user dropdown is found, we are logged in.
+    return $dropdown;
+  }
 
   /**
    * Authenticates a user with password from configuration.
@@ -211,23 +227,34 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $link->click();
   }
 
-
-  //TODO - add class to rss link
-
   /**
-   * @Given /^I follow RSS link$/
+   * @Given /^I click RSS icon in "([^"]*)" column in "([^"]*)" row$/
    */
-  public function iFollowRSSLink() {
-    $page = $this->getSession()->getPage();
-    $link = $page->find('css','pane-forum-categories > a');
-    if(empty($link)) {
-      throw new Exception("RSS link not found");
+  public function iClickRssIconInColumnInRow($column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
     }
-    $link->click();
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $rss_icons = $column->findAll('css', '.rss-icon');
+    if (empty($rss_icons)) {
+      throw new Exception('No RSS icons found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+    }
+    foreach ($rss_icons as $rss_icon) {
+      if (!$rss_icon->isVisible()) {
+        throw new Exception('RSS icon found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+      }
+      $rss_icon->click();
+      return;
+    }
+    throw new Exception('RSS icon found in the ' . $column . ' column but it\'s not visible');
   }
-
-
-
 
    /**
    * @Given /^I fill in "([^"]*)" with random text$/
@@ -309,50 +336,90 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^I should see "([^"]*)" block in "([^"]*)" column$/
+   * @Given /^I should see "([^"]*)" block in "([^"]*)" column in "([^"]*)" row$/
    */
-  public function iShouldSeeBlockInColumn($block_title, $column) {
-    $region = $this->getSession()->getPage()->find('region', $column);
-    if (empty($region)) {
-      throw new Exception(ucfirst($column) . ' column not found');
+  public function iShouldSeeBlockInColumnInRow($block_title, $column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
     }
-    $h2 = $region->findAll('css', '.block h2');
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $h2 = $column->findAll('css', '.block h2');
     if (empty($h2)) {
-      throw new Exception('No blocks were found in the ' . $column . ' column');
+      throw new Exception('No blocks were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
     foreach ($h2 as $text) {
       if (trim($text->getText()) == $block_title) {
+        if(!$text->isVisible()) {
+          throw new Exception('Block "' . $block_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+        }
         return;
       }
     }
-    throw new Exception('The block "' . $block_title . '" was not found in the ' . $column . ' column');
+    throw new Exception('The block "' . $block_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+  }
+
+    /**
+     * @Given /^I should see "([^"]*)" pane in "([^"]*)" column in "([^"]*)" row$/
+     */
+    public function iShouldSeePaneInColumnInRow($pane_title, $column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
+    }
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $h2 = $column->findAll('css', '.panel-pane h2');
+    if (empty($h2)) {
+      throw new Exception('No panel panes were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+    }
+    foreach ($h2 as $text) {
+        $a = $text->getText();
+      if (trim($text->getText()) == $pane_title) {
+        if(!$text->isVisible()) {
+          throw new Exception('Pane "' . $pane_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+        }
+        return;
+      }
+    }
+    throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
   }
 
   /**
-   * @Given /^I should see "([^"]*)" pane in "([^"]*)" column$/
+   * Function to check if the field specified is outlined in red or not
+   *
+   * @Given /^the field "([^"]*)" should be outlined in red$/
+   *
+   * @param string $field
+   *   The form field label to be checked.
    */
-  public function iShouldSeePaneInColumn($pane_title, $column) {
-    $region = $this->getSession()->getPage()->find('region', $column);
-    if (empty($region)) {
-      throw new Exception(ucfirst($column) . ' column not found');
+  public function theFieldShouldBeOutlinedInRed($field) {
+    $page = $this->getSession()->getPage();
+    // get the object of the field
+    $formField = $page->findField($field);
+    if (empty($formField)) {
+      throw new Exception('The page does not have the field with label "' . $field . '"');
     }
-    $h2 = $region->findAll('css', '.panel-pane h2');
-    if (empty($h2)) {
-      throw new Exception('No panel panes were found in the ' . $column . ' column');
+    // get the 'class' attribute of the field
+    $class = $formField->getAttribute("class");
+    // we get one or more classes with space separated. Split them using space
+    $class = explode(" ", $class);
+    // if the field has 'error' class, then the field will be outlined with red
+    if (!in_array("error", $class)) {
+      throw new Exception('The field "' . $field . '" is not outlined with red');
     }
-    foreach ($h2 as $text) {
-      if (trim($text->getText()) == $pane_title) {
-        return;
-      }
-    }
-    throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column');
   }
-
-//    print "\n";
-//    print_r($text->getText());
-//    print "\n";
-//    die;
-
 
   /**
    * Return email address for given user role.
