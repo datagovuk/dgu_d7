@@ -17,24 +17,37 @@
  */
 ?>
 <div class="panel-2col-stacked-50-50 row clearfix panel-display" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
-  <?php if ($content['top']): ?>
-    <div class="panel-col-top panel-panel">
-      <div class="inside"><?php print $content['top']; ?></div>
-    </div>
-  <?php endif; ?>
 
-  <div class="center-wrapper">
-    <div class="panel-col-first panel-panel col-md-6">
-      <div class="inside"><?php print $content['left']; ?></div>
+  <?php if ($content['top']): ?>
+    <div class="center-wrapper row-first">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+        <div class="inside"><?php print $content['top']; ?></div>
+      </div>
     </div>
-    <div class="panel-col-last panel-panel col-md-6">
-      <div class="inside"><?php print $content['right']; ?></div>
+  <?php endif ?>
+
+  <?php if ($content['left'] || $content['right']): ?>
+    <div class="center-wrapper row-second row-middle">
+      <?php if ($content['left']): ?>
+        <div class="panel-panel panel-col-first col-md-6">
+          <div class="inside"><?php print $content['left']; ?></div>
+        </div>
+      <?php endif ?>
+
+      <?php if ($content['right']): ?>
+        <div class="panel-panel panel-col-second panel-col-last col-md-6">
+          <div class="inside"><?php print $content['right']; ?></div>
+        </div>
+      <?php endif ?>
     </div>
-  </div>
+  <?php endif ?>
 
   <?php if ($content['bottom']): ?>
-    <div class="panel-col-bottom panel-panel">
-      <div class="inside"><?php print $content['bottom']; ?></div>
+    <div class="center-wrapper row-third row-last">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+        <div class="inside"><?php print $content['bottom']; ?></div>
+      </div>
     </div>
-  <?php endif; ?>
+  <?php endif ?>
+
 </div>
