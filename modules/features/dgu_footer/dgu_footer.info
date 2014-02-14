@@ -8,7 +8,6 @@ dependencies[] = page_manager
 features[ctools][] = page_manager:pages_default:1
 features[features_api][] = api:2
 features[menu_custom][] = menu-footer
-features[menu_links][] = menu-footer:contact
 features[page_manager_pages][] = accessibility
 features[page_manager_pages][] = code_of_conduct
 features[page_manager_pages][] = cookies_policy

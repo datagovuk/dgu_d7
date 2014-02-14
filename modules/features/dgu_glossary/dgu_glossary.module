@@ -4,6 +4,9 @@
  * Code for the DGU Glossary feature.
  */
 
+define('PUBLIC_GLOSSARY_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('GLOSSARY_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
 include_once 'dgu_glossary.features.inc';
 
 function dgu_glossary_menu()
@@ -90,30 +93,36 @@ function dgu_glossary_theme($existing, $type, $theme, $path)
                 'node' => NULL,
             ),
         ),
-        'suggested_definition_thanks' => array(
-            'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
-            'template' => 'glossary_thanks_page',
-            'variables' => array(
-                'thanks_text' => null,
-                'links' => null,
-            )
-        ),
+      'suggested_definition_thanks' => array(
+        'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+        'template' => 'glossary_thanks_page',
+        'variables' => array(
+          'thanks_text' => null,
+          'links' => null,
+        )
+      ),
+      'glossary_item_actions' => array(
+        'path' => drupal_get_path('module', 'dgu_glossary') . '/templates',
+        'template' => 'glossary_item_actions',
+        'variables' => array(
+        )
+      ),
     );
 }
 
 function dgu_glossary_suggest_definition_thanks_page($term)
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $vid = $term->vid;
     $tid = $term->tid;
     $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
-    $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to " . l($term->name, "$lex_path/$tid");
+    $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to the term: " . l($term->name, "$lex_path/$tid");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
 }
 
 function dgu_glossary_new_definition_thanks_page()
 {
-    $thanks_text = t("Thank you for your suggestion.  We will normally publish your suggestion within 5 working days.");
+    $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
     $lex_path = 'glossary';
     $links = "Return to the " . l(t("Glossary"), "$lex_path");
     return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
@@ -129,10 +138,12 @@ function dgu_glossary_suggest_definition_page($term)
         'language' => LANGUAGE_NONE,
     );
     drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
+    drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
     $form_state['build_info']['args'] = array($node);
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_definition_node_form', $node);
 
+    $form['current_def']['#markup'] = "<label>Current definition</label><p>{$term->description}</p>";
     $form['title']['#value'] = t('New suggested term for @term made by @user',
         array('@term' => $term->name, '@user' => $user->name));
     $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
@@ -198,6 +209,9 @@ function dgu_glossary_theme_registry_alter(&$theme_registry)
     $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
     $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
     $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
+    $theme_registry['lexicon_alphabar']['template'] = 'lexicon-alphabar';
+    $theme_registry['lexicon_alphabar']['path'] = $module_path . "/templates";
+
 }
 
 /**
@@ -213,7 +227,16 @@ function _dgu_glossary_insert_after_first_element(&$a, $element)
 
 function dgu_glossary_preprocess(&$variables, $hook)
 {
+    $path = drupal_get_path('module', 'dgu_glossary');
+    drupal_add_css($path . '/css/dgu_glossary.css');
     switch ($hook) {
+        case 'lexicon_overview_section':
+            $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . "<a href='#glossary'>go to top</a>";
+            break;
+        case 'lexicon_overview':
+          $variables['suggest_new_term_link'] = user_access('suggest new terms') ? 'glossary/suggest_new' : '/user/login?destination=glossary/suggest_new';
+          $variables['suggest_new_term_text'] = user_access('suggest new terms') ? 'Suggest a new Term' : 'Log in to Suggest a new Term';
+            break;
         case 'lexicon_alphabar':
             $path = drupal_get_path('module', 'dgu_glossary');
             drupal_add_js($path . '/js/glossary.js');
@@ -229,8 +252,10 @@ function dgu_glossary_preprocess(&$variables, $hook)
         case 'taxonomy_term':
             $term = $variables['term'];
             $voc = taxonomy_vocabulary_load($term->vid);
-            $term_path = $voc->machine_name . '/' . $variables['tid'];
+            global $base_url;
+            $term_path = '/' . $voc->machine_name . '/' . $variables['tid'];
             $variables['content']['field_endorse']['#weight'] = 98;
+            $variables['content']['field_endorse']['#label_display'] = 'hidden';
 
             // We need the instance id of the comments field on the glossary definition
             // in order to properly build a reply add link
@@ -240,48 +265,31 @@ function dgu_glossary_preprocess(&$variables, $hook)
                 return;
             $instance = $instances['field_comment'];
 
-            $button_link_options = array('attributes' => array('class' => array('button')));
-            $link_options = array();
-            $make_comment_path = 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
+            $make_comment_path = $base_url . '/' . 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $make_comment =  t('Make a comment');
             if (!user_access('post comments')) {
-                $destination = array('destination' => $make_comment_path);
-                $link_options = array('query' => $destination);
-                $make_comment_path =  'user/login';
+                $make_comment_path = $base_url . "/user/login?destination=/reply/add/{$term->tid}/{$instance['id']}/0";
                 $make_comment = t('Login to make a comment');
             }
-            $make_comment_button = l($make_comment, $make_comment_path, $button_link_options);
-            $make_comment_link = l($make_comment , $make_comment_path, $link_options);
 
 
-            $button_link_options = array('attributes' => array('class' => array('button')));
-            $link_options = array();
-            $suggest_better_path = $term_path . '/suggest_definition';
+            $suggest_better_path = $base_url . '/' . $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
             if(!user_access('suggest new definitions')){
-                $destination = array('destination' => $suggest_better_path);
-                $button_link_options += array('query' => $destination);
-                $link_options = array('query' => $destination);
-                $suggest_better_path =  'user/login';
+                $suggest_better_path = $base_url . "/user/login?destination=$term_path/suggest_better";
                 $suggest_better = t("Log in to suggest a better definition");
 
             }
-            $suggest_better_button = l($suggest_better, $suggest_better_path, $button_link_options);
-            $suggest_better_link = l($suggest_better, $suggest_better_path, $link_options);
 
-            $variables['content']['suggest_def'] = array(
-                '#markup' => "<div>" . $suggest_better_button . "</div>",
-                '#weight' => 99,
-            );
-            $variables['content']['make_comment'] = array(
-                '#markup' => "<div>" . $make_comment_button  . "</div>",
-                '#weight' => 100,
-            );
-            $variables['content']['further_info'] = array(
-                '#markup' => "<p>You can help us refine and improve the definition of the term: Aggregated data.  You can " .
-                    $suggest_better_link . " or you can participate in the conversation and " .
-                    $make_comment_link . ".</p>",
-                '#weight' => 101,
+            $variables['content']['glossary_item_actions'] = array(
+              '#markup' => theme('glossary_item_actions', array(
+                'comment_path' => $make_comment_path,
+                'comment_text' => $make_comment,
+                'suggest_path' => $suggest_better_path,
+                'suggest_text' => $suggest_better,
+                )
+              ),
+              '#weight' => 99,
             );
 
             $variables['suggested_definitions'] = '';
@@ -299,8 +307,11 @@ function dgu_glossary_preprocess(&$variables, $hook)
             //hide comments in the content section and display separately
             $variables['comments'] = $variables['content']['field_comment'];
             $variables['comments']['#label_display'] = 'hidden';
-            unset($variables['content']['field_comments']);
-
+            unset($variables['content']['field_comment']);
+            unset($variables['content']['field_is_new']);
+            $variables['content']['field_quality']['#title'] = 'APPSI quality score';
+            $variables['quality_score'] = render($variables['content']['field_quality']);
+            hide($variables['content']['field_quality']);
             break;
         default:
             # code...
@@ -421,13 +432,13 @@ function dgu_glossary_suggest_new_page()
         'language' => LANGUAGE_NONE,
     );
     drupal_set_title(t('Suggest new term and definition.'), PASS_THROUGH);
+    drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
     $form_state['build_info']['args'] = array($node);
     form_load_include($form_state, 'inc', 'node', 'node.pages');
     $form = drupal_get_form('suggested_term_node_form', $node);
-
     $form['title']['#value'] = t('New suggested term by @user',
         array('@user' => $user->name));
-
+    unset($form['additional_settings']);
     return $form;
 }
 
@@ -436,4 +447,59 @@ function dgu_glossary_query_alter(QueryAlterableInterface $query) {
         $query-> leftJoin('field_data_field_is_new', 'fn', 't.tid = fn.entity_id');
         $query-> condition(db_or()->condition('field_is_new_value', 0)->isNull('field_status_value'));
     }
+}
+
+
+function dgu_glossary_fivestar_widgets() {
+  $widgets = array(
+    drupal_get_path('module', 'dgu_glossary') . '/css/appsi_quality_score.css' => 'appsi_quality_score',
+  );
+  return $widgets;
+}
+
+function dgu_glossary_vud_votes_alter(&$votes) {
+  drupal_set_message("Your vote has been recorded");
+}
+
+
+function dgu_glossary_node_access_records($node) {
+  if (($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
+  $grants = array();
+  // Public request
+  $grants[] = array(
+    'realm' => 'glossary_moderator',
+    'gid' => GLOSSARY_MODERATOR_GRANT,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  $grants[] = array(
+    'realm' => 'glossary_moderator',
+    'gid' => $node->uid,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  if ($node->status == 1) {
+    $grants[] = array(
+      'realm' => 'glossary_moderator',
+      'gid' => PUBLIC_GLOSSARY_GRANT,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+    );
+  }
+    return $grants;
+  }
+}
+
+function dgu_glossary_node_grants($account, $op) {
+  $grants = array();
+  $grants['glossary_moderator'] = array($account->uid);
+  $grants['glossary_moderator'] = array($account->uid, PUBLIC_GLOSSARY_GRANT);
+  if (user_access('moderate glossary', $account)) {
+    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
+    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
+  }
+  return $grants;
 }

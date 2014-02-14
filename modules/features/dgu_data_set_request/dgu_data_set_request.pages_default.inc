@@ -64,7 +64,7 @@ function dgu_data_set_request_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Your data requests';
+  $display->title = 'Data requests';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
@@ -177,7 +177,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_threecol';
+  $display->layout = 'dgu_threecol_stacked';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -185,10 +185,12 @@ function dgu_data_set_request_default_page_manager_pages() {
       'left' => NULL,
       'middle' => NULL,
       'right' => NULL,
+      'top' => NULL,
+      'bottom' => NULL,
     ),
   );
   $display->cache = array();
-  $display->title = 'Your data requests';
+  $display->title = 'Data requests';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
@@ -249,7 +251,7 @@ function dgu_data_set_request_default_page_manager_pages() {
       'url' => '',
       'display' => 'block',
       'override_title' => 1,
-      'override_title_text' => 'Latest data requests',
+      'override_title_text' => 'Latest data requests <a href="/odug/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -270,9 +272,23 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
-      'title' => 'ODUG overview',
-      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li><li><a href="/odug/old-data-requests">See requests made under the old \'unlocking service\'.</a></li> </ul></div>',
-      'format' => 'filtered_html',
+      'title' => 'ODUG Members',
+      'body' => '<a href="/users/robert_barr">Robert Barr</a><br/>
+<a href="/users/dlazanski">Dominique Lazanski</a><br/>
+<a href="/users/gschimd">Gesche Schmid</a><br/>
+<a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
+<a href="/users/charlieboundy">Charlie Boundy</a><br/>
+<a href="/users/alex-kafetz">Alex Kafetz</a><br/>
+<a href="/users/duncan3ross">Duncan Ross</a><br/>
+<a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
+<a href="/users/tomsmith">Tom Smith</a><br/>
+Carlos Somohano<br/>
+Paul Fenton<br/>
+<a href="/users/hsavory">Heather Savory</a><br/>
+<a href="/users/pmalyon">Paul Malyon</a><br/>
+<a href="/users/jenit">Jeni Tennison</a><br/>
+<a href="/users/harveylewis">Harvey Lewis</a><br/>',
+      'format' => 'unfiltered',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -327,9 +343,9 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
-      'title' => 'Progress on data requests',
-      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p ><a class="btn btn-primary center-me" href="/odug/roadmap">See Dashboard</a></p> <p><a href="/odug/status">Find out more about data request status</a></p>',
-      'format' => 'full_html',
+      'title' => 'ODUG overview',
+      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li><li><a href="/odug/old-data-requests">See requests made under the old \'unlocking service\'.</a></li> </ul></div>',
+      'format' => 'filtered_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -345,6 +361,105 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-6';
     $pane->panel = 'middle';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => '',
+      'title' => 'Useful links',
+      'body' => '<a href="http://www.theodi.org ">The Open Data Institute</a>
+<a href="http://www.bis.gov.uk/transparency/data-strategy-board ">The Data Strategy board</a>
+<a href="http://www.cabinetoffice.gov.uk/content/open-data-user-group ">Cabinet Office ODUG page</a>
+<a href="http://www.bis.gov.uk/policies/shareholderexecutive/structure/portfolio-unit/public-data-group/background">Public Data Group</a>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['middle'][2] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
+    $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'create dataset_request content',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Request new data (for authenticated users)',
+      'title' => '',
+      'body' => '<p class="center-contents"><a class="btn-default btn btn-primary" href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-7'] = $pane;
+    $display->panels['right'][0] = 'new-7';
+    $pane = new stdClass();
+    $pane->pid = 'new-8';
+    $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 1,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Request new data (for anonymous users)',
+      'title' => '',
+      'body' => '<p class="center-contents"><a class="btn-default btn btn-primary" href="/user/login?destination=/node/add/dataset-request">Login to request new data</a></p><p>This form will allow you to submit a data request.</p>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-8'] = $pane;
+    $display->panels['right'][1] = 'new-8';
+    $pane = new stdClass();
+    $pane->pid = 'new-9';
+    $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'minutes';
     $pane->shown = TRUE;
@@ -373,23 +488,20 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['middle'][2] = 'new-6';
+    $display->content['new-9'] = $pane;
+    $display->panels['right'][2] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-7';
-    $pane->panel = 'middle';
+    $pane->pid = 'new-10';
+    $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
-      'title' => 'Useful links',
-      'body' => '<a href="http://www.theodi.org ">The Open Data Institute</a>
-<a href="http://www.bis.gov.uk/transparency/data-strategy-board ">The Data Strategy board</a>
-<a href="http://www.cabinetoffice.gov.uk/content/open-data-user-group ">Cabinet Office ODUG page</a>
-<a href="http://www.bis.gov.uk/policies/shareholderexecutive/structure/portfolio-unit/public-data-group/background">Public Data Group</a>',
-      'format' => 'filtered_html',
+      'title' => 'Progress on data requests',
+      'body' => '<p><a href="/odug/roadmap"> <img src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png" alt="" /> </a></p> <p  class="center-contents"><a class="btn-default btn btn-primary" href="/odug/roadmap">See Dashboard</a></p> <p class="center-contents"><a href="/odug/status">Find out more about data request status</a></p>',
+      'format' => 'full_html',
       'substitute' => TRUE,
     );
     $pane->cache = array();
@@ -400,18 +512,21 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['middle'][3] = 'new-7';
+    $display->content['new-10'] = $pane;
+    $display->panels['right'][3] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
-    $pane->panel = 'right';
-    $pane->type = 'block';
-    $pane->subtype = 'dgu_search-searchdataset_request';
+    $pane->pid = 'new-11';
+    $pane->panel = 'top';
+    $pane->type = 'dgu_search_form';
+    $pane->subtype = 'dgu_search_form';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'title_override' => NULL,
+      'title_override_text' => NULL,
       'override_title' => 0,
       'override_title_text' => '',
+      'content_type' => 'dataset_request',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -421,120 +536,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][0] = 'new-8';
-    $pane = new stdClass();
-    $pane->pid = 'new-9';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array(
-      'plugins' => array(
-        0 => array(
-          'name' => 'perm',
-          'settings' => array(
-            'perm' => 'create dataset_request content',
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
-        ),
-      ),
-    );
-    $pane->configuration = array(
-      'admin_title' => 'Request new data (for authenticated users)',
-      'title' => '',
-      'body' => '<p><a class="btn btn-primary center-me" href="/node/add/dataset-request">Request new data</a></p><p>This form will allow you to submit a data request.</p>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['right'][1] = 'new-9';
-    $pane = new stdClass();
-    $pane->pid = 'new-10';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array(
-      'plugins' => array(
-        0 => array(
-          'name' => 'role',
-          'settings' => array(
-            'rids' => array(
-              0 => 1,
-            ),
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
-        ),
-      ),
-    );
-    $pane->configuration = array(
-      'admin_title' => 'Request new data (for anonymous users)',
-      'title' => '',
-      'body' => '<p><a class="btn btn-primary center-me" href="/user/login?destination=/node/add/dataset-request">Login to request new data</a></p><p>This form will allow you to submit a data request.</p>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['right'][2] = 'new-10';
-    $pane = new stdClass();
-    $pane->pid = 'new-11';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'ODUG Members',
-      'body' => '<a href="/users/robert_barr">Robert Barr</a><br/>
-<a href="/users/dlazanski">Dominique Lazanski</a><br/>
-<a href="/users/gschimd">Gesche Schmid</a><br/>
-<a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
-<a href="/users/charlieboundy">Charlie Boundy</a><br/>
-<a href="/users/alex-kafetz">Alex Kafetz</a><br/>
-Duncan Ross<br/>
-<a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
-<a href="/users/tomsmith">Tom Smith</a><br/>
-Carlos Somohano<br/>
-Paul Fenton<br/>
-<a href="/users/hsavory">Heather Savory</a><br/>
-<a href="/users/pmalyon">Paul Malyon</a><br/>
-<a href="/users/jenit">Jeni Tennison</a><br/>
-<a href="/users/harveylewis">Harvey Lewis</a><br/>',
-      'format' => 'unfiltered',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 3;
-    $pane->locks = array();
     $display->content['new-11'] = $pane;
-    $display->panels['right'][3] = 'new-11';
+    $display->panels['top'][0] = 'new-11';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-9';
+  $display->title_pane = 'new-7';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data_requests'] = $page;

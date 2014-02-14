@@ -34,12 +34,17 @@
             <?php print $lexicon_overview->introduction; ?>
         </div>
     <?php endif;?>
-    <div class="glossary_filter">
-        <input type="radio" name="filter_glossary" value="show_approved">Only approved terms</input>
-        <input type="radio" name="filter_glossary" value="show_new">Only new terms</input>
-        <input checked="true" type="radio" name="filter_glossary" value="show_both">Both new and approved terms</input>
+
+
+    <div id="glossary_filter">
+      <ul class="nav nav-tabs">
+        <li><a href="#approved" id="show_approved" data-toggle="tab">Approved terms</a></li>
+        <li><a href="#new" id="show_new" data-toggle="tab">New terms</a></li>
+        <li class="active"><a href="#both" id="show_both" data-toggle="tab">All terms</a></li>
+
+      </ul>
+      <a href="<?php print $suggest_new_term_link ?>" class="suggest-new btn btn-mini btn-primary"><?php print $suggest_new_term_text ?></a>
     </div>
-    <a href="glossary/suggest_new" class="button">Suggest a new Term</a>
     <div class="lexicon-list">
         <?php foreach ($lexicon_overview_sections as $section) : ?>
             <?php print $section; ?>

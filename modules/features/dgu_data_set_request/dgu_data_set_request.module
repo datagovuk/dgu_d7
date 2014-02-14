@@ -4,7 +4,74 @@
  * Code for the DGU Data set request feature.
  */
 
+
+define('DATA_REQUEST_MODERATION_PERMISSION', 'edit any dataset_request content');
+
+define('PUBLIC_DATA_REQUEST_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
 include_once 'dgu_data_set_request.features.inc';
+
+
+/**
+ * Implements hook_menu_alter().
+ */
+function dgu_data_set_request_menu_alter(&$items) {
+  // Override the node edit menu item title.
+  $items['node/%node/edit']['title callback'] = 'dgu_data_set_request_edit_tab_title';
+  $items['node/%node/edit']['title arguments'] = array(1);
+
+  // Override the node view menu item title.
+  $items['node/%node/view']['title callback'] = 'dgu_data_set_request_view_tab_title';
+  $items['node/%node/view']['title arguments'] = array(1);
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_data_set_request_edit_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    return t('Edit');
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_edit_tab_title($node);
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_data_set_request_view_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    return t('View');
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_view_tab_title($node);
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function dgu_data_set_request_page_alter(&$page) {
+  if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['form_id']) && $page['content']['system_main']['#form_id'] == 'dataset_request_node_form' && user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    unset($page['content']['workbench_block']);
+    unset($page['help']['system_help']);
+
+  }
+}
 
 /**
  * @param $form
@@ -12,38 +79,41 @@ include_once 'dgu_data_set_request.features.inc';
  * @param $form_id
  *
  *
- * Implement Hook hook_form_FORM_ID_alter which:
+ * Implements Hook hook_form_FORM_ID_alter which:
  * -  creates our own hidden input for review status and hides the select
  * box for any user who does not have the "Dataset Request: Edit any content" permission.
  * - adds a button to submit the data request for moderation.
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
 
-  $form['revision_information']['#type'] = 'hidden';
-
-  $form['actions']['publish']['#access'] = TRUE;
-  $form['actions']['publish']['#value'] = 'Submit for moderation';
-  $form['actions']['publish']['#type'] = 'submit';
-  $form['actions']['publish']['#weight'] = 6;
-  $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
-
-  $form['actions']['submit']['#value'] = 'Save draft';
-  $form['#submit'][] = 'dgu_data_set_request_node_submit';
+  drupal_set_title('Create a dataset request');
 
   unset($form['actions']['preview']);
 
   $form['#attributes']['class'][] = "boxed";
-  if (!user_access('edit any dataset_request content')){
-      $form['field_review_status'] = array(
-          '#type' => 'hidden',
-          '#title' => t('Review status'),
-          '#value' => 0,
-      );
-      $form['field_review_notes'] = array(
-          '#type' => 'hidden',
-          '#title' => t('Review Notes'),
-          '#value' => 0,
-      );
+  if (!user_access(DATA_REQUEST_MODERATION_PERMISSION)){
+    $form['revision_information']['#type'] = 'hidden';
+    $form['actions']['publish']['#access'] = TRUE;
+    $form['actions']['publish']['#value'] = 'Submit for moderation';
+    $form['actions']['publish']['#type'] = 'submit';
+    $form['actions']['publish']['#weight'] = 6;
+    $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
+    $form['actions']['submit']['#value'] = 'Save draft';
+    $form['#submit'][] = 'dgu_data_set_request_node_submit';
+
+    $form['field_review_status'] = array(
+        '#type' => 'hidden',
+        '#title' => t('Review status'),
+        '#value' => 0,
+    );
+    $form['field_review_notes'] = array(
+        '#type' => 'hidden',
+        '#title' => t('Review Notes'),
+        '#value' => 0,
+    );
+  }
+  else {
+    $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
   }
 
 }
@@ -78,30 +148,71 @@ function dgu_data_set_request_exit() {
   }
 }
 
-function dgu_data_set_request_node_access($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-    return NODE_ACCESS_DENY;
+function dgu_data_set_request_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+    if($node->uid != $account->uid) {
+      return NODE_ACCESS_DENY;
+    }
   }
 }
 
 function dgu_data_set_request_node_access_records($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-  $grants = array(
-      array(
+  if ($node->type == 'dataset_request') {
+    $grants = array();
+    if (isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+      // Private request
+      $grants[] = array(
         'realm' => 'private_data_request',
-        'gid' => 123,
+        'gid' => DATA_REQUEST_MODERATOR_GRANT,
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
-      )
-    );
-  return $grants;
+      );
+      $grants[] = array(
+        'realm' => 'private_data_request',
+        'gid' => $node->uid,
+        'grant_view' => 1,
+        'grant_update' => 1,
+        'grant_delete' => 1,
+        );
+    }
+    else {
+      // Public request
+      $grants[] = array(
+        'realm' => 'public_data_request',
+        'gid' => DATA_REQUEST_MODERATOR_GRANT,
+        'grant_view' => 1,
+        'grant_update' => 1,
+        'grant_delete' => 1,
+      );
+      $grants[] = array(
+        'realm' => 'public_data_request',
+        'gid' => $node->uid,
+        'grant_view' => 1,
+        'grant_update' => 1,
+        'grant_delete' => 1,
+      );
+      if ($node->status == 1) {
+        $grants[] = array(
+          'realm' => 'public_data_request',
+          'gid' => PUBLIC_DATA_REQUEST_GRANT,
+          'grant_view' => 1,
+          'grant_update' => 0,
+          'grant_delete' => 0,
+        );
+      }
+    }
+    return $grants;
   }
 }
 
 function dgu_data_set_request_node_grants($account, $op) {
-  if (user_access('edit any dataset_request content', $account)) {
-    $grants['private_data_request'] = array(123);
-    return $grants;
+  $grants = array();
+  $grants['private_data_request'] = array($account->uid);
+  $grants['public_data_request'] = array($account->uid, PUBLIC_DATA_REQUEST_GRANT);
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION, $account)) {
+    $grants['private_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
+    $grants['public_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
   }
+  return $grants;
 }

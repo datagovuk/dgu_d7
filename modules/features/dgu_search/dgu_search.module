@@ -6,6 +6,17 @@
 
 include_once 'dgu_search.features.inc';
 
+function get_search_types(){
+  return array(
+  'app' => t('Apps'),
+  'blog' => t('Blogs'),
+  'forum' => t('Forum Posts'),
+  'resource' => t('Library'),
+  'dataset_request'  => t('Dataset Requests'),
+  'page' => t('Pages'),
+  'book' => t('Books'),
+  );
+}
 
 /**
  * Implements hook_ctools_plugin_directory().
@@ -16,8 +27,9 @@ function dgu_search_ctools_plugin_directory($module, $plugin) {
     }
 }
 
-
-// Implements hook_block_info().
+/**
+ * Implements hook_block_info().
+ */
 function dgu_search_block_info() {
   $blocks = array();
   $search_types = array(
@@ -87,29 +99,145 @@ function dgu_search_form_search_block_form_alter(&$form, &$form_state, $form_id)
 
 
 /**
+ * Implement HOOK_forms
+ *
+ * @return array of forms
+ */
+function dgu_search_forms() {
+  $forms['dgu_search_form'] = array(
+    'callback' => 'dgu_search_search_block',
+  );
+  return $forms;
+}
+
+function dgu_search_search_block($form, &$form_state) {
+  $form['search_block_form'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#title_display' => 'invisible',
+    '#size' => 15,
+    '#default_value' => '',
+    '#attributes' => array('title' => t('Enter the terms you wish to search for.')),
+  );
+  if (isset($form_state['dataset_request_count'])){
+    $form['dataset_request_count']= array(
+      '#type' => 'hidden',
+      '#value' => $form_state['dataset_request_count'],
+    );
+  }
+  $form['content_type'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['content_type'],
+  );
+  $form['searchtype'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['searchtype'],
+  );
+  $form['solrsort'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['solrsort'],
+  );
+  $form['count'] = array(
+    '#type' => 'hidden',
+    '#value' => $form_state['count'],
+  );
+  $form['f'] = array(
+    '#type' => 'value',
+    '#value' => $form_state['f'],
+  );
+  $form['actions'] = array('#type' => 'actions');
+  $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Search'));
+  $form['#submit'] = array('dgu_search_form_search_block_form_submit');
+  $form['#theme'] = 'dgu_search_form';
+  return $form;
+}
+
+
+function dgu_search_menu_breadcrumb_alter(&$active_trail, $item){
+  //don't do this unless we are on a search results page
+  if ((count($active_trail) >1) && $active_trail[1] != 'search'){
+    return;
+  }
+  $env_id = variable_get('apachesolr_default_environment', 'solr');
+  if (apachesolr_has_searched($env_id)) {
+    drupal_set_title("Search");
+    $query = apachesolr_current_query($env_id);
+    $fq = $query->getParam('fq');
+    foreach ($fq as $string){
+      $name = '';
+      if (strstr($string, ':')) {
+        list($name, $value) = explode(":", $string, 2);
+      }
+      if ($name == 'bundle'){
+        $search_types = get_search_types();
+        $form_state['content_type'] = $search_types[$value];
+        $form_state['searchtype'] = $value;
+
+
+
+        $active_trail = array_slice($active_trail, 0, 1);
+        $active_trail[] = array('title' => t('Search'), 'href' => 'search/everything', 'localized_options' => array());
+        //need it in twice because the last item gets removed.
+        $active_trail[] = array('title' => t('Search'), 'href' => 'search/everything', 'localized_options' => array());
+        drupal_set_title($search_types[$value]);
+        break;
+      }
+    }
+  }
+
+}
+
+/**
  * Added form submit function to retain filters.
  *
  * @see apachesolr_search_form_search_submit()
  */
 function dgu_search_form_search_block_form_submit($form, &$form_state) {
   $fv = $form_state['values'];
+  $form_state['values']['search_block_form'] = $fv['search_block_form'];
+  $form_state['values']['dgu_search_form'] = $fv['search_block_form'];
+  search_box_form_submit($form, $form_state);
 
-    $search_types = array(
-        'app' => t('Apps'),
-        'blog' => t('Blogs'),
-        'forum' => t('Forum Posts'),
-        'resource' => t('Library'),
-        'dataset_request'  => t('Dataset Requests'),
-    );
+  $search_types = array(
+      'app' => t('Apps'),
+      'blog' => t('Blogs'),
+      'forum' => t('Forum Posts'),
+      'resource' => t('Library'),
+      'dataset_request'  => t('Dataset Requests'),
+  );
 
-    if (isset($fv['search_block_form']) && isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
-        // Replace keys with their rawurlencoded value
-        $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
-
-        // Override redirect with a new bundle specific search.
-        global $base_url;
-        $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . "?f[0]=bundle%3A" . $fv['searchtype'];
+  if (isset($fv['search_block_form'])) {
+    $facets = '';
+    if (isset($fv['searchtype']) && !empty($search_types[$fv['searchtype']])) {
+      $facets =  "?f[0]=bundle%3A" . $fv['searchtype'];
     }
+    if (!empty($fv['f'])) {
+      if (!empty($facets)){
+        $facets .= '&';
+      } else {
+        $facets = '?';
+      }
+      foreach($fv['f'] as $i => $facet){
+        $facets .= 'f[' . $i . ']=' . $facet . '&';
+      }
+    }
+
+    $solrsort = '';
+    if (isset($fv['solrsort']) ){
+      if ($facets)
+        $solrsort = "";
+      else
+        $solrsort = "?";
+      $solrsort = $solrsort . "solrsort=${fv['solrsort']}";
+    }
+
+    // Replace keys with their rawurlencoded value
+    $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+
+    // Override redirect with a new bundle specific search.
+    global $base_url;
+    $form_state['redirect'] =  $base_url."/search/everything/" . $raw_keys . $facets . $solrsort;
+  }
 }
 
 
@@ -151,4 +279,180 @@ function dgu_search_apachesolr_query_alter($query) {
   $query->addParam('fl', 'sm_field_developed_by');
   // Retrieve 'field_review_status'.
   $query->addParam('fl', 'im_field_review_status');
+  $query->addParam('fl', 'tm_rendered_node');
+}
+
+
+/**
+ * Implements hook_facetapi_searcher_info()
+ */
+function dgu_search_facetapi_searcher_info_alter(array &$searcher_info) {
+  foreach ($searcher_info as $key => $value) {
+    if($value['url processor'] == 'standard'){
+      $searcher_info[$key]['url processor'] = 'dgu_search_url_processor';
+    }
+  }
+}
+
+/**
+ * Implements hook_facetapi_url_processors().
+ */
+function dgu_search_facetapi_url_processors() {
+  return array(
+    'dgu_search_url_processor' => array(
+      'handler' => array(
+        'label' => t('DGU Search Facet Api URL processor'),
+        'class' => 'FacetApiDguSearch',
+      ),
+    ),
+  );
+}
+
+class FacetApiDguSearch extends FacetapiUrlProcessorStandard {
+  public function setBreadcrumb() {
+    // Override method so bread crumb is not altered.
+  }
+}
+
+
+/**
+* Implements hook_apachesolr_prepare_query().
+*/
+function dgu_search_apachesolr_query_prepare($query, $caller) {
+
+  // Remove all default sorts.
+  $query->removeAvailableSort('bundle');
+  $query->removeAvailableSort('ds_created');
+  $query->removeAvailableSort('score');
+  $query->removeAvailableSort('sort_label');
+  $query->removeAvailableSort('sort_name');
+
+
+  $query->setAvailableSort('score', array('title' => t('Relevance'), 'default' => 'desc'));
+  $query->setAvailableSort('bundle', array('title' => t('Content type'), 'default' => 'asc'));
+  $query->setAvailableSort('sort_label', array('title' => t('Title'), 'default' => 'asc'));
+  $query->setAvailableSort('sort_name', array('title' => t('Author'), 'default' => 'asc'));
+  $query->setAvailableSort('ds_changed', array('title' => t('Last updated'), 'default' => 'desc'));
+}
+
+/**
+* Implements hook_preprocess_search_results().
+*/
+function dgu_search_preprocess_search_results(&$variables) {
+  $environments = apachesolr_load_all_environments();
+  foreach ($environments as $env_id => $environment) {
+    if (apachesolr_has_searched($env_id) && !apachesolr_suppress_blocks($env_id)) {
+      $response = NULL;
+      $query = apachesolr_current_query($env_id);
+      if ($query) {
+        // Get the query and response. Without these no blocks make sense.
+        $response = apachesolr_static_response_cache($query->getSearcher());
+      }
+      if (empty($response) || ($response->response->numFound < 2)) {
+        return NULL;
+      }
+
+      $sorts = $query->getAvailableSorts();
+      $filters = empty($_GET['f']) ? array() : $_GET['f'];
+
+      // Get the current sort as an array.
+      $solrsort = $query->getSolrsort();
+      $select_options = array();
+      $path = $query->getPath();
+
+      foreach ($sorts as $name => $sort) {
+        $options = array('query' => array('solrsort' => $name . ' ' . $sort['default']));
+
+        // Retain GET parameters that Apache Solr knows nothing about.
+        $get = array_diff_key($_GET, array('q' => 1, 'page' => 1, 'solrsort' => 1), $options['query']);
+        $options['query'] += $get;
+        $url = check_url(url($path, $options));
+        $select_options[$url]['text'] = $sort['title'];
+        $select_options[$url]['selected'] = $solrsort['#name'] == $name;
+
+        // Conditionally enable 'Author' sort.
+        if ($name == 'sort_name' && !(in_array('bundle:blog', $filters) || in_array('bundle:forum', $filters))) {
+          //$query->removeAvailableSort('sort_name');
+          $select_options[$url]['disabled'] = TRUE;
+        }
+
+        // Search is performed twice during single request (?), in second search keyword gets lost.
+        // We cache the keyword from first search if exist
+        $keyword = &drupal_static('dgu_search_keyword');
+        if (!isset($keyword)) {
+          $keyword = $query->getParam('q');
+        }
+
+        if ($name == 'score' && empty($keyword)) {
+          // Enable 'Relevance' sort only if user did put a keyword in to search box.
+          $select_options[$url]['disabled'] = TRUE;
+        }
+      }
+
+      $variables['sort_dropdown'] = theme('dgu_search_select', array('select_options' => $select_options));
+
+      drupal_add_js('jQuery(document).ready(
+        function () { $(\'select[name="search-results-sort"]\').change(
+          function(e){e.preventDefault();
+          window.location = $(this).val() + \'#search-sort-by\';
+          });
+        });', 'inline');
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function dgu_search_theme() {
+  return array(
+    'dgu_search_select' => array(
+      'variables' => array('options' => NULL, ),
+    ),
+  );
+}
+
+function theme_dgu_search_select($options) {
+  $output = '<form class="form-inline pull-right" id="search-sort-by"><label>Sort by:</label>';
+  $output .= '<select name="search-results-sort" class="form-control">';
+  $select_options = $options['select_options'];
+  foreach ($select_options as $key => $values) {
+    $disabled =  $values['disabled'] ? ' disabled="disabled" ' : '';
+    $selected =  $values['selected'] ? ' selected="selected" ' : '';
+    $output .= '<option value="' . $key . '"' . $selected . $disabled .  '>' . $values['text'] . '</option>';
+  }
+
+  $output .= '</select></form>';
+
+  return $output;
+}
+
+
+/**
+ * @param $node
+ * @return string
+ *
+ * Render the node using the search_results view mode. This gets added to the index without having the markup
+ * stripped from it.
+ */
+function dgu_search_apachesolr_index_document_build(ApacheSolrDocument $document, $entity, $entity_type, $env_id) {
+  $field = $document->getField('entity_type');
+  if ($field['value'] == 'node'){
+    $field = $document->getField('entity_id');
+    $nid = $field['value'];
+    $node = node_load($nid);
+
+    if (isset($node)){
+      $build = node_view($node, 'search_result');
+      $build['links']['#access'] = FALSE;
+      $document->addField('tm_rendered_node',render($build));
+    }
+  }
+
+}
+
+function dgu_search_batch_alter(&$batch){
+  if ($batch['source_url'] == 'admin/config/search/apachesolr/settings/solr/index/remaining'){
+    $batch['theme'] = 'dguk';
+  }
 }

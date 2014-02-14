@@ -46,7 +46,10 @@
   <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">
 
     <?php if (!$page): ?>
-      <h2><a href="<?php print $term_url; ?>"><?php print $term_name; ?></a></h2>
+      <div class="glossary-header">
+        <h2><?php print $term_name; ?></h2>
+        <span class="glossary-appsi-quality"><?php print $quality_score; ?></span>
+      </div>
     <?php endif; ?>
 
     <div class="content">
@@ -58,7 +61,6 @@
     </div>
 
     <div class="comments">
-        <h2>Comments</h2>
         <?php print render($comments); ?>
     </div>
 

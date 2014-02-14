@@ -29,7 +29,7 @@ function dgu_search_info_theme(&$theme) {
 function dgu_search_preprocess(&$variables, $hook){
 
     switch ($hook){
-        case 'dgu_search_info':
+      case 'dgu_search_info':
             $query = apachesolr_current_query(variable_get('apachesolr_default_environment', 'solr'));
             if ($query) {
                 $searcher = $query->getSearcher();
