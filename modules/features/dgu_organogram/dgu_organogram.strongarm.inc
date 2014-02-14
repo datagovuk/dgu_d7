@@ -71,7 +71,7 @@ function dgu_organogram_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_organogram_pattern';
-  $strongarm->value = '';
+  $strongarm->value = 'organogram/[node:title]';
   $export['pathauto_node_organogram_pattern'] = $strongarm;
 
   return $export;

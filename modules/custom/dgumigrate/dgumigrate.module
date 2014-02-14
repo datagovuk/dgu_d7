@@ -26,6 +26,7 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
         // Mappings are straight-forward
         $this->addFieldMapping('name', 'Term');
         $this->addFieldMapping('description', 'Definition');
+        $this->addFieldMapping('field_quality', 'Score')->callbacks(array($this, 'mapScore'));
     }
 
     public function prepareKey($source_key, $row) {
@@ -36,6 +37,11 @@ class DGUGlossaryMigration extends DrupalTerm6Migration {
     public function prepareRow($row) {
         $row->tid = $row->csvrownum;
         return TRUE;
+    }
+
+    public function mapScore($value){
+      // Quality score is expressed as a percentage as it's a five star field.
+      return (preg_match_all('/\*/', $value, $m)/5) * 100;
     }
 }
 
@@ -218,7 +224,6 @@ function dgumigrate_register_migrations() {
           'machine_name' => 'page',
           'source_type' => 'page',
           'destination_type' => 'page',
-          'ignore_comments' => TRUE,
       ),
       array(
           'class_name' => 'DGUStoryMigration',
@@ -290,6 +295,13 @@ function dgumigrate_register_migrations() {
       }
     }
   }
+  $arguments = array_merge($comment_arguments, array(
+    'description' => t('Migration of comments on App nodes from Drupal 6'),
+    'node_migration' =>'app',
+    'source_type' => 'apps',
+    'destination_type' => 'app'));
+  Migration::registerMigration('DGUCommentMigration', 'app_comments', $arguments);
+
   $ckan_dataset_arguments = $common_arguments + array(
     'source_type' => 'ckan_package',
     'user_migration' => 'user',

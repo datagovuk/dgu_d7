@@ -7,20 +7,12 @@
 include_once 'dgu_app.features.inc';
 
 /**
- * Implements hook_form_BASE_FORM_ID_alter().
- * Add boxed class and change page title on app node form.
- */
-function dgu_app_form_node_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'app_node_form') {
-    $form['#attributes']['class'][] = 'boxed';
-    drupal_set_title(t('Submit an app'));
-  }
-}
-
-/**
  * Implements hook_form_FORM_ID_alter().
  */
 function dgu_app_form_app_node_form_alter(&$form, &$form_state, $form_id) {
+
+  $form['#attributes']['class'][] = 'boxed';
+  drupal_set_title(t('Submit an app'));
 
   $form['revision_information']['#type'] = 'hidden';
 
@@ -63,5 +55,19 @@ function dgu_app_exit() {
     drupal_get_messages('status');
     // Add a message created in dgu_data_set_request_node_submit()
     drupal_set_message($message);
+  }
+}
+
+function dgu_app_preprocess_node(&$variables) {
+  if ($variables['type'] == 'app'){
+    if ($variables['view_mode'] == 'search_result'){
+      $variables['directory'] = 'profile/dgu/themes/custom/dguk/templates/';
+      $variables['classes_array'] = array("node", "node-app-searchresult");
+      $variables['submitted'] = 'Submitted on ' . $variables['date'];
+      if ($variables['created'] != $variables['changed']) {
+        $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
+      }
+
+    }
   }
 }

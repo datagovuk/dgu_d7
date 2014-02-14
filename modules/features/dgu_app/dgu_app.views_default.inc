@@ -37,15 +37,6 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Relationship: Content: Vote results */
-  $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
-  $handler->display->display_options['relationships']['votingapi_cache']['table'] = 'node';
-  $handler->display->display_options['relationships']['votingapi_cache']['field'] = 'votingapi_cache';
-  $handler->display->display_options['relationships']['votingapi_cache']['votingapi'] = array(
-    'value_type' => 'percent',
-    'tag' => 'vote',
-    'function' => 'average',
-  );
   /* Field: Global: Custom text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
@@ -60,7 +51,7 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Submitter name */
+  /* Field: Content: Your name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -118,12 +109,15 @@ function dgu_app_views_default_views() {
   /* Display: Latest apps */
   $handler = $view->new_display('block', 'Latest apps', 'block');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  $handler->display->display_options['block_description'] = 'apps/latest/rss.xml';
 
   /* Display: Top rated apps */
   $handler = $view->new_display('block', 'Top rated apps', 'block_1');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Top rated apps';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Votes average */
   $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
@@ -160,6 +154,62 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['sorts']['value_1']['relationship'] = 'votingapi_cache_1';
   $handler->display->display_options['sorts']['value_1']['order'] = 'DESC';
   $handler->display->display_options['sorts']['value_1']['coalesce'] = 0;
+
+  /* Display: Feed latest apps */
+  $handler = $view->new_display('feed', 'Feed latest apps', 'feed_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['row_options']['item_length'] = 'rss';
+  $handler->display->display_options['path'] = 'apps/latest/rss.xml';
+
+  /* Display: Feed top rated apps */
+  $handler = $view->new_display('feed', 'Feed top rated apps', 'feed_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Top rated apps';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['row_options']['item_length'] = 'rss';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Votes average */
+  $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['table'] = 'node';
+  $handler->display->display_options['relationships']['votingapi_cache']['field'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache']['ui_name'] = 'Votes average';
+  $handler->display->display_options['relationships']['votingapi_cache']['votingapi'] = array(
+    'value_type' => 'percent',
+    'tag' => 'vote',
+    'function' => 'average',
+  );
+  /* Relationship: Votes count */
+  $handler->display->display_options['relationships']['votingapi_cache_1']['id'] = 'votingapi_cache_1';
+  $handler->display->display_options['relationships']['votingapi_cache_1']['table'] = 'node';
+  $handler->display->display_options['relationships']['votingapi_cache_1']['field'] = 'votingapi_cache';
+  $handler->display->display_options['relationships']['votingapi_cache_1']['ui_name'] = 'Votes count';
+  $handler->display->display_options['relationships']['votingapi_cache_1']['votingapi'] = array(
+    'value_type' => 'percent',
+    'tag' => 'vote',
+    'function' => 'count',
+  );
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Vote results: Value */
+  $handler->display->display_options['sorts']['value']['id'] = 'value';
+  $handler->display->display_options['sorts']['value']['table'] = 'votingapi_cache';
+  $handler->display->display_options['sorts']['value']['field'] = 'value';
+  $handler->display->display_options['sorts']['value']['relationship'] = 'votingapi_cache';
+  $handler->display->display_options['sorts']['value']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['value']['coalesce'] = 1;
+  /* Sort criterion: Vote results: Value */
+  $handler->display->display_options['sorts']['value_1']['id'] = 'value_1';
+  $handler->display->display_options['sorts']['value_1']['table'] = 'votingapi_cache';
+  $handler->display->display_options['sorts']['value_1']['field'] = 'value';
+  $handler->display->display_options['sorts']['value_1']['relationship'] = 'votingapi_cache_1';
+  $handler->display->display_options['sorts']['value_1']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['value_1']['coalesce'] = 0;
+  $handler->display->display_options['path'] = 'apps/top/rss.xml';
+  $handler->display->display_options['sitename_title'] = 0;
   $export['apps'] = $view;
 
   $view = new view();

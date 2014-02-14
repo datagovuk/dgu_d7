@@ -5,3 +5,10 @@
  */
 
 include_once 'dgu_data_set.features.inc';
+
+function dgu_data_set_url_outbound_alter(&$path, &$options, $original_path) {
+  if(substr($path, 0, 12) == 'ckan_dataset') {
+    $dataset = entity_load_single('ckan_dataset', substr($path, 13));
+    $path = 'dataset/' . $dataset->name;
+  }
+}

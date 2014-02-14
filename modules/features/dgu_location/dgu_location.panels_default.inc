@@ -43,7 +43,12 @@ function dgu_location_default_panels_mini() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<div class="item-list"><ul><li><strong><a href="/location/uk-location-infrastructure#metadataexplained">Discovery Metadata Service explained</a></strong><ul><li><a href="/library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for discovery metadata</a></li><li><a href="/library/uk-location-discovery-metadata-service-operational-guide">Operational Guide for metadata</a></li><li><a href="/location/map-based-search">Find out more about Map Based Search</a></li></ul></li><li><strong><a href="/location/uk-location-infrastructure#viewserviceexplained">View Service explained</a></strong><ul><li><a href="/library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for view services</a></li><li><a href="/library/uk-location-view-service-operational-guide">Operational Guide for view services</a></li><li><a href="/location/preview-on-map">Find out more about Preview on Map</a></li></ul></li><li><a href="/location/uk-location-infrastructure#whatscoming"><strong>What\'s coming up next</strong></a></li></ul></div>',
+      'body' => '<div class="item-list"><ul><li><strong><a href="/location/uk-location-infrastructure#metadataexplained">Discovery Metadata Service explained</a></strong><ul><li><a href="/library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for discovery metadata</a></li><li><a href="/library/uk-location-discovery-metadata-service-operational-guide">Operational Guide for metadata</a></li><li><a href="/location/map-based-search">Find out more about Map Based Search</a></li></ul></li><li><strong><a href="/location/uk-location-infrastructure#viewserviceexplained">View Service explained</a></strong><ul><li><a href="/library/uk-location-getting-started-guide-4-publishing-discovery-and-view-services">Getting Started Guide for view services</a></li><li><a href="/library/uk-location-view-service-operational-guide">Operational Guide for view services</a></li><li><a href="/location/preview-on-map">Find out more about Preview on Map</a></li></ul></li><li><a href="/location/uk-location-infrastructure#whatscoming"><strong>What\'s coming up next</strong></a></li></ul></div>
+<div class="item-list"><ul>
+<li><a href="/location/inspire" title="">INSPIRE</a></li>
+<li><a href="/location/guidance_and_tools" title="">Guidance and Tools</a></li>
+<li><a href="/location/contact_points" title="">Location contacts</a></li>
+</ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );

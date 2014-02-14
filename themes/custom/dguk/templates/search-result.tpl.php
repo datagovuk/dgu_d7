@@ -73,9 +73,16 @@
 
   <?php if (!empty($info_split)): ?>
     <div class="search-info">
-      <p><?php print $info_split['submitted']; // should always be set at least with creation date?></p>
-      <?php if (isset($info_split['other'])): ?>
-        <p><?php print $info_split['other']; ?></p>
+      <?php if (isset($updated)): ?>
+        <p><?php print $updated; ?></p>
+      <?php endif; ?>
+
+      <?php if (isset($submitted)): ?>
+        <p><?php print $submitted; ?></p>
+      <?php endif; ?>
+
+      <?php if (isset($other)): ?>
+        <p><?php print $other; ?></p>
       <?php endif; ?>
     </div>
   <?php endif; ?>
