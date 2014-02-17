@@ -14,4 +14,5 @@ Tags to assist in selectively running tests
     Used for scenarios that involve sending an email
 @wip
     Work in progress
-@dependent
+@search
+    Used for scenarios that involve search.

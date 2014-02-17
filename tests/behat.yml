@@ -39,14 +39,6 @@ default:
         footer: '#footer'
         breadcrumb: '#breadcrumb'
         pager: '.pagination'
-        #panels
-        single: '.panel-col'
-        top: '.panel-col-top'
-        first: '.panel-col-first'
-        middle: '.panel-col-middle'
-        last: '.panel-col-last'
-        bottom: '.panel-col-bottom'
-
       selectors:
         message_selector: '.messages'
         error_message_selector: '.messages.error'

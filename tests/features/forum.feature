@@ -1,5 +1,5 @@
 @javascript
-Feature: Create new forum topic as a regular site user
+Feature: Create new forum topic as a site user
   In order to discuss a topic
   As a site user
   I should be able to post a new forum topic
@@ -28,7 +28,7 @@ Feature: Create new forum topic as a regular site user
     And I should see "SEARCH FORUM POSTS" pane in "last" column in "first" row
 
   @api
-  Scenario: Add a new forum topic with empty required fields
+  Scenario: Create a new forum topic with empty required fields
     Given I am logged in as a user with the "authenticated user" role
     And I visit "/forum"
     And I follow "Create new forum topic"
@@ -39,6 +39,8 @@ Feature: Create new forum topic as a regular site user
     And the field "Forums" should be outlined in red
 
   @api
-  Scenario: Add a new forum topic
+  Scenario: Create a new forum topic
     Given I am logged in as a user with the "authenticated user" role
     And I visit "/forum"
+    And I create "Test forum" forum topic in "General discussion" category
+

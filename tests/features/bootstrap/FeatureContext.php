@@ -256,6 +256,44 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     throw new Exception('RSS icon found in the ' . $column . ' column but it\'s not visible');
   }
 
+  /**
+   * @Given /^I click search icon$/
+   */
+  public function iClickSearchIcon() {
+
+    $search_icons = $this->getSession()->getPage()->findAll('css', '#dgu-search-form .btn-default');
+    if (empty($search_icons)) {
+      throw new Exception('No search icons found');
+    }
+    foreach ($search_icons as $search_icon) {
+      if (!$search_icon->isVisible()) {
+        throw new Exception('Search icon found but it\'s not visible');
+      }
+      $search_icon->click();
+      return;
+    }
+
+  }
+
+  /**
+   * @Given /^search result counter should contain "([^"]*)"$/
+   */
+  public function searchResultCounterShouldContain($string) {
+    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-footer');
+    if (empty($search_counters)) {
+      throw new Exception('Search counter not found');
+    }
+    foreach ($search_counters as $search_counter) {
+      if (!$search_counter->isVisible()) {
+        throw new Exception('Search counter found but it\'s not visible');
+      }
+      elseif ($search_counter->getText() != $string) {
+        throw new Exception('Search counter found but it contains "' . $search_counter->getText() . '" not "' . $string . '"');
+      }
+      return;
+    }
+  }
+
    /**
    * @Given /^I fill in "([^"]*)" with random text$/
    */
@@ -460,8 +498,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-
-          if ($msg->to == $mail_address && $msg->subject == $title) {
+            if ($msg->to == $mail_address && $msg->subject == $title) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
@@ -529,6 +566,36 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       }
     }
   }
+
+
+  /**
+   * @Given /^"([^"]*)" option in "([^"]*)" should be selected$/
+   */
+  public function optionInShouldBeSelected($option_key, $label) {
+
+    $page = $this->getSession()->getPage();
+
+    $select = $page->find('xpath', "//label[contains(., '$label')]/following-sibling::select");
+
+    if ($select) {
+      $dom = new domDocument;
+      $dom->loadHTML($select->getHtml());
+      $options = $dom->getElementsByTagName('option');
+      foreach ($options as $option) {
+        if($option->getAttribute('selected') && $option->nodeValue == $option_key) {
+          return;
+        }
+      }
+
+    }
+
+    throw new ElementNotFoundException(
+      $this->getSession(), 'select option', 'value|text', $option_key
+    );
+
+  }
+
+
 
   /**
    * @Given /^TEST$/
