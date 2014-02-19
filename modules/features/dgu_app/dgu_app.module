@@ -4,7 +4,6 @@
  * Drupal needs this blank file.
  */
 
-define('APP_MODERATION_PERMISSION', 'edit any app content');
 define('PUBLISHED_APP_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
 define('APP_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
 
@@ -33,7 +32,7 @@ function dgu_app_form_app_node_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Custom submit function for challenge content type.
+ * Custom submit function for app content type.
  */
 function dgu_app_node_submit($form, &$form_state) {
   if(isset($form_state['clicked_button'])) {
@@ -111,7 +110,7 @@ function dgu_app_node_grants($account, $op) {
   $grants = array();
   $grants['app'] = array($account->uid);
   $grants['app'] = array($account->uid, PUBLISHED_APP_GRANT);
-  if (user_access(APP_MODERATION_PERMISSION, $account)) {
+  if (user_access('edit any app content', $account)) {
     $grants['app'] = array(APP_MODERATOR_GRANT);
   }
   return $grants;

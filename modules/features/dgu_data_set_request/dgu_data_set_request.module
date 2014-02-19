@@ -119,7 +119,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 }
 
 /**
- * Custom submit function for challenge content type.
+ * Custom submit function for data_set_request content type.
  */
 function dgu_data_set_request_node_submit($form, &$form_state) {
   if(isset($form_state['clicked_button'])) {
