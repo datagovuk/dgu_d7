@@ -595,6 +595,28 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
   }
 
+  /**
+   * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
+   */
+
+  public function iHaveAnImageTitledLocatedInFolder($width, $height, $title, $path) {
+    $image = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+    $color = array(
+      imagecolorallocate($image,rand(100, 150),rand(100, 150),rand(100, 150)),
+      imagecolorallocate($image,rand(50, 100),rand(50, 100),rand(50, 100)),
+    );
+
+    for ($y = 0; $y < $height / 5; $y++) {
+      $i=$y % 2;
+      for ($x = 0; $x < $width / 5; $x++) {
+        imagefilledrectangle($image, $x*5, $y*5, $x*5 + 5, $y*5 + 5, $color[++$i % 2]);
+      }
+    }
+
+    imagestring($image, 5, $width/2 - strlen($title) * 4.5 , $height/2 - 15, $title, imagecolorallocate($image, 255, 255, 255));
+    imagepng($image, $path . '/' . $title . '.png');
+    imagedestroy($image);
+  }
 
 
   /**

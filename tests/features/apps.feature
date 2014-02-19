@@ -41,7 +41,7 @@ I should be able to submit a new app
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
 
-    #remove discrapancy - use 'apps' or 'Apps' in both links
+    #remove discrepancy - use 'apps' or 'Apps' in both links
   @anon @search
   Scenario: Use search box on Apps landing page
     Given I am on the homepage
@@ -67,3 +67,26 @@ I should be able to submit a new app
     And I click search icon
     Then "Relevance" option in "Sort by:" should be selected
     And search result counter should contain "Apps"
+
+  @api
+  Scenario: Create a new app
+    Given I am logged in as a user with the "authenticated user" role
+    And I visit "/apps"
+    And I follow "Add your app"
+    And I have an image "300" x "300" pixels titled "Test image" located in "/tmp/" folder
+    And I attach the file "/tmp/Test image.png" to "files[field_screen_shots_und_0]"
+    And I fill in "Name" with "Test app"
+    And I fill in "URL" with "test.co.uk"
+    And I fill in "Developed by" with "Developed by here"
+    And I fill in "Submitter Name" with "Submitter Name here"
+    And I fill in "Submitter e-mail" with "submitter@example.com"
+    And I select "Free" from "App charge"
+    And I select "Health" from "Category"
+    And I select "Other" from "Sector"
+    When I press "Save draft"
+    And I wait until the page loads
+    Then I should see "Your draft App has been created. Login to your profile to update it. You can submit this now or later"
+    And I should see the heading "Test app"
+    And I should see "Developed by here"
+    And I should see the link "test.co.uk"
+    And I break
