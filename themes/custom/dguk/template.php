@@ -498,8 +498,6 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
       $crumb['title'] = htmlspecialchars_decode($title);
       $crumb['href'] = $parent_path;
       $active_trail[$key] = $crumb;
-      //Set the page title to the node title
-      drupal_set_title($crumb['map'][$key]->title);
       //append an item to the active trail to prevent drupal from removing the last crumb
       $active_trail[] = $end;
     }  elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
@@ -539,6 +537,10 @@ function dguk_breadcrumb($variables) {
     $crumbs = '<ul id="breadcrumbs">';
     $a=0;
     $title = drupal_get_title();
+    $node = menu_get_object();
+    if ($node){
+      $title = $node->title;
+    }
     foreach($variables['breadcrumb'] as $value) {
       if ($a==0){
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
