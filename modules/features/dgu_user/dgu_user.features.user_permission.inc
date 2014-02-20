@@ -209,7 +209,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'bypass node access',
     'roles' => array(
       'administrator' => 'administrator',
-      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
