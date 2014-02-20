@@ -44,20 +44,23 @@
 
 .glossary-header {
     min-height: 60px;
-    background: #549df9;
+    background: #1c1d1d;
     padding: 10px 14px;
     color: #fff;
 }
 
 .glossary-appsi-quality {
     float: right;
-    margin-top: -33px;
+    margin-top: -37px;
     clear: left;
     display: block;
 }
 
 .glossary-header h2 {
     float: left;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 10px;
 }
 
 .glossary-content {
