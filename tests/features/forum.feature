@@ -40,7 +40,24 @@ Feature: Create new forum topic as a site user
 
   @api
   Scenario: Create a new forum topic
-    Given I am logged in as a user with the "authenticated user" role
+    Given that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
     And I visit "/forum"
-    And I create "Test forum" forum topic in "General discussion" category
+    And I follow "Create new forum topic"
+    And I fill in "Subject" with "Test forum topic"
+    And I select "General discussion" from "Forums"
+    When I press "Save draft"
+    And I wait until the page loads
+    Then I should see "Your draft Forum topic has been created. Login to your profile to update it. You can submit this now or later"
+    And I should see page title "Discussion Forum"
+    And I should see node title "TEST FORUM TOPIC"
+    #
+    When I submit "Forum topic" titled "Test forum topic" for moderation
+    And user with "moderator" role moderates "Test forum topic" authored by "test_user"
+    When I am logged in as a user "test_user" with the "authenticated user" role
+    Then I should see "Test forum topic" in All content tab but not in My edits or My drafts tabs
+
+
+
+
 

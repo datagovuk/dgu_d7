@@ -69,8 +69,9 @@ I should be able to submit a new app
     And search result counter should contain "Apps"
 
   @api
-  Scenario: Create a new app
-    Given I am logged in as a user with the "authenticated user" role
+  Scenario: Create a new app and test moderation workflow
+    Given that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
     And I visit "/apps"
     And I follow "Add your app"
     And I have an image "300" x "300" pixels titled "Test image" located in "/tmp/" folder
@@ -85,8 +86,12 @@ I should be able to submit a new app
     And I select "Other" from "Sector"
     When I press "Save draft"
     And I wait until the page loads
-    Then I should see "Your draft App has been created. Login to your profile to update it. You can submit this now or later"
-    And I should see the heading "Test app"
+    Then I should see a message about created draft "App"
+    And I should see page title "Apps"
+    And I should see node title "TEST APP"
     And I should see "Developed by here"
     And I should see the link "test.co.uk"
-    And I break
+    When I submit "App" titled "Test app" for moderation
+    And user with "moderator" role moderates "Test app" authored by "test_user"
+    When I am logged in as a user "test_user" with the "authenticated user" role
+    Then I should see "Test app" in All content tab but not in My edits or My drafts tabs
