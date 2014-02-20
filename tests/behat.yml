@@ -32,25 +32,18 @@ default:
 #        password: drupal
       region_map:
         subnav: '#greenbar'
-        content: '#content'
+        main_content: "#main-content"
+        content: '#content' #used in seven theme
         #header: TODO - render in page.tpl.php
         highlighted: '#highlighted'
         #help: TODO - render in page.tpl.php
         footer: '#footer'
         breadcrumb: '#breadcrumb'
         pager: '.pagination'
-        #panels
-        single: '.panel-col'
-        top: '.panel-col-top'
-        first: '.panel-col-first'
-        middle: '.panel-col-middle'
-        last: '.panel-col-last'
-        bottom: '.panel-col-bottom'
-
       selectors:
-        message_selector: '.messages'
-        error_message_selector: '.messages.error'
-        success_message_selector: '.messages.status'
+        message_selector: '.alert'
+        error_message_selector: '.alert.alert-error'
+        success_message_selector: '.alert.alert-success'
       text:
         log_out: '/user/logout'
         log_in: 'Log in'
