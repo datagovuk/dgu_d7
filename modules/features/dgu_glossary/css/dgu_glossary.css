@@ -23,7 +23,7 @@
 }
 
 .suggest-new {
-    margin-top: -65px;
+    margin-top: -25px;
     margin-left: 350px;
 }
 
@@ -58,4 +58,17 @@
 
 .glossary-header h2 {
     float: left;
+}
+
+.glossary-content {
+    background-color: #fff;
+    padding: 20px 15px;
+}
+
+.glossary-content .taxonomy-term p{
+    padding-top: 12px;
+}
+
+.glossary .nav {
+    margin-bottom: -20px;
 }
