@@ -10,10 +10,10 @@
 function dgu_blog_user_default_roles() {
   $roles = array();
 
-  // Exported role: blog moderator.
-  $roles['blog moderator'] = array(
-    'name' => 'blog moderator',
-    'weight' => 9,
+  // Exported role: blogger.
+  $roles['blogger'] = array(
+    'name' => 'blogger',
+    'weight' => 8,
   );
 
   return $roles;
