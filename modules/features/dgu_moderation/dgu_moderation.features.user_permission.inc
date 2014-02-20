@@ -45,6 +45,7 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'blogger' => 'blogger',
     ),
     'module' => 'workbench_moderation',
   );
@@ -55,6 +56,7 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'blogger' => 'blogger',
     ),
     'module' => 'workbench_moderation',
   );
@@ -75,6 +77,7 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'blogger' => 'blogger',
     ),
     'module' => 'workbench_moderation',
   );
@@ -104,6 +107,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'view moderation history',
     'roles' => array(
       'administrator' => 'administrator',
+      'blogger' => 'blogger',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
