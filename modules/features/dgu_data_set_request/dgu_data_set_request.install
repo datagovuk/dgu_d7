@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for the Workbench Moderation module.
+ * Install file for the DGU Data set request module.
  */
 
 /**
@@ -11,6 +11,16 @@
 function dgu_data_set_request_update_7001() {
   db_update('system')
     ->fields(array('weight' => 10))
+    ->condition('name', 'dgu_data_set_request', '=')
+    ->execute();
+}
+
+/**
+ * Revert module weight to original value.
+ */
+function dgu_data_set_request_update_7002() {
+  db_update('system')
+    ->fields(array('weight' => 0))
     ->condition('name', 'dgu_data_set_request', '=')
     ->execute();
 }

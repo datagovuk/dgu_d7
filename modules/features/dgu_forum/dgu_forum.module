@@ -4,48 +4,40 @@
  * Code for the DGU Forum feature.
  */
 
-define('PUBLISHED_FORUM_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
-define('FORUM_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+define('FORUM_MODERATION_PERMISSION', 'edit any forum content');
 
 include_once 'dgu_forum.features.inc';
 
+function dgu_forum_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'forum') {
+    return user_access(FORUM_MODERATION_PERMISSION);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dgu_forum_form_forum_node_form_alter(&$form, &$form_state, $form_id) {
+
+  drupal_set_title(t('Create forum topic'));
+  unset($form['actions']['preview']);
+  $form['#attributes']['class'][] = "boxed";
+
+  dgu_moderation_node_forms_alter($form, FORUM_MODERATION_PERMISSION);
+}
+
+function dgu_forum_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'forum') {
+    return dgu_moderation_access($account, $node, FORUM_MODERATION_PERMISSION);
+  }
+}
+
 function dgu_forum_node_access_records($node) {
   if (($node->type == 'forum')) {
-    $grants = array();
-
-    $grants[] = array(
-      'realm' => 'forum',
-      'gid' => FORUM_MODERATOR_GRANT,
-      'grant_view' => 1,
-      'grant_update' => 1,
-      'grant_delete' => 1,
-    );
-    $grants[] = array(
-      'realm' => 'forum',
-      'gid' => $node->uid,
-      'grant_view' => 1,
-      'grant_update' => 1,
-      'grant_delete' => 1,
-    );
-    if ($node->status == 1) {
-      $grants[] = array(
-        'realm' => 'forum',
-        'gid' => PUBLISHED_FORUM_GRANT,
-        'grant_view' => 1,
-        'grant_update' => 0,
-        'grant_delete' => 0,
-      );
-    }
-    return $grants;
+    return dgu_moderation_get_node_grants($node);
   }
 }
 
 function dgu_forum_node_grants($account, $op) {
-  $grants = array();
-  $grants['forum'] = array($account->uid);
-  $grants['forum'] = array($account->uid, PUBLISHED_FORUM_GRANT);
-  if (user_access('edit any forum content', $account)) {
-    $grants['forum'] = array(FORUM_MODERATOR_GRANT);
-  }
-  return $grants;
+  return dgu_moderation_get_account_grants($account, FORUM_MODERATION_PERMISSION);
 }

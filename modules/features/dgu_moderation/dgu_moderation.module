@@ -3,3 +3,172 @@
  * @file
  * Drupal needs this blank file.
  */
+
+define('PUBLISHED_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+
+/**
+ * Implements hook_menu_alter().
+ */
+function dgu_moderation_menu_alter(&$items) {
+  // Override the node edit menu item title.
+  $items['node/%node/edit']['title callback'] = 'dgu_moderation_edit_tab_title';
+  $items['node/%node/edit']['title arguments'] = array(1);
+
+  // Override the node view menu item title.
+  $items['node/%node/view']['title callback'] = 'dgu_moderation_view_tab_title';
+  $items['node/%node/view']['title arguments'] = array(1);
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_moderation_edit_tab_title($node) {
+
+  foreach (module_implements('dgu_moderation_moderator_permission') as $module) {
+    $function = $module . '_dgu_moderation_moderator_permission';
+    if ($function($node)) {
+      // Don't change the title if user is a moderator.
+      return t('Edit');
+    }
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_edit_tab_title($node);
+
+}
+
+/**
+ * Change the name of the node edit tab, conditionally.
+ *
+ * @param $node
+ *   The node being acted upon.
+ *
+ * @return
+ *   The title for the tab.
+ */
+function dgu_moderation_view_tab_title($node) {
+  // Don't change the title if user is a moderator.
+  foreach (module_implements('dgu_moderation_moderator_permission') as $module) {
+    $function = $module . '_dgu_moderation_moderator_permission';
+    if ($function($node)) {
+      // Don't change the title if user is a moderator.
+      return t('View');
+    }
+  }
+  // If user isn't a moderator apply workbench moderation logic.
+  return workbench_moderation_view_tab_title($node);
+}
+
+/**
+ * Implements hook_page_alter().
+ *
+ * Remove unwanted bit added to the node edit form by workbench moderation module.
+ */
+function dgu_moderation_page_alter(&$page) {
+
+  //if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['#form_id']) && strlen($page['content']['system_main']['#form_id']) > 10 && substr($page['content']['system_main']['#form_id'], -10,10) == '_node_form') {
+  if (isset($page['content']['workbench_block']) && $page['content']['system_main']['#node_edit_form']) {
+    unset($page['content']['workbench_block']);
+    unset($page['help']['system_help']);
+
+  }
+}
+
+function dgu_moderation_node_forms_alter (&$form, $moderation_permission) {
+  if (!user_access($moderation_permission)){
+    $form['revision_information']['#type'] = 'hidden';
+    $form['actions']['publish']['#access'] = TRUE;
+    $form['actions']['publish']['#value'] = 'Submit for moderation';
+    $form['actions']['publish']['#type'] = 'submit';
+    $form['actions']['publish']['#weight'] = 6;
+    $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
+    $form['actions']['submit']['#value'] = 'Save draft';
+    $form['#submit'][] = 'dgu_moderation_node_submit';
+  }
+  else {
+    $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
+  }
+
+}
+
+/**
+ * Custom submit function for data_set_request content type.
+ */
+function dgu_moderation_node_submit($form, &$form_state) {
+  if(isset($form_state['clicked_button'])) {
+
+    $content_types = node_type_get_types();
+    $content_type = $content_types[$form['#node']->type]->name;
+    $action = empty($form['#node']->nid) ? 'created' : 'updated';
+
+    if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
+      $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
+      $message = &drupal_static(dgu_moderation_message, NULL);
+      $message = 'Your ' . $content_type . ' has been ' . $action . ' and submitted for moderation. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later.';
+    }
+    elseif ($form_state['clicked_button']['#value'] == "Save draft") {
+      $form_state['values']['workbench_moderation_state_new'] = 'draft';
+      $message = &drupal_static(dgu_moderation_message, NULL);
+      $message = 'Your draft ' . $content_type . ' has been ' . $action . '. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later.';
+    }
+  }
+}
+
+function dgu_moderation_exit() {
+  if ($message = &drupal_static('dgu_moderation_message', NULL)) {
+    // Remove all status messages - most likely nothing more than '... has been created/updated'
+    drupal_get_messages('status');
+    // Add a message created in dgu_data_set_request_node_submit()
+    drupal_set_message($message);
+  }
+}
+
+function dgu_moderation_access($account, $node, $permission) {
+  if(!($node->uid == $account->uid || user_access($permission) || $node->status)) {
+    return NODE_ACCESS_DENY;
+  }
+}
+
+function dgu_moderation_get_node_grants(&$node){
+  $grants = array();
+  $grants[] = array(
+    'realm' => 'moderation',
+    'gid' => MODERATOR_GRANT,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  $grants[] = array(
+    'realm' => 'moderation',
+    'gid' => $node->uid,
+    'grant_view' => 1,
+    'grant_update' => 1,
+    'grant_delete' => 1,
+  );
+  if ($node->status == 1) {
+    $grants[] = array(
+      'realm' => 'moderation',
+      'gid' => PUBLISHED_GRANT,
+      'grant_view' => 1,
+      'grant_update' => 0,
+      'grant_delete' => 0,
+    );
+  }
+  return $grants;
+}
+
+function dgu_moderation_get_account_grants(&$account, $permission){
+  $grants = array();
+  $grants['moderation'] = array($account->uid);
+  $grants['moderation'] = array($account->uid, PUBLISHED_GRANT);
+  if (user_access($permission, $account)) {
+    $grants['moderation'] = array(MODERATOR_GRANT);
+  }
+  return $grants;
+}

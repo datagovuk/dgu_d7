@@ -4,4 +4,38 @@
  * Code for the DGU Blog Feature feature.
  */
 
+define('BLOG_MODERATION_PERMISSION', 'edit any blog content');
+
 include_once 'dgu_blog.features.inc';
+
+function dgu_blog_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'blog') {
+    return user_access(BLOG_MODERATION_PERMISSION);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dgu_blog_form_blog_node_form_alter(&$form, &$form_state, $form_id) {
+  unset($form['actions']['preview']);
+  $form['#attributes']['class'][] = "boxed";
+
+  dgu_moderation_node_forms_alter($form, BLOG_MODERATION_PERMISSION);
+}
+
+function dgu_blog_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'forum') {
+    return dgu_moderation_access($account, $node, BLOG_MODERATION_PERMISSION);
+  }
+}
+
+function dgu_blog_node_access_records($node) {
+  if (($node->type == 'blog')) {
+    return dgu_moderation_get_node_grants($node);
+  }
+}
+
+function dgu_blog_node_grants($account, $op) {
+  return dgu_moderation_get_account_grants($account, BLOG_MODERATION_PERMISSION);
+}
