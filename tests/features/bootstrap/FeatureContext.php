@@ -216,6 +216,51 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^I am logged in as a user "([^"]*)" with the "([^"]*)" role$/
+   */
+  public function iAmLoggedInAsAUserWithTheRole($user_name, $role) {
+    if (isset($user_name)) {
+
+      // Check if a user with this role is already logged in.
+      if ($this->loggedIn() && $this->user && isset($this->user->role) && $this->user->role == $role) {
+        return TRUE;
+      }
+      elseif (isset($this->users[$user_name])) {
+        // Set previously used credentials as current.
+        $this->user = $this->users[$user_name];
+        // Login.
+        $this->login();
+        return TRUE;
+      }
+
+      // Create user.
+      $user = (object) array(
+        'name' => $user_name,
+        'pass' => Random::name(16),
+        'role' => $role,
+      );
+      $user->mail = $this->getMailAddress($user_name);
+
+      // Create a new user.
+      $this->getDriver()->userCreate($user);
+
+      $this->users[$user_name] = $this->user = $user;
+
+      if ($role == 'authenticated user') {
+        // Nothing to do.
+      }
+      else {
+        $this->getDriver()->userAddRole($user, $role);
+      }
+
+      // Login.
+      $this->login();
+
+      return TRUE;
+    }
+  }
+
+  /**
    * @Given /^I follow login link$/
    */
   public function iFollowLoginLink() {
@@ -254,6 +299,44 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       return;
     }
     throw new Exception('RSS icon found in the ' . $column . ' column but it\'s not visible');
+  }
+
+  /**
+   * @Given /^I click search icon$/
+   */
+  public function iClickSearchIcon() {
+
+    $search_icons = $this->getSession()->getPage()->findAll('css', '#dgu-search-form .btn-default');
+    if (empty($search_icons)) {
+      throw new Exception('No search icons found');
+    }
+    foreach ($search_icons as $search_icon) {
+      if (!$search_icon->isVisible()) {
+        throw new Exception('Search icon found but it\'s not visible');
+      }
+      $search_icon->click();
+      return;
+    }
+
+  }
+
+  /**
+   * @Given /^search result counter should contain "([^"]*)"$/
+   */
+  public function searchResultCounterShouldContain($string) {
+    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-footer');
+    if (empty($search_counters)) {
+      throw new Exception('Search counter not found');
+    }
+    foreach ($search_counters as $search_counter) {
+      if (!$search_counter->isVisible()) {
+        throw new Exception('Search counter found but it\'s not visible');
+      }
+      elseif ($search_counter->getText() != $string) {
+        throw new Exception('Search counter found but it contains "' . $search_counter->getText() . '" not "' . $string . '"');
+      }
+      return;
+    }
   }
 
    /**
@@ -396,6 +479,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
   }
 
+
+  /**
+   * @Then /^I should see a message about created draft "([^"]*)"$/
+   */
+  public function iShouldSeeAMessageAboutCreatedDraft($content_type) {
+    return $this->assertSuccessMessage("Your draft $content_type has been created. Login to your profile to update it. You can submit this now or later");
+  }
+
+  /**
+   * @Then /^I should see a message about "([^"]*)" being submitted for moderation$/
+   */
+  public function iShouldSeeAMessageAboutBeingSubmittedForModeration($content_type) {
+    return $this->assertSuccessMessage("Your $content_type has been updated and submitted for moderation. Login to your profile to update it. You can submit this now or later");
+  }
+
+
   /**
    * Function to check if the field specified is outlined in red or not
    *
@@ -460,8 +559,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-
-          if ($msg->to == $mail_address && $msg->subject == $title) {
+            if ($msg->to == $mail_address && $msg->subject == $title) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
@@ -530,6 +628,88 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+
+  /**
+   * @Given /^"([^"]*)" option in "([^"]*)" should be selected$/
+   */
+  public function optionInShouldBeSelected($option_key, $label) {
+
+    $page = $this->getSession()->getPage();
+
+    $select = $page->find('xpath', "//label[contains(., '$label')]/following-sibling::select");
+
+    if ($select) {
+      $dom = new domDocument;
+      $dom->loadHTML($select->getHtml());
+      $options = $dom->getElementsByTagName('option');
+      foreach ($options as $option) {
+        if($option->getAttribute('selected') && $option->nodeValue == $option_key) {
+          return;
+        }
+      }
+
+    }
+
+    throw new ElementNotFoundException(
+      $this->getSession(), 'select option', 'value|text', $option_key
+    );
+
+  }
+
+  /**
+   * @Then /^I (?:|should )see page title "(?P<title>[^"]*)"$/
+   */
+  public function assertPageTitle($title) {
+    $results = $this->getSession()->getPage()->findAll('css', 'h1.page-header');
+    foreach ($results as $result) {
+      if ($result->getText() == $title) {
+        return;
+      }
+    }
+    throw new \Exception(sprintf("The text '%s' was not found in page title on the page %s", $title, $this->getSession()->getCurrentUrl()));
+  }
+
+  /**
+   * @Then /^I (?:|should )see node title "(?P<title>[^"]*)"$/
+   */
+  public function assertNodeTitle($title) {
+    $results = $this->getSession()->getPage()->findAll('css', 'article.node h2.node-title');
+    foreach ($results as $result) {
+      if ($result->getText() == $title) {
+        return;
+      }
+    }
+    if (count($results)) {
+      throw new \Exception(sprintf("The text '%s' was not found in node title on the page %s", $title, $this->getSession()->getCurrentUrl()));
+    }
+    else {
+      throw new \Exception(sprintf("Node title missing on the page %s", $title, $this->getSession()->getCurrentUrl()));
+    }
+  }
+  /**
+   * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
+   */
+
+  public function iHaveAnImageTitledLocatedInFolder($width, $height, $title, $path) {
+    $image = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+    $color = array(
+      imagecolorallocate($image,rand(100, 150),rand(100, 150),rand(100, 150)),
+      imagecolorallocate($image,rand(50, 100),rand(50, 100),rand(50, 100)),
+    );
+
+    for ($y = 0; $y < $height / 5; $y++) {
+      $i=$y % 2;
+      for ($x = 0; $x < $width / 5; $x++) {
+        imagefilledrectangle($image, $x*5, $y*5, $x*5 + 5, $y*5 + 5, $color[++$i % 2]);
+      }
+    }
+
+    imagestring($image, 5, $width/2 - strlen($title) * 4.5 , $height/2 - 15, $title, imagecolorallocate($image, 255, 255, 255));
+    imagepng($image, $path . '/' . $title . '.png');
+    imagedestroy($image);
+  }
+
+
   /**
    * @Given /^TEST$/
    */
@@ -539,6 +719,73 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
 
+  /**
+   * @Given /^I submit "([^"]*)" titled "([^"]*)" for moderation$/
+   */
+  public function iSubmitTitledForModeration($content_type, $title) {
+    return array (
+      new Given("I follow \"profile\""),
+      new Given("I follow \"$title\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"Edit draft\""),
+      new Given("I press \"Submit for moderation\""),
+      new Given("I should see a message about \"$content_type\" being submitted for moderation"),
+      new Given("I follow \"profile\""),
+      new Given("I should see the link \"$title\""),
+      new Given("I follow \"My Drafts\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see the link \"$title\""),
+      new Given("I should see \"Needs review\""),
+      new Given("I should see the link \"Draft\""),
+    );
+  }
 
+  /**
+   * @Given /^user with "([^"]*)" role moderates "([^"]*)" authored by "([^"]*)"$/
+   */
+  public function userWithRoleModeratesAuthoredBy($role, $title, $author) {
+    return array (
+      new Given("that the user \"test_moderator\" is not registered"),
+      new Given("I am logged in as a user \"test_moderator\" with the \"$role\" role"),
+      new Given("I visit \"/admin/workbench\""),
+      new Given("I follow \"Needs Review\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"$title\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"Moderate\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see \"Currently there is no published revision of this node.\""),
+      new Given("I should see \"Created by test_user.\""),
+      new Given("I should see \"Edited by $author.\""),
+      new Given("I should see the link \"$author\" in the \"content\" region"),
+      new Given("I should not see the link \"test_moderator\" in the \"content\" region"),
+      new Given("\"Published\" option in \"Moderation state\" should be selected"),
+      new Given("I press \"Apply\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see \"This is the published revision.\""),
+      new Given("I should see the link \"Unpublish\" in the \"content\" region"),
+      new Given("I should see the link \"test_moderator\" in the \"content\" region"),
+      new Given("I follow \"View\""),
+      new Given("I should see \"Revision state: Published\""),
+      new Given("I should see \"Current draft: Yes\""),
+      new Given("I should see the link \"Unpublish this revision\" in the \"main_content\" region"),
+    );
+  }
 
+  /**
+   * @Then /^I should see "([^"]*)" in All content tab but not in My edits or My drafts tabs$/
+   */
+  public function iShouldSeeInAllContentTabButNotInMyEditsOrMyDraftsTabs($title) {
+    return array (
+      new Given("I visit \"/admin/workbench/content/edited\""),
+      new Given("I should not see the link \"$title\""),
+      new Given("I visit \"/admin/workbench/drafts\""),
+      new Given("I should not see the link \"$title\""),
+      new Given("I visit \"/admin/workbench/content/all\""),
+      new Given("I follow \"$title\""),
+      new Given("I should see the link \"New draft\""),
+      new Given("I should see the link \"Add new comment\""),
+      new Given("I should see \"View published\""),
+    );
+  }
 }

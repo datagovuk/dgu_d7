@@ -499,7 +499,6 @@ function dgu_glossary_node_grants($account, $op) {
   $grants['glossary_moderator'] = array($account->uid, PUBLIC_GLOSSARY_GRANT);
   if (user_access('moderate glossary', $account)) {
     $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
-    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
   }
   return $grants;
 }

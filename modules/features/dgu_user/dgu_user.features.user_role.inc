@@ -13,25 +13,25 @@ function dgu_user_user_default_roles() {
   // Exported role: ckan adminstrator.
   $roles['ckan adminstrator'] = array(
     'name' => 'ckan adminstrator',
-    'weight' => 5,
+    'weight' => 7,
   );
 
   // Exported role: data publisher.
   $roles['data publisher'] = array(
     'name' => 'data publisher',
-    'weight' => 4,
+    'weight' => 6,
   );
 
   // Exported role: moderator.
   $roles['moderator'] = array(
     'name' => 'moderator',
-    'weight' => 3,
+    'weight' => 4,
   );
 
   // Exported role: unverified user.
   $roles['unverified user'] = array(
     'name' => 'unverified user',
-    'weight' => 3,
+    'weight' => 5,
   );
 
   return $roles;
