@@ -86,6 +86,7 @@ class LocalDataRegistry {
 // class FeatureContext extends BehatContext
 class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 {
+  private $users = array();
   /**
    * Initializes context.
    * Every scenario gets its own context object.
@@ -103,7 +104,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
     $this->mailAddresses = array();
     $this->mailMessages = array();
-
   }
 
     /**
@@ -714,8 +714,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^TEST$/
    */
   public function test() {
-
-
   }
 
 
