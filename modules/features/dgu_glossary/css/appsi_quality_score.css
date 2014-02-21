@@ -1,0 +1,38 @@
+/* Static View-only Star Version */
+.fivestar-appsi_quality_score div.fivestar-widget-static .star {
+    width: 8px;
+    height: 18px;
+    background: url(appsi_star.png) no-repeat 0 0;
+}
+
+.fivestar-appsi_quality_score div.fivestar-widget-static .star span.on {
+    background: url(appsi_star.png) no-repeat 0 -32px;
+}
+
+.fivestar-appsi_quality_score div.fivestar-widget-static .star span.off {
+    background: url(appsi_star.png) no-repeat 0 0;
+}
+
+/* Javascript Star Version */
+.fivestar-appsi_quality_score div.fivestar-widget .cancel,
+.fivestar-appsi_quality_score div.fivestar-widget .star {
+    width: 8px;
+    height: 18px;
+}
+.fivestar-appsi_quality_score div.fivestar-widget .cancel,
+.fivestar-appsi_quality_score div.fivestar-widget .cancel a {
+    background: url(appsi_delete.png) no-repeat 0 0;
+}
+
+.fivestar-appsi_quality_score div.fivestar-widget .star,
+.fivestar-appsi_quality_score div.fivestar-widget .star a {
+    background: url(appsi_star.png) no-repeat 0 0;
+}
+
+.fivestar-appsi_quality_score div.fivestar-widget div.on a {
+    background-position: 0 -16px;
+}
+.fivestar-appsi_quality_score div.fivestar-widget div.hover a,
+.fivestar-appsi_quality_score div.rating div a:hover {
+    background-position: 0 -32px;
+}

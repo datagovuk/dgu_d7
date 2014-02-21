@@ -47,6 +47,33 @@ function dguk_preprocess_node(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $full_node = node_load($variables['node']->nid);
   $variables['title'] = $full_node->title;
+
+  $fields = field_info_instances('user', 'user');
+  $field_id = $fields['field_avatar']['field_id'];
+  $user = new stdClass();
+  $user->uid = $variables['node']->uid;
+  field_attach_load('user', array($variables['node']->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
+
+  if (!empty($user->field_avatar)) {
+    $field = field_get_items('user', $user, 'field_avatar');
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'profile')));
+  }
+  else {
+    $image = theme_image_style_outside_files(
+    array(
+      'style_name' => 'profile',
+      'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
+      )
+    );
+  }
+  $variables['avatar'] = render($image);
+
+
+  if ($variables['created'] != $variables['changed']) {
+    $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
+
+  }
+
 }
 
 /**
@@ -76,6 +103,10 @@ function dguk_preprocess_panels_pane(&$variables) {
     $variables['content']['#attributes']['class'][] = 'form-search';
     $variables['content']['#attributes']['class'][] = 'form-search-solo';
   }
+
+  if ($variables['pane']->type == 'fieldable_panels_pane') {
+    $variables['theme_hook_suggestions'][] = 'panels_pane__fieldable_panels_pane__' . $variables['content']['#element']->bundle;
+  }
 }
 
 /**
@@ -89,12 +120,13 @@ function dguk_preprocess_block(&$variables) {
  *  Implements hook_preprocess_field().
  */
 function dguk_preprocess_field(&$variables) {
-
 	if($variables['element']['#field_name'] == 'field_uses_dataset') {
     // Render direct link to dataset in CKAN instead of dataset copy in Drupal.
-    $title = $variables['element']['#items'][0]['entity']->title;
-    $name = $variables['element']['#items'][0]['entity']->name;
-    $variables['items'][0]['#markup'] = l($title, 'dataset/' . $name);
+    foreach ($variables['element']['#items'] as $index => $item){
+      $title = $item['entity']->title;
+      $name = $item['entity']->name;
+      $variables['items'][$index]['#markup'] = l($title, 'dataset/' . $name);
+    }
   }
 }
 
@@ -149,15 +181,24 @@ function dguk_preprocess_search_result(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
 
+
+  $variables['info_split']['changed'] = $variables['info_split']['date'];
+  unset($variables['info_split']['date']);
+  $variables['info_split']['created'] = format_date($variables['result']['fields']['created'], 'short');
+
+
   switch ($variables['result']['bundle']) {
     case 'app':
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+
       if (isset($variables['result']['fields']['sm_field_developed_by'][0])) {
-        $variables['info_split']['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
+        $variables['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
       }
       break;
     case 'blog':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
       break;
     case 'dataset_request':
       $review_status_values = &drupal_static('odug_review_statuses');
@@ -168,17 +209,25 @@ function dguk_preprocess_search_result(&$variables) {
       $status_key = $variables['result']['fields']['im_field_review_status'][0];
       $status_value = $review_status_values[$status_key];
 
-      $variables['info_split']['other'] = 'Review status: ' . $status_value;
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['other'] = 'Review status: ' . $status_value;
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+
       break;
     case 'forum':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
+      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
       break;
     case 'page':
-      $variables['info_split']['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['created'];
+      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
+        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+      }
       break;
     case 'resource':
-      $variables['info_split']['submitted'] = 'Submitted on ' . $variables['info_split']['date'];
+      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
+      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
+        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
+      }
       break;
   }
 }
@@ -208,47 +257,140 @@ function dguk_css_alter(&$css) {
   unset($css[drupal_get_path('theme', 'bootstrap') . '/bootstrap/css/bootstrap-responsive.css']);
 }
 
-
 /**
- * Get the output for the main menu.
+ * Get the output for Data menu.
  */
-function dguk_get_main_menu($main_menu) {
-  $menu_new_classes = array();
-  foreach ($main_menu as $key => $item) {
-    $menu_new_classes['nav-' . strtolower(str_replace(' ', '-', $item['title'])) . ' ' . $key] = $item;
+function dguk_get_data_menu() {
+  $menu = menu_navigation_links('menu-apps');
+
+  $menu = array(
+    'menu-datasets' => array(
+      'title' => 'Datasets',
+      'href' => 'data/search',
+    ),
+    'menu-map-search' => array(
+      'title' => 'Map Search',
+      'href' => 'data/map-based-search',
+    ),
+    'menu-data-requests' => array(
+      'title' => 'Data Requests',
+      'href' => 'odug',
+    ),
+    'menu-publishers' => array(
+      'title' => 'Publishers',
+      'href' => 'publisher',
+    ),
+    'menu-organogram' => array(
+      'title' => 'Public Roles & Salaries',
+      'href' => 'organogram/cabinet-office',
+    ),
+    'menu-openspending' => array(
+      'title' => 'OpenSpending',
+      'href' => 'data/openspending-browse',
+    ),
+    'menu-openspending-report' => array(
+      'title' => 'Spend Reports',
+      'href' => 'data/openspending-report/index',
+    ),
+    'menu-site-usage' => array(
+      'title' => 'Site Analytics',
+      'href' => 'data/site-usage',
+    ),
+  );
+
+  global $user;
+  if ($user->uid == 1 || in_array('ckan adminstrator', array_values($user->roles))) {
+    $admin_menu = array(
+      'divider-section' => array(
+        'title' => 'Sys Admin:',
+      ),
+
+      'menu-system-dashboard' => array(
+        'title' => 'System Dashboard',
+        'href' => 'data/system_dashboard',
+      ),
+      'menu-harvest' => array(
+        'title' => 'Harvest Sources',
+        'href' => 'harvest',
+      ),
+      'menu-feedback-moderation' => array(
+        'title' => 'Feedback moderation',
+        'href' => 'data/feedback/moderation',
+      ),
+    );
+    $menu = array_merge($menu, $admin_menu);
   }
 
-	$menu_output = theme('links__main_menu', array(
-	    'links' => $menu_new_classes,
+  $classes = array('subnav', 'subnav-data');
+  $current_path = $_SERVER['REQUEST_URI'];
+  $a = strpos($current_path, 'odug');
+  $b = strpos($current_path, 'data-request');
+
+  // $current_path always starts from "/"
+  if (strpos($current_path, 'odug') == 1 || strpos($current_path, 'data-request') == 1 || strpos($current_path, 'node/add/dataset-request') == 1) {
+    $menu['menu-data-requests']['attributes']['class'][] = 'active';
+    $classes[] = 'active';
+  }
+  if (strpos($current_path, 'organogram') == 1) {
+    $menu['menu-organogram']['attributes']['class'][] = 'active';
+    $classes[] = 'active';
+  }
+
+	$menu_output = theme('links__menu-data', array(
+	    'links' => $menu,
 	    'attributes' => array(
-	        'id' => 'dgu-nav',
-	        'class' => array('nav'),
+	        'class' => $classes,
 	    ),
 	 ));
 
-  $output = '<div class="navbar navbar-inverse"> <div class="main-nav-collapse">';
-  $output .=  $menu_output;
-  $output .= '</div><!--/.main-nav-collapse --></div>';
-  $output = str_replace('Home</a>', '<div class="nav-icon"></div>Home</a>', $output);
-
-	return $output;
+	return $menu_output;
  }
 
 /**
- * Get the output for the sub menu (2nd level of main menu).
+ * Get the output for Apps menu.
  */
-function dguk_get_sub_menu() {
-	$menu = menu_navigation_links('main-menu', 1);
+function dguk_get_apps_menu($menu) {
+	//$menu = menu_navigation_links('menu-apps');
+  $classes = array('subnav', 'subnav-apps');
 
-	return theme('links__sub_menu', array(
-	    'links' => $menu,
-	    'attributes' => array(
-	        'id' => 'subnav',
-	    ),
+  foreach ($menu as $menu_item) {
+    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+      $classes[] = 'active';
+    }
+  }
+
+	$menu_output = theme('links__menu-apps', array(
+    'links' => $menu,
+    'attributes' => array(
+      'class' => $classes,
+    ),
 	 ));
+
+	return $menu_output;
  }
 
+/**
+ * Get the output for Apps menu.
+ */
+function dguk_get_interact_menu($menu) {
+  //$menu = menu_navigation_links('menu-interact');
+  $classes = array('subnav', 'subnav-interact');
 
+  foreach ($menu as $menu_item) {
+    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+      $classes[] = 'active';
+    }
+  }
+
+	$menu_output = theme('links__menu-interact', array(
+    'links' => $menu,
+    'attributes' => array(
+      'class' => $classes,
+    ),
+	 ));
+
+	return $menu_output;
+ }
 
 /**
  * Get the output for the footer menu.
@@ -267,90 +409,218 @@ function dguk_get_footer_menu() {
  }
 
 /**
- * Returns HTML for sub mnavigation links.
- */
-function dguk_links__sub_menu($variables) {
-  $links = $variables['links'];
-  $attributes = $variables['attributes'];
-  $output = '';
-
-  if (count($links) > 0) {
-    $output .= '<ul' . drupal_attributes($attributes) . '>';
-
-    $num_links = count($links);
-    $i = 1;
-
-    foreach ($links as $key => $link) {
-      $class = array($key);
-
-      // Add first, last and active classes to the list of links to help out themers.
-      if ($i == 1) {
-        $class[] = 'first';
-      }
-      if ($i == $num_links) {
-        $class[] = 'last';
-      }
-      if (isset($link['href']) && ($link['href'] == $_GET['q'] || ($link['href'] == '<front>' && drupal_is_front_page()))
-          && (empty($link['language']) || $link['language']->language == $language_url->language)) {
-        $class[] = 'active';
-      }
-      $output .= '<li' . drupal_attributes(array('class' => $class)) . '>';
-
-      if (isset($link['href'])) {
-        // Pass in $link as $options, they share the same keys.
-        $output .= l($link['title'], $link['href'], $link);
-      }
-      elseif (!empty($link['title'])) {
-        // Some links are actually not links, but we wrap these in <span> for adding title and class attributes.
-        if (empty($link['html'])) {
-          $link['title'] = check_plain($link['title']);
-        }
-        $span_attributes = '';
-        if (isset($link['attributes'])) {
-          $span_attributes = drupal_attributes($link['attributes']);
-        }
-        $output .= '<span' . $span_attributes . '>' . $link['title'] . '</span>';
-      }
-
-      $i++;
-      $output .= "</li>\n";
-
-      if ($i <= $num_links) {
-        $output .= "<span class=\"divider\">&nbsp;|&nbsp;</span>\n";
-      }
-    }
-
-    $output .= '</ul>';
-  }
-
-  return $output;
-}
-/**
  * Remove jquery and bootstrap.
  * @see dguk/templates/html.tpl.php
  */
 function dguk_js_alter(&$js){
-  unset($js['profiles/dgu/themes/contrib/bootstrap/bootstrap/js/bootstrap.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
+//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
+//
+//  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
+//  $current_path = current_path();
+//  $paths_to_avoid = array(
+//      '^admin\/',
+//      '^node\/add\/',
+//      '^node\/\d*\/edit',
+//      '^user\/\d*\/edit',
+//    );
+//
+//  $keep_jquery = FALSE;
+//  foreach ($paths_to_avoid as $path_to_avoid) {
+//    if(preg_match("/$path_to_avoid/", $current_path)) {
+//      $keep_jquery = TRUE;
+//      break;
+//    }
+//  }
+//
+//  if (!$keep_jquery) {
+//    unset($js['misc/jquery.js']);
+//  }
+  unset($js['misc/jquery.js']);
+  unset($js['profiles/dgu/modules/contrib/jquery_update/replace/jquery/1.8/jquery.min.js']);
 
-  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
-  $current_path = current_path();
-  $paths_to_avoid = array(
-      '^admin\/',
-      '^node\/add\/',
-      '^node\/\d*\/edit',
-      '^user\/\d*\/edit',
-    );
 
-  $keep_jquery = FALSE;
-  foreach ($paths_to_avoid as $path_to_avoid) {
-    if(preg_match("/$path_to_avoid/", $current_path)) {
-      $keep_jquery = TRUE;
-      break;
+
+}
+
+function dguk_menu_breadcrumb_alter(&$active_trail, $item){
+  $end = end($active_trail);
+  foreach ($active_trail as $key => $crumb){
+    if (!empty($crumb['path']) && $crumb['path'] == 'forum/%') {
+      //special processing for forum items
+      //Set the title and href and replace the current item with a link to forums
+      $crumb['title'] = 'Discussion Forum';
+      $crumb['href'] = 'forum';
+      $active_trail[$key] = $crumb;
+      //Set the title of the page to the current item's title which is appended to the crumbs link
+      drupal_set_title($crumb['map'][$key]->title);
+      //append an item to the active trail to prevent drupal from removing the last crumb
+      $active_trail[] = $end;
+    } elseif (!empty($crumb['link_path']) && $crumb['link_path'] == 'node/%'){
+      //special processing for nodes
+      $parent_path = '';
+      $title = drupal_get_title();
+      switch($item['map'][$key]->type){
+        case 'app':
+          $parent_path = 'apps';
+          break;
+        case 'blog':
+          $parent_path = 'blog';
+          break;
+        case 'resource':
+          $parent_path = 'library';
+          break;
+        case 'dataset_request':
+          $parent_path = 'odug';
+          break;
+        case 'forum':
+          //forum items need a link to the parent forum
+          //Set the title and href and replace the current item with a link to forums
+          $crumb['title'] = 'Discussion Forum';
+          $parent_path = 'forum';
+          $active_trail[$key] = $crumb;
+
+          $tid = $item['map'][$key]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
+          $forum = taxonomy_term_load($tid);
+          $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+          break;
+        default:
+          $alias = drupal_get_path_alias('node/' . $crumb['map'][$key]->nid);
+          $parts =  explode('/', $alias);
+          $parent_path =  $parts[0];
+          break;
+
+      }
+      //Set the current crumb to the page title
+      $crumb['title'] = htmlspecialchars_decode($title);
+      $crumb['href'] = $parent_path;
+      $active_trail[$key] = $crumb;
+      //append an item to the active trail to prevent drupal from removing the last crumb
+      $active_trail[] = $end;
+    }  elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
+      $instance_id = $item['page_arguments'][1];
+      $instance = reply_load_instance($instance_id);
+      $entity_type = $instance->entity_type;
+      $entity = entity_load($entity_type, array($item['page_arguments'][0]));
+      $entity = reset($entity);
+      $alias = drupal_get_path_alias($entity_type . '/' . $entity->nid);
+      $parts =  explode('/', $alias);
+
+      //set the parent path
+      $parent_path =  $parts[0];
+      $parent_menu = menu_get_item($parent_path);
+      $crumb['title'] = htmlspecialchars_decode($parent_menu['title']);
+      $crumb['href'] = $parent_path;
+      $active_trail[$key] = $crumb;
+
+      //Set the current crumb to the page title
+      $crumb['title'] = htmlspecialchars_decode($entity->title);
+      $crumb['href'] = $alias;
+      $active_trail[] = $crumb;
     }
   }
+}
 
-  if (!$keep_jquery) {
-    unset($js['misc/jquery.js']);
+/**
+ * Implements theme_breadcrumb()
+ * Return a themed breadcrumb trail.
+ *
+ * @param $breadcrumb
+ *   An array containing the breadcrumb links.
+ * @return a string containing the breadcrumb output.
+ */
+function dguk_breadcrumb($variables) {
+  if (count($variables['breadcrumb']) > 0) {
+    $crumbs = '<ul id="breadcrumbs">';
+    $a=0;
+    $title = drupal_get_title();
+    $node = menu_get_object();
+    if ($node){
+      $title = $node->title;
+    }
+    foreach($variables['breadcrumb'] as $value) {
+      if ($a==0){
+        $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
+      }
+      else {
+        if ($value != '*:*' && $title != 'Library'){
+          $crumbs .= '<li>'. $value . '</li>';
+        }
+      }
+      $a++;
+    }
+    $crumbs .= '<li>' . $title . '</li>';
+    return $crumbs;
+   }
+}
+
+function dguk_preprocess_user_profile(&$variables) {
+  $variables['first_name'] = $variables['field_first_name'][0]['safe_value'];
+  $variables['surname'] = $variables['field_surname'][0]['safe_value'];
+  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
+  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  $variables['linkedin'] = $variables['field_linkedin_url'][0]['url'];
+  $variables['facebook'] = $variables['field_facebook_url'][0]['url'];
+}
+
+
+function dguk_field__field_quality__glossary($variables){
+  $output = '';
+
+  // Render the label, if it's not hidden.
+  if (!$variables['label_hidden']) {
+    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label']
+      . '&nbsp;<a class="lexicon-term" href="http://www.nationalarchives.gov.uk/appsi/open-data-psi-glossary-pilot.htm" target="_blank" title="The APPSI quality score reflects our confidence in the accuracy and quality of a term and it\'s definition">(What is this?)</a>'
+      . ':&nbsp;</div>';
   }
 
+  // Render the items.
+  $output .= '<div class="field-items"' . $variables['content_attributes'] . '>';
+  foreach ($variables['items'] as $delta => $item) {
+    $classes = 'field-item ' . ($delta % 2 ? 'odd' : 'even');
+    $output .= '<div class="' . $classes . '"' . $variables['item_attributes'][$delta] . '>' . drupal_render($item) . '</div>';
+  }
+  $output .= '</div>';
+
+  // Render the top-level DIV.
+  $output = '<div class="' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
+
+  return $output;
+}
+
+
+function dguk_ajax_render_alter(&$commands) {
+  $commands[] = ajax_command_remove('#messages');
+  $commands[] = ajax_command_prepend('.drupal-messages', '<div id="messages">' . theme('status_messages') . '</div>');
+}
+
+
+function dguk_button($variables) {
+  $element = $variables['element'];
+  element_set_attributes($element, array('id', 'name', 'value', 'type'));
+
+  // If a button type class isn't present then add in default.
+  $button_classes = array(
+    'btn-default',
+    'btn-primary',
+    'btn-success',
+    'btn-info',
+    'btn-warning',
+    'btn-danger',
+    'btn-link',
+  );
+  $class_intersection = array_intersect($button_classes, $element['#attributes']['class']);
+  if (empty($class_intersection)) {
+    $element['#attributes']['class'][] = 'btn-default';
+  }
+
+  // Add in the button type class.
+  $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
+
+  // This line break adds inherent margin between multiple buttons.
+  return '<input' . drupal_attributes($element['#attributes']) .  "/>\n";
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="behat.mink.session.class">DGU\DGUSession</parameter>
+    </parameters>
+
+    <services>
+        <service id="behat.mink" class="Behat\Mink\Mink" />
+        <service id="mink.context.initializer" class="DGU\MinkAwareInitializer">
+            <argument type="service" id="behat.mink" />
+            <tag name="behat.context.initializer" />
+        </service>
+    </services>
+
+</container>

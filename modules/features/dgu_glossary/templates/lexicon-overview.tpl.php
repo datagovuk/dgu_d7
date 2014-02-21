@@ -27,20 +27,23 @@
  *
  */
 ?>
-<div id="<?php print $lexicon_overview->voc_name ?>" xmlns="http://www.w3.org/1999/html">
-    <?php print $lexicon_alphabar ?>
-    <?php if (isset($lexicon_overview->introduction)) : ?>
+<div id="<?php print $lexicon_overview->voc_name ?>" class="<?php print $lexicon_overview->voc_name ?>">
+
+    <navclass="tabs">
+      <ul  id="<?php print $lexicon_overview->voc_name ?>_filter" class="tabs--primary nav nav-tabs">
+        <li><a href="#approved" id="show_approved" data-toggle="tab">Approved terms</a></li>
+        <li><a href="#new" id="show_new" data-toggle="tab">New terms</a></li>
+        <li class="active"><a href="#both" id="show_both" data-toggle="tab">All terms</a></li>
+      </ul>
+    </nav>
+    <a href="<?php print $suggest_new_term_link ?>" class="suggest-new btn btn-mini btn-primary"><?php print $suggest_new_term_text ?></a>
+    <div class="glossary-content">
+      <?php print $lexicon_alphabar ?>
+      <?php if (isset($lexicon_overview->introduction)) : ?>
         <div class="lexicon-introduction">
-            <?php print $lexicon_overview->introduction; ?>
+          <?php print $lexicon_overview->introduction; ?>
         </div>
-    <?php endif;?>
-    <div class="glossary_filter">
-        <input type="radio" name="filter_glossary" value="show_approved">Only approved terms</input>
-        <input type="radio" name="filter_glossary" value="show_new">Only new terms</input>
-        <input checked="true" type="radio" name="filter_glossary" value="show_both">Both new and approved terms</input>
-    </div>
-    <a href="glossary/suggest_new" class="button">Suggest a new Term</a>
-    <div class="lexicon-list">
+      <?php endif;?>
         <?php foreach ($lexicon_overview_sections as $section) : ?>
             <?php print $section; ?>
             <?php if (isset($lexicon_overview->go_to_top_link)) : ?>

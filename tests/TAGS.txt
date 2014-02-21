@@ -1,0 +1,18 @@
+Existing tags
+*************
+
+Entire features or individual scenarios can be tagged as follows to assist in running tests:
+
+Tags to assist in selectively running tests
+===========================================
+
+@javascript
+    Used when the feature being tested relies on CSS or javascript and must use a fully-featured browser for accurate testing. Note: Selenium must be running on the system executing tests or these scenarios will fail.
+@slow
+    Used for scenarios that are slow.
+@email
+    Used for scenarios that involve sending an email
+@wip
+    Work in progress
+@search
+    Used for scenarios that involve search.

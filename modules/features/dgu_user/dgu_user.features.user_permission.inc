@@ -47,6 +47,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access content overview',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -56,17 +57,9 @@ function dgu_user_user_default_permissions() {
     'name' => 'access contextual links',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'contextual',
-  );
-
-  // Exported permission: 'access overlay'.
-  $permissions['access overlay'] = array(
-    'name' => 'access overlay',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'overlay',
   );
 
   // Exported permission: 'access printer-friendly version'.
@@ -120,16 +113,6 @@ function dgu_user_user_default_permissions() {
     'module' => 'user',
   );
 
-  // Exported permission: 'access workbench'.
-  $permissions['access workbench'] = array(
-    'name' => 'access workbench',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-    ),
-    'module' => 'workbench',
-  );
-
   // Exported permission: 'add content to books'.
   $permissions['add content to books'] = array(
     'name' => 'add content to books',
@@ -162,6 +145,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'administer nodes',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -202,15 +186,6 @@ function dgu_user_user_default_permissions() {
     'module' => 'workbench',
   );
 
-  // Exported permission: 'administer workbench moderation'.
-  $permissions['administer workbench moderation'] = array(
-    'name' => 'administer workbench moderation',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
   // Exported permission: 'bypass file access'.
   $permissions['bypass file access'] = array(
     'name' => 'bypass file access',
@@ -227,16 +202,6 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'node',
-  );
-
-  // Exported permission: 'bypass workbench moderation'.
-  $permissions['bypass workbench moderation'] = array(
-    'name' => 'bypass workbench moderation',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
   );
 
   // Exported permission: 'cancel account'.
@@ -281,6 +246,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'delete revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -294,41 +260,12 @@ function dgu_user_user_default_permissions() {
     'module' => 'admin_menu',
   );
 
-  // Exported permission: 'moderate content from draft to needs_review'.
-  $permissions['moderate content from draft to needs_review'] = array(
-    'name' => 'moderate content from draft to needs_review',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'moderate content from needs_review to draft'.
-  $permissions['moderate content from needs_review to draft'] = array(
-    'name' => 'moderate content from needs_review to draft',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'moderate content from needs_review to published'.
-  $permissions['moderate content from needs_review to published'] = array(
-    'name' => 'moderate content from needs_review to published',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
   // Exported permission: 'revert revisions'.
   $permissions['revert revisions'] = array(
     'name' => 'revert revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
@@ -366,6 +303,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'use text format filtered_html',
     'roles' => array(
       'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'filter',
   );
@@ -386,56 +324,6 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
     ),
     'module' => 'workbench_media',
-  );
-
-  // Exported permission: 'use workbench_moderation my drafts tab'.
-  $permissions['use workbench_moderation my drafts tab'] = array(
-    'name' => 'use workbench_moderation my drafts tab',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'authenticated user' => 'authenticated user',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'use workbench_moderation needs review tab'.
-  $permissions['use workbench_moderation needs review tab'] = array(
-    'name' => 'use workbench_moderation needs review tab',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'view all unpublished content'.
-  $permissions['view all unpublished content'] = array(
-    'name' => 'view all unpublished content',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'view moderation history'.
-  $permissions['view moderation history'] = array(
-    'name' => 'view moderation history',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
-  );
-
-  // Exported permission: 'view moderation messages'.
-  $permissions['view moderation messages'] = array(
-    'name' => 'view moderation messages',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
-    'module' => 'workbench_moderation',
   );
 
   // Exported permission: 'view own unpublished content'.

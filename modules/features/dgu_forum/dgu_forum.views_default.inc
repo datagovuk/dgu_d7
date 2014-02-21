@@ -162,6 +162,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['header'] = FALSE;
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Taxonomy term: Content using Forums */
   $handler->display->display_options['relationships']['reverse_taxonomy_forums_node']['id'] = 'reverse_taxonomy_forums_node';
@@ -470,6 +471,15 @@ function dgu_forum_views_default_views() {
       'label' => 'Content: Forums (taxonomy_forums)',
     ),
   );
+
+  /* Display: Feed */
+  $handler = $view->new_display('feed', 'Feed', 'feed_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'rss';
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['row_options']['item_length'] = 'rss';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  $handler->display->display_options['path'] = 'forum/rss.xml';
   $export['forum_topics'] = $view;
 
   return $export;

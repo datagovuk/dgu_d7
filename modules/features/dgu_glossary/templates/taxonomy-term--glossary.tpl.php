@@ -40,33 +40,38 @@
  * @ingroup themeable
  */
 ?>
+<div class="glossary-content">
 
-<?php print $lexicon_alphabar; ?>
 
+  <?php print $lexicon_alphabar; ?>
   <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">
 
-    <?php if (!$page): ?>
-      <h2><a href="<?php print $term_url; ?>"><?php print $term_name; ?></a></h2>
-    <?php endif; ?>
+      <?php if (!$page): ?>
+        <div class="glossary-header">
+          <h2><?php print $term_name; ?></h2>
+          <span class="glossary-appsi-quality"><?php print $quality_score; ?></span>
+        </div>
+      <?php endif; ?>
 
-    <div class="content">
-      <?php print render($content); ?>
+      <div class="content">
+        <?php print render($content); ?>
+      </div>
+
+      <div class="source">
+        <?php print render($source); ?>
+      </div>
+
+      <div class="comments">
+          <?php print render($comments); ?>
+      </div>
+
+      <?php if ($suggested_definitions): error_log(print_r($suggested_definitions,true)); ?>
+      <div class="suggested-definitions">
+        <h2>Suggested definitions</h2>
+        <?php print render($suggested_definitions); ?>
+      </div>
+      <?php endif; ?>
+
     </div>
 
-    <div class="source">
-      <?php print render($source); ?>
-    </div>
-
-    <div class="comments">
-        <h2>Comments</h2>
-        <?php print render($comments); ?>
-    </div>
-
-    <?php if ($suggested_definitions): error_log(print_r($suggested_definitions,true)); ?>
-    <div class="suggested-definitions">
-      <h2>Suggested definitions</h2>
-      <?php print render($suggested_definitions); ?>
-    </div>
-    <?php endif; ?>
-
-  </div>
+</div>

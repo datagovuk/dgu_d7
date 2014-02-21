@@ -1,0 +1,68 @@
+default:
+  paths:
+    features: features
+    bootstrap: features/bootstrap
+  context:
+    parameters:
+      drupal_users:
+        authenticated_user:
+          'pass'
+        admin:
+          'pass'
+        editor:
+          'pass'
+      email:
+        mailbox:
+          '{imap.gmail.com:993/imap/ssl}INBOX'
+        host:
+          'gmail.com'
+        username:
+          'dgutesting'
+        password:
+          'testpassword'
+  extensions:
+    Behat\MinkExtension\Extension:
+      goutte: ~
+      selenium2: ~
+    Drupal\DrupalExtension\Extension:
+      blackbox: ~
+      drush: ~
+#      basic_auth:
+#        username: drupal
+#        password: drupal
+      region_map:
+        subnav: '#greenbar'
+        main_content: "#main-content"
+        content: '#content' #used in seven theme
+        #header: TODO - render in page.tpl.php
+        highlighted: '#highlighted'
+        #help: TODO - render in page.tpl.php
+        footer: '#footer'
+        breadcrumb: '#breadcrumb'
+        pager: '.pagination'
+      selectors:
+        message_selector: '.alert'
+        error_message_selector: '.alert.alert-error'
+        success_message_selector: '.alert.alert-success'
+      text:
+        log_out: '/user/logout'
+        log_in: 'Log in'
+        password_field: 'Password '
+        username_field: 'Username or e-mail address '
+      drush:
+        alias: 'self'
+    features/extensions/DGUExtension.php: ~
+local:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://dgu_d7'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'dgud7.local'
+dev:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://dgud7.co-dev1.dh.bytemark.co.uk'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'dgud7.dev'

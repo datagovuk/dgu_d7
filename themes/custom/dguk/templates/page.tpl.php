@@ -1,81 +1,139 @@
-<div id="blackbar">
+<?php
+  global $user;
+  if (in_array('data publisher', array_values($user->roles))) {
+    $user = user_load($user->uid);
+  }
+?>
+
+<div id="blackbar" class="<?php print ($user->uid == 1 || in_array('data publisher', array_values($user->roles))) ? 'with' : 'without' ?>-publisher">
     <div class="container">
-        <div id="hm-government-link" class="retina-img">
-            <img src="/assets/img/crown-and-text.png" alt="HM Government" />
-        </div>
-            <?php if ($logged_in): ?>
-              <span class="ckan-logged-in">
-                  <div id="login-or-signup">
-                      You are logged-in as
-                      <a href="/admin/workbench"><?php print $user->name; ?></a>.
-                      <?php print l('Log out', 'user/logout', array('query' => drupal_get_destination())); ?>
-                  </div>
+        <a class="brand" href="/" rel="home">
+          <!--
+            <div id="dgu-header" class="retina-img">
+                <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
+            </div>
+            -->
+        </a>
+
+        <?php
+          // $main_menu is set to menu-interact and $secondary_menu is set to menu-apps
+          // otherwise context doesn't work
+          $data_menu = dguk_get_data_menu();
+          $apps_menu = dguk_get_apps_menu($secondary_menu);
+          $interact_menu = dguk_get_interact_menu($main_menu);
+          $active = 1;
+          if(strpos($data_menu, 'subnav-data active')) {
+            $active = 2;
+          }
+          if(strpos($apps_menu, 'subnav-apps active')) {
+            $active = 3;
+          }
+          if(strpos($interact_menu, 'subnav-interact active')) {
+            $active = 4;
+          }
+        ?>
+
+      <div class="chevron position<?php print $active;?>"></div>
+        <nav id="dgu-nav">
+          <?php //print dguk_get_main_menu($main_menu);?>
+          <div class="text-links">
+            <a href="/" title="" class="trigger-subnav nav-home <?php if($active == 1) print 'active'; ?>">Home</a>
+            <a href="/data" class="trigger-subnav nav-data <?php if($active == 2) print 'active'; ?>">Data</a>
+            <a href="/apps" class="trigger-subnav nav-apps <?php if($active == 3) print 'active'; ?>">Apps</a>
+            <a href="/interact" class="trigger-subnav nav-interact <?php if($active == 4) print 'active'; ?>">Interact</a>
+          </div>
+          <div class="nav-search" style="width: 200px;">
+            <form class="input-group input-group-sm" action="/data/search">
+              <input type="text" class="form-control" name="q" />
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
               </span>
-            <?php else: ?>
-              <span class="ckan-logged-out">
-                  <div id="login-or-signup">
-                      <?php print l('Log in', 'user', array('query' => drupal_get_destination())); ?>
-                      or
-                      <?php print l('sign up', 'user/register', array('query' => drupal_get_destination())); ?>
-                  </div>
-              </span>
-            <?php endif; ?>
+            </form>
+          </div>
+          <?php if ($logged_in): ?>
+            <span class="dropdown">
+              <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
+              <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
+                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s profile</a></li>
+                <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
+              </ul>
+            </span>
+          <?php else: ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
+          <?php endif; ?>
+
+          <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
+            <span class="dropdown">
+              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#"><i class="icon-lock"></i></a>
+              <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
+                <li role="presentation" class="dropdown-header">Tools</li>
+                <li><a href="/dataset/new">Add a Dataset</a></li>
+                <li><a href="/harvest">Dataset Harvesting</a></li>
+                <li role="presentation" class="dropdown-header">My publishers</li>
+                <?php foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
+
+                  <?php $publisher = entity_load_single('ckan_publisher', $publisher_ref['target_id']); ?>
+
+                  <li><a href="/publisher/<?php print $publisher->name?>"><?php print $publisher->title?></a></li>
+                <?php endforeach; ?>
+              </ul>
+            </span>
+          <?php endif; ?>
+
+
+        </nav>
     </div>
 </div>
 <div id="greenbar" class="">
     <div class="container">
-        <a class="btn btn-inverse visible-phone" data-toggle="collapse" data-target=".main-nav-collapse">
-            Nav &nbsp;<i class="icon-chevron-down icon-white"></i>
-        </a>
-        <a class="brand" href="/" rel="home">
-            <div id="dgu-header" class="retina-img">
-                <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
-            </div>
-        </a>
-    </div>
-    <div class="container">
-      <?php print dguk_get_main_menu($main_menu);?>
+      <?php print $data_menu; ?>
+      <?php print $apps_menu; ?>
+      <?php print $interact_menu; ?>
     </div>
 </div>
-<div class="container">
-  <?php print dguk_get_sub_menu() ?>
+<div id="pre-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <?php  print $breadcrumb; ?>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="container content-container">
-
-    <div class="page">
-        <?php // print $breadcrumb; issue #811: breadcrubms are temporarily removed ?>
-
-        <?php if($page['highlighted'] OR $messages): ?>
-            <div class="drupal-messages">
-                <?php print render($page['highlighted']); ?>
-                <?php print $messages; ?>
-            </div>
+<div role="main" id="main-content">
+  <div class="container">
+    <div class="drupal-messages">
+        <?php if($page['highlighted']): ?>
+          <?php print render($page['highlighted']); ?>
         <?php endif; ?>
+        <?php if($messages): ?>
+          <div id="messages" ><?php print $messages; ?></div>
+        <?php endif; ?>
+    </div>
+    <?php print render($title_prefix); ?>
+    <?php if ($title): ?>
+        <h1 class="page-header"><?php print $title; ?></h1>
+    <?php endif; ?>
+    <?php print render($title_suffix); ?>
 
-        <div role="main" id="main-content">
+    <?php if ($action_links): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
+    <?php endif; ?>
 
-            <?php print render($title_prefix); ?>
-            <?php if ($title): ?>
-                <h1><?php print $title; ?></h1>
-            <?php endif; ?>
-            <?php print render($title_suffix); ?>
+    <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
+        <nav class="tabs"><?php print render($tabs); ?></nav>
+    <?php endif; ?>
+    <div class="row">
+      <div class="col-md-12">
+        <?php print render($page['content_pre']); ?>
 
-            <?php if ($action_links): ?>
-                <ul class="action-links"><?php print render($action_links); ?></ul>
-            <?php endif; ?>
+        <?php print render($page['content']); ?>
 
-            <?php if (isset($tabs['#primary'][0]) || isset($tabs['#secondary'][0])): ?>
-                <nav class="tabs"><?php print render($tabs); ?></nav>
-            <?php endif; ?>
-
-            <?php print render($page['content_pre']); ?>
-
-            <?php print render($page['content']); ?>
-
-            <?php print render($page['content_post']); ?>
-
-        </div><!--/main-->
+        <?php print render($page['content_post']); ?>
+      </div>
+    </div>
+  </div>
+</div><!--/main-->
 
         <?php if ($page['sidebar_first']): ?>
             <div class="sidebar-first" id="sidebar1">

@@ -4,16 +4,13 @@
  * Drupal needs this blank file.
  */
 
+define('APP_MODERATION_PERMISSION', 'edit any app content');
+
 include_once 'dgu_app.features.inc';
 
-/**
- * Implements hook_form_BASE_FORM_ID_alter().
- * Add boxed class and change page title on app node form.
- */
-function dgu_app_form_node_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'app_node_form') {
-    $form['#attributes']['class'][] = 'boxed';
-    drupal_set_title(t('Submit an app'));
+function dgu_app_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'app') {
+    return user_access(APP_MODERATION_PERMISSION);
   }
 }
 
@@ -22,46 +19,39 @@ function dgu_app_form_node_form_alter(&$form, &$form_state, $form_id) {
  */
 function dgu_app_form_app_node_form_alter(&$form, &$form_state, $form_id) {
 
-  $form['revision_information']['#type'] = 'hidden';
-
-  $form['actions']['publish']['#access'] = TRUE;
-  $form['actions']['publish']['#value'] = 'Submit for moderation';
-  $form['actions']['publish']['#type'] = 'submit';
-  $form['actions']['publish']['#weight'] = 6;
-  $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
-
-  $form['actions']['submit']['#value'] = 'Save draft';
-  $form['#submit'][] = 'dgu_app_node_submit';
-
+  drupal_set_title(t('Submit an app'));
   unset($form['actions']['preview']);
+  $form['#attributes']['class'][] = "boxed";
+
+  dgu_moderation_node_forms_alter($form, APP_MODERATION_PERMISSION);
 }
 
-/**
- * Custom submit function for challenge content type.
- */
-function dgu_app_node_submit($form, &$form_state) {
-  if(isset($form_state['clicked_button'])) {
-
-    $action = empty($form['#node']->nid) ? 'created' : 'updated';
-
-    if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
-      $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
-      $message = &drupal_static(__FUNCTION__, NULL);
-      $message = 'Your App has been ' . $action . ' and submitted for moderation. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later';
-    }
-    elseif ($form_state['clicked_button']['#value'] == "Save draft") {
-      $form_state['values']['workbench_moderation_state_new'] = 'draft';
-      $message = &drupal_static(__FUNCTION__, NULL);
-      $message = 'Your draft App has been ' . $action . '. Login to your <a href="/admin/workbench">profile</a> to update it. You can submit this now or later';
-    }
+function dgu_app_node_access($node, $op, $account) {
+  if ($op != 'create' && $node->type == 'forum') {
+    return dgu_moderation_access($account, $node, APP_MODERATION_PERMISSION);
   }
 }
 
-function dgu_app_exit() {
-  if ($message = &drupal_static('dgu_app_node_submit', NULL)) {
-    // Remove all status messages - most likely nothing more than '... has been created/updated'
-    drupal_get_messages('status');
-    // Add a message created in dgu_data_set_request_node_submit()
-    drupal_set_message($message);
+function dgu_app_node_access_records($node) {
+  if (($node->type == 'app')) {
+    return dgu_moderation_get_node_grants($node);
+  }
+}
+
+function dgu_app_node_grants($account, $op) {
+  return dgu_moderation_get_account_grants($account, APP_MODERATION_PERMISSION);
+}
+
+function dgu_app_preprocess_node(&$variables) {
+  if ($variables['type'] == 'app'){
+    if ($variables['view_mode'] == 'search_result'){
+      $variables['directory'] = 'profile/dgu/themes/custom/dguk/templates/';
+      $variables['classes_array'] = array("node", "node-app-searchresult");
+      $variables['submitted'] = 'Submitted on ' . $variables['date'];
+      if ($variables['created'] != $variables['changed']) {
+        $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
+      }
+
+    }
   }
 }

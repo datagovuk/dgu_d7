@@ -61,7 +61,6 @@ function dgu_site_feature_entity_info_alter(&$entity_info) {
     'label' => t('Tile: small'),
     'pane category' => t('Tiles'),
     'pane top level' => FALSE, // set to true to make this show as a top level icon
-    //'pane icon' => '/path/to/custom/icon/for/this/pane.png',
     'admin' => array(
       'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
       'bundle argument' => 4,
@@ -70,4 +69,29 @@ function dgu_site_feature_entity_info_alter(&$entity_info) {
       'access arguments' => array('administer fieldable panels panes'),
     ),
   );
+
+  $entity_info['fieldable_panels_pane']['bundles']['tile_text_big'] = array(
+    'label' => t('Tile with text: big'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_text_big',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+  $entity_info['fieldable_panels_pane']['bundles']['tile_text_small'] = array(
+    'label' => t('Tile with text: small'),
+    'pane category' => t('Tiles'),
+    'pane top level' => FALSE, // set to true to make this show as a top level icon
+    'admin' => array(
+      'path' => 'admin/structure/fieldable-panels-panes/manage/%fieldable_panels_panes_type',
+      'bundle argument' => 4,
+      // Note that this has all _ replaced with - from the bundle name.
+      'real path' => 'admin/structure/fieldable-panels-panes/manage/tile_text_small',
+      'access arguments' => array('administer fieldable panels panes'),
+    ),
+  );
+
 }

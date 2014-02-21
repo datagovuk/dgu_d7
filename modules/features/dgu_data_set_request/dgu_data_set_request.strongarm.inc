@@ -23,7 +23,7 @@ function dgu_data_set_request_strongarm() {
         'custom_settings' => FALSE,
       ),
       'rss' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'search_index' => array(
         'custom_settings' => FALSE,
@@ -44,19 +44,27 @@ function dgu_data_set_request_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '14',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '10',
+          'weight' => '30',
         ),
         'redirect' => array(
-          'weight' => '11',
-        ),
-        'mollom' => array(
-          'weight' => '13',
+          'weight' => '30',
         ),
       ),
-      'display' => array(),
+      'display' => array(
+        'flag_spam_node' => array(
+          'default' => array(
+            'weight' => '19',
+            'visible' => TRUE,
+          ),
+          'rss' => array(
+            'weight' => '20',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
     ),
   );
   $export['field_bundle_settings_node__dataset_request'] = $strongarm;

@@ -29,9 +29,9 @@ function dgu_site_feature_filter_default_formats() {
         'weight' => 1,
         'status' => 1,
         'settings' => array(
-          'allowed_html' => '<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <p> <pre> <table> <tr> <td> <h2> <h3> <h4> <sup> <sub> <blockquote> <object> <param>',
+          'allowed_html' => '<a> <em> <strong> <cite> <code> <ul> <ol> <li> <p> <blockquote>',
           'filter_html_help' => 1,
-          'filter_html_nofollow' => 0,
+          'filter_html_nofollow' => 1,
         ),
       ),
       'filter_autop' => array(
@@ -64,6 +64,11 @@ function dgu_site_feature_filter_default_formats() {
       ),
       'filter_autop' => array(
         'weight' => 1,
+        'status' => 1,
+        'settings' => array(),
+      ),
+      'media_filter' => array(
+        'weight' => 2,
         'status' => 1,
         'settings' => array(),
       ),

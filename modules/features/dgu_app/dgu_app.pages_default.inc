@@ -132,9 +132,9 @@ function dgu_app_default_page_manager_pages() {
     'settings' => NULL,
   );
   $page->menu = array(
-    'type' => 'normal',
+    'type' => 'none',
     'title' => 'Apps',
-    'name' => 'main-menu',
+    'name' => 'menu-apps',
     'weight' => '3',
     'parent' => array(
       'type' => 'none',
@@ -168,7 +168,7 @@ function dgu_app_default_page_manager_pages() {
     'relationships' => array(),
   );
   $display = new panels_display();
-  $display->layout = 'dgu_twocol_stacked';
+  $display->layout = 'dgu_threecol_twocol';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
@@ -177,6 +177,11 @@ function dgu_app_default_page_manager_pages() {
       'right' => NULL,
       'top' => NULL,
       'bottom' => NULL,
+      'top_left' => NULL,
+      'top_middle' => NULL,
+      'top_right' => NULL,
+      'bottom_left' => NULL,
+      'bottom_right' => NULL,
     ),
   );
   $display->cache = array();
@@ -185,14 +190,14 @@ function dgu_app_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'left';
+    $pane->panel = 'bottom_left';
     $pane->type = 'views';
     $pane->subtype = 'apps';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
-      'use_pager' => 1,
+      'use_pager' => 0,
       'nodes_per_page' => '8',
       'pager_id' => '0',
       'offset' => '0',
@@ -203,8 +208,8 @@ function dgu_app_default_page_manager_pages() {
       'args' => '',
       'url' => '',
       'display' => 'block',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'override_title' => 1,
+      'override_title_text' => 'Latest apps <a class="rss-icon" href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -215,17 +220,17 @@ function dgu_app_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['left'][0] = 'new-1';
+    $display->panels['bottom_left'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'left';
+    $pane->panel = 'bottom_right';
     $pane->type = 'views';
     $pane->subtype = 'apps';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
-      'use_pager' => 1,
+      'use_pager' => 0,
       'nodes_per_page' => '8',
       'pager_id' => '0',
       'offset' => '0',
@@ -236,8 +241,8 @@ function dgu_app_default_page_manager_pages() {
       'args' => '',
       'url' => '',
       'display' => 'block_1',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'override_title' => 1,
+      'override_title_text' => 'Top rated apps <a class="rss-icon" href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -245,18 +250,21 @@ function dgu_app_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 0;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['left'][1] = 'new-2';
+    $display->panels['bottom_right'][0] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
-    $pane->panel = 'right';
-    $pane->type = 'block';
-    $pane->subtype = 'dgu_search-searchapp';
+    $pane->panel = 'top';
+    $pane->type = 'dgu_search_form';
+    $pane->subtype = 'dgu_search_form';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'title_override' => NULL,
+      'title_override_text' => NULL,
+      'content_type' => 'app',
       'override_title' => 0,
       'override_title_text' => '',
     );
@@ -269,113 +277,16 @@ function dgu_app_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-3'] = $pane;
-    $display->panels['right'][0] = 'new-3';
+    $display->panels['top'][0] = 'new-3';
     $pane = new stdClass();
     $pane->pid = 'new-4';
-    $pane->panel = 'right';
-    $pane->type = 'block';
-    $pane->subtype = 'tagclouds-6';
+    $pane->panel = 'top_left';
+    $pane->type = 'fieldable_panels_pane';
+    $pane->subtype = 'fpid:19';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Popular tags',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['right'][1] = 'new-4';
-    $pane = new stdClass();
-    $pane->pid = 'new-5';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array(
-      'plugins' => array(
-        0 => array(
-          'name' => 'perm',
-          'settings' => array(
-            'perm' => 'create app content',
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
-        ),
-      ),
-    );
-    $pane->configuration = array(
-      'admin_title' => 'Share you app (for authenticated users)',
-      'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/node/add/app">Share your app</a>',
-      'format' => 'full_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['right'][2] = 'new-5';
-    $pane = new stdClass();
-    $pane->pid = 'new-6';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = TRUE;
-    $pane->access = array(
-      'plugins' => array(
-        0 => array(
-          'name' => 'role',
-          'settings' => array(
-            'rids' => array(
-              0 => 1,
-            ),
-          ),
-          'context' => 'logged-in-user',
-          'not' => FALSE,
-        ),
-      ),
-    );
-    $pane->configuration = array(
-      'admin_title' => 'Share you app (for aunonymous users)',
-      'title' => 'Have you used our data to create an application?',
-      'body' => '<p>Let us know...</p><a class="btn btn-primary center-me" href="/user/login?destination=/node/add/app">Login to share your app</a>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 3;
-    $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['right'][3] = 'new-6';
-    $pane = new stdClass();
-    $pane->pid = 'new-7';
-    $pane->panel = 'top';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = FALSE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Apps Promo',
-      'body' => '<p>Placeholder - Apps promo</p>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
+      'view_mode' => 'full',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -385,8 +296,48 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['top'][0] = 'new-7';
+    $display->content['new-4'] = $pane;
+    $display->panels['top_left'][0] = 'new-4';
+    $pane = new stdClass();
+    $pane->pid = 'new-5';
+    $pane->panel = 'top_middle';
+    $pane->type = 'fieldable_panels_pane';
+    $pane->subtype = 'fpid:20';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'view_mode' => 'full',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-5'] = $pane;
+    $display->panels['top_middle'][0] = 'new-5';
+    $pane = new stdClass();
+    $pane->pid = 'new-6';
+    $pane->panel = 'top_right';
+    $pane->type = 'fieldable_panels_pane';
+    $pane->subtype = 'fpid:21';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'view_mode' => 'full',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['top_right'][0] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-1';
   $handler->conf['display'] = $display;
