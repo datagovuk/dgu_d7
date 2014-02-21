@@ -44,14 +44,18 @@ function dgu_glossary_user_default_permissions() {
   // Exported permission: 'delete any suggested_definition content'.
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',
-    'roles' => array(),
+    'roles' => array(
+      'glossary moderator' => 'glossary moderator',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'delete any suggested_term content'.
   $permissions['delete any suggested_term content'] = array(
     'name' => 'delete any suggested_term content',
-    'roles' => array(),
+    'roles' => array(
+      'glossary moderator' => 'glossary moderator',
+    ),
     'module' => 'node',
   );
 

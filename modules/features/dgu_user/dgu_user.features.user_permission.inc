@@ -15,6 +15,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration menu',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'admin_menu',
@@ -25,6 +26,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration pages',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'system',
@@ -200,6 +202,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'bypass node access',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );
