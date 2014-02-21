@@ -99,6 +99,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     Given I am not logged in
     And I go to "/user"
     And I follow "Request new password"
+    And I wait until the page loads
     And I fill in "Username or e-mail address" with "test_user" address
     And I press "E-mail new password"
     And I wait 3 seconds
