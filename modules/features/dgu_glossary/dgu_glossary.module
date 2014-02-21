@@ -4,8 +4,7 @@
  * Code for the DGU Glossary feature.
  */
 
-define('PUBLIC_GLOSSARY_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
-define('GLOSSARY_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+define('GLOSSARY_MODERATION_PERMISSION', 'moderate glossary');
 
 include_once 'dgu_glossary.features.inc';
 
@@ -161,9 +160,16 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
         $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
         $form['title']['#type'] = 'hidden';
-    } else if ($form_id == 'suggested_term_node_form') {
-        $form['title']['#type'] = 'hidden';
 
+        unset($form['actions']['preview']);
+        $form['#attributes']['class'][] = "boxed";
+        dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
+    }
+    else if ($form_id == 'suggested_term_node_form') {
+        $form['title']['#type'] = 'hidden';
+        unset($form['actions']['preview']);
+        $form['#attributes']['class'][] = "boxed";
+        dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
     }
 }
 
@@ -439,6 +445,10 @@ function dgu_glossary_suggest_new_page()
     $form['title']['#value'] = t('New suggested term by @user',
         array('@user' => $user->name));
     unset($form['additional_settings']);
+
+    $form['#attributes']['class'][] = "boxed";
+    dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
+
     return $form;
 }
 
@@ -461,45 +471,24 @@ function dgu_glossary_vud_votes_alter(&$votes) {
   drupal_set_message("Your vote has been recorded");
 }
 
+function dgu_glossary_dgu_moderation_moderator_permission(&$node) {
+  if (($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
+    return user_access(GLOSSARY_MODERATION_PERMISSION);
+  }
+}
+
+function dgu_glossary_node_access($node, $op, $account) {
+  if ($op != 'create' && ($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
+    return dgu_moderation_access($account, $node, GLOSSARY_MODERATION_PERMISSION);
+  }
+}
 
 function dgu_glossary_node_access_records($node) {
   if (($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
-  $grants = array();
-  // Public request
-  $grants[] = array(
-    'realm' => 'glossary_moderator',
-    'gid' => GLOSSARY_MODERATOR_GRANT,
-    'grant_view' => 1,
-    'grant_update' => 1,
-    'grant_delete' => 1,
-  );
-  $grants[] = array(
-    'realm' => 'glossary_moderator',
-    'gid' => $node->uid,
-    'grant_view' => 1,
-    'grant_update' => 1,
-    'grant_delete' => 1,
-  );
-  if ($node->status == 1) {
-    $grants[] = array(
-      'realm' => 'glossary_moderator',
-      'gid' => PUBLIC_GLOSSARY_GRANT,
-      'grant_view' => 1,
-      'grant_update' => 0,
-      'grant_delete' => 0,
-    );
-  }
-    return $grants;
+    return dgu_moderation_get_node_grants($node);
   }
 }
 
 function dgu_glossary_node_grants($account, $op) {
-  $grants = array();
-  $grants['glossary_moderator'] = array($account->uid);
-  $grants['glossary_moderator'] = array($account->uid, PUBLIC_GLOSSARY_GRANT);
-  if (user_access('moderate glossary', $account)) {
-    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
-    $grants['glossary_moderator'] = array(GLOSSARY_MODERATOR_GRANT);
-  }
-  return $grants;
+  return dgu_moderation_get_account_grants($account, GLOSSARY_MODERATION_PERMISSION);
 }

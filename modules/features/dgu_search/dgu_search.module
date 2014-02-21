@@ -8,13 +8,13 @@ include_once 'dgu_search.features.inc';
 
 function get_search_types(){
   return array(
-  'app' => t('Apps'),
-  'blog' => t('Blogs'),
-  'forum' => t('Forum Posts'),
-  'resource' => t('Library'),
-  'dataset_request'  => t('Dataset Requests'),
-  'page' => t('Pages'),
-  'book' => t('Books'),
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum Posts'),
+    'resource' => t('Library'),
+    'dataset_request'  => t('Dataset Requests'),
+    'page' => t('Pages'),
+    'book' => t('Books'),
   );
 }
 
@@ -22,9 +22,9 @@ function get_search_types(){
  * Implements hook_ctools_plugin_directory().
  */
 function dgu_search_ctools_plugin_directory($module, $plugin) {
-    if ($module == 'ctools' && !empty($plugin)) {
-        return "plugins/$plugin";
-    }
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
 }
 
 /**
@@ -61,11 +61,11 @@ function dgu_search_block_view($delta = '') {
     'searchtype' => $search_type,
   );
   $search_types = array(
-        'app' => t('Apps'),
-        'blog' => t('Blogs'),
-        'forum' => t('Forum Posts'),
-        'resource' => t('Library'),
-        'dataset_request'  => t('Dataset Requests'),
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum Posts'),
+    'resource' => t('Library'),
+    'dataset_request'  => t('Dataset Requests'),
   );
 
   $searchform = drupal_build_form('search_block_form', $form_state);
@@ -199,11 +199,11 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
   search_box_form_submit($form, $form_state);
 
   $search_types = array(
-      'app' => t('Apps'),
-      'blog' => t('Blogs'),
-      'forum' => t('Forum Posts'),
-      'resource' => t('Library'),
-      'dataset_request'  => t('Dataset Requests'),
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum Posts'),
+    'resource' => t('Library'),
+    'dataset_request'  => t('Dataset Requests'),
   );
 
   if (isset($fv['search_block_form'])) {
@@ -222,17 +222,19 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
       }
     }
 
-    $solrsort = '';
-    if (isset($fv['solrsort']) ){
-      if ($facets)
-        $solrsort = "";
-      else
-        $solrsort = "?";
-      $solrsort = $solrsort . "solrsort=${fv['solrsort']}";
-    }
-
     // Replace keys with their rawurlencoded value
     $raw_keys = str_replace("/","%2f",$fv['search_block_form']);
+
+    $solrsort = '';
+    if (isset($fv['solrsort']) ){
+      if($raw_keys){
+        if ($facets)
+          $solrsort = "&";
+        else
+          $solrsort = "?";
+        $solrsort = $solrsort . "solrsort=${fv['solrsort']}";
+      }
+    }
 
     // Override redirect with a new bundle specific search.
     global $base_url;
@@ -249,8 +251,8 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
  *
  */
 function dgu_search_hide_retain_filters(&$form){
-    unset($form['basic']['retain-filters']);
-    return $form;
+  unset($form['basic']['retain-filters']);
+  return $form;
 }
 
 /**
@@ -263,12 +265,12 @@ function dgu_search_hide_retain_filters(&$form){
  *
  */
 function dgu_search_form_apachesolr_panels_search_form_alter(&$form, &$form_state, $form_id){
-    $form['dgu']['retain-filters'] = array(
-        '#type' => 'hidden',
-        '#title' => t('Retain current filters'),
-        '#value' => 1,
-    );
-    $form['#after_build'] = array('dgu_search_hide_retain_filters');
+  $form['dgu']['retain-filters'] = array(
+    '#type' => 'hidden',
+    '#title' => t('Retain current filters'),
+    '#value' => 1,
+  );
+  $form['#after_build'] = array('dgu_search_hide_retain_filters');
 }
 
 /**
@@ -316,8 +318,8 @@ class FacetApiDguSearch extends FacetapiUrlProcessorStandard {
 
 
 /**
-* Implements hook_apachesolr_prepare_query().
-*/
+ * Implements hook_apachesolr_prepare_query().
+ */
 function dgu_search_apachesolr_query_prepare($query, $caller) {
 
   // Remove all default sorts.
@@ -336,8 +338,8 @@ function dgu_search_apachesolr_query_prepare($query, $caller) {
 }
 
 /**
-* Implements hook_preprocess_search_results().
-*/
+ * Implements hook_preprocess_search_results().
+ */
 function dgu_search_preprocess_search_results(&$variables) {
   $environments = apachesolr_load_all_environments();
   foreach ($environments as $env_id => $environment) {

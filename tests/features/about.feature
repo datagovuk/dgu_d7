@@ -9,12 +9,13 @@ Feature: About section
     When I follow "About"
     And I wait until the page loads
     Then I should see the heading "About"
-    And I should see "WHAT'S DATA.GOV.UK ALL ABOUT?" pane in "last" column
+    And I should see "WHAT'S DATA.GOV.UK ALL ABOUT?" pane in "last" column in "first" row
 
   Scenario: Browse to Technical details page
     Given I am on "/about"
     When I follow "Technical details"
     And I wait until the page loads
-    Then I should see the heading "About - Technical Details"
+    And I should see page title "About"
+    And I should see node title "ABOUT - TECHNICAL DETAILS"
     And I should see the heading "Comments"
-    And I should see "WHAT'S DATA.GOV.UK ALL ABOUT?" pane in "last" column
+    And I should see "WHAT'S DATA.GOV.UK ALL ABOUT?" pane in "last" column in "first" row

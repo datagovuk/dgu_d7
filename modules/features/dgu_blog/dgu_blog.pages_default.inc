@@ -241,7 +241,7 @@ function dgu_blog_default_page_manager_pages() {
       'url' => '',
       'display' => 'latest_blog_posts',
       'override_title' => 1,
-      'override_title_text' => 'Latest blog posts <a href="/blog/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => 'Latest blog posts <a class="rss-icon" href="/blog/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(

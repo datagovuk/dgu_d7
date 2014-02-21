@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install file for the DGU Moderation module.
+ */
+
+/**
+ * Update module weight to execute hooks after workbench_moderation.
+ */
+function dgu_moderation_update_7001() {
+  db_update('system')
+    ->fields(array('weight' => 10))
+    ->condition('name', 'dgu_moderation', '=')
+    ->execute();
+}

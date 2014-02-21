@@ -251,7 +251,7 @@ function dgu_data_set_request_default_page_manager_pages() {
       'url' => '',
       'display' => 'block',
       'override_title' => 1,
-      'override_title_text' => 'Latest data requests <a href="/odug/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => 'Latest data requests <a class="rss-icon" href="/odug/rss.xml"><i class="icon-rss-sign"></i></a>',
     );
     $pane->cache = array();
     $pane->style = array(

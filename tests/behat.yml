@@ -32,25 +32,18 @@ default:
 #        password: drupal
       region_map:
         subnav: '#greenbar'
-        content: '#content'
+        main_content: "#main-content"
+        content: '#content' #used in seven theme
         #header: TODO - render in page.tpl.php
         highlighted: '#highlighted'
         #help: TODO - render in page.tpl.php
         footer: '#footer'
         breadcrumb: '#breadcrumb'
         pager: '.pagination'
-        #panels
-        single: '.panel-col'
-        top: '.panel-col-top'
-        first: '.panel-col-first'
-        middle: '.panel-col-middle'
-        last: '.panel-col-last'
-        bottom: '.panel-col-bottom'
-
       selectors:
-        message_selector: '.messages'
-        error_message_selector: '.messages.error'
-        success_message_selector: '.messages.status'
+        message_selector: '.alert'
+        error_message_selector: '.alert.alert-error'
+        success_message_selector: '.alert.alert-success'
       text:
         log_out: '/user/logout'
         log_in: 'Log in'
@@ -58,17 +51,18 @@ default:
         username_field: 'Username or e-mail address '
       drush:
         alias: 'self'
+    features/extensions/DGUExtension.php: ~
 local:
   extensions:
     Behat\MinkExtension\Extension:
-      base_url: 'http://d7'
+      base_url: 'http://dgu_d7'
     Drupal\DrupalExtension\Extension:
       drush:
-        root: '/var/jenkins-builds/std_dev2/'
+        alias: 'dgud7.local'
 dev:
   extensions:
     Behat\MinkExtension\Extension:
       base_url: 'http://dgud7.co-dev1.dh.bytemark.co.uk'
     Drupal\DrupalExtension\Extension:
       drush:
-        alias: 'myalias'
+        alias: 'dgud7.dev'

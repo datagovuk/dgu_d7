@@ -23,6 +23,7 @@ use Behat\Gherkin\Node\PyStringNode,
 
 use Drupal\Component\Utility\Random;
 
+
 /**
  * Some of our features need to run their scenarios sequentially
  * and we need a way to pass relevant data (like generated node id)
@@ -85,6 +86,7 @@ class LocalDataRegistry {
 // class FeatureContext extends BehatContext
 class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 {
+  private $users = array();
   /**
    * Initializes context.
    * Every scenario gets its own context object.
@@ -102,29 +104,16 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
     $this->mailAddresses = array();
     $this->mailMessages = array();
-
   }
 
-  /**
-  * Override Element::find().
-  *
-  * To manipulate only visible elements
-  */
-  public function find($selector, $locator)
-  {
-      $items = $this->findAll($selector, $locator);
-
-      if (count($items) && !method_exists(current($items), 'isVisible')) {
-        return current($items);
-      }
-
-      foreach ($items as $item) {
-        if ($item->isVisible()) {
-          return $item;
-        }
-      }
-  }
-
+    /**
+     * @BeforeFeature
+     */
+    public static function prepare(FeatureEvent $event)
+    {
+        //$cmd = 'drush @standards.test ev \'$query = new EntityFieldQuery(); $result = $query->entityCondition("entity_type", "node")->propertyCondition("title", "Test ", "STARTS_WITH")->execute(); if (isset($result["node"])) {$nids = array_keys($result["node"]); foreach ($nids as $nid) {node_delete($nid);}}\'';
+        //shell_exec($cmd);
+    }
 
   /**
    * Hold the execution until the page is/resource are completely loaded OR timeout
@@ -186,6 +175,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * Determine if the a user is already logged in.
+   * Override DrupalContext::loggedIn() because we display logout link in the dropdown.
+   */
+  public function loggedIn() {
+    $session = $this->getSession();
+    $session->visit($this->locatePath('/'));
+    $user_icon = $session->getPage()->find('css','#dgu-nav a.nav-user');
+    if(empty($user_icon)) {
+      throw new Exception("User icon on the top black bar not found");
+    }
+    $user_icon->click();
+    $dropdown = $session->getPage()->find('css','#dgu-nav ul.dgu-user-dropdown');
+    // If a user dropdown is found, we are logged in.
+    return $dropdown;
+  }
 
   /**
    * Authenticates a user with password from configuration.
@@ -211,6 +216,51 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^I am logged in as a user "([^"]*)" with the "([^"]*)" role$/
+   */
+  public function iAmLoggedInAsAUserWithTheRole($user_name, $role) {
+    if (isset($user_name)) {
+
+      // Check if a user with this role is already logged in.
+      if ($this->loggedIn() && $this->user && isset($this->user->role) && $this->user->role == $role) {
+        return TRUE;
+      }
+      elseif (isset($this->users[$user_name])) {
+        // Set previously used credentials as current.
+        $this->user = $this->users[$user_name];
+        // Login.
+        $this->login();
+        return TRUE;
+      }
+
+      // Create user.
+      $user = (object) array(
+        'name' => $user_name,
+        'pass' => Random::name(16),
+        'role' => $role,
+      );
+      $user->mail = $this->getMailAddress($user_name);
+
+      // Create a new user.
+      $this->getDriver()->userCreate($user);
+
+      $this->users[$user_name] = $this->user = $user;
+
+      if ($role == 'authenticated user') {
+        // Nothing to do.
+      }
+      else {
+        $this->getDriver()->userAddRole($user, $role);
+      }
+
+      // Login.
+      $this->login();
+
+      return TRUE;
+    }
+  }
+
+  /**
    * @Given /^I follow login link$/
    */
   public function iFollowLoginLink() {
@@ -222,23 +272,72 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $link->click();
   }
 
-
-  //TODO - add class to rss link
-
   /**
-   * @Given /^I follow RSS link$/
+   * @Given /^I click RSS icon in "([^"]*)" column in "([^"]*)" row$/
    */
-  public function iFollowRSSLink() {
-    $page = $this->getSession()->getPage();
-    $link = $page->find('css','pane-forum-categories > a');
-    if(empty($link)) {
-      throw new Exception("RSS link not found");
+  public function iClickRssIconInColumnInRow($column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
     }
-    $link->click();
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $rss_icons = $column->findAll('css', '.rss-icon');
+    if (empty($rss_icons)) {
+      throw new Exception('No RSS icons found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+    }
+    foreach ($rss_icons as $rss_icon) {
+      if (!$rss_icon->isVisible()) {
+        throw new Exception('RSS icon found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+      }
+      $rss_icon->click();
+      return;
+    }
+    throw new Exception('RSS icon found in the ' . $column . ' column but it\'s not visible');
   }
 
+  /**
+   * @Given /^I click search icon$/
+   */
+  public function iClickSearchIcon() {
 
+    $search_icons = $this->getSession()->getPage()->findAll('css', '#dgu-search-form .btn-default');
+    if (empty($search_icons)) {
+      throw new Exception('No search icons found');
+    }
+    foreach ($search_icons as $search_icon) {
+      if (!$search_icon->isVisible()) {
+        throw new Exception('Search icon found but it\'s not visible');
+      }
+      $search_icon->click();
+      return;
+    }
 
+  }
+
+  /**
+   * @Given /^search result counter should contain "([^"]*)"$/
+   */
+  public function searchResultCounterShouldContain($string) {
+    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-footer');
+    if (empty($search_counters)) {
+      throw new Exception('Search counter not found');
+    }
+    foreach ($search_counters as $search_counter) {
+      if (!$search_counter->isVisible()) {
+        throw new Exception('Search counter found but it\'s not visible');
+      }
+      elseif ($search_counter->getText() != $string) {
+        throw new Exception('Search counter found but it contains "' . $search_counter->getText() . '" not "' . $string . '"');
+      }
+      return;
+    }
+  }
 
    /**
    * @Given /^I fill in "([^"]*)" with random text$/
@@ -320,50 +419,106 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^I should see "([^"]*)" block in "([^"]*)" column$/
+   * @Given /^I should see "([^"]*)" block in "([^"]*)" column in "([^"]*)" row$/
    */
-  public function iShouldSeeBlockInColumn($block_title, $column) {
-    $region = $this->getSession()->getPage()->find('region', $column);
-    if (empty($region)) {
-      throw new Exception(ucfirst($column) . ' column not found');
+  public function iShouldSeeBlockInColumnInRow($block_title, $column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
     }
-    $h2 = $region->findAll('css', '.block h2');
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $h2 = $column->findAll('css', '.block h2');
     if (empty($h2)) {
-      throw new Exception('No blocks were found in the ' . $column . ' column');
+      throw new Exception('No blocks were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
     foreach ($h2 as $text) {
       if (trim($text->getText()) == $block_title) {
+        if(!$text->isVisible()) {
+          throw new Exception('Block "' . $block_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+        }
         return;
       }
     }
-    throw new Exception('The block "' . $block_title . '" was not found in the ' . $column . ' column');
+    throw new Exception('The block "' . $block_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+  }
+
+    /**
+     * @Given /^I should see "([^"]*)" pane in "([^"]*)" column in "([^"]*)" row$/
+     */
+    public function iShouldSeePaneInColumnInRow($pane_title, $column, $row) {
+
+    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row)) {
+      throw new Exception(ucfirst($row) . ' row not found');
+    }
+
+    $column = $row->find('css', '.panel-col-' . $column);
+    if (empty($column)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $h2 = $column->findAll('css', '.panel-pane h2');
+    if (empty($h2)) {
+      throw new Exception('No panel panes were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+    }
+    foreach ($h2 as $text) {
+        $a = $text->getText();
+      if (trim($text->getText()) == $pane_title) {
+        if(!$text->isVisible()) {
+          throw new Exception('Pane "' . $pane_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
+        }
+        return;
+      }
+    }
+    throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+  }
+
+
+  /**
+   * @Then /^I should see a message about created draft "([^"]*)"$/
+   */
+  public function iShouldSeeAMessageAboutCreatedDraft($content_type) {
+    return $this->assertSuccessMessage("Your draft $content_type has been created. Login to your profile to update it. You can submit this now or later");
   }
 
   /**
-   * @Given /^I should see "([^"]*)" pane in "([^"]*)" column$/
+   * @Then /^I should see a message about "([^"]*)" being submitted for moderation$/
    */
-  public function iShouldSeePaneInColumn($pane_title, $column) {
-    $region = $this->getSession()->getPage()->find('region', $column);
-    if (empty($region)) {
-      throw new Exception(ucfirst($column) . ' column not found');
-    }
-    $h2 = $region->findAll('css', '.panel-pane h2');
-    if (empty($h2)) {
-      throw new Exception('No panel panes were found in the ' . $column . ' column');
-    }
-    foreach ($h2 as $text) {
-      if (trim($text->getText()) == $pane_title) {
-        return;
-      }
-    }
-    throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column');
+  public function iShouldSeeAMessageAboutBeingSubmittedForModeration($content_type) {
+    return $this->assertSuccessMessage("Your $content_type has been updated and submitted for moderation. Login to your profile to update it. You can submit this now or later");
   }
 
-//    print "\n";
-//    print_r($text->getText());
-//    print "\n";
-//    die;
 
+  /**
+   * Function to check if the field specified is outlined in red or not
+   *
+   * @Given /^the field "([^"]*)" should be outlined in red$/
+   *
+   * @param string $field
+   *   The form field label to be checked.
+   */
+  public function theFieldShouldBeOutlinedInRed($field) {
+    $page = $this->getSession()->getPage();
+    // get the object of the field
+    $formField = $page->findField($field);
+    if (empty($formField)) {
+      throw new Exception('The page does not have the field with label "' . $field . '"');
+    }
+    // get the 'class' attribute of the field
+    $class = $formField->getAttribute("class");
+    // we get one or more classes with space separated. Split them using space
+    $class = explode(" ", $class);
+    // if the field has 'error' class, then the field will be outlined with red
+    if (!in_array("error", $class)) {
+      throw new Exception('The field "' . $field . '" is not outlined with red');
+    }
+  }
 
   /**
    * Return email address for given user role.
@@ -404,8 +559,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-
-          if ($msg->to == $mail_address && $msg->subject == $title) {
+            if ($msg->to == $mail_address && $msg->subject == $title) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
@@ -474,15 +628,162 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+
+  /**
+   * @Given /^"([^"]*)" option in "([^"]*)" should be selected$/
+   */
+  public function optionInShouldBeSelected($option_key, $label) {
+
+    $page = $this->getSession()->getPage();
+
+    $select = $page->find('xpath', "//label[contains(., '$label')]/following-sibling::select");
+
+    if ($select) {
+      $dom = new domDocument;
+      $dom->loadHTML($select->getHtml());
+      $options = $dom->getElementsByTagName('option');
+      foreach ($options as $option) {
+        if($option->getAttribute('selected') && $option->nodeValue == $option_key) {
+          return;
+        }
+      }
+
+    }
+
+    throw new ElementNotFoundException(
+      $this->getSession(), 'select option', 'value|text', $option_key
+    );
+
+  }
+
+  /**
+   * @Then /^I (?:|should )see page title "(?P<title>[^"]*)"$/
+   */
+  public function assertPageTitle($title) {
+    $results = $this->getSession()->getPage()->findAll('css', 'h1.page-header');
+    foreach ($results as $result) {
+      if ($result->getText() == $title) {
+        return;
+      }
+    }
+    throw new \Exception(sprintf("The text '%s' was not found in page title on the page %s", $title, $this->getSession()->getCurrentUrl()));
+  }
+
+  /**
+   * @Then /^I (?:|should )see node title "(?P<title>[^"]*)"$/
+   */
+  public function assertNodeTitle($title) {
+    $results = $this->getSession()->getPage()->findAll('css', 'article.node h2.node-title');
+    foreach ($results as $result) {
+      if ($result->getText() == $title) {
+        return;
+      }
+    }
+    if (count($results)) {
+      throw new \Exception(sprintf("The text '%s' was not found in node title on the page %s", $title, $this->getSession()->getCurrentUrl()));
+    }
+    else {
+      throw new \Exception(sprintf("Node title missing on the page %s", $title, $this->getSession()->getCurrentUrl()));
+    }
+  }
+  /**
+   * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
+   */
+
+  public function iHaveAnImageTitledLocatedInFolder($width, $height, $title, $path) {
+    $image = @imagecreatetruecolor($width, $height) or die('Cannot Initialize new GD image stream');
+    $color = array(
+      imagecolorallocate($image,rand(100, 150),rand(100, 150),rand(100, 150)),
+      imagecolorallocate($image,rand(50, 100),rand(50, 100),rand(50, 100)),
+    );
+
+    for ($y = 0; $y < $height / 5; $y++) {
+      $i=$y % 2;
+      for ($x = 0; $x < $width / 5; $x++) {
+        imagefilledrectangle($image, $x*5, $y*5, $x*5 + 5, $y*5 + 5, $color[++$i % 2]);
+      }
+    }
+
+    imagestring($image, 5, $width/2 - strlen($title) * 4.5 , $height/2 - 15, $title, imagecolorallocate($image, 255, 255, 255));
+    imagepng($image, $path . '/' . $title . '.png');
+    imagedestroy($image);
+  }
+
+
   /**
    * @Given /^TEST$/
    */
   public function test() {
-
-
   }
 
 
+  /**
+   * @Given /^I submit "([^"]*)" titled "([^"]*)" for moderation$/
+   */
+  public function iSubmitTitledForModeration($content_type, $title) {
+    return array (
+      new Given("I follow \"profile\""),
+      new Given("I follow \"$title\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"Edit draft\""),
+      new Given("I press \"Submit for moderation\""),
+      new Given("I should see a message about \"$content_type\" being submitted for moderation"),
+      new Given("I follow \"profile\""),
+      new Given("I should see the link \"$title\""),
+      new Given("I follow \"My Drafts\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see the link \"$title\""),
+      new Given("I should see \"Needs review\""),
+      new Given("I should see the link \"Draft\""),
+    );
+  }
 
+  /**
+   * @Given /^user with "([^"]*)" role moderates "([^"]*)" authored by "([^"]*)"$/
+   */
+  public function userWithRoleModeratesAuthoredBy($role, $title, $author) {
+    return array (
+      new Given("that the user \"test_moderator\" is not registered"),
+      new Given("I am logged in as a user \"test_moderator\" with the \"$role\" role"),
+      new Given("I visit \"/admin/workbench\""),
+      new Given("I follow \"Needs Review\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"$title\""),
+      new Given("I wait until the page loads"),
+      new Given("I follow \"Moderate\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see \"Currently there is no published revision of this node.\""),
+      new Given("I should see \"Created by test_user.\""),
+      new Given("I should see \"Edited by $author.\""),
+      new Given("I should see the link \"$author\" in the \"content\" region"),
+      new Given("I should not see the link \"test_moderator\" in the \"content\" region"),
+      new Given("\"Published\" option in \"Moderation state\" should be selected"),
+      new Given("I press \"Apply\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see \"This is the published revision.\""),
+      new Given("I should see the link \"Unpublish\" in the \"content\" region"),
+      new Given("I should see the link \"test_moderator\" in the \"content\" region"),
+      new Given("I follow \"View\""),
+      new Given("I should see \"Revision state: Published\""),
+      new Given("I should see \"Current draft: Yes\""),
+      new Given("I should see the link \"Unpublish this revision\" in the \"main_content\" region"),
+    );
+  }
 
+  /**
+   * @Then /^I should see "([^"]*)" in All content tab but not in My edits or My drafts tabs$/
+   */
+  public function iShouldSeeInAllContentTabButNotInMyEditsOrMyDraftsTabs($title) {
+    return array (
+      new Given("I visit \"/admin/workbench/content/edited\""),
+      new Given("I should not see the link \"$title\""),
+      new Given("I visit \"/admin/workbench/drafts\""),
+      new Given("I should not see the link \"$title\""),
+      new Given("I visit \"/admin/workbench/content/all\""),
+      new Given("I follow \"$title\""),
+      new Given("I should see the link \"New draft\""),
+      new Given("I should see the link \"Add new comment\""),
+      new Given("I should see \"View published\""),
+    );
+  }
 }
