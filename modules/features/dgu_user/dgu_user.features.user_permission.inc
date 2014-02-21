@@ -62,15 +62,6 @@ function dgu_user_user_default_permissions() {
     'module' => 'contextual',
   );
 
-  // Exported permission: 'access overlay'.
-  $permissions['access overlay'] = array(
-    'name' => 'access overlay',
-    'roles' => array(
-      'administrator' => 'administrator',
-    ),
-    'module' => 'overlay',
-  );
-
   // Exported permission: 'access printer-friendly version'.
   $permissions['access printer-friendly version'] = array(
     'name' => 'access printer-friendly version',
