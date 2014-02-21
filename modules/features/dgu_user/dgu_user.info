@@ -17,7 +17,6 @@ dependencies[] = link
 dependencies[] = logintoboggan
 dependencies[] = media
 dependencies[] = node
-dependencies[] = overlay
 dependencies[] = path
 dependencies[] = search
 dependencies[] = strongarm
