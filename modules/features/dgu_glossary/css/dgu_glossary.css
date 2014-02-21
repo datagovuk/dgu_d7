@@ -16,6 +16,7 @@
 
 .vud-widget {
     float: left;
+    padding-right: 4px;
 }
 
 .field-name-field-quality .fivestar-summary {
