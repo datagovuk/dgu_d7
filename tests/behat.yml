@@ -58,11 +58,11 @@ local:
       base_url: 'http://dgu_d7'
     Drupal\DrupalExtension\Extension:
       drush:
-        root: '/home/pawel/PhpstormProjects/dgu_d7'
+        alias: 'dgud7.local'
 dev:
   extensions:
     Behat\MinkExtension\Extension:
       base_url: 'http://dgud7.co-dev1.dh.bytemark.co.uk'
     Drupal\DrupalExtension\Extension:
       drush:
-        alias: 'myalias'
+        alias: 'dgud7.dev'
