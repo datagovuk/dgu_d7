@@ -53,7 +53,6 @@ features[user_permission][] = access administration pages
 features[user_permission][] = access content
 features[user_permission][] = access content overview
 features[user_permission][] = access contextual links
-features[user_permission][] = access overlay
 features[user_permission][] = access printer-friendly version
 features[user_permission][] = access site in maintenance mode
 features[user_permission][] = access site reports
