@@ -20,6 +20,7 @@ Disallow: /modules/
 Disallow: /profiles/
 Disallow: /scripts/
 Disallow: /themes/
+Disallow: /api/
 # Files
 Disallow: /CHANGELOG.txt
 Disallow: /cron.php
@@ -34,7 +35,7 @@ Disallow: /UPGRADE.txt
 Disallow: /xmlrpc.php
 # Paths (clean URLs)
 Disallow: /admin/
-Disallow: /comment/reply/
+Disallow: /reply/add/
 Disallow: /filter/tips/
 Disallow: /node/add/
 Disallow: /search/
@@ -45,7 +46,7 @@ Disallow: /user/logout/
 Disallow: /user
 # Paths (no clean URLs)
 Disallow: /?q=admin/
-Disallow: /?q=comment/reply/
+Disallow: /?q=reply/add/
 Disallow: /?q=filter/tips/
 Disallow: /?q=node/add/
 Disallow: /?q=search/
