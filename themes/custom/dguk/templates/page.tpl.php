@@ -44,7 +44,7 @@
           </div>
           <div class="nav-search" style="width: 200px;">
             <form class="input-group input-group-sm" action="/data/search">
-              <input type="text" class="form-control" name="q" />
+              <input type="text" class="form-control" name="q" placeholder="Search for data...">
               <span class="input-group-btn">
                 <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
               </span>
