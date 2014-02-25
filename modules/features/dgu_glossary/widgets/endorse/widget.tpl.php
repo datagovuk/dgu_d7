@@ -15,6 +15,7 @@
           <button type="button" class="btn btn-default btn-primary">
             <i class="icon-thumbs-down"></i>
             <?php print t('Cancel Endorsement'); ?>
+            <?php if (user_access('moderate glossary')) print "($points)" ?>
           </button>
         </a>
     <?php elseif ($show_up_as_link): ?>
