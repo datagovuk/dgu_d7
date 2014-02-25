@@ -28,6 +28,7 @@ dependencies[] = vud_field
 dependencies[] = workbench_moderation
 features[ctools][] = page_manager:pages_default:1
 features[ctools][] = strongarm:strongarm:1
+features[ctools][] = bootstrap_tour:bootstrap_tour_tour:1
 features[features_api][] = api:2
 features[field_base][] = field_endorse
 features[field_base][] = field_is_new
