@@ -426,7 +426,7 @@ function dgu_glossary_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'lexicon_title_8';
-  $strongarm->value = 'Glossary of Public Sector Information and Open Data Terminology';
+  $strongarm->value = 'Glossary';
   $export['lexicon_title_8'] = $strongarm;
 
   $strongarm = new stdClass();
