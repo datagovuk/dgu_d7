@@ -143,7 +143,7 @@ function dgu_glossary_suggest_definition_page($term)
     $form = drupal_get_form('suggested_definition_node_form', $node);
 
     $form['current_def']['#markup'] = "<label>Current definition</label><p>{$term->description}</p>";
-    $form['title']['#value'] = t('New suggested definition for @term made by @user',
+    $form['title']['#value'] = t('New suggested definition for "@term" made by @user',
         array('@term' => $term->name, '@user' => $user->name));
     $form['field_term'][LANGUAGE_NONE]['#default_value'] = array($term->tid);
     $form['field_term'][LANGUAGE_NONE]['#value'] = array($term->tid);
