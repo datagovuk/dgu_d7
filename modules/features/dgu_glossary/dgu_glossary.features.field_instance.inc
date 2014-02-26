@@ -525,7 +525,6 @@ function dgu_glossary_field_default_field_instances() {
         'label' => 'above',
         'module' => 'taxonomy',
         'settings' => array(
-          'field_comments' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -566,7 +565,6 @@ function dgu_glossary_field_default_field_instances() {
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
-          'field_comments' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',

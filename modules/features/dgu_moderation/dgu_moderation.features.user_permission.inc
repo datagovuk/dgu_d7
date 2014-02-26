@@ -34,6 +34,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'bypass workbench moderation',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
@@ -66,6 +67,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'moderate content from needs_review to published',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
@@ -87,6 +89,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
@@ -97,6 +100,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'view all unpublished content',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
@@ -108,6 +112,7 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'blogger' => 'blogger',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
@@ -118,6 +123,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'administrator' => 'administrator',
+      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
