@@ -48,7 +48,7 @@ function dgu_glossary_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'left',
       'title' => 'Glossary Terms and definitions',
-      'content' => '<p>Each term and it\'s definition appear in the list.  If you click the term, you will be taken to  the term page where you can comment on the term or suggest a better definition</p>',
+      'content' => '<p>Each term and its definition appear in the list.  If you click the term, you will be taken to  the term page where you can comment on the term or suggest a better definition</p>',
       'format' => 'full_html',
     ),
     4 => array(
@@ -56,7 +56,7 @@ function dgu_glossary_default_bootstrap_tour() {
       'path' => 'glossary/1',
       'placement' => 'left',
       'title' => 'APPSI Quality score',
-      'content' => '<p>The APPSI quality score reflects our confidence in the accuracy and quality of a term and it\'s definition. You can learn more about APPSI by clicking on the link.</p>',
+      'content' => '<p>The APPSI quality score reflects our confidence in the accuracy and quality of a term and its definition. You can learn more about APPSI by clicking on the link.</p>',
       'format' => 'full_html',
     ),
     5 => array(
