@@ -574,7 +574,7 @@ function dguk_field__field_quality__glossary($variables){
   // Render the label, if it's not hidden.
   if (!$variables['label_hidden']) {
     $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label']
-      . '&nbsp;<a class="lexicon-term" href="http://www.nationalarchives.gov.uk/appsi/open-data-psi-glossary-pilot.htm" target="_blank" title="The APPSI quality score reflects our confidence in the accuracy and quality of a term and it\'s definition">(What is this?)</a>'
+      . '&nbsp;<a class="lexicon-term" href="http://www.nationalarchives.gov.uk/appsi/open-data-psi-glossary-pilot.htm" target="_blank" title="The APPSI quality score reflects our confidence in the accuracy and quality of a term and its definition. You can learn more about APPSI by clicking on the link.">(What is this?)</a>'
       . ':&nbsp;</div>';
   }
 
