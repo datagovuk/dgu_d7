@@ -344,6 +344,7 @@ function template_preprocess_suggested_definition_item(&$variables)
     $node = $variables['node'];
     $variables['suggested_definition'] = field_view_field('node', $node, 'field_suggested_definition');
     $variables['comments'] = field_view_field('node', $node, 'field_comment');
+    $variables['status'] = check_plain(workbench_moderation_state_label($node->workbench_moderation['current']->state));
 }
 
 function template_preprocess_suggested_definition_list(&$variables)
