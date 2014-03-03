@@ -257,6 +257,14 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['directory'] = 'profile/dgu/modules/features/dgu_glossary';
             $variables['term_class'] = empty($term->field_is_new[LANGUAGE_NONE][0]['value']) ? 'term-existing' : 'term-new';
             break;
+        case 'page':
+            if (arg(0) == 'glossary' && is_numeric(arg(1))){
+                $term = menu_get_object('taxonomy_term');
+                if (!empty($term)){
+                    drupal_set_title(variable_get('lexicon_title_' . $term->vid, t('Glossary')));
+                }
+            }
+            break;
         case 'taxonomy_term':
             $term = $variables['term'];
             $voc = taxonomy_vocabulary_load($term->vid);
