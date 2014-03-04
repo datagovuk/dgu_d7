@@ -45,6 +45,12 @@
         <dt><?php print t('Surname'); ?></dt>
         <dd><?php print $surname; ?></dd>
       </dl>
+    <?php if (user_access('moderate glossary')): ?>
+      <dl class="clearfix">
+        <dt><?php print t('Email'); ?></dt>
+        <dd><?php print $user->mail; ?></dd>
+      </dl>
+    <?php endif; ?>
     <?php if($bio): ?>
       <dl class="clearfix">
         <dt><?php print t('Bio'); ?></dt>
