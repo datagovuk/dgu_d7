@@ -4,6 +4,9 @@ api = 2
 ; Modules
 ; --------
 
+projects[bootstrap_tour][version] = "beta8"
+projects[bootstrap_tour][subdir] = "contrib"
+
 projects[apachesolr][type] = "module"
 projects[apachesolr][download][type] = "git"
 projects[apachesolr][download][url] = "http://git.drupal.org/project/apachesolr.git"
