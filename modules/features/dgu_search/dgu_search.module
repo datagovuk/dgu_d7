@@ -596,4 +596,3 @@ function _menu_trail_by_path_get_parent_candidates($path) {
         $parent_candidates[] = drupal_get_normal_path(rtrim($path, '/'));
     }
     return $parent_candidates;
-}
