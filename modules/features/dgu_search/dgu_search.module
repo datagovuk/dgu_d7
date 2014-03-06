@@ -152,12 +152,12 @@ function dgu_search_search_block($form, &$form_state) {
   return $form;
 }
 
-
+//do we really need this function? if we created a separate module to handle breadcrumbs by url.
 function dgu_search_menu_breadcrumb_alter(&$active_trail, $item){
   //don't do this unless we are on a search results page
-  if ((count($active_trail) >1) && $active_trail[1] != 'search'){
-    return;
-  }
+ // if ((count($active_trail) >1) && $active_trail[1] != 'search'){
+ //   return;
+ // }
   $env_id = variable_get('apachesolr_default_environment', 'solr');
   if (apachesolr_has_searched($env_id)) {
     drupal_set_title("Search");
@@ -176,9 +176,9 @@ function dgu_search_menu_breadcrumb_alter(&$active_trail, $item){
 
 
         $active_trail = array_slice($active_trail, 0, 1);
-        $active_trail[] = array('title' => t('Search'), 'href' => 'search/everything', 'localized_options' => array());
+        $active_trail[] = array('title' => t('Search1sttitle'), 'href' => 'search/everything', 'localized_options' => array());
         //need it in twice because the last item gets removed.
-        $active_trail[] = array('title' => t('Search'), 'href' => 'search/everything', 'localized_options' => array());
+        $active_trail[] = array('title' => t('Search2ndtitle'), 'href' => 'search/everything', 'localized_options' => array());
         drupal_set_title($search_types[$value]);
         break;
       }
