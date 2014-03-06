@@ -4,9 +4,11 @@ api = 2
 ; Modules
 ; --------
 
-projects[bootstrap_tour][subdir] = "contrib"
-projects[bootstrap_tour[download][url] = "http://git.drupal.org/project/bootstrap_tour.git"
-
+; Bootstrap Tour
+libraries[bootstrap_tour][download][type] = get
+libraries[bootstrap_tour][download][url] = https://git.drupal.org/project/bootstrap_tour.git
+libraries[bootstrap_tour][destination] = libraries
+libraries[bootstrap_tour][directory_name] = bootstrap_tour
 projects[apachesolr][type] = "module"
 projects[apachesolr][download][type] = "git"
 projects[apachesolr][download][url] = "http://git.drupal.org/project/apachesolr.git"
