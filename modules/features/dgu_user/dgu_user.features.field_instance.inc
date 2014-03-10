@@ -26,7 +26,7 @@ function dgu_user_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'image_link' => '',
-          'image_style' => '',
+          'image_style' => 'avatar_big',
         ),
         'type' => 'image',
         'weight' => 0,

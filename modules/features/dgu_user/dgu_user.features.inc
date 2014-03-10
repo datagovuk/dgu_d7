@@ -57,8 +57,8 @@ function dgu_user_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => 120,
-          'height' => 120,
+          'width' => 170,
+          'height' => 170,
         ),
         'weight' => 1,
       ),
