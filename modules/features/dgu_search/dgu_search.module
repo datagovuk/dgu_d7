@@ -122,28 +122,28 @@ function dgu_search_search_block($form, &$form_state) {
   if (isset($form_state['dataset_request_count'])){
     $form['dataset_request_count']= array(
       '#type' => 'hidden',
-      '#value' => $form_state['dataset_request_count'],
+      '#value' => htmlspecialchars(filter_xss($form_state['dataset_request_count'])),
     );
   }
   $form['content_type'] = array(
     '#type' => 'hidden',
-    '#value' => $form_state['content_type'],
+    '#value' => htmlspecialchars($form_state['content_type']),
   );
   $form['searchtype'] = array(
     '#type' => 'hidden',
-    '#value' => $form_state['searchtype'],
+    '#value' => htmlspecialchars($form_state['searchtype']),
   );
   $form['solrsort'] = array(
     '#type' => 'hidden',
-    '#value' => $form_state['solrsort'],
+    '#value' =>  htmlspecialchars($form_state['solrsort']),
   );
   $form['count'] = array(
     '#type' => 'hidden',
-    '#value' => $form_state['count'],
+    '#value' => htmlspecialchars($form_state['count']),
   );
   $form['f'] = array(
     '#type' => 'value',
-    '#value' => $form_state['f'],
+    '#value' => htmlspecialchars($form_state['f']),
   );
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Search'));
