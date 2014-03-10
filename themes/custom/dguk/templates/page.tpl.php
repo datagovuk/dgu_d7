@@ -31,6 +31,9 @@
           if(strpos($interact_menu, 'subnav-interact active')) {
             $active = 4;
           }
+          if(arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
+            $active = 6;
+          }
         ?>
 
       <div class="chevron position<?php print $active;?>"></div>
@@ -54,7 +57,7 @@
             <span class="dropdown">
               <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
-                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s profile</a></li>
+                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp;My workbench</a></li>
                 <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
               </ul>
             </span>
