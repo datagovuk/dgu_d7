@@ -226,6 +226,9 @@ projects[session_api][subdir] = "contrib"
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
 
+projects[imagefield_crop][version] = "1.1"
+projects[imagefield_crop][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
