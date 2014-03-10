@@ -56,7 +56,7 @@ function dguk_preprocess_node(&$variables) {
 
   if (!empty($user->field_avatar)) {
     $field = field_get_items('user', $user, 'field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'profile')));
+    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar_big')));
   }
   else {
     $image = theme_image_style_outside_files(
@@ -120,7 +120,13 @@ function dguk_preprocess_block(&$variables) {
  *  Implements hook_preprocess_field().
  */
 function dguk_preprocess_field(&$variables) {
-	if($variables['element']['#field_name'] == 'field_uses_dataset') {
+
+  // To add a class to field_avatar passed from preprocess_user_profile().
+  if(isset($variables['element']['classes_array'])){
+    $variables['classes_array'] = array_merge($variables['classes_array'], $variables['element']['classes_array']);
+  }
+
+  if($variables['element']['#field_name'] == 'field_uses_dataset') {
     // Render direct link to dataset in CKAN instead of dataset copy in Drupal.
     foreach ($variables['element']['#items'] as $index => $item){
       $title = $item['entity']->title;
@@ -261,7 +267,6 @@ function dguk_css_alter(&$css) {
  * Get the output for Data menu.
  */
 function dguk_get_data_menu() {
-  $menu = menu_navigation_links('menu-apps');
 
   $menu = array(
     'menu-datasets' => array(
@@ -323,8 +328,6 @@ function dguk_get_data_menu() {
 
   $classes = array('subnav', 'subnav-data');
   $current_path = $_SERVER['REQUEST_URI'];
-  $a = strpos($current_path, 'odug');
-  $b = strpos($current_path, 'data-request');
 
   // $current_path always starts from "/"
   if (strpos($current_path, 'odug') == 1 || strpos($current_path, 'data-request') == 1 || strpos($current_path, 'node/add/dataset-request') == 1) {
@@ -535,12 +538,12 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
 function dguk_breadcrumb($variables) {
   if (count($variables['breadcrumb']) > 0) {
     $crumbs = '<ul id="breadcrumbs">';
-    $a=0;
     $title = drupal_get_title();
     $node = menu_get_object();
     if ($node){
       $title = $node->title;
     }
+    $a = 0;
     foreach($variables['breadcrumb'] as $value) {
       if ($a==0){
         $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
@@ -558,17 +561,49 @@ function dguk_breadcrumb($variables) {
 }
 
 function dguk_preprocess_user_profile(&$variables) {
-  $variables['first_name'] = $variables['field_first_name'][0]['safe_value'];
-  $variables['surname'] = $variables['field_surname'][0]['safe_value'];
+
+
+  $variables['colour'] = $variables['elements']['#account']->uid % 10;
+  $colour = $variables['elements']['#account']->uid % 10;
+  $variables['user_profile']['field_avatar']['classes_array'] = array('bg-colour-' . $colour);
+
+  if (isset($variables['field_first_name'][0]['safe_value'])) {
+    $variables['full_name'] = $variables['field_first_name'][0]['safe_value'];
+  }
+  if (isset($variables['field_surname'][0]['safe_value'])) {
+    if (isset($variables['full_name'])) {
+      $variables['full_name'] = $variables['full_name'] . ' ' . $variables['field_surname'][0]['safe_value'];
+    }
+    else {
+      $variables['full_name'] = $variables['field_surname'][0]['safe_value'];
+    }
+  }
+
+  if (isset($variables['field_twitter'][0]['safe_value'])) {
+    $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
+    if (substr($variables['twitter'], 0, 1) == '@') {
+      // Just the username without @ character.
+      $variables['twitter'] = substr($variables['twitter'], 1);
+    }
+  }
+  if (isset($variables['field_linkedin_url'][0]['url'])) {
+    $parts = parse_url($variables['field_linkedin_url'][0]['url']);
+    $variables['linkedin'] = $parts['host'] . $parts['path'] . $parts['query'];
+  }
+
+  if (isset($variables['field_facebook_url'][0]['url'])) {
+    $parts = parse_url($variables['field_facebook_url'][0]['url']);
+    $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
+  }
+
+
   $variables['bio'] = $variables['field_bio'][0]['safe_value'];
-  $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
   $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
-  $variables['linkedin'] = $variables['field_linkedin_url'][0]['url'];
-  $variables['facebook'] = $variables['field_facebook_url'][0]['url'];
+
+  $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 }
 
-
-function dguk_field__field_quality__glossary($variables){
+function dguk_field__field_quality__glossary($variables) {
   $output = '';
 
   // Render the label, if it's not hidden.
@@ -623,4 +658,27 @@ function dguk_button($variables) {
 
   // This line break adds inherent margin between multiple buttons.
   return '<input' . drupal_attributes($element['#attributes']) .  "/>\n";
+}
+
+/**
+ * Overrides theme_menu_local_tasks().
+ */
+function dguk_menu_local_tasks(&$variables) {
+  $output = '';
+
+  if (!empty($variables['primary'])) {
+    $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+    $variables['primary']['#prefix'] = '<ul class="tabs--primary nav nav-pills">';
+    $variables['primary']['#suffix'] = '</ul>';
+    $output .= drupal_render($variables['primary']);
+  }
+
+  if (!empty($variables['secondary'])) {
+    $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+    $variables['secondary']['#prefix'] = '<ul class="tabs--secondary pagination pagination-sm">';
+    $variables['secondary']['#suffix'] = '</ul>';
+    $output .= drupal_render($variables['secondary']);
+  }
+
+  return $output;
 }
