@@ -99,6 +99,16 @@ function dgu_user_user_default_permissions() {
     'module' => 'contact',
   );
 
+  // Exported permission: 'access toolbar'.
+  $permissions['access toolbar'] = array(
+    'name' => 'access toolbar',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'toolbar',
+  );
+
   // Exported permission: 'access user profiles'.
   $permissions['access user profiles'] = array(
     'name' => 'access user profiles',
