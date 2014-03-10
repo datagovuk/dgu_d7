@@ -15,8 +15,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration menu',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
-      'moderator' => 'moderator',
     ),
     'module' => 'admin_menu',
   );
@@ -26,8 +24,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration pages',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
-      'moderator' => 'moderator',
     ),
     'module' => 'system',
   );
@@ -352,10 +348,7 @@ function dgu_user_user_default_permissions() {
   // Exported permission: 'view the administration theme'.
   $permissions['view the administration theme'] = array(
     'name' => 'view the administration theme',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
+    'roles' => array(),
     'module' => 'system',
   );
 

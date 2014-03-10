@@ -17,7 +17,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'field_replies' => '',
@@ -26,10 +26,10 @@ function dgu_user_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'image_link' => '',
-          'image_style' => 'profile',
+          'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 12,
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'user',
@@ -38,24 +38,29 @@ function dgu_user_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
-      'default_image' => 0,
+      'default_image' => 3962,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
-      'min_resolution' => '',
+      'min_resolution' => '170x170',
       'title_field' => 0,
       'user_register_form' => 0,
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'image',
+      'module' => 'imagefield_crop',
       'settings' => array(
+        'collapsible' => 2,
+        'croparea' => '170x170',
+        'enforce_minimum' => 1,
+        'enforce_ratio' => 1,
         'preview_image_style' => 'avatar',
         'progress_indicator' => 'throbber',
+        'resolution' => '170x170',
       ),
-      'type' => 'image_image',
-      'weight' => 4,
+      'type' => 'imagefield_crop_widget',
+      'weight' => 9,
     ),
   );
 
@@ -77,7 +82,7 @@ function dgu_user_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 8,
       ),
     ),
     'entity_type' => 'user',
@@ -92,10 +97,10 @@ function dgu_user_field_default_field_instances() {
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 5,
+        'rows' => 8,
       ),
       'type' => 'text_textarea',
-      'weight' => 7,
+      'weight' => 10,
     ),
   );
 
@@ -107,7 +112,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'link',
         'settings' => array(
           'field_replies' => '',
@@ -117,7 +122,7 @@ function dgu_user_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 9,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'user',
@@ -136,7 +141,8 @@ function dgu_user_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
-      'title' => 'optional',
+      'rel_remove' => 'default',
+      'title' => 'none',
       'title_maxlength' => 128,
       'title_value' => '',
       'url' => 0,
@@ -148,7 +154,7 @@ function dgu_user_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 9,
+      'weight' => 7,
     ),
   );
 
@@ -160,7 +166,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -188,7 +194,7 @@ function dgu_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 5,
+      'weight' => 3,
     ),
   );
 
@@ -200,7 +206,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -210,7 +216,7 @@ function dgu_user_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 11,
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'user',
@@ -228,7 +234,7 @@ function dgu_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 11,
+      'weight' => 5,
     ),
   );
 
@@ -240,7 +246,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'link',
         'settings' => array(
           'field_replies' => '',
@@ -250,7 +256,7 @@ function dgu_user_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 10,
+        'weight' => 7,
       ),
     ),
     'entity_type' => 'user',
@@ -269,7 +275,8 @@ function dgu_user_field_default_field_instances() {
         'url_cutoff' => 80,
       ),
       'enable_tokens' => 1,
-      'title' => 'optional',
+      'rel_remove' => 'default',
+      'title' => 'none',
       'title_maxlength' => 128,
       'title_value' => '',
       'url' => 0,
@@ -281,7 +288,7 @@ function dgu_user_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 10,
+      'weight' => 8,
     ),
   );
 
@@ -304,7 +311,7 @@ function dgu_user_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 0,
+        'weight' => 9,
       ),
     ),
     'entity_type' => 'user',
@@ -323,7 +330,7 @@ function dgu_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => 1,
+      'weight' => 11,
     ),
   );
 
@@ -335,7 +342,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -363,7 +370,7 @@ function dgu_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 4,
     ),
   );
 
@@ -375,7 +382,7 @@ function dgu_user_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -385,7 +392,7 @@ function dgu_user_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'user',
@@ -403,7 +410,7 @@ function dgu_user_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 8,
+      'weight' => 6,
     ),
   );
 

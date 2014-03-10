@@ -17,6 +17,9 @@ function dgu_user_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_avatar',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'fid' => array(
         'columns' => array(
@@ -33,7 +36,7 @@ function dgu_user_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 0,
+      'default_image' => 3961,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
@@ -47,6 +50,9 @@ function dgu_user_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_bio',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -74,6 +80,9 @@ function dgu_user_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_facebook_url',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
@@ -162,6 +171,9 @@ function dgu_user_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_linkedin_url',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
@@ -193,7 +205,7 @@ function dgu_user_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_publishers',
     'field_permissions' => array(
-      'type' => 1,
+      'type' => 2,
     ),
     'foreign keys' => array(
       'ckan_publisher' => array(
