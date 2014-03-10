@@ -122,7 +122,7 @@ function dgu_search_search_block($form, &$form_state) {
   if (isset($form_state['dataset_request_count'])){
     $form['dataset_request_count']= array(
       '#type' => 'hidden',
-      '#value' => htmlspecialchars(filter_xss($form_state['dataset_request_count'])),
+      '#value' => htmlspecialchars($form_state['dataset_request_count']),
     );
   }
   $form['content_type'] = array(
