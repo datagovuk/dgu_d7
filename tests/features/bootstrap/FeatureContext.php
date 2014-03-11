@@ -727,8 +727,10 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I wait until the page loads"),
       new Given("I follow \"Edit draft\""),
       new Given("I press \"Submit for moderation\""),
+      new Given("I wait until the page loads"),
       new Given("I should see a message about \"$content_type\" being submitted for moderation"),
       new Given("I follow \"profile\""),
+      new Given("I wait until the page loads"),
       new Given("I should see the link \"$title\""),
       new Given("I follow \"My Drafts\""),
       new Given("I wait until the page loads"),
@@ -755,32 +757,40 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I should see \"Currently there is no published revision of this node.\""),
       new Given("I should see \"Created by test_user.\""),
       new Given("I should see \"Edited by $author.\""),
-      new Given("I should see the link \"$author\" in the \"content\" region"),
-      new Given("I should not see the link \"test_moderator\" in the \"content\" region"),
+      new Given("I should see the link \"$author\" in the \"main_content\" region"),
+      new Given("I should not see the link \"test_moderator\" in the \"main_content\" region"),
       new Given("\"Published\" option in \"Moderation state\" should be selected"),
       new Given("I press \"Apply\""),
       new Given("I wait until the page loads"),
       new Given("I should see \"This is the published revision.\""),
-      new Given("I should see the link \"Unpublish\" in the \"content\" region"),
-      new Given("I should see the link \"test_moderator\" in the \"content\" region"),
-      new Given("I follow \"View\""),
-      new Given("I should see \"Revision state: Published\""),
-      new Given("I should see \"Current draft: Yes\""),
-      new Given("I should see the link \"Unpublish this revision\" in the \"main_content\" region"),
+      new Given("I should see the link \"Unpublish\" in the \"main_content\" region"),
+      new Given("I should see the link \"test_moderator\" in the \"main_content\" region"),
     );
+    // Add this when http://redmine.co-dev1.dh.bytemark.co.uk/issues/1372 is fixed and moderation block brought back
+    //new Given("I follow \"View\""),
+    //new Given("I should see \"Revision state: Published\""),
+    //new Given("I should see \"Current draft: Yes\""),
+    //new Given("I should see the link \"Unpublish this revision\" in the \"main_content\" region"),
+
   }
 
   /**
-   * @Then /^I should see "([^"]*)" in All content tab but not in My edits or My drafts tabs$/
+   * @Then /^I should see "([^"]*)" in My content and All content tabs but not in My drafts tab$/
    */
-  public function iShouldSeeInAllContentTabButNotInMyEditsOrMyDraftsTabs($title) {
+  public function iShouldSeeInMyAndAllContentTabsButNotInMyDraftsTab($title) {
     return array (
-      new Given("I visit \"/admin/workbench/content/edited\""),
+      new Given("I visit \"/admin/workbench\""),
+      new Given("I should see the link \"$title\""),
+      new Given("I follow \"My Drafts\""),
+      new Given("I wait until the page loads"),
       new Given("I should not see the link \"$title\""),
-      new Given("I visit \"/admin/workbench/drafts\""),
-      new Given("I should not see the link \"$title\""),
-      new Given("I visit \"/admin/workbench/content/all\""),
+      new Given("I follow \"My Content\""),
+      new Given("I wait until the page loads"),
+      new Given("I should see the link \"$title\""),
+      new Given("I follow \"All Recent Content\""),
+      new Given("I wait until the page loads"),
       new Given("I follow \"$title\""),
+      new Given("I wait until the page loads"),
       new Given("I should see the link \"New draft\""),
       new Given("I should see the link \"Add new comment\""),
       new Given("I should see \"View published\""),
