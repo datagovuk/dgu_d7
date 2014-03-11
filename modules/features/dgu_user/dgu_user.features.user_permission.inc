@@ -109,6 +109,16 @@ function dgu_user_user_default_permissions() {
     'module' => 'toolbar',
   );
 
+  // Exported permission: 'access user contact forms'.
+  $permissions['access user contact forms'] = array(
+    'name' => 'access user contact forms',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'contact',
+  );
+
   // Exported permission: 'access user profiles'.
   $permissions['access user profiles'] = array(
     'name' => 'access user profiles',
