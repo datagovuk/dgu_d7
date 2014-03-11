@@ -726,6 +726,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I follow \"$title\""),
       new Given("I wait until the page loads"),
       new Given("I follow \"Edit draft\""),
+      new Given("I wait until the page loads"),
       new Given("I press \"Submit for moderation\""),
       new Given("I wait until the page loads"),
       new Given("I should see a message about \"$content_type\" being submitted for moderation"),
@@ -763,7 +764,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I press \"Apply\""),
       new Given("I wait until the page loads"),
       new Given("I should see \"This is the published revision.\""),
-      new Given("I should see the link \"Unpublish\" in the \"main_content\" region"),
       new Given("I should see the link \"test_moderator\" in the \"main_content\" region"),
     );
     // Add this when http://redmine.co-dev1.dh.bytemark.co.uk/issues/1372 is fixed and moderation block brought back
