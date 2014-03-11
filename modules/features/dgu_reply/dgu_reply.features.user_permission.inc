@@ -33,6 +33,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'delete comment reply',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'reply',
   );
@@ -40,7 +41,9 @@ function dgu_reply_user_default_permissions() {
   // Exported permission: 'delete field_comment reply'.
   $permissions['delete field_comment reply'] = array(
     'name' => 'delete field_comment reply',
-    'roles' => array(),
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
     'module' => 'reply',
   );
 
@@ -65,6 +68,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'edit comment reply',
     'roles' => array(
       'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'reply',
   );
@@ -72,7 +76,9 @@ function dgu_reply_user_default_permissions() {
   // Exported permission: 'edit field_comment reply'.
   $permissions['edit field_comment reply'] = array(
     'name' => 'edit field_comment reply',
-    'roles' => array(),
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
     'module' => 'reply',
   );
 
