@@ -1,7 +1,7 @@
 core = 7.x
 api = 2
 projects[drupal][type] = "core"
-projects[drupal][version] = "7.24"
+projects[drupal][version] = "7.26"
 projects[drupal][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/menu-undefined-offset-1108314.patch"
 
 projects[dgu][type] = "profile"
