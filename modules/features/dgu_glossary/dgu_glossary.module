@@ -162,6 +162,8 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['title']['#type'] = 'hidden';
 
         unset($form['actions']['preview']);
+        $form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#attributes'] = array('placeholder' => $form['field_reason_for_change'][LANGUAGE_NONE][0]['#description']);
+        unset($form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#description']);
         $form['#attributes']['class'][] = "boxed";
         dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
     }
