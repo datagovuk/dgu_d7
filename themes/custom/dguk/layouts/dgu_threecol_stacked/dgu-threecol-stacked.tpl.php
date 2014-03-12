@@ -17,18 +17,18 @@
  *   - $content['bottom']: Content in the bottom row.
  */
 ?>
-<div class="panel-display panel-3col-33-stacked row clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
+<div class="panel-display panel-3col-33-stacked clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
 
   <?php if ($content['top']): ?>
-    <div class="center-wrapper row-first">
-      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+    <div class="center-wrapper row row-first">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last col-md-12">
         <div class="inside"><?php print $content['top']; ?></div>
       </div>
     </div>
   <?php endif ?>
 
   <?php if ($content['left'] || $content['middle'] || $content['right']): ?>
-    <div class="center-wrapper row-second row-middle">
+    <div class="center-wrapper row row-second row-middle">
       <?php if ($content['left']): ?>
         <div class="panel-panel panel-col-first col-md-4">
           <div class="inside"><?php print $content['left']; ?></div>
@@ -51,7 +51,7 @@
 
   <?php if ($content['bottom']): ?>
     <div class="center-wrapper row-third row-last">
-      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last col-md-12">
         <div class="inside"><?php print $content['bottom']; ?></div>
       </div>
     </div>
