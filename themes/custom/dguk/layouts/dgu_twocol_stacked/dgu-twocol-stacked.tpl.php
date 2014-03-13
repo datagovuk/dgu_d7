@@ -29,13 +29,13 @@
   <?php if ($content['left'] || $content['right']): ?>
     <div class="center-wrapper row row-second row-middle">
       <?php if ($content['left']): ?>
-        <div class="panel-panel panel-col-first col-md-8">
+        <div class="panel-panel panel-col-first col-md-9">
           <div class="inside"><?php print $content['left']; ?></div>
         </div>
       <?php endif ?>
 
       <?php if ($content['right']): ?>
-        <div class="panel-panel panel-col-second panel-col-last col-md-4">
+        <div class="panel-panel panel-col-second panel-col-last col-md-3">
           <div class="inside"><?php print $content['right']; ?></div>
         </div>
       <?php endif ?>
