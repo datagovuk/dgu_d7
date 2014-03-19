@@ -6,5 +6,5 @@ projects[drupal][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patch
 
 projects[dgu][type] = "profile"
 projects[dgu][download][type] = "git"
-projects[dgu][download][url] = "git@github.com:datagovuk/dgu_d7.git"
+projects[dgu][download][url] = "https://github.com/datagovuk/dgu_d7.git"
 projects[dgu][download][branch] = "master"
