@@ -8,6 +8,7 @@ dependencies[] = context
 dependencies[] = ctools
 dependencies[] = dgu_reply
 dependencies[] = email
+dependencies[] = emptyparagraphkiller
 dependencies[] = entityreference
 dependencies[] = features
 dependencies[] = fieldable_panels_panes
