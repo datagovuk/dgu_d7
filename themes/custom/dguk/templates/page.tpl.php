@@ -70,7 +70,7 @@
                 <li><a href="/dataset/new">Add a Dataset</a></li>
                 <li><a href="/harvest">Dataset Harvesting</a></li>
                 <li role="presentation" class="dropdown-header">My publishers</li>
-                <?php foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
+                <?php if (!empty($user->field_publishers)) foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
 
                   <?php $publisher = entity_load_single('ckan_publisher', $publisher_ref['target_id']); ?>
 
