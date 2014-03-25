@@ -5,7 +5,7 @@
       <div class="left-inner auto-height form-search">
         <div class="input-group">
         <form action="<?php print $form['#action']?>" method="post" id="<?php print $form['#form_id']?>" >
-            <input class="form-control" type="text" name="<?php print $form['search_block_form']['#name'] ?>" value="<?php print $form['keyword']['#value']?>" results="0" placeholder="Search <?php print $form['content_type']['#value']?>...">
+            <input class="form-control" type="text" name="<?php print $form['search_block_form']['#name'] ?>" value="<?php if(!empty($form['keyword']['#value']))print $form['keyword']['#value']?>" results="0" placeholder="Search <?php print $form['content_type']['#value']?>...">
             <span class="input-group-btn">
               <button type="submit" class="btn btn-default">
                 <i class="icon-search"></i>
@@ -14,7 +14,7 @@
             <input type="hidden" name="form_build_id" value="<?php print $form['form_build_id']['#value'] ?>">
             <input type="hidden" name="form_id" value="<?php print $form['form_id']['#value'] ?>">
             <input type="hidden" name="form_token" value="<?php print $form['form_token']['#default_value'] ?>">
-            <?php foreach($form['f']['#value'] as $i => $value): ?>
+            <?php if(!empty($form['f']['#value']))foreach($form['f']['#value'] as $i => $value): ?>
             <input type="hidden" name="f[<?php print $i; ?>]" value="<?php print $value ?>">
             <?php endforeach ?>
             <input type="hidden" name="searchtype" value="<?php print $form['searchtype']['#value'] ?>">
