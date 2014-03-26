@@ -426,7 +426,7 @@ function theme_dgu_search_select($options) {
   $output .= '<select name="search-results-sort" class="form-control">';
   $select_options = $options['select_options'];
   foreach ($select_options as $key => $values) {
-    $disabled =  empty($values['disabled']) ? ' disabled="disabled" ' : '';
+    $disabled =  empty($values['disabled']) ? '' : ' disabled="disabled" ';
     $selected =  $values['selected'] ? ' selected="selected" ' : '';
     $output .= '<option value="' . $key . '"' . $selected . $disabled .  '>' . $values['text'] . '</option>';
   }
