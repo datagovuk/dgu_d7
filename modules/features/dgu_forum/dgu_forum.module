@@ -8,6 +8,107 @@ define('FORUM_MODERATION_PERMISSION', 'edit any forum content');
 
 include_once 'dgu_forum.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_forum_menu_breadcrumb_alter(&$active_trail, $item) {
+
+  // Make breadcrumb following this pattern: forum/category/node_title
+  if ($item['path'] == 'node/%' && $item['map'][1]->type == 'forum') {
+    $tid = $item['map'][1]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
+    $forum = taxonomy_term_load($tid);
+    array_pop($active_trail);
+    $active_trail[] = array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array());
+    $active_trail[] = array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array());
+    $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+
+  }
+  // Reset breadcrumb to '/forum' only on 'Most popular topics' and 'Forum categories' pages.
+  elseif ($item['path'] == 'forum' || $item['path'] == 'forum/categories' || $item['path'] == 'forum/popular') {
+    $active_trail = array(array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()), array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()));
+    switch ($item['path']) {
+      case 'forum':
+        $active_trail[] = array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array());
+        drupal_set_title('Latest forum topics');
+        break;
+      case 'forum/categories':
+        drupal_set_title('Categories');
+        break;
+      case 'forum/popular':
+        drupal_set_title('Most popular topics');
+        break;
+    }
+  }
+
+  elseif ($item['path'] == 'forum/%') {
+    drupal_set_title($item['map']['1']->title);
+    $active_trail[1]['title'] = 'Forum';
+    $active_trail[1]['href'] = 'forum';
+    $active_trail[] = array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array());
+  }
+
+}
+
+/**
+ * Calculates the number of new posts in a forum that the user has not yet read.
+ *
+ * Nodes are new if they are newer than NODE_NEW_LIMIT.
+ *
+ * @param $term
+ *   The term ID of the forum.
+ *
+ * @return
+ *   The number of new posts in the forum that have not been read by the user.
+ */
+function dgu_forum_topics_unread($term) {
+  global $user;
+  // If not anonymous.
+  if($user->uid) {
+    $query = db_select('node', 'n');
+    $query->join('taxonomy_index', 'ti', 'n.nid = ti.nid AND ti.tid = :tid', array(':tid' => $term));
+    $query->leftJoin('history', 'h', 'n.nid = h.nid AND h.uid = :uid', array(':uid' => $user->uid));
+    $query->addExpression('COUNT(n.nid)', 'count');
+    return $query
+      ->condition('status', 1)
+      ->condition('n.created', NODE_NEW_LIMIT, '>')
+      ->isNull('h.nid')
+      ->addTag('node_access')
+      ->execute()
+      ->fetchField();
+  }
+}
+
+/**
+ * Calculates the number of new replies in a forum that the user has not yet read.
+ *
+ * Nodes are new if they are newer than NODE_NEW_LIMIT.
+ *
+ * @param $term
+ *   The term ID of the forum.
+ *
+ * @return
+ *   The number of new posts in the forum that have not been read by the user.
+ */
+function dgu_forum_replies_unread($term) {
+  global $user;
+
+  // If not anonymous.
+  if($user->uid) {
+    $query = db_select('node', 'n');
+    $query->join('taxonomy_index', 'ti', 'n.nid = ti.nid AND ti.tid = :tid', array(':tid' => $term));
+    $query->join('reply', 'r', 'n.nid = r.entity_id');
+    $query->leftJoin('history', 'h', 'n.nid = h.nid AND h.uid = :uid', array(':uid' => $user->uid));
+    $query->addExpression('COUNT(r.id)', 'count');
+    $query->condition('n.status', 1)
+      ->condition('r.status', 1)
+      ->condition('n.created', NODE_NEW_LIMIT, '>')
+      ->condition(db_or()->where('r.created > h.timestamp')->isNull('h.timestamp'))
+      ->addTag('node_access');
+    $result = $query->execute();
+    return $result->fetchField();
+  }
+}
+
 function dgu_forum_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'forum') {
     return user_access(FORUM_MODERATION_PERMISSION);
