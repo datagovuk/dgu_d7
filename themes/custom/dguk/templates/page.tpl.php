@@ -21,17 +21,18 @@
           $data_menu = dguk_get_data_menu();
           $apps_menu = dguk_get_apps_menu($secondary_menu);
           $interact_menu = dguk_get_interact_menu($main_menu);
+
           $active = 1;
-          if(strpos($data_menu, 'subnav-data active')) {
+          if (strpos($data_menu, 'subnav-data active')) {
             $active = 2;
           }
-          if(strpos($apps_menu, 'subnav-apps active')) {
+          if (strpos($apps_menu, 'subnav-apps active')) {
             $active = 3;
           }
-          if(strpos($interact_menu, 'subnav-interact active')) {
+          if (strpos($interact_menu, 'subnav-interact active')) {
             $active = 4;
           }
-          if(arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
+          if (arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
             $active = 6;
           }
         ?>
@@ -62,7 +63,8 @@
               </ul>
             </span>
           <?php else: ?>
-            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
+          <?php $destination = drupal_get_destination(); ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php endif; ?>
 
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
