@@ -93,5 +93,57 @@ function dgu_site_feature_entity_info_alter(&$entity_info) {
       'access arguments' => array('administer fieldable panels panes'),
     ),
   );
+}
 
+/**
+ * Gets the last time the user viewed a node.
+ *
+ * @param $nid
+ *   The node ID.
+ *
+ * @return
+ *   The timestamp when the user last viewed this node, if the user has
+ *   previously viewed the node; otherwise NODE_NEW_LIMIT.
+ */
+function dgu_site_feature_user_last_visit($nid) {
+  global $user;
+  if($user->uid) {
+    $history = &drupal_static(__FUNCTION__, array());
+
+    if (empty($history)) {
+      $result = db_query('SELECT nid, timestamp FROM {history} WHERE uid = :uid', array(':uid' => $user->uid));
+      foreach ($result as $t) {
+        $history[$t->nid] = $t->timestamp > NODE_NEW_LIMIT ? $t->timestamp : NODE_NEW_LIMIT;
+      }
+    }
+    return isset($history[$nid]) ? $history[$nid] : NODE_NEW_LIMIT;
+  }
+}
+
+/**
+ * Get number of new replies for current user and specified node.
+ *
+ * @param $nid
+ *   Node-id to count comments for.
+ * @param $timestamp
+ *   Time to count from (defaults to time of last user access
+ *   to node).
+ * @return The result or FALSE on error.
+ */
+function dgu_site_feature_num_new_replies($nid, $timestamp = 0) {
+  global $user;
+  if($user->uid) {
+    // Retrieve the timestamp at which the current user last viewed this node.
+    if (!$timestamp) {
+      $timestamp = node_last_viewed($nid);
+    }
+    $timestamp = ($timestamp > NODE_NEW_LIMIT ? $timestamp : NODE_NEW_LIMIT);
+
+    // Use the timestamp to retrieve the number of new comments.
+    return db_query('SELECT COUNT(id) FROM {reply} WHERE entity_id = :nid AND created > :timestamp AND status = :status', array(
+      ':nid' => $nid,
+      ':timestamp' => $timestamp,
+      ':status' => 1,
+      ))->fetchField();
+  }
 }
