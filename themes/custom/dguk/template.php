@@ -37,7 +37,6 @@ function dguk_preprocess_page(&$variables) {
   if (!empty($variables['node']) && $variables['node']->type == 'book' && !empty($variables['node']->parent_book)) {
     $variables['title'] = $variables['node']->parent_book->title;
   }
-
 }
 
 /**
@@ -48,32 +47,34 @@ function dguk_preprocess_node(&$variables) {
   $full_node = node_load($variables['node']->nid);
   $variables['title'] = $full_node->title;
 
-  $fields = field_info_instances('user', 'user');
-  $field_id = $fields['field_avatar']['field_id'];
-  $user = new stdClass();
-  $user->uid = $variables['node']->uid;
-  field_attach_load('user', array($variables['node']->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
-
-  if (!empty($user->field_avatar)) {
-    $field = field_get_items('user', $user, 'field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar_big')));
-  }
-  else {
-    $image = theme_image_style_outside_files(
-    array(
-      'style_name' => 'profile',
-      'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
-      )
-    );
-  }
-  $variables['avatar'] = render($image);
-
-
   if ($variables['created'] != $variables['changed']) {
-    $variables['updated'] = 'Updated on ' . format_date($variables['changed']);
-
+    $variables['updated'] = '| Updated on ' . format_date($variables['changed']);
   }
+  // We render user picture only on forum and blog nodes.
+  if ($variables['node']->type == 'forum' || $variables['node']->type == 'blog') {
+    $fields = field_info_instances('user', 'user');
+    $field_id = $fields['field_avatar']['field_id'];
+    $user = new stdClass();
+    $user->uid = $variables['node']->uid;
+    field_attach_load('user', array($user->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
 
+    if (!empty($user->field_avatar)) {
+      $field = field_get_items('user', $user, 'field_avatar');
+      $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+    }
+    else {
+      $image_info = dguk_default_field_image('field_avatar');
+      $image = field_view_value('user', $user, 'field_avatar', (array) $image_info, array('settings' => array('image_style' => 'avatar')));
+    }
+
+    $colour = $variables['node']->uid % 10;
+    if ($variables['node']->uid) {
+      $variables['avatar'] = l(render($image), 'user/' . $variables['node']->uid, array('html' => true, 'attributes' => array('class' => array('field-avatar','bg-colour-' . $colour))));
+    }
+    else {
+      $variables['avatar'] = '<div class="field-avatar bg-colour-0">' . render($image) . '</div>';
+    }
+  }
 }
 
 /**
@@ -141,28 +142,31 @@ function dguk_preprocess_field(&$variables) {
  */
 function dguk_preprocess_reply(&$variables) {
   $variables['classes_array'][] = 'boxed';
+  $variables['classes_array'][] = 'parent-' . $variables['reply']->parent;
 
   // Add $avatar variable with rendered user picture linked to user profile;
   $fields = field_info_instances('user', 'user');
   $field_id = $fields['field_avatar']['field_id'];
   $user = new stdClass();
   $user->uid = $variables['reply']->uid;
-  field_attach_load('user', array($variables['reply']->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
+  field_attach_load('user', array($user->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
 
   if (!empty($user->field_avatar)) {
     $field = field_get_items('user', $user, 'field_avatar');
     $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
   }
   else {
-    $image = theme_image_style_outside_files(
-    array(
-      'style_name' => 'avatar',
-      'path' => 'profiles/dgu/themes/custom/dguk/default_images/default_user.png',
-	    )
-    );
+    $image_info = dguk_default_field_image('field_avatar');
+    $image = field_view_value('user', $user, 'field_avatar', (array) $image_info, array('settings' => array('image_style' => 'avatar')));
   }
 
-  $variables['avatar'] = l(render($image), 'user/'.$variables['reply']->uid, array('html' => true) );
+  $colour = $variables['reply']->uid % 10;
+  if ($variables['reply']->uid) {
+    $variables['avatar'] = l(render($image), 'user/' . $variables['reply']->uid, array('html' => true, 'attributes' => array('class' => array('field-avatar','bg-colour-' . $colour))));
+  }
+  else {
+    $variables['avatar'] = '<div class="field-avatar bg-colour-0">' . render($image) . '</div>';
+  }
 }
 
 
@@ -171,11 +175,14 @@ function dguk_preprocess_reply(&$variables) {
  * Implements hook_preprocess_replies().
  */
 function dguk_preprocess_replies(&$variables) {
+  $options = array('attributes' => array('class' => array('btn-default', 'btn', 'btn-primary')));
+
   if (($variables['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $variables['bundle'] .' reply')) {
-     $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
-  } else {
-    $options = array('query' => array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0'));
-    $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login'), 'user/login' , $options) . ' to make a comment';
+     $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0', $options);
+  }
+  else {
+    $options['query'] = array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
+    $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login to make a comment'), 'user/login', $options);
   }
 }
 
@@ -237,6 +244,16 @@ function dguk_preprocess_search_result(&$variables) {
       break;
   }
 }
+
+/**
+ * Loads default image from image field.
+ */
+function dguk_default_field_image($field_name) {
+  $field_info = field_info_field($field_name);
+  $fid = $field_info['settings']['default_image'];
+  return file_load($fid);
+}
+
 
 /**
  *  Implements hook_form_alter().
@@ -327,6 +344,13 @@ function dguk_get_data_menu() {
   }
 
   $classes = array('subnav', 'subnav-data');
+
+  if(dguk_get_search_content_type() == 'dataset_request') {
+    $menu['menu-data-requests']['attributes'] = array('class' => array('active', 'active-trail'));
+    $classes[] = 'active';
+  }
+
+
   $current_path = $_SERVER['REQUEST_URI'];
 
   // $current_path always starts from "/"
@@ -349,12 +373,28 @@ function dguk_get_data_menu() {
 	return $menu_output;
  }
 
+function dguk_get_search_content_type() {
+  if ($is_search_page = arg(0) == 'search' && arg(1) == 'everything') {
+    $query = drupal_get_query_parameters();
+    foreach ($query['f'] as $facet) {
+      if (strpos($facet, 'bundle') === 0) {
+        return substr($facet, 7);
+      }
+    }
+  }
+}
+
 /**
  * Get the output for Apps menu.
  */
 function dguk_get_apps_menu($menu) {
 	//$menu = menu_navigation_links('menu-apps');
   $classes = array('subnav', 'subnav-apps');
+  if (dguk_get_search_content_type() == 'app') {
+    $classes[] = 'active';
+    $search_apps_link_ref = &$menu[key($menu)];;
+    $search_apps_link_ref['attributes']['class'] = 'active';
+  }
 
   foreach ($menu as $menu_item) {
     if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
@@ -373,15 +413,20 @@ function dguk_get_apps_menu($menu) {
  }
 
 /**
- * Get the output for Apps menu.
+ * Get the output for Interact menu.
  */
 function dguk_get_interact_menu($menu) {
-  //$menu = menu_navigation_links('menu-interact');
   $classes = array('subnav', 'subnav-interact');
+  $bundle_facet = dguk_get_search_content_type();
 
-  foreach ($menu as $menu_item) {
-    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+  $activated = FALSE;
+  foreach ($menu as &$menu_item) {
+    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class'])|| in_array('active-trail', $menu_item['attributes']['class']))) {
       $classes[] = 'active';
+    }
+    if($menu_item['href'] == $bundle_facet) {
+      $menu_item['attributes']['class'] = 'active';
+      $activated = TRUE;
     }
   }
 
@@ -392,6 +437,18 @@ function dguk_get_interact_menu($menu) {
     ),
 	 ));
 
+  if ($bundle_facet) {
+    if ($bundle_facet == 'app' || $bundle_facet == 'dataset_request') {
+      $menu_output = str_replace('active', '', $menu_output);
+    }
+    elseif($bundle_facet == 'resource') {
+      $menu_output = str_replace('>Library', 'class="active-trail active">Library', $menu_output);
+      $menu_output = str_replace('active-trail active">Search content', '">Search content', $menu_output);
+    }
+    elseif($activated) {
+      $menu_output = str_replace('active-trail active">Search content', '">Search content', $menu_output);
+    }
+  }
 	return $menu_output;
  }
 
@@ -416,53 +473,15 @@ function dguk_get_footer_menu() {
  * @see dguk/templates/html.tpl.php
  */
 function dguk_js_alter(&$js){
-//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/bootstrap.js']);
-//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_progress.js']);
-//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/_vertical-tabs.js']);
-//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/ajax.js']);
-//  unset($js['profiles/dgu/themes/contrib/bootstrap/js/misc/autocomplete.js']);
-//
-//  // Remove core jquery on all pages apart of defined in $paths_to_avoid array.
-//  $current_path = current_path();
-//  $paths_to_avoid = array(
-//      '^admin\/',
-//      '^node\/add\/',
-//      '^node\/\d*\/edit',
-//      '^user\/\d*\/edit',
-//    );
-//
-//  $keep_jquery = FALSE;
-//  foreach ($paths_to_avoid as $path_to_avoid) {
-//    if(preg_match("/$path_to_avoid/", $current_path)) {
-//      $keep_jquery = TRUE;
-//      break;
-//    }
-//  }
-//
-//  if (!$keep_jquery) {
-//    unset($js['misc/jquery.js']);
-//  }
   unset($js['misc/jquery.js']);
   unset($js['profiles/dgu/modules/contrib/jquery_update/replace/jquery/1.8/jquery.min.js']);
-
-
-
 }
 
 function dguk_menu_breadcrumb_alter(&$active_trail, $item){
+
   $end = end($active_trail);
   foreach ($active_trail as $key => $crumb){
-    if (!empty($crumb['path']) && $crumb['path'] == 'forum/%') {
-      //special processing for forum items
-      //Set the title and href and replace the current item with a link to forums
-      $crumb['title'] = 'Discussion Forum';
-      $crumb['href'] = 'forum';
-      $active_trail[$key] = $crumb;
-      //Set the title of the page to the current item's title which is appended to the crumbs link
-      drupal_set_title($crumb['map'][$key]->title);
-      //append an item to the active trail to prevent drupal from removing the last crumb
-      $active_trail[] = $end;
-    } elseif (!empty($crumb['link_path']) && $crumb['link_path'] == 'node/%'){
+    if (!empty($crumb['link_path']) && $crumb['link_path'] == 'node/%'){
       //special processing for nodes
       $parent_path = '';
       $title = drupal_get_title();
@@ -479,17 +498,6 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
         case 'dataset_request':
           $parent_path = 'odug';
           break;
-        case 'forum':
-          //forum items need a link to the parent forum
-          //Set the title and href and replace the current item with a link to forums
-          $crumb['title'] = 'Discussion Forum';
-          $parent_path = 'forum';
-          $active_trail[$key] = $crumb;
-
-          $tid = $item['map'][$key]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
-          $forum = taxonomy_term_load($tid);
-          $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
-          break;
         default:
           $alias = drupal_get_path_alias('node/' . $crumb['map'][$key]->nid);
           $parts =  explode('/', $alias);
@@ -503,7 +511,8 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
       $active_trail[$key] = $crumb;
       //append an item to the active trail to prevent drupal from removing the last crumb
       $active_trail[] = $end;
-    }  elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
+    }
+    elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
       $instance_id = $item['page_arguments'][1];
       $instance = reply_load_instance($instance_id);
       $entity_type = $instance->entity_type;
@@ -558,49 +567,6 @@ function dguk_breadcrumb($variables) {
     $crumbs .= '<li>' . $title . '</li>';
     return $crumbs;
    }
-}
-
-function dguk_preprocess_user_profile(&$variables) {
-
-
-  $variables['colour'] = $variables['elements']['#account']->uid % 10;
-  $colour = $variables['elements']['#account']->uid % 10;
-  $variables['user_profile']['field_avatar']['classes_array'] = array('bg-colour-' . $colour);
-
-  if (isset($variables['field_first_name'][0]['safe_value'])) {
-    $variables['full_name'] = $variables['field_first_name'][0]['safe_value'];
-  }
-  if (isset($variables['field_surname'][0]['safe_value'])) {
-    if (isset($variables['full_name'])) {
-      $variables['full_name'] = $variables['full_name'] . ' ' . $variables['field_surname'][0]['safe_value'];
-    }
-    else {
-      $variables['full_name'] = $variables['field_surname'][0]['safe_value'];
-    }
-  }
-
-  if (isset($variables['field_twitter'][0]['safe_value'])) {
-    $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
-    if (substr($variables['twitter'], 0, 1) == '@') {
-      // Just the username without @ character.
-      $variables['twitter'] = substr($variables['twitter'], 1);
-    }
-  }
-  if (isset($variables['field_linkedin_url'][0]['url'])) {
-    $parts = parse_url($variables['field_linkedin_url'][0]['url']);
-    $variables['linkedin'] = $parts['host'] . $parts['path'] . $parts['query'];
-  }
-
-  if (isset($variables['field_facebook_url'][0]['url'])) {
-    $parts = parse_url($variables['field_facebook_url'][0]['url']);
-    $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
-  }
-
-
-  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
-  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
-
-  $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 }
 
 function dguk_field__field_quality__glossary($variables) {
