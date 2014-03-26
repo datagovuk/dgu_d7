@@ -141,9 +141,16 @@ function dgu_search_search_block($form, &$form_state) {
     '#type' => 'hidden',
     '#value' => htmlspecialchars($form_state['count']),
   );
+    //Loop through any filter defined in the form array to sanitise values.
+    $filter_values = array();
+    if (!empty($form['f'])){
+        foreach ($form['f']['#value'] as $key => $value){
+            $filter_values[$key] = htmlspecialchars($value);
+        }
+    }
   $form['f'] = array(
     '#type' => 'value',
-    '#value' => htmlspecialchars($form_state['f']),
+    '#value' => $filter_values,
   );
   $form['actions'] = array('#type' => 'actions');
   $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Search'));
