@@ -8,6 +8,22 @@ define('BLOG_MODERATION_PERMISSION', 'edit any blog content');
 
 include_once 'dgu_blog.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
+  if ($item['path'] == 'blog') {
+    $active_trail = array(array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()));
+    
+    drupal_set_title('Latest blog posts');
+  }
+  // Reset breadcrumb to '/blog' only on 'Most popular blog posts'
+  elseif ($item['path'] == 'blog/popular') {
+    $active_trail = array(array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()));
+    drupal_set_title('Most popular blog posts');
+  }
+}
+
 function dgu_blog_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'blog') {
     return user_access(BLOG_MODERATION_PERMISSION);
