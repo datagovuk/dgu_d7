@@ -50,7 +50,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $search['keys'] = $context->data;
   }
 
-  $search_types = get_search_types();
+  $search_types = dgu_search_get_search_types();
 
   $form_state = array();
 
