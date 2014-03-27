@@ -12,8 +12,12 @@ function dgu_user_default_rules_configuration() {
   $items['rules_login_redirection'] = entity_import('rules_config', '{ "rules_login_redirection" : {
       "LABEL" : "Login redirection",
       "PLUGIN" : "reaction rule",
-      "REQUIRES" : [ "rules" ],
-      "ON" : [ "user_login" ],
+      "ACTIVE" : false,
+      "REQUIRES" : [ "rules_url_argument", "rules" ],
+      "ON" : [],
+      "IF" : [
+        { "NOT rules_url_argument_argument_exists" : { "argument" : "destination" } }
+      ],
       "DO" : [ { "redirect" : { "url" : "user\\/[account:uid]" } } ]
     }
   }');
