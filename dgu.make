@@ -88,6 +88,9 @@ projects[reply][subdir] = "contrib"
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
 
+projects[rules_url_argument][version] = "1.2"
+projects[rules_url_argument][subdir] = "contrib"
+
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"
 
