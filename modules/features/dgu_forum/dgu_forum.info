@@ -57,6 +57,7 @@ features[variable][] = node_options_forum
 features[variable][] = node_preview_forum
 features[variable][] = node_submitted_forum
 features[variable][] = pathauto_forum_pattern
+features[variable][] = pathauto_node_forum_pattern
 features[views_view][] = forum_categories
 features[views_view][] = forum_topics
 features_exclude[field_base][body] = body
