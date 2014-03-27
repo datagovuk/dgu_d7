@@ -60,6 +60,10 @@ function dgu_forum_strongarm() {
             'weight' => '4',
             'visible' => FALSE,
           ),
+          'teaser' => array(
+            'weight' => '1',
+            'visible' => FALSE,
+          ),
         ),
       ),
     ),
