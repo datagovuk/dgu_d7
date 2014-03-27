@@ -52,7 +52,7 @@ function dgu_site_feature_menu_default_menu_links() {
     'module' => 'system',
     'hidden' => 0,
     'external' => 0,
-    'has_children' => 0,
+    'has_children' => 1,
     'expanded' => 0,
     'weight' => 3,
   );
@@ -158,27 +158,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => 0,
   );
-  // Exported menu link: menu-apps:search/everything/
-  $menu_links['menu-apps:search/everything/'] = array(
-    'menu_name' => 'menu-apps',
-    'link_path' => 'search/everything/',
-    'router_path' => 'search/everything',
-    'link_title' => 'Search apps',
-    'options' => array(
-      'query' => array(
-        'f[0]' => 'bundle:app',
-      ),
-      'attributes' => array(
-        'title' => '',
-      ),
-    ),
-    'module' => 'menu',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 0,
-  );
   // Exported menu link: menu-interact:blog
   $menu_links['menu-interact:blog'] = array(
     'menu_name' => 'menu-interact',
@@ -269,6 +248,24 @@ function dgu_site_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => -50,
   );
+  // Exported menu link: menu-interact:search/everything
+  $menu_links['menu-interact:search/everything'] = array(
+    'menu_name' => 'menu-interact',
+    'link_path' => 'search/everything',
+    'router_path' => 'search/everything',
+    'link_title' => 'Search content',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 50,
+  );
   // Translatables
   // Included for use with string extractors like potx.
   t('All Blogs');
@@ -283,7 +280,7 @@ function dgu_site_feature_menu_default_menu_links() {
   t('Library');
   t('Linked Data');
   t('Location');
-  t('Search apps');
+  t('Search content');
 
 
   return $menu_links;
