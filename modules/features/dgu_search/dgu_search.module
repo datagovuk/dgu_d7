@@ -10,9 +10,9 @@ function dgu_search_get_search_types(){
   return array(
     'app' => t('Apps'),
     'blog' => t('Blogs'),
-    'forum' => t('Forum Posts'),
-    'resource' => t('Library'),
-    'dataset_request'  => t('Dataset Requests'),
+    'forum' => t('Forum topics'),
+    'resource' => t('Library resources'),
+    'dataset_request'  => t('Dataset requests'),
     'page' => t('Pages'),
     'book' => t('Books'),
   );
@@ -32,13 +32,7 @@ function dgu_search_ctools_plugin_directory($module, $plugin) {
  */
 function dgu_search_block_info() {
   $blocks = array();
-  $search_types = array(
-    'app' => t('Apps'),
-    'blog' => t('Blogs'),
-    'forum' => t('Forum Posts'),
-    'resource' => t('Library'),
-    'dataset_request'  => t('Dataset Requests'),
-  );
+  $search_types = dgu_search_get_search_types();
 
   // Create a block for each content type to search in solr.
   foreach ($search_types as $search_type => $type) {
@@ -60,13 +54,9 @@ function dgu_search_block_view($delta = '') {
   $form_state = array(
     'searchtype' => $search_type,
   );
-  $search_types = array(
-    'app' => t('Apps'),
-    'blog' => t('Blogs'),
-    'forum' => t('Forum Posts'),
-    'resource' => t('Library'),
-    'dataset_request'  => t('Dataset Requests'),
-  );
+
+  $search_types = dgu_search_get_search_types();
+
 
   $searchform = drupal_build_form('search_block_form', $form_state);
 
@@ -215,13 +205,7 @@ function dgu_search_form_search_block_form_submit($form, &$form_state) {
   $form_state['values']['dgu_search_form'] = $fv['search_block_form'];
   search_box_form_submit($form, $form_state);
 
-  $search_types = array(
-    'app' => t('Apps'),
-    'blog' => t('Blogs'),
-    'forum' => t('Forum Posts'),
-    'resource' => t('Library'),
-    'dataset_request'  => t('Dataset Requests'),
-  );
+  $search_types = dgu_search_get_search_types();
 
   if (isset($fv['search_block_form'])) {
     $facets = '';
