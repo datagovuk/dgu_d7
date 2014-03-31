@@ -51,11 +51,13 @@ $colour = $row->users_node_uid % 10;
 <div class="blog-posts-comments">
   <?php if ($fields['created_1']->raw): ?>
     <div class="reply-counter">
-      <span><?php print $fields['id']->raw; ?></span>
-      <?php print format_plural($fields['id']->raw, ' comment', ' comments'); ?>
-      <?php if ($new_replies): ?>
-        <span class="new"><?php print $new_replies; ?> new</span>
-      <?php endif; ?>
+      <a href="<?php print drupal_get_path_alias('node/' . $row->nid) . '#comments'; ?>">
+        <span><?php print $fields['id']->raw; ?></span>
+        <?php print format_plural($fields['id']->raw, ' comment', ' comments'); ?>
+        <?php if ($new_replies): ?>
+          <span class="new"><?php print $new_replies; ?> new</span>
+        <?php endif; ?>
+      </a>
     </div>
     <div class="reply-last grey-text">
       <?php if ($fields['id']->raw > 1): ?>
