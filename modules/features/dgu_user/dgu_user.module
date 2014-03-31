@@ -321,14 +321,16 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 
-  $result = db_query("SELECT n.type, nt.name, COUNT(n.nid) AS count
-                      FROM {node} n join {node_type} nt ON n.type = nt.type
-                      WHERE nt.type in ('app', 'blog', 'forum', 'dataset_request')
+  $plural_types = dgu_site_feature_get_plural_content_types();
+
+  $result = db_query("SELECT n.type, COUNT(n.nid) AS count
+                      FROM {node} n
+                      WHERE n.type in ('app', 'blog', 'forum', 'dataset_request')
                       AND n.uid = :uid AND n.status = 1
                       GROUP BY n.type
                       ", array(':uid' => $variables['elements']['#account']->uid));
   foreach ($result as $row) {
-    $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $row->name . '</a><span> (' . $row->count . ')</span></div>';
+    $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $plural_types[$row->type] . '</a><span> (' . $row->count . ')</span></div>';
   }
   $result = db_query("SELECT COUNT(r.id) AS count
                       FROM {reply} r
