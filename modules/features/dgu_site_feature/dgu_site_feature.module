@@ -147,3 +147,18 @@ function dgu_site_feature_num_new_replies($nid, $timestamp = 0) {
       ))->fetchField();
   }
 }
+
+/**
+ * Get plural content type names.
+ */
+function dgu_site_feature_get_plural_content_types(){
+  return array(
+    'app' => t('Apps'),
+    'blog' => t('Blogs'),
+    'forum' => t('Forum topics'),
+    'resource' => t('Library resources'),
+    'dataset_request'  => t('Dataset requests'),
+    'page' => t('Pages'),
+    'book' => t('Books'),
+  );
+}
