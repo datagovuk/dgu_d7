@@ -55,11 +55,13 @@ $new = $last_viewed ? FALSE : $row->node_created > NODE_NEW_LIMIT;
 <div class="forum-topic-replies">
   <?php if ($fields['created_1']->raw): ?>
     <div class="reply-counter">
-      <span><?php print $fields['id']->raw; ?></span>
-      <?php print format_plural($fields['id']->raw, ' reply', ' replies'); ?>
-      <?php if ($new_replies): ?>
-        <span class="new"><?php print $new_replies; ?> new</span>
-      <?php endif; ?>
+      <a href="<?php print drupal_get_path_alias('node/' . $row->nid) . '#comments'; ?>">
+        <span><?php print $fields['id']->raw; ?></span>
+        <?php print format_plural($fields['id']->raw, ' reply', ' replies'); ?>
+        <?php if ($new_replies): ?>
+          <span class="new"><?php print $new_replies; ?> new</span>
+        <?php endif; ?>
+      </a>
     </div>
     <div class="reply-last grey-text">
       <?php if ($fields['id']->raw > 1): ?>
