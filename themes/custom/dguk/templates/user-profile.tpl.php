@@ -60,7 +60,7 @@
       <?php endif; ?>
     </div>
     <?php if($stats): ?>
-      <h3>User statistics</h3>
+      <h3>User activity statistics</h3>
         <?php print $stats; ?>
     <?php endif; ?>
   </div>
