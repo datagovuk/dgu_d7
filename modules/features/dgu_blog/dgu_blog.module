@@ -15,12 +15,12 @@ function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
   if ($item['path'] == 'blog') {
     $active_trail = array(array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()));
     
-    drupal_set_title('Latest blog posts');
+    drupal_set_title('Latest Blogs');
   }
   // Reset breadcrumb to '/blog' only on 'Most popular blog posts'
   elseif ($item['path'] == 'blog/popular') {
     $active_trail = array(array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()));
-    drupal_set_title('Most popular blog posts');
+    drupal_set_title('Most popular Blogs');
   }
 }
 
