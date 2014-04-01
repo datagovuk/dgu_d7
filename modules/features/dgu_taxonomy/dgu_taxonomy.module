@@ -7,7 +7,7 @@
 include_once 'dgu_taxonomy.features.inc';
 
 function dgu_taxonomy_url_outbound_alter(&$path, &$options, &$original_path) {
-  if($options['entity_type'] == 'taxonomy_term') {
+  if(isset($options['entity_type']) && $options['entity_type'] == 'taxonomy_term') {
     $vocabularies = db_select('taxonomy_vocabulary', 'tv')
       ->fields('tv', array('vid', 'machine_name'))
       ->execute();

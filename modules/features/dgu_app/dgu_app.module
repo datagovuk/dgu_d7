@@ -27,7 +27,7 @@ function dgu_app_form_app_node_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function dgu_app_node_access($node, $op, $account) {
-  if ($op != 'create' && $node->type == 'forum') {
+  if ($op != 'create' && is_object($node) && $node->type == 'forum') {
     return dgu_moderation_access($account, $node, APP_MODERATION_PERMISSION);
   }
 }

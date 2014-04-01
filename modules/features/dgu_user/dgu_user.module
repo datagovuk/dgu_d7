@@ -315,9 +315,14 @@ function dgu_user_preprocess_user_profile(&$variables) {
     $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
   }
 
+  if (isset($variables['field_bio'][0]['safe_value'])) {
+    $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  }
 
-  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
-  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  if (isset($variables['field_job_title'][0]['safe_value'])) {
+    $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  }
+
 
   $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 

@@ -477,7 +477,7 @@ function dgu_glossary_dgu_moderation_moderator_permission(&$node) {
 }
 
 function dgu_glossary_node_access($node, $op, $account) {
-  if ($op != 'create' && ($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
+  if ($op != 'create' && is_object($node) &&  ($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
     return dgu_moderation_access($account, $node, GLOSSARY_MODERATION_PERMISSION);
   }
 }
