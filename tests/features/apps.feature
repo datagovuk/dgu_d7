@@ -94,4 +94,4 @@ I should be able to submit a new app
     When I submit "App" titled "Test app" for moderation
     And user with "moderator" role moderates "Test app" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
-    Then I should see "Test app" in All content tab but not in My edits or My drafts tabs
+    Then I should see "Test app" in My content and All content tabs but not in My drafts tab

@@ -46,16 +46,28 @@ function dgu_user_strongarm() {
           'weight' => '0',
         ),
         'timezone' => array(
-          'weight' => '3',
+          'weight' => '2',
         ),
         'overlay_control' => array(
           'weight' => '2',
+        ),
+        'googleanalytics' => array(
+          'weight' => '14',
+        ),
+        'redirect' => array(
+          'weight' => '13',
+        ),
+        'contact' => array(
+          'weight' => '1',
+        ),
+        'wysiwyg' => array(
+          'weight' => '12',
         ),
       ),
       'display' => array(
         'summary' => array(
           'default' => array(
-            'weight' => '5',
+            'weight' => '1',
             'visible' => TRUE,
           ),
         ),

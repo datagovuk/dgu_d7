@@ -19,11 +19,29 @@ function dgu_app_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete any app content'.
+  $permissions['delete any app content'] = array(
+    'name' => 'delete any app content',
+    'roles' => array(
+      'moderator' => 'moderator',
+    ),
+    'module' => 'node',
+  );
+
   // Exported permission: 'delete own app content'.
   $permissions['delete own app content'] = array(
     'name' => 'delete own app content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: 'edit any app content'.
+  $permissions['edit any app content'] = array(
+    'name' => 'edit any app content',
+    'roles' => array(
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

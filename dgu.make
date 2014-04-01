@@ -88,6 +88,9 @@ projects[reply][subdir] = "contrib"
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
 
+projects[rules_url_argument][version] = "1.2"
+projects[rules_url_argument][subdir] = "contrib"
+
 projects[field_formatter_settings][version] = "1.0"
 projects[field_formatter_settings][subdir] = "contrib"
 
@@ -222,6 +225,12 @@ projects[flag][subdir] = "contrib"
 
 projects[session_api][version] = "1.0-rc1"
 projects[session_api][subdir] = "contrib"
+
+projects[emptyparagraphkiller][version] = "1.0-beta2"
+projects[emptyparagraphkiller][subdir] = "contrib"
+
+projects[imagefield_crop][version] = "1.1"
+projects[imagefield_crop][subdir] = "contrib"
 
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"

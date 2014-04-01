@@ -31,3 +31,328 @@ function dgu_user_block_view($delta='') {
   }
   return $block;
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  $current_pass_description = 'If you want to change your password or email address please enter your current password here. If you have forgotten your password you can <a href="/user/password" title="Request new password via e-mail.">reset it here.</a>';
+
+  $form['account']['#type'] = 'fieldset';
+  $form['account']['#collapsible'] = TRUE;
+  $form['account']['#collapsed'] = TRUE;
+  $form['account']['#title'] = t('Account settings');
+  $form['account']['mail']['#weight'] = 1;
+  $form['account']['mail']['#weight'] = 5;
+  $form['account']['current_pass']['#description'] = $current_pass_description;
+  $form['account']['pass']['#prefix'] = '<div class="disclaimer">';
+  $form['account']['pass']['#sufix'] = '</div>';
+
+  $form['#after_build'][] = 'dgu_user_profile_after_build';
+  $form['#validate'][] = 'dgu_user_profile_validate';
+}
+
+function dgu_user_profile_after_build($form, &$form_state) {
+  $form['contact']['#collapsed'] = TRUE;
+  $form['timezone']['#collapsed'] = TRUE;
+
+  $form['field_first_name']['#attributes']['class'][] = 'col-md-4';
+  $form['field_surname']['#attributes']['class'][] = 'col-md-4';
+  $form['field_job_title']['#attributes']['class'][] = 'col-md-4';
+
+  $form['field_bio']['#attributes']['class'][] = 'col-md-8';
+  $form['field_avatar']['#attributes']['class'][] = 'col-md-4';
+
+  $form['field_avatar']['#attributes']['class'][] = 'clearfix';
+  $form['field_twitter']['#attributes']['class'][] = 'col-md-4';
+  $form['field_facebook_url']['#attributes']['class'][] = 'col-md-4';
+  $form['field_linkedin_url']['#attributes']['class'][] = 'col-md-4';
+
+  $form['contact']['#attributes']['class'][] = 'col-md-4';
+  $form['timezone']['#attributes']['class'][] = 'col-md-4';
+  $form['account']['#attributes']['class'][] = 'col-md-4';
+  $form['actions']['#attributes']['class'][] = 'col-md-12';
+  $form['redirect']['#attributes']['class'][] = 'col-md-12';
+  return $form;
+}
+
+function dgu_user_profile_validate($form, &$form_state) {
+  if(!empty($form_state['values']['field_facebook_url'][LANGUAGE_NONE][0]['url'])) {
+    $parts = parse_url($form_state['values']['field_facebook_url'][LANGUAGE_NONE][0]['url']);
+    if(strpos($parts['host'], 'facebook.com') == FALSE) {
+      form_set_error('field_facebook_url', 'Facebook URL must contain with \'facebook.com\'');
+    }
+  }
+  if(!empty($form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
+    $parts = parse_url($form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url']);
+    if(strpos($parts['host'], 'linkedin.com') == FALSE) {
+      form_set_error('field_linkedin_url', 'Linkedin URL must contain \'linkedin.com\'');
+    }
+  }
+
+  if(!empty($form_state['values']['field_twitter'][LANGUAGE_NONE][0]['value'])) {
+    $twitter_username = $form_state['values']['field_twitter'][LANGUAGE_NONE][0]['value'];
+    if(substr($twitter_username, 0, 1) == '@') {
+      $twitter_username = substr($twitter_username, 1);
+    }
+    if (!preg_match('/^[A-Za-z0-9_]{1,15}$/', $twitter_username)) {
+      form_set_error('field_twitter', 'Please use just twitter user name e.g \'@username\'');
+    }
+  }
+}
+
+/**
+ * Implements hook_menu_local_task_alter().
+ */
+function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if ($router_item['tab_root'] == 'user/%' && dgu_user_accessing_own_account()) {
+    $view_tab = current($data['tabs'][0]['output']);
+
+    // Remove 'Contact' tab on own profile.
+    $last_tab = end($data['tabs'][0]['output']);
+    if(!empty($last_tab) && $last_tab['#link']['path'] == 'user/%/contact') {
+      array_pop($data['tabs'][0]['output']);
+    }
+
+    // Remove 'Edit' tab from primary tabs and move it to secondary tabs.
+    // Copy 'View' tab from primary to secondary and rename it in primary row.
+    $last_tab = end($data['tabs'][0]['output']);
+    if(!empty($last_tab) && $last_tab['#link']['path'] == 'user/%/edit') {
+      array_pop($data['tabs'][0]['output']);
+      $data['tabs'][1]['count'] = 2;
+      $data['tabs'][1]['output'] = array($view_tab, $last_tab);
+      $data['tabs'][0]['output'][0]['#link']['title'] = 'My profile';
+      $data['tabs'][0]['output'][0]['#active']  = TRUE;
+    }
+
+    $data['tabs'][0]['output'][] = array(
+      '#theme' => 'menu_local_task',
+      '#link' => array('title' => 'My Workbench', 'href' => 'admin/workbench', 'localized_options' => array()),
+      '#active' => FALSE,
+    );
+
+    $data['tabs'][0]['output'][] = array(
+      '#theme' => 'menu_local_task',
+      '#link' => array('title' => 'Create content', 'href' => 'admin/workbench/create', 'localized_options' => array()),
+      '#active' => FALSE,
+    );
+
+    if(user_access('bypass node access')) {
+      $data['tabs'][0]['output'][] = array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'File list', 'href' => 'admin/workbench/files', 'localized_options' => array()),
+        '#active' => FALSE,
+      );
+    }
+    if(user_access('view all unpublished content')) {
+      $data['tabs'][0]['output'][] = array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'Offensive content', 'href' => 'admin/workbench/offensive-content', 'localized_options' => array()),
+        '#active' => FALSE,
+      );
+      $data['tabs'][0]['output'][] = array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'Offensive replies', 'href' => 'admin/workbench/offensive-replies', 'localized_options' => array()),
+        '#active' => FALSE,
+      );
+    }
+
+    if(user_access('use workbench_moderation needs review tab')) {
+      $data['tabs'][0]['output'][] = array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'Needs review', 'href' => 'admin/workbench/needs-review', 'localized_options' => array()),
+        '#active' => FALSE,
+      );
+    }
+
+  }
+  elseif ($router_item['tab_root'] == 'admin/workbench') {
+    global $user;
+    $data['tabs'][0]['output'][0]['#link']['title'] = 'My Workbench';
+    $my_profile = array(
+      array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'My profile', 'href' => 'user/' . $user->uid, 'localized_options' => array()),
+        '#active' => FALSE,
+      ),
+    );
+    array_unshift($data['tabs'][0]['output'], $my_profile);
+  }
+}
+
+function dgu_user_accessing_own_account() {
+  if(arg(0) == 'user' && is_numeric(arg(1))) {
+    global $user;
+    $profile_uid = arg(1);
+    if ($user->uid == $profile_uid) {
+      return TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function dgu_user_page_alter(&$page) {
+  // Hide Toolbar for those who can access the Admin Menu.
+  if (user_access('access administration menu') && isset($page['page_top']['toolbar'])) {
+    $page['page_top']['toolbar']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
+
+  if($active_trail[1]['href'] == 'node/add') {
+    $active_trail[1]['href'] = 'admin/workbench/create';
+  }
+
+  if (($item['path'] == 'user/%/content' || $item['path'] == 'user/%/comments') && arg(0) == 'user' && is_numeric(arg(1))) {
+    $user = user_load(arg(1));
+    //drupal_set_title('User comments');
+    $active_trail[1]['title'] = $user->name;
+    $active_trail[1]['href'] = 'user/' . $user->uid;
+    $active_trail[1]['path'] = 'user/' . $user->uid;
+  }
+
+  if (arg(0) == 'user' && is_numeric(arg(1)) && dgu_user_accessing_own_account()) {
+    if (arg(2) == 'edit') {
+      drupal_set_title('Edit my profile');
+      $breadcrumb = array();
+      $breadcrumb[] = l('Home', '<front>');
+      drupal_set_breadcrumb($breadcrumb);
+    }
+    else {
+      drupal_set_title('My profile');
+    }
+  }
+}
+
+function dgu_user_workbench_content_alter(&$output) {
+  // Remove profile section.
+  unset($output['workbench_current_user']);
+  // Remove My Edits view.
+  unset($output['workbench_edited']);
+  // Remove All Recent Content view.
+  unset($output['workbench_recent_content']);
+
+  $output['workbench_my_content'] = array(
+    '#view' => 'my_content',
+    '#view_display' => 'block',
+    '#attributes' => array('class' => array('clearfix')),
+    '#theme' => 'workbench_element',
+  );
+  $output['workbench_my_comments'] = array(
+    '#view' => 'user_replies',
+    '#view_display' => 'block_1',
+    '#attributes' => array('class' => array('clearfix')),
+    '#theme' => 'workbench_element',
+  );
+}
+
+/**
+ * Implements hook_workbench_create_alter().
+ *
+ * Remove Suggested term and Suggested definition from 'Create content' workbench section.
+ */
+function dgu_user_workbench_create_alter(&$output) {
+  drupal_set_title('Create content');
+  $output = array();
+  $item = menu_get_item('node/add');
+  $content = system_admin_menu_block($item);
+
+  foreach($content as $key => &$value) {
+    if ($value['router_path'] == 'node/add/suggested-definition' || $value['router_path'] == 'node/add/suggested-term') {
+      unset($content[$key]);
+    }
+  }
+
+  if (!empty($content)) {
+    // Theme the arrray of content type creation links.
+    $output['#markup'] = '<div class="workbench-add-content">' . theme('node_add_list', array('content' => $content)) . '</div>';
+  }
+  else {
+    $output['#markup'] .= t('You cannot create any new content. Please contact the site administrator.');
+  }
+}
+
+/**
+ *  Implements hook_preprocess_user_profile().
+ */
+function dgu_user_preprocess_user_profile(&$variables) {
+  $variables['colour'] = $variables['elements']['#account']->uid % 10;
+  $colour = $variables['elements']['#account']->uid % 10;
+  $variables['user_profile']['field_avatar']['classes_array'] = array('bg-colour-' . $colour);
+
+  if (isset($variables['field_first_name'][0]['safe_value'])) {
+    $variables['full_name'] = $variables['field_first_name'][0]['safe_value'];
+  }
+  if (isset($variables['field_surname'][0]['safe_value'])) {
+    if (isset($variables['full_name'])) {
+      $variables['full_name'] = $variables['full_name'] . ' ' . $variables['field_surname'][0]['safe_value'];
+    }
+    else {
+      $variables['full_name'] = $variables['field_surname'][0]['safe_value'];
+    }
+  }
+
+  if (isset($variables['field_twitter'][0]['safe_value'])) {
+    $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
+    if (substr($variables['twitter'], 0, 1) == '@') {
+      // Just the username without @ character.
+      $variables['twitter'] = substr($variables['twitter'], 1);
+    }
+  }
+  if (isset($variables['field_linkedin_url'][0]['url'])) {
+    $parts = parse_url($variables['field_linkedin_url'][0]['url']);
+    $variables['linkedin'] = $parts['host'] . $parts['path'] . $parts['query'];
+  }
+
+  if (isset($variables['field_facebook_url'][0]['url'])) {
+    $parts = parse_url($variables['field_facebook_url'][0]['url']);
+    $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
+  }
+
+
+  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+
+  $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
+
+  $plural_types = dgu_site_feature_get_plural_content_types();
+
+  $result = db_query("SELECT n.type, COUNT(n.nid) AS count
+                      FROM {node} n
+                      WHERE n.type in ('app', 'blog', 'forum', 'dataset_request')
+                      AND n.uid = :uid AND n.status = 1
+                      GROUP BY n.type
+                      ", array(':uid' => $variables['elements']['#account']->uid));
+  foreach ($result as $row) {
+    $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $plural_types[$row->type] . '</a><span> (' . $row->count . ')</span></div>';
+  }
+  $result = db_query("SELECT COUNT(r.id) AS count
+                      FROM {reply} r
+                      WHERE r.uid = :uid AND r.status = 1
+                      GROUP BY r.entity_id AND r.entity_type", array(':uid' => $variables['elements']['#account']->uid));
+
+
+  if($comments_count = $result->fetchField()) {
+    $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/comments">Comments</a><span> (' . $comments_count . ')</span></div>';
+  }
+
+  if ($variables['stats']) {
+    $variables['stats'] = '<div class="view user-stats">' . $variables['stats'] . '</div>';
+  }
+
+
+  $recent_content = views_embed_view('user_content', 'block');
+  if(strpos($recent_content, 'view-content')) {
+    $variables['recent_content'] = $recent_content;
+  }
+  $recent_comments = views_embed_view('user_replies', 'block_3');
+  if(strpos($recent_comments, 'view-content')) {
+    $variables['recent_comments'] = $recent_comments;
+  }
+}

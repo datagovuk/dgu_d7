@@ -25,6 +25,11 @@ function dgu_blog_context_default_contexts() {
         'node_form' => '0',
       ),
     ),
+    'path' => array(
+      'values' => array(
+        'blog/*' => 'blog/*',
+      ),
+    ),
   );
   $context->reactions = array(
     'menu' => 'blog',

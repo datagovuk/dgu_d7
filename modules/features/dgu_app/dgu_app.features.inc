@@ -34,7 +34,7 @@ function dgu_app_node_info() {
     'app' => array(
       'name' => t('App'),
       'base' => 'node_content',
-      'description' => t('This content type supports listing, display, and submission of \'Apps\' - production or prototype applications that make use of publicly-available government data feeds.'),
+      'description' => t('Create content to to showcase your application which uses publicly available government data.  When you submit an app, our moderators will review and publish your content.  You can link to your application.'),
       'has_title' => '1',
       'title_label' => t('Name'),
       'help' => t('Please submit examples of Internet-based applications that make use of publicly-available government data sources.'),

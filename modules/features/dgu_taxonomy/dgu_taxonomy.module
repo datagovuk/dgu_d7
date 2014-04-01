@@ -5,3 +5,22 @@
 
 
 include_once 'dgu_taxonomy.features.inc';
+
+function dgu_taxonomy_url_outbound_alter(&$path, &$options, &$original_path) {
+  if($options['entity_type'] == 'taxonomy_term') {
+    $vocabularies = db_select('taxonomy_vocabulary', 'tv')
+      ->fields('tv', array('vid', 'machine_name'))
+      ->execute();
+
+    $vocabulary_fields = array();
+    foreach ($vocabularies as $vocabulary) {
+      $vocabulary_fields[$vocabulary->vid] = 'im_field_' . $vocabulary->machine_name . ':';
+    }
+
+    $options['query']['f[0]'] = $vocabulary_fields[$options['entity']->vid] . $options['entity']->tid;
+    $path = 'search/everything';
+
+    // Avoid override by alias.
+    $original_path = $path;
+  }
+}

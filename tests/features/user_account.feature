@@ -76,7 +76,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     # Email verification.
     Given the "test_user" user received an email "Account details for test_user at data.gov.uk"
     When user "test_user" clicks link containing "user/validate" in mail "Account details for test_user at data.gov.uk"
-    Then I should be on "/admin/workbench"
+    Then I should be on "/users/testuser"
     And I should see "You have successfully validated your e-mail address."
     # Password reset using user name.
     Given I am not logged in
@@ -112,3 +112,35 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I should see "This login can be used only once."
     When I press "Log in"
     Then I should see "You have just used your one-time login link. It is no longer necessary to use this link to log in. Please change your password."
+
+  @api
+  Scenario: Authenticated user profile
+    Given that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
+    And I am on the homepage
+    And I follow "Hello test_user"
+    And I wait until the page loads
+    Then I should be on "/user"
+    And I should see the heading "My profile"
+    And I should see the following <links>
+      | links                       |
+      | My profile                  |
+      | View                        |
+      | Edit                        |
+      | My Workbench                |
+      | Create content              |
+    And I should not see the following <links>
+      | links                       |
+      | File list                   |
+      | Offensive content           |
+      | Offensive replies           |
+      | Needs review                |
+    And I should see "Member for"
+    Given I have an image "500" x "400" pixels titled "Test user picture" located in "/tmp/" folder
+    And I follow "Edit"
+    And I attach the file "/tmp/Test user picture.png" to "files[field_avatar_und_0]"
+    When I press "Upload"
+    And I wait until the page loads
+    Then I should see "Click on the image and drag to mark how the image will be cropped"
+    And I break
+    #Then I should see an "field_avatar_und_0_remove_button" element

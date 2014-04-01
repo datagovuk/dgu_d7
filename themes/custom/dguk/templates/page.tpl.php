@@ -21,15 +21,19 @@
           $data_menu = dguk_get_data_menu();
           $apps_menu = dguk_get_apps_menu($secondary_menu);
           $interact_menu = dguk_get_interact_menu($main_menu);
+
           $active = 1;
-          if(strpos($data_menu, 'subnav-data active')) {
+          if (strpos($data_menu, 'subnav-data active')) {
             $active = 2;
           }
-          if(strpos($apps_menu, 'subnav-apps active')) {
+          if (strpos($apps_menu, 'subnav-apps active')) {
             $active = 3;
           }
-          if(strpos($interact_menu, 'subnav-interact active')) {
+          if (strpos($interact_menu, 'subnav-interact active')) {
             $active = 4;
+          }
+          if (arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
+            $active = 6;
           }
         ?>
 
@@ -44,7 +48,7 @@
           </div>
           <div class="nav-search" style="width: 200px;">
             <form class="input-group input-group-sm" action="/data/search">
-              <input type="text" class="form-control" name="q" />
+              <input type="text" class="form-control" name="q" placeholder="Search for data...">
               <span class="input-group-btn">
                 <button type="submit" class="btn btn-primary"><i class="icon-search"></i></button>
               </span>
@@ -54,12 +58,13 @@
             <span class="dropdown">
               <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
-                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp; <?php print $user->name?>'s profile</a></li>
+                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp;My workbench</a></li>
                 <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
               </ul>
             </span>
           <?php else: ?>
-            <?php print l('<i class="icon-user"></i>', 'user', array('query' => drupal_get_destination(), 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
+          <?php $destination = drupal_get_destination(); ?>
+            <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
           <?php endif; ?>
 
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
@@ -110,11 +115,6 @@
           <div id="messages" ><?php print $messages; ?></div>
         <?php endif; ?>
     </div>
-    <?php print render($title_prefix); ?>
-    <?php if ($title): ?>
-        <h1 class="page-header"><?php print $title; ?></h1>
-    <?php endif; ?>
-    <?php print render($title_suffix); ?>
 
     <?php if ($action_links): ?>
         <ul class="action-links"><?php print render($action_links); ?></ul>

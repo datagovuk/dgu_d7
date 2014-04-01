@@ -66,3 +66,11 @@ dev:
     Drupal\DrupalExtension\Extension:
       drush:
         alias: 'dgud7.dev'
+pawel:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://pawel.d7.co-dev1.dh.bytemark.co.uk'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'pawel.d7.dev'
+

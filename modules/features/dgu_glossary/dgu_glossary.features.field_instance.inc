@@ -647,7 +647,7 @@ function dgu_glossary_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Briefly describe why you have suggested this change.');
-  t('Briefly describe why you have suggested this change. If this term comes from  a published source or an accredited glossary, you should cite it here.');
+  t('Briefly describe why you have suggested this change. If this term comes from a published source or an accredited glossary, you should cite it here.');
   t('Comments');
   t('Quality');
   t('Reason for change');

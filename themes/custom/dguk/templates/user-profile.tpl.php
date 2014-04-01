@@ -34,56 +34,65 @@
  * @ingroup themeable
  */
 ?>
-<div class="profile clearfix"<?php print $attributes; ?>>
-  <div class="avatar"><?php print render($user_profile['field_avatar']); ?></div>
-  <div class="col-md-10 col-md-offset-2 col-sm-9 col-sm-offset-3">
-      <dl class="clearfix">
-        <dt><?php print t('First name'); ?></dt>
-        <dd><?php print $first_name; ?></dd>
-      </dl>
-      <dl class="clearfix">
-        <dt><?php print t('Surname'); ?></dt>
-        <dd><?php print $surname; ?></dd>
-      </dl>
-    <?php if (user_access('moderate glossary')): ?>
-      <dl class="clearfix">
-        <dt><?php print t('Email'); ?></dt>
-        <dd><?php print $user->mail; ?></dd>
-      </dl>
-    <?php endif; ?>
-    <?php if($bio): ?>
-      <dl class="clearfix">
-        <dt><?php print t('Bio'); ?></dt>
-        <dd><?php print $bio; ?></dd>
-      </dl>
-    <?php endif; ?>
-      <dl class="clearfix">
-        <dt><?php print t('History'); ?></dt>
-        <dd><?php print t('Member for ') . render($user_profile['summary']['member_for']['#markup']); ?></dd>
-      </dl>
-    <?php if($twitter): ?>
-      <dl class="clearfix">
-        <dt><?php print t('Twitter'); ?></dt>
-        <dd><?php print l('@' . $twitter, 'http://twitter.com/' . $twitter); ?></dd>
-      </dl>
-    <?php endif; ?>
-    <?php if($job_title): ?>
-      <dl class="clearfix">
-        <dt><?php print t('Job title'); ?></dt>
-        <dd><?php print $job_title; ?></dd>
-      </dl>
-    <?php endif; ?>
-    <?php if($linkedin): ?>
-      <dl class="clearfix">
-        <dt><?php print t('LinkedIn'); ?></dt>
-        <dd><?php print l($linkedin, $linkedin); ?></dd>
-      </dl>
-    <?php endif; ?>
-    <?php if($facebook): ?>
-      <dl class="clearfix">
-        <dt><?php print t('Facebook'); ?></dt>
-        <dd><?php print l($facebook, $facebook); ?></dd>
-      </dl>
+<div class="user-info row"<?php print $attributes; ?>>
+  <div class="profile col-md-4">
+    <h3>About <?php print $elements['#account']->name?></h3>
+    <div class="inside user-profile">
+      <?php print render($user_profile['field_avatar']); ?>
+      <?php if($full_name): ?>
+        <h3 class="full-name"><?php print $full_name?></h3>
+      <?php endif; ?>
+      <?php if($job_title): ?>
+        <div class="job-title"><?php print $job_title?></div>
+      <?php endif; ?>
+      <div class="member-for"><?php print $member_for?></div>
+      <?php if($twitter): ?>
+        <div class="solcial-media twitter"><a href="https://twitter.com/<?php print $twitter?>"><?php print '@' . $twitter?></a></div>
+      <?php endif; ?>
+      <?php if($linkedin): ?>
+        <div class="solcial-media linkedin"><a href="http://<?php print $linkedin?>"><?php print truncate_utf8($linkedin, 55, FALSE, TRUE); ?></a></div>
+      <?php endif; ?>
+      <?php if($facebook): ?>
+        <div class="solcial-media facebook"><a href="https://<?php print $facebook?>"><?php print truncate_utf8($facebook, 55, FALSE, TRUE); ?></a></div>
+      <?php endif; ?>
+      <?php if($bio): ?>
+        <div class="bio"><?php print $bio?></div>
+      <?php endif; ?>
+    </div>
+    <?php if($stats): ?>
+      <h3>User activity statistics</h3>
+        <?php print $stats; ?>
     <?php endif; ?>
   </div>
+
+  <?php if($recent_content): ?>
+    <div class="user-engagement col-md-4">
+        <h3>Recent content</h3>
+          <?php print $recent_content; ?>
+    </div>
+  <?php endif; ?>
+  <?php if($recent_comments): ?>
+    <div class="user-engagement col-md-4">
+      <h3>Recent comments</h3>
+        <?php print $recent_comments; ?>
+    </div>
+  <?php endif; ?>
 </div>
+<div class="user-other row">
+  <div class="col-md-12">
+    <?php
+    hide($user_profile['field_avatar']);
+    hide($user_profile['field_first_name']);
+    hide($user_profile['field_surname']);
+    hide($user_profile['field_job_title']);
+    hide($user_profile['field_twitter']);
+    hide($user_profile['field_linkedin_url']);
+    hide($user_profile['field_facebook_url']);
+    hide($user_profile['field_bio']);
+    hide($user_profile['summary']);
+    hide($user_profile['user_picture']);
+    ?>
+    <?php print render($user_profile); ?>
+  </div>
+</div>
+

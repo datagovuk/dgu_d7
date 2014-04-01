@@ -50,7 +50,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $search['keys'] = $context->data;
   }
 
-  $search_types = get_search_types();
+  $search_types = dgu_site_feature_get_plural_content_types();
 
   $form_state = array();
 
@@ -148,9 +148,9 @@ function dgu_search_dgu_search_form_content_type_edit_form($form, &$form_state) 
       'all' => t('All'),
       'app' => t('Apps'),
       'blog' => t('Blogs'),
-      'forum' => t('Forum Posts'),
-      'resource' => t('Library'),
-      'dataset_request'  => t('Dataset Requests'),
+      'forum' => t('Forum topics'),
+      'resource' => t('Library resources'),
+      'dataset_request'  => t('Dataset requests'),
     ),
     '#default_value' => $config['content_type'],
   );

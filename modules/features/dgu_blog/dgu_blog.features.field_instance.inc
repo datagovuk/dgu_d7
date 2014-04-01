@@ -88,7 +88,7 @@ function dgu_blog_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'taxonomy',
         'settings' => array(
           'field_replies' => '',
@@ -98,7 +98,7 @@ function dgu_blog_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
@@ -146,7 +146,7 @@ function dgu_blog_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 7,
+        'weight' => 5,
       ),
       'rss' => array(
         'label' => 'above',
@@ -198,7 +198,7 @@ function dgu_blog_field_default_field_instances() {
           ),
         ),
         'type' => 'file_default',
-        'weight' => 9,
+        'weight' => 4,
       ),
       'rss' => array(
         'label' => 'above',
@@ -244,16 +244,9 @@ function dgu_blog_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'taxonomy',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 4,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
       ),
       'rss' => array(
         'label' => 'above',
@@ -292,7 +285,7 @@ function dgu_blog_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'taxonomy',
         'settings' => array(
           'field_replies' => '',
@@ -302,7 +295,7 @@ function dgu_blog_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 3,
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
@@ -355,7 +348,7 @@ function dgu_blog_field_default_field_instances() {
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 8,
+        'weight' => 3,
       ),
       'rss' => array(
         'label' => 'above',

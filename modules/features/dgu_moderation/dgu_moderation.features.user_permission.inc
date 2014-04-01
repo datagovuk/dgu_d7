@@ -34,8 +34,6 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'bypass workbench moderation',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
-      'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',
   );
@@ -100,7 +98,6 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'view all unpublished content',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
     'module' => 'workbench_moderation',

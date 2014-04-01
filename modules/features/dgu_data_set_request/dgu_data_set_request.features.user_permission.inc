@@ -28,11 +28,28 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'delete any dataset_request content'.
+  $permissions['delete any dataset_request content'] = array(
+    'name' => 'delete any dataset_request content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
   // Exported permission: 'delete own dataset_request content'.
   $permissions['delete own dataset_request content'] = array(
     'name' => 'delete own dataset_request content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'node',
+  );
+
+  // Exported permission: 'edit any dataset_request content'.
+  $permissions['edit any dataset_request content'] = array(
+    'name' => 'edit any dataset_request content',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
     ),
     'module' => 'node',
   );

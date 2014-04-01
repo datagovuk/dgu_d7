@@ -45,7 +45,7 @@ Feature: Create new forum topic as a site user
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
-    Then I should see "Test blog" in All content tab but not in My edits or My drafts tabs
+    Then I should see "Test blog" in My content and All content tabs but not in My drafts tab
 
 
 

@@ -16,10 +16,10 @@
  */
 ?>
 
-<div class="panel-display panel-3col-33 row clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
+<div class="panel-display panel-3col-33 clearfix" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
 
   <?php if ($content['left'] || $content['middle'] || $content['right']): ?>
-    <div class="center-wrapper row-first row-last">
+    <div class="center-wrapper row row-first row-last">
       <div class="panel-panel panel-col-first col-md-4">
         <div class="inside"><?php print $content['left']; ?></div>
       </div>

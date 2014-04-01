@@ -15,8 +15,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration menu',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
-      'moderator' => 'moderator',
     ),
     'module' => 'admin_menu',
   );
@@ -26,8 +24,6 @@ function dgu_user_user_default_permissions() {
     'name' => 'access administration pages',
     'roles' => array(
       'administrator' => 'administrator',
-      'glossary moderator' => 'glossary moderator',
-      'moderator' => 'moderator',
     ),
     'module' => 'system',
   );
@@ -99,6 +95,26 @@ function dgu_user_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'unverified user' => 'unverified user',
+    ),
+    'module' => 'contact',
+  );
+
+  // Exported permission: 'access toolbar'.
+  $permissions['access toolbar'] = array(
+    'name' => 'access toolbar',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'toolbar',
+  );
+
+  // Exported permission: 'access user contact forms'.
+  $permissions['access user contact forms'] = array(
+    'name' => 'access user contact forms',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'contact',
   );
@@ -352,10 +368,7 @@ function dgu_user_user_default_permissions() {
   // Exported permission: 'view the administration theme'.
   $permissions['view the administration theme'] = array(
     'name' => 'view the administration theme',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'moderator' => 'moderator',
-    ),
+    'roles' => array(),
     'module' => 'system',
   );
 

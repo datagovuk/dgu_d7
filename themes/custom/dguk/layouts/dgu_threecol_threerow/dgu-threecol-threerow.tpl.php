@@ -1,15 +1,15 @@
-<div class="panel-display panel-3col-33 row clearfix" <?php if (!empty($css_id)) {print "id=\"$css_id\"";} ?>>
+<div class="panel-display panel-3col-33 clearfix" <?php if (!empty($css_id)) {print "id=\"$css_id\"";} ?>>
 
   <?php if ($content['top']): ?>
-    <div class="center-wrapper row-first">
-      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+    <div class="center-wrapper row row-first">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last col-md-12">
         <div class="inside"><?php print $content['top']; ?></div>
       </div>
     </div>
   <?php endif ?>
 
   <?php if ($content['top_left'] || $content['top_middle'] || $content['top_right']): ?>
-    <div class="center-wrapper row-second">
+    <div class="center-wrapper row row-second">
       <?php if ($content['top_left']): ?>
         <div class="panel-panel panel-col-first col-md-4">
           <div class="inside"><?php print $content['top_left']; ?></div>
@@ -31,7 +31,7 @@
   <?php endif ?>
 
   <?php if ($content['middle_left'] || $content['middle_middle'] || $content['middle_right']): ?>
-    <div class="center-wrapper row-third">
+    <div class="center-wrapper row row-third">
       <?php if ($content['middle_left']): ?>
         <div class="panel-panel panel-col-first col-md-4">
           <div class="inside"><?php print $content['middle_left']; ?></div>
@@ -53,7 +53,7 @@
   <?php endif ?>
 
   <?php if ($content['bottom_left'] || $content['bottom_middle'] || $content['bottom_right']): ?>
-    <div class="center-wrapper row-fourth">
+    <div class="center-wrapper row row-fourth">
       <?php if ($content['bottom_left']): ?>
         <div class="panel-panel panel-col-first col-md-4">
           <div class="inside"><?php print $content['bottom_left']; ?></div>
@@ -75,8 +75,8 @@
   <?php endif ?>
 
   <?php if ($content['bottom']): ?>
-    <div class="center-wrapper row-fifth row-last">
-      <div class="panel-panel panel-col-single panel-col-first panel-col-last">
+    <div class="center-wrapper row row-fifth row-last">
+      <div class="panel-panel panel-col-single panel-col-first panel-col-last col-md-12">
         <div class="inside"><?php print $content['bottom']; ?></div>
       </div>
     </div>
