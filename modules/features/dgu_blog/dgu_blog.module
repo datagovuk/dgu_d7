@@ -41,7 +41,7 @@ function dgu_blog_form_blog_node_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function dgu_blog_node_access($node, $op, $account) {
-  if ($op != 'create' && $node->type == 'forum') {
+  if ($op != 'create' && is_object($node) && $node->type == 'forum') {
     return dgu_moderation_access($account, $node, BLOG_MODERATION_PERMISSION);
   }
 }

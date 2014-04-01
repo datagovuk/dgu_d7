@@ -127,7 +127,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
     $data['tabs'][0]['output'][] = array(
       '#theme' => 'menu_local_task',
-      '#link' => array('title' => 'My Workbench', 'href' => 'admin/workbench', 'localized_options' => array()),
+      '#link' => array('title' => 'Manage my content', 'href' => 'admin/workbench', 'localized_options' => array()),
       '#active' => FALSE,
     );
 
@@ -168,7 +168,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   }
   elseif ($router_item['tab_root'] == 'admin/workbench') {
     global $user;
-    $data['tabs'][0]['output'][0]['#link']['title'] = 'My Workbench';
+    $data['tabs'][0]['output'][0]['#link']['title'] = 'Manage my content';
     $my_profile = array(
       array(
         '#theme' => 'menu_local_task',
@@ -315,9 +315,14 @@ function dgu_user_preprocess_user_profile(&$variables) {
     $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
   }
 
+  if (isset($variables['field_bio'][0]['safe_value'])) {
+    $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  }
 
-  $variables['bio'] = $variables['field_bio'][0]['safe_value'];
-  $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  if (isset($variables['field_job_title'][0]['safe_value'])) {
+    $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
+  }
+
 
   $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 

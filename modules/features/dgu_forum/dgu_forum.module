@@ -128,7 +128,7 @@ function dgu_forum_form_forum_node_form_alter(&$form, &$form_state, $form_id) {
 }
 
 function dgu_forum_node_access($node, $op, $account) {
-  if ($op != 'create' && $node->type == 'forum') {
+  if ($op != 'create' && is_object($node) && $node->type == 'forum') {
     return dgu_moderation_access($account, $node, FORUM_MODERATION_PERMISSION);
   }
 }

@@ -54,18 +54,9 @@
               </span>
             </form>
           </div>
-          <?php if ($logged_in): ?>
-            <span class="dropdown">
-              <a class="nav-user btn btn-primary dropdown-button" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
-              <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
-                <li><a href="/admin/workbench"><i class="icon-user"></i>&nbsp;My workbench</a></li>
-                <li><a href="/user/logout"><i class="icon-signout"></i>&nbsp; Log out</a></li>
-              </ul>
-            </span>
-          <?php else: ?>
+
           <?php $destination = drupal_get_destination(); ?>
-            <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
-          <?php endif; ?>
+          <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
 
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
             <span class="dropdown">
