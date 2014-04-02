@@ -99,9 +99,12 @@ function dgu_services_get_replies($ckan_id) {
     // Not sure if this is necessary.
     //field_attach_prepare_view('ckan_dataset', array($dataset->id => $dataset), 'comment');
 
-    $output = field_attach_view('ckan_dataset', $dataset, 'default');
+
+    $output .= field_attach_view('ckan_dataset', $dataset, 'default');
     if (isset($output['field_comment'][0]['#markup'])) {
-      $rendered_output = $output['field_comment'][0]['#markup'];
+
+      $rendered_output = '<div class="replies-header"><h3>Comments</h3></div>';
+      $rendered_output .= $output['field_comment'][0]['#markup'];
 
       // Fix flag on replies on ckan side so user is redirected back to a dataset vie page instead of drupal api endpoint
       $rendered_output = str_replace('destination=comment/get', 'destination=dataset', $rendered_output);
