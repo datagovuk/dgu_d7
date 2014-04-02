@@ -13,17 +13,13 @@ dependencies[] = number
 dependencies[] = options
 dependencies[] = path
 dependencies[] = taxonomy
-dependencies[] = search
 dependencies[] = field_ui
 dependencies[] = file
 dependencies[] = overlay
 dependencies[] = rdf
 dependencies[] = contact
-
 dependencies[] = admin_menu
 dependencies[] = features
-dependencies[] = strongarm
-dependencies[] = contextual
 dependencies[] = help
 dependencies[] = pathauto
 dependencies[] = token
