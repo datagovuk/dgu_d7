@@ -22,6 +22,12 @@ function dgu_user_user_default_roles() {
     'weight' => 6,
   );
 
+  // Exported role: glossary moderator.
+  $roles['glossary moderator'] = array(
+    'name' => 'glossary moderator',
+    'weight' => 9,
+  );
+
   // Exported role: moderator.
   $roles['moderator'] = array(
     'name' => 'moderator',
