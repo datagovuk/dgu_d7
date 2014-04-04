@@ -121,13 +121,12 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I follow "Hello test_user"
     And I wait until the page loads
     Then I should be on "/user"
-    And I should see the heading "My profile"
     And I should see the following <links>
       | links                       |
       | My profile                  |
       | View                        |
       | Edit                        |
-      | My Workbench                |
+      | Manage my content           |
       | Create content              |
     And I should not see the following <links>
       | links                       |
@@ -142,5 +141,5 @@ Feature: Register an account on data.gov.uk with valid username and email
     When I press "Upload"
     And I wait until the page loads
     Then I should see "Click on the image and drag to mark how the image will be cropped"
-    And I break
+    #And I break
     #Then I should see an "field_avatar_und_0_remove_button" element
