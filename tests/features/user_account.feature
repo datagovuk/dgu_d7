@@ -11,7 +11,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I wait until the page loads
 
   Scenario: Login form
-    Then I should see "You are not logged in."
+    Then I should not see "You are not logged in."
     And I should see the following <links>
     | links                       |
     | I have an account           |
@@ -24,7 +24,7 @@ Feature: Register an account on data.gov.uk with valid username and email
 
   Scenario: Registration form
     When I click "I want to create an account"
-    Then I should see "You are not logged in."
+    Then I should not see "You are not logged in."
     And I should see the following <texts>
       | texts                      |
       | Username                   |
@@ -76,7 +76,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     # Email verification.
     Given the "test_user" user received an email "Account details for test_user at data.gov.uk"
     When user "test_user" clicks link containing "user/validate" in mail "Account details for test_user at data.gov.uk"
-    Then I should be on "/users/testuser"
+    Then I should be on "/user"
     And I should see "You have successfully validated your e-mail address."
     # Password reset using user name.
     Given I am not logged in
