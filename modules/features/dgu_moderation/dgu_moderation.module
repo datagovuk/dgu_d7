@@ -92,7 +92,9 @@ function dgu_moderation_node_forms_alter (&$form, $moderation_permission) {
     $form['#submit'][] = 'dgu_moderation_node_submit';
   }
   else {
-    $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
+    if (!empty($form['options']['workbench_moderation_state_new']['#default_value'])) {
+      $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
+    }
   }
 
 }
