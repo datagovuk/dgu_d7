@@ -209,6 +209,18 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1]['href'] = 'admin/workbench/create';
   }
 
+  if ($item['path'] == 'user') {
+    drupal_set_title('User account');
+  }
+
+  if ($item['path'] == 'user/login') {
+    drupal_set_title('Login');
+  }
+
+  if ($item['path'] == 'user/register') {
+    drupal_set_title('Register');
+  }
+
   if (($item['path'] == 'user/%/content' || $item['path'] == 'user/%/comments') && arg(0) == 'user' && is_numeric(arg(1))) {
     $user = user_load(arg(1));
     //drupal_set_title('User comments');
