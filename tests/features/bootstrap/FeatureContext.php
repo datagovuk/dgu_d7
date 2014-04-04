@@ -185,7 +185,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     // If a logout link is found, we are logged in. While not perfect, this is
     // how Drupal SimpleTests currently work as well.
     $element = $session->getPage();
-    print_r($element->getHtml());
     return $element->findLink($this->getDrupalText('log_out'));
   }
 
@@ -782,9 +781,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I wait until the page loads"),
       new Given("I should not see the link \"$title\""),
       new Given("I follow \"My Content\""),
-      new Given("I wait until the page loads"),
-      new Given("I should see the link \"$title\""),
-      new Given("I follow \"All Recent Content\""),
       new Given("I wait until the page loads"),
       new Given("I follow \"$title\""),
       new Given("I wait until the page loads"),
