@@ -182,14 +182,11 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   public function loggedIn() {
     $session = $this->getSession();
     $session->visit($this->locatePath('/'));
-    $user_icon = $session->getPage()->find('css','#dgu-nav a.nav-user');
-    if(empty($user_icon)) {
-      throw new Exception("User icon on the top black bar not found");
-    }
-    $user_icon->click();
-    $dropdown = $session->getPage()->find('css','#dgu-nav ul.dgu-user-dropdown');
-    // If a user dropdown is found, we are logged in.
-    return $dropdown;
+    // If a logout link is found, we are logged in. While not perfect, this is
+    // how Drupal SimpleTests currently work as well.
+    $element = $session->getPage();
+    print_r($element->getHtml());
+    return $element->findLink($this->getDrupalText('log_out'));
   }
 
   /**
@@ -673,7 +670,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Then /^I (?:|should )see node title "(?P<title>[^"]*)"$/
    */
   public function assertNodeTitle($title) {
-    $results = $this->getSession()->getPage()->findAll('css', 'article.node h2.node-title');
+    $results = $this->getSession()->getPage()->findAll('css', 'article.node h1.node-title');
     foreach ($results as $result) {
       if ($result->getText() == $title) {
         return;
