@@ -13,6 +13,7 @@ I should be able to submit a new app
     Then I should be on "/apps"
     And I should see "LATEST APPS" pane in "first" column in "third" row
     And I should see "TOP RATED APPS" pane in "last" column in "third" row
+    And search result counter should contain "Apps"
 
   @anon
   Scenario: View latest apps RSS
@@ -41,6 +42,7 @@ I should be able to submit a new app
     And I should see "FILTER BY SECTOR:" pane in "first" column in "second" row
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
+    And search result counter should contain "Apps"
 
     #remove discrepancy - use 'apps' or 'Apps' in both links
   @anon @search
