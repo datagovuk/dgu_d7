@@ -347,7 +347,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
     $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/comments">Comments</a><span> (' . $comments_count . ')</span></div>';
   }
 
-  if ($variables['stats']) {
+  if (!empty($variables['stats'])) {
     $variables['stats'] = '<div class="view user-stats">' . $variables['stats'] . '</div>';
   }
 
