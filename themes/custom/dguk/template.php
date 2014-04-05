@@ -376,11 +376,13 @@ function dguk_get_data_menu() {
 function dguk_get_search_content_type() {
   if ($is_search_page = arg(0) == 'search' && arg(1) == 'everything') {
     $query = drupal_get_query_parameters();
-    foreach ($query['f'] as $facet) {
-      if (strpos($facet, 'bundle') === 0) {
-        return substr($facet, 7);
+     if(!empty($query['f'])){
+      foreach ($query['f'] as $facet) {
+        if (strpos($facet, 'bundle') === 0) {
+          return substr($facet, 7);
+        }
       }
-    }
+     }
   }
 }
 
