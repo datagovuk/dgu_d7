@@ -96,7 +96,6 @@ features[user_permission][] = view own unpublished content
 features[user_permission][] = view revisions
 features[user_permission][] = view the administration theme
 features[user_role][] = ckan adminstrator
-features[user_role][] = glossary moderator
 features[user_role][] = data publisher
 features[user_role][] = moderator
 features[user_role][] = unverified user
