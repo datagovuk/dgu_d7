@@ -18,6 +18,9 @@ function dgu_moderation_menu_alter(&$items) {
   // Override the node view menu item title.
   $items['node/%node/view']['title callback'] = 'dgu_moderation_view_tab_title';
   $items['node/%node/view']['title arguments'] = array(1);
+
+  // Rename 'My Workbench' to 'Manage my content'.
+  $items['admin/workbench']['title'] = 'Manage my content';
 }
 
 /**

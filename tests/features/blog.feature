@@ -5,13 +5,19 @@ Feature: Create new forum topic as a site user
   I should be able to post a new forum topic
 
   @anon
-  Scenario: View blogs landing page
+  Scenario: View latest blogs page
     Given I am on the homepage
     And I click "Interact"
     When I follow "All Blogs"
     Then I should be on "/blog"
-    And I should see page title "Blogs"
-    And I should see "LATEST BLOG POSTS" pane in "first" column in "second" row
+    And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row
+    And search result counter should contain "Blogs"
+
+  @anon
+  Scenario: View most popular blogs page
+    Given I am on "/blog"
+    And I follow "Most popular Blogs"
+    And I should be on "/blog/popular"
     And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row
     And search result counter should contain "Blogs"
 
@@ -40,8 +46,7 @@ Feature: Create new forum topic as a site user
     When I press "Save draft"
     And I wait until the page loads
     Then I should see "Your draft Blog entry has been created. Login to your profile to update it. You can submit this now or later"
-    And I should see page title "Blogs"
-    And I should see node title "TEST BLOG"
+    And I should see node title "Test blog"
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role

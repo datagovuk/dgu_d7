@@ -13,6 +13,7 @@ I should be able to submit a new app
     Then I should be on "/apps"
     And I should see "LATEST APPS" pane in "first" column in "third" row
     And I should see "TOP RATED APPS" pane in "last" column in "third" row
+    And search result counter should contain "Apps"
 
   @anon
   Scenario: View latest apps RSS
@@ -32,7 +33,9 @@ I should be able to submit a new app
   Scenario: View search apps page
     Given I am on the homepage
     And I click "Apps"
-    When I follow "Search apps"
+    And I follow "Browse Apps"
+    And I wait until the page loads
+    When I click search icon
     And I wait until the page loads
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
     And "Last updated" option in "Sort by:" should be selected
@@ -40,6 +43,7 @@ I should be able to submit a new app
     And I should see "FILTER BY SECTOR:" pane in "first" column in "second" row
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
     And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
+    And search result counter should contain "Apps"
 
     #remove discrepancy - use 'apps' or 'Apps' in both links
   @anon @search
@@ -87,8 +91,7 @@ I should be able to submit a new app
     When I press "Save draft"
     And I wait until the page loads
     Then I should see a message about created draft "App"
-    And I should see page title "Apps"
-    And I should see node title "TEST APP"
+    And I should see node title "Test app"
     And I should see "Developed by here"
     And I should see the link "test.co.uk"
     When I submit "App" titled "Test app" for moderation

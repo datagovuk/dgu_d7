@@ -45,7 +45,7 @@ default:
         error_message_selector: '.alert.alert-error'
         success_message_selector: '.alert.alert-success'
       text:
-        log_out: '/user/logout'
+        log_out: 'Log out'
         log_in: 'Log in'
         password_field: 'Password '
         username_field: 'Username or e-mail address '

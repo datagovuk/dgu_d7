@@ -5,10 +5,10 @@
       <?php if ($view_mode == "search_result"): ?>
         <h3 class="node-title" <?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h3>
       <? else: ?>
-        <h2 class="node-title" <?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+        <h1 class="node-title" <?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h1>
       <? endif; ?>
     <?php elseif ($title): ?>
-      <h2 class="node-title" <?php print $title_attributes; ?>><?php print $title; ?></h2>
+      <h1 class="node-title" <?php print $title_attributes; ?>><?php print $title; ?></h1>
     <?php endif; ?>
     <?php print render($title_suffix); ?>
     <?php if ($display_submitted): ?>
