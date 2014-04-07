@@ -103,7 +103,6 @@ features[user_role][] = unverified user
 features[variable][] = anonymous
 features[variable][] = ckan_publisher_role
 features[variable][] = field_bundle_settings_user__user
-features[variable][] = locale_custom_disabled_strings_en
 features[variable][] = locale_custom_strings_en
 features[variable][] = logintoboggan_confirm_email_at_registration
 features[variable][] = logintoboggan_immediate_login_on_register

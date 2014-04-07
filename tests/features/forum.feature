@@ -5,27 +5,51 @@ Feature: Create new forum topic as a site user
   I should be able to post a new forum topic
 
   @anon
-  Scenario: View the forum categories page
+  Scenario: View the latest forum topics page
     Given I am on the homepage
     And I click "Interact"
     When I follow "All Forums"
     Then I should be on "/forum"
-    And I should see "FORUM CATEGORIES" pane in "single" column in "first" row
-    And I should not see "Create new Forum topic"
+    And I should see the link "Login to take part in forums »"
+    And search result counter should contain "Forum topics"
 
   @anon
-  Scenario: View the forum RSS
+  Scenario: View the latest forum topics RSS
     Given I am on "/forum"
     And I wait until the page loads
     And I click RSS icon in "single" column in "first" row
     Then I should be on "/forum/rss.xml"
 
-  Scenario: View the forum category page
+  @anon
+  Scenario: View the most popular forum topics page
     Given I am on "/forum"
+    When I follow "Most popular topics"
+    Then I should be on "/forum/popular"
+    And I should see the link "Login to take part in forums »"
+    And search result counter should contain "Forum topics"
+
+  @anon
+  Scenario: View the most popular forum topics RSS
+    Given I am on "/forum/popular"
+    And I wait until the page loads
+    And I click RSS icon in "single" column in "first" row
+    Then I should be on "/forum/popular/rss.xml"
+
+  @anon
+  Scenario: View the forum categories page
+    Given I am on "/forum"
+    When I follow "Forum categories"
+    And I should be on "/forum/categories"
+    And I should see the link "Login to take part in forums »"
+    And search result counter should contain "Forum topics"
+
+  @anon
+  Scenario: View the forum category page
+    Given I am on "/forum/categories"
     When I follow "General discussion"
     And I should be on "/forum/general-discussion"
-    And I should see "FORUM CATEGORIES" pane in "last" column in "first" row
-    And I should see "SEARCH FORUM POSTS" pane in "last" column in "first" row
+    And I should see "GENERAL DISCUSSION" pane in "first" column in "second" row
+    And I should see "FORUM CATEGORIES" pane in "last" column in "second" row
 
   @api
   Scenario: Create a new forum topic with empty required fields
@@ -49,9 +73,7 @@ Feature: Create new forum topic as a site user
     When I press "Save draft"
     And I wait until the page loads
     Then I should see "Your draft Forum topic has been created. Login to your profile to update it. You can submit this now or later"
-    And I should see page title "Discussion Forum"
-    And I should see node title "TEST FORUM TOPIC"
-    #
+    And I should see node title "Test forum topic"
     When I submit "Forum topic" titled "Test forum topic" for moderation
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
