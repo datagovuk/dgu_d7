@@ -34,6 +34,7 @@ I should be able to submit a new app
     Given I am on the homepage
     And I click "Apps"
     And I follow "Browse Apps"
+    And I wait until the page loads
     When I click search icon
     And I wait until the page loads
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
