@@ -11,8 +11,8 @@ function dgu_glossary_user_default_roles() {
   $roles = array();
 
   // Exported role: Glossary moderator.
-  $roles['Glossary moderator'] = array(
-    'name' => 'glossary moderator',
+  $roles['glossary moderator'] = array(
+    'name' => 'Glossary moderator',
     'weight' => 3,
   );
 
