@@ -78,15 +78,13 @@ function dgu_user_profile_after_build($form, &$form_state) {
 
 function dgu_user_profile_validate($form, &$form_state) {
   if(!empty($form_state['values']['field_facebook_url'][LANGUAGE_NONE][0]['url'])) {
-    $parts = parse_url($form_state['values']['field_facebook_url'][LANGUAGE_NONE][0]['url']);
-    if(strpos($parts['host'], 'facebook.com') == FALSE) {
-      form_set_error('field_facebook_url', 'Facebook URL must contain with \'facebook.com\'');
+    if(!preg_match('/^(http\:\/\/|https\:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/', $form_state['values']['field_facebook_url'][LANGUAGE_NONE][0]['url'])){
+      form_set_error('field_facebook_url', 'Not valid Facebook URL');
     }
   }
   if(!empty($form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
-    $parts = parse_url($form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url']);
-    if(strpos($parts['host'], 'linkedin.com') == FALSE) {
-      form_set_error('field_linkedin_url', 'Linkedin URL must contain \'linkedin.com\'');
+    if(!preg_match('/^(ftp|http|https):\/\/?((www|\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/', $form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
+      form_set_error('field_linkedin_url', 'Not valid public Linkedin profile URL');
     }
   }
 
