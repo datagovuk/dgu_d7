@@ -8,12 +8,12 @@
     <?php endif; ?>
     <?php print render($title_suffix); ?>
 
-    <?php if (!empty($display_submitted)): ?>
+    <?php if ($display_submitted): ?>
       <span class="submitted">
         <?php print $user_picture; ?>
         <?php print $submitted; ?>
       </span>
-      <?php if (!empty($updated)): ?>
+      <?php if ($updated): ?>
         <span class="submitted">
           <?php print $updated; ?>
         </span>
