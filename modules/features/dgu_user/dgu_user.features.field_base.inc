@@ -36,7 +36,7 @@ function dgu_user_field_default_field_bases() {
     'locked' => 0,
     'module' => 'image',
     'settings' => array(
-      'default_image' => 3927,
+      'default_image' => 4014,
       'uri_scheme' => 'public',
     ),
     'translatable' => 0,
