@@ -277,7 +277,8 @@ function dgu_glossary_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'lexicon_introduction_8';
   $strongarm->value = array(
-    'value' => '',
+    'value' => '<p>This glossary is intended to be an authoritative explanation of the meaning of technical terms, for all users of data.gov.uk.&nbsp; Users are encouraged to improve it by suggesting a better way of explaining the definitions, and by adding new definitions.</p>
+',
     'format' => 'filtered_html',
   );
   $export['lexicon_introduction_8'] = $strongarm;

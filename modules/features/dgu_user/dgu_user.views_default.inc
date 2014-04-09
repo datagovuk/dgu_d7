@@ -1036,7 +1036,6 @@ function dgu_user_views_default_views() {
     9 => 0,
   );
   $handler->display->display_options['path'] = 'admin/workbench/content/comments/all';
-  $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'All Recent Comments';
   $handler->display->display_options['menu']['weight'] = '3';
   $handler->display->display_options['menu']['context'] = 0;
