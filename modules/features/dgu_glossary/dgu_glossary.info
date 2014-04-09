@@ -149,3 +149,4 @@ features_exclude[field][taxonomy_term-glossary-field_related_terms] = taxonomy_t
 features_exclude[field][taxonomy_term-glossary-field_source] = taxonomy_term-glossary-field_source
 features_exclude[field][taxonomy_term-glossary-field_source_url] = taxonomy_term-glossary-field_source_url
 features_exclude[field][taxonomy_term-glossary-field_comment] = taxonomy_term-glossary-field_comment
+features_exclude[dependencies][dgu_glossary] = dgu_glossary
