@@ -23,7 +23,7 @@
     }
 
     $.changeTerms = function(e){
-        show = $(e.srcElement).attr('id');
+        show = $(e.target).attr('id');
         switch (show) {
             case 'show_new':
                 $.showNewTerms();
