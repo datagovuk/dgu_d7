@@ -85,6 +85,7 @@ features[menu_links][] = main-menu:odug
 features[menu_links][] = menu-apps:apps
 features[menu_links][] = menu-interact:blog
 features[menu_links][] = menu-interact:forum
+features[menu_links][] = menu-interact:glossary
 features[menu_links][] = menu-interact:library
 features[menu_links][] = menu-interact:linked-data
 features[menu_links][] = menu-interact:location
