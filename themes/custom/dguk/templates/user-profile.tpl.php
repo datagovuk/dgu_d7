@@ -39,39 +39,39 @@
     <h3>About <?php print $elements['#account']->name?></h3>
     <div class="inside user-profile">
       <?php print render($user_profile['field_avatar']); ?>
-      <?php if($full_name): ?>
+      <?php if(!empty($full_name)): ?>
         <h3 class="full-name"><?php print $full_name?></h3>
       <?php endif; ?>
-      <?php if($job_title): ?>
+      <?php if(!empty($job_title)): ?>
         <div class="job-title"><?php print $job_title?></div>
       <?php endif; ?>
       <div class="member-for"><?php print $member_for?></div>
-      <?php if($twitter): ?>
+      <?php if(!empty($twitter)): ?>
         <div class="solcial-media twitter"><a href="https://twitter.com/<?php print $twitter?>"><?php print '@' . $twitter?></a></div>
       <?php endif; ?>
-      <?php if($linkedin): ?>
+      <?php if(!empty($linkedin)): ?>
         <div class="solcial-media linkedin"><a href="http://<?php print $linkedin?>"><?php print truncate_utf8($linkedin, 55, FALSE, TRUE); ?></a></div>
       <?php endif; ?>
-      <?php if($facebook): ?>
+      <?php if(!empty($facebook)): ?>
         <div class="solcial-media facebook"><a href="https://<?php print $facebook?>"><?php print truncate_utf8($facebook, 55, FALSE, TRUE); ?></a></div>
       <?php endif; ?>
-      <?php if($bio): ?>
+      <?php if(!empty($bio)): ?>
         <div class="bio"><?php print $bio?></div>
       <?php endif; ?>
     </div>
-    <?php if($stats): ?>
+    <?php if(!empty($stats)): ?>
       <h3>User activity statistics</h3>
         <?php print $stats; ?>
     <?php endif; ?>
   </div>
 
-  <?php if($recent_content): ?>
+  <?php if(!empty($recent_content)): ?>
     <div class="user-engagement col-md-4">
         <h3>Recent content</h3>
           <?php print $recent_content; ?>
     </div>
   <?php endif; ?>
-  <?php if($recent_comments): ?>
+  <?php if(!empty($recent_comments)): ?>
     <div class="user-engagement col-md-4">
       <h3>Recent comments</h3>
         <?php print $recent_comments; ?>
