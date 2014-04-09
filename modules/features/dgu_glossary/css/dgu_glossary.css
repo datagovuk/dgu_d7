@@ -1,5 +1,4 @@
 
-
 .glossary_filter {
     float: right;
 }
@@ -14,6 +13,12 @@
     text-align: center;
 }
 
+.lexicon-extralinks a {
+    background-color: #eee;
+    font-size: 0.6em;
+    padding: 3px 6px;
+}
+
 .vud-widget {
     float: left;
     padding-right: 4px;
@@ -24,8 +29,7 @@
 }
 
 .suggest-new {
-    margin-top: -65px;
-    margin-left: 350px;
+    float: right;
 }
 
 .glossary-term dt {
@@ -34,6 +38,7 @@
     text-transform: uppercase;
     padding-bottom: 8px;
 }
+
 .glossary-term dt .lexicon-extralinks a {
     font-size: 0.8em;
 }
@@ -41,7 +46,6 @@
 .glossary-term dd {
     padding-bottom: 10px;
 }
-
 
 .glossary-header {
     min-height: 60px;
@@ -68,7 +72,7 @@
     padding: 20px 15px;
 }
 
-.glossary-content .taxonomy-term p{
+.glossary-content .taxonomy-term p {
     padding-top: 12px;
 }
 

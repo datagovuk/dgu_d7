@@ -30,13 +30,15 @@
 <div id="<?php print $lexicon_overview->voc_name ?>" class="<?php print $lexicon_overview->voc_name ?>">
 
     <navclass="tabs">
-      <ul  id="<?php print $lexicon_overview->voc_name ?>_filter" class="tabs--primary nav nav-tabs">
-        <li><a href="#approved" id="show_approved" data-toggle="tab">Approved terms</a></li>
-        <li><a href="#new" id="show_new" data-toggle="tab">New terms</a></li>
-        <li class="active"><a href="#both" id="show_both" data-toggle="tab">All terms</a></li>
-      </ul>
+      <div id="menu-tabs">
+        <ul  id="<?php print $lexicon_overview->voc_name ?>_filter" class="tabs--primary nav">
+          <li><a href="#approved" id="show_approved" data-toggle="tab">Approved terms</a></li>
+          <li><a href="#new" id="show_new" data-toggle="tab">New terms</a></li>
+          <li class="active"><a href="#both" id="show_both" data-toggle="tab">All terms</a></li>
+        </ul>
+        <a href="<?php print $suggest_new_term_link ?>" class="suggest-new btn btn-mini btn-primary"><?php print $suggest_new_term_text ?></a>
+      </div>
     </nav>
-    <a href="<?php print $suggest_new_term_link ?>" class="suggest-new btn btn-mini btn-primary"><?php print $suggest_new_term_text ?></a>
     <div class="glossary-content">
       <?php print $lexicon_alphabar ?>
       <?php if (isset($lexicon_overview->introduction)) : ?>
