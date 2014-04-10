@@ -40,42 +40,53 @@
  * @ingroup themeable
  */
 ?>
-<div class="glossary-content">
+  <div class="glossary-content">
 
 
-  <?php print $lexicon_alphabar; ?>
-  <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">
+    <?php print $lexicon_alphabar; ?>
+    <div id="taxonomy-term-<?php print $term->tid; ?>" class="<?php print $classes; ?>">
 
       <?php if (!$page): ?>
         <div class="glossary-header">
           <h2><?php print $term_name; ?></h2>
-          <span class="glossary-appsi-quality"><?php print $quality_score; ?></span>
+          <div class="content">
+            <?php
+            // Hide comments, tags, and links now so that we can render them later.
+            hide($content['links']);
+            hide($content['field_comment']);
+
+            hide($content['field_endorse']);
+            hide($content['glossary_item_actions']);
+            print render($content);
+            ?>
+          </div>
+          <div class="glossary-appsi-quality"><?php print $quality_score; ?></div>
+
+          <?php
+          // Hide comments, tags, and links now so that we can render them later.
+          print render($content['field_endorse']);
+          print render($content['glossary_item_actions']);
+          ?>
+
         </div>
       <?php endif; ?>
 
-      <div class="content">
-        <?php
-        // Hide comments, tags, and links now so that we can render them later.
-        hide($content['links']);
-        hide($content['field_comment']);
-        print render($content);
-        ?>
-      </div>
+
 
       <div class="source">
         <?php print render($source); ?>
       </div>
 
-      <?php if ($suggested_definitions): error_log(print_r($suggested_definitions,true)); ?>
-      <div class="suggested-definitions">
-        <h2>Suggested definitions</h2>
-        <?php print render($suggested_definitions); ?>
-      </div>
+      <?php if ($suggested_definitions): error_log(print_r($suggested_definitions, TRUE)); ?>
+        <div class="suggested-definitions">
+          <h2>Suggested definitions</h2>
+          <?php print render($suggested_definitions); ?>
+        </div>
       <?php endif; ?>
 
     </div>
 
-</div>
+  </div>
 
 <?php if (!empty($content['field_comment'])): ?>
   <footer>

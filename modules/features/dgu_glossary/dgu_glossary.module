@@ -65,8 +65,9 @@ function dgu_glossary_menu()
 
 
 /**
- * Implementation of hook_ctools_plugin_dierctory() to let the system
- * know we implement widget plugins.
+ * Implements hook_ctools_plugin_dierctory().
+ *
+ * To let the system know we implement widget plugins.
  */
 function dgu_glossary_ctools_plugin_directory($module, $plugin)
 {
@@ -167,7 +168,7 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['#attributes']['class'][] = "boxed";
         dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
     }
-    else if ($form_id == 'suggested_term_node_form') {
+    elseif ($form_id == 'suggested_term_node_form') {
         $form['title']['#type'] = 'hidden';
         unset($form['actions']['preview']);
         $form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#attributes'] = array('placeholder' => $form['field_reason_for_change'][LANGUAGE_NONE][0]['#description']);
@@ -175,10 +176,27 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['#attributes']['class'][] = "boxed";
         dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
     }
+    elseif ($form_id == 'reply_add_form') {
+      $form['#submit'][] = 'dgu_glossary_reply_submit';
+    }
 }
 
+function dgu_glossary_reply_submit($form, &$form_state) {
+  // Redirect to glossary page instead of taxonomy page.
+  if (substr($form_state['redirect'], 0, 14) == 'taxonomy/term/') {
+    $form_state['redirect'] = str_replace('taxonomy/term', 'glossary', $form_state['redirect']);
+  }
+  elseif (substr($form_state['redirect'], 0, 5) == 'node/') {
+    $nid = substr($form_state['redirect'], 5);
+    $node = node_load($nid);
+    if($node->type == 'suggested_definition') {
+      $tid = $node->field_term[LANGUAGE_NONE][0]['tid'];
+      $form_state['redirect'] = 'glossary/' . $tid;
+    }
+  }
+}
 /**
- * Implemnt hook permissions
+ * Implements hook permissions
  */
 function dgu_glossary_permission(){
     return array(
@@ -196,7 +214,7 @@ function dgu_glossary_permission(){
 
 
 /**
- * Implement hook_theme_registry_alter to allow the theme files for the glossary to reside in
+ * Implements hook_theme_registry_alter to allow the theme files for the glossary to reside in
  * the templates directory of the module.
  *
  * @param $theme_registry - theme registry passed in to be modified.

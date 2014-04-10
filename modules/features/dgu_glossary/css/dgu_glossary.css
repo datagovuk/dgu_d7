@@ -8,9 +8,24 @@
     clear: left;
 }
 
+.lexicon-alphabar-instructions,
+.lexicon-introduction,
+.alphabet-search {
+    background: #fff !important;
+    padding: 10px;
+    margin: 0 !important;
+}
+
 .lexicon-alphabar-instructions {
     padding: 10px;
     text-align: center;
+}
+
+.lexicon-letter {
+    text-align: center;
+    background: #f5fff2;
+    padding: 15px;
+    margin-top: 15px;
 }
 
 .lexicon-extralinks a {
@@ -32,6 +47,12 @@
     float: right;
 }
 
+.glossary-term {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
 .glossary-term dt {
     font-size: 1.2em;
     /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
@@ -49,31 +70,40 @@
 
 .glossary-header {
     min-height: 60px;
-    background: #dff0d8;
-    padding: 10px 14px;
-}
-
-.glossary-appsi-quality {
-    float: right;
-    margin-top: -37px;
-    clear: left;
-    display: block;
+    background: #fff;
+    padding: 10px 15px 15px 15px;
+    margin-top: 15px;
 }
 
 .glossary-header h2 {
-    float: left;
     font-weight: bold;
     font-size: 20px;
     padding-top: 10px;
 }
 
-.glossary-content {
-    background-color: #fff;
-    padding: 10px 15px;
+.glossary-appsi-quality {
 }
 
-.glossary-content .taxonomy-term p {
-    padding-top: 12px;
+
+.glossary-content {
+    padding: 10px 0;
+}
+
+.suggested-definitions {
+    margin-top: 15px;
+}
+
+.suggested-definitions ul {
+    padding-left: 0;
+}
+
+.suggested-definitions li {
+    list-style: none;
+}
+
+.suggested-definitions li .field-name-field-suggested-definition {
+    background: #fff;
+    padding: 15px;
 }
 
 .glossary .nav {
