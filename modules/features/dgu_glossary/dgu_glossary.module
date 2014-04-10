@@ -289,6 +289,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $term = $variables['term'];
             $voc = taxonomy_vocabulary_load($term->vid);
             global $base_url;
+            global $user;
             $term_path = '/' . $voc->machine_name . '/' . $variables['tid'];
             $variables['content']['field_endorse']['#weight'] = 98;
             $variables['content']['field_endorse']['#label_display'] = 'hidden';
@@ -304,7 +305,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
 
             $make_comment_path = $base_url . '/' . 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
             $make_comment =  t('Add new comment');
-            if (!user_access('post comments')) {
+            if (!$user->uid) {
                 $make_comment_path = $base_url . "/user/login?destination=/reply/add/{$term->tid}/{$instance['id']}/0";
                 $make_comment = t('Login to make a comment');
             }
