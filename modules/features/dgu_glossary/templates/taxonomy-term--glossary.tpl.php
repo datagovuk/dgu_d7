@@ -54,15 +54,16 @@
       <?php endif; ?>
 
       <div class="content">
-        <?php print render($content); ?>
+        <?php
+        // Hide comments, tags, and links now so that we can render them later.
+        hide($content['links']);
+        hide($content['field_comment']);
+        print render($content);
+        ?>
       </div>
 
       <div class="source">
         <?php print render($source); ?>
-      </div>
-
-      <div class="comments">
-          <?php print render($comments); ?>
       </div>
 
       <?php if ($suggested_definitions): error_log(print_r($suggested_definitions,true)); ?>
@@ -75,3 +76,9 @@
     </div>
 
 </div>
+
+<?php if (!empty($content['field_comment'])): ?>
+  <footer>
+    <?php print render($content['field_comment']); ?>
+  </footer>
+<?php endif; ?>
