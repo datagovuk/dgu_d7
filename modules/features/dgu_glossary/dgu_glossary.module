@@ -253,7 +253,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             break;
         case 'lexicon_overview_item':
             $term = $variables['term'];
-            $instance = field_info_instance('taxonomy_term', 'field_comments', 'glossary');
+            $instance = field_info_instance('taxonomy_term', 'field_comment', 'glossary');
             $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
             $variables['directory'] = 'profile/dgu/modules/features/dgu_glossary';
@@ -279,17 +279,17 @@ function dgu_glossary_preprocess(&$variables, $hook)
             // in order to properly build a reply add link
             list(, , $bundle) = entity_extract_ids('taxonomy_term', $term);
             $instances = field_info_instances('taxonomy_term', $bundle, null);
-            if (empty($instances['field_comment']))
-                return;
+            if (empty($instances['field_comment'])) {
+              return;
+            }
             $instance = $instances['field_comment'];
 
             $make_comment_path = $base_url . '/' . 'reply/add/' . $term->tid . '/' . $instance['id'] . '/0';
-            $make_comment =  t('Make a comment');
+            $make_comment =  t('Add new comment');
             if (!user_access('post comments')) {
                 $make_comment_path = $base_url . "/user/login?destination=/reply/add/{$term->tid}/{$instance['id']}/0";
                 $make_comment = t('Login to make a comment');
             }
-
 
             $suggest_better_path = $base_url . '/' . $term_path . '/suggest_definition';
             $suggest_better = t('Suggest a better definition');
@@ -322,10 +322,13 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $lexicon_alphabar = $lex['overview']['#lexicon_alphabar'];
             $variables['lexicon_alphabar'] = $lexicon_alphabar;
 
-            //hide comments in the content section and display separately
-            $variables['comments'] = $variables['content']['field_comment'];
-            $variables['comments']['#label_display'] = 'hidden';
-            unset($variables['content']['field_comment']);
+            // Lack of time to check why $term->field_comment is empty even if there are comments.
+            // Testing for presence of .push class in the markup instead to find if there are any comments.
+            if(strpos($variables['content']['field_comment'][0]['#markup'], 'push') == FALSE) {
+              // If there are no comments hide 'Add new comment' link to avoid repeating it twice.
+              unset($variables['content']['field_comment']);
+            }
+
             unset($variables['content']['field_is_new']);
             $variables['content']['field_quality']['#title'] = 'APPSI quality score';
             $variables['quality_score'] = render($variables['content']['field_quality']);

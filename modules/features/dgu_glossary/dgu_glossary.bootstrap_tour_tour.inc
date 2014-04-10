@@ -79,7 +79,7 @@ function dgu_glossary_default_bootstrap_tour() {
       'selector' => '#make-comment',
       'path' => '',
       'placement' => 'right',
-      'title' => 'Make a comment',
+      'title' => 'Add new comment',
       'content' => '<p>If you would like to discuss the term or the definition with other users, you can do that by making a comment.</p>',
       'format' => 'full_html',
     ),
