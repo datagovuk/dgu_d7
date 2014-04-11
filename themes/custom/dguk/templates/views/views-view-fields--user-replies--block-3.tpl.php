@@ -25,7 +25,15 @@
 */
 
 $entity_paths = array('node' => '/node/', 'taxonomy_term' => '/glossary/', 'ckan_dataset' => '/dataset/');
-$href = drupal_get_path_alias($entity_paths[$row->_field_data['id']['entity']->entity_type]  . $row->_field_data['id']['entity']->entity_id) . '#reply-' . $row->_field_data['id']['entity']->id;
+$reply = $row->_field_data['id']['entity'];
+
+if ($reply->entity_type == 'ckan_dataset') {
+  if ($dataset = ckan_dataset_load($reply->entity_id)) {
+    $reply->entity_id = $dataset->ckan_id;
+  }
+}
+
+$href = drupal_get_path_alias($entity_paths[$reply->entity_type]  . $reply->entity_id) . '#reply-' . $reply->id;
 ?>
 
 <div class="views-field views-field-title">
@@ -38,4 +46,3 @@ $href = drupal_get_path_alias($entity_paths[$row->_field_data['id']['entity']->e
     <?php print $fields['created']->content; ?>
   </span>
 </span>
-
