@@ -23,11 +23,14 @@
 *
 * @ingroup views_templates
 */
+
+$entity_paths = array('node' => '/node/', 'taxonomy_term' => '/glossary/', 'ckan_dataset' => '/dataset/');
+$href = drupal_get_path_alias($entity_paths[$row->_field_data['id']['entity']->entity_type]  . $row->_field_data['id']['entity']->entity_id) . '#reply-' . $row->_field_data['id']['entity']->id;
 ?>
 
 <div class="views-field views-field-title">
   <span class="field-content">
-    <a href="/<?php print drupal_get_path_alias('node/' . $row->_field_data['id']['entity']->entity_id) . '#reply-' . $row->_field_data['id']['entity']->id; ?>"><?php print $fields['field_reply_subject']->content; ?></a>
+    <a href="<?php print $href ?>"><?php print $fields['field_reply_subject']->content; ?></a>
   </span>
 </div>
 <span class="views-field views-field-created">
