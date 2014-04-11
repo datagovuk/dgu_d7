@@ -21,5 +21,9 @@
  * regardless of any changes in the aliasing that might happen if
  * the view is modified.
  */
+
+if($row->_field_data['id']['entity']->entity_type == 'taxonomy_term') {
+  $output = str_replace('/taxonomy_term/', '/glossary/', $output);
+}
 ?>
 <?php print str_replace('">', '#reply-' . $row->id . '">', $output); ?>
