@@ -77,6 +77,6 @@
   </dd>
 <?php endif; ?>
 <?php if ($count > 0) : ?>
-  <a href="/glossary/<?php print $term->tid?>"><?php print"$count comments" ?></a>
+  <a href="/glossary/<?php print $term->tid . '#comments'; ?>"><?php print $count . format_plural($count, ' comment', ' comments'); ?></a>
 <?php endif; ?>
 </div>
