@@ -60,6 +60,11 @@ function dgu_site_feature_filter_default_formats() {
     'status' => 1,
     'weight' => -9,
     'filters' => array(
+      'emptyparagraphkiller' => array(
+        'weight' => 0,
+        'status' => 1,
+        'settings' => array(),
+      ),
       'filter_url' => array(
         'weight' => 0,
         'status' => 1,
