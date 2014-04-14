@@ -26,7 +26,7 @@ function dgu_user_block_view($delta='') {
   switch($delta) {
     case 'dgu_user_email_validation' :
       global $user;
-      $block['content'] = 'You will now receive  an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email.<br />Use the <a href="/user/' . $user->uid . '/profile">profile</a> tab to add more detail to your profile.<br /><a href="/toboggan/revalidate/' . $user->uid . '">Re-send</a> validation e-mail.';
+      $block['content'] = 'You will now receive  an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email.<br />Use <a href="/user/' . $user->uid . '/profile">My profile</a> tab to add more detail to your profile.<br /><a href="/toboggan/revalidate/' . $user->uid . '">Re-send</a> validation e-mail.';
       break;
   }
   return $block;
