@@ -106,7 +106,7 @@
           <div id="messages" ><?php print $messages; ?></div>
         <?php endif; ?>
     </div>
-
+    <?php print render($page['help']); ?>
     <?php if ($action_links): ?>
         <ul class="action-links"><?php print render($action_links); ?></ul>
     <?php endif; ?>
