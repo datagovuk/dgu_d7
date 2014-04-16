@@ -26,7 +26,7 @@ function dgu_user_block_view($delta='') {
   switch($delta) {
     case 'dgu_user_email_validation' :
       global $user;
-      $block['content'] = 'You will now receive  an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email.<br />Use the <a href="/user/' . $user->uid . '/profile">profile</a> tab to add more detail to your profile.<br /><a href="/toboggan/revalidate/' . $user->uid . '">Re-send</a> validation e-mail.';
+      $block['content'] = 'You will now receive  an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email.<br />Use <a href="/user/' . $user->uid . '/profile">My profile</a> tab to add more detail to your profile.<br /><a href="/toboggan/revalidate/' . $user->uid . '">Re-send</a> validation e-mail.';
       break;
   }
   return $block;
@@ -196,6 +196,18 @@ function dgu_user_page_alter(&$page) {
   if (user_access('access administration menu') && isset($page['page_top']['toolbar'])) {
     $page['page_top']['toolbar']['#access'] = FALSE;
   }
+
+  $custom_strings = variable_get('locale_custom_strings_en');
+  $registration_message = current($custom_strings)['A validation e-mail has been sent to your e-mail address. In order to gain full access to the site, you will need to follow the instructions in that message.'];
+
+  drupal_add_js(
+    'jQuery(document).ready(function () {
+       var message = $("#messages div.alert-success").text();
+       if(message && message.indexOf("' . $registration_message . '") !== -1) {
+         $.get("/data/search");
+       }
+     });',
+    'inline');
 }
 
 /**

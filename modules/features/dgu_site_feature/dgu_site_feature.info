@@ -65,7 +65,6 @@ features[field_instance][] = node-page-field_sector
 features[field_instance][] = node-page-field_tags
 features[filter][] = filtered_html
 features[filter][] = full_html
-features[image][] = profile
 features[image][] = tile_big
 features[image][] = tile_small
 features[image][] = tile_text_big
