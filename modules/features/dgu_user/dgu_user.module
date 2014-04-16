@@ -198,7 +198,8 @@ function dgu_user_page_alter(&$page) {
   }
 
   $custom_strings = variable_get('locale_custom_strings_en');
-  $registration_message = current($custom_strings)['A validation e-mail has been sent to your e-mail address. In order to gain full access to the site, you will need to follow the instructions in that message.'];
+  $custom_strings = current($custom_strings);
+  $registration_message = $custom_strings['A validation e-mail has been sent to your e-mail address. In order to gain full access to the site, you will need to follow the instructions in that message.'];
 
   drupal_add_js(
     'jQuery(document).ready(function () {
