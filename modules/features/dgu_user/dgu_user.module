@@ -189,6 +189,13 @@ function dgu_user_accessing_own_account() {
 }
 
 /**
+ * Implements hook_user_login().
+ */
+function dgu_user_user_login(&$edit, $account) {
+  $_SESSION['ping_ckan'] = TRUE;
+}
+
+/**
  * Implements hook_page_alter().
  */
 function dgu_user_page_alter(&$page) {
@@ -197,18 +204,16 @@ function dgu_user_page_alter(&$page) {
     $page['page_top']['toolbar']['#access'] = FALSE;
   }
 
-  $custom_strings = variable_get('locale_custom_strings_en');
-  $custom_strings = current($custom_strings);
-  $registration_message = $custom_strings['A validation e-mail has been sent to your e-mail address. In order to gain full access to the site, you will need to follow the instructions in that message.'];
-
-  drupal_add_js(
-    'jQuery(document).ready(function () {
-       var message = $("#messages div.alert-success").text();
-       if(message && message.indexOf("' . $registration_message . '") !== -1) {
+  if(!empty($_SESSION['ping_ckan'])) {
+    drupal_add_js(
+      'jQuery(document).ready(function () {
          $.get("/data/search");
-       }
-     });',
-    'inline');
+       });',
+      'inline');
+    unset($_SESSION['ping_ckan']);
+  }
+
+
 }
 
 /**
