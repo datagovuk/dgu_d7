@@ -231,6 +231,7 @@ projects[emptyparagraphkiller][subdir] = "contrib"
 
 projects[imagefield_crop][version] = "1.1"
 projects[imagefield_crop][subdir] = "contrib"
+projects[imagefield_crop][patch][] = "http://drupal.org/files/issues/imagefield_crop-clean_up_presave-1913412-38_0.patch"
 
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
