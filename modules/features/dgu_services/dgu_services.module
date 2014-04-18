@@ -129,11 +129,10 @@ function dgu_services_get_dataset_from_ckan_id($ckan_id) {
       // Syncing from CKAN on the fly.
       module_load_include('inc', 'ckan', 'ckan.drush');
       $client = ckan_get_client();
-      $publisher_role = variable_get('ckan_publisher_role', FALSE);
 
       try {
         $dataset = $client->GetDataset(array('id'=>$ckan_id))->toArray();
-        ckan_synchronise_dataset($dataset, $publisher_role);
+        ckan_synchronise_dataset($dataset['result']);
       }
       catch (Exception $e) {
         watchdog('comment_get', 'Error synchronising dataset ' . $ckan_id, array(), WATCHDOG_ERROR);
