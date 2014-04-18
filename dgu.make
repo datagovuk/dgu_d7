@@ -232,11 +232,8 @@ projects[emptyparagraphkiller][subdir] = "contrib"
 projects[imagefield_crop][type] = "module"
 projects[imagefield_crop][download][type] = "git"
 projects[imagefield_crop][download][url] = "http://git.drupal.org/project/imagefield_crop.git"
-;commit 366d78ae2cc260739555edeaf6eb00d2f2d8ee8d matches 7.x-1.1 tag
-projects[imagefield_crop][revision] = "366d78ae2cc260739555edeaf6eb00d2f2d8ee8d"
+projects[imagefield_crop][revision] = "f2a6d533c95e80080e28a7fb7ba184b61026b3ee"
 projects[imagefield_crop][subdir] = "contrib"
-projects[imagefield_crop][patch][] = "http://drupal.org/files/issues/imagefield_crop-clean_up_presave-1913412-38_0.patch"
-projects[imagefield_crop][patch][] = "http://drupal.org/files/issues/imagefield_crop_use_empty_instead_of_isset-1913412-45.patch"
 
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
