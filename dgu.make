@@ -232,7 +232,7 @@ projects[emptyparagraphkiller][subdir] = "contrib"
 projects[imagefield_crop][type] = "module"
 projects[imagefield_crop][download][type] = "git"
 projects[imagefield_crop][download][url] = "http://git.drupal.org/project/imagefield_crop.git"
-projects[imagefield_crop][revision] = "f2a6d533c95e80080e28a7fb7ba184b61026b3ee"
+projects[imagefield_crop][download][revision] = "f2a6d533c95e80080e28a7fb7ba184b61026b3ee"
 projects[imagefield_crop][subdir] = "contrib"
 
 projects[emptyparagraphkiller][version] = "1.0-beta2"
