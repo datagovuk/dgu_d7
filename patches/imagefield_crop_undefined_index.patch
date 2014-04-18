@@ -1,0 +1,13 @@
+diff --git a/imagefield_crop.module b/imagefield_crop.module
+index 0dc6a84..78673ea 100644
+--- a/imagefield_crop.module
++++ b/imagefield_crop.module
+@@ -408,7 +408,7 @@ function _imagefield_crop_entity_presave($entity, $fields) {
+     if ($field['widget']['type'] != 'imagefield_crop_widget') {
+       continue;
+     }
+-    if (!isset($entity->{$field_name})) {
++    if (empty($entity->{$field_name})) {
+       continue;
+     }
+     // Get the language key for the field, if fields language key is not

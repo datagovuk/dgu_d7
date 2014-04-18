@@ -229,11 +229,9 @@ projects[session_api][subdir] = "contrib"
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
 
-projects[imagefield_crop][type] = "module"
-projects[imagefield_crop][download][type] = "git"
-projects[imagefield_crop][download][url] = "http://git.drupal.org/project/imagefield_crop.git"
-projects[imagefield_crop][download][revision] = "f2a6d533c95e80080e28a7fb7ba184b61026b3ee"
+projects[imagefield_crop][version] = "1.1"
 projects[imagefield_crop][subdir] = "contrib"
+projects[imagefield_crop][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/imagefield_crop_undefined_index.patch"
 
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
