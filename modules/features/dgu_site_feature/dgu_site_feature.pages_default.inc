@@ -201,7 +201,51 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<p><strong>What\'s data.gov.uk all about?</strong></p><p>The Government is releasing public data to help people understand how government works and how policies are made. Some of this data is already available, but data.gov.uk brings it together in one searchable website. Making this data easily available means it will be easier for people to make decisions and suggestions about government policies based on detailed information. Hear more about the Government\'s Transparency agenda from the Prime Minister</p><p><strong>What\'s available?</strong></p><p>There are over 9,000 datasets available, from all central government departments and a number of other public sector bodies and local authorities. Is data just public information? Not really. From data.gov.uk, you can access the raw data driving government forward. This can then be used by people to build useful applications that help society, or investigate how effective policy changes have been over time.</p><p>General public information - such as how to find out if you are entitled to tax credits, or how to tax your car - can be found at <a href="http://gov.uk/" target="_blank">gov.uk</a>.</p><p><strong>How can I use the data?</strong></p><p>You can use the data in all sorts of ways. This may be simply to analyse trends over time from one policy area, or to compare how different parts of government go about their work. Technical users will be able to create useful applications out of the raw data files, which can then be used by everyone.</p><p><strong>How can I add my organisation\'s data?</strong></p><p>There is a simple how-to guide that takes you through the steps needed to include your data in data.gov.uk\'s index.How can I find out more?You can find out more about the data.gov.uk project by following these links: FAQ.</p><p><strong>Who is involved in the project?</strong></p><p>Data.gov.uk is a key part of the Government\'s work on Transparency which is being lead by the Transparency Board. Data.gov.uk implementation is being led by the Transparency and Open Data team in the Cabinet Office, working across government departments to ensure that data is released in a timely and accessible way.</p><p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the Comprehensive Knowledge Archive Network (CKAN): CKAN runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer\'s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/api">http://data.gov.uk/data/api</a>.</p><p><strong>Awards</strong></p><p>Data.gov.uk has been shortlisted for the following awards:Nominet Internet Awards 2010 – Empowering Young People &amp; CitizensISPA Awards 2010 - Internet Hero</p><p><strong>How can I get involved?</strong></p><p>There are a number of ways of getting involved in the project, dependent on your background or interest. For example:</p><ul><li>Ideas: let us know any ideas you would like to see someone build as applications? Tell the community via the Ideas page and someone might just pick up the challenge!</li><li>Applications: have you built something cool with our data?Share it with us through the Apps page. You never know who might get excited!</li><li>Visualisations: one of the challenges is making data come to life. Have you found a great way of displaying our data? Does it combine with other data to give a new insight? Show us your talent?Architecture: would you like to help us make this site better? Get in touch!</li></ul><p>&nbsp;</p><p><strong><a href="/about/technical-details">Technical details</a></strong></p>',
+      'body' => '<p><strong>What&#39;s data.gov.uk all about?</strong></p>
+
+<p>The Government is releasing public data to help people understand how government works and how policies are made. Some of this data is already available, but data.gov.uk brings it together in one searchable website. Making this data easily available means it will be easier for people to make decisions and suggestions about government policies based on detailed information. Hear more about the Government&#39;s Transparency agenda from the Prime Minister.</p>
+
+<p><strong>What&#39;s available?</strong></p>
+
+<p>There are datasets available from all central government departments and a number of other public sector bodies and local authorities. Is data just public information? Not really. From data.gov.uk, you can access the raw data driving government forward. This can then be used by people to build useful applications that help society, or investigate how effective policy changes have been over time.</p>
+
+<p>General public information - such as how to find out if you are entitled to tax credits, or how to tax your car - can be found at <a href="http://gov.uk/" target="_blank">gov.uk</a>.</p>
+
+<p><strong>How can I use the data?</strong></p>
+
+<p>You can use the data in all sorts of ways. This may be simply to analyse trends over time from one policy area, or to compare how different parts of government go about their work. Technical users will be able to create useful applications out of the raw data files, which can then be used by everyone.</p>
+
+<p><strong>How can I add my organisation&#39;s data?</strong></p>
+
+<p>There is a simple how-to guide that takes you through the steps needed to include your data in data.gov.uk&#39;s index.How can I find out more?You can find out more about the data.gov.uk project by following these links:<a href="http://data.gov.uk/library/user-guide-editors-and-administrators-v30"> Guidance document</a>.</p>
+
+<p><strong>Who is involved in the project?</strong></p>
+
+<p>Data.gov.uk is a key part of the Government&#39;s work on Transparency which is being lead by the Transparency Board. Data.gov.uk implementation is being led by the Transparency and Open Data team in the Cabinet Office, working across government departments to ensure that data is released in a timely and accessible way.</p>
+
+<p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the Comprehensive Knowledge Archive Network (CKAN): CKAN runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer&#39;s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/api">http://data.gov.uk/data/api</a>.</p>
+
+<p><strong>How can I get involved?</strong></p>
+
+<p>There are a number of ways of getting involved in the project, dependent on your background or interest. For example:</p>
+
+<ul>
+	<li>Applications: have you built something cool with our data?Share it with us through the Apps page. You never know who might get excited!</li>
+	<li>Visualisations: one of the challenges is making data come to life. Have you found a great way of displaying our data? Does it combine with other data to give a new insight? Show us your talent?</li>
+	<li>Architecture: would you like to help us make this site better? Get in touch! You can see some of the visualisations create by the data.gov.uk team and the code used to create them&nbsp;<a href="http://data.gov.uk/data/viz/social-investment-and-foundations">here</a> and <a href="http://data.gov.uk/data/viz/investment-readiness-programme">here</a>.</li>
+	<li>Comments and feedback: You can provide comments on datasets and blogs&nbsp;as well as give feedback on the potential impact of a&nbsp;dataset.</li>
+</ul>
+
+<p><strong>Working with data</strong></p>
+
+<p>If you wish to get involved in working with data you can check<a href="http://data.gov.uk/blog/simple-intro-open-data"> this</a> very brief primer, you can also check out organisations such as the <a href="http://theodi.org/">Open Data Institute</a> and the <a href="https://okfn.org/">Open Knowledge Foundation</a>.</p>
+
+<p>&nbsp;</p>
+
+<p><strong>To find out technical details about the setup of data.gov.uk go <a href="/about/technical-details">here</a>.</strong></p>
+
+<p>&nbsp;</p>
+',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
