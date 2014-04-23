@@ -12,6 +12,7 @@ if (module_exists('apachesolr_search')) {
       'title_override' => FALSE,
       'title_override_text' => '',
       'content_type' => '',
+      'show_counter' => TRUE,
     ),
   );
 }
@@ -122,12 +123,17 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
     $form_state['dataset_request_count'] = $dr_count;
   }
   $form_state['solrsort'] = $solrsort;
+  error_log(print_r($conf, true));
+  $form_state['show_counter'] = $conf['show_counter'];
+  //print  "asdfasdfasf" . $conf['show_counter'];
+  print_r( $conf );
   $form = drupal_build_form('dgu_search_form', $form_state);
 
   // Statcically cached keyword in dgu_search.module:dgu_search_apachesolr_query_prepare()
   if ($keyword = &drupal_static('dgu_search_keyword')) {
     $form['keyword']['#value'] = $keyword;
   }
+
 
   $block->content = drupal_render($form);
   return $block;
@@ -155,12 +161,20 @@ function dgu_search_dgu_search_form_content_type_edit_form($form, &$form_state) 
     '#default_value' => $config['content_type'],
   );
 
+  $form['show_counter'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Add search result counter'),
+    '#default_value' => $config['show_counter'],
+  );
+
   return $form;
 }
 
 function dgu_search_dgu_search_form_content_type_edit_form_submit(&$form, &$form_state) {
   foreach (array_keys($form_state['plugin']['defaults']) as $key) {
+    error_log("${key} => " . $form_state['values'][$key]);
     $form_state['conf'][$key] = $form_state['values'][$key];
   }
+  $form_state['conf']['show_counter'] = $form_state['input']['show_counter'];
 }
 

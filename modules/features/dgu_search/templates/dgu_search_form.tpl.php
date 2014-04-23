@@ -24,7 +24,8 @@
         </div>
         <span class="search-all-label">Click search now to see all content in this category</span>
       </div>
-    </div>
+    </div> <?php print $form['show_counter'] ?>
+    <?php if ($form['show_counter']): ?>
     <div class="right">
       <div class="right-inner auto-height">
         <div class="chevron"></div>
@@ -42,5 +43,6 @@
         </div>
       </div>
     </div>
+    <?php endif; ?>
   </div>
 </div>
