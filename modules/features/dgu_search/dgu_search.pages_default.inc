@@ -72,11 +72,15 @@ function dgu_search_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-1';
     $pane->panel = 'left';
-    $pane->type = 'block';
-    $pane->subtype = 'facetapi-GiIy4zr9Gu0ZSa0bumw1Y9qIIpIDf1wu';
+    $pane->type = 'dgu_search_form';
+    $pane->subtype = 'dgu_search_form';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
+      'title_override' => NULL,
+      'title_override_text' => NULL,
+      'content_type' => 'all',
+      'show_counter' => NULL,
       'override_title' => 0,
       'override_title_text' => '',
     );
@@ -94,7 +98,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-2';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-4Zh0ggJMBgeeYbrLPJCe8EML3A6PLE0J';
+    $pane->subtype = 'facetapi-GiIy4zr9Gu0ZSa0bumw1Y9qIIpIDf1wu';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -115,7 +119,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-3';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
+    $pane->subtype = 'facetapi-4Zh0ggJMBgeeYbrLPJCe8EML3A6PLE0J';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -136,7 +140,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-4';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
+    $pane->subtype = 'facetapi-rdivo01SKN5F1E4FueqZJl3JRX19bxQ4';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -157,7 +161,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-5';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
+    $pane->subtype = 'facetapi-DlKt6k0NxuIZ3UKJlQnnoHsJVwxoJMbY';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -178,7 +182,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-6';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
+    $pane->subtype = 'facetapi-EkFIUzN6EE00EWS2gBWyGz9V0YUXSMXP';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -199,7 +203,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-7';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-nNIok1zEcTDdArOSMLOe8qvM7lVhDjlG';
+    $pane->subtype = 'facetapi-8o8kdtP8CKjahDIu1Wy5LGxnDHg3ZYnT';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -220,7 +224,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-8';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->subtype = 'facetapi-nNIok1zEcTDdArOSMLOe8qvM7lVhDjlG';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -241,8 +245,8 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-9';
     $pane->panel = 'left';
     $pane->type = 'block';
-    $pane->subtype = 'apachesolr_search-sort';
-    $pane->shown = FALSE;
+    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
       'override_title' => 0,
@@ -260,6 +264,27 @@ function dgu_search_default_page_manager_pages() {
     $display->panels['left'][8] = 'new-9';
     $pane = new stdClass();
     $pane->pid = 'new-10';
+    $pane->panel = 'left';
+    $pane->type = 'block';
+    $pane->subtype = 'apachesolr_search-sort';
+    $pane->shown = FALSE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 9;
+    $pane->locks = array();
+    $display->content['new-10'] = $pane;
+    $display->panels['left'][9] = 'new-10';
+    $pane = new stdClass();
+    $pane->pid = 'new-11';
     $pane->panel = 'right';
     $pane->type = 'apachesolr_result';
     $pane->subtype = 'apachesolr_result';
@@ -297,21 +322,18 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['right'][0] = 'new-10';
+    $display->content['new-11'] = $pane;
+    $display->panels['right'][0] = 'new-11';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
-    $pane->panel = 'top';
-    $pane->type = 'dgu_search_form';
-    $pane->subtype = 'dgu_search_form';
+    $pane->pid = 'new-12';
+    $pane->panel = 'right';
+    $pane->type = 'dgu_search_info';
+    $pane->subtype = 'dgu_search_info';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'title_override' => NULL,
-      'title_override_text' => NULL,
-      'content_type' => 'all',
-      'override_title' => 0,
-      'override_title_text' => '',
+      'title_override' => FALSE,
+      'title_override_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -319,10 +341,10 @@ function dgu_search_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['top'][0] = 'new-11';
+    $display->content['new-12'] = $pane;
+    $display->panels['right'][1] = 'new-12';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

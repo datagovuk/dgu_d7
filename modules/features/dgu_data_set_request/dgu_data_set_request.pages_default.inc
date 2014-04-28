@@ -527,6 +527,7 @@ Paul Fenton<br/>
       'override_title' => 0,
       'override_title_text' => '',
       'content_type' => 'dataset_request',
+      'show_counter' => '1',
     );
     $pane->cache = array();
     $pane->style = array(

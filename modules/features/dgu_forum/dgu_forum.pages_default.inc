@@ -660,6 +660,7 @@ function dgu_forum_default_page_manager_pages() {
       'content_type' => 'forum',
       'override_title' => 0,
       'override_title_text' => '',
+      'show_counter' => '1',
     );
     $pane->cache = array();
     $pane->style = array(

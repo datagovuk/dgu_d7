@@ -14,7 +14,7 @@ include_once 'dgu_blog.features.inc';
 function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
   if ($item['path'] == 'blog') {
     $active_trail = array(array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()), array('title' => 'Blogs', 'href' => 'blog', 'localized_options' => array()));
-    
+
     drupal_set_title('Latest Blogs');
   }
   // Reset breadcrumb to '/blog' only on 'Most popular blog posts'
