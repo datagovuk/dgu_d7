@@ -64,7 +64,17 @@
  * @ingroup themeable
  */
 ?>
-<li class="<?php print $classes; // .boxed and .node-type-<bundle> classes added in dguk_preprocess_search_result() ?>"<?php print $attributes; ?>>
+<li class="<?php print $classes; ?> publication-preference-<?php print $result['fields']['im_field_publication_preference'][0]; ?>"<?php print $attributes; ?>>
+  <?php if (!$result['fields']['im_field_publication_preference'][0]): ?>
+    <p class="confidential">Confidential request</p>
+  <?php endif; ?>
+  <a class="search-result-header" href="<?php print $url; ?>">
+    <div class="content-type"><?php print $result['type']; ?></div>
+    <h3 class="title"<?php print $title_attributes; ?>>
+      <?php print $title; ?>
+    </h3>
+  </a>
+
   <?php
     print $result['fields']['tm_rendered_node'][0];
   ?>
