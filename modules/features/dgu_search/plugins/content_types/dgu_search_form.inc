@@ -56,7 +56,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   $form_state = array();
 
   if ($conf['content_type'] == 'all') {
-    $form_state['content_type'] = "Documents";
+    $form_state['content_type'] = "content";
     $form_state['searchtype'] = '';
     $search['filters'] = empty($_GET['f'])? array() : $_GET['f'];
     $form_state['f'] = $search['filters'];
