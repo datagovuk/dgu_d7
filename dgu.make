@@ -240,6 +240,9 @@ projects[imagefield_crop][patch][] = "http://raw.github.com/datagovuk/dgu_d7/mas
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
 
+projects[smart_trim][version] = "1.4"
+projects[smart_trim][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"

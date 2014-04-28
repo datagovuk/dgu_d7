@@ -19,6 +19,7 @@ dependencies[] = media
 dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = reply
+dependencies[] = smart_trim
 dependencies[] = strongarm
 dependencies[] = taxonomy
 dependencies[] = text

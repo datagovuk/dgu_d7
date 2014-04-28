@@ -47,6 +47,9 @@ function dguk_preprocess_node(&$variables) {
   $full_node = node_load($variables['node']->nid);
   $variables['title'] = $full_node->title;
 
+  $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
+  $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__' . $variables['view_mode'];
+
   if ($variables['created'] != $variables['changed']) {
     $variables['updated'] = '| Updated on ' . format_date($variables['changed']);
   }
@@ -194,55 +197,8 @@ function dguk_preprocess_search_result(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
 
-
-  $variables['info_split']['changed'] = $variables['info_split']['date'];
-  unset($variables['info_split']['date']);
-  $variables['info_split']['created'] = format_date($variables['result']['fields']['created'], 'short');
-
-
-  switch ($variables['result']['bundle']) {
-    case 'app':
-      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
-      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-
-      if (isset($variables['result']['fields']['sm_field_developed_by'][0])) {
-        $variables['other'] = 'Developed by: ' . $variables['result']['fields']['sm_field_developed_by'][0];
-      }
-      break;
-    case 'blog':
-      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
-      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-      break;
-    case 'dataset_request':
-      $review_status_values = &drupal_static('odug_review_statuses');
-      if (!isset($review_status_values)) {
-        $all_fields_info = field_info_fields();
-        $review_status_values = $all_fields_info['field_review_status']['settings']['allowed_values'];
-      }
-      $status_key = $variables['result']['fields']['im_field_review_status'][0];
-      $status_value = $review_status_values[$status_key];
-
-      $variables['other'] = 'Review status: ' . $status_value;
-      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-
-      break;
-    case 'forum':
-      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'];
-      $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-      break;
-    case 'page':
-      $variables['submitted'] = 'Submitted by ' . $variables['info_split']['user'] . ' on ' . $variables['info_split']['created'];
-      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
-        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-      }
-      break;
-    case 'resource':
-      $variables['submitted'] = 'Submitted on ' . $variables['info_split']['created'];
-      if($variables['info_split']['created'] != $variables['info_split']['changed']) {
-        $variables['updated'] = 'Updated on ' . $variables['info_split']['changed'];
-      }
-      break;
-  }
+  // To properly display app rating.
+  drupal_add_css(drupal_get_path('module', 'fivestar') . '/css/fivestar.css');
 }
 
 /**
@@ -646,5 +602,167 @@ function dguk_menu_local_tasks(&$variables) {
     $output .= drupal_render($variables['secondary']);
   }
 
+  return $output;
+}
+
+function dguk_facetapi_title($variables) {
+  return drupal_strtolower($variables['title']);
+}
+
+/**
+ * Overrides theme_panels_default_style_render_region().
+ *
+ * To add numbered classes to panel separators to be able to target particular separator in CSS.
+ */
+function dguk_panels_default_style_render_region($vars) {
+  $output = '';
+  $counter = 0;
+  $total = count($vars['panes']);
+  foreach ($vars['panes'] as $pane) {
+    $output .= $pane;
+    if ($counter < $total -1) {
+      $output .= '<div class="panel-separator panel-separator-' . $counter++ . '"></div>';
+    }
+  }
+  return $output;
+}
+
+/**
+ * Overrides theme_facetapi_link_active().
+ *
+ * To get rid of '(-)'.
+ */
+function dguk_facetapi_link_active($variables) {
+  $accessible_markup = theme('facetapi_accessible_markup', array('text' => $variables['text'], 'active' => TRUE));
+  $variables['text'] = '<span class="facet-name">' . $variables['text'] . '</span>' . $accessible_markup . '<div class="facet-kill pull-right"><i class="icon-large icon-remove-sign"></i></div>';
+  $variables['options']['html'] = TRUE;
+  return '<span class="facet-selected">' . theme_link($variables) . '</span>';
+}
+
+/**
+ * Overrides theme_pager().
+ */
+function dguk_pager($variables) {
+
+  // Don't allow pagers longer than 3 pages.
+  if ($variables['quantity'] > 3) {
+    $variables['quantity'] = 3;
+  }
+
+  $output = "";
+  $items = array();
+  $tags = $variables['tags'];
+  $element = $variables['element'];
+  $parameters = $variables['parameters'];
+  $quantity = $variables['quantity'];
+
+  global $pager_page_array, $pager_total;
+
+  // Calculate various markers within this pager piece:
+  // Middle is used to "center" pages around the current page.
+  $pager_middle = ceil($quantity / 2);
+  // Current is the page we are currently paged to.
+  $pager_current = $pager_page_array[$element] + 1;
+  // First is the first page listed by this pager piece (re quantity).
+  $pager_first = $pager_current - $pager_middle + 1;
+  // Last is the last page listed by this pager piece (re quantity).
+  $pager_last = $pager_current + $quantity - $pager_middle;
+  // Max is the maximum page number.
+  $pager_max = $pager_total[$element];
+
+  // Prepare for generation loop.
+  $i = $pager_first;
+  if ($pager_last > $pager_max) {
+    // Adjust "center" if at end of query.
+    $i = $i + ($pager_max - $pager_last);
+    $pager_last = $pager_max;
+  }
+  if ($i <= 0) {
+    // Adjust "center" if at start of query.
+    $pager_last = $pager_last + (1 - $i);
+    $i = 1;
+  }
+  // End of generation loop preparation.
+
+  $li_previous = theme('pager_previous', array(
+    'text' => (isset($tags[1]) ? $tags[1] : '«'),
+    'element' => $element,
+    'interval' => 1,
+    'parameters' => $parameters,
+  ));
+  $li_next = theme('pager_next', array(
+    'text' => (isset($tags[3]) ? $tags[3] : '»'),
+    'element' => $element,
+    'interval' => 1,
+    'parameters' => $parameters,
+  ));
+
+  if ($pager_total[$element] > 1) {
+
+    if ($li_previous) {
+      $items[] = array(
+        'class' => array('prev'),
+        'data' => $li_previous,
+      );
+    }
+    // When there is more than one page, create the pager list.
+    if ($i != $pager_max) {
+      if ($i > 1) {
+        $items[] = array(
+          'class' => array('pager-ellipsis', 'disabled'),
+          'data' => '<span>…</span>',
+        );
+      }
+      // Now generate the actual pager piece.
+      for (; $i <= $pager_last && $i <= $pager_max; $i++) {
+        if ($i < $pager_current) {
+          $items[] = array(
+            // 'class' => array('pager-item'),
+            'data' => theme('pager_previous', array(
+              'text' => $i,
+              'element' => $element,
+              'interval' => ($pager_current - $i),
+              'parameters' => $parameters,
+            )),
+          );
+        }
+        if ($i == $pager_current) {
+          $items[] = array(
+            // Add the active class.
+            'class' => array('active'),
+            'data' => l($i, '#', array('fragment' => '', 'external' => TRUE)),
+          );
+        }
+        if ($i > $pager_current) {
+          $items[] = array(
+            'data' => theme('pager_next', array(
+              'text' => $i,
+              'element' => $element,
+              'interval' => ($i - $pager_current),
+              'parameters' => $parameters,
+            )),
+          );
+        }
+      }
+      if ($i < $pager_max) {
+        $items[] = array(
+          'class' => array('pager-ellipsis', 'disabled'),
+          'data' => '<span>…</span>',
+        );
+      }
+    }
+    // End generation.
+    if ($li_next) {
+      $items[] = array(
+        'class' => array('next'),
+        'data' => $li_next,
+      );
+    }
+
+    return '<div class="text-center">' . theme('item_list', array(
+      'items' => $items,
+      'attributes' => array('class' => array('pagination')),
+    )) . '</div>';
+  }
   return $output;
 }

@@ -48,8 +48,8 @@ function dgu_blog_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
-  t('Latest blog posts');
-  t('Most popular blog posts');
+  t('Latest Blogs');
+  t('Most popular Blogs');
 
 
   return $menu_links;

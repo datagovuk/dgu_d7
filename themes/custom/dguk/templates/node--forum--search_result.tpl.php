@@ -1,4 +1,4 @@
 <?php
 
 // These two content types share the same template.
-include 'node--blog.tpl.php';
+include 'node--blog--search_result.tpl.php';

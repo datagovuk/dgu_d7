@@ -29,7 +29,7 @@ function dgu_data_set_request_strongarm() {
         'custom_settings' => FALSE,
       ),
       'search_result' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'print' => array(
         'custom_settings' => FALSE,
@@ -61,6 +61,10 @@ function dgu_data_set_request_strongarm() {
           ),
           'rss' => array(
             'weight' => '20',
+            'visible' => FALSE,
+          ),
+          'search_result' => array(
+            'weight' => '19',
             'visible' => FALSE,
           ),
         ),

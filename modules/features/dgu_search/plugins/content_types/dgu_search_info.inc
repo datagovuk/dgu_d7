@@ -52,38 +52,16 @@ function dgu_search_preprocess(&$variables, $hook){
                     $content_type = $filter['#value'];
                 }
             }
-            //If we are searching for data requests, we need to say how many private (unpublished requests) there are.
-            if($content_type == 'dataset_request') {
-                $query = "SELECT count(distinct n.nid) count
-                  FROM node n
-                  LEFT JOIN field_revision_field_data_use du ON du.revision_id = n.vid
-                  WHERE n.type = 'dataset_request'
-                  AND status = 0
-                  AND du.field_data_use_value IS NOT NULL";
-                $result = db_query($query);
-                $dr_count = $result->fetchField();
-                $variables['dataset_request_count'] = $dr_count;
-            }
+
             if ($entity){
                 $entity_info = entity_get_info($entity);
                 if (!empty($entity_info['bundles'][$content_type]['label'])){
                     $content_type = $entity_info['bundles'][$content_type]['label'];
                 }
             }
-            $plurals = array(
-                'Blog entry' => 'Blog entries',
-            );
-            if ($response->response->numFound > 1){
-                if (array_key_exists($content_type, $plurals)){
-                    $content_type = $plurals[$content_type];
-                } else {
-                    $content_type = $content_type . "s";
-                }
-            }
-            $variables['type'] = $content_type;
 
-
-
+            $search_types = dgu_site_feature_get_plural_content_types();
+            $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Results';
             break;
         default:
             # code...

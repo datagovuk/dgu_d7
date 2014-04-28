@@ -64,32 +64,16 @@
  * @ingroup themeable
  */
 ?>
-<li class="<?php print $classes; // .boxed and .node-type-<bundle> classes added in dguk_preprocess_search_result() ?>"<?php print $attributes; ?>>
-  <?php print render($title_prefix); ?>
-  <h3 class="title"<?php print $title_attributes; ?>>
-    <a href="<?php print $url; ?>"><?php print $title; ?></a>
-  </h3>
-  <?php print render($title_suffix); ?>
+<li class="<?php print $classes; ?>"<?php print $attributes; ?>>
+  <a class="search-result-header" href="<?php print $url; ?>">
+    <div class="content-type"><?php print $result['type']; ?></div>
+    <h3 class="title"<?php print $title_attributes; ?>>
+      <?php print $title; ?>
+    </h3>
+  </a>
 
-  <?php if (!empty($info_split)): ?>
-    <div class="search-info">
-      <?php if (isset($updated)): ?>
-        <p><?php print $updated; ?></p>
-      <?php endif; ?>
-
-      <?php if (isset($submitted)): ?>
-        <p><?php print $submitted; ?></p>
-      <?php endif; ?>
-
-      <?php if (isset($other)): ?>
-        <p><?php print $other; ?></p>
-      <?php endif; ?>
-    </div>
-  <?php endif; ?>
-
-  <div class="search-snippet-info">
-    <?php if ($snippet): ?>
-      <p class="search-snippet"<?php print $content_attributes; ?>><?php print $snippet; ?></p>
-    <?php endif; ?>
-  </div>
+  <?php
+    print $result['fields']['tm_rendered_node'][0];
+  ?>
 </li>
+

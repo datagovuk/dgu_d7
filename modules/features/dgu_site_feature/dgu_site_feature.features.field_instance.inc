@@ -651,6 +651,28 @@ function dgu_site_feature_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 0,
       ),
+      'search_result' => array(
+        'label' => 'hidden',
+        'module' => 'smart_trim',
+        'settings' => array(
+          'field_replies' => 0,
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'more_link' => 0,
+          'more_text' => 'Read more',
+          'summary_handler' => 'trim',
+          'trim_length' => 250,
+          'trim_options' => array(
+            'text' => 'text',
+          ),
+          'trim_suffix' => '...',
+          'trim_type' => 'chars',
+        ),
+        'type' => 'smart_trim_format',
+        'weight' => 0,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -706,6 +728,12 @@ function dgu_site_feature_field_default_field_instances() {
         'type' => 'taxonomy_term_reference_link',
         'weight' => 1,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -746,6 +774,12 @@ function dgu_site_feature_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
+        'weight' => 5,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 5,
       ),
       'teaser' => array(
@@ -792,6 +826,12 @@ function dgu_site_feature_field_default_field_instances() {
           ),
         ),
         'type' => 'file_default',
+        'weight' => 4,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'teaser' => array(
@@ -843,6 +883,12 @@ function dgu_site_feature_field_default_field_instances() {
         'type' => 'taxonomy_term_reference_link',
         'weight' => 2,
       ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 2,
+      ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
@@ -884,6 +930,12 @@ function dgu_site_feature_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
+        'weight' => 3,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 3,
       ),
       'teaser' => array(

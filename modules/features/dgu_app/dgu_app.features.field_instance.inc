@@ -45,16 +45,24 @@ function dgu_app_field_default_field_instances() {
       ),
       'search_result' => array(
         'label' => 'hidden',
-        'module' => 'text',
+        'module' => 'smart_trim',
         'settings' => array(
           'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'more_link' => 0,
+          'more_text' => 'Read more',
+          'summary_handler' => 'trim',
           'trim_length' => 250,
+          'trim_options' => array(
+            'text' => 'text',
+          ),
+          'trim_suffix' => '...',
+          'trim_type' => 'chars',
         ),
-        'type' => 'text_trimmed',
+        'type' => 'smart_trim_format',
         'weight' => 4,
       ),
       'teaser' => array(
@@ -256,7 +264,7 @@ function dgu_app_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -452,9 +460,22 @@ function dgu_app_field_default_field_instances() {
       ),
       'search_result' => array(
         'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
+        'module' => 'fivestar',
+        'settings' => array(
+          'expose' => TRUE,
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'style' => 'average',
+          'text' => 'average',
+          'widget' => array(
+            'fivestar_widget' => NULL,
+          ),
+        ),
+        'type' => 'fivestar_formatter_default',
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -526,7 +547,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'image_style' => 'thumbnail',
         ),
         'type' => 'image',
-        'weight' => 9,
+        'weight' => 5,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -585,7 +606,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 8,
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
@@ -741,7 +762,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 7,
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
