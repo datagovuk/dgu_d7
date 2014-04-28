@@ -119,6 +119,10 @@ function dgu_search_search_block($form, &$form_state) {
     '#type' => 'hidden',
     '#value' => htmlspecialchars($form_state['count']),
   );
+  $form['show_counter'] = array(
+    '#type' => 'hidden',
+    '#value' => htmlspecialchars($form_state['show_counter']),
+  );
   //Loop through any filter defined in the form array to sanitise values.
   $filter_values = array();
   if (!empty($form['f'])){
@@ -270,6 +274,7 @@ function dgu_search_apachesolr_query_alter($query) {
   $query->addParam('fl', 'sm_field_developed_by');
   // Retrieve 'field_review_status'.
   $query->addParam('fl', 'im_field_review_status');
+  $query->addParam('fl', 'im_field_publication_preference');
   $query->addParam('fl', 'tm_rendered_node');
 }
 
