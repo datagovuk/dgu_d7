@@ -94,19 +94,20 @@
         <?php  print $breadcrumb; ?>
       </div>
     </div>
+    <?php if($messages): ?>
+      <div class="drupal-messages">
+        <div id="messages" ><?php print $messages; ?></div>
+      </div>
+    <?php endif; ?>
+    <?php if($page['highlighted']): ?>
+      <?php print render($page['highlighted']); ?>
+    <?php endif; ?>
+    <?php print render($page['help']); ?>
+
   </div>
 </div>
 <div role="main" id="main-content">
   <div class="container">
-    <div class="drupal-messages">
-        <?php if($page['highlighted']): ?>
-          <?php print render($page['highlighted']); ?>
-        <?php endif; ?>
-        <?php if($messages): ?>
-          <div id="messages" ><?php print $messages; ?></div>
-        <?php endif; ?>
-    </div>
-    <?php print render($page['help']); ?>
     <?php if ($action_links): ?>
         <ul class="action-links"><?php print render($action_links); ?></ul>
     <?php endif; ?>
