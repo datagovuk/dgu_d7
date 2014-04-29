@@ -26,14 +26,24 @@
         <?php endif ?>
 
         <?php if ($content['left_bottom']): ?>
-          <div class="inside panel-left-bottom"><?php print $content['left_bottom']; ?></div>
+          <div class="inside panel-left-bottom">
+            <div class="visible-xs visible-sm">
+              <a class="hide-facets" href="#">
+                <i class="icon-remove-circle icon-4x"></i>
+              </a>
+            </div>
+            <?php print $content['left_bottom']; ?>
+          </div>
         <?php endif ?>
       </div>
     <?php endif ?>
 
     <?php if ($content['right']): ?>
       <div class="panel-panel panel-col-second panel-col-last col-md-8">
-        <div class="inside"><?php print $content['right']; ?></div>
+        <div class="inside">
+          <a href="#" class="visible-sm visible-xs btn btn-primary btn-sm show-facets">Show Search Facets »</a>
+          <?php print $content['right']; ?>
+        </div>
       </div>
     <?php endif ?>
   </div>
