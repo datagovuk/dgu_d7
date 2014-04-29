@@ -338,6 +338,9 @@ function dgu_search_preprocess_search_results(&$variables) {
 
   drupal_add_js(drupal_get_path('module', 'dgu_search') . '/js/dgu_search.js');
 
+  // To properly display app rating.
+  drupal_add_css(drupal_get_path('module', 'fivestar') . '/css/fivestar.css');
+
   $environments = apachesolr_load_all_environments();
   foreach ($environments as $env_id => $environment) {
     if (apachesolr_has_searched($env_id) && !apachesolr_suppress_blocks($env_id)) {
