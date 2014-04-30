@@ -61,7 +61,7 @@ function dgu_search_preprocess(&$variables, $hook){
             }
 
             $search_types = dgu_site_feature_get_plural_content_types();
-            $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Results';
+            $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Content results';
             break;
         default:
             # code...

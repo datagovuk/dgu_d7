@@ -14,7 +14,7 @@ function dgu_search_apachesolr_environments() {
   $environment->api_version = 1;
   $environment->env_id = 'solr';
   $environment->name = 'solr';
-  $environment->url = 'http://localhost:8983/solr/dgu_drupal';
+  $environment->url = 'http://localhost:8983/solr';
   $environment->service_class = '';
   $environment->conf = array(
     'apachesolr_access_always_add_grants' => 0,
@@ -36,8 +36,8 @@ function dgu_search_apachesolr_environments() {
         'last_entity_id' => 0,
       ),
       'node' => array(
-        'last_changed' => '1390383020',
-        'last_entity_id' => '2902',
+        'last_changed' => '1398687303',
+        'last_entity_id' => '3110',
       ),
       'redirect' => array(
         'last_changed' => 0,
@@ -76,19 +76,18 @@ function dgu_search_apachesolr_environments() {
         'last_entity_id' => 0,
       ),
     ),
-    'apachesolr_index_updated' => 1390827730,
-    'apachesolr_last_optimize' => 1390753338,
+    'apachesolr_index_updated' => 1398773575,
+    'apachesolr_last_optimize' => 1398687455,
     'apachesolr_read_only' => '0',
   );
   $environment->index_bundles = array(
     'node' => array(
       0 => 'app',
-      1 => 'article',
-      2 => 'blog',
-      3 => 'dataset_request',
-      4 => 'forum',
-      5 => 'page',
-      6 => 'resource',
+      1 => 'blog',
+      2 => 'dataset_request',
+      3 => 'forum',
+      4 => 'page',
+      5 => 'resource',
     ),
   );
   $export['solr'] = $environment;

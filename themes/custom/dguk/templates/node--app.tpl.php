@@ -19,7 +19,6 @@
       <?php endif; ?>
     <?php endif; ?>
   </header>
-  <?php print theme_fivestar_static(array('rating' => $field_rating[0]['average'], 'stars' => 5)); ?>
   <?php
     // Hide comments, tags, and links now so that we can render them later.
     hide($content['links']);

@@ -196,9 +196,6 @@ function dguk_preprocess_replies(&$variables) {
 function dguk_preprocess_search_result(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'node-type-' . $variables['result']['bundle'];
-
-  // To properly display app rating.
-  drupal_add_css(drupal_get_path('module', 'fivestar') . '/css/fivestar.css');
 }
 
 /**
