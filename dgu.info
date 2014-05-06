@@ -22,12 +22,9 @@ dependencies[] = contact
 
 dependencies[] = admin_menu
 dependencies[] = features
-dependencies[] = strongarm
-dependencies[] = contextual
 dependencies[] = help
 dependencies[] = pathauto
 dependencies[] = token
-dependencies[] = search
 dependencies[] = syslog
 dependencies[] = admin_devel
 dependencies[] = admin_menu_toolbar
