@@ -141,7 +141,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->mode = 'default';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'What data would should be released',
+    'label' => 'What data should be released',
     'weight' => '3',
     'children' => array(
       0 => 'field_data_holder',
@@ -149,7 +149,7 @@ function dgu_data_set_request_field_group_info() {
     ),
     'format_type' => 'div',
     'format_settings' => array(
-      'label' => 'What data would should be released',
+      'label' => 'What data should be released',
       'instance_settings' => array(
         'classes' => '',
         'description' => '',
