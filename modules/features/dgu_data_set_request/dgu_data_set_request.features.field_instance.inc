@@ -32,7 +32,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 17,
+        'weight' => 10,
       ),
       'rss' => array(
         'label' => 'above',
@@ -87,7 +87,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 18,
       ),
       'rss' => array(
         'label' => 'above',
@@ -145,7 +145,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 18,
+        'weight' => 17,
       ),
       'rss' => array(
         'label' => 'above',
@@ -190,7 +190,7 @@ function dgu_data_set_request_field_default_field_instances() {
     'description' => 'Please give a broad overview of the benefits of this data being made available.',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -257,7 +257,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 20,
+        'weight' => 9,
       ),
       'rss' => array(
         'label' => 'above',
@@ -316,7 +316,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
@@ -381,7 +381,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 15,
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
@@ -462,7 +462,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 11,
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
@@ -531,7 +531,7 @@ function dgu_data_set_request_field_default_field_instances() {
     'description' => 'Identify the most appropriate data themes that relate to your request (please select at least one)',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'taxonomy',
         'settings' => array(
           'field_replies' => '',
@@ -541,7 +541,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 16,
+        'weight' => 11,
       ),
       'rss' => array(
         'label' => 'above',
@@ -596,7 +596,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'rss' => array(
         'label' => 'above',
@@ -701,7 +701,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
 <strong>Answers to this question will be treated confidentially.</strong>',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -711,7 +711,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 9,
       ),
       'rss' => array(
         'label' => 'above',
@@ -769,7 +769,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 3,
+        'weight' => 16,
       ),
       'rss' => array(
         'label' => 'above',
@@ -822,16 +822,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'text_default',
-        'weight' => 2,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 15,
       ),
       'rss' => array(
         'label' => 'above',
@@ -879,7 +872,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'list',
         'settings' => array(
           'field_replies' => '',
@@ -889,7 +882,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 1,
+        'weight' => 12,
       ),
       'rss' => array(
         'label' => 'above',
@@ -935,16 +928,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'list_default',
-        'weight' => 9,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',
@@ -990,16 +976,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'list_default',
-        'weight' => 12,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 13,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1061,7 +1040,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 14,
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1123,7 +1102,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 13,
+        'weight' => 0,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1185,7 +1164,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 21,
+        'weight' => 16,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1233,16 +1212,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'text_default',
-        'weight' => 0,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',

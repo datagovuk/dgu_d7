@@ -56,7 +56,7 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '19',
+            'weight' => '8',
             'visible' => TRUE,
           ),
           'rss' => array(
