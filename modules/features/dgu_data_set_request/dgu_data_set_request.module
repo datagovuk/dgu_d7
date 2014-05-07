@@ -11,6 +11,19 @@ define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (a
 
 include_once 'dgu_data_set_request.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
+  switch ($item['path']) {
+    case 'data-request/blogs':
+      drupal_set_title('ODUG Blogs');
+      break;
+    case 'data-request/minutes':
+      drupal_set_title('ODUG Minutes');
+      break;
+  }
+}
 
 function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'dataset_request') {
