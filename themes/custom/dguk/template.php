@@ -249,7 +249,7 @@ function dguk_get_data_menu() {
     ),
     'menu-data-requests' => array(
       'title' => 'Data Requests',
-      'href' => 'odug',
+      'href' => 'data-request',
     ),
     'menu-publishers' => array(
       'title' => 'Publishers',
