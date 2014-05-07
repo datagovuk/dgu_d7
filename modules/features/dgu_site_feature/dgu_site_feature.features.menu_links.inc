@@ -126,20 +126,6 @@ function dgu_site_feature_menu_default_menu_links() {
     'expanded' => 0,
     'weight' => 6,
   );
-  // Exported menu link: main-menu:odug
-  $menu_links['main-menu:odug'] = array(
-    'menu_name' => 'main-menu',
-    'link_path' => 'odug',
-    'router_path' => 'odug',
-    'link_title' => 'Data requests',
-    'options' => array(),
-    'module' => 'system',
-    'hidden' => 0,
-    'external' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
-    'weight' => 2,
-  );
   // Exported menu link: menu-apps:apps
   $menu_links['menu-apps:apps'] = array(
     'menu_name' => 'menu-apps',
@@ -292,7 +278,6 @@ function dgu_site_feature_menu_default_menu_links() {
   t('Blogs');
   t('Browse Apps');
   t('Data');
-  t('Data requests');
   t('Forum');
   t('Home');
   t('Library');

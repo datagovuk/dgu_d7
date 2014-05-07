@@ -10,12 +10,6 @@
 function dgu_site_feature_menu_default_menu_custom() {
   $menus = array();
 
-  // Exported menu: main-menu.
-  $menus['main-menu'] = array(
-    'menu_name' => 'main-menu',
-    'title' => 'Main menu',
-    'description' => 'The <em>Main</em> menu is used on many sites to show the major sections of the site, often in a top navigation bar.',
-  );
   // Exported menu: menu-apps.
   $menus['menu-apps'] = array(
     'menu_name' => 'menu-apps',
@@ -32,10 +26,8 @@ function dgu_site_feature_menu_default_menu_custom() {
   // Included for use with string extractors like potx.
   t('Apps');
   t('Interact');
-  t('Main menu');
   t('Sub navigation for \'Apps\' main navigation link');
   t('Sub navigation for \'Interact\' main navigation link');
-  t('The <em>Main</em> menu is used on many sites to show the major sections of the site, often in a top navigation bar.');
 
 
   return $menus;
