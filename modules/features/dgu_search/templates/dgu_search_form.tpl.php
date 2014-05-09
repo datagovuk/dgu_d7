@@ -32,7 +32,7 @@
       <div class="right-inner auto-height">
         <div class="chevron"></div>
         <div class="result-count"><?php print $form['count']['#value']?></div>
-        <div class="result-count-footer"><?php print $form['content_type']['#value']?>
+        <div class="result-count-footer result-count-type"><?php print $form['content_type']['#value']?>
         <?php if (isset($form['dataset_request_count']['#value'])): ?>
           <div class="result-private-dataset-request">
           <?php if (user_access('edit any dataset_request content')): ?>

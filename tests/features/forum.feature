@@ -72,7 +72,7 @@ Feature: Create new forum topic as a site user
     And I select "General discussion" from "Forums"
     When I press "Save draft"
     And I wait until the page loads
-    Then I should see "Your draft Forum topic has been created. Login to your profile to update it. You can submit this now or later"
+    Then I should see a message about created draft "Forum topic"
     And I should see node title "Test forum topic"
     When I submit "Forum topic" titled "Test forum topic" for moderation
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
