@@ -39,26 +39,24 @@ I should be able to submit a new app
     And I wait until the page loads
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
     And "Last updated" option in "Sort by:" should be selected
-    And I should see "FILTER BY CONTENT TYPE:" pane in "first" column in "second" row
-    And I should see "FILTER BY SECTOR:" pane in "first" column in "second" row
-    And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
-    And I should see "FILTER BY TAGS:" pane in "first" column in "second" row
+    And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
     And search result counter should contain "Apps"
 
-    #remove discrepancy - use 'apps' or 'Apps' in both links
   @anon @search
   Scenario: Use search box on Apps landing page
     Given I am on the homepage
     And I click "Apps"
     When I follow "Browse Apps"
     And I wait until the page loads
-    When I fill in "Search Apps..." with "data"
+    When I fill in "Search apps..." with "data"
     And I click search icon
     Then I should be on "/search/everything/data?f[0]=bundle%3Aapp&solrsort=score"
     And "Relevance" option in "Sort by:" should be selected
 
   @anon @search
-  Scenario: Use search box on Apps landing page
+  Scenario: Use search box on Apps search page
     Given I am on the homepage
     And I click "Apps"
     When I follow "Browse Apps"
@@ -67,7 +65,7 @@ I should be able to submit a new app
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
     And "Last updated" option in "Sort by:" should be selected
     And search result counter should contain "Apps"
-    When I fill in "Search Apps..." with "data"
+    When I fill in "Search apps..." with "data"
     And I click search icon
     Then "Relevance" option in "Sort by:" should be selected
     And search result counter should contain "Apps"

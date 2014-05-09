@@ -45,7 +45,7 @@ Feature: Create new forum topic as a site user
     And I fill in "Title" with "Test blog"
     When I press "Save draft"
     And I wait until the page loads
-    Then I should see "Your draft Blog entry has been created. Login to your profile to update it. You can submit this now or later"
+    Then I should see a message about created draft "Blog entry"
     And I should see node title "Test blog"
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"

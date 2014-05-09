@@ -59,6 +59,13 @@ local:
     Drupal\DrupalExtension\Extension:
       drush:
         alias: 'dgud7.local'
+local2:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://dgu_d7'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'dgud7.local2'
 dev:
   extensions:
     Behat\MinkExtension\Extension:

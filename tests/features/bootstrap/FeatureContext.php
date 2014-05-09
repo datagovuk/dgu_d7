@@ -86,7 +86,7 @@ class LocalDataRegistry {
 // class FeatureContext extends BehatContext
 class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 {
-  private $users = array();
+  protected $users = array();
   /**
    * Initializes context.
    * Every scenario gets its own context object.
@@ -96,6 +96,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   public function __construct(array $parameters)
   {
     $this->dataRegistry = new LocalDataRegistry();
+    $this->random = new Random();
+
     if (isset($parameters['drupal_users'])) {
       $this->drupal_users = $parameters['drupal_users'];
     }
@@ -228,11 +230,10 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
         $this->login();
         return TRUE;
       }
-
       // Create user.
       $user = (object) array(
         'name' => $user_name,
-        'pass' => Random::name(16),
+        'pass' => $this->random->name(16),
         'role' => $role,
       );
       $user->mail = $this->getMailAddress($user_name);
@@ -320,7 +321,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^search result counter should contain "([^"]*)"$/
    */
   public function searchResultCounterShouldContain($string) {
-    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-footer');
+    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-type');
     if (empty($search_counters)) {
       throw new Exception('Search counter not found');
     }
@@ -340,7 +341,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function iFillInWithRandomText($label) {
     // A @Tranform would be more elegant.
-    $randomString = strtolower(Random::name(10));
+    $randomString = strtolower($this->random->name(10));
     // Save this for later retrieval.
     HackyDataRegistry::set('random:' . $label, $randomString);
     $step = "I fill in \"$label\" with \"$randomString\"";
@@ -480,14 +481,14 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Then /^I should see a message about created draft "([^"]*)"$/
    */
   public function iShouldSeeAMessageAboutCreatedDraft($content_type) {
-    return $this->assertSuccessMessage("Your draft $content_type has been created. Login to your profile to update it. You can submit this now or later");
+    return $this->assertSuccessMessage("Your draft $content_type has been created. You can update it in My Drafts section.");
   }
 
   /**
    * @Then /^I should see a message about "([^"]*)" being submitted for moderation$/
    */
   public function iShouldSeeAMessageAboutBeingSubmittedForModeration($content_type) {
-    return $this->assertSuccessMessage("Your $content_type has been updated and submitted for moderation. Login to your profile to update it. You can submit this now or later");
+    return $this->assertSuccessMessage("Your $content_type has been updated and submitted for moderation. You can update it in Manage my content section.");
   }
 
 
@@ -522,7 +523,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   protected function getMailAddress($user) {
 
     if(empty($this->mailAddresses[$user])) {
-      $this->mailAddresses[$user] = $this->email['username'] . '+' . str_replace('_', '.', $user) . '.'  . Random::name(8) . '@'. $this->email['host'];
+      $this->mailAddresses[$user] = $this->email['username'] . '+' . str_replace('_', '.', $user) . '.'  . $this->random->name(8) . '@'. $this->email['host'];
     }
 
     return $this->mailAddresses[$user];
@@ -718,7 +719,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function iSubmitTitledForModeration($content_type, $title) {
     return array (
-      new Given("I follow \"profile\""),
+      new Given("I follow \"My Drafts\""),
+      new Given("I wait until the page loads"),
       new Given("I follow \"$title\""),
       new Given("I wait until the page loads"),
       new Given("I follow \"Edit draft\""),
@@ -726,7 +728,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I press \"Submit for moderation\""),
       new Given("I wait until the page loads"),
       new Given("I should see a message about \"$content_type\" being submitted for moderation"),
-      new Given("I follow \"profile\""),
+      new Given("I follow \"Manage my content\""),
       new Given("I wait until the page loads"),
       new Given("I should see the link \"$title\""),
       new Given("I follow \"My Drafts\""),
