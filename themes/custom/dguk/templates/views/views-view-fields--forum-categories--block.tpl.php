@@ -34,7 +34,7 @@ $new_topics = dgu_forum_topics_unread($row->tid);
   <?php print $fields['description']->content; ?>
 </div>
 <?php endif; ?>
-<div class="forum-category-stats">
+<div class="views-field views-field-stats forum-category-stats">
     <span><span class="counter"><?php print $fields['nid']->raw; ?></span> topics</span>
   <?php if ($new_topics): ?>
     <span class="new"><?php print $new_topics; ?> new</span>
