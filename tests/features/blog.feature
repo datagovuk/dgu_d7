@@ -1,8 +1,8 @@
 @javascript
-Feature: Create new forum topic as a site user
+Feature: Create blogs as a blogger
   In order to discuss a topic
-  As a site user
-  I should be able to post a new forum topic
+  As a blogger
+  I should be able to create blogs
 
   @anon
   Scenario: View latest blogs page
@@ -11,7 +11,7 @@ Feature: Create new forum topic as a site user
     When I follow "All Blogs"
     Then I should be on "/blog"
     And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row
-    And search result counter should contain "Blogs"
+    And search result counter should match "^\d* Blogs$"
 
   @anon
   Scenario: View most popular blogs page
@@ -19,7 +19,7 @@ Feature: Create new forum topic as a site user
     And I follow "Most popular Blogs"
     And I should be on "/blog/popular"
     And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row
-    And search result counter should contain "Blogs"
+    And search result counter should match "^\d* Blogs$"
 
   @anon
   Scenario: View the blog RSS
@@ -30,7 +30,6 @@ Feature: Create new forum topic as a site user
 
   @api
   Scenario: Create a new blogs entry with empty required fields
-    #todo - use blogger role
     Given I am logged in as a user with the "blogger" role
     And I visit "/node/add/blog"
     When I press "Save"

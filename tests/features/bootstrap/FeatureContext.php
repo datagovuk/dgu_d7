@@ -318,19 +318,28 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^search result counter should contain "([^"]*)"$/
+   * @Given /^search result counter should match "([^"]*)"$/
    */
-  public function searchResultCounterShouldContain($string) {
-    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-type');
+  public function searchResultCounterShouldMatch($regex) {
+    // Search for counter on landing pages first.
+    $search_counters = $this->getSession()->getPage()->findAll('css', '#dgu-search-form .right .right-inner');
     if (empty($search_counters)) {
-      throw new Exception('Search counter not found');
+      // If not found then search for counter on search page.
+      $search_counters = $this->getSession()->getPage()->findAll('css', '.pane-dgu-search-info .result-info');
+      if (empty($search_counters)) {
+        throw new Exception('Search counter not found');
+      }
     }
     foreach ($search_counters as $search_counter) {
+
+      $text = $search_counter->getText();
+      preg_match('/' . $regex . '/i', $text, $match);
+
       if (!$search_counter->isVisible()) {
         throw new Exception('Search counter found but it\'s not visible');
       }
-      elseif ($search_counter->getText() != $string) {
-        throw new Exception('Search counter found but it contains "' . $search_counter->getText() . '" not "' . $string . '"');
+      elseif (empty($match)) {
+        throw new Exception('Search counter found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
       }
       return;
     }
