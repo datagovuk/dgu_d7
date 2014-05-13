@@ -774,6 +774,36 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     return;
   }
 
+  /**
+   * @Then /^avatar in row "([^"]*)" of "([^"]*)" view should link to "([^"]*)"$/
+   */
+  public function avatarInRowOfViewShouldLinkTo($row, $view_display_id, $href) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $avatar = $view_row->find('css', '.field-avatar');
+    $link = $avatar->findLink('');
+    if (empty($link)) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" is not a link.');
+    }
+    elseif ($link->getAttribute('href') != $href) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" links to "' . $link->getAttribute('href') . '" instead of "' . $href . '".');
+    }
+
+    $img = $link->find('css', 'img');
+    if (empty($img)) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" doesn\' contain user picture.');
+    }
+
+    return;
+  }
 
   /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
