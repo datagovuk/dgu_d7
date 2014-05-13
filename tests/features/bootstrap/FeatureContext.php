@@ -322,27 +322,24 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function searchResultCounterShouldMatch($regex) {
     // Search for counter on landing pages first.
-    $search_counters = $this->getSession()->getPage()->findAll('css', '#dgu-search-form .right .right-inner');
-    if (empty($search_counters)) {
+    $search_counter = $this->getSession()->getPage()->find('css', '#dgu-search-form .right .right-inner');
+    if (empty($search_counter)) {
       // If not found then search for counter on search page.
-      $search_counters = $this->getSession()->getPage()->findAll('css', '.pane-dgu-search-info .result-info');
-      if (empty($search_counters)) {
+      $search_counter = $this->getSession()->getPage()->find('css', '.pane-dgu-search-info .result-info');
+      if (empty($search_counter)) {
         throw new Exception('Search counter not found');
       }
     }
-    foreach ($search_counters as $search_counter) {
+    $text = $search_counter->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
 
-      $text = $search_counter->getText();
-      preg_match('/' . $regex . '/i', $text, $match);
-
-      if (!$search_counter->isVisible()) {
-        throw new Exception('Search counter found but it\'s not visible');
-      }
-      elseif (empty($match)) {
-        throw new Exception('Search counter found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
-      }
-      return;
+    if (!$search_counter->isVisible()) {
+      throw new Exception('Search counter found but it\'s not visible');
     }
+    elseif (empty($match)) {
+      throw new Exception('Search counter found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+    return;
   }
 
    /**
@@ -423,6 +420,58 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       }
     }
   }
+
+  /**
+   * @Given /^I should see the following <breadcrumbs>$/
+   */
+  public function iShouldSeeTheFollowingBreadcrumbs(TableNode $breadcrumbs) {
+
+    if (empty($breadcrumbs)) {
+      throw new Exception('Breadcrumbs list passed to the function is empty.');
+    }
+    $breadcrumbs = array_keys($breadcrumbs->getRowsHash());
+
+    $breadcrumbs_element = $this->getSession()->getPage()->find('css', '#breadcrumbs');
+    if (empty($breadcrumbs_element)) {
+      throw new Exception('Breadcrumbs not found.');
+    }
+
+    $items = $breadcrumbs_element->findAll('css', 'li');
+
+    $home = array_shift($items);
+    if ($home->find('css', 'a')->getAttribute('href') != '/') {
+      throw new Exception('First breadcrumb is not the homepage.');
+    }
+
+    if (empty($items)) {
+      throw new Exception('No breadcrumbs apart home has been found.');
+    }
+
+    $last_element = array_pop($items);
+    $last_breadcrumb = array_pop($breadcrumbs);
+
+    if ($last_element->getText() != $last_breadcrumb) {
+      throw new Exception('Last breadcumb is not "' . $last_breadcrumb . '".');
+    }
+    elseif ($last_element->findLink($last_breadcrumb)) {
+      throw new Exception('Last breadcumb "' . $last_breadcrumb . '" is a link.');
+    }
+
+    if (count($items) != count($breadcrumbs)) {
+      $items_count = count($items);
+      $breadcrumb_count = count($breadcrumbs);
+      $symbol = $items_count > $breadcrumb_count ? 'less' : 'greater';
+      throw new Exception('Nuber of breadcrumbs passed to the function is ' . $symbol . ' than number of breadcumbs found.');
+    }
+
+    foreach ($items as $key => $item) {
+      if (!$item->findLink($breadcrumbs[$key])) {
+        throw new Exception('Breadcrumb "' . $key + 1 . '" is not "' . $breadcrumbs[$key] . '".');
+      };
+    }
+
+  }
+
 
   /**
    * @Given /^I should see "([^"]*)" block in "([^"]*)" column in "([^"]*)" row$/
@@ -692,6 +741,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       throw new \Exception(sprintf("Node title missing on the page %s", $title, $this->getSession()->getCurrentUrl()));
     }
   }
+
   /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
    */
@@ -715,13 +765,11 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     imagedestroy($image);
   }
 
-
   /**
    * @Given /^TEST$/
    */
   public function test() {
   }
-
 
   /**
    * @Given /^I submit "([^"]*)" titled "([^"]*)" for moderation$/
