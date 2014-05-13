@@ -743,6 +743,44 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^view "([^"]*)" view should have "([^"]*)" rows$/
+   */
+  public function viewViewShouldHaveRows($view_display_id, $rows) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+    $view_rows = $view->findAll('css', '.views-row');
+    if (count($view_rows) != $rows) {
+      throw new \Exception('View with display id "' . $view_display_id . '" has ' . count($view_rows) . ' rows instead of ' . $rows. '.');
+    }
+  }
+
+  /**
+   * @Given /^pager in "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function pagerInViewShouldMatch($view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+    $pager = $view->find('css', '.pagination');
+
+    if (empty($pager)) {
+      throw new \Exception('View "' . $view_display_id . '" doesn\' have a pager.');
+    }
+
+    $text = $pager->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (empty($match)) {
+      throw new Exception('Pager in view "' . $view_display_id. '" contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+
+  }
+
+
+  /**
    * @Then /^"([^"]*)" field in row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
    */
   public function fieldInRowOfViewShouldMatch($field_name, $row, $view_display_id, $regex) {
