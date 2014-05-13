@@ -743,6 +743,39 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Then /^"([^"]*)" field in row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function fieldInRowOfViewShouldMatch($field_name, $row, $view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $field = $view_row->find('css', '.views-field-' . $field_name);
+
+    if (empty($field)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" not found.');
+    }
+
+    $text = $field->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (!$field->isVisible()) {
+      throw new Exception('Field "' . $field_name. '" found but it\'s not visible');
+    }
+    elseif (empty($match)) {
+      throw new Exception('Field "' . $field_name. '" found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+    return;
+  }
+
+
+  /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
    */
 
