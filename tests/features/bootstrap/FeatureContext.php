@@ -771,7 +771,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     elseif (empty($match)) {
       throw new Exception('Field "' . $field_name. '" found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
     }
-    return;
   }
 
   /**
@@ -801,9 +800,30 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     if (empty($img)) {
       throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" doesn\' contain user picture.');
     }
-
-    return;
   }
+
+  /**
+   * @Then /^row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function rowOfViewShouldMatch($row, $view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $row_content = $view_row->getText();
+    preg_match('/' . $regex . '/i', $row_content, $match);
+
+    if (empty($match)) {
+      throw new Exception('Row "' . $row . '" of view "' . $view_display_id . '" contains "' . $row_content . '" what doesn\'t match "' . $regex . '"');
+    }
+  }
+
 
   /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
