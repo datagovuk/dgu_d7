@@ -13,7 +13,7 @@ I should be able to submit a new app
     Then I should be on "/apps"
     And I should see "LATEST APPS" pane in "first" column in "third" row
     And I should see "TOP RATED APPS" pane in "last" column in "third" row
-    And search result counter should contain "Apps"
+    And search result counter should match "^\d* Apps$"
 
   @anon
   Scenario: View latest apps RSS
@@ -42,7 +42,7 @@ I should be able to submit a new app
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
     And I should see "TAGS" pane in "first" column in "first" row
-    And search result counter should contain "Apps"
+    And search result counter should match "^\d* Apps$"
 
   @anon @search
   Scenario: Use search box on Apps landing page
@@ -64,11 +64,11 @@ I should be able to submit a new app
     And I click search icon
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
     And "Last updated" option in "Sort by:" should be selected
-    And search result counter should contain "Apps"
+    And search result counter should match "^\d* Apps$"
     When I fill in "Search apps..." with "data"
     And I click search icon
     Then "Relevance" option in "Sort by:" should be selected
-    And search result counter should contain "Apps"
+    And search result counter should match "^\d* Apps$"
 
   @api
   Scenario: Create a new app and test moderation workflow

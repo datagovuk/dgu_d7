@@ -11,7 +11,7 @@ Feature: Create new forum topic as a site user
     When I follow "All Forums"
     Then I should be on "/forum"
     And I should see the link "Login to take part in forums »"
-    And search result counter should contain "Forum topics"
+    And search result counter should match "^\d* Forum topics$"
 
   @anon
   Scenario: View the latest forum topics RSS
@@ -26,7 +26,7 @@ Feature: Create new forum topic as a site user
     When I follow "Most popular topics"
     Then I should be on "/forum/popular"
     And I should see the link "Login to take part in forums »"
-    And search result counter should contain "Forum topics"
+    And search result counter should match "^\d* Forum topics$"
 
   @anon
   Scenario: View the most popular forum topics RSS
@@ -41,7 +41,7 @@ Feature: Create new forum topic as a site user
     When I follow "Forum categories"
     And I should be on "/forum/categories"
     And I should see the link "Login to take part in forums »"
-    And search result counter should contain "Forum topics"
+    And search result counter should match "^\d* Forum topics$"
 
   @anon
   Scenario: View the forum category page

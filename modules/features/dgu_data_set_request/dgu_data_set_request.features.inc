@@ -40,7 +40,7 @@ function dgu_data_set_request_node_info() {
       'description' => t('You can create a data request for any data that you believe should be released as open Data but you have had difficulty obtaining.  You will be asked questions about how you plan to use the data and what benefits you can see to releasing this data.  You may choose to keep your data request confidential.  Before creating a new data request please look through any published data requests to make sure that someone else has not already started this process.'),
       'has_title' => '1',
       'title_label' => t('Dataset name'),
-      'help' => t('Please enter the name of the dataset you require.'),
+      'help' => '',
     ),
   );
   return $items;

@@ -928,7 +928,7 @@ return $node->uid;
   $handler->display->display_options['filters']['uid_raw']['value']['value'] = '3';
 
   /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  $handler = $view->new_display('block', 'Block', 'frequent_bloggers');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;

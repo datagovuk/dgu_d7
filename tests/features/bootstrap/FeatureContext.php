@@ -318,22 +318,28 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^search result counter should contain "([^"]*)"$/
+   * @Given /^search result counter should match "([^"]*)"$/
    */
-  public function searchResultCounterShouldContain($string) {
-    $search_counters = $this->getSession()->getPage()->findAll('css', '.result-count-type');
-    if (empty($search_counters)) {
-      throw new Exception('Search counter not found');
-    }
-    foreach ($search_counters as $search_counter) {
-      if (!$search_counter->isVisible()) {
-        throw new Exception('Search counter found but it\'s not visible');
+  public function searchResultCounterShouldMatch($regex) {
+    // Search for counter on landing pages first.
+    $search_counter = $this->getSession()->getPage()->find('css', '#dgu-search-form .right .right-inner');
+    if (empty($search_counter)) {
+      // If not found then search for counter on search page.
+      $search_counter = $this->getSession()->getPage()->find('css', '.pane-dgu-search-info .result-info');
+      if (empty($search_counter)) {
+        throw new Exception('Search counter not found');
       }
-      elseif ($search_counter->getText() != $string) {
-        throw new Exception('Search counter found but it contains "' . $search_counter->getText() . '" not "' . $string . '"');
-      }
-      return;
     }
+    $text = $search_counter->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (!$search_counter->isVisible()) {
+      throw new Exception('Search counter found but it\'s not visible');
+    }
+    elseif (empty($match)) {
+      throw new Exception('Search counter found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+    return;
   }
 
    /**
@@ -414,6 +420,58 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       }
     }
   }
+
+  /**
+   * @Given /^I should see the following <breadcrumbs>$/
+   */
+  public function iShouldSeeTheFollowingBreadcrumbs(TableNode $breadcrumbs) {
+
+    if (empty($breadcrumbs)) {
+      throw new Exception('Breadcrumbs list passed to the function is empty.');
+    }
+    $breadcrumbs = array_keys($breadcrumbs->getRowsHash());
+
+    $breadcrumbs_element = $this->getSession()->getPage()->find('css', '#breadcrumbs');
+    if (empty($breadcrumbs_element)) {
+      throw new Exception('Breadcrumbs not found.');
+    }
+
+    $items = $breadcrumbs_element->findAll('css', 'li');
+
+    $home = array_shift($items);
+    if ($home->find('css', 'a')->getAttribute('href') != '/') {
+      throw new Exception('First breadcrumb is not the homepage.');
+    }
+
+    if (empty($items)) {
+      throw new Exception('No breadcrumbs apart home has been found.');
+    }
+
+    $last_element = array_pop($items);
+    $last_breadcrumb = array_pop($breadcrumbs);
+
+    if ($last_element->getText() != $last_breadcrumb) {
+      throw new Exception('Last breadcumb is not "' . $last_breadcrumb . '".');
+    }
+    elseif ($last_element->findLink($last_breadcrumb)) {
+      throw new Exception('Last breadcumb "' . $last_breadcrumb . '" is a link.');
+    }
+
+    if (count($items) != count($breadcrumbs)) {
+      $items_count = count($items);
+      $breadcrumb_count = count($breadcrumbs);
+      $symbol = $items_count > $breadcrumb_count ? 'less' : 'greater';
+      throw new Exception('Nuber of breadcrumbs passed to the function is ' . $symbol . ' than number of breadcumbs found.');
+    }
+
+    foreach ($items as $key => $item) {
+      if (!$item->findLink($breadcrumbs[$key])) {
+        throw new Exception('Breadcrumb "' . $key + 1 . '" is not "' . $breadcrumbs[$key] . '".');
+      };
+    }
+
+  }
+
 
   /**
    * @Given /^I should see "([^"]*)" block in "([^"]*)" column in "([^"]*)" row$/
@@ -683,6 +741,181 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       throw new \Exception(sprintf("Node title missing on the page %s", $title, $this->getSession()->getCurrentUrl()));
     }
   }
+
+  /**
+   * @Given /^view "([^"]*)" view should have "([^"]*)" rows$/
+   */
+  public function viewViewShouldHaveRows($view_display_id, $rows) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+    $view_rows = $view->findAll('css', '.views-row');
+    if (count($view_rows) != $rows) {
+      throw new \Exception('View with display id "' . $view_display_id . '" has ' . count($view_rows) . ' rows instead of ' . $rows. '.');
+    }
+  }
+
+  /**
+   * @Given /^pager in "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function pagerInViewShouldMatch($view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+    $pager = $view->find('css', '.pagination');
+
+    if (empty($pager)) {
+      throw new \Exception('View "' . $view_display_id . '" doesn\' have a pager.');
+    }
+
+    $text = $pager->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (empty($match)) {
+      throw new Exception('Pager in view "' . $view_display_id. '" contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+  }
+
+  /**
+   * @Given /^pager should match "([^"]*)"$/
+   */
+  public function pagerShouldMatch($regex) {
+    $pager = $this->getSession()->getPage()->find('css', '.pagination');
+
+    if (empty($pager)) {
+      throw new \Exception('Pager not found.');
+    }
+
+    $text = $pager->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (empty($match)) {
+      throw new Exception('Pager contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+  }
+
+
+  /**
+   * @Then /^"([^"]*)" field in row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function fieldInRowOfViewShouldMatch($field_name, $row, $view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $field = $view_row->find('css', '.views-field-' . $field_name);
+
+    if (empty($field)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" not found.');
+    }
+
+    $text = $field->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (!$field->isVisible()) {
+      throw new Exception('Field "' . $field_name. '" found but it\'s not visible');
+    }
+    elseif (empty($match)) {
+      throw new Exception('Field "' . $field_name. '" found but it contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
+  }
+
+  /**
+   * @Then /^avatar in row "([^"]*)" of "([^"]*)" view should link to "([^"]*)"$/
+   */
+  public function avatarInRowOfViewShouldLinkTo($row, $view_display_id, $href) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $avatar = $view_row->find('css', '.field-avatar');
+    $link = $avatar->findLink('');
+    if (empty($link)) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" is not a link.');
+    }
+    elseif ($link->getAttribute('href') != $href) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" links to "' . $link->getAttribute('href') . '" instead of "' . $href . '".');
+    }
+
+    $img = $link->find('css', 'img');
+    if (empty($img)) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" doesn\' contain user picture.');
+    }
+  }
+
+  /**
+   * @Then /^row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
+   */
+  public function rowOfViewShouldMatch($row, $view_display_id, $regex) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $row_content = $view_row->getText();
+    preg_match('/' . $regex . '/i', $row_content, $match);
+
+    if (empty($match)) {
+      throw new Exception('Row "' . $row . '" of view "' . $view_display_id . '" contains "' . $row_content . '" what doesn\'t match "' . $regex . '"');
+    }
+  }
+
+  /**
+   * @Then /^"([^"]*)" item in "([^"]*)" subnav should be active$/
+   */
+  public function itemInSubnavShouldBeActive($item, $menu) {
+    $subnav = $this->getSession()->getPage()->find('css', '.subnav-' . strtolower($menu));
+    if (empty($subnav)) {
+      throw new \Exception('"' . $menu . '" sub navigation not found.');
+    }
+    elseif (!$subnav->isVisible()) {
+      throw new Exception('"' . $menu . '" sub navigation is not active sub navigation');
+    }
+
+    $link = $subnav->findLink($item);
+    if (empty($link)) {
+      throw new \Exception('"' . $item . '" menu item not found.');
+    }
+
+    $classes = $link->getAttribute('class');
+    if (strpos($classes,'active') === false) {
+      throw new \Exception('"' . $item . '" menu item is not active.');
+    }
+
+  }
+
+  /**
+   * @Given /^there should be "([^"]*)" search results on the page$/
+   */
+  public function thereShouldBeSearchResultsOnThePage($expected_number) {
+    $items = $this->getSession()->getPage()->findAll('css', '.search-results .search-result');
+    if (empty($items)) {
+      throw new \Exception('No search results found.');
+    }
+    if (count($items) != $expected_number) {
+      throw new \Exception('There are ' . count($items) . ' search results instead of ' . $expected_number . '.');
+    }
+  }
+
   /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
    */
@@ -706,13 +939,11 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     imagedestroy($image);
   }
 
-
   /**
    * @Given /^TEST$/
    */
   public function test() {
   }
-
 
   /**
    * @Given /^I submit "([^"]*)" titled "([^"]*)" for moderation$/
