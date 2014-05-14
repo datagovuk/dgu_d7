@@ -296,9 +296,9 @@ function dgu_blog_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
-      'override_title' => 1,
-      'override_title_text' => 'Frequent bloggers',
+      'display' => 'frequent_bloggers',
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -481,9 +481,9 @@ function dgu_blog_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
-      'override_title' => 1,
-      'override_title_text' => 'Frequent bloggers',
+      'display' => 'frequent_bloggers',
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
