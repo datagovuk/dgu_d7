@@ -776,7 +776,24 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     if (empty($match)) {
       throw new Exception('Pager in view "' . $view_display_id. '" contains "' . $text . '" which doesn\'t match "' . $regex . '"');
     }
+  }
 
+  /**
+   * @Given /^pager should match "([^"]*)"$/
+   */
+  public function pagerShouldMatch($regex) {
+    $pager = $this->getSession()->getPage()->find('css', '.pagination');
+
+    if (empty($pager)) {
+      throw new \Exception('Pager not found.');
+    }
+
+    $text = $pager->getText();
+    preg_match('/' . $regex . '/i', $text, $match);
+
+    if (empty($match)) {
+      throw new Exception('Pager contains "' . $text . '" which doesn\'t match "' . $regex . '"');
+    }
   }
 
 
@@ -884,6 +901,19 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       throw new \Exception('"' . $item . '" menu item is not active.');
     }
 
+  }
+
+  /**
+   * @Given /^there should be "([^"]*)" search results on the page$/
+   */
+  public function thereShouldBeSearchResultsOnThePage($expected_number) {
+    $items = $this->getSession()->getPage()->findAll('css', '.search-results .search-result');
+    if (empty($items)) {
+      throw new \Exception('No search results found.');
+    }
+    if (count($items) != $expected_number) {
+      throw new \Exception('There are ' . count($items) . ' search results instead of ' . $expected_number . '.');
+    }
   }
 
   /**
