@@ -862,6 +862,29 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * @Then /^"([^"]*)" item in "([^"]*)" subnav should be active$/
+   */
+  public function itemInSubnavShouldBeActive($item, $menu) {
+    $subnav = $this->getSession()->getPage()->find('css', '.subnav-' . strtolower($menu));
+    if (empty($subnav)) {
+      throw new \Exception('"' . $menu . '" sub navigation not found.');
+    }
+    elseif (!$subnav->isVisible()) {
+      throw new Exception('"' . $menu . '" sub navigation is not active sub navigation');
+    }
+
+    $link = $subnav->findLink($item);
+    if (empty($link)) {
+      throw new \Exception('"' . $item . '" menu item not found.');
+    }
+
+    $classes = $link->getAttribute('class');
+    if (strpos($classes,'active') === false) {
+      throw new \Exception('"' . $item . '" menu item is not active.');
+    }
+
+  }
 
   /**
    * @Given /^I have an image "([^"]*)" x "([^"]*)" pixels titled "([^"]*)" located in "([^"]*)" folder$/
