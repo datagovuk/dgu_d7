@@ -83,7 +83,7 @@
 <div id="greenbar" class="">
     <div class="container">
       <?php print $data_menu; ?>
-      <?php print $apps_menu; ?>
+      <?php //print $apps_menu; // Comment out because it can be used in the future. Disable for now because it contains only one item. ?>
       <?php print $interact_menu; ?>
     </div>
 </div>
