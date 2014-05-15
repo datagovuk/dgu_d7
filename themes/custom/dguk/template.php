@@ -271,6 +271,10 @@ function dguk_get_data_menu() {
       'title' => 'Site Analytics',
       'href' => 'data/site-usage',
     ),
+    'menu-reports' => array(
+      'title' => 'Reports',
+      'href' => 'data/report',
+    ),
   );
 
   global $user;
