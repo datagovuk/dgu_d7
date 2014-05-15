@@ -55,6 +55,7 @@ features[menu_links][] = menu-apps-tabs:apps/top
 features[node][] = app
 features[page_manager_handlers][] = node_view_panel_context_5
 features[page_manager_pages][] = apps
+features[page_manager_pages][] = top_rated_apps
 features[user_permission][] = create app content
 features[user_permission][] = delete any app content
 features[user_permission][] = delete own app content
