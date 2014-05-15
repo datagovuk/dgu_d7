@@ -124,7 +124,7 @@ function dgu_app_default_page_manager_pages() {
   $page->api_version = 1;
   $page->name = 'apps';
   $page->task = 'page';
-  $page->admin_title = 'Apps';
+  $page->admin_title = 'Latest apps';
   $page->admin_description = 'Apps landing page';
   $page->path = 'apps';
   $page->access = array(
@@ -190,40 +190,31 @@ function dgu_app_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-1';
-    $pane->panel = 'bottom_left';
-    $pane->type = 'views';
-    $pane->subtype = 'apps';
+    $pane->panel = 'bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'menu-menu-apps-tabs';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_pager_settings' => 0,
-      'use_pager' => 0,
-      'nodes_per_page' => '8',
-      'pager_id' => '0',
-      'offset' => '0',
-      'more_link' => 0,
-      'feed_icons' => 0,
-      'panel_args' => 0,
-      'link_to_view' => 0,
-      'args' => '',
-      'url' => '',
-      'display' => 'block',
       'override_title' => 1,
-      'override_title_text' => 'Latest apps <a class="rss-icon" href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
       'settings' => NULL,
     );
-    $pane->css = array();
+    $pane->css = array(
+      'css_id' => 'menu-tabs',
+      'css_class' => '',
+    );
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['bottom_left'][0] = 'new-1';
+    $display->panels['bottom'][0] = 'new-1';
     $pane = new stdClass();
     $pane->pid = 'new-2';
-    $pane->panel = 'bottom_right';
+    $pane->panel = 'bottom';
     $pane->type = 'views';
     $pane->subtype = 'apps';
     $pane->shown = TRUE;
@@ -240,9 +231,9 @@ function dgu_app_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block_1',
+      'display' => 'latest_apps',
       'override_title' => 1,
-      'override_title_text' => 'Top rated apps <a class="rss-icon" href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>',
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -250,10 +241,10 @@ function dgu_app_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
     $display->content['new-2'] = $pane;
-    $display->panels['bottom_right'][0] = 'new-2';
+    $display->panels['bottom'][1] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
     $pane->panel = 'top';
@@ -340,7 +331,7 @@ function dgu_app_default_page_manager_pages() {
     $display->content['new-6'] = $pane;
     $display->panels['top_right'][0] = 'new-6';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['apps'] = $page;

@@ -25,47 +25,46 @@ function dgu_app_views_default_views() {
   $handler->display->display_options['title'] = 'Latest apps';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['cache']['type'] = 'time';
-  $handler->display->display_options['cache']['results_lifespan'] = '300';
-  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
-  $handler->display->display_options['cache']['output_lifespan'] = '300';
-  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '8';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '3';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '«';
+  $handler->display->display_options['pager']['options']['tags']['next'] = '»';
+  $handler->display->display_options['pager']['options']['tags']['last'] = '';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Global: Custom text */
-  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['table'] = 'views';
-  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = '';
-  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<img src="/assets/img/apps.png" />';
-  $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = '';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Your name */
-  $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['label'] = '';
-  $handler->display->display_options['fields']['field_submitter_name']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_submitter_name']['alter']['text'] = 'by [field_submitter_name]';
-  $handler->display->display_options['fields']['field_submitter_name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_submitter_name']['settings'] = array(
+  /* Field: Content: Screen shots */
+  $handler->display->display_options['fields']['field_screen_shots']['id'] = 'field_screen_shots';
+  $handler->display->display_options['fields']['field_screen_shots']['table'] = 'field_data_field_screen_shots';
+  $handler->display->display_options['fields']['field_screen_shots']['field'] = 'field_screen_shots';
+  $handler->display->display_options['fields']['field_screen_shots']['label'] = '';
+  $handler->display->display_options['fields']['field_screen_shots']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_screen_shots']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_screen_shots']['settings'] = array(
+    'image_style' => 'apps_thumbnail',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
       'field_replies_revision' => '',
     ),
   );
+  $handler->display->display_options['fields']['field_screen_shots']['delta_limit'] = '1';
+  $handler->display->display_options['fields']['field_screen_shots']['delta_offset'] = '0';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '40';
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   /* Field: Content: rating */
   $handler->display->display_options['fields']['field_rating']['id'] = 'field_rating';
   $handler->display->display_options['fields']['field_rating']['table'] = 'field_data_field_rating';
@@ -107,17 +106,28 @@ function dgu_app_views_default_views() {
   );
 
   /* Display: Latest apps */
-  $handler = $view->new_display('block', 'Latest apps', 'block');
+  $handler = $view->new_display('block', 'Latest apps', 'latest_apps');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
-  $handler->display->display_options['block_description'] = 'apps/latest/rss.xml';
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = '<a class="rss-icon" href="/apps/latest/rss.xml"><i class="icon-rss-sign"></i></a>';
+  $handler->display->display_options['header']['area']['format'] = 'full_html';
 
   /* Display: Top rated apps */
-  $handler = $view->new_display('block', 'Top rated apps', 'block_1');
+  $handler = $view->new_display('block', 'Top rated apps', 'top_rated_apps');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Top rated apps';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
+  /* Header: Global: Text area */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = '<a class="rss-icon" href="/apps/top/rss.xml"><i class="icon-rss-sign"></i></a>';
+  $handler->display->display_options['header']['area']['format'] = 'full_html';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Votes average */
   $handler->display->display_options['relationships']['votingapi_cache']['id'] = 'votingapi_cache';
