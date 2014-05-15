@@ -49,6 +49,7 @@ features[field_instance][] = node-app-field_submitter_email
 features[field_instance][] = node-app-field_submitter_name
 features[field_instance][] = node-app-field_tags
 features[field_instance][] = node-app-field_uses_dataset
+features[image][] = apps_thumbnail
 features[menu_custom][] = menu-apps-tabs
 features[menu_links][] = menu-apps-tabs:apps
 features[menu_links][] = menu-apps-tabs:apps/top
