@@ -395,10 +395,14 @@ Paul Fenton<br/>
       'admin_title' => '',
       'title' => 'Useful links',
       'body' => '<a href="http://www.theodi.org ">The Open Data Institute</a>
+<br/>
 <a href="http://www.bis.gov.uk/transparency/data-strategy-board ">The Data Strategy board</a>
+<br/>
 <a href="http://www.cabinetoffice.gov.uk/content/open-data-user-group ">Cabinet Office ODUG page</a>
-<a href="http://www.bis.gov.uk/policies/shareholderexecutive/structure/portfolio-unit/public-data-group/background">Public Data Group</a>',
-      'format' => 'filtered_html',
+<br/>
+<a href="https://www.gov.uk/government/groups/public-data-group">Public Data Group</a>
+',
+      'format' => 'unfiltered',
       'substitute' => TRUE,
     );
     $pane->cache = array();
