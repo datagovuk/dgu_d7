@@ -8,6 +8,19 @@ define('APP_MODERATION_PERMISSION', 'edit any app content');
 
 include_once 'dgu_app.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_app_menu_breadcrumb_alter(&$active_trail, $item) {
+  if ($item['path'] == 'apps') {
+    drupal_set_title('Apps');
+  }
+  elseif ($item['path'] == 'apps/top') {
+    $active_trail = array(array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()), array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()));
+    drupal_set_title('Top rated apps');
+  }
+}
+
 function dgu_app_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'app') {
     return user_access(APP_MODERATION_PERMISSION);
