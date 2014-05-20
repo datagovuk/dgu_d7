@@ -247,6 +247,87 @@ function dgu_app_default_page_manager_pages() {
     $display->panels['bottom'][1] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Add your app (for authenticated users)',
+      'title' => '',
+      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/app">Add your app &raquo;</a></p>
+',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'unboxed',
+    );
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-3'] = $pane;
+    $display->panels['bottom'][2] = 'new-3';
+    $pane = new stdClass();
+    $pane->pid = 'new-4';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 1,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Add your app (for anonymous users)',
+      'title' => '',
+      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/apps">Login to add your app &raquo;</a></p>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'unboxed',
+    );
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $display->content['new-4'] = $pane;
+    $display->panels['bottom'][3] = 'new-4';
+    $pane = new stdClass();
+    $pane->pid = 'new-5';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -268,10 +349,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['top'][0] = 'new-3';
+    $display->content['new-5'] = $pane;
+    $display->panels['top'][0] = 'new-5';
     $pane = new stdClass();
-    $pane->pid = 'new-4';
+    $pane->pid = 'new-6';
     $pane->panel = 'top_left';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:19';
@@ -288,10 +369,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['top_left'][0] = 'new-4';
+    $display->content['new-6'] = $pane;
+    $display->panels['top_left'][0] = 'new-6';
     $pane = new stdClass();
-    $pane->pid = 'new-5';
+    $pane->pid = 'new-7';
     $pane->panel = 'top_middle';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:20';
@@ -308,10 +389,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['top_middle'][0] = 'new-5';
+    $display->content['new-7'] = $pane;
+    $display->panels['top_middle'][0] = 'new-7';
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-8';
     $pane->panel = 'top_right';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:21';
@@ -328,8 +409,8 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['top_right'][0] = 'new-6';
+    $display->content['new-8'] = $pane;
+    $display->panels['top_right'][0] = 'new-8';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -406,7 +487,7 @@ function dgu_app_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-9';
     $pane->panel = 'bottom';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-apps-tabs';
@@ -427,10 +508,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['bottom'][0] = 'new-7';
+    $display->content['new-9'] = $pane;
+    $display->panels['bottom'][0] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-10';
     $pane->panel = 'bottom';
     $pane->type = 'views';
     $pane->subtype = 'apps';
@@ -460,10 +541,91 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['bottom'][1] = 'new-8';
+    $display->content['new-10'] = $pane;
+    $display->panels['bottom'][1] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-11';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 2,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Add your app (for authenticated users)',
+      'title' => '',
+      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/app">Add your app &raquo;</a></p>',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'unboxed',
+    );
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-11'] = $pane;
+    $display->panels['bottom'][2] = 'new-11';
+    $pane = new stdClass();
+    $pane->pid = 'new-12';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 1,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Add your app (for anonymous users)',
+      'title' => '',
+      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/apps">Login to add your app &raquo;</a></p>
+',
+      'format' => 'filtered_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => 'unboxed',
+    );
+    $pane->extras = array();
+    $pane->position = 3;
+    $pane->locks = array();
+    $display->content['new-12'] = $pane;
+    $display->panels['bottom'][3] = 'new-12';
+    $pane = new stdClass();
+    $pane->pid = 'new-13';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -485,10 +647,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['top'][0] = 'new-9';
+    $display->content['new-13'] = $pane;
+    $display->panels['top'][0] = 'new-13';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-14';
     $pane->panel = 'top_left';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:19';
@@ -505,10 +667,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['top_left'][0] = 'new-10';
+    $display->content['new-14'] = $pane;
+    $display->panels['top_left'][0] = 'new-14';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-15';
     $pane->panel = 'top_middle';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:20';
@@ -525,10 +687,10 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['top_middle'][0] = 'new-11';
+    $display->content['new-15'] = $pane;
+    $display->panels['top_middle'][0] = 'new-15';
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-16';
     $pane->panel = 'top_right';
     $pane->type = 'fieldable_panels_pane';
     $pane->subtype = 'fpid:21';
@@ -545,8 +707,8 @@ function dgu_app_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['top_right'][0] = 'new-12';
+    $display->content['new-16'] = $pane;
+    $display->panels['top_right'][0] = 'new-16';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

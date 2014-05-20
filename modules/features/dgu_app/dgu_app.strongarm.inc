@@ -53,7 +53,7 @@ function dgu_app_strongarm() {
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '10',
+            'weight' => '9',
             'visible' => TRUE,
           ),
           'rss' => array(

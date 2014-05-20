@@ -28,7 +28,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 7,
+        'weight' => 6,
       ),
       'rss' => array(
         'label' => 'hidden',
@@ -109,7 +109,7 @@ function dgu_app_field_default_field_instances() {
     'description' => 'This information will not relayed to other users of the site.',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'list',
         'settings' => array(
           'field_replies' => '',
@@ -119,7 +119,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 3,
+        'weight' => 5,
       ),
       'rss' => array(
         'label' => 'above',
@@ -171,7 +171,7 @@ function dgu_app_field_default_field_instances() {
     'description' => 'Enter the URL of this app.',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'link',
         'settings' => array(
           'field_replies' => '',
@@ -181,7 +181,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 2,
+        'weight' => 4,
       ),
       'rss' => array(
         'label' => 'above',
@@ -249,10 +249,17 @@ function dgu_app_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 4,
+        'label' => 'hidden',
+        'module' => 'taxonomy',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
@@ -355,7 +362,7 @@ function dgu_app_field_default_field_instances() {
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'inline',
         'module' => 'text',
         'settings' => array(
           'field_replies' => '',
@@ -443,7 +450,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'fivestar_formatter_default',
-        'weight' => 1,
+        'weight' => 3,
       ),
       'rss' => array(
         'label' => 'inline',
@@ -514,7 +521,7 @@ The first images will be shown as a small thumbnail (253x140 pixels) in previews
 All images will be shown on your app page with medium sized thumbnails (188 pixels wide) which click through to the full sized image',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'image',
         'settings' => array(
           'field_replies' => '',
@@ -526,7 +533,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 9,
+        'weight' => 8,
       ),
       'rss' => array(
         'label' => 'above',
@@ -594,7 +601,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 6,
+        'weight' => 11,
       ),
       'rss' => array(
         'label' => 'above',
@@ -642,7 +649,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'rss' => array(
         'label' => 'above',
@@ -692,7 +699,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'rss' => array(
         'label' => 'above',
@@ -740,7 +747,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
     'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'taxonomy',
         'settings' => array(
           'field_replies' => '',
@@ -750,7 +757,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 5,
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
@@ -809,7 +816,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 8,
+        'weight' => 7,
       ),
       'rss' => array(
         'label' => 'above',
