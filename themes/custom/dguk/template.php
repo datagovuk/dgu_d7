@@ -767,3 +767,13 @@ function dguk_pager($variables) {
   }
   return $output;
 }
+
+/**
+ * Implements hook_preprocess_region().
+ */
+function dguk_preprocess_region(&$variables) {
+  // Get rid of the icon and 'boxed' class in help block.
+  if ($variables['region'] == 'help') {
+    $variables['content'] = str_replace('boxed', '', $variables['elements']['#children']);
+  }
+}
