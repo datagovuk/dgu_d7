@@ -469,27 +469,7 @@ function dguk_menu_breadcrumb_alter(&$active_trail, $item){
       //append an item to the active trail to prevent drupal from removing the last crumb
       $active_trail[] = $end;
     }
-    elseif (!empty($crumb['path']) && $crumb['path'] == 'reply/add/%/%/%') {
-      $instance_id = $item['page_arguments'][1];
-      $instance = reply_load_instance($instance_id);
-      $entity_type = $instance->entity_type;
-      $entity = entity_load($entity_type, array($item['page_arguments'][0]));
-      $entity = reset($entity);
-      $alias = drupal_get_path_alias($entity_type . '/' . $entity->nid);
-      $parts =  explode('/', $alias);
 
-      //set the parent path
-      $parent_path =  $parts[0];
-      $parent_menu = menu_get_item($parent_path);
-      $crumb['title'] = htmlspecialchars_decode($parent_menu['title']);
-      $crumb['href'] = $parent_path;
-      $active_trail[$key] = $crumb;
-
-      //Set the current crumb to the page title
-      $crumb['title'] = htmlspecialchars_decode($entity->title);
-      $crumb['href'] = $alias;
-      $active_trail[] = $crumb;
-    }
   }
 }
 

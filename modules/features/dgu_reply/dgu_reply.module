@@ -50,3 +50,53 @@ function dgu_reply_menu_alter(&$items) {
     }
   }
 }
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_reply_menu_breadcrumb_alter(&$active_trail, $item) {
+  if ($item['path'] == 'reply/add/%/%/%') {
+
+    // Keep only first home page breadcrumb
+    $active_trail = array(current($active_trail));
+
+    $instance_id = $item['page_arguments'][1];
+    $instance = reply_load_instance($instance_id);
+    $entity_type = $instance->entity_type;
+    $entity = entity_load($entity_type, array($item['page_arguments'][0]));
+    $entity = current($entity);
+    list($id, $vid, $bundle) = entity_extract_ids($entity_type, $entity);
+
+    if ($entity_type == 'ckan_dataset') {
+      $entity_uri = entity_uri($entity_type, $entity);
+      $active_trail[] = array('title' => 'Datasets', 'href' => 'data/search', 'localized_options' => array());
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->title), 'href' => $entity_uri['path'], 'localized_options' => array());
+    }
+
+    elseif ($entity_type == 'taxonomy_term' && $bundle == 'glossary'){
+      $parent_menu = menu_get_item('glossary');
+      $parent_menu_title = $parent_menu['title'];
+      $active_trail[] = array('title' => $parent_menu_title, 'href' => 'glossary', 'localized_options' => array());
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->name), 'href' => 'glossary/' . $id, 'localized_options' => array());
+    }
+
+    else {
+      $alias = $entity->path['alias'] ? $entity->path['alias'] : drupal_get_path_alias($entity_type . '/' . $id);
+      $parts =  explode('/', $alias);
+
+      if (count($parts) > 1) {
+        $parent_path =  $parts[0];
+        if ($parent_path == 'taxonomy_term') {
+          $parent_path = 'glossary';
+        }
+        if ($parent_menu = menu_get_item($parent_path)) {
+          $parent_menu_title = $parent_menu['title'];
+          $active_trail[] = array('title' => htmlspecialchars_decode($parent_menu_title), 'href' => $parent_path, 'localized_options' => array());
+        }
+      }
+      $active_trail[] = array('title' => htmlspecialchars_decode($entity->title), 'href' => $alias, 'localized_options' => array());
+    }
+
+    drupal_set_title('Comment');
+  }
+}
