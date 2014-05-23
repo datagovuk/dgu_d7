@@ -6,7 +6,30 @@
 
 include_once 'dgu_site_feature.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_site_feature_menu_breadcrumb_alter(&$active_trail, $item) {
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'page') {
+    // Map breadcrumbs to node path for pages
+    $active_trail = array(current($active_trail));
+    $alias = drupal_get_path_alias('node/' . $item['map'][1]->nid);
+    $parts =  explode('/', $alias);
 
+    if (count($parts) > 1) {
+      array_pop($parts);
+      $current = '';
+      foreach ($parts as $part) {
+        $current_path = drupal_get_normal_path($current . $part);
+        if ($parent_menu = menu_get_item($current_path)) {
+          $parent_menu_title = $parent_menu['title'];
+          $active_trail[] = array('title' => htmlspecialchars_decode($parent_menu_title), 'href' => $current_path, 'localized_options' => array());
+        }
+        $current .= $part . '/';
+      }
+    }
+  }
+}
 
  /**
  * Implements hook_theme().

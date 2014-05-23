@@ -16,12 +16,32 @@ include_once 'dgu_data_set_request.features.inc';
  */
 function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
   switch ($item['path']) {
+    case 'data-request':
+      $active_trail = array(
+        current($active_trail),
+        array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array()),
+        array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array()),
+      );
+      drupal_set_title('Latest data requests');
+      break;
     case 'data-request/blogs':
+      $active_trail = array(
+        current($active_trail),
+        array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array()),
+      );
       drupal_set_title('ODUG Blogs');
       break;
     case 'data-request/minutes':
+      $active_trail = array(
+        current($active_trail),
+        array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array()),
+      );
       drupal_set_title('ODUG Minutes');
       break;
+  }
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'dataset_request') {
+    $active_trail[2] = $active_trail[1];
+    $active_trail[1] = array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array());
   }
 }
 

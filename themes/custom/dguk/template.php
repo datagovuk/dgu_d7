@@ -434,45 +434,6 @@ function dguk_js_alter(&$js){
   unset($js['profiles/dgu/modules/contrib/jquery_update/replace/jquery/1.8/jquery.min.js']);
 }
 
-function dguk_menu_breadcrumb_alter(&$active_trail, $item){
-
-  $end = end($active_trail);
-  foreach ($active_trail as $key => $crumb){
-    if (!empty($crumb['link_path']) && $crumb['link_path'] == 'node/%'){
-      //special processing for nodes
-      $parent_path = '';
-      $title = drupal_get_title();
-      switch($item['map'][$key]->type){
-        case 'app':
-          $parent_path = 'apps';
-          break;
-        case 'blog':
-          $parent_path = 'blog';
-          break;
-        case 'resource':
-          $parent_path = 'library';
-          break;
-        case 'dataset_request':
-          $parent_path = 'odug';
-          break;
-        default:
-          $alias = drupal_get_path_alias('node/' . $crumb['map'][$key]->nid);
-          $parts =  explode('/', $alias);
-          $parent_path =  $parts[0];
-          break;
-
-      }
-      //Set the current crumb to the page title
-      $crumb['title'] = htmlspecialchars_decode($title);
-      $crumb['href'] = $parent_path;
-      $active_trail[$key] = $crumb;
-      //append an item to the active trail to prevent drupal from removing the last crumb
-      $active_trail[] = $end;
-    }
-
-  }
-}
-
 /**
  * Implements theme_breadcrumb()
  * Return a themed breadcrumb trail.

@@ -8,6 +8,22 @@ define('GLOSSARY_MODERATION_PERMISSION', 'moderate glossary');
 
 include_once 'dgu_glossary.features.inc';
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_glossary_menu_breadcrumb_alter(&$active_trail, $item) {
+  switch ($item['path']) {
+    case 'glossary/%':
+      drupal_set_title(htmlspecialchars_decode($item['map'][1]->name));
+      break;
+    case 'glossary/%/suggest_definition':
+    case 'glossary/%/thanks':
+      $active_trail[2]['title'] = htmlspecialchars_decode($item['map'][1]->name);
+      drupal_set_title('Suggest better definition');
+      break;
+  }
+}
+
 function dgu_glossary_menu()
 {
     // Get all the id's of vocabularies that are configured in the settings.
@@ -404,21 +420,6 @@ function glossary_term_page($term)
     // the active trail, and the link name becomes the page title. Thus, we must
     // explicitly set the page title to be the term title.
     drupal_set_title('Glossary');
-
-    // Build breadcrumb based on the hierarchy of the term.
-    $current = (object)array(
-        'tid' => $term->tid,
-    );
-    // @todo This overrides any other possible breadcrumb and is a pure hard-coded
-    //   presumption. Make this behavior configurable per vocabulary or term.
-    $breadcrumb = array();
-    while ($parents = taxonomy_get_parents($current->tid)) {
-        $current = array_shift($parents);
-        $breadcrumb[] = l($current->name, 'taxonomy/term/' . $current->tid);
-    }
-    $breadcrumb[] = l(t('Home'), NULL);
-    $breadcrumb = array_reverse($breadcrumb);
-    drupal_set_breadcrumb($breadcrumb);
     drupal_add_feed('glossary/' . $term->tid . '/feed', 'RSS - ' . $term->name);
 
     // Set the term path as the canonical URL to prevent duplicate content.
@@ -458,7 +459,7 @@ function dgu_glossary_suggest_new_page()
         'type' => 'suggested_term',
         'language' => LANGUAGE_NONE,
     );
-    drupal_set_title(t('Suggest new term and definition.'), PASS_THROUGH);
+    drupal_set_title(t('Suggest new term and definition'), PASS_THROUGH);
     drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
     $form_state['build_info']['args'] = array($node);
     form_load_include($form_state, 'inc', 'node', 'node.pages');

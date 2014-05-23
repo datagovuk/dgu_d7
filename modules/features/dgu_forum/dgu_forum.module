@@ -13,19 +13,26 @@ include_once 'dgu_forum.features.inc';
  */
 function dgu_forum_menu_breadcrumb_alter(&$active_trail, $item) {
 
-  // Make breadcrumb following this pattern: forum/category/node_title
+  // Forum nodes
   if ($item['path'] == 'node/%' && $item['map'][1]->type == 'forum') {
+    // Make breadcrumb following this pattern: forum/category/node_title
     $tid = $item['map'][1]->taxonomy_forums[LANGUAGE_NONE][0]['tid'];
     $forum = taxonomy_term_load($tid);
-    array_pop($active_trail);
-    $active_trail[] = array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array());
-    $active_trail[] = array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array());
-    $active_trail[] = array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array());
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()),
+      array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array()),
+      array('title' => $forum->name, 'href' => 'forum/' . str_replace(' ', '-', strtolower($forum->name)), 'localized_options' => array()),
+    );
+
 
   }
-  // Reset breadcrumb to '/forum' only on 'Most popular topics' and 'Forum categories' pages.
+  // Forum landing pages
   elseif ($item['path'] == 'forum' || $item['path'] == 'forum/categories' || $item['path'] == 'forum/popular') {
-    $active_trail = array(array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()), array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()));
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array())
+    );
     switch ($item['path']) {
       case 'forum':
         $active_trail[] = array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array());
@@ -40,11 +47,14 @@ function dgu_forum_menu_breadcrumb_alter(&$active_trail, $item) {
     }
   }
 
-  elseif ($item['path'] == 'forum/%') {
+  // Forum topics within a category
+  elseif (isset($item['map'][1]->type) && $item['path'] == 'forum/%') {
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Forum', 'href' => 'forum', 'localized_options' => array()),
+      array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array()),
+    );
     drupal_set_title($item['map']['1']->title);
-    $active_trail[1]['title'] = 'Forum';
-    $active_trail[1]['href'] = 'forum';
-    $active_trail[] = array('title' => 'Categories' , 'href' => 'forum/categories', 'localized_options' => array());
   }
 
 }
