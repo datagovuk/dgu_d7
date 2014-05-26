@@ -12,11 +12,11 @@ include_once 'dgu_site_feature.features.inc';
 function dgu_site_feature_menu_breadcrumb_alter(&$active_trail, $item) {
   if (isset($item['map'][1]->type) && $item['map'][1]->type == 'page') {
     // Map breadcrumbs to node path for pages
-    $active_trail = array(current($active_trail));
     $alias = drupal_get_path_alias('node/' . $item['map'][1]->nid);
     $parts =  explode('/', $alias);
 
     if (count($parts) > 1) {
+      $active_trail = array(current($active_trail));
       array_pop($parts);
       $current = '';
       foreach ($parts as $part) {
