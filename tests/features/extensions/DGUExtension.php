@@ -79,7 +79,15 @@ class DGUSession extends \Behat\Mink\Session
  */
 class DGUDocumentElement extends \Behat\Mink\Element\DocumentElement
 {
-    public function find($selector, $locator)
+
+    public function findField($locator, $ignore_visibility = false)
+    {
+      return $this->find('named', array(
+        'field', $this->getSession()->getSelectorsHandler()->xpathLiteral($locator)
+      ), $ignore_visibility);
+    }
+
+    public function find($selector, $locator, $ignore_visibility = false)
     {
         $items = $this->findAll($selector, $locator);
 
@@ -88,7 +96,7 @@ class DGUDocumentElement extends \Behat\Mink\Element\DocumentElement
         }
 
         foreach ($items as $item) {
-            if ($item->isVisible()) {
+            if ($ignore_visibility || $item->isVisible()) {
                 return $item;
             }
         }
