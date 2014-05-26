@@ -973,6 +973,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^there is a test page with "([^"]*)" path$/
+   */
+  public function thereIsATestPageWithPath($path) {
+    return array (
+      new Given("I visit \"" . $path . "\""),
+      new Given("I should see \"The requested page could not be found.\""),
+      new Given("that the user \"test_admin\" is not registered"),
+      new Given("I am logged in as a user \"test_admin\" with the \"administrator\" role"),
+      new Given("I visit \"/node/add/page\""),
+      new Given("I fill in \"Title\" with \"Test page\""),
+      new Given("I press \"Save\""),
+      new Given("I should see \"Page Test page has been created.\""),
+    );
+  }
+
+  /**
    * @Given /^I submit "([^"]*)" titled "([^"]*)" for moderation$/
    */
   public function iSubmitTitledForModeration($content_type, $title) {
