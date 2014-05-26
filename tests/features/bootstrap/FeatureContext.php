@@ -858,6 +858,33 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @When /^I click "([^"]*)" field in row "([^"]*)" of "([^"]*)" view$/
+   */
+  public function clickFieldInRowOfView($field_name, $row, $view_display_id) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $field = $view_row->find('css', '.views-field-' . $field_name);
+
+    if (empty($field)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" not found.');
+    }
+
+    $link = $field->findLink('');
+    if (empty($link)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" is not a link.');
+    }
+    $link->click();
+  }
+
+  /**
    * @Then /^row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
    */
   public function rowOfViewShouldMatch($row, $view_display_id, $regex) {
