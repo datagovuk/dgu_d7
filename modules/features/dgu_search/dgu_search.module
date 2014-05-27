@@ -242,6 +242,27 @@ function dgu_search_facetapi_url_processors() {
 }
 
 class FacetApiDguSearch extends FacetapiUrlProcessorStandard {
+
+  public function getQueryString(array $facet, array $values, $active) {
+    $qstring = parent::getQueryString( $facet,  $values, $active);
+    $types = array();
+    foreach (node_type_get_types() as $type) {
+      $types[] = 'bundle:' . $type->type;
+    }
+
+    //If we are sorting by bundle, make sure that solrsort is unset to allow the default sort to work.
+    if ($qstring['solrsort'] == 'bundle asc'){
+      foreach ($qstring['f'] as $facet){
+        if (in_array($facet, $types) ){
+          unset($qstring['solrsort']);
+          break;
+        }
+      }
+    }
+    return $qstring;
+  }
+
+
   public function setBreadcrumb() {
     // Override method so bread crumb is not altered.
   }
@@ -266,6 +287,11 @@ function dgu_search_apachesolr_query_prepare($query) {
   $query->setAvailableSort('sort_label', array('title' => t('Title'), 'default' => 'asc'));
   $query->setAvailableSort('sort_name', array('title' => t('Author'), 'default' => 'asc'));
   $query->setAvailableSort('ds_changed', array('title' => t('Last updated'), 'default' => 'desc'));
+
+  //If we are on the library search page we must disable the sort by content type.
+  if (arg(0) == 'library') {
+    $query->removeAvailableSort('bundle');
+  }
 }
 
 /**
@@ -311,7 +337,11 @@ function dgu_search_preprocess_search_results(&$variables) {
 
         // Conditionally enable 'Author' sort.
         if ($name == 'sort_name' && !(in_array('bundle:blog', $filters) || in_array('bundle:forum', $filters))) {
-          //$query->removeAvailableSort('sort_name');
+          $select_options[$url]['disabled'] = TRUE;
+        }
+
+        // Conditionally disable 'Content type' sort.
+        if ($name == 'bundle' && (count(preg_grep('/bundle:/', $filters))>0)) {
           $select_options[$url]['disabled'] = TRUE;
         }
 
