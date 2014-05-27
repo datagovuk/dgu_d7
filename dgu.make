@@ -245,6 +245,19 @@ projects[emptyparagraphkiller][subdir] = "contrib"
 projects[smart_trim][version] = "1.4"
 projects[smart_trim][subdir] = "contrib"
 
+projects[message][version] = "1.9"
+projects[message][subdir] = "contrib"
+
+projects[message_notify][version] = "2.5"
+projects[message_notify][subdir] = "contrib"
+
+projects[message_subscribe][version] = "1.0-rc2"
+projects[message_subscribe][subdir] = "contrib"
+
+projects[message_digest][version] = "1.0"
+projects[message_digest][subdir] = "contrib"
+
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
