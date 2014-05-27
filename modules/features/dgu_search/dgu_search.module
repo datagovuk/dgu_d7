@@ -337,7 +337,11 @@ function dgu_search_preprocess_search_results(&$variables) {
 
         // Conditionally enable 'Author' sort.
         if ($name == 'sort_name' && !(in_array('bundle:blog', $filters) || in_array('bundle:forum', $filters))) {
-          //$query->removeAvailableSort('sort_name');
+          $select_options[$url]['disabled'] = TRUE;
+        }
+
+        // Conditionally disable 'Content type' sort.
+        if ($name == 'bundle' && (count(preg_grep('/bundle:/', $filters))>0)) {
           $select_options[$url]['disabled'] = TRUE;
         }
 
