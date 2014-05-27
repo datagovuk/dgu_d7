@@ -90,12 +90,12 @@ function dgu_app_default_page_manager_handlers() {
     $pane->pid = 'new-2';
     $pane->panel = 'right';
     $pane->type = 'block';
-    $pane->subtype = 'apachesolr_search-mlt-002';
+    $pane->subtype = 'apachesolr_search-mlt-001';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
-      'override_title_text' => 'Related apps',
+      'override_title' => 0,
+      'override_title_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(

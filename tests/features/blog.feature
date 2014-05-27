@@ -88,7 +88,7 @@ Feature: Create blogs as a blogger
     And the field "Title" should be outlined in red
 
   @api
-  Scenario: Create a new blog entry
+  Scenario: Create a new blog entry and comment on it
     Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "blogger" role
     And I visit "/node/add/blog"
@@ -97,10 +97,13 @@ Feature: Create blogs as a blogger
       | Add content       |
       | Create Blog entry |
     When I fill in "Title" with "Test blog"
+    And I type "Test body" in the "edit-body-und-0-value" WYSIWYG editor
     And I press "Save draft"
     And I wait until the page loads
     Then I should see a message about created draft "Blog entry"
+    And I should be on "/blog/test-blog"
     And I should see node title "Test blog"
+    And I should see "Test body"
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
@@ -111,3 +114,39 @@ Feature: Create blogs as a blogger
     And "name" field in row "1" of "latest_blog_posts" view should match "^Created by test_user \d* sec ago$"
     And avatar in row "1" of "latest_blog_posts" view should link to "/users/testuser"
     And row "1" of "latest_blog_posts" view should match "No comments so far$"
+    When I click "title" field in row "1" of "latest_blog_posts" view
+    Then I should be on "/blog/test-blog"
+    # Testing comments as different user
+    Given that the user "test_commenting_user" is not registered
+    And I am logged in as a user "test_commenting_user" with the "authenticated user" role
+    And I visit "/blog/test-blog"
+    And I wait until the page loads
+    When I follow "Add new comment"
+    And I should see the following <breadcrumbs>
+      | Blogs     |
+      | Test blog |
+      | Comment   |
+    # TODO test how blog teaser above comment should be rendered
+    And I fill in "Subject" with "Test subject"
+    And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
+    And I press "Submit"
+    And I wait until the page loads
+    Then I should be on "/blog/test-blog"
+    And I should see the success message "Comment was successfully created."
+    And I should see "Test blog"
+    And I should see "Test body"
+    And I should see the heading "Comments"
+    And I should see "Test subject"
+    And I should see "Test comment"
+    And I should see the link "Reply"
+    Given the cache has been cleared
+    When I visit "/blog"
+    Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
+
+  @anon
+  Scenario: Make sure that comments can't be posted by anonymous users
+    Given I am on "/blog"
+    And I wait until the page loads
+    When I click "title" field in row "1" of "latest_blog_posts" view
+    And I wait until the page loads
+    Then I should see the link "Login to make a comment"

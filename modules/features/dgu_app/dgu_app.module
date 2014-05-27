@@ -13,11 +13,23 @@ include_once 'dgu_app.features.inc';
  */
 function dgu_app_menu_breadcrumb_alter(&$active_trail, $item) {
   if ($item['path'] == 'apps') {
-    drupal_set_title('Apps');
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()),
+      array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()),
+    );
+    drupal_set_title('Latest apps');
   }
   elseif ($item['path'] == 'apps/top') {
-    $active_trail = array(array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()), array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array()));
+    $active_trail = array(
+      current($active_trail),
+      array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array())
+    );
     drupal_set_title('Top rated apps');
+  }
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'app') {
+    $active_trail[2] = $active_trail[1];
+    $active_trail[1] = array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array());
   }
 }
 

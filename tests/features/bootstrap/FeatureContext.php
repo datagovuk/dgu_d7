@@ -187,6 +187,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     // If a logout link is found, we are logged in. While not perfect, this is
     // how Drupal SimpleTests currently work as well.
     $element = $session->getPage();
+    sleep(1);
     return $element->findLink($this->getDrupalText('log_out'));
   }
 
@@ -858,6 +859,33 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @When /^I click "([^"]*)" field in row "([^"]*)" of "([^"]*)" view$/
+   */
+  public function clickFieldInRowOfView($field_name, $row, $view_display_id) {
+    $view = $this->getSession()->getPage()->find('css', '.view-display-id-' . $view_display_id);
+    if (empty($view)) {
+      throw new \Exception('View with display id "' . $view_display_id . '" not found.');
+    }
+
+    $view_row = $view->find('css', '.views-row-' . $row);
+    if (empty($view_row)) {
+      throw new \Exception('Row "' . $row . '" in view "' . $view_display_id . '" not found.');
+    }
+
+    $field = $view_row->find('css', '.views-field-' . $field_name);
+
+    if (empty($field)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" not found.');
+    }
+
+    $link = $field->findLink('');
+    if (empty($link)) {
+      throw new \Exception('Field "' . $field_name. '" in row "' . $row . '" of view "' . $view_display_id . '" is not a link.');
+    }
+    $link->click();
+  }
+
+  /**
    * @Then /^row "([^"]*)" of "([^"]*)" view should match "([^"]*)"$/
    */
   public function rowOfViewShouldMatch($row, $view_display_id, $regex) {
@@ -943,6 +971,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^TEST$/
    */
   public function test() {
+  }
+
+  /**
+   * @Given /^there is a test page with "([^"]*)" path$/
+   */
+  public function thereIsATestPageWithPath($path) {
+    return array (
+      new Given("I visit \"" . $path . "\""),
+      new Given("I should see \"The requested page could not be found.\""),
+      new Given("that the user \"test_admin\" is not registered"),
+      new Given("I am logged in as a user \"test_admin\" with the \"administrator\" role"),
+      new Given("I visit \"/node/add/page\""),
+      new Given("I fill in \"Title\" with \"Test page\""),
+      new Given("I press \"Save\""),
+      new Given("I should see \"Page Test page has been created.\""),
+    );
   }
 
   /**
