@@ -287,6 +287,11 @@ function dgu_search_apachesolr_query_prepare($query) {
   $query->setAvailableSort('sort_label', array('title' => t('Title'), 'default' => 'asc'));
   $query->setAvailableSort('sort_name', array('title' => t('Author'), 'default' => 'asc'));
   $query->setAvailableSort('ds_changed', array('title' => t('Last updated'), 'default' => 'desc'));
+
+  //If we are on the library search page we must disable the sort by content type.
+  if (arg(0) == 'library') {
+    $query->removeAvailableSort('bundle');
+  }
 }
 
 /**
