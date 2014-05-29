@@ -686,6 +686,33 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
 
   /**
+   * @Given /^"([^"]*)" option in "([^"]*)" should be disabled$/
+   */
+  public function optionInShouldBeDisabled($option_key, $label) {
+
+    $page = $this->getSession()->getPage();
+
+    $select = $page->find('xpath', "//label[contains(., '$label')]/following-sibling::select");
+
+    if ($select) {
+      $dom = new domDocument;
+      $dom->loadHTML($select->getHtml());
+      $options = $dom->getElementsByTagName('option');
+      foreach ($options as $option) {
+        if($option->getAttribute('disabled') && $option->nodeValue == $option_key) {
+          return;
+        }
+      }
+
+    }
+
+    throw new ElementNotFoundException(
+      $this->getSession(), 'select option', 'value|text', $option_key
+    );
+
+  }
+
+  /**
    * @Given /^"([^"]*)" option in "([^"]*)" should be selected$/
    */
   public function optionInShouldBeSelected($option_key, $label) {
