@@ -41,7 +41,7 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
 
   @anon @search
-  Scenario: Search for content from the Search content landing page using the content type facet link after the user has selected 'Content type' sort.
+  Scenario: Search for content using the content type facet link after the 'Content type' sort by is selected .
     Given I am on the homepage
     And I click "Interact"
     And I follow "Search content"
@@ -57,7 +57,7 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
-    When I follow "/search/everything/?solrsort=bundle%20asc"
+    When I select "Content type" from "search-results-sort"
     And I wait until the page loads
     Then "Content type" option in "Sort by:" should be selected
     When I follow "Dataset Request"
@@ -93,7 +93,7 @@ Feature: Search content as a site user
     And "Last updated" option in "Sort by:" should be selected
     And I should see "Please enter some keywords to refine your search further."
     And I should see the following <breadcrumbs>
-      | Library |
+      | Search |
 
   @anon @search
   Scenario: Use search box on Library landing page with a keyword
