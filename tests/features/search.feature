@@ -10,7 +10,6 @@ Feature: Search content as a site user
     And I click "Interact"
     When I follow "Search content"
     Then I should be on "/search/everything"
-    And I break
     And "Search content" item in "Interact" subnav should be active
     And I should see the following <breadcrumbs>
       | Search |
@@ -63,7 +62,7 @@ Feature: Search content as a site user
     And "Content type" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
-      | Dataset requests |
+      | Data requests |
       | Search |
 
   @anon @search
@@ -76,7 +75,7 @@ Feature: Search content as a site user
     And "Relevance" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
-      | Search |
+      | Library |
 
   @anon @search
   Scenario: Use search box on Library landing page without a keyword
