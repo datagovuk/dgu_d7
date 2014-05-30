@@ -66,6 +66,7 @@ Feature: Search content as a site user
     Then "Content type" option in "Sort by:" should be selected
     When I follow "Dataset Request"
     And I wait until the page loads
+    Then I should be on "/search/everything/?f[0]=bundle%3Adataset_request"
     And "Content type" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
@@ -94,12 +95,13 @@ Feature: Search content as a site user
     When I select "Content type" from "search-results-sort"
     And I wait until the page loads
     Then "Content type" option in "Sort by:" should be selected
-    When I follow "Dataset Request"
+    When I follow "Page"
     And I wait until the page loads
+    Then I should be on "/search/everything/?f[0]=bundle%3Apage"
     And "Content type" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
-      | Data requests |
+      | Page |
       | Search |
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
