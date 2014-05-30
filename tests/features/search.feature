@@ -45,7 +45,7 @@ Feature: Search content as a site user
     And pager should match "^1 2 3 … »$"
 
   @anon @search
-  Scenario: Search for content using the content type facet link after the 'Content type' sort by is selected .
+  Scenario: Search for content using the Dataset Request facet link after the 'Content type' sort by is selected .
     Given I am on the homepage
     And I click "Interact"
     And I follow "Search content"
@@ -61,6 +61,9 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
     When I select "Content type" from "search-results-sort"
     And I wait until the page loads
     Then "Content type" option in "Sort by:" should be selected
@@ -73,10 +76,11 @@ Feature: Search content as a site user
       | Data requests |
       | Search |
     And there should be "10" search results on the page
+    And search result counter should match "^\d* Pages"
     And pager should match "^1 2 3 … »$"
 
   @anon @search
-  Scenario: Search for content using the content type facet link after the 'Content type' sort by is selected .
+  Scenario: Search for content using the Page facet link after the 'Content type' sort by is selected .
     Given I am on the homepage
     And I click "Interact"
     And I follow "Search content"
@@ -92,6 +96,9 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
     When I select "Content type" from "search-results-sort"
     And I wait until the page loads
     Then "Content type" option in "Sort by:" should be selected
@@ -101,7 +108,7 @@ Feature: Search content as a site user
     And "Content type" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
-      | Page |
       | Search |
     And there should be "10" search results on the page
+    And search result counter should match "^\d* Pages"
     And pager should match "^1 2 3 … »$"
