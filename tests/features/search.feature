@@ -38,7 +38,6 @@ Feature: Search content as a site user
     And I click search icon
     Then I should be on "/search/everything/data?solrsort=score"
     And "Relevance" option in "Sort by:" should be selected
-    And there should be "10" search results on the page
 
   @anon @search
   Scenario: Search for content using the content type facet link after the 'Content type' sort by is selected .
@@ -67,42 +66,3 @@ Feature: Search content as a site user
     And I should see the following <breadcrumbs>
       | Data requests |
       | Search |
-
-  @anon @search
-  Scenario: View Search Library landing page
-    Given I am on the homepage
-    And I click "Interact"
-    When I follow "Library"
-    Then I should be on "/library"
-    And "Library" item in "Interact" subnav should be active
-    And "Relevance" option in "Sort by:" should be disabled
-    And "Last updated" option in "Sort by:" should be selected
-    And I should see the following <breadcrumbs>
-      | Library |
-
-  @anon @search
-  Scenario: Use search box on Library landing page without a keyword
-    Given I am on the homepage
-    And I click "Interact"
-    When I follow "Library"
-    And I wait until the page loads
-    And I click search icon
-    Then I should be on "/search/everything/?f[0]=bundle%3Aresource"
-    And "Relevance" option in "Sort by:" should be disabled
-    And "Content type" option in "Sort by:" should be disabled
-    And "Last updated" option in "Sort by:" should be selected
-    And I should see "Please enter some keywords to refine your search further."
-    And I should see the following <breadcrumbs>
-      | Search |
-
-  @anon @search
-  Scenario: Use search box on Library landing page with a keyword
-    Given I am on the homepage
-    And I click "Interact"
-    When I follow "Search content"
-    And I wait until the page loads
-    When I fill in "Search content..." with "data"
-    And I click search icon
-    Then I should be on "/search/everything/data?f[0]=bundle%3Aresource&solrsort=score"
-    And "Relevance" option in "Sort by:" should be selected
-    And there should be "10" search results on the page
