@@ -50,6 +50,7 @@ Feature: Search content as a site user
     When I follow "Page"
     And I wait until the page loads
     Then I should be on "/search/everything/?f[0]=bundle%3Apage"
+    And "Search content" item in "Interact" subnav should be active
     And "Content type" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
