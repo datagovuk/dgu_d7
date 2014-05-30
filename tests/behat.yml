@@ -80,4 +80,10 @@ pawel:
     Drupal\DrupalExtension\Extension:
       drush:
         alias: 'pawel.d7.dev'
-
+jason:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://dgu.dev:1080'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'dgu.dev'

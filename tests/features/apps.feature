@@ -8,7 +8,6 @@ I should be able to submit a new app
   Scenario: View apps landing page
     Given I am on the homepage
     And I click "Apps"
-    When I follow "Browse Apps"
     And I wait until the page loads
     Then I should be on "/apps"
     And I should see "LATEST APPS" pane in "first" column in "third" row
@@ -33,7 +32,6 @@ I should be able to submit a new app
   Scenario: View search apps page
     Given I am on the homepage
     And I click "Apps"
-    And I follow "Browse Apps"
     And I wait until the page loads
     When I click search icon
     And I wait until the page loads
@@ -48,7 +46,6 @@ I should be able to submit a new app
   Scenario: Use search box on Apps landing page
     Given I am on the homepage
     And I click "Apps"
-    When I follow "Browse Apps"
     And I wait until the page loads
     When I fill in "Search apps..." with "data"
     And I click search icon
@@ -59,7 +56,6 @@ I should be able to submit a new app
   Scenario: Use search box on Apps search page
     Given I am on the homepage
     And I click "Apps"
-    When I follow "Browse Apps"
     And I wait until the page loads
     And I click search icon
     Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
