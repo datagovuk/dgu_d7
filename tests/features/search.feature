@@ -14,6 +14,7 @@ Feature: Search content as a site user
     And I should see the following <breadcrumbs>
       | Search |
     And "Last updated" option in "Sort by:" should be selected
+    And "Author" option in "Sort by:" should be disabled
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
 
