@@ -275,17 +275,17 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function iClickRssIconInColumnInRow($column, $row) {
 
-    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
-    if (empty($row)) {
+    $row_element = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row_element)) {
       throw new Exception(ucfirst($row) . ' row not found');
     }
 
-    $column = $row->find('css', '.panel-col-' . $column);
-    if (empty($column)) {
+    $column_element = $row_element->find('css', '.panel-col-' . $column);
+    if (empty($column_element)) {
       throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
     }
 
-    $rss_icons = $column->findAll('css', '.rss-icon');
+    $rss_icons = $column_element->findAll('css', '.rss-icon');
     if (empty($rss_icons)) {
       throw new Exception('No RSS icons found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
@@ -440,7 +440,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $items = $breadcrumbs_element->findAll('css', 'li');
 
     $home = array_shift($items);
-    if ($home->find('css', 'a')->getAttribute('href') != '/') {
+    if ($home->find('css', 'a')->getHtml() != '<i class="icon-home"></i>') {
       throw new Exception('First breadcrumb is not the homepage.');
     }
 
@@ -479,17 +479,17 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function iShouldSeeBlockInColumnInRow($block_title, $column, $row) {
 
-    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
-    if (empty($row)) {
+    $row_element = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row_element)) {
       throw new Exception(ucfirst($row) . ' row not found');
     }
 
-    $column = $row->find('css', '.panel-col-' . $column);
-    if (empty($column)) {
+    $column_element = $row_element->find('css', '.panel-col-' . $column);
+    if (empty($column_element)) {
       throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
     }
 
-    $h2 = $column->findAll('css', '.block h2');
+    $h2 = $column_element->findAll('css', '.block h2');
     if (empty($h2)) {
       throw new Exception('No blocks were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
@@ -509,17 +509,17 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
      */
     public function iShouldSeePaneInColumnInRow($pane_title, $column, $row) {
 
-    $row = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
-    if (empty($row)) {
+    $row_element = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row_element)) {
       throw new Exception(ucfirst($row) . ' row not found');
     }
 
-    $column = $row->find('css', '.panel-col-' . $column);
-    if (empty($column)) {
+      $column_element = $row_element->find('css', '.panel-col-' . $column);
+    if (empty($column_element)) {
       throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
     }
 
-    $h2 = $column->findAll('css', '.panel-pane h2');
+    $h2 = $column_element->findAll('css', '.panel-pane h2');
     if (empty($h2)) {
       throw new Exception('No panel panes were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
@@ -848,8 +848,14 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     if (empty($link)) {
       throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" is not a link.');
     }
-    elseif ($link->getAttribute('href') != $href) {
-      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" links to "' . $link->getAttribute('href') . '" instead of "' . $href . '".');
+
+    $href_property = $link->getAttribute('href');
+    // Use regex to get relative url.
+    // We expect relative urls as we set them in the HTML but selenium returns
+    // Dom property instead of HTML attribute whis us absolute url in most cases
+    // https://code.google.com/p/selenium/issues/detail?id=1824
+    if (preg_replace('/(http(s)?:\/\/\w+)/i', '', $href_property) != $href) {
+      throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" links to "' . $href_property . '" instead of "' . $href . '".');
     }
 
     $img = $link->find('css', 'img');
