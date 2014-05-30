@@ -15,10 +15,6 @@ Feature: Search content as a site user
       | Search |
     And "Last updated" option in "Sort by:" should be selected
     And "Author" option in "Sort by:" should be disabled
-    And I should see "CONTENT TYPE" pane in "first" column in "first" row
-    And I should see "CATEGORY" pane in "first" column in "first" row
-    And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
 
@@ -48,12 +44,6 @@ Feature: Search content as a site user
   @anon @search
   Scenario: Search for content using the Page facet link after the 'Content type' sort by is selected .
     Given I am on "/search/everything/"
-    And "Search content" item in "Interact" subnav should be active
-    And I click search icon
-    And I should see "Please enter some keywords to refine your search further"
-    And I should see the following <breadcrumbs>
-      | Search |
-    And "Last updated" option in "Sort by:" should be selected
     When I select "Content type" from "search-results-sort"
     And I wait until the page loads
     Then "Content type" option in "Sort by:" should be selected
@@ -64,6 +54,10 @@ Feature: Search content as a site user
     And "Last updated" option in "Sort by:" should be selected
     And I should see the following <breadcrumbs>
       | Search |
+    And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
     And there should be "10" search results on the page
     And search result counter should match "^\d* Pages"
     And pager should match "^1 2 3 … »$"
