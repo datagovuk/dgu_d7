@@ -44,6 +44,8 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
 
+  #TODO in search.feature we need to add a scenario for testing if keyword is preserved when a facet is un-/selected
+
   @anon @search
   Scenario: Search for content using the Page facet link after the 'Content type' sort by is selected .
     Given I am on the homepage
