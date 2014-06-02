@@ -159,7 +159,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 9,
+      'weight' => 10,
     ),
   );
 
@@ -241,6 +241,78 @@ function dgu_app_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-app-field_app_thumbnail'
+  $field_instances['node-app-field_app_thumbnail'] = array(
+    'bundle' => 'app',
+    'deleted' => 0,
+    'description' => 'Please supply an image of your application, this will be default image used on \'Latest apps\' and \'Top rated apps\' lists.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'image',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'image_link' => '',
+          'image_style' => '',
+        ),
+        'type' => 'image',
+        'weight' => 14,
+      ),
+      'rss' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_app_thumbnail',
+    'label' => 'App thumbnail',
+    'required' => 1,
+    'settings' => array(
+      'alt_field' => 0,
+      'default_image' => 0,
+      'file_directory' => '',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '370x370',
+      'title_field' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'imagefield_crop',
+      'settings' => array(
+        'collapsible' => 2,
+        'croparea' => '370x370',
+        'enforce_minimum' => 1,
+        'enforce_ratio' => 1,
+        'preview_image_style' => 'tile_text_big',
+        'progress_indicator' => 'throbber',
+        'resolution' => '370x370',
+      ),
+      'type' => 'imagefield_crop_widget',
+      'weight' => 7,
+    ),
+  );
+
   // Exported field_instance: 'node-app-field_category'
   $field_instances['node-app-field_category'] = array(
     'bundle' => 'app',
@@ -292,7 +364,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 10,
+      'weight' => 11,
     ),
   );
 
@@ -350,7 +422,7 @@ function dgu_app_field_default_field_instances() {
       'module' => 'reply',
       'settings' => array(),
       'type' => 'reply',
-      'weight' => 14,
+      'weight' => 15,
     ),
   );
 
@@ -514,11 +586,8 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_screen_shots'] = array(
     'bundle' => 'app',
     'deleted' => 0,
-    'description' => 'Please supply images of your application so that users can see what it does.
-
-The first images will be shown as a small thumbnail (253x140 pixels) in previews of the app.
-
-All images will be shown on your app page with medium sized thumbnails (188 pixels wide) which click through to the full sized image',
+    'description' => 'Please supply additional images of your application so that users can see what it does.
+All images will be shown on your app page which click through to the full sized image',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -586,7 +655,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 7,
+      'weight' => 8,
     ),
   );
 
@@ -634,7 +703,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 12,
+      'weight' => 13,
     ),
   );
 
@@ -793,7 +862,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 11,
+      'weight' => 12,
     ),
   );
 
@@ -869,7 +938,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
         'size' => 60,
       ),
       'type' => 'entityreference_autocomplete_tags',
-      'weight' => 8,
+      'weight' => 9,
     ),
   );
 
@@ -878,6 +947,7 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
   t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('App Link');
   t('App charge');
+  t('App thumbnail');
   t('Category');
   t('Comments');
   t('Description');
@@ -885,11 +955,9 @@ All images will be shown on your app page with medium sized thumbnails (188 pixe
   t('Enter the URL of this app.');
   t('Please provide a helpful summary of your apps for when your app is published data.gov.uk.');
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit)');
-  t('Please supply images of your application so that users can see what it does.
-
-The first images will be shown as a small thumbnail (253x140 pixels) in previews of the app.
-
-All images will be shown on your app page with medium sized thumbnails (188 pixels wide) which click through to the full sized image');
+  t('Please supply additional images of your application so that users can see what it does.
+All images will be shown on your app page which click through to the full sized image');
+  t('Please supply an image of your application, this will be default image used on \'Latest apps\' and \'Top rated apps\' lists.');
   t('Screen shots');
   t('Sector');
   t('Submitter Name');
