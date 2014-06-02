@@ -74,6 +74,8 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   $search['page'] = pager_find_page();
   $search['rows'] = isset($conf['rows']) ? $conf['rows'] : 10;
   $search['env_id'] = isset($conf['env_id']) ? $conf['env_id'] : $env_id;
+  $solrsort =  $search['sort'];
+
 
   try {
 
@@ -89,24 +91,28 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
           $form_state['content_type'] = $search_types[$value];
           $form_state['searchtype'] = $value;
         }
+        $searcher = $query->getSearcher();
+        $response = apachesolr_static_response_cache($searcher);
       }
+    } else {
+      $solr = apachesolr_get_solr($search['env_id']);
+      $name = 'apachesolr';
+      $params = array_filter(array('q' => $search['keys'], 'fq' => $search['filters'], 'rows' => $search['rows']));
+      $base_path = $search['path'];
+
+      $query = apachesolr_drupal_query($name, $params, $solrsort, $base_path, $solr, $context);
+
+      list($final_query, $response) = apachesolr_do_query($query);
+      $env_id = $query->solr('getId');
+      apachesolr_has_searched($env_id, TRUE);
+
     }
-
-    $solr = apachesolr_get_solr($search['env_id']);
-    $name = 'apachesolr';
-    $params = array_filter(array('q' => $search['keys'], 'fq' => $search['filters'], 'rows' => $search['rows']));
-    $solrsort =  $search['sort'];
-    $base_path = $search['path'];
-
-    $query = apachesolr_drupal_query($name, $params, $solrsort, $base_path, $solr, $context);
-
-    list($final_query, $response) = apachesolr_do_query($query);
-    $env_id = $query->solr('getId');
-    apachesolr_has_searched($env_id, TRUE);
 
     if (isset($response->code) && ($response->code == 200) && isset($response->response->numFound)) {
       $form_state['count'] = $response->response->numFound;
     }
+
+
   } catch (Exception $e) {
     error_log("Exception occurred talking to solr: ".$e->getMessage());
   }
