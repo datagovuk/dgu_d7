@@ -245,7 +245,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_app_thumbnail'] = array(
     'bundle' => 'app',
     'deleted' => 0,
-    'description' => 'Please supply an image of your application, this will be default image used on \'Latest apps\' and \'Top rated apps\' lists.',
+    'description' => 'Please supply a square thumbnail image for your application (at least 370x370 pixels). This image will be used on the \'Latest apps\' and \'Top rated apps\' lists.',
     'display' => array(
       'default' => array(
         'label' => 'above',
