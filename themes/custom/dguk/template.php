@@ -263,10 +263,6 @@ function dguk_get_data_menu() {
       'title' => 'Public Roles & Salaries',
       'href' => 'organogram/cabinet-office',
     ),
-    'menu-openspending' => array(
-      'title' => 'OpenSpending',
-      'href' => 'data/openspending-browse',
-    ),
     'menu-openspending-report' => array(
       'title' => 'Spend Reports',
       'href' => 'data/openspending-report/index',

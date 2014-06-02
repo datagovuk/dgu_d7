@@ -47,7 +47,13 @@ function dgu_app_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '13',
+          'weight' => '14',
+        ),
+        'mollom' => array(
+          'weight' => '17',
+        ),
+        'redirect' => array(
+          'weight' => '16',
         ),
       ),
       'display' => array(
