@@ -500,6 +500,37 @@ function dgu_data_set_request_field_default_field_bases() {
     'type' => 'text_long',
   );
 
+  // Exported field_base: 'field_review_outcome'
+  $field_bases['field_review_outcome'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_review_outcome',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => 'Data released',
+        1 => 'Data cannot be released',
+        2 => 'Data already available',
+        3 => 'Not a data request or a data issue',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
   // Exported field_base: 'field_review_status'
   $field_bases['field_review_status'] = array(
     'active' => 1,
@@ -520,14 +551,14 @@ function dgu_data_set_request_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'Awaiting Status',
-        1 => 'Not a data request or a data issue',
-        2 => 'Escalated due to quality/format issue',
-        3 => 'Dataset scheduled for release',
-        4 => 'ODUG developing business case',
-        5 => 'Dataset released',
-        6 => 'Dataset cannot be released',
-        7 => 'Data already available',
+        0 => 'New',
+        1 => 'Escalated to data holder',
+        2 => 'Querried by data holder',
+        3 => 'ODUG developing business case',
+        4 => 'Scheduled for release',
+        5 => 'Postponed',
+        6 => 'Closed',
+        7 => 'placeholder',
       ),
       'allowed_values_function' => '',
     ),

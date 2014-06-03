@@ -70,7 +70,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Your name */
+  /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -182,7 +182,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Review status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
@@ -274,7 +274,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Your name */
+  /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -386,7 +386,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Review status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
@@ -647,7 +647,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Your name */
+  /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
@@ -817,7 +817,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Review status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
@@ -1055,7 +1055,7 @@ function dgu_data_set_request_views_default_views() {
     5 => 0,
   );
   $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Review status (field_review_status) */
+  /* Filter criterion: Content: Status (field_review_status) */
   $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
   $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
@@ -1178,7 +1178,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'd/m/Y';
-  /* Field: Content: Review status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
@@ -1287,7 +1287,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Review status */
+  /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
@@ -1400,7 +1400,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Your name */
+  /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
