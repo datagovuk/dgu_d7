@@ -32,6 +32,7 @@ features[facetapi][] = apachesolr@solr:block:im_field_data_use
 features[facetapi][] = apachesolr@solr:block:im_field_document_type
 features[facetapi][] = apachesolr@solr:block:im_field_organisation_type
 features[facetapi][] = apachesolr@solr:block:im_field_publication_preference
+features[facetapi][] = apachesolr@solr:block:im_field_review_outcome
 features[facetapi][] = apachesolr@solr:block:im_field_review_status
 features[facetapi][] = apachesolr@solr:block:im_field_sector
 features[facetapi][] = apachesolr@solr:block:im_field_tags
