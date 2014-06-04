@@ -1,18 +1,33 @@
 @javascript
-Feature: Submit new app as a regular site user
-In order to inform how open data is used
-As a site user
-I should be able to submit a new app
+Feature: View latest apps landing page and submit a new app for moderation as a regular site user
+  In order to inform how open data is used
+  As a site user
+  I should be able to search for apps which are published and submit a new App
 
   @anon
-  Scenario: View apps landing page
+  Scenario: View latest apps landing page and check Top rated apps page
     Given I am on the homepage
+    And I am not logged in
     And I click "Apps"
     And I wait until the page loads
     Then I should be on "/apps"
-    And I should see "LATEST APPS" pane in "first" column in "third" row
-    And I should see "TOP RATED APPS" pane in "last" column in "third" row
+    And view "latest_apps" view should have "5" rows
+    And I should see the link "Login to add your app »"
+    And I should see the following <breadcrumbs>
+      | Apps        |
+      | Latest apps |
     And search result counter should match "^\d* Apps$"
+    And pager should match "^1 2 3 … »$"
+    When I follow "Top rated apps"
+    And I wait until the page loads
+    Then I should be on "/apps/top"
+    Then I should see the link "Login to add your app »"
+    And I should see the following <breadcrumbs>
+      | Apps           |
+      | Top rated apps |
+    And view "top_rated_apps" view should have "5" rows
+    And search result counter should match "^\d* Apps$"
+    And pager should match "^1 2 3 … »$"
 
   @anon
   Scenario: View latest apps RSS
