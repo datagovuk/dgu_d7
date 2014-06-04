@@ -294,7 +294,7 @@ function dgu_data_set_request_field_default_field_instances() {
       'module' => 'reply',
       'settings' => array(),
       'type' => 'reply',
-      'weight' => 12,
+      'weight' => 11,
     ),
   );
 
@@ -519,7 +519,7 @@ function dgu_data_set_request_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -1018,7 +1018,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -1063,7 +1063,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     ),
     'entity_type' => 'node',
     'field_name' => 'field_review_notes',
-    'label' => 'Review notes',
+    'label' => 'Notes',
     'required' => 0,
     'settings' => array(
       'text_processing' => 1,
@@ -1076,6 +1076,61 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'rows' => 5,
       ),
       'type' => 'text_textarea',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-dataset_request-field_review_outcome'
+  $field_instances['node-dataset_request-field_review_outcome'] = array(
+    'bundle' => 'dataset_request',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'list_default',
+        'weight' => 19,
+      ),
+      'rss' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_review_outcome',
+    'label' => 'Outcome',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
       'weight' => 1,
     ),
   );
@@ -1139,7 +1194,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     ),
     'entity_type' => 'node',
     'field_name' => 'field_review_status',
-    'label' => 'Review status',
+    'label' => 'Status',
     'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
@@ -1272,16 +1327,17 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
 <strong>Answers to this question will be treated confidentially.</strong>');
   t('If you know the data exists and which organisation collects it, please provide details.');
   t('Issue type');
+  t('Notes');
   t('Organisation name');
   t('Organisation type');
+  t('Outcome');
   t('Please describe the problem that access to the data solves.');
   t('Please give a broad overview of the benefits of this data being made available.');
   t('Please select a main reason.');
   t('Provide further details. Details may include broken links, licensing terms, financial charges, confidentiality, closed formats, out of date etc.');
   t('Publication preference');
   t('Reason');
-  t('Review notes');
-  t('Review status');
+  t('Status');
   t('Suggested use');
   t('Your e-mail');
   t('Your name');

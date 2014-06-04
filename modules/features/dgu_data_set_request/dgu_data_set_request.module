@@ -106,13 +106,16 @@ function dgu_data_set_request_node_access_records($node) {
         'grant_update' => 1,
         'grant_delete' => 1,
       );
-      $grants[] = array(
-        'realm' => 'private_data_request',
-        'gid' => $node->uid,
-        'grant_view' => 1,
-        'grant_update' => 1,
-        'grant_delete' => 1,
+      if ($node->uid) {
+        // Grant author permission only if author is not anonymous.
+        $grants[] = array(
+          'realm' => 'private_data_request',
+          'gid' => $node->uid,
+          'grant_view' => 1,
+          'grant_update' => 1,
+          'grant_delete' => 1,
         );
+      }
     }
     else {
       // Public request
@@ -123,13 +126,16 @@ function dgu_data_set_request_node_access_records($node) {
         'grant_update' => 1,
         'grant_delete' => 1,
       );
-      $grants[] = array(
-        'realm' => 'public_data_request',
-        'gid' => $node->uid,
-        'grant_view' => 1,
-        'grant_update' => 1,
-        'grant_delete' => 1,
-      );
+      if ($node->uid) {
+        // Grant author permission only if author is not anonymous.
+        $grants[] = array(
+          'realm' => 'public_data_request',
+          'gid' => $node->uid,
+          'grant_view' => 1,
+          'grant_update' => 1,
+          'grant_delete' => 1,
+        );
+      }
       if ($node->status == 1) {
         $grants[] = array(
           'realm' => 'public_data_request',

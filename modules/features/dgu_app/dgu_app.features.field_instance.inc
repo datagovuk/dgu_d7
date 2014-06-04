@@ -249,17 +249,8 @@ function dgu_app_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 14,
       ),
       'rss' => array(
@@ -955,9 +946,9 @@ All images will be shown on your app page which click through to the full sized 
   t('Enter the URL of this app.');
   t('Please provide a helpful summary of your apps for when your app is published data.gov.uk.');
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit)');
+  t('Please supply a square thumbnail image for your application (at least 370x370 pixels). This image will be used on the \'Latest apps\' and \'Top rated apps\' lists.');
   t('Please supply additional images of your application so that users can see what it does.
 All images will be shown on your app page which click through to the full sized image');
-  t('Please supply a square thumbnail image for your application (at least 370x370 pixels). This image will be used on the \'Latest apps\' and \'Top rated apps\' lists.');
   t('Screen shots');
   t('Sector');
   t('Submitter Name');

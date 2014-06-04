@@ -47,10 +47,13 @@ function dgu_data_set_request_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '12',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '13',
+        ),
+        'mollom' => array(
+          'weight' => '14',
         ),
       ),
       'display' => array(
