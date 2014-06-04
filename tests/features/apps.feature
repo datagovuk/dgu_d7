@@ -150,7 +150,7 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     When I follow "View user profile"
     And I wait until the page loads
     Then I should be on "/users/testuser"
-  
+
 #TODO Test presence of "More like this" block.
 #TODO Test star ratings.
 #TODO Test presence of screenshots and pop ups of app view page.
