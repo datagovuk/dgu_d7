@@ -149,7 +149,7 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "Body content of test comment"
     And I should see the link "Reply"
     And I should see the link "test_user"
-    When I follow "View user profile"
+    When I follow "test_user" in the "main_content"
     And I wait until the page loads
     Then I should be on "/users/testuser"
 
