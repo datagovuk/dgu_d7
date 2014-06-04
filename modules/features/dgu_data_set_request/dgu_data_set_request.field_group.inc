@@ -21,7 +21,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Benefits of using data in this way',
-    'weight' => '6',
+    'weight' => '7',
     'children' => array(
       0 => 'field_benefits_overview',
     ),
@@ -52,7 +52,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '5. Please describe the benefits of using data in this way.',
-    'weight' => '9',
+    'weight' => '8',
     'children' => array(
       0 => 'field_benefits_overview',
     ),
@@ -79,7 +79,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Challenges in accessing this data',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
       0 => 'field_barriers_detail',
       1 => 'field_barriers_reason',
@@ -112,7 +112,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '3. Have you faced challenges in accessing this data?',
-    'weight' => '7',
+    'weight' => '6',
     'children' => array(
       0 => 'field_barriers_attempted',
       1 => 'field_barriers_detail',
@@ -142,7 +142,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'What data should be released',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_data_holder',
       1 => 'field_data_set_description',
@@ -174,7 +174,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '2. What data would you like released?',
-    'weight' => '6',
+    'weight' => '5',
     'children' => array(
       0 => 'field_data_holder',
       1 => 'field_data_set_description',
@@ -204,7 +204,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Purpose of using this data',
-    'weight' => '5',
+    'weight' => '6',
     'children' => array(
       0 => 'field_data_use',
       1 => 'field_data_use_detail',
@@ -236,7 +236,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '4. What do you plan to do with the data?',
-    'weight' => '8',
+    'weight' => '7',
     'children' => array(
       0 => 'field_data_use',
       1 => 'field_data_use_detail',
@@ -264,7 +264,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '1. Who are you?',
-    'weight' => '5',
+    'weight' => '4',
     'children' => array(
       0 => 'field_organisation_name',
       1 => 'field_organisation_type',
@@ -294,7 +294,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Estimates of the economic or financial benefit of data release',
-    'weight' => '7',
+    'weight' => '8',
     'children' => array(
       0 => 'field_estimates_detail',
       1 => 'field_provide_estimates',
@@ -326,7 +326,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '6. Are you able to provide estimates of the economic or financial benefit of data release?',
-    'weight' => '10',
+    'weight' => '9',
     'children' => array(
       0 => 'field_estimates_detail',
       1 => 'field_provide_estimates',
