@@ -103,6 +103,9 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "App Link: Test app"
     And I should see the link "Test app"
     Then I should be on "/apps/test-app"
+    And I should see the following <breadcrumbs>
+      | Apps     |
+      | Test app |
     And I should see "App charge: Free"
     And I should see "Health"
     And I should see "Apps submitted to data.gov.uk are currently approved for publication"
@@ -127,10 +130,7 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
 # Comment on "Test app" as "test_commenting_user"
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
-    When I visit "/apps/test-app"
-    Then I should see the following <breadcrumbs>
-      | Apps     |
-      | Test app |
+    And I am on "/apps/test-app"
     When I follow "Add new comment"
     And I wait until the page loads
     Then I should see the following <breadcrumbs>
@@ -148,7 +148,9 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "Test subject"
     And I should see "Body content of test comment"
     And I should see the link "Reply"
-    And I should see the link "test_user"
+
+#View the Test App and check the author link
+    Given I am on "/apps/test-app"
     When I follow "test_user" in the "main_content"
     And I wait until the page loads
     Then I should be on "/users/testuser"
