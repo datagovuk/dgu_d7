@@ -1091,7 +1091,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I follow \"My Drafts\""),
       new Given("I wait until the page loads"),
       new Given("I should not see the link \"$title\""),
-      new Given("I follow \"Manage my content\""),
+      new Given("I follow \"My Content\""),
       new Given("I wait until the page loads"),
       new Given("I follow \"$title\""),
       new Given("I wait until the page loads"),
