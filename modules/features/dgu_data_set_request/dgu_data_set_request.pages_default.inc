@@ -236,7 +236,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'ODUG overview',
-      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li><li><a href="/odug/old-data-requests">See requests made under the old \'unlocking service\'.</a></li> </ul></div>',
+      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li> </ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
@@ -615,7 +615,7 @@ Paul Fenton<br/>
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'ODUG overview',
-      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li><li><a href="/odug/old-data-requests">See requests made under the old \'unlocking service\'.</a></li> </ul></div>',
+      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li> </ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
@@ -990,7 +990,7 @@ Paul Fenton<br/>
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'ODUG overview',
-      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li><li><a href="/odug/old-data-requests">See requests made under the old \'unlocking service\'.</a></li> </ul></div>',
+      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li> </ul></div>',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
