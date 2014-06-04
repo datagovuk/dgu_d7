@@ -32,7 +32,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 10,
+        'weight' => 11,
       ),
       'rss' => array(
         'label' => 'above',
@@ -257,7 +257,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 9,
+        'weight' => 10,
       ),
       'rss' => array(
         'label' => 'above',
@@ -462,7 +462,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
@@ -541,7 +541,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'rss' => array(
         'label' => 'above',
@@ -824,7 +824,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 16,
       ),
       'rss' => array(
         'label' => 'above',
@@ -882,7 +882,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'rss' => array(
         'label' => 'above',
@@ -978,7 +978,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1040,7 +1040,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1098,7 +1098,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 19,
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1219,7 +1219,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 17,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1269,7 +1269,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => 15,
       ),
       'rss' => array(
         'label' => 'above',

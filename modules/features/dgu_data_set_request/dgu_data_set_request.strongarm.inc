@@ -47,19 +47,16 @@ function dgu_data_set_request_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '12',
+          'weight' => '30',
         ),
         'redirect' => array(
-          'weight' => '13',
-        ),
-        'mollom' => array(
-          'weight' => '14',
+          'weight' => '30',
         ),
       ),
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '8',
+            'weight' => '9',
             'visible' => TRUE,
           ),
           'rss' => array(
