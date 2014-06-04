@@ -150,3 +150,10 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     When I follow "View user profile"
     And I wait until the page loads
     Then I should be on "/users/testuser"
+  
+#TODO Test presence of "More like this" block.
+#TODO Test star ratings.
+#TODO Test presence of screenshots and pop ups of app view page.
+#TODO Solr Indexing - test presence of new app on search page and test "updated on" is displayed after an update.
+#TODO Test app promo tiles (including adding an image and testing the link).
+#TODO Test app thumbnails and ratings on landing page views.
