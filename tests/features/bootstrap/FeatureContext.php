@@ -97,6 +97,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   {
     $this->dataRegistry = new LocalDataRegistry();
     $this->random = new Random();
+    $this->useContext('wysiwig', new WysiwygSubContext());
 
     if (isset($parameters['drupal_users'])) {
       $this->drupal_users = $parameters['drupal_users'];

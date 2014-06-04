@@ -86,4 +86,4 @@ jason:
       base_url: 'http://dgu.dev:1080'
     Drupal\DrupalExtension\Extension:
       drush:
-        alias: 'dgu.dev'
+        alias: 'self'
