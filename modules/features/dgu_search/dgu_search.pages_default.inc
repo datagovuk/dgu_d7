@@ -222,7 +222,7 @@ function dgu_search_default_page_manager_pages() {
     $pane->pid = 'new-8';
     $pane->panel = 'left_bottom';
     $pane->type = 'block';
-    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->subtype = 'facetapi-OMYIDTb0E4wA80mSSDf2mOJcq4aCjhX8';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -241,6 +241,27 @@ function dgu_search_default_page_manager_pages() {
     $display->panels['left_bottom'][7] = 'new-8';
     $pane = new stdClass();
     $pane->pid = 'new-9';
+    $pane->panel = 'left_bottom';
+    $pane->type = 'block';
+    $pane->subtype = 'facetapi-QzRqS0QDg8NoxrEl29HCuN0PLk60EtBa';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 8;
+    $pane->locks = array();
+    $display->content['new-9'] = $pane;
+    $display->panels['left_bottom'][8] = 'new-9';
+    $pane = new stdClass();
+    $pane->pid = 'new-10';
     $pane->panel = 'left_top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -262,10 +283,10 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['left_top'][0] = 'new-9';
+    $display->content['new-10'] = $pane;
+    $display->panels['left_top'][0] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-11';
     $pane->panel = 'right';
     $pane->type = 'dgu_search_info';
     $pane->subtype = 'dgu_search_info';
@@ -283,10 +304,10 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['right'][0] = 'new-10';
+    $display->content['new-11'] = $pane;
+    $display->panels['right'][0] = 'new-11';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-12';
     $pane->panel = 'right';
     $pane->type = 'apachesolr_result';
     $pane->subtype = 'apachesolr_result';
@@ -324,8 +345,8 @@ function dgu_search_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['right'][1] = 'new-11';
+    $display->content['new-12'] = $pane;
+    $display->panels['right'][1] = 'new-12';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
