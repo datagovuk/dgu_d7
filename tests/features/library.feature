@@ -18,4 +18,35 @@ Feature: Create a Library Resource and search for library resources
     And I should see the following <breadcrumbs>
       | Library |
 
+  @anon @search
+  Scenario: Use search box on Library landing page with and without a keyword to check the error message and solr sort.
+    Given I am on "/library"
+    And I should see the following <breadcrumbs>
+      | Library |
+    And I click search icon
+    Then I should be on "/search/everything/?f[0]=bundle%3Aresource"
+    And "Relevance" option in "Sort by:" should be disabled
+    And "Content type" option in "Sort by:" should be disabled
+    And "Last updated" option in "Sort by:" should be selected
+    And I should see "Please enter some keywords to refine your search further."
+    And I should see "DOCUMENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
+    When I fill in "Search library resources..." with "data"
+    And I click search icon
+    Then I should be on "/search/everything/data?f[0]=bundle%3Aresource&solrsort=score"
+    And I should see the following <breadcrumbs>
+      | Search |
+    And "Relevance" option in "Sort by:" should be selected
+    And "Content type" option in "Sort by:" should be disabled
+    And there should be "10" search results on the page
+    And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "DOCUMENT TYPE" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
+
+  
+
 #TODO use editor role instead of adminsitrator
