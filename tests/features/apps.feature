@@ -33,14 +33,14 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
   Scenario: View latest apps RSS
     Given I am on "/apps"
     And I wait until the page loads
-    And I click RSS icon in "first" column in "third" row
+    And I click RSS icon in "first" column in "fourth" row
     Then I should be on "/apps/latest/rss.xml"
 
   @anon
   Scenario: View top rated apps RSS
-    Given I am on "/apps"
+    Given I am on "/apps/top"
     And I wait until the page loads
-    And I click RSS icon in "last" column in "third" row
+    And I click RSS icon in "first" column in "fourth" row
     Then I should be on "/apps/top/rss.xml"
 
   @anon @search
