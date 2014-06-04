@@ -88,6 +88,8 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I fill in "Developed by" with "Test developer"
     And I fill in "Submitter Name" with "Test submitter"
     And I fill in "Submitter e-mail" with "submitter@example.com"
+    Given I have an image "370" x "370" pixels titled "Test image" located in "/tmp/" folder
+    And I attach the file "/tmp/Test image.png" to "files[field_app_thumbnail_und_0]"
     And I select "Free" from "App charge"
     And I select "Health" from "Category"
     And I select "Other" from "Sector"
