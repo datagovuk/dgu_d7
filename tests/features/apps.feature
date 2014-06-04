@@ -43,43 +43,31 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I click RSS icon in "first" column in "fourth" row
     Then I should be on "/apps/top/rss.xml"
 
-  @anon @search
-  Scenario: View search apps page
-    Given I am on the homepage
-    And I click "Apps"
-    And I wait until the page loads
-    When I click search icon
-    And I wait until the page loads
-    Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
-    And "Last updated" option in "Sort by:" should be selected
-    And I should see "CONTENT TYPE" pane in "first" column in "first" row
-    And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
-    And search result counter should match "^\d* Apps$"
 
   @anon @search
-  Scenario: Use search box on Apps landing page
-    Given I am on the homepage
-    And I click "Apps"
+  Scenario: Use search box on latest apps landing page/search page with and without keyword checking if relevance sort is selected. Check error message and default sort
+    Given I am on "/apps"
+    And I click search icon
     And I wait until the page loads
+    Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
+    And I should see "Please enter some keywords to refine your search further"
+    And "Last updated" option in "Sort by:" should be selected
     When I fill in "Search apps..." with "data"
     And I click search icon
+    And I wait until the page loads
     Then I should be on "/search/everything/data?f[0]=bundle%3Aapp&solrsort=score"
     And "Relevance" option in "Sort by:" should be selected
-
-  @anon @search
-  Scenario: Use search box on Apps search page
-    Given I am on the homepage
-    And I click "Apps"
-    And I wait until the page loads
-    And I click search icon
-    Then I should be on "/search/everything/?f[0]=bundle%3Aapp"
-    And "Last updated" option in "Sort by:" should be selected
-    And search result counter should match "^\d* Apps$"
-    When I fill in "Search apps..." with "data"
-    And I click search icon
-    Then "Relevance" option in "Sort by:" should be selected
-    And search result counter should match "^\d* Apps$"
+    And "Author" option in "Sort by:" should be disabled
+    And "Content type" option in "Sort by:" should be disabled
+    And I should see the following <breadcrumbs>
+      | Apps   |
+      | Search |
+    And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I should see "TAGS" pane in "first" column in "first" row
+    And there should be "10" search results on the page
+    And pager should match "^1 2 3 … »$"
 
   @api
   Scenario: Create a new app and test moderation workflow
