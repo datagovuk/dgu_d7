@@ -39,7 +39,16 @@ Feature: Search content as a site user
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
 
-  #TODO in search.feature we need to add a scenario for testing if keyword is preserved when a facet is un-/selected
+  @anon @search
+  Scenario: Testing if the keyword is preserved when a facet is selected then unselected.
+    Given I am on "/search/everything/"
+    When I fill in "Search content..." with "data"
+    And I click search icon
+    Then I should be on "/search/everything/data?solrsort=score"
+    When I follow "Page"
+    Then I should be on "/search/everything/data?solrsort=score&f[0]=bundle%3Apage"
+    When I click "Page"
+    Then I should be on "/search/everything/data?solrsort=score"
 
   @anon @search
   Scenario: Search for content using the Page facet link after the 'Content type' sort by is selected .
