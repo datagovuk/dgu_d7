@@ -54,12 +54,6 @@ Feature: Create a Library Resource and search for library resources
     And I follow "Library resource"
     And I wait until the page loads
     Then I should see "Create Library resource"
-    And I should see "Title"
-    And I should see "Body"
-    And I should see "Category"
-    And I should see "Tags"
-    And I should see "Sector"
-    And I should see "Document Type"
     Given I have an image "300" x "300" pixels titled "Test image" located in "/tmp/" folder
     And I attach the file "/tmp/Test image.png" to "files[field_resource_file_und_0]"
     And I fill in "Title" with "Test Library resource"
