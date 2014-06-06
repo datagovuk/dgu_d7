@@ -1228,8 +1228,8 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['status_2']['operator'] = 'empty';
   $handler->display->display_options['filters']['status_2']['group'] = 2;
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  /* Display: Latest dataset requests */
+  $handler = $view->new_display('block', 'Latest dataset requests', 'latest_dataset_requests');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
@@ -1554,8 +1554,8 @@ function dgu_data_set_request_views_default_views() {
   );
   $handler->display->display_options['filters']['tid']['vocabulary'] = 'tags';
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  /* Display: Latest dataset requests */
+  $handler = $view->new_display('block', 'Latest dataset requests', 'latest_dataset_requests');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $export['minutes'] = $view;
 
