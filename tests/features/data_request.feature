@@ -48,12 +48,15 @@ Feature: Request new data
     And I should see "WHAT DO YOU PLAN TO DO WITH THE DATA?"
     And I should see "PLEASE DESCRIBE THE BENEFITS OF USING DATA IN THIS WAY."
     And I should see "ARE YOU ABLE TO PROVIDE ESTIMATES OF THE ECONOMIC OR FINANCIAL BENEFIT OF DATA RELEASE?"
+    #Check we cannot see hidden fields
+    And I should not see "Notes"
+    And I should not see "Outcome"
+    And I should not see "Status"
     # Fill out new dataset request form
-    When I select the radio button "Data cannot be released" with the id "edit-field-review-outcome-und-1"
-    And I select the radio button "Request is public."
-    And I fill in "Your name" with "My name"
+    When I fill in "Your name" with "My name"
     And I fill in "Your e-mail" with "test@data.gov.uk"
     And I select the radio button "Private Individual"
+    And I select the radio button "Request is public."
     And I fill in "Dataset name *" with "My Dataset request name"
     And I fill in "Data set description" with "My Dataset request description"
     And I fill in "Data holder" with "The Data holder"

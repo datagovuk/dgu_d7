@@ -33,7 +33,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -44,7 +43,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -55,7 +53,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -101,7 +98,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -112,7 +108,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -123,7 +118,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -152,7 +146,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit own field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -163,7 +156,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit own field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -174,7 +166,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit own field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -194,7 +185,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -205,7 +195,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -216,7 +205,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -236,7 +224,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -247,7 +234,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
@@ -258,7 +244,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
-      'ckan adminstrator' => 'ckan adminstrator',
       'moderator' => 'moderator',
     ),
     'module' => 'field_permissions',
