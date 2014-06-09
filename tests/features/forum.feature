@@ -88,3 +88,25 @@ Feature: Create new forum topic as a site user
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test forum topic" in My content and All content tabs but not in My drafts tab
+    # Comment on "Test forum topic" as "test_commenting_user"
+    Given that the user "test_commenting_user" is not registered
+    And I am logged in as a user "test_commenting_user" with the "authenticated user" role
+    And I break
+    And I am on "/forum/general-discussion/test-forum-topic"
+    When I follow "Add new comment"
+    And I wait until the page loads
+    Then I should see the following <breadcrumbs>
+      | Forum            |
+      | Test forum topic |
+      | Comment          |
+    When I fill in "Subject" with "Test subject"
+    And I type "Body content of test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
+    And I press "Submit"
+    And I wait until the page loads
+    Then I should be on "/forum/general-discussion/test-forum-topic"
+    And I should see the success message "Comment was successfully created."
+    And I should see "Test forum topic"
+    And I should see the heading "Comments"
+    And I should see "Test subject"
+    And I should see "Body content of test comment"
+    And I should see the link "Reply"
