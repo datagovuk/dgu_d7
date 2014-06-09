@@ -5,11 +5,15 @@ Feature: Create new forum topic as a site user
   I should be able to post a new forum topic
 
   @anon
-  Scenario: View the latest forum topics page
+  Scenario: View the latest forum topics landing page
     Given I am on the homepage
     And I click "Interact"
     When I follow "All Forums"
     Then I should be on "/forum"
+    And "All Forums" item in "Interact" subnav should be active
+    And I should see the following <breadcrumbs>
+      | Forum               |
+      | Latest forum topics |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
 
@@ -25,6 +29,9 @@ Feature: Create new forum topic as a site user
     Given I am on "/forum"
     When I follow "Most popular topics"
     Then I should be on "/forum/popular"
+    And I should see the following <breadcrumbs>
+      | Forum               |
+      | Most popular topics |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
 
@@ -39,12 +46,15 @@ Feature: Create new forum topic as a site user
   Scenario: View the forum categories page
     Given I am on "/forum"
     When I follow "Forum categories"
-    And I should be on "/forum/categories"
+    Then I should be on "/forum/categories"
+    And I should see the following <breadcrumbs>
+      | Forum      |
+      | Categories |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
 
   @anon
-  Scenario: View the forum category page
+  Scenario: View a forum category page
     Given I am on "/forum/categories"
     When I follow "General discussion"
     And I should be on "/forum/general-discussion"
@@ -78,8 +88,3 @@ Feature: Create new forum topic as a site user
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test forum topic" in My content and All content tabs but not in My drafts tab
-
-
-
-
-
