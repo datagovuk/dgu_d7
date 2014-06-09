@@ -160,3 +160,38 @@ function dgu_data_set_request_node_grants($account, $op) {
   }
   return $grants;
 }
+
+
+/**
+ * Implements hook_assignee_get_users().
+ */
+function dgu_data_set_request_assignee_get_users($field, $instance, $entity_type, $entity) {
+  $options['Administrators'] = array(
+    1 => t('admin'),
+  );
+
+  $options['Dispatchers'] = array(
+    1 => t('admin'),
+  );
+  $options['Account Managers'] = array(
+    1 => t('admin'),
+  );
+
+  if (isset($entity->field_data_holder_ref[LANGUAGE_NONE][0]['target_id'])) {
+    $publisher = ckan_publisher_load($entity->field_data_holder_ref[LANGUAGE_NONE][0]['target_id']);
+
+    $query = db_select('users', 'u')
+      ->fields('u', array('uid', 'name'));
+    $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
+    $query->join('field_data_field_data_holder_ref', 'dh', 'dh.field_data_holder_ref_target_id = fp.field_publishers_target_id');
+    $query->condition('fp.entity_type', 'user')
+      ->condition('dh.entity_type', 'node')
+      ->condition('dh.bundle', 'dataset_request')
+      ->condition('dh.entity_id', $entity->nid);
+    $publishing_users = $query->execute()->fetchAllKeyed();
+
+    $options[$publisher->title] = $publishing_users;
+  }
+
+  return $options;
+}
