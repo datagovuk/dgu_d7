@@ -91,7 +91,6 @@ Feature: Create new forum topic as a site user
     # Comment on "Test forum topic" as "test_commenting_user"
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
-    And I break
     And I am on "/forum/general-discussion/test-forum-topic"
     When I follow "Add new comment"
     And I wait until the page loads
@@ -110,3 +109,39 @@ Feature: Create new forum topic as a site user
     And I should see "Test subject"
     And I should see "Body content of test comment"
     And I should see the link "Reply"
+
+  @anon @search
+  Scenario: View search forum page with and without a keyword, check solr sort.
+    Given I am on "/forum"
+    When I click search icon
+    Then I should be on "/search/everything/?f[0]=bundle%3Aforum"
+    And I should see "Please enter some keywords to refine your search further."
+    And I should see the following <breadcrumbs>
+      | Forum  |
+      | Search |
+    And I should see "Please enter some keywords to refine your search further."
+    And "All Forums" item in "Interact" subnav should be active
+    And "Last updated" option in "Sort by:" should be selected
+    And there should be "10" search results on the page
+    And pager should match "^1 2 3 … »$"
+    When I fill in "Search forum topics..." with "key"
+    And I click search icon
+    Then I should be on "/search/everything/key?f[0]=bundle%3Aforum"
+    And search result counter should match "^\d* Content results"
+    And "Relevance" option in "Sort by:" should be selected
+    And I should see "CONTENT TYPE" pane in "first" column in "first" row
+    And I should see "CATEGORY" pane in "first" column in "first" row
+    And I should see "SECTOR" pane in "first" column in "first" row
+    And I click "Forum topic"
+    And I wait until the page loads
+    Then I should be on "/search/everything/key?"
+    And "Search content" item in "Interact" subnav should be active
+    And I should see the following <breadcrumbs>
+      | Search |
+    And search result counter should match "^\d* Content results"
+    And "Relevance" option in "Sort by:" should be selected
+    And there should be "10" search results on the page
+    When I click "Forum topic"
+    And I wait until the page loads
+    Then I should be on "/search/everything/key?f[0]=bundle%3Aforum"
+    And "All Forums" item in "Interact" subnav should be active
