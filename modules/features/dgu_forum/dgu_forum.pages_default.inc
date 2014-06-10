@@ -306,7 +306,7 @@ function dgu_forum_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
+      'display' => 'forum_categories_block',
       'override_title' => 1,
       'override_title_text' => '',
     );
@@ -485,7 +485,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->pid = 'new-6';
     $pane->panel = 'left';
     $pane->type = 'views_panes';
-    $pane->subtype = 'forum_topics-panel_pane_1';
+    $pane->subtype = 'forum_topics-panel_pane_category_forum';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array();
@@ -701,7 +701,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->pid = 'new-12';
     $pane->panel = 'middle';
     $pane->type = 'views_panes';
-    $pane->subtype = 'forum_topics-panel_pane_2';
+    $pane->subtype = 'forum_topics-panel_pane_latest_forum';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array();
@@ -919,7 +919,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->pid = 'new-17';
     $pane->panel = 'middle';
     $pane->type = 'views_panes';
-    $pane->subtype = 'forum_topics-panel_pane_3';
+    $pane->subtype = 'forum_topics-panel_pane_most_popular_forum';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array();
