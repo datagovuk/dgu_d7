@@ -15,7 +15,9 @@ Feature: Create new forum topic as a site user
       | Forum               |
       | Latest forum topics |
     And I should see the link "Login to take part in forums »"
+    And pager in "panel_pane_latest_forum" view should match "^1 2 3 … »$"
     And search result counter should match "^\d* Forum topics$"
+    And view "panel_pane_latest_forum" view should have "6" rows
 
   @anon
   Scenario: View the latest forum topics RSS
@@ -34,6 +36,7 @@ Feature: Create new forum topic as a site user
       | Most popular topics |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
+    And row "1" of "panel_pane_most_popular_forum" view should match "\d* replies Last \d* \w* \d* \w* ago$"
 
   @anon
   Scenario: View the most popular forum topics RSS
@@ -52,12 +55,20 @@ Feature: Create new forum topic as a site user
       | Categories |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
+    And view "forum_categories_block" view should have "9" rows
 
   @anon
   Scenario: View a forum category page
     Given I am on "/forum/categories"
     When I follow "General discussion"
-    And I should be on "/forum/general-discussion"
+    Then I should be on "/forum/general-discussion"
+    And I should see the following <breadcrumbs>
+      | Forum            |
+      | Categories       |
+      | General discussion |
+    And I should see the link "Login to take part in forums »"
+    And search result counter should match "^\d* Forum topics$"
+
     And I should see "GENERAL DISCUSSION" pane in "first" column in "second" row
     And I should see "FORUM CATEGORIES" pane in "last" column in "second" row
 
@@ -110,7 +121,7 @@ Feature: Create new forum topic as a site user
     And I should see "Body content of test comment"
     And I should see the link "Reply"
 
-  @anon @search
+  @anon @api @search
   Scenario: View search forum page with and without a keyword, check solr sort.
     Given I am on "/forum"
     When I click search icon
