@@ -156,3 +156,19 @@ Feature: Create new forum topic as a site user
     And I wait until the page loads
     Then I should be on "/search/everything/key?f[0]=bundle%3Aforum"
     And "All Forums" item in "Interact" subnav should be active
+
+    # Clear the cache so the new app will show up on the latest apps landing page
+    Given the cache has been cleared
+    When I visit "/forum"
+    And I break
+    And I wait until the page loads
+    Then "title" field in row "1" of "panel_pane_latest_forum" view should match "^Test forum topic$"
+    When I click "title" field in row "1" of "panel_pane_latest_forum" view
+    Then I should be on "/forum/general-discussion/test-forum-topic"
+
+    #View the Test forum topic and check the author link
+    Given I am on "/forum/general-discussion/test-forum-topic"
+    When I follow "test_user" in the "main_content"
+    And I wait until the page loads
+    Then I should be on "/users/testuser"
+    
