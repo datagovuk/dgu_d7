@@ -483,6 +483,86 @@ function dgu_forum_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass();
     $pane->pid = 'new-6';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 1,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Login to take part in forums (for unverified users)',
+      'title' => '',
+      'body' => '<p><a href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
+',
+      'format' => 'filtered_html',
+      'substitute' => 1,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => '.btn-primary',
+    );
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['bottom'][0] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
+    $pane->panel = 'bottom';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'perm',
+          'settings' => array(
+            'perm' => 'create forum content',
+          ),
+          'context' => 'logged-in-user',
+          'not' => FALSE,
+        ),
+      ),
+    );
+    $pane->configuration = array(
+      'admin_title' => 'Create new forum topic (for authenticated users)',
+      'title' => '',
+      'body' => '<p><a href="/node/add/forum">Create new forum topic &raquo;</a></p>
+',
+      'format' => 'filtered_html',
+      'substitute' => 1,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array(
+      'css_id' => '',
+      'css_class' => '.btn-primary',
+    );
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-7'] = $pane;
+    $display->panels['bottom'][1] = 'new-7';
+    $pane = new stdClass();
+    $pane->pid = 'new-8';
     $pane->panel = 'left';
     $pane->type = 'views_panes';
     $pane->subtype = 'forum_topics-panel_pane_category_forum';
@@ -497,10 +577,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['left'][0] = 'new-6';
+    $display->content['new-8'] = $pane;
+    $display->panels['left'][0] = 'new-8';
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-9';
     $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'forum_categories';
@@ -530,10 +610,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['right'][0] = 'new-7';
+    $display->content['new-9'] = $pane;
+    $display->panels['right'][0] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-10';
     $pane->panel = 'right';
     $pane->type = 'block';
     $pane->subtype = 'dgu_search-searchforum';
@@ -551,10 +631,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][1] = 'new-8';
+    $display->content['new-10'] = $pane;
+    $display->panels['right'][1] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-11';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -566,6 +646,7 @@ function dgu_forum_default_page_manager_pages() {
       'content_type' => 'forum',
       'override_title' => 0,
       'override_title_text' => '',
+      'show_counter' => '1',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -575,8 +656,8 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['top'][0] = 'new-9';
+    $display->content['new-11'] = $pane;
+    $display->panels['top'][0] = 'new-11';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -649,7 +730,7 @@ function dgu_forum_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-12';
     $pane->panel = 'middle';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -671,10 +752,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['middle'][0] = 'new-10';
+    $display->content['new-12'] = $pane;
+    $display->panels['middle'][0] = 'new-12';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-13';
     $pane->panel = 'middle';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-forum-tabs';
@@ -695,10 +776,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['middle'][1] = 'new-11';
+    $display->content['new-13'] = $pane;
+    $display->panels['middle'][1] = 'new-13';
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-14';
     $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'forum_topics-panel_pane_latest_forum';
@@ -713,10 +794,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['middle'][2] = 'new-12';
+    $display->content['new-14'] = $pane;
+    $display->panels['middle'][2] = 'new-14';
     $pane = new stdClass();
-    $pane->pid = 'new-13';
+    $pane->pid = 'new-15';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -752,10 +833,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-13'] = $pane;
-    $display->panels['middle'][3] = 'new-13';
+    $display->content['new-15'] = $pane;
+    $display->panels['middle'][3] = 'new-15';
     $pane = new stdClass();
-    $pane->pid = 'new-14';
+    $pane->pid = 'new-16';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -793,8 +874,8 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-14'] = $pane;
-    $display->panels['middle'][4] = 'new-14';
+    $display->content['new-16'] = $pane;
+    $display->panels['middle'][4] = 'new-16';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
@@ -867,7 +948,7 @@ function dgu_forum_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-15';
+    $pane->pid = 'new-17';
     $pane->panel = 'middle';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -889,10 +970,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-15'] = $pane;
-    $display->panels['middle'][0] = 'new-15';
+    $display->content['new-17'] = $pane;
+    $display->panels['middle'][0] = 'new-17';
     $pane = new stdClass();
-    $pane->pid = 'new-16';
+    $pane->pid = 'new-18';
     $pane->panel = 'middle';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-forum-tabs';
@@ -913,10 +994,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-16'] = $pane;
-    $display->panels['middle'][1] = 'new-16';
+    $display->content['new-18'] = $pane;
+    $display->panels['middle'][1] = 'new-18';
     $pane = new stdClass();
-    $pane->pid = 'new-17';
+    $pane->pid = 'new-19';
     $pane->panel = 'middle';
     $pane->type = 'views_panes';
     $pane->subtype = 'forum_topics-panel_pane_most_popular_forum';
@@ -931,10 +1012,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-17'] = $pane;
-    $display->panels['middle'][2] = 'new-17';
+    $display->content['new-19'] = $pane;
+    $display->panels['middle'][2] = 'new-19';
     $pane = new stdClass();
-    $pane->pid = 'new-18';
+    $pane->pid = 'new-20';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -970,10 +1051,10 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-18'] = $pane;
-    $display->panels['middle'][3] = 'new-18';
+    $display->content['new-20'] = $pane;
+    $display->panels['middle'][3] = 'new-20';
     $pane = new stdClass();
-    $pane->pid = 'new-19';
+    $pane->pid = 'new-21';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1011,8 +1092,8 @@ function dgu_forum_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-19'] = $pane;
-    $display->panels['middle'][4] = 'new-19';
+    $display->content['new-21'] = $pane;
+    $display->panels['middle'][4] = 'new-21';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
