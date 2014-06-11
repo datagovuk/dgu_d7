@@ -5,7 +5,7 @@ Feature: Create new forum topic as a site user
   I should be able to post a new forum topic
 
   @anon
-  Scenario: View the latest forum topics landing page
+  Scenario: View the latest forum topics landing page as anonymous user
     Given I am on the homepage
     And I click "Interact"
     When I follow "All Forums"
@@ -15,9 +15,9 @@ Feature: Create new forum topic as a site user
       | Forum               |
       | Latest forum topics |
     And I should see the link "Login to take part in forums »"
-    And pager in "panel_pane_latest_forum" view should match "^1 2 3 … »$"
     And search result counter should match "^\d* Forum topics$"
     And view "panel_pane_latest_forum" view should have "6" rows
+    And pager in "panel_pane_latest_forum" view should match "^1 2 3 … »$"
 
   @anon
   Scenario: View the latest forum topics RSS
@@ -26,8 +26,8 @@ Feature: Create new forum topic as a site user
     And I click RSS icon in "single" column in "first" row
     Then I should be on "/forum/rss.xml"
 
-  @anon
-  Scenario: View the most popular forum topics page
+  @anon @api
+  Scenario: View the most popular forum topics page as anonymous and authenticated users
     Given I am on "/forum"
     When I follow "Most popular topics"
     Then I should be on "/forum/popular"
@@ -37,6 +37,11 @@ Feature: Create new forum topic as a site user
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
     And row "1" of "panel_pane_most_popular_forum" view should match "\d* replies Last \d* \w* \d* \w* ago$"
+    And view "panel_pane_most_popular_forum" view should have "6" rows
+    And pager in "panel_pane_most_popular_forum" view should match "^1 2 3 … »$"
+    And I am logged in as a user "test_user" with the "authenticated user" role
+    And I am on "/forum/categories"
+    Then I should see the link "Create new forum topic"
 
   @anon
   Scenario: View the most popular forum topics RSS
@@ -45,32 +50,42 @@ Feature: Create new forum topic as a site user
     And I click RSS icon in "single" column in "first" row
     Then I should be on "/forum/popular/rss.xml"
 
-  @anon
-  Scenario: View the forum categories page
+  @anon @api
+  Scenario: View the forum categories page as anonymous and authenticated users
     Given I am on "/forum"
     When I follow "Forum categories"
     Then I should be on "/forum/categories"
     And I should see the following <breadcrumbs>
       | Forum      |
       | Categories |
-    And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
     And view "forum_categories_block" view should have "9" rows
+    And I should see the link "Login to take part in forums »"
+    Given that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
+    And I am on "/forum/categories"
+    Then I should see the link "Create new forum topic"
 
-  @anon
-  Scenario: View a forum category page
+  @anon @api
+  Scenario: View a forum category page as anonymous and authenticated users
     Given I am on "/forum/categories"
     When I follow "General discussion"
     Then I should be on "/forum/general-discussion"
     And I should see the following <breadcrumbs>
-      | Forum            |
-      | Categories       |
+      | Forum              |
+      | Categories         |
       | General discussion |
-    And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
-
     And I should see "GENERAL DISCUSSION" pane in "first" column in "second" row
     And I should see "FORUM CATEGORIES" pane in "last" column in "second" row
+    And view "panel_pane_category_forum" view should have "6" rows
+    And row "1" of "panel_pane_category_forum" view should match "\d* replies|reply \d* \w* \d* \w* ago$"
+    And pager in "panel_pane_category_forum" view should match "^1 2 3 … »$"
+    And I should see the link "Login to take part in forums »"
+    Given that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
+    And I am on "/forum/categories"
+    Then I should see the link "Create new forum topic"
 
   @api
   Scenario: Create a new forum topic with empty required fields
@@ -133,8 +148,7 @@ Feature: Create new forum topic as a site user
     And I wait until the page loads
     Then I should be on "/users/testuser"
 
-
-  @anon @api @search
+  @anon @search
   Scenario: View search forum page with and without a keyword, check solr sort.
     Given I am on "/forum"
     When I click search icon
