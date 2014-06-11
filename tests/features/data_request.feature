@@ -92,8 +92,11 @@ Feature: Request new data
   Scenario: View ODUG blogs page
     Given I am not logged in
     And I am on "/data-request"
-    And I follow "ODUG Blogs"
-    And I should be on "/data-request/blogs"
+    When I follow "ODUG Blogs"
+    Then I should be on "/data-request/blogs"
+    And I should see the following <breadcrumbs>
+      |  Data Requests |
+      |  ODUG Blogs    |
     And I should see the link "Login to request new data"
     And I should see the link "See Dashboard"
     And I should see "ODUG OVERVIEW" pane in "first" column in "second" row
@@ -103,16 +106,17 @@ Feature: Request new data
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     And view "blogs_odug" view should have "6" rows
     And "title" field in row "1" of "blogs_odug" view should match "^ODUG response to PAF Advisory Board response$"
-    And "name" field in row "1" of "blogs_odug" view should match "^Created by hsovoury"
-    And "created" field in row "1" of "blogs_odug" view should match "^\m* \w* ago$"
-    And row "1" of "blogs_odug" view should match "\d* comments|comment? \w* \m* ago$|No comments so far$"
-    And pager in "" view should match "^1 2 3 … »$"
+    And "name" field in row "1" of "blogs_odug" view should match "^Created by hsavory \d* month \d* weeks ago$"
+    And pager in "blogs_odug" view should match "^1 2 3 … »|1 2 3 »$"
 
   @anon
   Scenario: View ODUG minutes page
     Given I am not logged in
     And I am on "/data-request"
-    And I follow "ODUG Minutes"
+    When I follow "ODUG Minutes"
+    Then I should see the following <breadcrumbs>
+      |  Data Requests |
+      |  ODUG Minutes    |
     And I should be on "/data-request/minutes"
     And I should see the link "Login to request new data"
     And I should see the link "See Dashboard"
@@ -121,6 +125,10 @@ Feature: Request new data
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
+    And view "default" view should have "6" rows
+    And "title" field in row "1" of "default" view should match "^Minutes of the Open Data User Group Meeting of September 2013$"
+    And "field-resource-file" field in row "1" of "default" view should match "^Resources: Minutes of Open Data User Group Sep 2013.odt$"
+    And pager in "default" view should match "^1 2 3 … »|1 2 3 »$"
 
   @anon
   Scenario: View the data requests RSS
