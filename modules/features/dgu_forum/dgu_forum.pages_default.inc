@@ -490,11 +490,9 @@ function dgu_forum_default_page_manager_pages() {
     $pane->access = array(
       'plugins' => array(
         0 => array(
-          'name' => 'role',
+          'name' => 'perm',
           'settings' => array(
-            'rids' => array(
-              0 => 1,
-            ),
+            'perm' => 'create forum content',
           ),
           'context' => 'logged-in-user',
           'not' => FALSE,
@@ -502,9 +500,9 @@ function dgu_forum_default_page_manager_pages() {
       ),
     );
     $pane->configuration = array(
-      'admin_title' => 'Login to take part in forums (for unverified users)',
+      'admin_title' => 'Create new forum topic (for authenticated users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
+      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => 1,
@@ -531,9 +529,11 @@ function dgu_forum_default_page_manager_pages() {
     $pane->access = array(
       'plugins' => array(
         0 => array(
-          'name' => 'perm',
+          'name' => 'role',
           'settings' => array(
-            'perm' => 'create forum content',
+            'rids' => array(
+              0 => 1,
+            ),
           ),
           'context' => 'logged-in-user',
           'not' => FALSE,
@@ -541,9 +541,9 @@ function dgu_forum_default_page_manager_pages() {
       ),
     );
     $pane->configuration = array(
-      'admin_title' => 'Create new forum topic (for authenticated users)',
+      'admin_title' => 'Login to take part in forums (for anonymous users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic &raquo;</a></p>
+      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => 1,
