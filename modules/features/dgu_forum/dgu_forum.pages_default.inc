@@ -504,7 +504,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Login to take part in forums (for unverified users)',
       'title' => '',
-      'body' => '<p><a href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
+      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => 1,
@@ -515,7 +515,7 @@ function dgu_forum_default_page_manager_pages() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => '.btn-primary',
+      'css_class' => 'unboxed',
     );
     $pane->extras = array();
     $pane->position = 0;
@@ -543,7 +543,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Create new forum topic (for authenticated users)',
       'title' => '',
-      'body' => '<p><a href="/node/add/forum">Create new forum topic &raquo;</a></p>
+      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => 1,
@@ -554,7 +554,7 @@ function dgu_forum_default_page_manager_pages() {
     );
     $pane->css = array(
       'css_id' => '',
-      'css_class' => '.btn-primary',
+      'css_class' => 'unboxed',
     );
     $pane->extras = array();
     $pane->position = 1;
