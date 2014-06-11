@@ -5,7 +5,7 @@ Feature: Request new data
   I should be able to request new data
 
   @anon
-  Scenario: View latest data requests page as an unverified user
+  Scenario: View latest data requests page as an anonymous user
     Given I am not logged in
     And I am on the homepage
     And I click "Data"
@@ -17,6 +17,8 @@ Feature: Request new data
     And "Data Requests" item in "Data" subnav should be active
     And I should see the link "Login to request new data"
     And I should see the link "See Dashboard"
+    And view "latest_dataset_requests" view should have "5" rows
+    And pager in "latest_dataset_requests" view should match "^1 2 3 … »$"
     And I should see "ODUG OVERVIEW" pane in "first" column in "second" row
     And I should see "PROGRESS ON REQUESTS" pane in "last" column in "second" row
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
@@ -28,7 +30,6 @@ Feature: Request new data
     And I should see the following <breadcrumbs>
       | User account |
       | Login        |
-
 
   @api
   Scenario: View latest data requests page and create a Dataset request as an authenticated user
@@ -84,7 +85,8 @@ Feature: Request new data
     And I visit "/data-request"
     And I wait until the page loads
     Then "title" field in row "1" of "latest_dataset_requests" view should match "^My Dataset request name$"
-
+    And "name" field in row "1" of "latest_dataset_requests" view should match "^Submitted by test_user$"
+    And "created" field in row "1" of "latest_dataset_requests" view should match "^\d* min \d* sec ago$"
 
   @anon
   Scenario: View ODUG blogs page
@@ -99,6 +101,12 @@ Feature: Request new data
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
+    And view "blogs_odug" view should have "6" rows
+    And "title" field in row "1" of "blogs_odug" view should match "^ODUG response to PAF Advisory Board response$"
+    And "name" field in row "1" of "blogs_odug" view should match "^Created by hsovoury"
+    And "created" field in row "1" of "blogs_odug" view should match "^\m* \w* ago$"
+    And row "1" of "blogs_odug" view should match "\d* comments|comment? \w* \m* ago$|No comments so far$"
+    And pager in "" view should match "^1 2 3 … »$"
 
   @anon
   Scenario: View ODUG minutes page
