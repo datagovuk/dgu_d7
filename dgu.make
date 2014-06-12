@@ -167,7 +167,7 @@ projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
 projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
 projects[ckan][subdir] = "contrib"
 
-projects[ckan_publisher_tree][version] = "7.x-1.x"
+projects[ckan_publisher_tree][version] = "1.x"
 projects[ckan_publisher_tree][subdir] = "contrib"
 
 projects[composer_manager][version] = "1.0-beta7"
