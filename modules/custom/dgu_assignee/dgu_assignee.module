@@ -43,8 +43,6 @@ function dgu_assignee_field_instance_settings_form($field, $instance) {
 
 /**
  * Implements hook_field_is_empty().
- *
- * If all of the options are set to REPLY_INHERIT, this field is empty.
  */
 function dgu_assignee_field_is_empty($item, $field) {
   return empty($item['uid']);
