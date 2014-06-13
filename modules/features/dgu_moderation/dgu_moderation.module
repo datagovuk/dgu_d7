@@ -147,13 +147,16 @@ function dgu_moderation_get_node_grants(&$node){
     'grant_update' => 1,
     'grant_delete' => 1,
   );
-  $grants[] = array(
-    'realm' => 'moderation',
-    'gid' => $node->uid,
-    'grant_view' => 1,
-    'grant_update' => 1,
-    'grant_delete' => 1,
-  );
+  if ($node->uid) {
+    // Grant author permission only if author is not anonymous.
+    $grants[] = array(
+      'realm' => 'moderation',
+      'gid' => $node->uid,
+      'grant_view' => 1,
+      'grant_update' => 1,
+      'grant_delete' => 1,
+    );
+  }
   if ($node->status == 1) {
     $grants[] = array(
       'realm' => 'moderation',
