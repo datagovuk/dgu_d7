@@ -137,7 +137,7 @@ Feature: Request new data
     Then I should be on "/odug/rss.xml"
 
   @anon @search
-  Scenario: Use search box on Dataset requests landing page with a keyword
+  Scenario: Use search box on dataset requests landing page with a keyword
     Given I am on "/data-request"
     When I fill in "Search dataset requests..." with "data"
     And I click search icon
@@ -145,6 +145,24 @@ Feature: Request new data
     And "Relevance" option in "Sort by:" should be selected
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
+
+  @anon @search
+  Scenario: Use search box on dataset requests landing page without a keyword
+    Given I am on "/data-request"
+    And I click search icon
+    Then I should be on "/search/everything/?f[0]=bundle%3Adataset_request"
+    And "Relevance" option in "Sort by:" should be disabled
+    And "Last updated" option in "Sort by:" should be selected
+    And I should see "Please enter some keywords to refine your search further."
+    And there should be "10" search results on the page
+    And pager should match "^1 2 3 … »$"
+
+  @anon @search
+  Scenario: Testing if the keyword is preserved when a facet is unselected.
+    Given I am on "/search/everything/data?f[0]=bundle%3Adataset_request&solrsort=score"
+    When I click "Dataset Request"
+    Then I should be on "/search/everything/data?solrsort=score"\
+    And "Relevance" option in "Sort by:" should be selected
 
 #TODO test private request access (node view and search index) for non admins
 #TODO test presence of all fields on node view page
