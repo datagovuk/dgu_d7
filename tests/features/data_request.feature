@@ -145,3 +145,6 @@ Feature: Request new data
     And "Relevance" option in "Sort by:" should be selected
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
+
+#TODO test private request access (node view and search index) for non admins
+#TODO test presence of all fields on node view page
