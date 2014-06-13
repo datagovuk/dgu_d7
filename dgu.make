@@ -169,7 +169,7 @@ projects[ckan][subdir] = "contrib"
 
 projects[ckan_publisher_tree][type] = "module"
 projects[ckan_publisher_tree][download][type] = "git"
-projects[ckan_publisher_tree][download][url] = "http://git.drupal.org/project/ckan.git"
+projects[ckan_publisher_tree][download][url] = "http://git.drupal.org/project/ckan_publisher_tree.git"
 projects[ckan_publisher_tree][download][branch] = "7.x-1.x"
 projects[ckan_publisher_tree][subdir] = "contrib"
 
