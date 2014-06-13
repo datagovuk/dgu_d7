@@ -23,7 +23,6 @@ Feature: Request new data
     And I should see "PROGRESS ON REQUESTS" pane in "last" column in "second" row
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
-    And I should see "Login to request new data"
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     When I follow "Login to request new data"
     Then I should be on "/user/login?destination=/node/add/dataset-request"
@@ -36,7 +35,6 @@ Feature: Request new data
     Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
     And I am on "/data-request"
-    And I should see "Request new data"
     When I follow "Request new data"
     Then I should be on "/node/add/dataset-request"
     And I should see "Create a dataset request"
@@ -128,8 +126,8 @@ Feature: Request new data
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     And view "odug_minutes" view should have "6" rows
     And "title" field in row "1" of "odug_minutes" view should match "\w*$"
-    And "field-resource-file" field in row "1" of "odug_minutes" view should match "^Resources:$"
-    And pager in "odug_minutes" view should match "^1 2 3 … »|1 2 3 »$"
+    And "field-resource-file" field in row "1" of "odug_minutes" view should match "^Resources:"
+    And pager in "odug_minutes" view should match "^1 2 3 … »|1 2 3 »"
 
   @anon
   Scenario: View the data requests RSS
