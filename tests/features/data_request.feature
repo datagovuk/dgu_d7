@@ -106,7 +106,7 @@ Feature: Request new data
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     And view "blogs_odug" view should have "6" rows
     And "title" field in row "1" of "blogs_odug" view should match "\w*"
-    And "name" field in row "1" of "blogs_odug" view should match "^Created by \w* \d* month \d* weeks ago$"
+    And "name" field in row "1" of "blogs_odug" view should match "^Created by"
     And row "1" of "blogs_odug" view should match "\d* comments? \d* \w* \d* \w* ago$|No comments so far$"
     And pager in "blogs_odug" view should match "^1 2 3 … »|1 2 3 »$"
 
