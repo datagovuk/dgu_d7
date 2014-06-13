@@ -135,3 +135,13 @@ Feature: Request new data
     And I wait until the page loads
     And I click RSS icon in "first" column in "second" row
     Then I should be on "/odug/rss.xml"
+
+  @anon @search
+  Scenario: Use search box on Dataset requests landing page with a keyword
+    Given I am on "/data-request"
+    When I fill in "Search dataset requests..." with "data"
+    And I click search icon
+    Then I should be on "/search/everything/data?f[0]=bundle%3Adataset_request&solrsort=score"
+    And "Relevance" option in "Sort by:" should be selected
+    And there should be "10" search results on the page
+    And pager should match "^1 2 3 … »$"
