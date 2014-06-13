@@ -86,7 +86,7 @@ Feature: Request new data
     And I wait until the page loads
     Then "title" field in row "1" of "latest_dataset_requests" view should match "^My Dataset request name$"
     And "name" field in row "1" of "latest_dataset_requests" view should match "^Submitted by test_user$"
-    And "created" field in row "1" of "latest_dataset_requests" view should match "^\d* min \d* sec ago$"
+    And "created" field in row "1" of "latest_dataset_requests" view should match "^\d* min \d* sec ago|\d* sec ago$"
 
   @anon
   Scenario: View ODUG blogs page
