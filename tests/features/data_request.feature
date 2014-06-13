@@ -127,7 +127,7 @@ Feature: Request new data
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     And view "default" view should have "6" rows
-    And "title" field in row "1" of "default" view should match "^Minutes of the Open Data User Group Meeting of \w* \d*$"
+    And "title" field in row "1" of "default" view should match "\w*$"
     And "field-resource-file" field in row "1" of "default" view should match "^Resources: Minutes of Open Data User Group \w* \d*.odt$"
     And pager in "default" view should match "^1 2 3 … »|1 2 3 »$"
 
