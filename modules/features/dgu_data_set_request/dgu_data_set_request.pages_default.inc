@@ -212,7 +212,7 @@ function dgu_data_set_request_default_page_manager_pages() {
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
+      'display' => 'latest_dataset_requests',
       'override_title' => 1,
       'override_title_text' => '',
     );

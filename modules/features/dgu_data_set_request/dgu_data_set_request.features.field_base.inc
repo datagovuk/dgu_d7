@@ -556,7 +556,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_review_notes',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => 2,
     ),
     'foreign keys' => array(
       'format' => array(
@@ -586,7 +586,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_review_outcome',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => 2,
     ),
     'foreign keys' => array(),
     'indexes' => array(
@@ -617,7 +617,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_review_status',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => 2,
     ),
     'foreign keys' => array(),
     'indexes' => array(
