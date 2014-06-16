@@ -140,6 +140,11 @@ Feature: Create new forum topic as a site user
     When I visit "/forum"
     And I wait until the page loads
     Then "title" field in row "1" of "panel_pane_latest_forum" view should match "^Test forum topic$"
+    And I should see "Created by"
+    And I should see "Posted in"
+    And row "1" of "panel_pane_latest_forum" view should match "1 Reply"
+    And I break
+    And avatar in row "1" of "panel_pane_latest_forum" view should link to "/users/testuser"
     When I click "title" field in row "1" of "panel_pane_latest_forum" view
     Then I should be on "/forum/general-discussion/test-forum-topic"
     #View the Test forum topic and check the author link
