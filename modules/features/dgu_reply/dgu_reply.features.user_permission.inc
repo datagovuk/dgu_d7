@@ -63,6 +63,25 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
+  // Exported permission: 'delete own review_comment reply'.
+  $permissions['delete own review_comment reply'] = array(
+    'name' => 'delete own review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
+    ),
+    'module' => 'reply',
+  );
+
+  // Exported permission: 'delete review_comment reply'.
+  $permissions['delete review_comment reply'] = array(
+    'name' => 'delete review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'reply',
+  );
+
   // Exported permission: 'edit comment reply'.
   $permissions['edit comment reply'] = array(
     'name' => 'edit comment reply',
@@ -101,6 +120,25 @@ function dgu_reply_user_default_permissions() {
     'module' => 'reply',
   );
 
+  // Exported permission: 'edit own review_comment reply'.
+  $permissions['edit own review_comment reply'] = array(
+    'name' => 'edit own review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
+    ),
+    'module' => 'reply',
+  );
+
+  // Exported permission: 'edit review_comment reply'.
+  $permissions['edit review_comment reply'] = array(
+    'name' => 'edit review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'reply',
+  );
+
   // Exported permission: 'post comment reply'.
   $permissions['post comment reply'] = array(
     'name' => 'post comment reply',
@@ -116,6 +154,16 @@ function dgu_reply_user_default_permissions() {
     'name' => 'post field_comment reply',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'reply',
+  );
+
+  // Exported permission: 'post review_comment reply'.
+  $permissions['post review_comment reply'] = array(
+    'name' => 'post review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
@@ -139,6 +187,16 @@ function dgu_reply_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'unverified user' => 'unverified user',
+    ),
+    'module' => 'reply',
+  );
+
+  // Exported permission: 'view review_comment reply'.
+  $permissions['view review_comment reply'] = array(
+    'name' => 'view review_comment reply',
+    'roles' => array(
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
