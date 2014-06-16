@@ -23,7 +23,7 @@
           </form>
         </div>
         <?php if ($form['show_counter']['#value']): // Show this text only on landing pages (show_counter is set to true on landing pages) ?>
-        <span class="search-all-label">Click search now to see all content in this category</span>
+        <span class="search-all-label">Click search icon to see all content in this category</span>
         <?php endif; ?>
       </div>
     </div>
