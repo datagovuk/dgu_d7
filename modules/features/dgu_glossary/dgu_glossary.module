@@ -190,6 +190,7 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id)
         $form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#attributes'] = array('placeholder' => $form['field_reason_for_change'][LANGUAGE_NONE][0]['#description']);
         unset($form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#description']);
         $form['#attributes']['class'][] = "boxed";
+        $form['#submit'][] = 'dgu_suggested_term_node_form_submit';
         dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
     }
     elseif ($form_id == 'reply_add_form') {
@@ -473,6 +474,10 @@ function dgu_glossary_suggest_new_page()
 
     return $form;
 }
+
+function dgu_suggested_term_node_form_submit($form, &$form_state){
+    $form_state['values']['title'] = $form_state['values']['field_term_name'][LANGUAGE_NONE][0]['value'];
+    }
 
 function dgu_glossary_query_alter(QueryAlterableInterface $query) {
     if (FALSE && (empty($_GET['comments']) && $query->hasTag('comment_filter'))) {
