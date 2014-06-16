@@ -349,7 +349,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -528,7 +528,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -706,7 +706,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
