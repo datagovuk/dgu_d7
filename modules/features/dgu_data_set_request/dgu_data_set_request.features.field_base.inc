@@ -18,7 +18,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_assignee',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => 2,
     ),
     'foreign keys' => array(
       'uid' => array(
@@ -182,52 +182,6 @@ function dgu_data_set_request_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'text',
-  );
-
-  // Exported field_base: 'field_data_holder_ref'
-  $field_bases['field_data_holder_ref'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_data_holder_ref',
-    'field_permissions' => array(
-      'type' => 0,
-    ),
-    'foreign keys' => array(
-      'ckan_publisher' => array(
-        'columns' => array(
-          'target_id' => 'id',
-        ),
-        'table' => 'ckan_publisher',
-      ),
-    ),
-    'indexes' => array(
-      'target_id' => array(
-        0 => 'target_id',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'entityreference',
-    'settings' => array(
-      'handler' => 'base',
-      'handler_settings' => array(
-        'behaviors' => array(
-          'views-select-list' => array(
-            'status' => 0,
-          ),
-        ),
-        'sort' => array(
-          'direction' => 'ASC',
-          'property' => 'title',
-          'type' => 'property',
-        ),
-        'target_bundles' => array(),
-      ),
-      'target_type' => 'ckan_publisher',
-    ),
-    'translatable' => 0,
-    'type' => 'entityreference',
   );
 
   // Exported field_base: 'field_data_set_description'
@@ -546,6 +500,61 @@ function dgu_data_set_request_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_publisher_ref'
+  $field_bases['field_publisher_ref'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_publisher_ref',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
+    'foreign keys' => array(
+      'id' => array(
+        'columns' => array(
+          'id' => 'id',
+        ),
+        'table' => 'ckan_publisher',
+      ),
+    ),
+    'indexes' => array(
+      'id' => array(
+        0 => 'id',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'ckan_publisher_tree',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'ckan_publisher_reference',
+  );
+
+  // Exported field_base: 'field_review_comments'
+  $field_bases['field_review_comments'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_review_comments',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reply',
+    'settings' => array(
+      'access' => -1,
+      'allow_reply' => -1,
+      'bundle' => 'review_comment',
+      'display' => -1,
+      'form' => -1,
+    ),
+    'translatable' => 0,
+    'type' => 'reply',
   );
 
   // Exported field_base: 'field_review_notes'

@@ -146,7 +146,6 @@ function dgu_data_set_request_field_group_info() {
     'children' => array(
       0 => 'field_data_holder',
       1 => 'field_data_set_description',
-      2 => 'field_data_holder_ref',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -175,13 +174,12 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '2. What data would you like released?',
-    'weight' => '8',
+    'weight' => '6',
     'children' => array(
       0 => 'field_data_holder',
       1 => 'field_data_set_description',
       2 => 'field_data_themes',
-      3 => 'field_data_holder_ref',
-      4 => 'title',
+      3 => 'title',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -266,7 +264,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => '1. Who are you?',
-    'weight' => '7',
+    'weight' => '4',
     'children' => array(
       0 => 'field_organisation_name',
       1 => 'field_organisation_type',
@@ -296,7 +294,7 @@ function dgu_data_set_request_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Estimates of the economic or financial benefit of data release',
-    'weight' => '9',
+    'weight' => '10',
     'children' => array(
       0 => 'field_estimates_detail',
       1 => 'field_provide_estimates',

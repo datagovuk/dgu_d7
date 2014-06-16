@@ -88,7 +88,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 12,
+        'weight' => 13,
       ),
       'rss' => array(
         'label' => 'above',
@@ -313,7 +313,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 11,
+        'weight' => 12,
       ),
       'rss' => array(
         'label' => 'above',
@@ -350,7 +350,7 @@ function dgu_data_set_request_field_default_field_instances() {
       'module' => 'reply',
       'settings' => array(),
       'type' => 'reply',
-      'weight' => 13,
+      'weight' => 14,
     ),
   );
 
@@ -416,62 +416,6 @@ function dgu_data_set_request_field_default_field_instances() {
       ),
       'type' => 'text_textfield',
       'weight' => 3,
-    ),
-  );
-
-  // Exported field_instance: 'node-dataset_request-field_data_holder_ref'
-  $field_instances['node-dataset_request-field_data_holder_ref'] = array(
-    'bundle' => 'dataset_request',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'entityreference',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-          'link' => FALSE,
-        ),
-        'type' => 'entityreference_label',
-        'weight' => 2,
-      ),
-      'rss' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_data_holder_ref',
-    'label' => 'Data holder',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(),
-      'type' => 'options_select',
-      'weight' => 2,
     ),
   );
 
@@ -631,7 +575,7 @@ function dgu_data_set_request_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 5,
+      'weight' => 7,
     ),
   );
 
@@ -653,7 +597,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 13,
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',
@@ -936,7 +880,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 17,
+        'weight' => 19,
       ),
       'rss' => array(
         'label' => 'above',
@@ -994,7 +938,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 14,
+        'weight' => 15,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1090,7 +1034,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => 17,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1130,7 +1074,122 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 6,
+      'weight' => 8,
+    ),
+  );
+
+  // Exported field_instance: 'node-dataset_request-field_publisher_ref'
+  $field_instances['node-dataset_request-field_publisher_ref'] = array(
+    'bundle' => 'dataset_request',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'ckan_publisher_tree',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'ckan_publisher_reference_default',
+        'weight' => 16,
+      ),
+      'rss' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_publisher_ref',
+    'label' => 'Publisher',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'ckan_publisher_tree',
+      'settings' => array(
+        'start_minimized' => 1,
+      ),
+      'type' => 'ckan_publisher_tree',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-dataset_request-field_review_comments'
+  $field_instances['node-dataset_request-field_review_comments'] = array(
+    'bundle' => 'dataset_request',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'reply',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'reply_default',
+        'weight' => 11,
+      ),
+      'rss' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'search_result' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_review_comments',
+    'label' => 'Review notes',
+    'required' => 0,
+    'settings' => array(
+      'access' => -1,
+      'allow_reply' => -1,
+      'display' => -1,
+      'form' => -1,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'reply',
+      'settings' => array(),
+      'type' => 'reply',
+      'weight' => 13,
     ),
   );
 
@@ -1188,7 +1247,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -1316,7 +1375,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => 2,
+      'weight' => 0,
     ),
   );
 
@@ -1331,7 +1390,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 18,
+        'weight' => 20,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1381,7 +1440,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 16,
+        'weight' => 18,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1449,7 +1508,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   t('Please select a main reason.');
   t('Provide further details. Details may include broken links, licensing terms, financial charges, confidentiality, closed formats, out of date etc.');
   t('Publication preference');
+  t('Publisher');
   t('Reason');
+  t('Review notes');
   t('Status');
   t('Suggested use');
   t('Your e-mail');
