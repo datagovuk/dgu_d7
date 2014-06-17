@@ -43,9 +43,6 @@ function dgu_search_preprocess(&$variables, $hook){
             $variables['end'] = $response->response->start + count($response->response->docs);
 
             foreach($query->getFilters() as $filter){
-                if (isset($filter['#name']) && $filter['#name'] == 'entity_type'){
-                    $entity = str_replace(array('"', "'"), '', $filter['#value']);
-                }
                 if (isset($filter['#name']) && $filter['#name'] == 'bundle'){
                     $content_type = $filter['#value'];
                 }
