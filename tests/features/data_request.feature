@@ -51,6 +51,21 @@ Feature: Request new data
     And I should not see "Notes"
     And I should not see "Outcome"
     And I should not see "Status"
+    When I press "Save draft"
+    And I wait 2 seconds
+    Then I should see "Dataset name field is required."
+    And I should see "Data themes field is required."
+    And I should see "Suggested use field is required."
+    And I should see "Organisation name field is required."
+    And I should see "Organisation type field is required."
+    And I should see "Are you able to provide estimates? field is required."
+    And I should see "Publication preference field is required."
+    And I should see "Your e-mail field is required."
+    And I should see "Your name field is required."
+    And the field "Your name" should be outlined in red
+    And the field "Your e-mail" should be outlined in red
+    And the field "Organisation" should be outlined in red
+    And the field "Dataset name" should be outlined in red
     # Fill out new dataset request form
     When I fill in "Your name" with "My name"
     And I fill in "Your e-mail" with "test@data.gov.uk"
