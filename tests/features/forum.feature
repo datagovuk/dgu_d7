@@ -66,22 +66,6 @@ Feature: Create new forum topic as a site user
     And view "forum_categories_block" view should have "9" rows
     And row "1" of "forum_categories_block" view should match "^General discussion"
     And row "1" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "2" of "forum_categories_block" view should match "^Police.uk data"
-    And row "2" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "3" of "forum_categories_block" view should match "^Using data"
-    And row "3" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "4" of "forum_categories_block" view should match "^Publishing data"
-    And row "4" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "5" of "forum_categories_block" view should match "^Open data"
-    And row "5" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "6" of "forum_categories_block" view should match "^Team Building"
-    And row "6" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "7" of "forum_categories_block" view should match "^Tools and Applications"
-    And row "7" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "8" of "forum_categories_block" view should match "^Food Hygiene rating data"
-    And row "8" of "forum_categories_block" view should match "\d* topics \d* replies$"
-    And row "9" of "forum_categories_block" view should match "^Data Portal Setup"
-    And row "9" of "forum_categories_block" view should match "\d* topics \d* replies$"
     And I should see the link "Login to take part in forums »"
     Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
