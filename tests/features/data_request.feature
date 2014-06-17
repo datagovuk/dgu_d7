@@ -140,7 +140,7 @@ Feature: Request new data
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     And view "odug_minutes_block" view should have "6" rows
-    And "title" field in row "1" of "odug_minutes_block" view should match "\w*$"
+    And "title" field in row "1" of "odug_minutes_block" view should match "\w*"
     And "field-resource-file" field in row "1" of "odug_minutes_block" view should match "^Resources:"
     And pager in "odug_minutes_block" view should match "^1 2 3 … »|1 2 3 »"
 
