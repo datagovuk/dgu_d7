@@ -288,6 +288,7 @@ function dgu_glossary_preprocess(&$variables, $hook)
             break;
         case 'lexicon_overview_item':
             $term = $variables['term'];
+            $term->extralinks['search for term']['path'] = "search/everything/" .$term->name;
             $instance = field_info_instance('taxonomy_term', 'field_comment', 'glossary');
             $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
