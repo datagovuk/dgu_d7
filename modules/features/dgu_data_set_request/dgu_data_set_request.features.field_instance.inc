@@ -1195,7 +1195,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'entity_type' => 'node',
     'field_name' => 'field_review_status',
     'label' => 'Status',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'user_register_form' => FALSE,
     ),
