@@ -42,21 +42,9 @@ function dgu_search_preprocess(&$variables, $hook){
             $variables['start'] = $response->response->start + 1;
             $variables['end'] = $response->response->start + count($response->response->docs);
 
-            $content_type = 'Result';
-            $entity = '';
             foreach($query->getFilters() as $filter){
-                if (isset($filter['#name']) && $filter['#name'] == 'entity_type'){
-                    $entity = str_replace(array('"', "'"), '', $filter['#value']);
-                }
                 if (isset($filter['#name']) && $filter['#name'] == 'bundle'){
                     $content_type = $filter['#value'];
-                }
-            }
-
-            if ($entity){
-                $entity_info = entity_get_info($entity);
-                if (!empty($entity_info['bundles'][$content_type]['label'])){
-                    $content_type = $entity_info['bundles'][$content_type]['label'];
                 }
             }
 
@@ -89,3 +77,4 @@ function dgu_search_dgu_search_info_content_type_render($subtype, $conf, $panel_
 function dgu_search_info_content_type_edit_form($form, &$form_state) {
     return $form;
 }
+
