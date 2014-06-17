@@ -84,6 +84,7 @@ Feature: Create blogs as a blogger
     When I click "Blog entry"
     And I wait until the page loads
     Then I should be on "/search/everything/blog?f[0]=bundle%3Ablog"
+    And search result counter should match "^\d* Blogs"
     And "All Blogs" item in "Interact" subnav should be active
     And "Content type" option in "Sort by:" should be disabled
 
