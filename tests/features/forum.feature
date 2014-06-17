@@ -60,6 +60,24 @@ Feature: Create new forum topic as a site user
       | Categories |
     And search result counter should match "^\d* Forum topics$"
     And view "forum_categories_block" view should have "9" rows
+    And row "1" of "forum_categories_block" view should match "^General discussion"
+    And row "1" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "2" of "forum_categories_block" view should match "^Police.uk data"
+    And row "2" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "3" of "forum_categories_block" view should match "^Using data"
+    And row "3" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "4" of "forum_categories_block" view should match "^Publishing data"
+    And row "4" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "5" of "forum_categories_block" view should match "^Open data"
+    And row "5" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "6" of "forum_categories_block" view should match "^Team Building"
+    And row "6" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "7" of "forum_categories_block" view should match "^Tools and Applications"
+    And row "7" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "8" of "forum_categories_block" view should match "^Food Hygiene rating data"
+    And row "8" of "forum_categories_block" view should match "\d* topics \d* replies$"
+    And row "9" of "forum_categories_block" view should match "^Data Portal Setup"
+    And row "9" of "forum_categories_block" view should match "\d* topics \d* replies$"
     And I should see the link "Login to take part in forums »"
     Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
@@ -135,7 +153,7 @@ Feature: Create new forum topic as a site user
     And I should see "Test subject"
     And I should see "Body content of test comment"
     And I should see the link "Reply"
-    # Clear the cache so the new app will show up on the forum landing page
+    # Clear the cache so the forum topic will show up on the forum landing page
     Given the cache has been cleared
     When I visit "/forum"
     And I wait until the page loads
@@ -143,7 +161,6 @@ Feature: Create new forum topic as a site user
     And I should see "Created by"
     And I should see "Posted in"
     And row "1" of "panel_pane_latest_forum" view should match "1 Reply"
-    And I break
     And avatar in row "1" of "panel_pane_latest_forum" view should link to "/users/testuser"
     When I click "title" field in row "1" of "panel_pane_latest_forum" view
     Then I should be on "/forum/general-discussion/test-forum-topic"
