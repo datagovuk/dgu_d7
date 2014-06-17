@@ -44,7 +44,7 @@ Feature: Create blogs as a blogger
     Then I should be on "/blog/rss.xml"
 
   @anon @search
-  Scenario: View search blog page
+  Scenario: View search blog page and perform a search with and without a keyword checking the solr sort.
     Given I am on the homepage
     And I click "Interact"
     And I follow "All Blogs"
@@ -73,11 +73,20 @@ Feature: Create blogs as a blogger
       | Search |
     And search result counter should match "^\d* Content results"
     And "Last updated" option in "Sort by:" should be selected
+    And "Author" option in "Sort by:" should be disabled
+    And "Relevance" option in "Sort by:" should be disabled
     And there should be "10" search results on the page
+    When I fill in "Search content..." with "blog"
+    And I click search icon
+    Then I should be on "/search/everything/blog?solrsort=score"
+    And "Relevance" option in "Sort by:" should be selected
+    And "Author" option in "Sort by:" should be disabled
     When I click "Blog entry"
     And I wait until the page loads
-    Then I should be on "/search/everything/?f[0]=bundle%3Ablog"
+    Then I should be on "/search/everything/blog?f[0]=bundle%3Ablog"
+    And search result counter should match "^\d* Blogs"
     And "All Blogs" item in "Interact" subnav should be active
+    And "Content type" option in "Sort by:" should be disabled
 
   @api
   Scenario: Create a new blogs entry with empty required fields
@@ -144,7 +153,7 @@ Feature: Create blogs as a blogger
     Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
 
   @anon
-  Scenario: Make sure that comments can't be posted by anonymous users
+  Scenario: Make sure that comments can not be posted by anonymous users
     Given I am on "/blog"
     And I wait until the page loads
     When I click "title" field in row "1" of "latest_blog_posts" view
