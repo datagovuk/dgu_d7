@@ -169,7 +169,7 @@ Feature: Create new forum topic as a site user
     When I fill in "Search forum topics..." with "key"
     And I click search icon
     Then I should be on "/search/everything/key?f[0]=bundle%3Aforum"
-    And search result counter should match "^\d* Content results"
+    And search result counter should match "^\d* Forum topics"
     And "Relevance" option in "Sort by:" should be selected
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
     And I should see "CATEGORY" pane in "first" column in "first" row
@@ -182,6 +182,8 @@ Feature: Create new forum topic as a site user
       | Search |
     And search result counter should match "^\d* Content results"
     And "Relevance" option in "Sort by:" should be selected
+    And "Author" option in "Sort by:" should be disabled
+    And "Content type" option in "Sort by:" should be disabled
     And there should be "10" search results on the page
     When I click "Forum topic"
     And I wait until the page loads
