@@ -85,6 +85,7 @@ Feature: Create new forum topic as a site user
     And I should see "GENERAL DISCUSSION" pane in "first" column in "second" row
     And I should see "FORUM CATEGORIES" pane in "last" column in "second" row
     And row "1" of "block_1" view should match "^General Discussion \d* topics"
+    And view "block_1" view should have "9" rows
     And view "panel_pane_category_forum" view should have "6" rows
     And "title" field in row "1" of "panel_pane_category_forum" view should match "^\w*"
     And  "name" field in row "1" of "panel_pane_category_forum" view should match "^Created by \w*|\w* (\d* \w* \d* \w* ago|\d* \w* ago)"
