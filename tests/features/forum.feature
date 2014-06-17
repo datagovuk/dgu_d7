@@ -36,9 +36,13 @@ Feature: Create new forum topic as a site user
       | Most popular topics |
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
+    And "title" field in row "1" of "panel_pane_most_popular_forum" view should match "^\w*"
+    And  "name" field in row "1" of "panel_pane_most_popular_forum" view should match "^Created by \w*|\w* (\d* \w* \d* \w* ago|\d* \w* ago)"
+    And  "taxonomy-forums" field in row "1" of "panel_pane_most_popular_forum" view should match "^Posted in \w*"
     And row "1" of "panel_pane_most_popular_forum" view should match "\d* replies Last \d* \w* \d* \w* ago$"
     And view "panel_pane_most_popular_forum" view should have "6" rows
     And pager in "panel_pane_most_popular_forum" view should match "^1 2 3 … »$"
+    Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
     And I am on "/forum/categories"
     Then I should see the link "Create new forum topic"
@@ -96,8 +100,11 @@ Feature: Create new forum topic as a site user
     And search result counter should match "^\d* Forum topics$"
     And I should see "GENERAL DISCUSSION" pane in "first" column in "second" row
     And I should see "FORUM CATEGORIES" pane in "last" column in "second" row
+    And row "1" of "block_1" view should match "^General Discussion \d* topics"
     And view "panel_pane_category_forum" view should have "6" rows
-    And row "1" of "panel_pane_category_forum" view should match "\d* replies|reply \d* \w* \d* \w* ago$"
+    And "title" field in row "1" of "panel_pane_category_forum" view should match "^\w*"
+    And  "name" field in row "1" of "panel_pane_category_forum" view should match "^Created by \w*|\w* (\d* \w* \d* \w* ago|\d* \w* ago)"
+    And row "1" of "panel_pane_category_forum" view should match "\d* replies|reply \d* \w* \d* \w* ago|No replies so far$"
     And pager in "panel_pane_category_forum" view should match "^1 2 3 … »$"
     And I should see the link "Login to take part in forums »"
     Given that the user "test_user" is not registered
@@ -158,10 +165,9 @@ Feature: Create new forum topic as a site user
     When I visit "/forum"
     And I wait until the page loads
     Then "title" field in row "1" of "panel_pane_latest_forum" view should match "^Test forum topic$"
-    And I should see "Created by"
-    And I should see "Posted in"
-    And row "1" of "panel_pane_latest_forum" view should match "1 Reply"
     And avatar in row "1" of "panel_pane_latest_forum" view should link to "/users/testuser"
+    And  "name" field in row "1" of "panel_pane_latest_forum" view should match "^Created by \w* (\d* \w* \d* \w* ago|\d* \w* ago)"
+    And row "1" of "panel_pane_latest_forum" view should match "1 reply"
     When I click "title" field in row "1" of "panel_pane_latest_forum" view
     Then I should be on "/forum/general-discussion/test-forum-topic"
     #View the Test forum topic and check the author link
