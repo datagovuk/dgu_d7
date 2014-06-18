@@ -157,7 +157,7 @@ Feature: Request new data
     When I fill in "Search dataset requests..." with "data"
     And I click search icon
     Then I should be on "/search/everything/data?f[0]=bundle%3Adataset_request&solrsort=score"
-    And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
+    And search result counter should match "^\d* Dataset requests$"
     And "Relevance" option in "Sort by:" should be selected
     And there should be "10" search results on the page
     And pager should match "^1 2 3 … »$"
@@ -170,7 +170,7 @@ Feature: Request new data
     Given I am on "/data-request"
     And I click search icon
     Then I should be on "/search/everything/?f[0]=bundle%3Adataset_request"
-    And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
+    And search result counter should match "^\d* Dataset requests$"
     And "Author" option in "Sort by:" should be disabled
     And "Last updated" option in "Sort by:" should be selected
     And "Relevance" option in "Sort by:" should be disabled

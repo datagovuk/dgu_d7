@@ -111,7 +111,9 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "Apps submitted to data.gov.uk are currently approved for publication"
     And I should see the link "Flag as offensive"
     When I follow "Edit draft"
+    And I wait until the page loads
     And I press "Save draft"
+    And I wait until the page loads
     Then I should see " Your draft App has been updated. You can update it in My Drafts section."
     And I should see "Updated on"
     And I submit "App" titled "Test app" for moderation
