@@ -89,7 +89,6 @@ Feature: Create new forum topic as a site user
     And view "panel_pane_category_forum" view should have "6" rows
     And "title" field in row "1" of "panel_pane_category_forum" view should match "^\w*"
     And  "name" field in row "1" of "panel_pane_category_forum" view should match "^Created by \w*|\w* (\d* \w* \d* \w* ago|\d* \w* ago)"
-    And  "taxonomy-forums" field in row "1" of "panel_pane_most_popular_forum" view should match "^Posted in \w*"
     And row "1" of "panel_pane_category_forum" view should match "\d* replies|reply \d* \w* \d* \w* ago|No replies so far$"
     And pager in "panel_pane_category_forum" view should match "^1 2 3 … »$"
     And I should see the link "Login to take part in forums »"
