@@ -63,10 +63,11 @@ function dgu_forum_views_default_views() {
     'forums' => 'forums',
   );
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block');
+  /* Display: Forum categories block */
+  $handler = $view->new_display('block', 'Forum categories block', 'forum_categories_block');
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'row forum-categories-main';
+  $handler->display->display_options['display_description'] = 'block view for forum categories veiw tab on forum landing page';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
@@ -308,8 +309,9 @@ function dgu_forum_views_default_views() {
   $handler = $view->new_display('block', 'Block', 'block');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
 
-  /* Display: Content pane */
-  $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  /* Display: Forum Category */
+  $handler = $view->new_display('panel_pane', 'Forum Category', 'panel_pane_category_forum');
+  $handler->display->display_options['display_description'] = 'Content pane view panel for a single forum category page';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
@@ -347,7 +349,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -480,9 +482,10 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['path'] = 'forum/rss.xml';
   $handler->display->display_options['sitename_title'] = 0;
 
-  /* Display: Content pane - latest */
-  $handler = $view->new_display('panel_pane', 'Content pane - latest', 'panel_pane_2');
+  /* Display: Latest forum topics */
+  $handler = $view->new_display('panel_pane', 'Latest forum topics', 'panel_pane_latest_forum');
   $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['display_description'] = 'Content pane view panel for the latest forum topics tab on the forum landing page';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
@@ -525,7 +528,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -653,9 +656,10 @@ function dgu_forum_views_default_views() {
     ),
   );
 
-  /* Display: Content pane - most popular */
-  $handler = $view->new_display('panel_pane', 'Content pane - most popular', 'panel_pane_3');
+  /* Display: Most popular forum topics */
+  $handler = $view->new_display('panel_pane', 'Most popular forum topics', 'panel_pane_most_popular_forum');
   $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['display_description'] = 'Content pane view panel for the most popular tab on the forum landing page';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
@@ -702,7 +706,7 @@ function dgu_forum_views_default_views() {
   $handler->display->display_options['fields']['field_avatar']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_avatar']['settings'] = array(
     'image_style' => 'avatar',
-    'image_link' => '',
+    'image_link' => 'content',
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',

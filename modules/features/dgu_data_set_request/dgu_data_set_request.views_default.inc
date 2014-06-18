@@ -1553,9 +1553,19 @@ function dgu_data_set_request_views_default_views() {
   );
   $handler->display->display_options['filters']['tid']['vocabulary'] = 'tags';
 
-  /* Display: Latest dataset requests */
-  $handler = $view->new_display('block', 'Latest dataset requests', 'latest_dataset_requests');
+  /* Display: ODUG minutes  */
+  $handler = $view->new_display('block', 'ODUG minutes ', 'odug_minutes_block');
+  $handler->display->display_options['display_description'] = 'ODUG minutes block';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '6';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '3';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '«';
+  $handler->display->display_options['pager']['options']['tags']['next'] = '»';
+  $handler->display->display_options['block_description'] = 'ODUG minutes block';
   $export['minutes'] = $view;
 
   return $export;

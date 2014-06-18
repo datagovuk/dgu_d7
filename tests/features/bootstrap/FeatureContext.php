@@ -881,7 +881,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     // We expect relative urls as we set them in the HTML but selenium returns
     // Dom property instead of HTML attribute whis us absolute url in most cases
     // https://code.google.com/p/selenium/issues/detail?id=1824
-    if (preg_replace('/(http(s)?:\/\/\w+)/i', '', $href_property) != $href) {
+    if (preg_replace('/http(s)?:\/\/[^\/]*/i', '', $href_property) != $href) {
       throw new \Exception('Avatar in row "' . $row . '" of view "' . $view_display_id . '" links to "' . $href_property . '" instead of "' . $href . '".');
     }
 
@@ -1004,7 +1004,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^I have a txt file titled "([^"]*)" located in "([^"]*)" folder$/
    */
   public function iHaveATxtFileTitledLocatedInFolder($title, $path){
-    $file = $path + $title;
+    $file = $path . $title;
     $contents = "Test txt file.";
     $handle = fopen($file, "w");
     if(!$handle){

@@ -966,7 +966,7 @@ Paul Fenton<br/>
       'link_to_view' => 0,
       'args' => '',
       'url' => '',
-      'display' => 'block',
+      'display' => 'odug_minutes_block',
       'override_title' => 1,
       'override_title_text' => '',
     );

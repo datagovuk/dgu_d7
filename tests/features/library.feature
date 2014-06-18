@@ -36,14 +36,13 @@ Feature: Create a Library Resource and search for library resources
       | Search |
     And "Relevance" option in "Sort by:" should be selected
     And "Author" option in "Sort by:" should be disabled
-    And "Content type" option in "Sort by:" should be disabled
     And there should be "10" search results on the page
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
     And I should see "CATEGORY" pane in "first" column in "first" row
     And I should see "DOCUMENT TYPE" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
     And I should see "TAGS" pane in "first" column in "first" row
-    And search result counter should match "^\d* Content results$"
+    And search result counter should match "^\d* Library resources$"
     And pager should match "^1 2 3 … »$"
 
   @api
