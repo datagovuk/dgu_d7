@@ -154,24 +154,30 @@ function dgu_data_set_request_node_grants($account, $op) {
  * Implements hook_assignee_get_users().
  */
 function dgu_data_set_request_assignee_get_users($field, $instance, $entity_type, $entity) {
-  $options['Administrators'] = array(
-    1 => t('admin'),
-  );
 
-  $options['Dispatchers'] = array(
-    1 => t('admin'),
-  );
-  $options['Account Managers'] = array(
-    1 => t('admin'),
-  );
+  $query = db_select('role', 'r');
+  $query->join('users_roles', 'ur', 'r.rid = ur.rid');
+  $query->join('users', 'u', 'u.uid = ur.uid');
+  $query->fields('r', array('name'))
+        ->fields('ur', array('uid'))
+        ->fields('u', array('name'))
+        ->condition('r.name', 'data request %', 'LIKE');
+  $users = $query->execute()->fetchAll();
 
-  if (isset($entity->field_data_holder_ref[LANGUAGE_NONE][0]['target_id'])) {
-    $publisher = ckan_publisher_load($entity->field_data_holder_ref[LANGUAGE_NONE][0]['target_id']);
+  $options = array();
+  foreach ($users as $user) {
+    $options[$user->name] = array(
+      $user->uid => $user->u_name,
+    );
+  }
+
+  if (isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id'])) {
+    $publisher = ckan_publisher_load($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
 
     $query = db_select('users', 'u')
       ->fields('u', array('uid', 'name'));
     $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
-    $query->join('field_data_field_data_holder_ref', 'dh', 'dh.field_data_holder_ref_target_id = fp.field_publishers_target_id');
+    $query->join('field_data_field_publisher_ref', 'dh', 'dh.field_publisher_ref_id = fp.field_publishers_target_id');
     $query->condition('fp.entity_type', 'user')
       ->condition('dh.entity_type', 'node')
       ->condition('dh.bundle', 'dataset_request')
