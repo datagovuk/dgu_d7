@@ -1004,7 +1004,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^I have a txt file titled "([^"]*)" located in "([^"]*)" folder$/
    */
   public function iHaveATxtFileTitledLocatedInFolder($title, $path){
-    $file = $path + $title;
+    $file = $path . $title;
     $contents = "Test txt file.";
     $handle = fopen($file, "w");
     if(!$handle){
