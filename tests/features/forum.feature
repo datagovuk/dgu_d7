@@ -191,7 +191,6 @@ Feature: Create new forum topic as a site user
     And search result counter should match "^\d* Content results"
     And "Relevance" option in "Sort by:" should be selected
     And "Author" option in "Sort by:" should be disabled
-    And "Content type" option in "Sort by:" should be disabled
     And there should be "10" search results on the page
     When I click "Forum topic"
     And I wait until the page loads
