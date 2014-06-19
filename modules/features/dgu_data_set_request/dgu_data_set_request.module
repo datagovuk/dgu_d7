@@ -166,9 +166,7 @@ function dgu_data_set_request_assignee_get_users($field, $instance, $entity_type
 
   $options = array();
   foreach ($users as $user) {
-    $options[$user->name] = array(
-      $user->uid => $user->u_name,
-    );
+    $options[$user->name][$user->uid] = $user->u_name;
   }
 
   if (isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id'])) {
