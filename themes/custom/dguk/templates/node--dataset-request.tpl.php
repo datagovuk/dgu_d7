@@ -1,6 +1,8 @@
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
+  <?php print render($title_prefix); ?>
   <h1 class="node-title" <?php print $title_attributes; ?>><?php print $title; ?></h1>
+  <?php print render($title_suffix); ?>
 
   <?php if (!$field_publication_preference[LANGUAGE_NONE][0]['value']): ?>
     <p class="confidential">Confidential request</p>
