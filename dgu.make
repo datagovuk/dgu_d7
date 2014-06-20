@@ -119,7 +119,10 @@ projects[migrate_d2d][subdir] = "contrib"
 projects[fivestar][version] = "2.0-alpha2"
 projects[fivestar][subdir] = "contrib"
 
-projects[workbench_moderation][version] = "1.2"
+projects[workbench_moderation][type] = "module"
+projects[workbench_moderation][download][type] = "git"
+projects[workbench_moderation][download][url] = "http://git.drupal.org/project/workbench_moderation.git"
+projects[workbench_moderation][download][revision] = "e7144c9f866879d0679b8116c7715865a91c6878"
 projects[workbench_moderation][subdir] = "contrib"
 
 projects[lexicon][version] = "1.10"
