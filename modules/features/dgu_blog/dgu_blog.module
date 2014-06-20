@@ -49,7 +49,12 @@ function dgu_blog_form_blog_node_form_alter(&$form, &$form_state, $form_id) {
   unset($form['actions']['preview']);
   $form['#attributes']['class'][] = "boxed";
 
-  dgu_moderation_node_forms_alter($form, BLOG_MODERATION_PERMISSION);
+  if (!user_access(BLOG_MODERATION_PERMISSION)) {
+    dgu_moderation_node_forms_alter($form);
+  }
+  else {
+    $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
+  }
 }
 
 function dgu_blog_node_access($node, $op, $account) {

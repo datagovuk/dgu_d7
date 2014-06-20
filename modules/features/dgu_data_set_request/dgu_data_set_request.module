@@ -68,7 +68,12 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   unset($form['actions']['preview']);
   $form['#attributes']['class'][] = "boxed";
 
-  dgu_moderation_node_forms_alter($form, DATA_REQUEST_MODERATION_PERMISSION);
+  if (!user_access(DATA_REQUEST_MODERATION_PERMISSION)) {
+    dgu_moderation_node_forms_alter($form);
+  }
+  else {
+    $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
+  }
 
 }
 
