@@ -14,12 +14,13 @@
            title="<?php print $reset_long_text; ?>">
           <i class="icon-thumbs-down"></i>
           <?php print t('Cancel Endorsement'); ?>
-          <?php if (user_access('moderate glossary')) print "($points)" ?>
+          <?php print "($points)"; ?>
         </a>
     <?php elseif ($show_up_as_link): ?>
         <a class="btn btn-default btn-primary" href="<?php print $link_up; ?>" rel="nofollow" class="<?php print $link_class_up; ?>">
           <i class="icon-thumbs-up"></i>
           <?php print t('Endorse'); ?>
+          <?php print "($points)"; ?>
         </a>
     <?php endif; ?>
   <?php endif; ?>
