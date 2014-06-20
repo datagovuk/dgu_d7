@@ -263,6 +263,13 @@ projects[message_subscribe][subdir] = "contrib"
 projects[message_digest][version] = "1.0"
 projects[message_digest][subdir] = "contrib"
 
+projects[edit][type] = "module"
+projects[edit][download][type] = "git"
+projects[edit][download][url] = "http://git.drupal.org/project/edit.git"
+projects[edit][download][revision] = "c777f843eb32ab0e6f50324f9ca0c7037edc076f"
+projects[edit][subdir] = "contrib"
+
+
 
 ; Themes
 ; --------
@@ -272,8 +279,19 @@ projects[bootstrap][download][type] = "git"
 projects[bootstrap][download][url] = "http://git.drupal.org/project/bootstrap.git"
 projects[bootstrap][download][tag] = "7.x-3.0-rc2"
 
-
+; Libraries
+; --------
 libraries[ckeditor][download][type] = "get"
 libraries[ckeditor][download][url] = "http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.2/ckeditor_4.2_full.zip"
 libraries[ckeditor][directory_name] = "ckeditor"
 libraries[ckeditor][destination] = "libraries"
+
+libraries[backbone][download][type] = "get"
+libraries[backbone][download][url] = "https://github.com/jashkenas/backbone/archive/1.1.2.zip"
+libraries[backbone][directory_name] = "backbone"
+libraries[backbone][destination] = "libraries"
+
+libraries[underscore][download][type] = "get"
+libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.6.0.zip"
+libraries[underscore][directory_name] = "underscore"
+libraries[underscore][destination] = "libraries"
