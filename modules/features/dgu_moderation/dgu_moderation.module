@@ -83,21 +83,20 @@ function dgu_moderation_page_alter(&$page) {
   }
 }
 
-function dgu_moderation_node_forms_alter (&$form, $moderation_permission) {
-  if (!user_access($moderation_permission)){
-    $form['revision_information']['#type'] = 'hidden';
-    $form['actions']['publish']['#access'] = TRUE;
-    $form['actions']['publish']['#value'] = 'Submit for moderation';
-    $form['actions']['publish']['#type'] = 'submit';
-    $form['actions']['publish']['#weight'] = 6;
-    $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
-    $form['actions']['submit']['#value'] = 'Save draft';
-    $form['#submit'][] = 'dgu_moderation_node_submit';
-  }
-  else {
-    $form['options']['workbench_moderation_state_new']['#default_value'] = $form['workbench_moderation_state_current']['#value'];
-  }
+function dgu_moderation_node_forms_alter (&$form) {
+  $form['revision_information']['#type'] = 'hidden';
+  $form['actions']['publish']['#access'] = TRUE;
+  $form['actions']['publish']['#value'] = 'Submit for moderation';
+  $form['actions']['publish']['#type'] = 'submit';
+  $form['actions']['publish']['#weight'] = 6;
+  $form['actions']['publish']['#submit'] = $form['actions']['submit']['#submit'];
+  $form['actions']['submit']['#value'] = 'Save draft';
+  $form['#submit'][] = 'dgu_moderation_node_submit';
+}
 
+function dgu_moderation_node_forms_after_build ($form) {
+  $form['options']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  return $form;
 }
 
 /**
