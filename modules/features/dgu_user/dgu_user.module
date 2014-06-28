@@ -356,19 +356,27 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   $plural_types = dgu_site_feature_get_plural_content_types();
 
-  $result = db_query("SELECT n.type, COUNT(n.nid) AS count
-                      FROM {node} n
-                      WHERE n.type in ('app', 'blog', 'forum', 'dataset_request')
-                      AND n.uid = :uid AND n.status = 1
-                      GROUP BY n.type
-                      ", array(':uid' => $variables['elements']['#account']->uid));
+
+  $uid = $variables['elements']['#account']->uid;
+
+  $query = db_select('node', 'n');
+  $query->fields('n', array('type'))
+    ->condition('n.uid', $uid)
+    ->addTag('node_access')
+    ->groupBy('n.type')
+    ->addExpression('COUNT(nid)', 'count');
+  $result = $query->execute();
+
   foreach ($result as $row) {
     $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $plural_types[$row->type] . '</a><span> (' . $row->count . ')</span></div>';
   }
-  $result = db_query("SELECT COUNT(r.id) AS count
-                      FROM {reply} r
-                      WHERE r.uid = :uid AND r.status = 1
-                      GROUP BY r.entity_id AND r.entity_type", array(':uid' => $variables['elements']['#account']->uid));
+
+  $query = db_select('reply', 'r');
+  $query->condition('r.uid', $uid)
+    ->condition('r.status', 1)
+    ->groupBy('r.entity_id AND r.entity_type')
+    ->addExpression('COUNT(r.id)', 'count');
+  $result = $query->execute();
 
 
   if($comments_count = $result->fetchField()) {
