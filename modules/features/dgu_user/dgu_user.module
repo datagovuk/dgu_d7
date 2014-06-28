@@ -362,6 +362,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
   $query = db_select('node', 'n');
   $query->fields('n', array('type'))
     ->condition('n.uid', $uid)
+    ->condition('n.type', array('app', 'blog', 'forum', 'dataset_request'), 'IN')
     ->addTag('node_access')
     ->groupBy('n.type')
     ->addExpression('COUNT(nid)', 'count');
