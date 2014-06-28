@@ -375,6 +375,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
   $query = db_select('reply', 'r');
   $query->condition('r.uid', $uid)
     ->condition('r.status', 1)
+    ->condition('r.bundle', 'comment')
     ->groupBy('r.entity_id AND r.entity_type')
     ->addExpression('COUNT(r.id)', 'count');
   $result = $query->execute();
