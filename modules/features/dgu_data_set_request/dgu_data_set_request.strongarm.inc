@@ -44,16 +44,16 @@ function dgu_data_set_request_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '0',
+          'weight' => '6',
         ),
         'path' => array(
-          'weight' => '15',
+          'weight' => '24',
         ),
         'redirect' => array(
-          'weight' => '16',
+          'weight' => '25',
         ),
         'mollom' => array(
-          'weight' => '17',
+          'weight' => '26',
         ),
       ),
       'display' => array(
@@ -106,7 +106,7 @@ function dgu_data_set_request_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_dataset_request';
-  $strongarm->value = '1';
+  $strongarm->value = '0';
   $export['node_preview_dataset_request'] = $strongarm;
 
   $strongarm = new stdClass();

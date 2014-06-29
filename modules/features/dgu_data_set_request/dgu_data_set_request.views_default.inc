@@ -48,7 +48,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Data name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Data set description */
+  /* Field: Content: Data request description */
   $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['field'] = 'field_data_set_description';
@@ -59,17 +59,10 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Data holder */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
@@ -252,7 +245,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Data name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Data set description */
+  /* Field: Content: Data request description */
   $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['field'] = 'field_data_set_description';
@@ -263,17 +256,10 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Data holder */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
@@ -625,7 +611,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Data name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Data set description */
+  /* Field: Content: Data request description */
   $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['field'] = 'field_data_set_description';
@@ -636,17 +622,10 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Data holder */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Submitter name */
   $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
   $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
@@ -770,7 +749,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Are you able to provide estimates? */
+  /* Field: Content: Are you able to provide estimates of the economic or financial benefit of data release? */
   $handler->display->display_options['fields']['field_provide_estimates']['id'] = 'field_provide_estimates';
   $handler->display->display_options['fields']['field_provide_estimates']['table'] = 'field_data_field_provide_estimates';
   $handler->display->display_options['fields']['field_provide_estimates']['field'] = 'field_provide_estimates';
@@ -853,7 +832,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['field_data_use_value']['table'] = 'field_data_field_data_use';
   $handler->display->display_options['filters']['field_data_use_value']['field'] = 'field_data_use_value';
   $handler->display->display_options['filters']['field_data_use_value']['operator'] = 'not empty';
-  /* Filter criterion: Content: Are you able to provide estimates? (field_provide_estimates) */
+  /* Filter criterion: Content: Are you able to provide estimates of the economic or financial benefit of data release? (field_provide_estimates) */
   $handler->display->display_options['filters']['field_provide_estimates_value']['id'] = 'field_provide_estimates_value';
   $handler->display->display_options['filters']['field_provide_estimates_value']['table'] = 'field_data_field_provide_estimates';
   $handler->display->display_options['filters']['field_provide_estimates_value']['field'] = 'field_provide_estimates_value';
@@ -1376,17 +1355,10 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['date_format'] = 'short';
-  /* Field: Content: Data holder */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Organisation name */
   $handler->display->display_options['fields']['field_organisation_name']['id'] = 'field_organisation_name';
   $handler->display->display_options['fields']['field_organisation_name']['table'] = 'field_data_field_organisation_name';
