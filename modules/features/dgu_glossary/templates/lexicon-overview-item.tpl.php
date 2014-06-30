@@ -34,7 +34,7 @@
   <?php if (isset($term->extralinks)) : ?>
     <span class="lexicon-extralinks">
     <?php foreach ($term->extralinks as $link) : ?>
-      <?php print l($link["name"], $link["path"], $link["attributes"]); ?>
+      <?php print l($link["name"], $link["path"], $link["attributes"] ? $link["attributes"] : array()); ?>
     <?php endforeach; ?>
     </span>
 
