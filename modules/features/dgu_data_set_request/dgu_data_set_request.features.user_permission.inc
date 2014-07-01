@@ -239,6 +239,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_assignee',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
@@ -249,7 +251,10 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'view field_data_set_link'.
   $permissions['view field_data_set_link'] = array(
     'name' => 'view field_data_set_link',
-    'roles' => array(),
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -258,6 +263,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_publisher_ref',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -269,6 +276,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -280,6 +289,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -289,7 +300,10 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'view field_review_status'.
   $permissions['view field_review_status'] = array(
     'name' => 'view field_review_status',
-    'roles' => array(),
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'field_permissions',
   );
 
