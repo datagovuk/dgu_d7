@@ -40,7 +40,10 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   $form['account']['#type'] = 'fieldset';
   $form['account']['#collapsible'] = TRUE;
-  $form['account']['#collapsed'] = TRUE;
+  // Don't collapse account setting if user just used password reset link
+  if(!$_GET['pass-reset-token']) {
+    $form['account']['#collapsed'] = TRUE;
+  }
   $form['account']['#title'] = t('Account settings');
   $form['account']['mail']['#weight'] = 1;
   $form['account']['mail']['#weight'] = 5;
