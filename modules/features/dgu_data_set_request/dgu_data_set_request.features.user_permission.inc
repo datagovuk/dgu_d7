@@ -33,7 +33,9 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'create field_data_set_link'.
   $permissions['create field_data_set_link'] = array(
     'name' => 'create field_data_set_link',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -73,9 +75,7 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'create field_review_status'.
   $permissions['create field_review_status'] = array(
     'name' => 'create field_review_status',
-    'roles' => array(
-      'authenticated user' => 'authenticated user',
-    ),
+    'roles' => array(),
     'module' => 'field_permissions',
   );
 
@@ -115,6 +115,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_assignee',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
@@ -125,7 +126,10 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'edit field_data_set_link'.
   $permissions['edit field_data_set_link'] = array(
     'name' => 'edit field_data_set_link',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -134,6 +138,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_publisher_ref',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -145,6 +150,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -156,6 +162,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request account manager' => 'data request account manager',
       'data request administrator' => 'data request administrator',
     ),
@@ -165,7 +172,10 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'edit field_review_status'.
   $permissions['edit field_review_status'] = array(
     'name' => 'edit field_review_status',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -192,7 +202,9 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'edit own field_data_set_link'.
   $permissions['edit own field_data_set_link'] = array(
     'name' => 'edit own field_data_set_link',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -232,7 +244,10 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'edit own field_review_status'.
   $permissions['edit own field_review_status'] = array(
     'name' => 'edit own field_review_status',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -304,7 +319,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_status',
     'roles' => array(
       'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
     ),
     'module' => 'field_permissions',
   );
@@ -323,7 +337,9 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'view own field_data_set_link'.
   $permissions['view own field_data_set_link'] = array(
     'name' => 'view own field_data_set_link',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -363,7 +379,9 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'view own field_review_status'.
   $permissions['view own field_review_status'] = array(
     'name' => 'view own field_review_status',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 
