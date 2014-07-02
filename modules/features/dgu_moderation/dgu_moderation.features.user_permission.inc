@@ -45,6 +45,16 @@ function dgu_moderation_user_default_permissions() {
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
       'blogger' => 'blogger',
+      'data publisher' => 'data publisher',
+    ),
+    'module' => 'workbench_moderation',
+  );
+
+  // Exported permission: 'moderate content from draft to published'.
+  $permissions['moderate content from draft to published'] = array(
+    'name' => 'moderate content from draft to published',
+    'roles' => array(
+      'data publisher' => 'data publisher',
     ),
     'module' => 'workbench_moderation',
   );
@@ -56,6 +66,7 @@ function dgu_moderation_user_default_permissions() {
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
       'blogger' => 'blogger',
+      'data publisher' => 'data publisher',
     ),
     'module' => 'workbench_moderation',
   );
@@ -65,9 +76,24 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'moderate content from needs_review to published',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
+    'module' => 'workbench_moderation',
+  );
+
+  // Exported permission: 'moderate content from published to draft'.
+  $permissions['moderate content from published to draft'] = array(
+    'name' => 'moderate content from published to draft',
+    'roles' => array(),
+    'module' => 'workbench_moderation',
+  );
+
+  // Exported permission: 'moderate content from published to needs_review'.
+  $permissions['moderate content from published to needs_review'] = array(
+    'name' => 'moderate content from published to needs_review',
+    'roles' => array(),
     'module' => 'workbench_moderation',
   );
 
@@ -87,6 +113,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
@@ -109,6 +136,7 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'blogger' => 'blogger',
+      'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
@@ -120,6 +148,7 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'view moderation messages',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
