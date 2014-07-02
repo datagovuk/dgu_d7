@@ -67,6 +67,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['delete own review_comment reply'] = array(
     'name' => 'delete own review_comment reply',
     'roles' => array(
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
     ),
@@ -124,6 +125,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['edit own review_comment reply'] = array(
     'name' => 'edit own review_comment reply',
     'roles' => array(
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
     ),
@@ -162,6 +164,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['post review_comment reply'] = array(
     'name' => 'post review_comment reply',
     'roles' => array(
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
     ),
@@ -195,6 +198,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['view review_comment reply'] = array(
     'name' => 'view review_comment reply',
     'roles' => array(
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'data request dispatcher' => 'data request dispatcher',
     ),
