@@ -95,7 +95,12 @@ function dgu_moderation_node_forms_alter (&$form) {
 }
 
 function dgu_moderation_node_forms_after_build ($form) {
-  $form['options']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  if (isset($form['options']['workbench_moderation_state_new']['#value'])) {
+    $form['options']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  }
+  elseif($form['revision_information']['workbench_moderation_state_new']['#value']) {
+    $form['revision_information']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
+  }
   return $form;
 }
 
