@@ -319,6 +319,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_status',
     'roles' => array(
       'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
     ),
     'module' => 'field_permissions',
   );
