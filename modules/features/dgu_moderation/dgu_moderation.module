@@ -1,8 +1,10 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the DGU Moderation feature.
  */
+
+include_once 'dgu_moderation.features.inc';
 
 define('PUBLISHED_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
 define('MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid

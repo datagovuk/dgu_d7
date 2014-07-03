@@ -55,6 +55,9 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'moderate content from draft to published',
     'roles' => array(
       'data publisher' => 'data publisher',
+      'data request account manager' => 'data request account manager',
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'workbench_moderation',
   );
@@ -77,6 +80,9 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
+      'data request account manager' => 'data request account manager',
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
@@ -86,14 +92,20 @@ function dgu_moderation_user_default_permissions() {
   // Exported permission: 'moderate content from published to draft'.
   $permissions['moderate content from published to draft'] = array(
     'name' => 'moderate content from published to draft',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
     'module' => 'workbench_moderation',
   );
 
   // Exported permission: 'moderate content from published to needs_review'.
   $permissions['moderate content from published to needs_review'] = array(
     'name' => 'moderate content from published to needs_review',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+      'moderator' => 'moderator',
+    ),
     'module' => 'workbench_moderation',
   );
 
@@ -114,6 +126,9 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
+      'data request account manager' => 'data request account manager',
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
@@ -137,6 +152,9 @@ function dgu_moderation_user_default_permissions() {
       'administrator' => 'administrator',
       'blogger' => 'blogger',
       'data publisher' => 'data publisher',
+      'data request account manager' => 'data request account manager',
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
@@ -149,6 +167,9 @@ function dgu_moderation_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
+      'data request account manager' => 'data request account manager',
+      'data request administrator' => 'data request administrator',
+      'data request dispatcher' => 'data request dispatcher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
     ),
