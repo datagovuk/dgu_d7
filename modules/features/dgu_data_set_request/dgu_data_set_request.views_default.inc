@@ -725,6 +725,14 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
+  /* Relationship: Content: Author */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
@@ -735,7 +743,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Data name';
+  $handler->display->display_options['fields']['title']['label'] = 'Data request title';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   /* Field: Content: Data request description */
@@ -749,32 +757,49 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Broken/missing handler */
+  /* Field: Content: Do you know who holds this data? */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  /* Field: Content: Submitter name */
-  $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['settings'] = array(
+  $handler->display->display_options['fields']['field_data_holder']['label'] = 'Data holder';
+  $handler->display->display_options['fields']['field_data_holder']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Submitter e-mail */
-  $handler->display->display_options['fields']['field_submitter_email']['id'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['table'] = 'field_data_field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['field'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['settings'] = array(
+  /* Field: User: First Name */
+  $handler->display->display_options['fields']['field_first_name']['id'] = 'field_first_name';
+  $handler->display->display_options['fields']['field_first_name']['table'] = 'field_data_field_first_name';
+  $handler->display->display_options['fields']['field_first_name']['field'] = 'field_first_name';
+  $handler->display->display_options['fields']['field_first_name']['relationship'] = 'uid';
+  /* Field: User: Surname */
+  $handler->display->display_options['fields']['field_surname']['id'] = 'field_surname';
+  $handler->display->display_options['fields']['field_surname']['table'] = 'field_data_field_surname';
+  $handler->display->display_options['fields']['field_surname']['field'] = 'field_surname';
+  $handler->display->display_options['fields']['field_surname']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['field_surname']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
       'field_replies_revision' => '',
     ),
   );
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Submitter name';
+  $handler->display->display_options['fields']['name']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['name']['alter']['text'] = '[name] ([field_first_name] [field_surname])';
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['mail']['label'] = 'Submitter e-mail';
   /* Field: Content: Organisation type */
   $handler->display->display_options['fields']['field_organisation_type']['id'] = 'field_organisation_type';
   $handler->display->display_options['fields']['field_organisation_type']['table'] = 'field_data_field_organisation_type';
@@ -917,173 +942,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['style_options']['trim'] = 0;
   $handler->display->display_options['style_options']['replace_newlines'] = 0;
   $handler->display->display_options['style_options']['header'] = 1;
-  $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Nid */
-  $handler->display->display_options['fields']['nid']['id'] = 'nid';
-  $handler->display->display_options['fields']['nid']['table'] = 'node';
-  $handler->display->display_options['fields']['nid']['field'] = 'nid';
-  /* Field: Content: Post date */
-  $handler->display->display_options['fields']['created']['id'] = 'created';
-  $handler->display->display_options['fields']['created']['table'] = 'node';
-  $handler->display->display_options['fields']['created']['field'] = 'created';
-  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
-  $handler->display->display_options['fields']['created']['custom_date_format'] = 'd/m/Y - H:i';
-  /* Field: Content: Title */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'node';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = 'Data name';
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Field: Content: Data request description */
-  $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
-  $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
-  $handler->display->display_options['fields']['field_data_set_description']['field'] = 'field_data_set_description';
-  $handler->display->display_options['fields']['field_data_set_description']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
-  $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  /* Field: Content: Submitter name */
-  $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Submitter e-mail */
-  $handler->display->display_options['fields']['field_submitter_email']['id'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['table'] = 'field_data_field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['field'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Organisation type */
-  $handler->display->display_options['fields']['field_organisation_type']['id'] = 'field_organisation_type';
-  $handler->display->display_options['fields']['field_organisation_type']['table'] = 'field_data_field_organisation_type';
-  $handler->display->display_options['fields']['field_organisation_type']['field'] = 'field_organisation_type';
-  $handler->display->display_options['fields']['field_organisation_type']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Organisation name */
-  $handler->display->display_options['fields']['field_organisation_name']['id'] = 'field_organisation_name';
-  $handler->display->display_options['fields']['field_organisation_name']['table'] = 'field_data_field_organisation_name';
-  $handler->display->display_options['fields']['field_organisation_name']['field'] = 'field_organisation_name';
-  $handler->display->display_options['fields']['field_organisation_name']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Data themes */
-  $handler->display->display_options['fields']['field_data_themes']['id'] = 'field_data_themes';
-  $handler->display->display_options['fields']['field_data_themes']['table'] = 'field_data_field_data_themes';
-  $handler->display->display_options['fields']['field_data_themes']['field'] = 'field_data_themes';
-  $handler->display->display_options['fields']['field_data_themes']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  $handler->display->display_options['fields']['field_data_themes']['delta_offset'] = '0';
-  /* Field: Content: Reason */
-  $handler->display->display_options['fields']['field_barriers_reason']['id'] = 'field_barriers_reason';
-  $handler->display->display_options['fields']['field_barriers_reason']['table'] = 'field_data_field_barriers_reason';
-  $handler->display->display_options['fields']['field_barriers_reason']['field'] = 'field_barriers_reason';
-  $handler->display->display_options['fields']['field_barriers_reason']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Further detail */
-  $handler->display->display_options['fields']['field_barriers_detail']['id'] = 'field_barriers_detail';
-  $handler->display->display_options['fields']['field_barriers_detail']['table'] = 'field_data_field_barriers_detail';
-  $handler->display->display_options['fields']['field_barriers_detail']['field'] = 'field_barriers_detail';
-  $handler->display->display_options['fields']['field_barriers_detail']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Suggested use */
-  $handler->display->display_options['fields']['field_data_use']['id'] = 'field_data_use';
-  $handler->display->display_options['fields']['field_data_use']['table'] = 'field_data_field_data_use';
-  $handler->display->display_options['fields']['field_data_use']['field'] = 'field_data_use';
-  $handler->display->display_options['fields']['field_data_use']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  $handler->display->display_options['fields']['field_data_use']['delta_offset'] = '0';
-  /* Field: Content: Further detail */
-  $handler->display->display_options['fields']['field_data_use_detail']['id'] = 'field_data_use_detail';
-  $handler->display->display_options['fields']['field_data_use_detail']['table'] = 'field_data_field_data_use_detail';
-  $handler->display->display_options['fields']['field_data_use_detail']['field'] = 'field_data_use_detail';
-  $handler->display->display_options['fields']['field_data_use_detail']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Benefits overview */
-  $handler->display->display_options['fields']['field_benefits_overview']['id'] = 'field_benefits_overview';
-  $handler->display->display_options['fields']['field_benefits_overview']['table'] = 'field_data_field_benefits_overview';
-  $handler->display->display_options['fields']['field_benefits_overview']['field'] = 'field_benefits_overview';
-  $handler->display->display_options['fields']['field_benefits_overview']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Status */
-  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Publication preference */
-  $handler->display->display_options['fields']['field_publication_preference']['id'] = 'field_publication_preference';
-  $handler->display->display_options['fields']['field_publication_preference']['table'] = 'field_data_field_publication_preference';
-  $handler->display->display_options['fields']['field_publication_preference']['field'] = 'field_publication_preference';
-  $handler->display->display_options['fields']['field_publication_preference']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   $handler->display->display_options['path'] = 'admin/all_data_requests/csv';
 
   /* Display: Page */
@@ -1312,32 +1170,10 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Broken/missing handler */
+  /* Field: Content: Do you know who holds this data? */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';
-  /* Field: Content: Submitter name */
-  $handler->display->display_options['fields']['field_submitter_name']['id'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['table'] = 'field_data_field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['field'] = 'field_submitter_name';
-  $handler->display->display_options['fields']['field_submitter_name']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
-  /* Field: Content: Submitter e-mail */
-  $handler->display->display_options['fields']['field_submitter_email']['id'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['table'] = 'field_data_field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['field'] = 'field_submitter_email';
-  $handler->display->display_options['fields']['field_submitter_email']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Organisation type */
   $handler->display->display_options['fields']['field_organisation_type']['id'] = 'field_organisation_type';
   $handler->display->display_options['fields']['field_organisation_type']['table'] = 'field_data_field_organisation_type';
@@ -1475,17 +1311,6 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Issue type */
-  $handler->display->display_options['fields']['field_issue_type']['id'] = 'field_issue_type';
-  $handler->display->display_options['fields']['field_issue_type']['table'] = 'field_data_field_issue_type';
-  $handler->display->display_options['fields']['field_issue_type']['field'] = 'field_issue_type';
-  $handler->display->display_options['fields']['field_issue_type']['settings'] = array(
-    'field_replies' => '',
-    'field_replies_settings' => array(
-      'field_replies_reply_field_name' => '',
-      'field_replies_revision' => '',
-    ),
-  );
   /* Field: Content: Status */
   $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
   $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
@@ -1508,6 +1333,11 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
+  /* Field: Content: Author uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'node';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'Author';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Type */
@@ -2045,7 +1875,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['date_format'] = 'short';
-  /* Field: Broken/missing handler */
+  /* Field: Content: Do you know who holds this data? */
   $handler->display->display_options['fields']['field_data_holder']['id'] = 'field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['table'] = 'field_data_field_data_holder';
   $handler->display->display_options['fields']['field_data_holder']['field'] = 'field_data_holder';

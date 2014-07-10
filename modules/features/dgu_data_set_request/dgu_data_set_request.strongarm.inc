@@ -68,13 +68,13 @@ function dgu_data_set_request_strongarm() {
           'weight' => '6',
         ),
         'path' => array(
-          'weight' => '24',
-        ),
-        'redirect' => array(
           'weight' => '25',
         ),
-        'mollom' => array(
+        'redirect' => array(
           'weight' => '26',
+        ),
+        'mollom' => array(
+          'weight' => '27',
         ),
       ),
       'display' => array(

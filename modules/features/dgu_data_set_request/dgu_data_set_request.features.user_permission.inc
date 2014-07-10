@@ -75,7 +75,9 @@ function dgu_data_set_request_user_default_permissions() {
   // Exported permission: 'create field_review_status'.
   $permissions['create field_review_status'] = array(
     'name' => 'create field_review_status',
-    'roles' => array(),
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 
@@ -318,6 +320,7 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['view field_review_status'] = array(
     'name' => 'view field_review_status',
     'roles' => array(
+      'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
     ),
