@@ -416,6 +416,7 @@ function dgu_data_set_request_views_default_views() {
     'field_review_status' => 'field_review_status',
     'field_review_outcome' => 'field_review_outcome',
     'field_publication_preference' => 'field_publication_preference',
+    'field_assignee' => 'field_assignee',
     'edit_node' => 'edit_node',
   );
   $handler->display->display_options['style_options']['default'] = 'changed';
@@ -456,6 +457,13 @@ function dgu_data_set_request_views_default_views() {
       'empty_column' => 0,
     ),
     'field_publication_preference' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_assignee' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -519,6 +527,17 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_publication_preference']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_publication_preference']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_publication_preference']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Assignee */
+  $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
