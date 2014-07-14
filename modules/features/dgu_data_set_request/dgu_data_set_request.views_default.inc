@@ -774,11 +774,24 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_first_name']['table'] = 'field_data_field_first_name';
   $handler->display->display_options['fields']['field_first_name']['field'] = 'field_first_name';
   $handler->display->display_options['fields']['field_first_name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['field_first_name']['label'] = '';
+  $handler->display->display_options['fields']['field_first_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_first_name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_first_name']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
   /* Field: User: Surname */
   $handler->display->display_options['fields']['field_surname']['id'] = 'field_surname';
   $handler->display->display_options['fields']['field_surname']['table'] = 'field_data_field_surname';
   $handler->display->display_options['fields']['field_surname']['field'] = 'field_surname';
   $handler->display->display_options['fields']['field_surname']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['field_surname']['label'] = '';
+  $handler->display->display_options['fields']['field_surname']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_surname']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_surname']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
@@ -1439,7 +1452,7 @@ function dgu_data_set_request_views_default_views() {
     5 => 0,
   );
   $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Issue type (field_issue_type) */
+  /* Filter criterion: Broken/missing handler */
   $handler->display->display_options['filters']['field_issue_type_value']['id'] = 'field_issue_type_value';
   $handler->display->display_options['filters']['field_issue_type_value']['table'] = 'field_data_field_issue_type';
   $handler->display->display_options['filters']['field_issue_type_value']['field'] = 'field_issue_type_value';
@@ -1466,7 +1479,6 @@ function dgu_data_set_request_views_default_views() {
     6 => 0,
     5 => 0,
   );
-  $handler->display->display_options['filters']['field_issue_type_value']['expose']['reduce'] = TRUE;
   /* Filter criterion: Content: Organisation type (field_organisation_type) */
   $handler->display->display_options['filters']['field_organisation_type_value']['id'] = 'field_organisation_type_value';
   $handler->display->display_options['filters']['field_organisation_type_value']['table'] = 'field_data_field_organisation_type';

@@ -43,6 +43,5 @@ function dgu_data_set_request_node_info() {
       'help' => '',
     ),
   );
-  drupal_alter('node_info', $items);
   return $items;
 }
