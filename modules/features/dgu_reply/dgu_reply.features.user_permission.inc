@@ -69,7 +69,6 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
-      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
@@ -127,7 +126,6 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
-      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
@@ -166,7 +164,6 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
-      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
@@ -200,7 +197,6 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
-      'data request dispatcher' => 'data request dispatcher',
     ),
     'module' => 'reply',
   );
