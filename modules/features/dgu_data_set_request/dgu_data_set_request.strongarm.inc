@@ -80,7 +80,7 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '14',
+            'weight' => '13',
             'visible' => TRUE,
           ),
           'rss' => array(

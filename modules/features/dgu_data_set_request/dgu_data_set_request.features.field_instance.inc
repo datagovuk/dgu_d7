@@ -143,7 +143,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 10,
+        'weight' => 9,
       ),
       'rss' => array(
         'label' => 'above',
@@ -201,7 +201,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 9,
+        'weight' => 8,
       ),
       'rss' => array(
         'label' => 'above',
@@ -256,7 +256,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 13,
+        'weight' => 12,
       ),
       'rss' => array(
         'label' => 'above',
@@ -363,16 +363,9 @@ function dgu_data_set_request_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'text',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'text_default',
-        'weight' => 24,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 15,
       ),
       'rss' => array(
         'label' => 'above',
@@ -645,7 +638,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 11,
+        'weight' => 10,
       ),
       'rss' => array(
         'label' => 'above',
@@ -700,7 +693,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => 11,
       ),
       'rss' => array(
         'label' => 'above',
@@ -760,7 +753,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 15,
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',
