@@ -48,6 +48,17 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'create field_review_comments'.
+  $permissions['create field_review_comments'] = array(
+    'name' => 'create field_review_comments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'create field_review_notes'.
   $permissions['create field_review_notes'] = array(
     'name' => 'create field_review_notes',
@@ -138,6 +149,15 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'edit field_review_comments'.
+  $permissions['edit field_review_comments'] = array(
+    'name' => 'edit field_review_comments',
+    'roles' => array(
+      'administrator' => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit field_review_notes'.
   $permissions['edit field_review_notes'] = array(
     'name' => 'edit field_review_notes',
@@ -208,6 +228,17 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'edit own field_review_comments'.
+  $permissions['edit own field_review_comments'] = array(
+    'name' => 'edit own field_review_comments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'edit own field_review_notes'.
   $permissions['edit own field_review_notes'] = array(
     'name' => 'edit own field_review_notes',
@@ -272,6 +303,17 @@ function dgu_data_set_request_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: 'view field_review_comments'.
+  $permissions['view field_review_comments'] = array(
+    'name' => 'view field_review_comments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: 'view field_review_notes'.
   $permissions['view field_review_notes'] = array(
     'name' => 'view field_review_notes',
@@ -331,6 +373,17 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_publisher_ref',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: 'view own field_review_comments'.
+  $permissions['view own field_review_comments'] = array(
+    'name' => 'view own field_review_comments',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
