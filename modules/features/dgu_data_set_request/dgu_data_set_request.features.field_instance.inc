@@ -19,15 +19,8 @@ function dgu_data_set_request_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'dgu_assignee',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'dgu_assignee_default',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 1,
       ),
       'rss' => array(
