@@ -34,6 +34,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create field_data_set_link',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -73,7 +74,6 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['create field_review_outcome'] = array(
     'name' => 'create field_review_outcome',
     'roles' => array(
-      'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -84,6 +84,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -134,6 +135,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -173,8 +175,6 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['edit field_review_outcome'] = array(
     'name' => 'edit field_review_outcome',
     'roles' => array(
-      'administrator' => 'administrator',
-      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -186,6 +186,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -214,6 +215,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit own field_data_set_link',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -253,7 +255,6 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['edit own field_review_outcome'] = array(
     'name' => 'edit own field_review_outcome',
     'roles' => array(
-      'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -330,9 +331,6 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['view field_review_outcome'] = array(
     'name' => 'view field_review_outcome',
     'roles' => array(
-      'administrator' => 'administrator',
-      'anonymous user' => 'anonymous user',
-      'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -364,6 +362,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_data_set_link',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -403,7 +402,6 @@ function dgu_data_set_request_user_default_permissions() {
   $permissions['view own field_review_outcome'] = array(
     'name' => 'view own field_review_outcome',
     'roles' => array(
-      'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -414,6 +412,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view own field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
   );

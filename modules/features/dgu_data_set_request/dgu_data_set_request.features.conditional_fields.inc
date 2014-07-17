@@ -1146,6 +1146,13 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
           4 => 0,
         ),
+        11 => array(
+          1 => 1,
+          2 => 2,
+          5 => 0,
+          3 => 0,
+          4 => 0,
+        ),
       ),
       'element_edit' => array(
         1 => 1,
@@ -1186,6 +1193,10 @@ function dgu_data_set_request_conditional_fields_default_fields() {
           3 => 0,
         ),
         9 => array(
+          1 => 1,
+          3 => 0,
+        ),
+        11 => array(
           1 => 1,
           3 => 0,
         ),
