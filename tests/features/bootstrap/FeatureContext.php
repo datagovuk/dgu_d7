@@ -1020,6 +1020,39 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^TEST$/
    */
   public function test() {
+
+    try {
+      $drush = $this->getDriver();
+      $result = $drush->drush('sqlq', array('"SELECT nid FROM node n WHERE n.type = \'dataset_request\';"'));
+      $nids = explode("\n", $result);
+
+      // remove first element which is column name 'nid'
+      array_shift($nids);
+
+      $session = $this->getSession();
+
+      foreach ($nids as $nid) {
+        $session->visit($this->locatePath('/node/' . $nid . '/edit'));
+        sleep(1);
+        $page = $this->getSession()->getPage();
+        $last_vertical_tab = $page->find('css', '.vertical-tabs-list .last a');
+
+        //PHP Fatal error:  Call to a member function click() on a non-object in /home/pawel/PhpstormProjects/dgu_d7/profiles/dgu/tests/features/bootstrap/FeatureContext.php on line 1039
+        // log and continue
+        $last_vertical_tab->click();
+        sleep(1);
+        $last_vertical_tab = $page->find('css', '.vertical-tabs-list .last a');
+
+        $moderation_state = $page->find('css', '.form-item-workbench-moderation-state-new');
+        $moderation_state->selectFieldOption('Moderation state', 'Published');
+
+        $page->pressButton('Save');
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('Query failed  ' . $e->getMessage());
+    }
   }
 
   /**
@@ -1071,7 +1104,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("that the user \"test_moderator\" is not registered"),
       new Given("I am logged in as a user \"test_moderator\" with the \"$role\" role"),
       new Given("I visit \"/admin/workbench\""),
-      new Given("I follow \"Needs Review\""),
+      new Given("I follow \"Needs review\""),
       new Given("I wait until the page loads"),
       new Given("I follow \"$title\""),
       new Given("I wait until the page loads"),
