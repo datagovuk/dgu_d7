@@ -148,23 +148,31 @@ function dguk_preprocess_field(&$variables) {
  *  Implements hook_preprocess_reply().
  */
 function dguk_preprocess_reply(&$variables) {
+  global $user;
+  if($user->uid == $variables['reply']->uid) {
+    $variables['classes_array'][] = 'own-reply';
+  }
+
   $variables['classes_array'][] = 'boxed';
   $variables['classes_array'][] = 'parent-' . $variables['reply']->parent;
+
 
   // Add $avatar variable with rendered user picture linked to user profile;
   $fields = field_info_instances('user', 'user');
   $field_id = $fields['field_avatar']['field_id'];
-  $user = new stdClass();
-  $user->uid = $variables['reply']->uid;
-  field_attach_load('user', array($user->uid => $user), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
 
-  if (!empty($user->field_avatar)) {
-    $field = field_get_items('user', $user, 'field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
+
+  $account = new stdClass();
+  $account->uid = $variables['reply']->uid;
+  field_attach_load('user', array($account->uid => $account), FIELD_LOAD_CURRENT, array('field_id' => $field_id));
+
+  if (!empty($account->field_avatar)) {
+    $field = field_get_items('user', $account, 'field_avatar');
+    $image = field_view_value('user', $account, 'field_avatar', $field[0], array('settings' => array('image_style' => 'avatar')));
   }
   else {
     $image_info = dguk_default_field_image('field_avatar');
-    $image = field_view_value('user', $user, 'field_avatar', (array) $image_info, array('settings' => array('image_style' => 'avatar')));
+    $image = field_view_value('user', $account, 'field_avatar', (array) $image_info, array('settings' => array('image_style' => 'avatar')));
   }
 
   $colour = $variables['reply']->uid % 10;
@@ -174,6 +182,10 @@ function dguk_preprocess_reply(&$variables) {
   else {
     $variables['avatar'] = '<div class="field-avatar bg-colour-0">' . render($image) . '</div>';
   }
+
+  $variables['theme_hook_suggestions'][] = 'reply__' . $variables['bundle'];
+
+
 }
 
 
@@ -184,12 +196,14 @@ function dguk_preprocess_reply(&$variables) {
 function dguk_preprocess_replies(&$variables) {
   $options = array('attributes' => array('class' => array('btn-default', 'btn', 'btn-primary')));
 
-  if (($variables['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $variables['bundle'] .' reply')) {
-     $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0', $options);
-  }
-  else {
-    $options['query'] = array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
-    $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login to make a comment'), 'user/login', $options);
+  if ($variables['bundle'] == 'comment') {
+    if (($variables['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $variables['bundle'] .' reply')) {
+      $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0', $options);
+    }
+    else {
+      $options['query'] = array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
+      $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login to make a comment'), 'user/login', $options);
+    }
   }
 }
 

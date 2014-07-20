@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Schema for assignee field.
+ */
+
+/**
+ * Implements hook_field_schema();
+ */
+function dgu_assignee_field_schema($field) {
+  $columns = array(
+    'uid' => array(
+      'type' => 'int',
+      'unsigned' => TRUE,
+      'not null' => FALSE,
+    ),
+  );
+  return array(
+    'columns' => $columns,
+    'indexes' => array('uid' => array('uid')),
+    'foreign keys' => array(
+      'uid' => array(
+        'table' => 'users',
+        'columns' => array('uid' => 'uid'),
+      ),
+    ),
+  );
+}

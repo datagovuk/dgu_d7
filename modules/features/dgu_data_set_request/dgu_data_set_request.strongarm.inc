@@ -13,6 +13,27 @@ function dgu_data_set_request_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_dataset_request';
+  $strongarm->value = 1;
+  $export['diff_enable_revisions_page_node_dataset_request'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_dataset_request';
+  $strongarm->value = 1;
+  $export['diff_show_preview_changes_node_dataset_request'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_dataset_request';
+  $strongarm->value = 'full';
+  $export['diff_view_mode_preview_node_dataset_request'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__dataset_request';
   $strongarm->value = array(
     'view_modes' => array(
@@ -44,19 +65,22 @@ function dgu_data_set_request_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '0',
+          'weight' => '6',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '25',
         ),
         'redirect' => array(
-          'weight' => '30',
+          'weight' => '26',
+        ),
+        'mollom' => array(
+          'weight' => '27',
         ),
       ),
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '9',
+            'weight' => '13',
             'visible' => TRUE,
           ),
           'rss' => array(
@@ -103,7 +127,7 @@ function dgu_data_set_request_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_dataset_request';
-  $strongarm->value = '1';
+  $strongarm->value = '0';
   $export['node_preview_dataset_request'] = $strongarm;
 
   $strongarm = new stdClass();

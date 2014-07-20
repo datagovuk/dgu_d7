@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * Implements hook_field_info().
+ */
+function dgu_assignee_field_info() {
+  return array(
+    'assignee' => array(
+      'label' => t('Assignee'),
+      'description' => t('Provides a field type for setting an assignee.'),
+      'default_widget' => 'assignee',
+      'default_formatter' => 'dgu_assignee_default',
+    )
+  );
+}
+
+/**
+ * Implements hook_field_instance_settings_form().
+ */
+function dgu_assignee_field_instance_settings_form($field, $instance) {
+  // Get all modules which implement hook_assignee_get_users().
+
+  $settings = $instance['settings'];
+
+  $providers = module_implements('assignee_get_users');
+
+  foreach ($providers as $module) {
+    $path = drupal_get_path('module', $module) . '/' . $module . '.info';
+    $info = drupal_parse_info_file($path);
+    $options[$module] = $info['name'];
+  }
+
+  $form['user_list_provider'] = array(
+    '#type' => 'radios',
+    '#required' => TRUE,
+    '#title' => t('Assignee user list provider'),
+    '#options' => $options,
+    '#default_value' => $settings['user_list_provider'],
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_is_empty().
+ */
+function dgu_assignee_field_is_empty($item, $field) {
+  return empty($item['uid']);
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function dgu_assignee_field_formatter_info() {
+  return array(
+    'dgu_assignee_default' => array(
+      'label' => t('Default'),
+      'field types' => array('assignee'),
+    )
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function dgu_assignee_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  if(isset($items[0]['uid'])) {
+    $account = user_load($items[0]['uid']);
+    return array(
+      '0' => array(
+        '#type' => 'link',
+        '#title' => $account->name,
+        '#href' => 'user/' . $account->uid,
+      )
+    );
+  }
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ */
+function dgu_assignee_field_widget_info_alter(&$info) {
+  if (module_exists('options')) {
+    $info['options_select']['field types'][] = 'assignee';
+    $info['options_buttons']['field types'][] = 'assignee';
+  }
+}
+
+/**
+ * Implements hook_options_list().
+ */
+function dgu_assignee_options_list($field, $instance = NULL, $entity_type = NULL, $entity = NULL) {
+  $options = array();
+
+  if(isset($instance['settings']['user_list_provider'])) {
+    $options = module_invoke($instance['settings']['user_list_provider'], 'assignee_get_users', $field, $instance, $entity_type, $entity);
+  }
+
+  return $options;
+}

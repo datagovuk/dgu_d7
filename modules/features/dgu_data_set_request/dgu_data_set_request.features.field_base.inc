@@ -10,6 +10,38 @@
 function dgu_data_set_request_field_default_field_bases() {
   $field_bases = array();
 
+  // Exported field_base: 'field_assignee'
+  $field_bases['field_assignee'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_assignee',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
+    'foreign keys' => array(
+      'uid' => array(
+        'columns' => array(
+          'uid' => 'uid',
+        ),
+        'table' => 'users',
+      ),
+    ),
+    'indexes' => array(
+      'uid' => array(
+        0 => 'uid',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'dgu_assignee',
+    'settings' => array(
+      'example_textfield' => 'some text',
+    ),
+    'translatable' => 0,
+    'type' => 'assignee',
+  );
+
   // Exported field_base: 'field_barriers_attempted'
   $field_bases['field_barriers_attempted'] = array(
     'active' => 1,
@@ -130,6 +162,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_holder',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -159,6 +194,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_set_description',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -253,6 +291,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_use',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -309,6 +350,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_estimates_detail',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -327,35 +371,6 @@ function dgu_data_set_request_field_default_field_bases() {
     'settings' => array(),
     'translatable' => 0,
     'type' => 'text_long',
-  );
-
-  // Exported field_base: 'field_issue_type'
-  $field_bases['field_issue_type'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_issue_type',
-    'foreign keys' => array(),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        'Data is not published' => 'Data is not published',
-        'Data doesn’t exist in specific format' => 'Data doesn’t exist in specific format',
-        'Format' => 'Format',
-        'Licence' => 'Licence',
-        'Other' => 'Other',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_organisation_name'
@@ -425,6 +440,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_provide_estimates',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -468,6 +486,61 @@ function dgu_data_set_request_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_publisher_ref'
+  $field_bases['field_publisher_ref'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_publisher_ref',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
+    'foreign keys' => array(
+      'id' => array(
+        'columns' => array(
+          'id' => 'id',
+        ),
+        'table' => 'ckan_publisher',
+      ),
+    ),
+    'indexes' => array(
+      'id' => array(
+        0 => 'id',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'ckan_publisher_tree',
+    'settings' => array(),
+    'translatable' => 0,
+    'type' => 'ckan_publisher_reference',
+  );
+
+  // Exported field_base: 'field_review_comments'
+  $field_bases['field_review_comments'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_review_comments',
+    'field_permissions' => array(
+      'type' => 2,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'reply',
+    'settings' => array(
+      'access' => -1,
+      'allow_reply' => -1,
+      'bundle' => 'review_comment',
+      'display' => -1,
+      'form' => -1,
+    ),
+    'translatable' => 0,
+    'type' => 'reply',
   );
 
   // Exported field_base: 'field_review_notes'
@@ -558,7 +631,35 @@ function dgu_data_set_request_field_default_field_bases() {
         4 => 'Scheduled for release',
         5 => 'Postponed',
         6 => 'Closed',
-        7 => 'placeholder',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_integer',
+  );
+
+  // Exported field_base: 'field_submitter_type'
+  $field_bases['field_submitter_type'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_submitter_type',
+    'field_permissions' => array(
+      'type' => 0,
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        1 => 'As a private individual',
+        2 => 'In behalf of an organisation',
       ),
       'allowed_values_function' => '',
     ),
