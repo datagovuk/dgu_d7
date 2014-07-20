@@ -11,6 +11,8 @@ default:
           'pass'
         editor:
           'pass'
+        jamesashton:
+          'pass'
       email:
         mailbox:
           '{imap.gmail.com:993/imap/ssl}INBOX'
