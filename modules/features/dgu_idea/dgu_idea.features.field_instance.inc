@@ -14,7 +14,7 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-body'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -28,7 +28,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => '0',
       ),
       'teaser' => array(
         'label' => 'hidden',
@@ -70,7 +70,7 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-field_category'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -84,7 +84,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 3,
+        'weight' => '3',
       ),
       'teaser' => array(
         'label' => 'above',
@@ -112,7 +112,7 @@ function dgu_idea_field_default_field_instances() {
   // Exported field_instance: 'node-idea-field_comment'
   $field_instances['node-idea-field_comment'] = array(
     'bundle' => 'idea',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -126,7 +126,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 6,
+        'weight' => '6',
       ),
       'teaser' => array(
         'label' => 'above',
@@ -159,7 +159,7 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-field_sector'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -173,7 +173,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 4,
+        'weight' => '4',
       ),
       'teaser' => array(
         'label' => 'above',
@@ -202,14 +202,14 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-field_submitter_email'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 2,
+        'weight' => '2',
       ),
       'teaser' => array(
         'label' => 'above',
@@ -240,7 +240,7 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-field_submitter_name'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -254,7 +254,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 1,
+        'weight' => '1',
       ),
       'teaser' => array(
         'label' => 'above',
@@ -286,7 +286,7 @@ function dgu_idea_field_default_field_instances() {
   $field_instances['node-idea-field_tags'] = array(
     'bundle' => 'idea',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -300,7 +300,7 @@ function dgu_idea_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 5,
+        'weight' => '5',
       ),
       'teaser' => array(
         'label' => 'above',

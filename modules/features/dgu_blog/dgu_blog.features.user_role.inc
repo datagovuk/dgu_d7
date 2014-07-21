@@ -13,7 +13,7 @@ function dgu_blog_user_default_roles() {
   // Exported role: blogger.
   $roles['blogger'] = array(
     'name' => 'blogger',
-    'weight' => 8,
+    'weight' => '8',
   );
 
   return $roles;

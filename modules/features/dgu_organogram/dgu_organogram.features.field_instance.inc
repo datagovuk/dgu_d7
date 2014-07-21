@@ -14,7 +14,7 @@ function dgu_organogram_field_default_field_instances() {
   $field_instances['node-organogram-body'] = array(
     'bundle' => 'organogram',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -69,7 +69,7 @@ function dgu_organogram_field_default_field_instances() {
   $field_instances['node-organogram-field_endpoint'] = array(
     'bundle' => 'organogram',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -115,7 +115,7 @@ function dgu_organogram_field_default_field_instances() {
   $field_instances['node-organogram-field_parent_organogram'] = array(
     'bundle' => 'organogram',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(

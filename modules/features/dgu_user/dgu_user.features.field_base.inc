@@ -12,13 +12,13 @@ function dgu_user_field_default_field_bases() {
 
   // Exported field_base: 'field_avatar'
   $field_bases['field_avatar'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_avatar',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(
       'fid' => array(
@@ -33,21 +33,21 @@ function dgu_user_field_default_field_bases() {
         0 => 'fid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'image',
     'settings' => array(
-      'default_image' => 4014,
+      'default_image' => '4014',
       'uri_scheme' => 'public',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'image',
   );
 
   // Exported field_base: 'field_bio'
   $field_bases['field_bio'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_bio',
     'field_permissions' => array(
@@ -66,26 +66,26 @@ function dgu_user_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
   // Exported field_base: 'field_facebook_url'
   $field_bases['field_facebook_url'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_facebook_url',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'link',
     'settings' => array(
       'attributes' => array(
@@ -102,15 +102,15 @@ function dgu_user_field_default_field_bases() {
       'title_value' => '',
       'url' => 0,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'link_field',
   );
 
   // Exported field_base: 'field_first_name'
   $field_bases['field_first_name'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_first_name',
     'foreign keys' => array(
@@ -126,20 +126,20 @@ function dgu_user_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
   // Exported field_base: 'field_job_title'
   $field_bases['field_job_title'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_job_title',
     'foreign keys' => array(
@@ -155,28 +155,28 @@ function dgu_user_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
   // Exported field_base: 'field_linkedin_url'
   $field_bases['field_linkedin_url'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_linkedin_url',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'link',
     'settings' => array(
       'attributes' => array(
@@ -193,15 +193,15 @@ function dgu_user_field_default_field_bases() {
       'title_value' => '',
       'url' => 0,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'link_field',
   );
 
   // Exported field_base: 'field_publishers'
   $field_bases['field_publishers'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_publishers',
     'field_permissions' => array(
@@ -220,7 +220,7 @@ function dgu_user_field_default_field_bases() {
         0 => 'target_id',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'entityreference',
     'settings' => array(
       'handler' => 'base',
@@ -237,15 +237,15 @@ function dgu_user_field_default_field_bases() {
       ),
       'target_type' => 'ckan_publisher',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'entityreference',
   );
 
   // Exported field_base: 'field_surname'
   $field_bases['field_surname'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_surname',
     'foreign keys' => array(
@@ -261,20 +261,20 @@ function dgu_user_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
   // Exported field_base: 'field_twitter'
   $field_bases['field_twitter'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_twitter',
     'foreign keys' => array(
@@ -290,12 +290,12 @@ function dgu_user_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 

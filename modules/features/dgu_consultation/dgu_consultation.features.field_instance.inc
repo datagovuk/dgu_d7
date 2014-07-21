@@ -14,7 +14,7 @@ function dgu_consultation_field_default_field_instances() {
   $field_instances['node-book-body'] = array(
     'bundle' => 'book',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -68,7 +68,7 @@ function dgu_consultation_field_default_field_instances() {
   // Exported field_instance: 'node-book-field_field_comments'
   $field_instances['node-book-field_field_comments'] = array(
     'bundle' => 'book',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Reply bundle used for comments on paragraphs, not meant to be displayed itself',
     'display' => array(
       'default' => array(
@@ -108,7 +108,7 @@ function dgu_consultation_field_default_field_instances() {
   $field_instances['node-book-field_paragraph'] = array(
     'bundle' => 'book',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(

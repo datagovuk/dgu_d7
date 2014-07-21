@@ -13,7 +13,7 @@ function dgu_user_field_default_field_instances() {
   // Exported field_instance: 'user-user-field_avatar'
   $field_instances['user-user-field_avatar'] = array(
     'bundle' => 'user',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -38,7 +38,7 @@ function dgu_user_field_default_field_instances() {
     'required' => 0,
     'settings' => array(
       'alt_field' => 0,
-      'default_image' => 4013,
+      'default_image' => '4013',
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
@@ -51,7 +51,7 @@ function dgu_user_field_default_field_instances() {
       'active' => 1,
       'module' => 'imagefield_crop',
       'settings' => array(
-        'collapsible' => 2,
+        'collapsible' => '2',
         'croparea' => '170x170',
         'enforce_minimum' => 1,
         'enforce_ratio' => 1,
@@ -68,7 +68,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_bio'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -108,7 +108,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_facebook_url'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -162,7 +162,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_first_name'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -202,7 +202,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_job_title'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -242,7 +242,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_linkedin_url'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -296,7 +296,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_publishers'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -338,7 +338,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_surname'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -378,7 +378,7 @@ function dgu_user_field_default_field_instances() {
   $field_instances['user-user-field_twitter'] = array(
     'bundle' => 'user',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(

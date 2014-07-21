@@ -14,7 +14,7 @@ function dgu_forum_field_default_field_instances() {
   $field_instances['node-forum-body'] = array(
     'bundle' => 'forum',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -104,7 +104,7 @@ function dgu_forum_field_default_field_instances() {
   $field_instances['node-forum-field_category'] = array(
     'bundle' => 'forum',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -165,7 +165,7 @@ function dgu_forum_field_default_field_instances() {
   // Exported field_instance: 'node-forum-field_comment'
   $field_instances['node-forum-field_comment'] = array(
     'bundle' => 'forum',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -224,7 +224,7 @@ function dgu_forum_field_default_field_instances() {
   $field_instances['node-forum-field_sector'] = array(
     'bundle' => 'forum',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -272,7 +272,7 @@ function dgu_forum_field_default_field_instances() {
   $field_instances['node-forum-field_uses_dataset'] = array(
     'bundle' => 'forum',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -340,7 +340,7 @@ function dgu_forum_field_default_field_instances() {
   $field_instances['node-forum-taxonomy_forums'] = array(
     'bundle' => 'forum',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(

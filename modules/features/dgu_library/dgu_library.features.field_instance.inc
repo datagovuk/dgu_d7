@@ -14,7 +14,7 @@ function dgu_library_field_default_field_instances() {
   $field_instances['node-resource-body'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -91,7 +91,7 @@ function dgu_library_field_default_field_instances() {
   $field_instances['node-resource-field_category'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -132,7 +132,7 @@ function dgu_library_field_default_field_instances() {
   // Exported field_instance: 'node-resource-field_comment'
   $field_instances['node-resource-field_comment'] = array(
     'bundle' => 'resource',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -178,7 +178,7 @@ function dgu_library_field_default_field_instances() {
   $field_instances['node-resource-field_document_type'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -219,7 +219,7 @@ function dgu_library_field_default_field_instances() {
   // Exported field_instance: 'node-resource-field_resource_file'
   $field_instances['node-resource-field_resource_file'] = array(
     'bundle' => 'resource',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -281,7 +281,7 @@ function dgu_library_field_default_field_instances() {
   $field_instances['node-resource-field_sector'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit).',
     'display' => array(
       'default' => array(
@@ -323,7 +323,7 @@ function dgu_library_field_default_field_instances() {
   $field_instances['node-resource-field_tags'] = array(
     'bundle' => 'resource',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
     'display' => array(
       'default' => array(

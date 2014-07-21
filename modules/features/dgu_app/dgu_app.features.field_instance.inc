@@ -14,7 +14,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-body'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please provide a helpful summary of your apps for when your app is published data.gov.uk.',
     'display' => array(
       'default' => array(
@@ -28,7 +28,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => '6',
       ),
       'rss' => array(
         'label' => 'hidden',
@@ -105,7 +105,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_app_charge'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'This information will not relayed to other users of the site.',
     'display' => array(
       'default' => array(
@@ -119,7 +119,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 5,
+        'weight' => '5',
       ),
       'rss' => array(
         'label' => 'above',
@@ -167,7 +167,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_app_link'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Enter the URL of this app.',
     'display' => array(
       'default' => array(
@@ -181,7 +181,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 4,
+        'weight' => '4',
       ),
       'rss' => array(
         'label' => 'above',
@@ -244,14 +244,14 @@ function dgu_app_field_default_field_instances() {
   // Exported field_instance: 'node-app-field_app_thumbnail'
   $field_instances['node-app-field_app_thumbnail'] = array(
     'bundle' => 'app',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please supply a square thumbnail image for your application (at least 370x370 pixels). This image will be used on the \'Latest apps\' and \'Top rated apps\' lists.',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 14,
+        'weight' => '14',
       ),
       'rss' => array(
         'label' => 'above',
@@ -291,7 +291,7 @@ function dgu_app_field_default_field_instances() {
       'active' => 1,
       'module' => 'imagefield_crop',
       'settings' => array(
-        'collapsible' => 2,
+        'collapsible' => '2',
         'croparea' => '370x370',
         'enforce_minimum' => 1,
         'enforce_ratio' => 1,
@@ -308,7 +308,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_category'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -322,7 +322,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 1,
+        'weight' => '1',
       ),
       'rss' => array(
         'label' => 'above',
@@ -362,7 +362,7 @@ function dgu_app_field_default_field_instances() {
   // Exported field_instance: 'node-app-field_comment'
   $field_instances['node-app-field_comment'] = array(
     'bundle' => 'app',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -376,7 +376,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 10,
+        'weight' => '10',
       ),
       'rss' => array(
         'label' => 'above',
@@ -421,7 +421,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_developed_by'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -435,7 +435,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => '0',
       ),
       'rss' => array(
         'label' => 'above',
@@ -493,7 +493,7 @@ function dgu_app_field_default_field_instances() {
   $field_instances['node-app-field_rating'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -513,7 +513,7 @@ function dgu_app_field_default_field_instances() {
           ),
         ),
         'type' => 'fivestar_formatter_default',
-        'weight' => 3,
+        'weight' => '3',
       ),
       'rss' => array(
         'label' => 'inline',
@@ -576,7 +576,7 @@ function dgu_app_field_default_field_instances() {
   // Exported field_instance: 'node-app-field_screen_shots'
   $field_instances['node-app-field_screen_shots'] = array(
     'bundle' => 'app',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please supply additional images of your application so that users can see what it does.
 All images will be shown on your app page which click through to the full sized image',
     'display' => array(
@@ -593,7 +593,7 @@ All images will be shown on your app page which click through to the full sized 
           'image_style' => '',
         ),
         'type' => 'image',
-        'weight' => 8,
+        'weight' => '8',
       ),
       'rss' => array(
         'label' => 'above',
@@ -654,14 +654,14 @@ All images will be shown on your app page which click through to the full sized 
   $field_instances['node-app-field_sector'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit)',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 11,
+        'weight' => '11',
       ),
       'rss' => array(
         'label' => 'above',
@@ -702,14 +702,14 @@ All images will be shown on your app page which click through to the full sized 
   $field_instances['node-app-field_submitter_email'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 13,
+        'weight' => '13',
       ),
       'rss' => array(
         'label' => 'above',
@@ -752,14 +752,14 @@ All images will be shown on your app page which click through to the full sized 
   $field_instances['node-app-field_submitter_name'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 12,
+        'weight' => '12',
       ),
       'rss' => array(
         'label' => 'above',
@@ -803,7 +803,7 @@ All images will be shown on your app page which click through to the full sized 
   $field_instances['node-app-field_tags'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
     'display' => array(
       'default' => array(
@@ -817,7 +817,7 @@ All images will be shown on your app page which click through to the full sized 
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 2,
+        'weight' => '2',
       ),
       'rss' => array(
         'label' => 'above',
@@ -861,7 +861,7 @@ All images will be shown on your app page which click through to the full sized 
   $field_instances['node-app-field_uses_dataset'] = array(
     'bundle' => 'app',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -876,7 +876,7 @@ All images will be shown on your app page which click through to the full sized 
           'link' => FALSE,
         ),
         'type' => 'entityreference_label',
-        'weight' => 7,
+        'weight' => '7',
       ),
       'rss' => array(
         'label' => 'above',

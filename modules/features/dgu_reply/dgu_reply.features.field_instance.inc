@@ -14,7 +14,7 @@ function dgu_reply_field_default_field_instances() {
   $field_instances['reply-comment-field_reply_comment'] = array(
     'bundle' => 'comment',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -54,7 +54,7 @@ function dgu_reply_field_default_field_instances() {
   $field_instances['reply-comment-field_reply_subject'] = array(
     'bundle' => 'comment',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -94,7 +94,7 @@ function dgu_reply_field_default_field_instances() {
   $field_instances['reply-field_comment-field_reply_comment'] = array(
     'bundle' => 'field_comment',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -134,7 +134,7 @@ function dgu_reply_field_default_field_instances() {
   $field_instances['reply-field_comment-field_reply_subject'] = array(
     'bundle' => 'field_comment',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -174,7 +174,7 @@ function dgu_reply_field_default_field_instances() {
   $field_instances['reply-review_comment-field_review_comment'] = array(
     'bundle' => 'review_comment',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
