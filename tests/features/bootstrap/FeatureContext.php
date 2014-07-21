@@ -1023,36 +1023,69 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
     try {
       $drush = $this->getDriver();
-      $result = $drush->drush('sqlq', array('"SELECT nid FROM node n WHERE n.type = \'dataset_request\';"'));
-      $nids = explode("\n", $result);
+      $result = $drush->drush('sqlq', array('"SELECT nid FROM node n WHERE n.type = \'dataset_request\' ORDER BY nid DESC;"'));
+    }
+    catch (Exception $e) {
+      throw new \Exception('Query failed ' . $e->getMessage());
+    }
 
-      // remove first element which is column name 'nid'
-      array_shift($nids);
+    $nids = explode("\n", $result);
 
-      $session = $this->getSession();
+    // remove first element which is column name 'nid'
+    array_shift($nids);
+    array_pop($nids);
 
-      foreach ($nids as $nid) {
-        $session->visit($this->locatePath('/node/' . $nid . '/edit'));
-        sleep(1);
-        $page = $this->getSession()->getPage();
-        $last_vertical_tab = $page->find('css', '.vertical-tabs-list .last a');
+    $session = $this->getSession();
 
-        //PHP Fatal error:  Call to a member function click() on a non-object in /home/pawel/PhpstormProjects/dgu_d7/profiles/dgu/tests/features/bootstrap/FeatureContext.php on line 1039
-        // log and continue
+    $no_message = array();
+    $dif_message = array();
+
+
+    foreach ($nids as $nid) {
+
+      print $nid . " | ";
+
+      $session->visit($this->locatePath('/node/' . $nid . '/edit'));
+      sleep(1);
+      $page = $this->getSession()->getPage();
+      sleep(1);
+      $last_vertical_tab = $page->find('css', '.vertical-tabs-list .last a');
+      if (is_object($last_vertical_tab)) {
         $last_vertical_tab->click();
         sleep(1);
         $last_vertical_tab = $page->find('css', '.vertical-tabs-list .last a');
 
         $moderation_state = $page->find('css', '.form-item-workbench-moderation-state-new');
         $moderation_state->selectFieldOption('Moderation state', 'Published');
-
         $page->pressButton('Save');
+        sleep(1);
+
+        $message = 'has been updated.';
+        $successSelector = $this->getDrupalSelector('success_message_selector');
+        $successSelectorObj = $this->getSession()->getPage()->find("css", $successSelector);
+        if(empty($successSelectorObj)) {
+          $no_message[] = $nid;
+        }
+        elseif (strpos(trim($successSelectorObj->getText()), $message) === FALSE) {
+          $dif_message[] = $nid;
+        }
       }
+      else {
+        $no_message[] = $nid;
+      }
+    }
+
+    if (!empty($no_message)) {
+      print "\nNo success message on:\n";
+      print implode(' | ', $no_message);
 
     }
-    catch (Exception $e) {
-      throw new \Exception('Query failed  ' . $e->getMessage());
+    if (!empty($dif_message)) {
+      print "\nMessage different on\n";
+      print implode(' | ', $dif_message);
     }
+
+
   }
 
   /**
