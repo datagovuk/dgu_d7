@@ -12,9 +12,9 @@ function dgu_app_field_default_field_bases() {
 
   // Exported field_base: 'field_app_charge'
   $field_bases['field_app_charge'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_app_charge',
     'foreign keys' => array(),
@@ -23,7 +23,7 @@ function dgu_app_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -33,20 +33,20 @@ function dgu_app_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_text',
   );
 
   // Exported field_base: 'field_app_link'
   $field_bases['field_app_link'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_app_link',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'link',
     'settings' => array(
       'attributes' => array(
@@ -63,19 +63,19 @@ function dgu_app_field_default_field_bases() {
       'title_value' => '',
       'url' => 0,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'link_field',
   );
 
   // Exported field_base: 'field_app_thumbnail'
   $field_bases['field_app_thumbnail'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_app_thumbnail',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(
       'fid' => array(
@@ -90,21 +90,21 @@ function dgu_app_field_default_field_bases() {
         0 => 'fid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'image',
     'settings' => array(
       'default_image' => 0,
       'uri_scheme' => 'public',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'image',
   );
 
   // Exported field_base: 'field_developed_by'
   $field_bases['field_developed_by'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_developed_by',
     'foreign keys' => array(
@@ -120,38 +120,38 @@ function dgu_app_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
   // Exported field_base: 'field_rating'
   $field_bases['field_rating'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_rating',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'fivestar',
     'settings' => array(
       'axis' => 'vote',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'fivestar',
   );
 
   // Exported field_base: 'field_screen_shots'
   $field_bases['field_screen_shots'] = array(
-    'active' => 1,
-    'cardinality' => 3,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '3',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_screen_shots',
     'field_permissions' => array(
@@ -170,13 +170,13 @@ function dgu_app_field_default_field_bases() {
         0 => 'fid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'image',
     'settings' => array(
       'default_image' => 0,
       'uri_scheme' => 'public',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'image',
   );
 

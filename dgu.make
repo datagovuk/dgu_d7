@@ -54,8 +54,9 @@ projects[ctools][subdir] = "contrib"
 # Patch prevents ctools from running filter_xss_admin on an un-rendered array.
 projects[ctools][patch][] = "http://drupal.org/files/ctools-1925018-61.patch"
 
-projects[features][version] = "2.0-rc3"
+projects[features][version] = "2.0"
 projects[features][subdir] = "contrib"
+projects[features][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/features_dont_convert_strings_to_integers.patch"
 
 projects[views][version] = "3.7"
 projects[views][subdir] = "contrib"

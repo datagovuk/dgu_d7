@@ -14,7 +14,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_assignee'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -67,7 +67,7 @@ function dgu_data_set_request_field_default_field_instances() {
         'value' => 0,
       ),
     ),
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -122,7 +122,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_barriers_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Provide further details. Details may include broken links, licensing terms, financial charges, confidentiality, closed formats, out of date etc.',
     'display' => array(
       'default' => array(
@@ -180,7 +180,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_barriers_reason'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please select a main reason.',
     'display' => array(
       'default' => array(
@@ -235,7 +235,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_benefits_overview'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please give a broad overview of the benefits of this data being made available.',
     'display' => array(
       'default' => array(
@@ -292,7 +292,7 @@ function dgu_data_set_request_field_default_field_instances() {
   // Exported field_instance: 'node-dataset_request-field_comment'
   $field_instances['node-dataset_request-field_comment'] = array(
     'bundle' => 'dataset_request',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -351,7 +351,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_holder'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -402,7 +402,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_set_description'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'What data are you requesting?',
     'display' => array(
       'default' => array(
@@ -465,14 +465,14 @@ function dgu_data_set_request_field_default_field_instances() {
     'label' => 'Data request description',
     'required' => 1,
     'settings' => array(
-      'text_processing' => 0,
+      'text_processing' => '0',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => 3,
+        'rows' => '3',
       ),
       'type' => 'text_textarea',
       'weight' => 7,
@@ -483,7 +483,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_set_link'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -562,7 +562,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_themes'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Identify the most appropriate data themes that relate to your request (please select at least one)',
     'display' => array(
       'default' => array(
@@ -617,7 +617,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_use'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'What do you plan to do with the data?',
     'display' => array(
       'default' => array(
@@ -672,7 +672,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_use_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'Please describe the problem that access to the data solves.',
     'display' => array(
       'default' => array(
@@ -730,7 +730,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_estimates_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => 'If you are able, please tell is in more detail any estimates you are able to make of the benefits this data would bring.
 Consider benefits in terms of economic impact such as employment, revenues or more efficient delivery of services. 
 <strong>Answers to this question will be treated confidentially.</strong>',
@@ -790,7 +790,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_organisation_name'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -841,7 +841,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_organisation_type'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -896,7 +896,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_provide_estimates'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -944,7 +944,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_publication_preference'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -999,7 +999,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_publisher_ref'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1055,7 +1055,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   // Exported field_instance: 'node-dataset_request-field_review_comments'
   $field_instances['node-dataset_request-field_review_comments'] = array(
     'bundle' => 'dataset_request',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1114,7 +1114,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_review_notes'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1172,7 +1172,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_review_outcome'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1228,10 +1228,10 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'bundle' => 'dataset_request',
     'default_value' => array(
       0 => array(
-        'value' => 0,
+        'value' => '0',
       ),
     ),
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1300,7 +1300,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_submitter_type'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(

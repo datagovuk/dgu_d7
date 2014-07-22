@@ -12,9 +12,9 @@ function dgu_shared_fields_field_default_field_bases() {
 
   // Exported field_base: 'body'
   $field_bases['body'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(
       0 => 'node',
     ),
@@ -32,18 +32,18 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_with_summary',
   );
 
   // Exported field_base: 'field_category'
   $field_bases['field_category'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_category',
     'foreign keys' => array(
@@ -59,7 +59,7 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -69,15 +69,15 @@ function dgu_shared_fields_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_sector'
   $field_bases['field_sector'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_sector',
     'foreign keys' => array(
@@ -93,7 +93,7 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -103,31 +103,31 @@ function dgu_shared_fields_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_submitter_email'
   $field_bases['field_submitter_email'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_submitter_email',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'email',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'email',
   );
 
   // Exported field_base: 'field_submitter_name'
   $field_bases['field_submitter_name'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_submitter_name',
     'foreign keys' => array(
@@ -143,20 +143,20 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
   // Exported field_base: 'field_tags'
   $field_bases['field_tags'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_tags',
     'foreign keys' => array(
@@ -172,7 +172,7 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -182,17 +182,20 @@ function dgu_shared_fields_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_uses_dataset'
   $field_bases['field_uses_dataset'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_uses_dataset',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
     'foreign keys' => array(
       'ckan_dataset' => array(
         'columns' => array(
@@ -206,7 +209,7 @@ function dgu_shared_fields_field_default_field_bases() {
         0 => 'target_id',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'entityreference',
     'settings' => array(
       'handler' => 'base',
@@ -223,7 +226,7 @@ function dgu_shared_fields_field_default_field_bases() {
       ),
       'target_type' => 'ckan_dataset',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'entityreference',
   );
 

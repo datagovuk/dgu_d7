@@ -12,28 +12,28 @@ function dgu_glossary_field_default_field_bases() {
 
   // Exported field_base: 'field_endorse'
   $field_bases['field_endorse'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_endorse',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'vud_field',
     'settings' => array(
       'votingapi_tag' => 'vote',
       'vud_widget' => 'updown',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'vud_field',
   );
 
   // Exported field_base: 'field_is_new'
   $field_bases['field_is_new'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_is_new',
     'foreign keys' => array(),
@@ -42,7 +42,7 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -51,33 +51,33 @@ function dgu_glossary_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_boolean',
   );
 
   // Exported field_base: 'field_quality'
   $field_bases['field_quality'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_quality',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'fivestar',
     'settings' => array(
       'axis' => 'vote',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'fivestar',
   );
 
   // Exported field_base: 'field_reason_for_change'
   $field_bases['field_reason_for_change'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_reason_for_change',
     'foreign keys' => array(
@@ -93,18 +93,18 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
   // Exported field_base: 'field_related_terms'
   $field_bases['field_related_terms'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_related_terms',
     'foreign keys' => array(
@@ -120,7 +120,7 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -130,15 +130,15 @@ function dgu_glossary_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_source'
   $field_bases['field_source'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_source',
     'foreign keys' => array(),
@@ -147,7 +147,7 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -161,20 +161,20 @@ function dgu_glossary_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_text',
   );
 
   // Exported field_base: 'field_source_url'
   $field_bases['field_source_url'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_source_url',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'link',
     'settings' => array(
       'attributes' => array(
@@ -191,15 +191,15 @@ function dgu_glossary_field_default_field_bases() {
       'title_value' => '',
       'url' => 0,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'link_field',
   );
 
   // Exported field_base: 'field_suggested_definition'
   $field_bases['field_suggested_definition'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_suggested_definition',
     'foreign keys' => array(
@@ -215,18 +215,18 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
   // Exported field_base: 'field_term'
   $field_bases['field_term'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_term',
     'foreign keys' => array(
@@ -242,7 +242,7 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -252,15 +252,15 @@ function dgu_glossary_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_term_name'
   $field_bases['field_term_name'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_term_name',
     'foreign keys' => array(
@@ -276,12 +276,12 @@ function dgu_glossary_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 

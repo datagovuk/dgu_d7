@@ -12,9 +12,9 @@ function dgu_library_field_default_field_bases() {
 
   // Exported field_base: 'field_document_type'
   $field_bases['field_document_type'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_document_type',
     'foreign keys' => array(
@@ -30,7 +30,7 @@ function dgu_library_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -40,19 +40,19 @@ function dgu_library_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
   // Exported field_base: 'field_resource_file'
   $field_bases['field_resource_file'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_resource_file',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(
       'fid' => array(
@@ -67,14 +67,14 @@ function dgu_library_field_default_field_bases() {
         0 => 'fid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'file',
     'settings' => array(
       'display_default' => 0,
       'display_field' => 1,
       'uri_scheme' => 'public',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'file',
   );
 

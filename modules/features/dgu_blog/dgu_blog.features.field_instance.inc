@@ -14,7 +14,7 @@ function dgu_blog_field_default_field_instances() {
   $field_instances['node-blog-body'] = array(
     'bundle' => 'blog',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -106,7 +106,7 @@ function dgu_blog_field_default_field_instances() {
   $field_instances['node-blog-field_category'] = array(
     'bundle' => 'blog',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -160,7 +160,7 @@ function dgu_blog_field_default_field_instances() {
   // Exported field_instance: 'node-blog-field_comment'
   $field_instances['node-blog-field_comment'] = array(
     'bundle' => 'blog',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -218,7 +218,7 @@ function dgu_blog_field_default_field_instances() {
   // Exported field_instance: 'node-blog-field_file_attachments'
   $field_instances['node-blog-field_file_attachments'] = array(
     'bundle' => 'blog',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -279,7 +279,7 @@ function dgu_blog_field_default_field_instances() {
   $field_instances['node-blog-field_sector'] = array(
     'bundle' => 'blog',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -327,7 +327,7 @@ function dgu_blog_field_default_field_instances() {
   $field_instances['node-blog-field_tags'] = array(
     'bundle' => 'blog',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -385,7 +385,7 @@ function dgu_blog_field_default_field_instances() {
   $field_instances['node-blog-field_uses_dataset'] = array(
     'bundle' => 'blog',
     'default_value' => NULL,
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
