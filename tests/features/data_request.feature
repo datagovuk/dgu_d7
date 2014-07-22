@@ -59,7 +59,7 @@ Feature: Request new data
     # Fill out new dataset request form
     And I fill in "Data request title" with "My Dataset request title"
     And I fill in "Data request description" with "My Dataset request description"
-    And I select the radio button "Request is public."
+    And I select the radio button "Request is public"
     And I select the radio button "In behalf of an organisation"
     And I wait 1 second
     And I select the radio button "Start up"
@@ -114,9 +114,7 @@ Feature: Request new data
     And I wait until the page loads
     And I select "jamesashton" from "Assignee"
     And I press "Save"
-    And I wait until the page loads
-    Then I should see the link "jamesashton"
-    When I visit "/admin/workbench"
+    And I visit "/admin/workbench"
     And I wait until the page loads
     And I follow "Active Data requests"
     Then I should not see "My Dataset request title"
