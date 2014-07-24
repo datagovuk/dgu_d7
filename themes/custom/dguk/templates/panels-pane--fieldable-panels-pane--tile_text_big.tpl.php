@@ -27,7 +27,9 @@
       <?php print render($content['field_image_tile_text_big']); ?>
       <div class="tile-text">
         <h2><?php print $title; ?></h2>
-        <p><?php print $content['field_tile_description'][0]['#markup']; ?></p>
+        <?php if (isset($content['field_tile_description'][0]['#markup'])): ?>
+          <p><?php print $content['field_tile_description'][0]['#markup']; ?></p>
+        <?php endif; ?>
       </div>
     </a>
   </div>
