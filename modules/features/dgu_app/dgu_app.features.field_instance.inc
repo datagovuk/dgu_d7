@@ -926,9 +926,9 @@ All images will be shown on your app page which click through to the full sized 
       'settings' => array(
         'match_operator' => 'CONTAINS',
         'path' => '',
-        'size' => 60,
+        'size' => '60',
       ),
-      'type' => 'entityreference_autocomplete_tags',
+      'type' => 'entityreference_autocomplete',
       'weight' => 9,
     ),
   );
