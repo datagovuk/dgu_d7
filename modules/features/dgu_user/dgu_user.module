@@ -371,6 +371,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
     ->addExpression('COUNT(nid)', 'count');
   $result = $query->execute();
 
+  $variables['stats'] = '';
   foreach ($result as $row) {
     $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $plural_types[$row->type] . '</a><span> (' . $row->count . ')</span></div>';
   }
