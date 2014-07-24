@@ -149,11 +149,27 @@ function dgu_data_set_request_strongarm() {
             'weight' => '19',
             'visible' => FALSE,
           ),
+          'teaser' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
         ),
         'flag_subscribe_node' => array(
           'default' => array(
             'weight' => '13',
             'visible' => TRUE,
+          ),
+          'teaser' => array(
+            'weight' => '10',
+            'visible' => FALSE,
+          ),
+          'rss' => array(
+            'weight' => '10',
+            'visible' => FALSE,
+          ),
+          'search_result' => array(
+            'weight' => '10',
+            'visible' => FALSE,
           ),
         ),
       ),
