@@ -187,6 +187,96 @@ function dgu_data_set_request_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_data_request_assignee'
+  $field_bases['field_data_request_assignee'] = array(
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_data_request_assignee',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
+    'foreign keys' => array(
+      'users' => array(
+        'columns' => array(
+          'target_id' => 'uid',
+        ),
+        'table' => 'users',
+      ),
+    ),
+    'indexes' => array(
+      'target_id' => array(
+        0 => 'target_id',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'entityreference',
+    'settings' => array(
+      'handler' => 'base',
+      'handler_settings' => array(
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 0,
+          ),
+        ),
+        'sort' => array(
+          'type' => 'none',
+        ),
+        'target_bundles' => array(),
+      ),
+      'target_type' => 'user',
+    ),
+    'translatable' => '0',
+    'type' => 'entityreference',
+  );
+
+  // Exported field_base: 'field_data_request_reference'
+  $field_bases['field_data_request_reference'] = array(
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_data_request_reference',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
+    'foreign keys' => array(
+      'node' => array(
+        'columns' => array(
+          'target_id' => 'nid',
+        ),
+        'table' => 'node',
+      ),
+    ),
+    'indexes' => array(
+      'target_id' => array(
+        0 => 'target_id',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'entityreference',
+    'settings' => array(
+      'handler' => 'base',
+      'handler_settings' => array(
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 0,
+          ),
+        ),
+        'sort' => array(
+          'type' => 'none',
+        ),
+        'target_bundles' => array(
+          'dataset_request' => 'dataset_request',
+        ),
+      ),
+      'target_type' => 'node',
+    ),
+    'translatable' => '0',
+    'type' => 'entityreference',
+  );
+
   // Exported field_base: 'field_data_set_description'
   $field_bases['field_data_set_description'] = array(
     'active' => '1',

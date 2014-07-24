@@ -10,6 +10,202 @@
 function dgu_data_set_request_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'message-data_request_assignee-field_data_request_assignee'
+  $field_instances['message-data_request_assignee-field_data_request_assignee'] = array(
+    'bundle' => 'data_request_assignee',
+    'default_value' => NULL,
+    'deleted' => '0',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => '1',
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'message',
+    'field_name' => 'field_data_request_assignee',
+    'label' => 'Assignee',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => '60',
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => '2',
+    ),
+  );
+
+  // Exported field_instance: 'message-data_request_assignee-field_data_request_reference'
+  $field_instances['message-data_request_assignee-field_data_request_reference'] = array(
+    'bundle' => 'data_request_assignee',
+    'default_value' => NULL,
+    'deleted' => '0',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => '0',
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'message',
+    'field_name' => 'field_data_request_reference',
+    'label' => 'Data request reference',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => '60',
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => '1',
+    ),
+  );
+
+  // Exported field_instance: 'message-data_request_assignee-field_message_rendered_body'
+  $field_instances['message-data_request_assignee-field_message_rendered_body'] = array(
+    'bundle' => 'data_request_assignee',
+    'default_value' => NULL,
+    'deleted' => '0',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'text_default',
+        'weight' => 3,
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'message',
+    'field_name' => 'field_message_rendered_body',
+    'label' => 'Rendered_body',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => '1',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'rows' => '5',
+      ),
+      'type' => 'text_textarea',
+      'weight' => '4',
+    ),
+  );
+
+  // Exported field_instance: 'message-data_request_assignee-field_message_rendered_subject'
+  $field_instances['message-data_request_assignee-field_message_rendered_subject'] = array(
+    'bundle' => 'data_request_assignee',
+    'default_value' => NULL,
+    'deleted' => '0',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+        ),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'message_notify_email_body' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'message_notify_email_subject' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'message',
+    'field_name' => 'field_message_rendered_subject',
+    'label' => 'Rendered subject',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => '0',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => '60',
+      ),
+      'type' => 'text_textfield',
+      'weight' => '3',
+    ),
+  );
+
   // Exported field_instance: 'node-dataset_request-field_assignee'
   $field_instances['node-dataset_request-field_assignee'] = array(
     'bundle' => 'dataset_request',
@@ -21,7 +217,7 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => '19',
       ),
       'rss' => array(
         'label' => 'above',
@@ -81,7 +277,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 7,
+        'weight' => '6',
       ),
       'rss' => array(
         'label' => 'above',
@@ -136,7 +332,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 9,
+        'weight' => '8',
       ),
       'rss' => array(
         'label' => 'above',
@@ -194,7 +390,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 8,
+        'weight' => '7',
       ),
       'rss' => array(
         'label' => 'above',
@@ -249,7 +445,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 12,
+        'weight' => '11',
       ),
       'rss' => array(
         'label' => 'above',
@@ -306,7 +502,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 17,
+        'weight' => '16',
       ),
       'rss' => array(
         'label' => 'above',
@@ -358,7 +554,7 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 15,
+        'weight' => '20',
       ),
       'rss' => array(
         'label' => 'above',
@@ -416,7 +612,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 6,
+        'weight' => '5',
       ),
       'rss' => array(
         'label' => 'above',
@@ -497,7 +693,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => 4,
+        'weight' => '3',
       ),
       'rss' => array(
         'label' => 'above',
@@ -576,7 +772,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 18,
+        'weight' => '17',
       ),
       'rss' => array(
         'label' => 'above',
@@ -631,7 +827,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => 10,
+        'weight' => '9',
       ),
       'rss' => array(
         'label' => 'above',
@@ -686,7 +882,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => 11,
+        'weight' => '10',
       ),
       'rss' => array(
         'label' => 'above',
@@ -746,7 +942,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 14,
+        'weight' => '14',
       ),
       'rss' => array(
         'label' => 'above',
@@ -797,7 +993,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 23,
+        'weight' => '24',
       ),
       'rss' => array(
         'label' => 'above',
@@ -855,7 +1051,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 19,
+        'weight' => '18',
       ),
       'rss' => array(
         'label' => 'above',
@@ -903,7 +1099,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 21,
+        'weight' => '22',
       ),
       'rss' => array(
         'label' => 'above',
@@ -951,7 +1147,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 22,
+        'weight' => '23',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1013,7 +1209,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'ckan_publisher_reference_default',
-        'weight' => 2,
+        'weight' => '1',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1069,7 +1265,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'reply_default',
-        'weight' => 16,
+        'weight' => '15',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1128,7 +1324,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => '4',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1186,7 +1382,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 3,
+        'weight' => '2',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1245,7 +1441,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => 0,
+        'weight' => '0',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1307,7 +1503,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 20,
+        'weight' => '21',
       ),
       'rss' => array(
         'label' => 'above',
@@ -1351,6 +1547,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   t('Benefits overview');
   t('Comments');
   t('Data request description');
+  t('Data request reference');
   t('Data set link');
   t('Data themes');
   t('Do you know who holds this data?');
@@ -1373,6 +1570,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   t('Publication preference');
   t('Publisher');
   t('Reason');
+  t('Rendered subject');
+  t('Rendered_body');
   t('Review notes');
   t('Status');
   t('Suggested use');

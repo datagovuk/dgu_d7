@@ -34,6 +34,64 @@ function dgu_data_set_request_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_message__data_request_assignee';
+  $strongarm->value = array(
+    'view_modes' => array(
+      'message_notify_email_subject' => array(
+        'custom_settings' => TRUE,
+      ),
+      'message_notify_email_body' => array(
+        'custom_settings' => TRUE,
+      ),
+      'full' => array(
+        'custom_settings' => FALSE,
+      ),
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+    ),
+    'extra_fields' => array(
+      'form' => array(),
+      'display' => array(
+        'message__message_text__0' => array(
+          'message_notify_email_subject' => array(
+            'visible' => TRUE,
+            'weight' => 0,
+          ),
+          'message_notify_email_body' => array(
+            'visible' => FALSE,
+            'weight' => 0,
+          ),
+          'default' => array(
+            'weight' => '0',
+            'visible' => TRUE,
+          ),
+        ),
+        'message__message_text__1' => array(
+          'message_notify_email_subject' => array(
+            'visible' => FALSE,
+            'weight' => 0,
+          ),
+          'message_notify_email_body' => array(
+            'visible' => TRUE,
+            'weight' => 0,
+          ),
+          'default' => array(
+            'weight' => '1',
+            'visible' => FALSE,
+          ),
+        ),
+      ),
+    ),
+  );
+  $export['field_bundle_settings_message__data_request_assignee'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__dataset_request';
   $strongarm->value = array(
     'view_modes' => array(
@@ -80,7 +138,7 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '13',
+            'weight' => '12',
             'visible' => TRUE,
           ),
           'rss' => array(
@@ -90,6 +148,12 @@ function dgu_data_set_request_strongarm() {
           'search_result' => array(
             'weight' => '19',
             'visible' => FALSE,
+          ),
+        ),
+        'flag_subscribe_node' => array(
+          'default' => array(
+            'weight' => '13',
+            'visible' => TRUE,
           ),
         ),
       ),
