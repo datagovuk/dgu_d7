@@ -41,7 +41,7 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   $form['account']['#type'] = 'fieldset';
   $form['account']['#collapsible'] = TRUE;
   // Don't collapse account setting if user just used password reset link
-  if(!$_GET['pass-reset-token']) {
+  if(empty($_GET['pass-reset-token'])) {
     $form['account']['#collapsed'] = TRUE;
   }
   $form['account']['#title'] = t('Account settings');
@@ -317,9 +317,8 @@ function dgu_user_preprocess_user_profile(&$variables) {
   $colour = $variables['elements']['#account']->uid % 10;
   $variables['user_profile']['field_avatar']['classes_array'] = array('bg-colour-' . $colour);
 
-  if (isset($variables['field_first_name'][0]['safe_value'])) {
-    $variables['full_name'] = $variables['field_first_name'][0]['safe_value'];
-  }
+  $variables['full_name'] = isset($variables['field_first_name'][0]['safe_value']) ? $variables['field_first_name'][0]['safe_value'] : FALSE;
+
   if (isset($variables['field_surname'][0]['safe_value'])) {
     if (isset($variables['full_name'])) {
       $variables['full_name'] = $variables['full_name'] . ' ' . $variables['field_surname'][0]['safe_value'];
@@ -329,36 +328,34 @@ function dgu_user_preprocess_user_profile(&$variables) {
     }
   }
 
-  if (isset($variables['field_twitter'][0]['safe_value'])) {
-    $variables['twitter'] = $variables['field_twitter'][0]['safe_value'];
-    if (substr($variables['twitter'], 0, 1) == '@') {
-      // Just the username without @ character.
-      $variables['twitter'] = substr($variables['twitter'], 1);
-    }
+  $variables['twitter'] = isset($variables['field_twitter'][0]['safe_value']) ? $variables['field_twitter'][0]['safe_value'] : FALSE;
+
+  if (substr($variables['twitter'], 0, 1) == '@') {
+    // Just the username without @ character.
+    $variables['twitter'] = substr($variables['twitter'], 1);
   }
+
   if (isset($variables['field_linkedin_url'][0]['url'])) {
     $parts = parse_url($variables['field_linkedin_url'][0]['url']);
     $variables['linkedin'] = $parts['host'] . $parts['path'] . $parts['query'];
+  }
+  else {
+    $variables['linkedin'] = FALSE;
   }
 
   if (isset($variables['field_facebook_url'][0]['url'])) {
     $parts = parse_url($variables['field_facebook_url'][0]['url']);
     $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
   }
-
-  if (isset($variables['field_bio'][0]['safe_value'])) {
-    $variables['bio'] = $variables['field_bio'][0]['safe_value'];
+  else {
+    $variables['facebook'] = FALSE;
   }
 
-  if (isset($variables['field_job_title'][0]['safe_value'])) {
-    $variables['job_title'] = $variables['field_job_title'][0]['safe_value'];
-  }
-
-
+  $variables['bio'] = isset($variables['field_bio'][0]['safe_value']) ? $variables['field_bio'][0]['safe_value'] : FALSE;
+  $variables['job_title'] = isset($variables['field_job_title'][0]['safe_value']) ? $variables['field_job_title'][0]['safe_value'] : FALSE;
   $variables['member_for'] =  $variables['user_profile']['summary']['member_for']['#title'] . ' ' . $variables['user_profile']['summary']['member_for']['#markup'];
 
   $plural_types = dgu_site_feature_get_plural_content_types();
-
 
   $uid = $variables['elements']['#account']->uid;
 
@@ -371,6 +368,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
     ->addExpression('COUNT(nid)', 'count');
   $result = $query->execute();
 
+  $variables['stats'] = '';
   foreach ($result as $row) {
     $variables['stats'] .= '<div><a href="/user/' .$variables['elements']['#account']->uid. '/content?type=' . $row->type. '">' . $plural_types[$row->type] . '</a><span> (' . $row->count . ')</span></div>';
   }
@@ -394,11 +392,8 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
 
   $recent_content = views_embed_view('user_content', 'block');
-  if(strpos($recent_content, 'view-content')) {
-    $variables['recent_content'] = $recent_content;
-  }
+  $variables['recent_content'] = strpos($recent_content, 'view-content') ? $recent_content : FALSE;
+
   $recent_comments = views_embed_view('user_replies', 'block_3');
-  if(strpos($recent_comments, 'view-content')) {
-    $variables['recent_comments'] = $recent_comments;
-  }
+  $variables['recent_comments'] = strpos($recent_comments, 'view-content') ? $recent_comments : FALSE;
 }

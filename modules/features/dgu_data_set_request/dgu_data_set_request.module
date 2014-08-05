@@ -245,6 +245,48 @@ function is_or_was_assignee($nid, $account = NULL) {
   return in_array($account->uid, $assignees);
 }
 
+
+/**
+ * Implements hook_node_presave().
+ */
+function dgu_data_set_request_node_presave($node) {
+  if ($node->type == 'dataset_request' && isset($node->field_assignee[LANGUAGE_NONE][0]['uid'])) {
+    $previous_node_revision = node_load($node->nid);
+    $previous_assignee = &drupal_static('previous_data_request_assignee');
+    $previous_assignee = isset($previous_node_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_node_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function dgu_data_set_request_node_update($node) {
+  if ($node->type == 'dataset_request' && isset($node->field_assignee[LANGUAGE_NONE][0]['uid'])) {
+    $previous_assignee = &drupal_static('previous_data_request_assignee');
+    if ($previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
+
+
+      global $user;
+      $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
+
+      flag('flag', 'subscribe_node', $node->nid, $assignee);
+
+      $message = message_create('data_request_assignee');
+      $wrapper = entity_metadata_wrapper('message', $message);
+      $wrapper->field_data_request_reference->set($node);
+      $wrapper->field_data_request_assignee->set($assignee);
+
+      $options = array(
+        'rendered fields' => array(
+          'message_notify_email_subject' => 'field_message_rendered_subject',
+          'message_notify_email_body' => 'field_message_rendered_body',
+        ),
+      );
+
+      message_subscribe_send_message('node', $node, $message, array('email' => $options));
+    }
+  }
+}
 /**
  * Implements hook_preprocess_replies().
  */
