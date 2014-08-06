@@ -85,10 +85,13 @@ function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request') {
     if(!($node->uid == $account->uid || user_access(DATA_REQUEST_MODERATION_PERMISSION))) {
       if(isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+        
         $assignees = dgu_data_set_request_get_assignees($node->nid);
+
         if(!in_array($account->uid, $assignees)) {
           return NODE_ACCESS_DENY;
         }
+
       }
     }
   }

@@ -14,26 +14,26 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['message-data_request_assignee-field_data_request_assignee'] = array(
     'bundle' => 'data_request_assignee',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '1',
+        'weight' => 1,
       ),
       'message_notify_email_body' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 6,
       ),
       'message_notify_email_subject' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'message',
@@ -49,10 +49,10 @@ function dgu_data_set_request_field_default_field_instances() {
       'settings' => array(
         'match_operator' => 'CONTAINS',
         'path' => '',
-        'size' => '60',
+        'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => '2',
+      'weight' => 2,
     ),
   );
 
@@ -60,26 +60,26 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['message-data_request_assignee-field_data_request_reference'] = array(
     'bundle' => 'data_request_assignee',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'message_notify_email_body' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 5,
       ),
       'message_notify_email_subject' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 5,
       ),
     ),
     'entity_type' => 'message',
@@ -95,10 +95,10 @@ function dgu_data_set_request_field_default_field_instances() {
       'settings' => array(
         'match_operator' => 'CONTAINS',
         'path' => '',
-        'size' => '60',
+        'size' => 60,
       ),
       'type' => 'entityreference_autocomplete',
-      'weight' => '1',
+      'weight' => 1,
     ),
   );
 
@@ -106,7 +106,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['message-data_request_assignee-field_message_rendered_body'] = array(
     'bundle' => 'data_request_assignee',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -126,13 +126,13 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 4,
       ),
       'message_notify_email_subject' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 4,
       ),
     ),
     'entity_type' => 'message',
@@ -140,17 +140,17 @@ function dgu_data_set_request_field_default_field_instances() {
     'label' => 'Rendered_body',
     'required' => 0,
     'settings' => array(
-      'text_processing' => '1',
+      'text_processing' => 1,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => '5',
+        'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => '4',
+      'weight' => 4,
     ),
   );
 
@@ -158,7 +158,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['message-data_request_assignee-field_message_rendered_subject'] = array(
     'bundle' => 'data_request_assignee',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -178,13 +178,13 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
       'message_notify_email_subject' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 3,
       ),
     ),
     'entity_type' => 'message',
@@ -192,17 +192,17 @@ function dgu_data_set_request_field_default_field_instances() {
     'label' => 'Rendered subject',
     'required' => 0,
     'settings' => array(
-      'text_processing' => '0',
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => '60',
+        'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => '3',
+      'weight' => 3,
     ),
   );
 
@@ -210,32 +210,32 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_assignee'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '19',
+        'weight' => 19,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -263,7 +263,7 @@ function dgu_data_set_request_field_default_field_instances() {
         'value' => 0,
       ),
     ),
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -277,25 +277,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => '6',
+        'weight' => 6,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '17',
+        'weight' => 17,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '17',
+        'weight' => 17,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -318,7 +318,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_barriers_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'Provide further details. Details may include broken links, licensing terms, financial charges, confidentiality, closed formats, out of date etc.',
     'display' => array(
       'default' => array(
@@ -332,25 +332,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => '8',
+        'weight' => 8,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '7',
+        'weight' => 7,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '8',
+        'weight' => 8,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -376,7 +376,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_barriers_reason'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'Please select a main reason.',
     'display' => array(
       'default' => array(
@@ -390,25 +390,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => '7',
+        'weight' => 7,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '19',
+        'weight' => 19,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '18',
+        'weight' => 18,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -431,7 +431,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_benefits_overview'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'Please give a broad overview of the benefits of this data being made available.',
     'display' => array(
       'default' => array(
@@ -445,25 +445,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => '11',
+        'weight' => 11,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '10',
+        'weight' => 10,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '12',
+        'weight' => 12,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -488,7 +488,7 @@ function dgu_data_set_request_field_default_field_instances() {
   // Exported field_instance: 'node-dataset_request-field_comment'
   $field_instances['node-dataset_request-field_comment'] = array(
     'bundle' => 'dataset_request',
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -502,25 +502,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'reply_default',
-        'weight' => '16',
+        'weight' => 16,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '21',
+        'weight' => 21,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '20',
+        'weight' => 20,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -547,32 +547,32 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_holder'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '20',
+        'weight' => 20,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -598,7 +598,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_set_description'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'What data are you requesting?',
     'display' => array(
       'default' => array(
@@ -612,7 +612,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => '5',
+        'weight' => 5,
       ),
       'rss' => array(
         'label' => 'above',
@@ -625,7 +625,7 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -647,13 +647,13 @@ function dgu_data_set_request_field_default_field_instances() {
           'trim_type' => 'chars',
         ),
         'type' => 'smart_trim_format',
-        'weight' => '1',
+        'weight' => 1,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -661,14 +661,14 @@ function dgu_data_set_request_field_default_field_instances() {
     'label' => 'Data request description',
     'required' => 1,
     'settings' => array(
-      'text_processing' => '0',
+      'text_processing' => 0,
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'rows' => '3',
+        'rows' => 3,
       ),
       'type' => 'text_textarea',
       'weight' => 7,
@@ -679,7 +679,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_set_link'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -693,13 +693,13 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => '3',
+        'weight' => 3,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '13',
+        'weight' => 13,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -712,13 +712,13 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'link_default',
-        'weight' => '4',
+        'weight' => 4,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -758,7 +758,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_themes'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'Identify the most appropriate data themes that relate to your request (please select at least one)',
     'display' => array(
       'default' => array(
@@ -772,25 +772,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => '17',
+        'weight' => 17,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '16',
+        'weight' => 16,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '16',
+        'weight' => 16,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -813,7 +813,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_use'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'What do you plan to do with the data?',
     'display' => array(
       'default' => array(
@@ -827,25 +827,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'list_default',
-        'weight' => '9',
+        'weight' => 9,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '8',
+        'weight' => 8,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '9',
+        'weight' => 9,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -868,7 +868,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_data_use_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'Please describe the problem that access to the data solves.',
     'display' => array(
       'default' => array(
@@ -882,25 +882,25 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
         ),
         'type' => 'text_default',
-        'weight' => '10',
+        'weight' => 10,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '9',
+        'weight' => 9,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '11',
+        'weight' => 11,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -926,7 +926,7 @@ function dgu_data_set_request_field_default_field_instances() {
   $field_instances['node-dataset_request-field_estimates_detail'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => 'If you are able, please tell is in more detail any estimates you are able to make of the benefits this data would bring.
 Consider benefits in terms of economic impact such as employment, revenues or more efficient delivery of services. 
 <strong>Answers to this question will be treated confidentially.</strong>',
@@ -942,25 +942,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => '14',
+        'weight' => 14,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '12',
+        'weight' => 12,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '14',
+        'weight' => 14,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -986,32 +986,32 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_organisation_name'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '24',
+        'weight' => 24,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '5',
+        'weight' => 5,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '7',
+        'weight' => 7,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1037,7 +1037,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_organisation_type'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1051,25 +1051,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '18',
+        'weight' => 18,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '6',
+        'weight' => 6,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '6',
+        'weight' => 6,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1092,32 +1092,32 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_provide_estimates'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '22',
+        'weight' => 22,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '11',
+        'weight' => 11,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '13',
+        'weight' => 13,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1140,20 +1140,20 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_publication_preference'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '23',
+        'weight' => 23,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '14',
+        'weight' => 14,
       ),
       'search_result' => array(
         'label' => 'above',
@@ -1166,13 +1166,13 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1195,7 +1195,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_publisher_ref'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1209,25 +1209,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'ckan_publisher_reference_default',
-        'weight' => '1',
+        'weight' => 1,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1251,7 +1251,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   // Exported field_instance: 'node-dataset_request-field_review_comments'
   $field_instances['node-dataset_request-field_review_comments'] = array(
     'bundle' => 'dataset_request',
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1265,25 +1265,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'reply_default',
-        'weight' => '15',
+        'weight' => 15,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1310,7 +1310,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_review_notes'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1324,25 +1324,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'text_default',
-        'weight' => '4',
+        'weight' => 4,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '15',
+        'weight' => 15,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '15',
+        'weight' => 15,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1368,7 +1368,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_review_outcome'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1382,25 +1382,25 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '2',
+        'weight' => 2,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1424,10 +1424,10 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'bundle' => 'dataset_request',
     'default_value' => array(
       0 => array(
-        'value' => '0',
+        'value' => 0,
       ),
     ),
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
@@ -1441,7 +1441,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'rss' => array(
         'label' => 'above',
@@ -1454,7 +1454,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '3',
+        'weight' => 3,
       ),
       'search_result' => array(
         'label' => 'hidden',
@@ -1467,13 +1467,13 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           ),
         ),
         'type' => 'list_default',
-        'weight' => '3',
+        'weight' => 3,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',
@@ -1496,32 +1496,32 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   $field_instances['node-dataset_request-field_submitter_type'] = array(
     'bundle' => 'dataset_request',
     'default_value' => NULL,
-    'deleted' => '0',
+    'deleted' => 0,
     'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '21',
+        'weight' => 21,
       ),
       'rss' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'search_result' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
       'teaser' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
     'entity_type' => 'node',

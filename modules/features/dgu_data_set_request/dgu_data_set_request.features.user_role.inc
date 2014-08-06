@@ -13,7 +13,7 @@ function dgu_data_set_request_user_default_roles() {
   // Exported role: data request administrator.
   $roles['data request administrator'] = array(
     'name' => 'data request administrator',
-    'weight' => '9',
+    'weight' => 9,
   );
 
   return $roles;
