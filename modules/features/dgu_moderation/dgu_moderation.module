@@ -152,6 +152,8 @@ function dgu_moderation_get_node_grants(&$node){
     'grant_view' => 1,
     'grant_update' => 1,
     'grant_delete' => 1,
+    'priority' => 1,
+
   );
   if ($node->uid) {
     // Grant author permission only if author is not anonymous.
@@ -161,6 +163,7 @@ function dgu_moderation_get_node_grants(&$node){
       'grant_view' => 1,
       'grant_update' => 1,
       'grant_delete' => 1,
+      'priority' => 1,
     );
   }
   if ($node->status == 1) {
@@ -170,6 +173,7 @@ function dgu_moderation_get_node_grants(&$node){
       'grant_view' => 1,
       'grant_update' => 0,
       'grant_delete' => 0,
+      'priority' => 1,
     );
   }
   return $grants;
