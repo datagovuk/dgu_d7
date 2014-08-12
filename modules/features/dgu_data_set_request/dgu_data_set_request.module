@@ -272,6 +272,7 @@ function dgu_data_set_request_node_presave($node) {
       $updates_to_ignore[] = $node->nid;
     }
 
+    // Store previous revision of the node in static cache to be available for comparison in hook_node_update().
     $previous_data_request_revision = node_load($node->nid);
     $previous_assignee = &drupal_static('previous_data_request_assignee');
     $previous_assignee = isset($previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
@@ -294,9 +295,12 @@ function dgu_data_set_request_node_update($node) {
     $previous_assignee = &drupal_static('previous_data_request_assignee');
     $previous_data_request_revision = &drupal_static('previous_data_request_revision');
 
+    // Use static cache to get this summary available in hook_tokens().
     $summary_of_changes = &drupal_static('data_request_summary_of_changes');
     $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
 
+    // This is taken from message stack examples.
+    // It's related to message_notify how it stores rendered subject and body via view modes.
     $options = array(
       'rendered fields' => array(
         'message_notify_email_subject' => 'field_message_rendered_subject',
@@ -304,28 +308,47 @@ function dgu_data_set_request_node_update($node) {
       ),
     );
 
+    // Get data_request_update message bundle and set required fields.
     $message_update = message_create('data_request_update');
     $wrapper = entity_metadata_wrapper('message', $message_update);
     $wrapper->field_data_request_reference->set($node);
 
     if (isset($node->field_assignee[LANGUAGE_NONE][0]['uid']) && $previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
+
+      // There is new assignee, this is special case where an assignee
+      // must receive different message than all other subscribers.
       $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
+
+      // Get data_request_assignee message bundle and set required fields.
       $message_assignee = message_create('data_request_assignee');
       $wrapper = entity_metadata_wrapper('message', $message_assignee);
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
+
+      // Send one off message to current assignee without using message subscribe.
       message_notify_send_message($message_assignee, $options);
 
+      // Temporarily unsubscribe current assignee to avoid sending two messages
+      // to this person (one about being current assignee, second about request update event)
+      // if this person was subscribed before (e.g. was already an assignee before).
       flag('unflag', 'subscribe_node', $node->nid, $assignee);
+
+      // Send data_request_update message to all subscribers.
       message_subscribe_send_message('node', $node, $message_update, array('email' => $options));
+
+      // Subscribe an assignee to following notifications about data request updates.
       flag('flag', 'subscribe_node', $node->nid, $assignee);
     }
     else {
+      // Something else than assignee has been changed, simply notify all subscribers.
       message_subscribe_send_message('node', $node, $message_update, array('email' => $options));
     }
   }
 }
 
+/**
+ * Helper function to get summary of changes used in notification about data request update.
+ */
 function _dgu_data_request_get_summary_of_changes($current_revision, $previous_revision) {
 
   $changes = array();
@@ -333,14 +356,15 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
   $previous_request = node_view($previous_revision);
 
   foreach ($current_request as $key => $value) {
+    // Iterate through all fields.
     if(strpos($key, 'field_') === 0) {
-
       if (isset($current_request[$key]['#items'])) {
-
         if (count($current_request[$key]['#items']) != count($previous_request[$key]['#items'])) {
+          // If multi value field had different quantity of items it is modified.
           _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
         }
         else {
+          // Otherwise compare the values.
           foreach ($current_request[$key]['#items'] as $index => &$item) {
 
             // Fix weird discrepancy on text_log fields, for some reason current revision has
@@ -360,6 +384,7 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
 
   }
 
+  // Render summary.
   $output = '';
   foreach ($changes as $field_name => $diff) {
     $output .= 'Field "' . $field_name . '" changed' . "\n";
@@ -367,10 +392,12 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
     $output .= 'to:   ' . $diff['current'] . "\n";
     $output .= "\n";
   }
-
   return $output;
 }
 
+/**
+ * Helper function to render changes in a single field.
+ */
 function _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, &$changes) {
   $new_value = field_view_field('node', $current_revision, $key);
   $old_value = field_view_field('node', $previous_revision, $key);
@@ -385,7 +412,10 @@ function _dgu_data_set_request_render_changes($current_revision, $previous_revis
 }
 
 
-
+/**
+ * Helper recursive function to get rid of multiple commas added before
+ * each closing HTML tag in _dgu_data_set_request_render_changes() function.
+ */
 function _dgu_data_set_request_remove_multiple_commas($string) {
   $string = str_replace(', , ', ', ', $string);
   if (strpos($string, ', , ') !== FALSE) {
