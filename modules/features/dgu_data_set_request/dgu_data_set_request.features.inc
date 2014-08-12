@@ -36,7 +36,7 @@ function dgu_data_set_request_default_message_type() {
   $items = array();
   $items['data_request_assignee'] = entity_import('message_type', '{
     "name" : "data_request_assignee",
-    "description" : "User assingned to a data request",
+    "description" : "Data request has been assigned to you",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",
@@ -48,14 +48,46 @@ function dgu_data_set_request_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\t[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E assigned \\u003Ca href=\\u0022[message:field-data-request-assignee:url]\\u0022\\u003E@{message:field-data-request-assignee:name}\\u003C\\/a\\u003E to \\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E data request\\u003C\\/p\\u003E",
+          "value" : "\\u003Cp\\u003EData request \\u0022\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u0022 has been assigned to you by \\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E",
           "format" : "full_html",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022\\u0026#9;[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E assigned \\u003Ca href=\\u0022[message:field-data-request-assignee:url]\\u0022\\u003E@{message:field-data-request-assignee:name}\\u003C\\/a\\u003E to \\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E data request\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EData request \\u0022\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u0022 has been assigned to you by \\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\u003Cp\\u003E\\u003Cstrong\\u003EStatus: \\u003C\\/strong\\u003E[message:field-data-request-reference:field-review-status]\\u003C\\/p\\u003E\\u003Cp\\u003E\\u003Cstrong\\u003ESubmitter: \\u003C\\/strong\\u003E\\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E\\u003C\\/p\\u003E",
+          "value" : "\\u003Cp\\u003EData request \\u0022[message:field-data-request-reference:title]\\u0022 has been assigned to you\\u003C\\/p\\u003E",
           "format" : "full_html",
-          "safe_value" : "\\u003Cp\\u003E\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n\\u003Cp\\u003E\\u003Cstrong\\u003EStatus: \\u003C\\/strong\\u003E[message:field-data-request-reference:field-review-status]\\u003C\\/p\\u003E\\n\\u003Cp\\u003E\\u003Cstrong\\u003ESubmitter: \\u003C\\/strong\\u003E\\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E[message:user:name]\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EData request \\u0022[message:field-data-request-reference:title]\\u0022 has been assigned to you\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003EUser \\u0022[message:user:name]\\u0022 ([message:user:url])\\u003Cbr\\u003Ehas assigned you to deal with the data request:\\u003Cbr\\u003E\\u0022[message:field-data-request-reference:title]\\u0022.\\u003C\\/p\\u003E\\u003Cp\\u003EPlease login to review this request at:\\u003Cbr\\u003E[message:field-data-request-reference:url]\\u003Cbr\\u003Eto progress it further.\\u003C\\/p\\u003E\\u003Cp\\u003EYou have been also subscribed to notifications about this data request.\\u003Cbr\\u003EYou can unsubscribe at:\\u003Cbr\\u003E[site:url]user\\/[message:field-data-request-assignee:uid]\\/message-subscribe\\u003C\\/p\\u003E\\u003Cp\\u003EYou can see all data requests\\u0026nbsp;assigned to you at:\\u003Cbr\\u003E[site:url]admin\\/workbench\\/content\\/active\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EUser \\u0022[message:user:name]\\u0022 ([message:user:url])\\u003Cbr \\/\\u003Ehas assigned you to deal with the data request:\\u003Cbr \\/\\u003E\\u0022[message:field-data-request-reference:title]\\u0022.\\u003C\\/p\\u003E\\n\\u003Cp\\u003EPlease login to review this request at:\\u003Cbr \\/\\u003E[message:field-data-request-reference:url]\\u003Cbr \\/\\u003Eto progress it further.\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou have been also subscribed to notifications about this data request.\\u003Cbr \\/\\u003EYou can unsubscribe at:\\u003Cbr \\/\\u003E[site:url]user\\/[message:field-data-request-assignee:uid]\\/message-subscribe\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou can see all data requests\\u00a0assigned to you at:\\u003Cbr \\/\\u003E[site:url]admin\\/workbench\\/content\\/active\\u003C\\/p\\u003E\\n"
+        }
+      ]
+    },
+    "rdf_mapping" : []
+  }');
+  $items['data_request_update'] = entity_import('message_type', '{
+    "name" : "data_request_update",
+    "description" : "Data request has been updated",
+    "argument_keys" : [],
+    "argument" : [],
+    "category" : "message_type",
+    "data" : {
+      "token options" : { "clear" : 0 },
+      "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
+    },
+    "language" : "",
+    "arguments" : null,
+    "message_text" : { "und" : [
+        {
+          "value" : "\\u003Cp\\u003EData request \\u0022\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u0022 has been updated by \\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EData request \\u0022\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u0022 has been updated by \\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url})\\u0026nbsp;has updated data request:\\u003Cbr\\u003E\\u0022[message:field-data-request-reference:title]\\u0022.\\u003C\\/p\\u003E\\u003Cp\\u003EYou can see this request at:\\u003Cbr\\u003E[message:field-data-request-reference:url]\\u003C\\/p\\u003E\\u003Cp\\u003EYou have received this message because you\\u0026nbsp;are subscribed to notifications about this data request.\\u003C\\/p\\u003E\\u003Cp\\u003EYou can unsubscribe at:\\u003Cbr\\u003E[site:url]user\\/[message:user:uid]\\/message-subscribe\\u003C\\/p\\u003E\\u003Cp\\u003ESummary of changes:\\u003C\\/p\\u003E\\u003Cp\\u003E[message:data_request-summary_of_changes]\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url})\\u00a0has updated data request:\\u003Cbr \\/\\u003E\\u0022[message:field-data-request-reference:title]\\u0022.\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou can see this request at:\\u003Cbr \\/\\u003E[message:field-data-request-reference:url]\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou have received this message because you\\u00a0are subscribed to notifications about this data request.\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou can unsubscribe at:\\u003Cbr \\/\\u003E[site:url]user\\/[message:user:uid]\\/message-subscribe\\u003C\\/p\\u003E\\n\\u003Cp\\u003ESummary of changes:\\u003C\\/p\\u003E\\n\\u003Cp\\u003E[message:data_request-summary_of_changes]\\u003C\\/p\\u003E\\n"
         }
       ]
     },

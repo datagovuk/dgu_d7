@@ -46,7 +46,6 @@ function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
 }
 
 function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
-  global $user;
   if ($node->type == 'dataset_request') {
     if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
       return TRUE;
@@ -66,7 +65,6 @@ function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
  * - adds a button to submit the data request for moderation.
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
-  global $user;
   $node = $form['#node'];
   drupal_set_title('Create a dataset request');
   unset($form['actions']['preview']);
@@ -85,10 +83,13 @@ function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request') {
     if(!($node->uid == $account->uid || user_access(DATA_REQUEST_MODERATION_PERMISSION))) {
       if(isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+        
         $assignees = dgu_data_set_request_get_assignees($node->nid);
+
         if(!in_array($account->uid, $assignees)) {
           return NODE_ACCESS_DENY;
         }
+
       }
     }
   }
@@ -108,6 +109,7 @@ function dgu_data_set_request_node_access_records($node) {
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
+        'priority' => 1,
       );
       if ($node->uid) {
         // Grant author permission only if author is not anonymous.
@@ -117,6 +119,7 @@ function dgu_data_set_request_node_access_records($node) {
           'grant_view' => 1,
           'grant_update' => 1,
           'grant_delete' => 1,
+          'priority' => 1,
         );
       }
       if (!empty($assignees)) {
@@ -128,6 +131,7 @@ function dgu_data_set_request_node_access_records($node) {
             'grant_view' => 1,
             'grant_update' => 1,
             'grant_delete' => 0,
+            'priority' => 1,
           );
         }
       }
@@ -140,6 +144,7 @@ function dgu_data_set_request_node_access_records($node) {
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
+        'priority' => 1,
       );
       if ($node->uid) {
         // Grant author permission only if author is not anonymous.
@@ -149,6 +154,7 @@ function dgu_data_set_request_node_access_records($node) {
           'grant_view' => 1,
           'grant_update' => 1,
           'grant_delete' => 1,
+          'priority' => 1,
         );
       }
       if (!empty($assignees)) {
@@ -160,6 +166,7 @@ function dgu_data_set_request_node_access_records($node) {
             'grant_view' => 1,
             'grant_update' => 1,
             'grant_delete' => 0,
+            'priority' => 1,
           );
         }
       }
@@ -170,6 +177,7 @@ function dgu_data_set_request_node_access_records($node) {
           'grant_view' => 1,
           'grant_update' => 0,
           'grant_delete' => 0,
+          'priority' => 1,
         );
       }
     }
@@ -254,9 +262,20 @@ function is_or_was_assignee($nid, $account = NULL) {
  */
 function dgu_data_set_request_node_presave($node) {
   if ($node->type == 'dataset_request' && isset($node->field_assignee[LANGUAGE_NONE][0]['uid'])) {
-    $previous_node_revision = node_load($node->nid);
+    $previous_data_request_revision = &drupal_static('previous_data_request_revision');
+
+    // Workbench moderation uses shutdown function to update the node for the second time in the same request.
+    // To avoid messages being created twice we ignore second node update in single request.
+    if (isset($previous_data_request_revision)) {
+      $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+      $updates_to_ignore = isset($updates_to_ignore) ? $updates_to_ignore : array();
+      $updates_to_ignore[] = $node->nid;
+    }
+
+    // Store previous revision of the node in static cache to be available for comparison in hook_node_update().
+    $previous_data_request_revision = node_load($node->nid);
     $previous_assignee = &drupal_static('previous_data_request_assignee');
-    $previous_assignee = isset($previous_node_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_node_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
+    $previous_assignee = isset($previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
   }
 }
 
@@ -264,32 +283,177 @@ function dgu_data_set_request_node_presave($node) {
  * Implements hook_node_update().
  */
 function dgu_data_set_request_node_update($node) {
-  if ($node->type == 'dataset_request' && isset($node->field_assignee[LANGUAGE_NONE][0]['uid'])) {
+  if ($node->type == 'dataset_request') {
+
+    // Ignore second node update in single request.
+    // See dgu_data_set_request_node_presave();
+    $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+    if (is_array($updates_to_ignore) && in_array($node->nid, $updates_to_ignore)) {
+      return;
+    }
+
     $previous_assignee = &drupal_static('previous_data_request_assignee');
-    if ($previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
+    $previous_data_request_revision = &drupal_static('previous_data_request_revision');
 
+    // Use static cache to get this summary available in hook_tokens().
+    $summary_of_changes = &drupal_static('data_request_summary_of_changes');
+    $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
 
-      global $user;
+    // This is taken from message stack examples.
+    // It's related to message_notify how it stores rendered subject and body via view modes.
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+
+    // Get data_request_update message bundle and set required fields.
+    $message_update = message_create('data_request_update');
+    $wrapper = entity_metadata_wrapper('message', $message_update);
+    $wrapper->field_data_request_reference->set($node);
+
+    if (isset($node->field_assignee[LANGUAGE_NONE][0]['uid']) && $previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
+
+      // There is new assignee, this is special case where an assignee
+      // must receive different message than all other subscribers.
       $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
 
-      flag('flag', 'subscribe_node', $node->nid, $assignee);
-
-      $message = message_create('data_request_assignee');
-      $wrapper = entity_metadata_wrapper('message', $message);
+      // Get data_request_assignee message bundle and set required fields.
+      $message_assignee = message_create('data_request_assignee');
+      $wrapper = entity_metadata_wrapper('message', $message_assignee);
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
 
-      $options = array(
-        'rendered fields' => array(
-          'message_notify_email_subject' => 'field_message_rendered_subject',
-          'message_notify_email_body' => 'field_message_rendered_body',
-        ),
-      );
+      // Send one off message to current assignee without using message subscribe.
+      message_notify_send_message($message_assignee, $options);
 
-      message_subscribe_send_message('node', $node, $message, array('email' => $options));
+      // Temporarily unsubscribe current assignee to avoid sending two messages
+      // to this person (one about being current assignee, second about request update event)
+      // if this person was subscribed before (e.g. was already an assignee before).
+      flag('unflag', 'subscribe_node', $node->nid, $assignee);
+
+      // Send data_request_update message to all subscribers.
+      message_subscribe_send_message('node', $node, $message_update, array('email' => $options));
+
+      // Subscribe an assignee to following notifications about data request updates.
+      flag('flag', 'subscribe_node', $node->nid, $assignee);
+    }
+    else {
+      // Something else than assignee has been changed, simply notify all subscribers.
+      message_subscribe_send_message('node', $node, $message_update, array('email' => $options));
     }
   }
 }
+
+/**
+ * Helper function to get summary of changes used in notification about data request update.
+ */
+function _dgu_data_request_get_summary_of_changes($current_revision, $previous_revision) {
+
+  $changes = array();
+  $current_request = node_view($current_revision);
+  $previous_request = node_view($previous_revision);
+
+  foreach ($current_request as $key => $value) {
+    // Iterate through all fields.
+    if(strpos($key, 'field_') === 0) {
+      if (isset($current_request[$key]['#items'])) {
+        if (count($current_request[$key]['#items']) != count($previous_request[$key]['#items'])) {
+          // If multi value field had different quantity of items it is modified.
+          _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
+        }
+        else {
+          // Otherwise compare the values.
+          foreach ($current_request[$key]['#items'] as $index => &$item) {
+
+            // Fix weird discrepancy on text_log fields, for some reason current revision has
+            // only 'value' element, previous revision has also 'safe_value' and 'format'.
+            if ($current_request[$key]['#field_type'] == 'text_long') {
+              $item =  array('value' => $item['value']);
+              $previous_request[$key]['#items'][$index] =  array('value' => $previous_request[$key]['#items'][$index]['value']);
+            }
+
+            if ($item != $previous_request[$key]['#items'][$index]) {
+              _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  // Render summary.
+  $output = '';
+  foreach ($changes as $field_name => $diff) {
+    $output .= 'Field "' . $field_name . '" changed' . "\n";
+    $output .= 'from: ' . $diff['previous'] . "\n";
+    $output .= 'to:   ' . $diff['current'] . "\n";
+    $output .= "\n";
+  }
+  return $output;
+}
+
+/**
+ * Helper function to render changes in a single field.
+ */
+function _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, &$changes) {
+  $new_value = field_view_field('node', $current_revision, $key);
+  $old_value = field_view_field('node', $previous_revision, $key);
+
+  $new_value['#label_display'] = 'hidden';
+  $old_value['#label_display'] = 'hidden';
+
+  $changes[$new_value['#title']] = array (
+    'current' => substr(_dgu_data_set_request_remove_multiple_commas(strip_tags(str_replace('</', ', </', render($new_value)))), 0, -2),
+    'previous' => substr(_dgu_data_set_request_remove_multiple_commas(strip_tags(str_replace('</', ', </', render($old_value)))), 0, -2),
+  );
+}
+
+
+/**
+ * Helper recursive function to get rid of multiple commas added before
+ * each closing HTML tag in _dgu_data_set_request_render_changes() function.
+ */
+function _dgu_data_set_request_remove_multiple_commas($string) {
+  $string = str_replace(', , ', ', ', $string);
+  if (strpos($string, ', , ') !== FALSE) {
+    $string = _dgu_data_set_request_remove_multiple_commas($string);
+  }
+  return $string;
+}
+
+
+/**
+* Implements hook_token_info().
+*/
+function dgu_data_set_request_token_info() {
+  $info['tokens']['message']['data_request-summary_of_changes'] = array(
+    'name' => t('Data request - summary of changes'),
+    'description' => t('Returns summary of changes in modified data request'),
+  );
+  return $info;
+}
+/**
+* Implements hook_tokens().
+*/
+function dgu_data_set_request_tokens($type, $tokens, array $data = array(), array $options = array()) {
+ $replacements = array();
+   if ($type == 'message') {
+     foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'data_request-summary_of_changes':
+          $replacements[$original] = drupal_static('data_request_summary_of_changes');
+          break;
+      }
+     }
+  }
+  return $replacements;
+}
+
+
+
 /**
  * Implements hook_preprocess_replies().
  */
