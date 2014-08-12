@@ -12,8 +12,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_assignee'
   $field_bases['field_assignee'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_assignee',
@@ -44,8 +44,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_barriers_attempted'
   $field_bases['field_barriers_attempted'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_barriers_attempted',
@@ -70,8 +70,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_barriers_detail'
   $field_bases['field_barriers_detail'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_barriers_detail',
@@ -97,8 +97,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_barriers_reason'
   $field_bases['field_barriers_reason'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_barriers_reason',
@@ -130,8 +130,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_benefits_overview'
   $field_bases['field_benefits_overview'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_benefits_overview',
@@ -157,8 +157,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_holder'
   $field_bases['field_data_holder'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_holder',
@@ -189,8 +189,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_request_assignee'
   $field_bases['field_data_request_assignee'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_request_assignee',
@@ -233,8 +233,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_request_reference'
   $field_bases['field_data_request_reference'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_request_reference',
@@ -279,8 +279,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_set_description'
   $field_bases['field_data_set_description'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_set_description',
@@ -309,8 +309,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_set_link'
   $field_bases['field_data_set_link'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_set_link',
@@ -330,7 +330,7 @@ function dgu_data_set_request_field_default_field_bases() {
       'display' => array(
         'url_cutoff' => 80,
       ),
-      'enable_tokens' => 1,
+      'enable_tokens' => '1',
       'title' => 'optional',
       'title_maxlength' => 128,
       'title_value' => '',
@@ -342,8 +342,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_themes'
   $field_bases['field_data_themes'] = array(
-    'active' => 1,
-    'cardinality' => -1,
+    'active' => '1',
+    'cardinality' => '-1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_themes',
@@ -376,8 +376,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_use'
   $field_bases['field_data_use'] = array(
-    'active' => 1,
-    'cardinality' => -1,
+    'active' => '1',
+    'cardinality' => '-1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_use',
@@ -408,8 +408,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_data_use_detail'
   $field_bases['field_data_use_detail'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_data_use_detail',
@@ -435,8 +435,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_estimates_detail'
   $field_bases['field_estimates_detail'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_estimates_detail',
@@ -465,8 +465,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_organisation_name'
   $field_bases['field_organisation_name'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_organisation_name',
@@ -494,8 +494,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_organisation_type'
   $field_bases['field_organisation_type'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_organisation_type',
@@ -527,8 +527,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_provide_estimates'
   $field_bases['field_provide_estimates'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_provide_estimates',
@@ -556,8 +556,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_publication_preference'
   $field_bases['field_publication_preference'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_publication_preference',
@@ -585,8 +585,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_publisher_ref'
   $field_bases['field_publisher_ref'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_publisher_ref',
@@ -615,8 +615,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_review_comments'
   $field_bases['field_review_comments'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_review_comments',
@@ -628,11 +628,11 @@ function dgu_data_set_request_field_default_field_bases() {
     'locked' => 0,
     'module' => 'reply',
     'settings' => array(
-      'access' => -1,
-      'allow_reply' => -1,
+      'access' => '-1',
+      'allow_reply' => '-1',
       'bundle' => 'review_comment',
-      'display' => -1,
-      'form' => -1,
+      'display' => '-1',
+      'form' => '-1',
     ),
     'translatable' => 0,
     'type' => 'reply',
@@ -640,8 +640,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_review_notes'
   $field_bases['field_review_notes'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_review_notes',
@@ -670,8 +670,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_review_outcome'
   $field_bases['field_review_outcome'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_review_outcome',
@@ -701,8 +701,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_review_status'
   $field_bases['field_review_status'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_review_status',
@@ -735,8 +735,8 @@ function dgu_data_set_request_field_default_field_bases() {
 
   // Exported field_base: 'field_submitter_type'
   $field_bases['field_submitter_type'] = array(
-    'active' => 1,
-    'cardinality' => 1,
+    'active' => '1',
+    'cardinality' => '1',
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_submitter_type',
