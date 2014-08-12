@@ -320,7 +320,7 @@ function dgu_data_set_request_node_update($node) {
       $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
 
       // Get data_request_assignee message bundle and set required fields.
-      $message_assignee = message_create('data_request_assignee');
+      $message_assignee = message_create('data_request_assignee', array('uid' => $node->field_assignee[LANGUAGE_NONE][0]['uid']));
       $wrapper = entity_metadata_wrapper('message', $message_assignee);
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
