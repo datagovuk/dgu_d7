@@ -721,7 +721,7 @@ function dgu_data_set_request_field_default_field_bases() {
       'allowed_values' => array(
         0 => 'New',
         1 => 'Escalated to data holder',
-        2 => 'Querried by data holder',
+        2 => 'Queried by data holder',
         3 => 'ODUG developing business case',
         4 => 'Scheduled for release',
         5 => 'Postponed',
