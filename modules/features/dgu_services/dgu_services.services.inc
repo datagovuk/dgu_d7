@@ -35,6 +35,26 @@ function dgu_services_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'node' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'relationships' => array(
+        'files' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'targeted_actions' => array(
+        'attach_file' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'views' => array(
       'operations' => array(
         'retrieve' => array(
