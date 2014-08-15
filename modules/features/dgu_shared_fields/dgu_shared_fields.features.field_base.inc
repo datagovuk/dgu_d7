@@ -251,7 +251,7 @@ function dgu_shared_fields_field_default_field_bases() {
   // Exported field_base: 'field_uses_dataset'
   $field_bases['field_uses_dataset'] = array(
     'active' => '1',
-    'cardinality' => '2',
+    'cardinality' => '-1',
     'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_uses_dataset',

@@ -37,10 +37,10 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['relationships']['field_uses_dataset_target_id']['table'] = 'field_data_field_uses_dataset';
   $handler->display->display_options['relationships']['field_uses_dataset_target_id']['field'] = 'field_uses_dataset_target_id';
   $handler->display->display_options['relationships']['field_uses_dataset_target_id']['required'] = TRUE;
-  /* Relationship: Content: Screen shots (field_screen_shots:fid) */
-  $handler->display->display_options['relationships']['field_screen_shots_fid']['id'] = 'field_screen_shots_fid';
-  $handler->display->display_options['relationships']['field_screen_shots_fid']['table'] = 'field_data_field_screen_shots';
-  $handler->display->display_options['relationships']['field_screen_shots_fid']['field'] = 'field_screen_shots_fid';
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -61,12 +61,6 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['fields']['ckan_id']['table'] = 'ckan_dataset';
   $handler->display->display_options['fields']['ckan_id']['field'] = 'ckan_id';
   $handler->display->display_options['fields']['ckan_id']['relationship'] = 'field_uses_dataset_target_id';
-  /* Field: File: Path */
-  $handler->display->display_options['fields']['uri']['id'] = 'uri';
-  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
-  $handler->display->display_options['fields']['uri']['field'] = 'uri';
-  $handler->display->display_options['fields']['uri']['relationship'] = 'field_screen_shots_fid';
-  $handler->display->display_options['fields']['uri']['label'] = 'Thumbnail';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
