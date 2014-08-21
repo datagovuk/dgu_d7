@@ -294,12 +294,7 @@ function dgu_data_set_request_node_update($node) {
     $previous_assignee = isset($previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
 
     $fields_for_short_summary = array('field_review_status' => 'value', 'field_review_outcome' =>'value', 'field_review_notes' => 'value');
-
-
-    // Get data_request_update message bundle and set required fields.
-    $message_update = message_create('data_request_update');
-    $wrapper = entity_metadata_wrapper('message', $message_update);
-    $wrapper->field_data_request_reference->set($node);
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
 
     // This is taken from message stack examples.
     // It's related to message_notify how it stores rendered subject and body via view modes.
@@ -343,13 +338,28 @@ function dgu_data_set_request_node_update($node) {
       // Send data_request_update message to all subscribers.
       // First test if particular fields has changed and notify all non admin users.
       if(_dgu_data_set_request_fields_changed($fields_for_short_summary, $node, $previous_data_request_revision)) {
+
+        // Get data_request_update message bundle and set required fields.
+        $message_update = message_create('data_request_update');
+        $wrapper = entity_metadata_wrapper('message', $message_update);
+        $wrapper->field_data_request_reference->set($node);
+
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
-        //message_subscribe_send_message('node', $node, $message_update);
+        $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
+        _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
 
       }
       // Then notify admin users with full summary of changes.
+      // Get data_request_update message bundle and set required fields.
+      $message_update = message_create('data_request_update');
+      $wrapper = entity_metadata_wrapper('message', $message_update);
+      $wrapper->field_data_request_reference->set($node);
+
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
-      message_subscribe_send_message('node', $node, $message_update);
+      $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
+      _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
+      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
 
       // Subscribe an assignee to following notifications about data request updates.
       flag('flag', 'subscribe_node', $node->nid, $assignee);
@@ -358,15 +368,68 @@ function dgu_data_set_request_node_update($node) {
       // Something else than assignee has been changed, simply notify all subscribers.
       // First test if particular fields has changed and notify all non admin users.
       if(_dgu_data_set_request_fields_changed($fields_for_short_summary, $node, $previous_data_request_revision)) {
+        // Get data_request_update message bundle and set required fields.
+        $message_update = message_create('data_request_update');
+        $wrapper = entity_metadata_wrapper('message', $message_update);
+        $wrapper->field_data_request_reference->set($node);
+
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
-        //message_subscribe_send_message('node', $node, $message_update);
+        $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
+        _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
       }
 
       // Then notify admin users with full summary of changes.
+
+      // Get data_request_update message bundle and set required fields.
+      $message_update = message_create('data_request_update');
+      $wrapper = entity_metadata_wrapper('message', $message_update);
+      $wrapper->field_data_request_reference->set($node);
+
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
-      message_subscribe_send_message('node', $node, $message_update);
+      $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
+      _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
+      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
     }
   }
+}
+
+
+/**
+ * Helper function to test if particular fields has changed between revisions.
+ */
+function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
+
+  // Get all flags on given entity type.
+  $flags = message_subscribe_flag_get_flags('node');
+
+  $fids = array();
+  foreach ($flags as $flag) {
+    $fids[$flag->fid] = $flag->name;
+  }
+  // Query all the entity IDs inside the given flags. We don't use
+  // flag_get_content_flags() as we want to get all the flaggings of an
+  // entity-type in a single query.
+  $query = db_select('flagging', 'f');
+  $query->join('users', 'u', 'u.uid = f.uid');
+  $query->leftJoin('users_roles', 'ur', 'ur.uid = u.uid');
+  $query->fields('f', array('uid'))
+    ->distinct()
+    ->condition('f.entity_type', 'node')
+    ->condition('f.entity_id', $nid)
+    ->condition('fid', array_keys($fids), 'IN');
+
+  if ($in_rids == TRUE) {
+    $query->condition('ur.rid', $rids, 'IN');
+  }
+  else {
+    $query->condition(db_or()->where('ur.rid NOT IN (' . implode (', ', $rids) . ')')->isNull('ur.rid'));
+  }
+
+  $result = $query->execute()->fetchCol();
+  $a=$query->__toString();
+
+  return array_fill_keys($result, array('notifiers' => array()));
 }
 
 /**
@@ -396,6 +459,11 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
   foreach ((array)$current_request['#node'] as $key => $value) {
     // Iterate through all fields.
     if(strpos($key, 'field_') === 0) {
+      if(!empty($fields)) {
+        if(!in_array($key, array_keys($fields))) {
+          continue;
+        }
+      }
       if (isset($current_request[$key]['#items']) && count($current_request[$key]['#items']) != count($previous_request[$key]['#items'])) {
         // If multi value field had different quantity of items it is modified.
         _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
