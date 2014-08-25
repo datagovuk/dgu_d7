@@ -118,19 +118,19 @@ function dgu_moderation_node_submit($form, &$form_state) {
 
     if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
       $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
-      $message = &drupal_static(dgu_moderation_message, NULL);
+      $message = &drupal_static('dgu_moderation_message');
       $message = 'Your ' . $content_type . ' has been ' . $action . ' and submitted for moderation. You can update it in <a href="/admin/workbench">Manage my content</a> section.<br />Please ensure your <a href="/user">profile</a> is up to date as we may use these details to contact you about your ' . $content_type . '.';
     }
     elseif ($form_state['clicked_button']['#value'] == "Save draft") {
       $form_state['values']['workbench_moderation_state_new'] = 'draft';
-      $message = &drupal_static(dgu_moderation_message, NULL);
+      $message = &drupal_static('dgu_moderation_message');
       $message = 'Your draft ' . $content_type . ' has been ' . $action . '. You can update it in <a href="/admin/workbench/content/drafts">My Drafts</a> section.<br />Please ensure your <a href="/user">profile</a> is up to date as we may use these details to contact you about your ' . $content_type . '.';
     }
   }
 }
 
 function dgu_moderation_exit() {
-  if ($message = &drupal_static('dgu_moderation_message', NULL)) {
+  if ($message = drupal_static('dgu_moderation_message')) {
     // Remove all status messages - most likely nothing more than '... has been created/updated'
     drupal_get_messages('status');
     // Add a message created in dgu_data_set_request_node_submit()
