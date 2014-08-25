@@ -13,10 +13,12 @@
             </span>
             <input type="hidden" name="form_build_id" value="<?php print $form['form_build_id']['#value'] ?>">
             <input type="hidden" name="form_id" value="<?php print $form['form_id']['#value'] ?>">
-            <input type="hidden" name="form_token" value="<?php print $form['form_token']['#default_value'] ?>">
+            <?php if(isset($form['form_token']['#value'])): ?>
+              <input type="hidden" name="form_token" value="<?php print $form['form_token']['#value'] ?>">
+            <?php endif; ?>
             <?php if(!empty($form['f']['#value']))foreach($form['f']['#value'] as $i => $value): ?>
             <input type="hidden" name="f[<?php print $i; ?>]" value="<?php print $value ?>">
-            <?php endforeach ?>
+            <?php endforeach; ?>
             <input type="hidden" name="searchtype" value="<?php print $form['searchtype']['#value'] ?>">
             <input type="hidden" name="solrsort" value="<?php print $form['solrsort']['#value'] ?>">
             <input type="hidden" name="submit" value="search">
