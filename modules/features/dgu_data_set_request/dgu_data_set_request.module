@@ -70,7 +70,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   unset($form['actions']['preview']);
   $form['#attributes']['class'][] = "boxed";
 
-  if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
+  if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
   }
   else {
@@ -320,12 +320,12 @@ function dgu_data_set_request_node_update($node) {
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
 
-      $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day'));
+      $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day' => 'digest_day'));
       $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
           $node->field_assignee[LANGUAGE_NONE][0]['uid'] => array(
-            'notifiers' => array($notifier),
+            'notifiers' => $notifier,
           ),
         ),
       );
@@ -400,7 +400,7 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
 
   // Get all flags on given entity type.
   $flags = message_subscribe_flag_get_flags('node');
-  $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day'));
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day' => 'digest_day'));
 
   $fids = array();
   foreach ($flags as $flag) {
@@ -431,7 +431,7 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
 
   $uids = array();
   foreach ($result as $row) {
-    $uids[$row->uid]['notifiers'] = array(isset($row->field_digest_notifier_value) ? $row->field_digest_notifier_value : $default_notifier);
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value) : $default_notifier;
   }
 
   return $uids;
@@ -469,7 +469,10 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
           continue;
         }
       }
-      if (isset($current_request[$key]['#items']) && count($current_request[$key]['#items']) != count($previous_request[$key]['#items'])) {
+
+      if ((isset($current_request[$key]['#items']) && !isset($previous_request[$key]['#items']))
+       || (!isset($current_request[$key]['#items']) && isset($previous_request[$key]['#items']))
+       || (isset($current_request[$key]['#items']) && isset($previous_request[$key]['#items']) && count($current_request[$key]['#items']) != count($previous_request[$key]['#items']))) {
         // If multi value field had different quantity of items it is modified.
         _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
       }
@@ -518,7 +521,9 @@ function _dgu_data_set_request_render_changes($current_revision, $previous_revis
   $new_value['#label_display'] = 'hidden';
   $old_value['#label_display'] = 'hidden';
 
-  $changes[$new_value['#title']] = array (
+  $title = $new_value['#title'] ? $new_value['#title'] : $old_value['#title'];
+
+  $changes[$title] = array (
     'current' => substr(_dgu_data_set_request_remove_multiple_commas(strip_tags(str_replace('</', ', </', render($new_value)))), 0, -2),
     'previous' => substr(_dgu_data_set_request_remove_multiple_commas(strip_tags(str_replace('</', ', </', render($old_value)))), 0, -2),
   );
