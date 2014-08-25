@@ -104,7 +104,6 @@ Feature: Request new data
     When I press "Save"
     And I wait until the page loads
     Then I should see the link "test_data_request_admin"
-    And I should see the link "Academics"
     When I visit "/admin/workbench"
     And I follow "Active Data requests"
     And I wait until the page loads
