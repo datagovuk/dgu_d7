@@ -63,11 +63,14 @@ function dgu_user_strongarm() {
         'wysiwyg' => array(
           'weight' => '12',
         ),
+        'mollom' => array(
+          'weight' => '99',
+        ),
       ),
       'display' => array(
         'summary' => array(
           'default' => array(
-            'weight' => '1',
+            'weight' => '0',
             'visible' => TRUE,
           ),
         ),

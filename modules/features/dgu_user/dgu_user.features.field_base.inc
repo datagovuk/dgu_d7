@@ -51,7 +51,7 @@ function dgu_user_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_bio',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(
       'format' => array(
@@ -71,6 +71,35 @@ function dgu_user_field_default_field_bases() {
     'settings' => array(),
     'translatable' => '0',
     'type' => 'text_long',
+  );
+
+  // Exported field_base: 'field_digest_notifier'
+  $field_bases['field_digest_notifier'] = array(
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_digest_notifier',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'digest_day' => 'Daily',
+        'digest_week' => 'Weekly',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => '0',
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_facebook_url'
