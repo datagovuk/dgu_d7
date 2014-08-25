@@ -14,7 +14,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_assignee'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_assignee',
     'field_permissions' => array(
@@ -33,12 +33,12 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'uid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'dgu_assignee',
     'settings' => array(
       'example_textfield' => 'some text',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'assignee',
   );
 
@@ -46,7 +46,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_barriers_attempted'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_barriers_attempted',
     'foreign keys' => array(),
@@ -55,7 +55,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -64,7 +64,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_boolean',
   );
 
@@ -72,7 +72,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_barriers_detail'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_barriers_detail',
     'foreign keys' => array(
@@ -88,10 +88,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -99,7 +99,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_barriers_reason'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_barriers_reason',
     'foreign keys' => array(),
@@ -108,7 +108,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -124,7 +124,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -132,7 +132,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_benefits_overview'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_benefits_overview',
     'foreign keys' => array(
@@ -148,10 +148,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -159,7 +159,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_holder'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_holder',
     'field_permissions' => array(
@@ -178,12 +178,12 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
@@ -191,7 +191,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_request_assignee'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_request_assignee',
     'field_permissions' => array(
@@ -210,7 +210,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'target_id',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'entityreference',
     'settings' => array(
       'handler' => 'base',
@@ -227,7 +227,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'target_type' => 'user',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'entityreference',
   );
 
@@ -235,7 +235,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_request_reference'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_request_reference',
     'field_permissions' => array(
@@ -254,7 +254,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'target_id',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'entityreference',
     'settings' => array(
       'handler' => 'base',
@@ -273,7 +273,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'target_type' => 'node',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'entityreference',
   );
 
@@ -281,7 +281,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_set_description'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_set_description',
     'field_permissions' => array(
@@ -300,10 +300,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -311,7 +311,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_set_link'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_set_link',
     'field_permissions' => array(
@@ -319,7 +319,7 @@ function dgu_data_set_request_field_default_field_bases() {
     ),
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'link',
     'settings' => array(
       'attributes' => array(
@@ -336,7 +336,7 @@ function dgu_data_set_request_field_default_field_bases() {
       'title_value' => '',
       'url' => 0,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'link_field',
   );
 
@@ -344,7 +344,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_themes'] = array(
     'active' => '1',
     'cardinality' => '-1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_themes',
     'foreign keys' => array(
@@ -360,7 +360,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'tid',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'taxonomy',
     'settings' => array(
       'allowed_values' => array(
@@ -370,7 +370,7 @@ function dgu_data_set_request_field_default_field_bases() {
         ),
       ),
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'taxonomy_term_reference',
   );
 
@@ -378,7 +378,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_use'] = array(
     'active' => '1',
     'cardinality' => '-1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_use',
     'field_permissions' => array(
@@ -390,7 +390,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -402,7 +402,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -410,7 +410,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_data_use_detail'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_data_use_detail',
     'foreign keys' => array(
@@ -426,10 +426,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -437,7 +437,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_estimates_detail'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_estimates_detail',
     'field_permissions' => array(
@@ -456,10 +456,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -467,7 +467,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_organisation_name'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_organisation_name',
     'foreign keys' => array(
@@ -483,12 +483,12 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(
       'max_length' => 255,
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text',
   );
 
@@ -496,7 +496,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_organisation_type'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_organisation_type',
     'field_permissions' => array(
@@ -508,7 +508,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -521,7 +521,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -529,7 +529,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_provide_estimates'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_provide_estimates',
     'field_permissions' => array(
@@ -541,7 +541,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -550,7 +550,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_boolean',
   );
 
@@ -558,7 +558,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_publication_preference'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_publication_preference',
     'field_permissions' => array(
@@ -570,7 +570,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -579,7 +579,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -587,7 +587,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_publisher_ref'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_publisher_ref',
     'field_permissions' => array(
@@ -606,10 +606,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'id',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'ckan_publisher_tree',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'ckan_publisher_reference',
   );
 
@@ -617,7 +617,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_review_comments'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_review_comments',
     'field_permissions' => array(
@@ -625,7 +625,7 @@ function dgu_data_set_request_field_default_field_bases() {
     ),
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'reply',
     'settings' => array(
       'access' => '-1',
@@ -634,7 +634,7 @@ function dgu_data_set_request_field_default_field_bases() {
       'display' => '-1',
       'form' => '-1',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'reply',
   );
 
@@ -642,7 +642,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_review_notes'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_review_notes',
     'field_permissions' => array(
@@ -661,10 +661,10 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'text',
     'settings' => array(),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'text_long',
   );
 
@@ -672,7 +672,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_review_outcome'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_review_outcome',
     'field_permissions' => array(
@@ -684,7 +684,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -695,7 +695,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -703,11 +703,11 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_review_status'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_review_status',
     'field_permissions' => array(
-      'type' => 2,
+      'type' => '2',
     ),
     'foreign keys' => array(),
     'indexes' => array(
@@ -715,7 +715,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -729,7 +729,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 
@@ -737,7 +737,7 @@ function dgu_data_set_request_field_default_field_bases() {
   $field_bases['field_submitter_type'] = array(
     'active' => '1',
     'cardinality' => '1',
-    'deleted' => 0,
+    'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_submitter_type',
     'field_permissions' => array(
@@ -749,7 +749,7 @@ function dgu_data_set_request_field_default_field_bases() {
         0 => 'value',
       ),
     ),
-    'locked' => 0,
+    'locked' => '0',
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
@@ -758,7 +758,7 @@ function dgu_data_set_request_field_default_field_bases() {
       ),
       'allowed_values_function' => '',
     ),
-    'translatable' => 0,
+    'translatable' => '0',
     'type' => 'list_integer',
   );
 

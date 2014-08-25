@@ -69,6 +69,10 @@ function dgu_data_set_request_strongarm() {
             'weight' => '0',
             'visible' => TRUE,
           ),
+          'message_notify_daily_digest' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
@@ -83,6 +87,10 @@ function dgu_data_set_request_strongarm() {
             'weight' => '1',
             'visible' => FALSE,
           ),
+          'message_notify_daily_digest' => array(
+            'weight' => '1',
+            'visible' => FALSE,
+          ),
         ),
         'message__message_text__2' => array(
           'message_notify_email_subject' => array(
@@ -91,6 +99,10 @@ function dgu_data_set_request_strongarm() {
           ),
           'message_notify_email_body' => array(
             'weight' => '0',
+            'visible' => TRUE,
+          ),
+          'message_notify_daily_digest' => array(
+            'weight' => '2',
             'visible' => TRUE,
           ),
         ),
@@ -117,6 +129,10 @@ function dgu_data_set_request_strongarm() {
             'visible' => FALSE,
             'weight' => 0,
           ),
+          'message_notify_daily_digest' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
@@ -126,6 +142,10 @@ function dgu_data_set_request_strongarm() {
           'message_notify_email_body' => array(
             'visible' => TRUE,
             'weight' => 0,
+          ),
+          'message_notify_daily_digest' => array(
+            'weight' => '1',
+            'visible' => TRUE,
           ),
         ),
       ),
