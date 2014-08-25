@@ -320,10 +320,12 @@ function dgu_data_set_request_node_update($node) {
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
 
+      $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day'));
+      $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
           $node->field_assignee[LANGUAGE_NONE][0]['uid'] => array(
-            'notifiers' => array('digest_day'), // TODO add UI to choose notifier
+            'notifiers' => array($notifier),
           ),
         ),
       );
@@ -346,7 +348,6 @@ function dgu_data_set_request_node_update($node) {
 
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
-        _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
         message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
 
       }
@@ -358,7 +359,6 @@ function dgu_data_set_request_node_update($node) {
 
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
       $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
       message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
 
       // Subscribe an assignee to following notifications about data request updates.
@@ -375,7 +375,6 @@ function dgu_data_set_request_node_update($node) {
 
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
-        _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
         message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
       }
 
@@ -388,7 +387,6 @@ function dgu_data_set_request_node_update($node) {
 
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
       $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      _message_subscribe_add_default_notifiers($uids); // TODO - add UI to pick default notifier per user
       message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
     }
   }
@@ -402,6 +400,7 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
 
   // Get all flags on given entity type.
   $flags = message_subscribe_flag_get_flags('node');
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day'));
 
   $fids = array();
   foreach ($flags as $flag) {
@@ -413,7 +412,9 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
   $query = db_select('flagging', 'f');
   $query->join('users', 'u', 'u.uid = f.uid');
   $query->leftJoin('users_roles', 'ur', 'ur.uid = u.uid');
-  $query->fields('f', array('uid'))
+  $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = u.uid');
+  $query->fields('f', array('uid'));
+  $query->fields('fdn', array('field_digest_notifier_value'))
     ->distinct()
     ->condition('f.entity_type', 'node')
     ->condition('f.entity_id', $nid)
@@ -426,10 +427,14 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
     $query->condition(db_or()->where('ur.rid NOT IN (' . implode (', ', $rids) . ')')->isNull('ur.rid'));
   }
 
-  $result = $query->execute()->fetchCol();
-  $a=$query->__toString();
+  $result = $query->execute()->fetchAll();
 
-  return array_fill_keys($result, array('notifiers' => array()));
+  $uids = array();
+  foreach ($result as $row) {
+    $uids[$row->uid]['notifiers'] = array(isset($row->field_digest_notifier_value) ? $row->field_digest_notifier_value : $default_notifier);
+  }
+
+  return $uids;
 }
 
 /**
@@ -537,7 +542,7 @@ function _dgu_data_set_request_remove_multiple_commas($string) {
 */
 function dgu_data_set_request_token_info() {
   $info['tokens']['message']['data_request-summary_of_changes'] = array(
-    'name' => t('Data request - summary of changes for admins'),
+    'name' => t('Data request - summary of changes'),
     'description' => t('Returns summary of changes in modified data request'),
   );
   return $info;
