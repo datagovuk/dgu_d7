@@ -321,7 +321,7 @@ function dgu_data_set_request_node_update($node) {
       $wrapper->field_data_request_assignee->set($assignee);
 
       $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day' => 'digest_day'));
-      $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] : $default_notifier;
+      $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
           $node->field_assignee[LANGUAGE_NONE][0]['uid'] => array(
@@ -431,7 +431,7 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
 
   $uids = array();
   foreach ($result as $row) {
-    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value) : $default_notifier;
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
   }
 
   return $uids;
