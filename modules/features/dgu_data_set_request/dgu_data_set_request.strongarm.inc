@@ -122,29 +122,51 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'visible' => TRUE,
-            'weight' => 0,
+            'weight' => '0',
+            'visible' => FALSE,
           ),
           'message_notify_email_body' => array(
+            'weight' => '0',
             'visible' => FALSE,
-            'weight' => 0,
           ),
           'message_notify_daily_digest' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
+          'message_notify_weekly_digest' => array(
             'weight' => '0',
             'visible' => FALSE,
           ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
-            'visible' => FALSE,
-            'weight' => 0,
+            'weight' => '0',
+            'visible' => TRUE,
           ),
           'message_notify_email_body' => array(
-            'visible' => TRUE,
-            'weight' => 0,
+            'weight' => '0',
+            'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
             'weight' => '1',
+            'visible' => TRUE,
+          ),
+          'message_notify_weekly_digest' => array(
+            'weight' => '1',
+            'visible' => TRUE,
+          ),
+        ),
+        'message__message_text__2' => array(
+          'message_notify_email_subject' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+          'message_notify_email_body' => array(
+            'weight' => '2',
+            'visible' => TRUE,
+          ),
+          'message_notify_weekly_digest' => array(
+            'weight' => '2',
             'visible' => TRUE,
           ),
         ),
