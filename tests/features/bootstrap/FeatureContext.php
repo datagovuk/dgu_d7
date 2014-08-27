@@ -615,7 +615,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-            if ($msg->to == $mail_address && $msg->subject == $title) {
+          $a = strpos($msg->subject, $title);
+            if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
@@ -653,7 +654,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-          if ($msg->to == $mail_address && $msg->subject == $title) {
+          if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
