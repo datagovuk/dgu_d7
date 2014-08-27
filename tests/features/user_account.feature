@@ -74,7 +74,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I should see "tab to add more detail to your profile."
     And I should see "validation e-mail."
     # Email verification.
-    Given the "test_user" user received an email "Account details for test_user at data.gov.uk"
+    Given the "test_user" user received an email 'Account details for test_user at data.gov.uk'
     When user "test_user" clicks link containing "user/validate" in mail "Account details for test_user at data.gov.uk"
     Then I should be on "/user"
     And I should see "You have successfully validated your e-mail address."
@@ -86,7 +86,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I fill in "Username or e-mail address" with "test_user"
     And I press "E-mail new password"
     And I wait 3 seconds
-    Then the "test_user" user received an email "Replacement login information for test_user at data.gov.uk"
+    Then the "test_user" user received an email 'Replacement login information for test_user at data.gov.uk'
     And I should see "Further instructions have been sent to your e-mail address."
     When user "test_user" clicks link containing "user/reset" in mail "Replacement login information for test_user at data.gov.uk"
     And I wait until the page loads
@@ -103,7 +103,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I fill in "Username or e-mail address" with "test_user" address
     And I press "E-mail new password"
     And I wait 3 seconds
-    Then the "test_user" user received an email "Replacement login information for test_user at data.gov.uk"
+    Then the "test_user" user received an email 'Replacement login information for test_user at data.gov.uk'
     And I should see "Further instructions have been sent to your e-mail address."
     When user "test_user" clicks link containing "user/reset" in mail "Replacement login information for test_user at data.gov.uk"
     And I wait until the page loads
