@@ -160,7 +160,6 @@ Feature: Request new data
     # Set digest last run to 2 days ago to trigger daily notifications
     And I set digest last run to 2 days ago
     And I run cron
-    And I wait 20 seconds
     Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
     # TODO - test summary of changes
     #Summary of changes:
@@ -172,7 +171,6 @@ Feature: Request new data
     # Set digest last run to 10 days ago to trigger daily and weekly notifications
     When I set digest last run to 10 days ago
     And I run cron
-    And I wait 20 seconds
     Then the "test_data_publisher" user received an email 'data.gov.uk Message Digest'
     And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
@@ -201,10 +199,9 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    # Set assignee to  test_data_request_admin
+    # Set assignee to test_data_request_admin
     And I select "test_data_request_admin" from "Assignee"
     And I press "Save"
-    And I wait 10 seconds
     Then the "test_data_request_admin" user received an email 'Data request "My Dataset request title" has been assigned to you'
     And I should see "Add note"
     Given I visit "/admin/workbench/content/active"
@@ -213,9 +210,9 @@ Feature: Request new data
     When I follow "My Edits"
     And I wait until the page loads
     Then I should see "My Dataset request title"
+    # Set digest last run to 10 days ago to trigger daily and weekly notifications
     And I set digest last run to 10 days ago
     And I run cron
-    And I wait 10 seconds
     Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
     And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_admin" user have not received an email 'data.gov.uk Message Digest'

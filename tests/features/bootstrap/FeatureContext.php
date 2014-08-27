@@ -610,24 +610,23 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $all = imap_check($mbox);
 
     $received = false;
-    // Trying 30 times with one second pause
-    for ($attempts = 0; $attempts++ < 30; ) {
+    // Trying 150 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 150; ) {
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-          $a = strpos($msg->subject, $title);
-            if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
-            $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
-            // Consider if we start sending HTML emails.
-            //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
-            $this->mailMessages[$user][] = $msg;
-            imap_delete($mbox, $msg->msgno);
-            $received = true;
-            break 2;
-          }
+          if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
+          $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
+          // Consider if we start sending HTML emails.
+          //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
+          $this->mailMessages[$user][] = $msg;
+          imap_delete($mbox, $msg->msgno);
+          $received = true;
+          break 2;
+        }
         }
       }
-      sleep(1);
+      sleep(3);
     }
     imap_close($mbox);
     // Throw Exception if message not found.
@@ -649,8 +648,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $all = imap_check($mbox);
 
     $received = false;
-    // Trying 30 times with one second pause
-    for ($attempts = 0; $attempts++ < 30; ) {
+    // Trying 10 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 10; ) {
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
@@ -665,7 +664,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           }
         }
       }
-      sleep(1);
+      sleep(3);
     }
     imap_close($mbox);
     // Throw Exception if message not found.
@@ -722,7 +721,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       }
     }
   }
-
 
   /**
    * @Given /^"([^"]*)" option in "([^"]*)" should be disabled$/
