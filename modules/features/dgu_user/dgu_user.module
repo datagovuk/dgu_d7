@@ -266,6 +266,10 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     drupal_set_title('Register');
   }
 
+  if ($item['path'] == 'user/%/edit') {
+    drupal_set_title('Edit');
+  }
+
   if ($item['path'] == 'admin/workbench/content/data-requests' || $item['path'] == 'admin/workbench/content/active') {
     unset($active_trail[0]);
   }
