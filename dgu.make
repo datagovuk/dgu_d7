@@ -264,10 +264,12 @@ projects[message_notify][subdir] = "contrib"
 projects[message_subscribe][version] = "1.0-rc2"
 projects[message_subscribe][subdir] = "contrib"
 
-projects[message_digest][version] = "1.0"
+projects[message_digest][type] = "module"
+projects[message_digest][download][type] = "git"
+projects[message_digest][url] = "http://git.drupal.org/project/message_digest.git"
+projects[message_digest][download][tag] = "7.x-1.0"
 projects[message_digest][subdir] = "contrib"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest-remove_mail_header-2236179.patch"
-
 
 projects[edit][type] = "module"
 projects[edit][download][type] = "git"
