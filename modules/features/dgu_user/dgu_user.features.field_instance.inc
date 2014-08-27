@@ -109,7 +109,7 @@ function dgu_user_field_default_field_instances() {
     'bundle' => 'user',
     'default_value' => array(
       0 => array(
-        'value' => 'digest_day',
+        'value' => 'email',
       ),
     ),
     'deleted' => '0',
@@ -117,16 +117,9 @@ function dgu_user_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'list',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-        ),
-        'type' => 'list_default',
-        'weight' => 10,
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => '10',
       ),
     ),
     'entity_type' => 'user',

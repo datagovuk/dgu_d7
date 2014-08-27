@@ -93,6 +93,7 @@ function dgu_user_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
+        'email' => 'Immediately as they are triggered',
         'digest_day' => 'Daily',
         'digest_week' => 'Weekly',
       ),
