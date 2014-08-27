@@ -52,6 +52,9 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   unset($form['field_digest_notifier']);
   unset($form['account']['field_digest_notifier'][LANGUAGE_NONE]['#options']['_none']);
 
+  // Temporarily hide 'Notification frequency' for users with only authenticated role.
+  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = count($form['#user']->roles) > 1;
+
   $form['profile']['#type'] = 'fieldset';
   $form['profile']['#collapsible'] = FALSE;
   $form['profile']['#title'] = t('My Profile');
@@ -122,12 +125,6 @@ function dgu_user_profile_validate($form, &$form_state) {
 function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   if ($router_item['tab_root'] == 'user/%' && dgu_user_accessing_own_account()) {
     $view_tab = current($data['tabs'][0]['output']);
-
-//    // Remove 'Contact' tab on own profile.
-//    $last_tab = end($data['tabs'][0]['output']);
-//    if(!empty($last_tab) && $last_tab['#link']['path'] == 'user/%/contact') {
-//      array_pop($data['tabs'][0]['output']);
-//    }
 
     // Remove 'Edit' tab from primary tabs and move it to secondary tabs.
     // Copy 'View' tab from primary to secondary and rename it in primary row.
