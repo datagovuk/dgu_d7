@@ -1,0 +1,64 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Notifications feature.
+ */
+
+include_once 'dgu_notifications.features.inc';
+
+/**
+ * Implements hook_theme_registry_alter().
+ *
+ * To allow the theme files for the message_digest to reside in
+ * the templates directory of the module.
+ */
+function dgu_notifications_theme_registry_alter(&$theme_registry) {
+  $module_path = drupal_get_path('module', 'dgu_notifications');
+
+  unset($theme_registry['message_digest']['function']);
+  $theme_registry['message_digest']['template'] = 'message-digest';
+  $theme_registry['message_digest']['path'] = $module_path . "/templates";
+
+  unset($theme_registry['message_digest_row']['function']);
+  $theme_registry['message_digest_row']['template'] = 'message-digest-row';
+  $theme_registry['message_digest_row']['path'] = $module_path . "/templates";
+
+}
+
+/**
+ * Implements hook_message_digest_view_mode_alter().
+ *
+ * This isn't intended to actually alter anything in the context but
+ * to cache statically uid to be used in dgu_notifications_tokens().
+ */
+function dgu_notifications_message_digest_view_mode_alter($context) {
+  $current_subscriber_uid = &drupal_static('current-subscriber-uid');
+  $current_subscriber_uid = $context['uid'];
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function dgu_notifications_token_info() {
+  $info['tokens']['message']['current-subscriber-uid'] = array(
+    'name' => t('Current subscriber'),
+    'description' => t('Returns current subscriber uid in message_digest'),
+  );
+  return $info;
+}
+/**
+ * Implements hook_tokens().
+ */
+function dgu_notifications_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  if ($type == 'message') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'current-subscriber-uid':
+          $replacements[$original] = drupal_static('current-subscriber-uid');
+          break;
+      }
+    }
+  }
+  return $replacements;
+}

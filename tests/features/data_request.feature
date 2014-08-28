@@ -81,7 +81,7 @@ Feature: Request new data
     And I should see "Your draft Dataset Request has been created. You can update it in My Drafts section."
     And I should see "Please ensure your profile is up to date as we may use these details to contact you about your Dataset Request."
     When I submit "Dataset Request" titled "My Dataset request title" for moderation
-    #Moderate newly created dataset request
+    # Moderate newly created dataset request
     And user with "moderator" role moderates "My Dataset request title" authored by "test_user"
     And the cache has been cleared
     And I visit "/data-request"
@@ -89,8 +89,32 @@ Feature: Request new data
     Then "title" field in row "1" of "latest_dataset_requests" view should match "^My Dataset request title$"
     And "name" field in row "1" of "latest_dataset_requests" view should match "^Submitted by test_user$"
     And "created" field in row "1" of "latest_dataset_requests" view should match "^\d* min \d* sec ago|\d* sec ago$"
+    #
     # Test administration workflow
-    Given that the user "test_data_request_admin" is not registered
+    #
+    # Register test_data_publisher user and assign it to "Academics" publisher
+    Given that the user "test_data_publisher" is not registered
+    And I am logged in as a user "test_data_publisher" with the "data publisher" role
+    And user "test_data_publisher" belongs to "Academics" publisher
+    # Set weekly notifications for test_data_publisher
+    And I visit "user"
+    And I wait until the page loads
+    And I follow "Edit"
+    And I wait until the page loads
+    And I select "Weekly" from "Notification frequency"
+    And I press "Save"
+    # Register test_data_request_manager user
+    And that the user "test_data_request_manager" is not registered
+    And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
+    # Set daily notifications for test_data_publisher
+    And I visit "user"
+    And I wait until the page loads
+    And I follow "Edit"
+    And I wait until the page loads
+    And I select "Daily" from "Notification frequency"
+    And I press "Save"
+    # Register test_data_request_admin user
+    And that the user "test_data_request_admin" is not registered
     And I am logged in as a user "test_data_request_admin" with the "data request administrator" role
     And I am on "/admin/workbench"
     And I follow "Data requests"
@@ -99,12 +123,12 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    And I select "test_data_request_admin" from "Assignee"
+    And I select "test_data_request_manager" from "Assignee"
     And I select the radio button "Academics"
     When I press "Save"
     And I wait until the page loads
-    Then I should see the link "test_data_request_admin"
-    And I should see the link "Academics"
+    Given I am not logged in
+    And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     When I visit "/admin/workbench"
     And I follow "Active Data requests"
     And I wait until the page loads
@@ -112,24 +136,86 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    And I select "jamesashton" from "Assignee"
+    And I select "test_data_publisher" from "Assignee"
     And I press "Save"
-    And I visit "/admin/workbench"
     And I wait until the page loads
-    And I follow "Active Data requests"
+    Then I should see "Add note"
+    Given I visit "/admin/workbench"
+    And I wait until the page loads
+    When I follow "Active Data requests"
+    And I wait until the page loads
     Then I should not see "My Dataset request title"
-    And I wait until the page loads
     When I follow "My Edits"
+    And I wait until the page loads
     Then I should see "My Dataset request title"
     Given I am not logged in
-    And I am on "/user"
-    And I log in as "jamesashton" user
+    # Log in as test_data_publisher
+    And I am logged in as a user "test_data_publisher" with the "data publisher" role
     When I visit "/admin/workbench"
     And I wait until the page loads
     And I follow "Active Data requests"
     And I wait until the page loads
     And I follow "My Dataset request title"
     Then I should see "Add note"
+    # Set digest last run to 2 days ago to trigger daily notifications
+    And I set digest last run to 2 days ago
+    And I run cron
+    Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
+    # TODO - test summary of changes
+    #Summary of changes:
+    #Field "Assignee" changed
+    #from: test_data_request_manager
+    #to:   test_data_publisher
+    And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
+    # Set digest last run to 10 days ago to trigger daily and weekly notifications
+    When I set digest last run to 10 days ago
+    And I run cron
+    Then the "test_data_publisher" user received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
+    # Test links in the email
+    When user "test_data_publisher" clicks link containing "data-request/my-dataset-request-title" in mail "data.gov.uk Message Digest"
+    And I wait until the page loads
+    Then I should be on "data-request/my-dataset-request-title"
+    When user "test_data_publisher" clicks link containing "admin/workbench/content/active" in mail "data.gov.uk Message Digest"
+    And I wait until the page loads
+    Then I should be on "admin/workbench/content/active"
+    And I should see the link "My Dataset request title"
+    And I should see "Request is public"
+    And I should see the link "edit"
+    Then I should see the following <breadcrumbs>
+      | Active Data requests |
+    When user "test_data_publisher" clicks link containing "message-subscribe" in mail "data.gov.uk Message Digest"
+    And I wait until the page loads
+    Then I should see the following <breadcrumbs>
+      | My subscriptions |
+    And I should see the link "My Dataset request title"
+    # Unsubscribe test_data_publisher from "My Dataset request title"
+    And I click "Unsubscribe"
+    And I wait 2 seconds
+    Then I should see the link "Subscribe"
+    When I follow "My Dataset request title"
+    And I wait until the page loads
+    And I follow "Edit"
+    And I wait until the page loads
+    # Set assignee to test_data_request_admin
+    And I select "test_data_request_admin" from "Assignee"
+    And I press "Save"
+    Then the "test_data_request_admin" user received an email 'Data request "My Dataset request title" has been assigned to you'
+    And I should see "Add note"
+    Given I visit "/admin/workbench/content/active"
+    And I wait until the page loads
+    Then I should not see "My Dataset request title"
+    When I follow "My Edits"
+    And I wait until the page loads
+    Then I should see "My Dataset request title"
+    # Set digest last run to 10 days ago to trigger daily and weekly notifications
+    And I set digest last run to 10 days ago
+    And I run cron
+    Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
+    And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_admin" user have not received an email 'data.gov.uk Message Digest'
 
   @anon
   Scenario: View ODUG blogs page

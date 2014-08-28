@@ -220,8 +220,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   public function iAmLoggedInAsAUserWithTheRole($user_name, $role) {
     if (isset($user_name)) {
 
-      // Check if a user with this role is already logged in.
-      if ($this->loggedIn() && $this->user && isset($this->user->role) && $this->user->role == $role) {
+      // Check if a user with this user name and role is already logged in.
+      if ($this->loggedIn() && $this->user && isset($this->user->role) && $this->user->role == $role && isset($this->user->name) && $this->user->name == $user_name) {
         return TRUE;
       }
       elseif (isset($this->users[$user_name])) {
@@ -598,7 +598,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^the "([^"]*)" user received an email "([^"]*)"$/
+   * @Given /^the "([^"]*)" user received an email '([^']*)'$/
    */
   public function theUserReceivedAnEmail($user, $title) {
 
@@ -610,12 +610,50 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $all = imap_check($mbox);
 
     $received = false;
-    // Trying 30 times with one second pause
-    for ($attempts = 0; $attempts++ < 30; ) {
+    // Trying 150 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 150; ) {
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
-            if ($msg->to == $mail_address && $msg->subject == $title) {
+          if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
+          $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
+          // Consider if we start sending HTML emails.
+          //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
+          $this->mailMessages[$user][] = $msg;
+          imap_delete($mbox, $msg->msgno);
+          $received = true;
+          break 2;
+        }
+        }
+      }
+      sleep(3);
+    }
+    imap_close($mbox);
+    // Throw Exception if message not found.
+    if (!$received) {
+      throw new \Exception('Email "' . $title . '" to "' . $mail_address . '" not received.');
+    }
+  }
+
+  /**
+   * @Given /^the "([^"]*)" user have not received an email '([^']*)'$/
+   */
+  public function theUserNotReceivedAnEmail($user, $title) {
+
+    $mail_address = $this->getMailAddress($user);
+    $title = $this->fixStepArgument($title);
+
+    $mbox = imap_open( $this->email['mailbox'], $mail_address,  $this->email['password']);
+
+    $all = imap_check($mbox);
+
+    $received = false;
+    // Trying 10 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 10; ) {
+
+      if ($all->Nmsgs) {
+        foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
+          if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
             $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
             // Consider if we start sending HTML emails.
             //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
@@ -626,12 +664,12 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           }
         }
       }
-      sleep(1);
+      sleep(3);
     }
     imap_close($mbox);
     // Throw Exception if message not found.
-    if (!$received) {
-      throw new \Exception('Email "' . $title . '" to "' . $mail_address . '" not received.');
+    if ($received) {
+      throw new \Exception('Email "' . $title . '" to "' . $mail_address . '" has been received.');
     }
   }
 
@@ -677,13 +715,12 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       $this->getDriver()->drush('user-cancel', array($user_name), array('yes' => NULL, 'delete-content' => NULL));
     }
     catch (Exception $e) {
-      if(strpos($e->getMessage(), "Could not find a user account with the name $user_name!") !== 0){
+      if(strpos($e->getMessage(), "Could not find a user account with the name") !== 0){
         // Print exception message if exception is different than expected
         print $e->getMessage();
       }
     }
   }
-
 
   /**
    * @Given /^"([^"]*)" option in "([^"]*)" should be disabled$/
@@ -1017,10 +1054,40 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^user "([^"]*)" belongs to "([^"]*)" publisher$/
+   */
+  public function userBelongsToPublisher($user_name, $publisher_name) {
+    try {
+      $drush = $this->getDriver();
+      $publisher_id = $drush->drush('ev', array('"\$query = new EntityFieldQuery(); \$result = \$query->entityCondition(\'entity_type\', \'ckan_publisher\')->propertyCondition(\'title\', \'Academics\')->execute(); \$publisher = reset(\$result[\'ckan_publisher\']); print \$publisher->id;"'));
+      $uid = $drush->drush('ev', array('"\$user = user_load_by_name(\'' . $user_name . '\'); \$user->field_publishers[\'und\'][0][\'target_id\'] = ' . $publisher_id . '; user_save(\$user);"'));
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @Given /^I set digest last run to (\d+) day(?:s|) ago$/
+   */
+  public function iSetDigestLastRunToDayAgo($days) {
+    try {
+      $timestamp = time() - 60 * 60 * 24 * $days;
+      $drush = $this->getDriver();
+      $drush->drush('vset', array('"message_digest_1 day_last_run"', $timestamp));
+      $drush->drush('vset', array('"message_digest_1 week_last_run"', $timestamp));
+    }
+    catch (Exception $e) {
+      throw new \Exception('Setting digest last run via Drush vset command failed. ' . $e->getMessage());
+    }
+  }
+
+
+
+  /**
    * @Given /^TEST$/
    */
   public function test() {
-
     try {
       $drush = $this->getDriver();
       $result = $drush->drush('sqlq', array('"SELECT nid FROM node n WHERE n.type = \'dataset_request\' ORDER BY nid DESC;"'));

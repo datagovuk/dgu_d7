@@ -1,0 +1,12 @@
+name = DGU Notifications
+description = Notifications and messages configuration
+core = 7.x
+package = DGU Features
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = message
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[message_type][] = dgu_notifications_reply_new
+features[variable][] = field_bundle_settings_message__dgu_notifications_reply_new

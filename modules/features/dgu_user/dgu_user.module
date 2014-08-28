@@ -39,43 +39,60 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   $current_pass_description = 'If you want to change your password or email address please enter your current password here. If you have forgotten your password you can <a href="/user/password" title="Request new password via e-mail.">reset it here.</a>';
 
   $form['account']['#type'] = 'fieldset';
-  $form['account']['#collapsible'] = TRUE;
-  // Don't collapse account setting if user just used password reset link
-  if(empty($_GET['pass-reset-token'])) {
-    $form['account']['#collapsed'] = TRUE;
-  }
-  $form['account']['#title'] = t('Account settings');
-  $form['account']['mail']['#weight'] = 1;
-  $form['account']['mail']['#weight'] = 5;
+  $form['account']['#collapsible'] = FALSE;
+  $form['account']['#title'] = t('My Account');
   $form['account']['current_pass']['#description'] = $current_pass_description;
-  $form['account']['pass']['#prefix'] = '<div class="disclaimer">';
-  $form['account']['pass']['#sufix'] = '</div>';
+  $form['account']['mail']['#weight'] = 5;
+
+  $form['account']['contact'] = $form['contact']['contact'];
+  $form['account']['contact']['#weight'] = 10;
+  unset($form['contact']);
+  $form['account']['field_digest_notifier'] = $form['field_digest_notifier'];
+  $form['account']['field_digest_notifier']['#weight'] = 12;
+  unset($form['field_digest_notifier']);
+  unset($form['account']['field_digest_notifier'][LANGUAGE_NONE]['#options']['_none']);
+
+  // Temporarily hide 'Notification frequency' for users with only authenticated role.
+  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = count($form['#user']->roles) > 1;
+
+  $form['profile']['#type'] = 'fieldset';
+  $form['profile']['#collapsible'] = FALSE;
+  $form['profile']['#title'] = t('My Profile');
+
+  $form['profile']['field_first_name'] = $form['field_first_name'];
+  $form['profile']['field_surname'] = $form['field_surname'];
+  $form['profile']['field_job_title'] = $form['field_job_title'];
+  $form['profile']['field_bio'] = $form['field_bio'];
+  $form['profile']['field_twitter'] = $form['field_twitter'];
+  $form['profile']['field_facebook_url'] = $form['field_facebook_url'];
+  $form['profile']['field_linkedin_url'] = $form['field_linkedin_url'];
+  unset($form['field_first_name']);
+  unset($form['field_surname']);
+  unset($form['field_job_title']);
+  unset($form['field_bio']);
+  unset($form['field_twitter']);
+  unset($form['field_facebook_url']);
+  unset($form['field_linkedin_url']);
+
+  $form['profile']['field_twitter']['#weight'] = 10;
+  $form['profile']['field_facebook_url']['#weight'] = 11;
+  $form['profile']['field_linkedin_url']['#weight'] = 12;
+
+//  $form['profile']['field_avatar'] = $form['field_avatar'];
+//  unset($form['field_avatar']);
+
+  $form['account']['#attributes']['class'][] = 'col-md-6';
+  $form['profile']['#attributes']['class'][] = 'col-md-6';
+
 
   $form['#after_build'][] = 'dgu_user_profile_after_build';
   $form['#validate'][] = 'dgu_user_profile_validate';
 }
 
 function dgu_user_profile_after_build($form, &$form_state) {
-  $form['contact']['#collapsed'] = TRUE;
-  $form['timezone']['#collapsed'] = TRUE;
-
-  $form['field_first_name']['#attributes']['class'][] = 'col-md-4';
-  $form['field_surname']['#attributes']['class'][] = 'col-md-4';
-  $form['field_job_title']['#attributes']['class'][] = 'col-md-4';
-
-  $form['field_bio']['#attributes']['class'][] = 'col-md-8';
-  $form['field_avatar']['#attributes']['class'][] = 'col-md-4';
-
-  $form['field_avatar']['#attributes']['class'][] = 'clearfix';
-  $form['field_twitter']['#attributes']['class'][] = 'col-md-4';
-  $form['field_facebook_url']['#attributes']['class'][] = 'col-md-4';
-  $form['field_linkedin_url']['#attributes']['class'][] = 'col-md-4';
-
-  $form['contact']['#attributes']['class'][] = 'col-md-4';
-  $form['timezone']['#attributes']['class'][] = 'col-md-4';
-  $form['account']['#attributes']['class'][] = 'col-md-4';
-  $form['actions']['#attributes']['class'][] = 'col-md-12';
-  $form['redirect']['#attributes']['class'][] = 'col-md-12';
+  $form['account']['timezone'] = $form['timezone']['timezone'];
+  unset($form['timezone']);
+  $form['account']['timezone']['#weight'] = 11;
   return $form;
 }
 
@@ -86,7 +103,7 @@ function dgu_user_profile_validate($form, &$form_state) {
     }
   }
   if(!empty($form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
-    if(!preg_match('/^(ftp|http|https):\/\/?((www|\w\w)\.)?linkedin.com(\w+:{0,1}\w*@)?(\S+)(:([0-9])+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/', $form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
+    if(!preg_match('/^(http(s)?:\/\/)?([\w]+\.)?linkedin\.com\/(pub|in|profile)/', $form_state['values']['field_linkedin_url'][LANGUAGE_NONE][0]['url'])) {
       form_set_error('field_linkedin_url', 'Not valid public Linkedin profile URL');
     }
   }
@@ -109,21 +126,22 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   if ($router_item['tab_root'] == 'user/%' && dgu_user_accessing_own_account()) {
     $view_tab = current($data['tabs'][0]['output']);
 
-    // Remove 'Contact' tab on own profile.
-    $last_tab = end($data['tabs'][0]['output']);
-    if(!empty($last_tab) && $last_tab['#link']['path'] == 'user/%/contact') {
-      array_pop($data['tabs'][0]['output']);
-    }
-
     // Remove 'Edit' tab from primary tabs and move it to secondary tabs.
     // Copy 'View' tab from primary to secondary and rename it in primary row.
-    $last_tab = end($data['tabs'][0]['output']);
-    if(!empty($last_tab) && $last_tab['#link']['path'] == 'user/%/edit') {
-      array_pop($data['tabs'][0]['output']);
-      $data['tabs'][1]['count'] = 2;
-      $data['tabs'][1]['output'] = array($view_tab, $last_tab);
+    $edit_tab = $data['tabs'][0]['output'][1];
+    if(!empty($edit_tab) && $edit_tab['#link']['path'] == 'user/%/edit') {
+      unset($data['tabs'][0]['output'][1]);
+
+      $arg2 = arg(2);
+      if(arg(0) == 'user' && is_numeric(arg(1)) && (arg(2) == 'edit' || empty($arg2))) {
+        $data['tabs'][1]['count'] = 2;
+        $data['tabs'][1]['output'] = array($view_tab, $edit_tab);
+        $data['tabs'][0]['output'][0]['#active']  = TRUE;
+      }
+
       $data['tabs'][0]['output'][0]['#link']['title'] = 'My profile';
-      $data['tabs'][0]['output'][0]['#active']  = TRUE;
+
+      $data['tabs'][0]['output'][2]['#link']['title'] = 'My subscriptions';
     }
 
     $data['tabs'][0]['output'][] = array(
@@ -177,7 +195,14 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
         '#active' => FALSE,
       ),
     );
-    array_unshift($data['tabs'][0]['output'], $my_profile);
+    $my_subscriptions = array(
+      array(
+        '#theme' => 'menu_local_task',
+        '#link' => array('title' => 'My subscriptions', 'href' => 'user/' . $user->uid . '/message-subscribe', 'localized_options' => array()),
+        '#active' => FALSE,
+      ),
+    );
+    array_unshift($data['tabs'][0]['output'], $my_profile, $my_subscriptions);
   }
 }
 
@@ -215,8 +240,6 @@ function dgu_user_page_alter(&$page) {
       'inline');
     unset($_SESSION['ping_ckan']);
   }
-
-
 }
 
 /**
@@ -240,6 +263,14 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     drupal_set_title('Register');
   }
 
+  if ($item['path'] == 'user/%/edit') {
+    drupal_set_title('Edit');
+  }
+
+  if ($item['path'] == 'admin/workbench/content/data-requests' || $item['path'] == 'admin/workbench/content/active') {
+    unset($active_trail[0]);
+  }
+
   if (($item['path'] == 'user/%/content' || $item['path'] == 'user/%/comments') && arg(0) == 'user' && is_numeric(arg(1))) {
     $user = user_load(arg(1));
     //drupal_set_title('User comments');
@@ -248,7 +279,17 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1]['path'] = 'user/' . $user->uid;
   }
 
-  if (arg(0) == 'user' && is_numeric(arg(1)) && dgu_user_accessing_own_account()) {
+  if ($item['path'] == 'user/%/message-subscribe') {
+    if (dgu_user_accessing_own_account()) {
+      unset($active_trail[1]);
+      drupal_set_title('My subscriptions');
+    }
+    else {
+      drupal_set_title('Subscriptions');
+    }
+  }
+
+  if (arg(0) == 'user' && is_numeric(arg(1)) && arg(2) == NULL && dgu_user_accessing_own_account()) {
     if (arg(2) == 'edit') {
       drupal_set_title('Edit my profile');
       $breadcrumb = array();
@@ -337,6 +378,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   if (isset($variables['field_linkedin_url'][0]['url'])) {
     $parts = parse_url($variables['field_linkedin_url'][0]['url']);
+    $parts['query'] = isset($parts['query']) ? $parts['query'] : '';
     $variables['linkedin'] = $parts['host'] . $parts['path'] . $parts['query'];
   }
   else {
@@ -345,6 +387,7 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   if (isset($variables['field_facebook_url'][0]['url'])) {
     $parts = parse_url($variables['field_facebook_url'][0]['url']);
+    $parts['query'] = isset($parts['query']) ? $parts['query'] : '';
     $variables['facebook'] = $parts['host'] . $parts['path'] . $parts['query'];
   }
   else {
@@ -396,4 +439,16 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   $recent_comments = views_embed_view('user_replies', 'block_3');
   $variables['recent_comments'] = strpos($recent_comments, 'view-content') ? $recent_comments : FALSE;
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * To move field_avatar in to 'My Profile', this causes ajax errors if happens in hook_form_alter().
+ */
+function dgu_user_preprocess_page(&$variables) {
+  if(arg(0) == 'user' && arg(2) == 'edit' && isset($variables['page']['content']['system_main']['field_avatar'])) {
+    $variables['page']['content']['system_main']['profile']['field_avatar'] = $variables['page']['content']['system_main']['field_avatar'];
+    unset($variables['page']['content']['system_main']['field_avatar']);
+  }
 }
