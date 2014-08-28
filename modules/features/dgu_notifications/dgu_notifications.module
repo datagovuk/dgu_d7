@@ -55,7 +55,9 @@ function dgu_notifications_tokens($type, $tokens, array $data = array(), array $
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'current-subscriber-uid':
-          $replacements[$original] = drupal_static('current-subscriber-uid');
+          $uid = drupal_static('current-subscriber-uid');
+          $uid = $uid ? $uid : $data['message']->uid;
+          $replacements[$original] = $uid;
           break;
       }
     }
