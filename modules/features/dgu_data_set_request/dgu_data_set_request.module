@@ -320,7 +320,7 @@ function dgu_data_set_request_node_update($node) {
       $wrapper->field_data_request_reference->set($node);
       $wrapper->field_data_request_assignee->set($assignee);
 
-      $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day' => 'digest_day'));
+      $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
       $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
@@ -400,7 +400,7 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
 
   // Get all flags on given entity type.
   $flags = message_subscribe_flag_get_flags('node');
-  $default_notifier = variable_get('message_subscribe_default_notifiers', array('digest_day' => 'digest_day'));
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
 
   $fids = array();
   foreach ($flags as $flag) {
