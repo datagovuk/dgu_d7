@@ -537,6 +537,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['empty'] = 'Not assigned';
   $handler->display->display_options['fields']['field_assignee']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
@@ -717,6 +718,209 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['menu']['weight'] = '99';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment_1');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Data requests assignees';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_assignee' => 'field_assignee',
+    'nid' => 'nid',
+  );
+  $handler->display->display_options['style_options']['default'] = 'nid';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_assignee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Assignee */
+  $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['empty'] = 'Not assigned';
+  $handler->display->display_options['fields']['field_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['group_type'] = 'count';
+  $handler->display->display_options['fields']['nid']['label'] = 'Number of request';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dataset_request' => 'dataset_request',
+  );
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+  );
+  $handler->display->display_options['displays'] = array(
+    'page_1' => 'page_1',
+    'default' => 0,
+    'page' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
+
+  /* Display: Attachment */
+  $handler = $view->new_display('attachment', 'Attachment', 'attachment_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Data requests assignees';
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['grouping'] = array(
+    0 => array(
+      'field' => 'field_assignee',
+      'rendered' => 0,
+      'rendered_strip' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['default_row_class'] = FALSE;
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_assignee' => 'field_assignee',
+    'field_review_status' => 'field_review_status',
+    'nid' => 'nid',
+  );
+  $handler->display->display_options['style_options']['default'] = 'nid';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_assignee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_review_status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Assignee */
+  $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_assignee']['empty'] = 'Not assigned';
+  $handler->display->display_options['fields']['field_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Nid */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['group_type'] = 'count';
+  $handler->display->display_options['fields']['nid']['label'] = 'Number of request';
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dataset_request' => 'dataset_request',
+  );
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+  );
+  $handler->display->display_options['displays'] = array(
+    'page_1' => 'page_1',
+    'default' => 0,
+    'page' => 0,
+  );
+  $handler->display->display_options['attachment_position'] = 'after';
   $export['data_requests_administration'] = $view;
 
   $view = new view();
