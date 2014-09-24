@@ -77,6 +77,13 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
+
+    $form['submit_top'] = $form['actions']['submit'];
+    $form['submit_top']['#weight'] = -100;
+    $form['#attached']['css'][] = array(
+      'data' => '#edit-submit-top {float: right;}',
+      'type' => 'inline',
+    );
   }
   else {
     dgu_moderation_node_forms_alter($form);
