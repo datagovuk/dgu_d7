@@ -70,22 +70,34 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   unset($form['actions']['preview']);
   $form['#attributes']['class'][] = "boxed";
 
+  $form['field_publisher_ref'][LANGUAGE_NONE]['#ajax'] = array(
+    'callback' => 'dgu_data_set_request_form_ajax_callback',
+    'wrapper' => 'edit-field-assignee',
+  );
+
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
   }
   else {
     dgu_moderation_node_forms_alter($form);
   }
+}
 
+function dgu_data_set_request_form_ajax_callback($form, $form_state) {
+  $node = $form_state['node'];
+  $node->field_publisher_ref[LANGUAGE_NONE][0]['id'] = $form_state['values']['field_publisher_ref'][LANGUAGE_NONE][0]['id'];
+  $options = dgu_data_set_request_assignee_get_users(NULL, NULL, NULL, $node);
+  $form['field_assignee'][LANGUAGE_NONE]['#options'] = $options;
+  $form['field_assignee'][LANGUAGE_NONE]['#prefix'] = '<div id="edit-field-assignee" class="field-type-assignee field-name-field-assignee field-widget-options-select form-wrapper">';
+  $form['field_assignee'][LANGUAGE_NONE]['#suffix'] = '</div>';
+  return  $form['field_assignee'][LANGUAGE_NONE];
 }
 
 function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request') {
     if(!($node->uid == $account->uid || user_access(DATA_REQUEST_MODERATION_PERMISSION))) {
       if(isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-        
         $assignees = dgu_data_set_request_get_assignees($node->nid);
-
         if(!in_array($account->uid, $assignees)) {
           return NODE_ACCESS_DENY;
         }
@@ -200,7 +212,7 @@ function dgu_data_set_request_node_grants($account, $op) {
 /**
  * Implements hook_assignee_get_users().
  */
-function dgu_data_set_request_assignee_get_users($field, $instance, $entity_type, $entity) {
+function dgu_data_set_request_assignee_get_users($field = NULL, $instance = NULL, $entity_type = NULL, $entity) {
 
   $query = db_select('role', 'r');
   $query->join('users_roles', 'ur', 'r.rid = ur.rid');
@@ -222,11 +234,7 @@ function dgu_data_set_request_assignee_get_users($field, $instance, $entity_type
     $query = db_select('users', 'u')
       ->fields('u', array('uid', 'name'));
     $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
-    $query->join('field_data_field_publisher_ref', 'dh', 'dh.field_publisher_ref_id = fp.field_publishers_target_id');
-    $query->condition('fp.entity_type', 'user')
-      ->condition('dh.entity_type', 'node')
-      ->condition('dh.bundle', 'dataset_request')
-      ->condition('dh.entity_id', $entity->nid);
+    $query->condition('fp.field_publishers_target_id', $entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
     $publishing_users = $query->execute()->fetchAllKeyed();
 
     $options[$publisher->title] = $publishing_users;
