@@ -49,8 +49,19 @@ function dgu_data_set_request_default_page_manager_handlers() {
           'context' => 'empty',
           'not' => FALSE,
         ),
+        2 => array(
+          'name' => 'role',
+          'settings' => array(
+            'rids' => array(
+              0 => 3,
+              1 => 10,
+            ),
+          ),
+          'context' => 'logged-in-user',
+          'not' => TRUE,
+        ),
       ),
-      'logic' => 'or',
+      'logic' => 'and',
     ),
   );
   $display = new panels_display();
