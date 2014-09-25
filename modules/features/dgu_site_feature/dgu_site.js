@@ -9,7 +9,7 @@
 
       $('ul.tabs--primary li.quick-edit a').click(function(e){
           e.preventDefault();
-          $('ul.contextual-links li.quick-edit a').trigger( 'click');
+          $('ul.contextual-links li.quick-quickedit a').trigger( 'click');
       });
 
     }
