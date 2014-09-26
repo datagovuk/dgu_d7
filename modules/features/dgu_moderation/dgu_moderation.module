@@ -144,6 +144,18 @@ function dgu_moderation_exit() {
   }
 }
 
+
+/**
+ * Implements hook_node_presave().
+ */
+function dgu_moderation_node_presave($node) {
+  if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+    // Avoid reverting to draft published nodes during quick editing.
+    $node->workbench_moderation_state_new = $node->workbench_moderation['published']->state;
+  }
+}
+
+
 /**
  * Implements hook_node_load().
  */
