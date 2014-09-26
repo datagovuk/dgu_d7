@@ -151,7 +151,8 @@ function dgu_moderation_node_load($nodes, $types) {
   // Hack to avoid administrators moderating themselves when using quickedit module.
   // We have other hacks in form alter hooks, this one fixes node_save called without submitting a node edit form.
   $backtrace = debug_backtrace();
-  if (array_pop($backtrace)['function'] == '_drupal_shutdown_function' && array_pop($backtrace)['function'] == 'call_user_func_array' && array_pop($backtrace)['function'] == 'workbench_moderation_store') {
+  $count = count($backtrace);
+  if ($backtrace[--$count]['function'] == '_drupal_shutdown_function' && $backtrace[--$count]['function'] == 'call_user_func_array' && $backtrace[--$count]['function'] == 'workbench_moderation_store') {
     $node = reset($nodes);
     // If user can edit any nodes of this type then we don't want this user moderate self actions.
     // We terminate execution here to avoid workbench moderation reverting current revision to previous revision and preserve the state.
