@@ -85,6 +85,9 @@ function dgu_moderation_page_alter(&$page) {
   }
 }
 
+/**
+ * Helper function called in content type specific form_hook_alter().
+ */
 function dgu_moderation_node_forms_alter (&$form) {
   $form['revision_information']['#type'] = 'hidden';
   $form['actions']['publish']['#access'] = TRUE;
@@ -129,14 +132,35 @@ function dgu_moderation_node_submit($form, &$form_state) {
   }
 }
 
+/**
+ * Implements hook_exit().
+ */
 function dgu_moderation_exit() {
   if ($message = drupal_static('dgu_moderation_message')) {
-    // Remove all status messages - most likely nothing more than '... has been created/updated'
+    // Remove all status messages - most likely nothing more than '... has been created/updated'.
     drupal_get_messages('status');
-    // Add a message created in dgu_data_set_request_node_submit()
+    // Add a message created in dgu_data_set_request_node_submit().
     drupal_set_message($message);
   }
 }
+
+/**
+ * Implements hook_node_load().
+ */
+function dgu_moderation_node_load($nodes, $types) {
+  // Hack to avoid administrators moderating themselves when using quickedit module.
+  // We have other hacks in form alter hooks, this one fixes node_save called without submitting a node edit form.
+  $backtrace = debug_backtrace();
+  if (array_pop($backtrace)['function'] == '_drupal_shutdown_function' && array_pop($backtrace)['function'] == 'call_user_func_array' && array_pop($backtrace)['function'] == 'workbench_moderation_store') {
+    $node = reset($nodes);
+    // If user can edit any nodes of this type then we don't want this user moderate self actions.
+    // We terminate execution here to avoid workbench moderation reverting current revision to previous revision and preserve the state.
+    if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+      die;
+    }
+  }
+}
+
 
 function dgu_moderation_access($account, $node, $permission) {
   if(!($node->uid == $account->uid || user_access($permission) || $node->status)) {
