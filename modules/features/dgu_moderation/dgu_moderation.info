@@ -1,6 +1,7 @@
 name = DGU Moderation
 core = 7.x
 package = DGU Features
+dependencies[] = bootstrap_tour
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = strongarm
@@ -8,6 +9,8 @@ dependencies[] = workbench
 dependencies[] = workbench_moderation
 dependencies[] = workbench_moderation
 dependencies[] = workbench_moderation
+features[bootstrap_tour][] = content_moderation
+features[ctools][] = bootstrap_tour:bootstrap_tour_tour:1
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[user_permission][] = access workbench
