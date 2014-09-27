@@ -27,6 +27,9 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'image_link' => '',
           'image_style' => 'tile_big',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'image',
         'weight' => 1,
@@ -74,6 +77,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_url',
@@ -130,6 +136,9 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'image_link' => '',
           'image_style' => 'tile_small',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'image',
         'weight' => 1,
@@ -177,6 +186,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_url',
@@ -233,6 +245,9 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'image_link' => '',
           'image_style' => 'tile_text_big',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'image',
         'weight' => 1,
@@ -280,6 +295,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_default',
@@ -335,6 +353,9 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 2,
@@ -376,6 +397,9 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'image_link' => '',
           'image_style' => 'tile_text_small',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'image',
         'weight' => 2,
@@ -423,6 +447,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_default',
@@ -592,6 +619,9 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 0,
@@ -604,6 +634,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'trim_length' => 600,
         ),
@@ -647,6 +680,9 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => '0',
@@ -662,6 +698,9 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'more_link' => 0,
           'more_text' => 'Read more',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
           'summary_handler' => 'trim',
           'trim_length' => 250,
           'trim_options' => array(
@@ -681,6 +720,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'trim_length' => 600,
         ),
@@ -723,6 +765,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
@@ -771,6 +816,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',
@@ -823,6 +871,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'file_default',
@@ -879,6 +930,9 @@ function dgu_site_feature_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'taxonomy_term_reference_link',
         'weight' => '2',
@@ -927,6 +981,9 @@ function dgu_site_feature_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
