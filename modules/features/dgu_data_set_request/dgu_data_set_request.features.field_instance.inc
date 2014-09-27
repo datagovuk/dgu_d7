@@ -142,6 +142,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 3,
@@ -205,6 +208,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -271,6 +277,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'link' => FALSE,
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'entityreference_label',
         'weight' => 0,
@@ -336,6 +345,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 1,
@@ -399,6 +411,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -464,6 +479,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'dgu_assignee_default',
         'weight' => '1',
@@ -524,6 +542,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => '7',
@@ -578,6 +599,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -637,6 +661,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => '8',
@@ -691,6 +718,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -748,6 +778,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',
@@ -859,6 +892,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => '6',
@@ -871,6 +907,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -887,6 +926,9 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
           'more_link' => 0,
           'more_text' => 'Read more',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
           'summary_handler' => 'full',
           'trim_length' => 250,
           'trim_options' => array(
@@ -940,6 +982,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'link_default',
         'weight' => '4',
@@ -958,6 +1003,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_default',
@@ -1019,6 +1067,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'taxonomy_term_reference_link',
         'weight' => '18',
@@ -1074,6 +1125,9 @@ function dgu_data_set_request_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => '10',
@@ -1128,6 +1182,9 @@ function dgu_data_set_request_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -1188,6 +1245,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -1297,6 +1357,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'list_default',
@@ -1413,6 +1476,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => 0,
@@ -1455,6 +1521,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'ckan_publisher_reference_default',
@@ -1511,6 +1580,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',
@@ -1571,6 +1643,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => '5',
@@ -1628,6 +1703,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'list_default',
@@ -1688,6 +1766,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => '0',
@@ -1701,6 +1782,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => 3,
@@ -1713,6 +1797,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'list_default',
