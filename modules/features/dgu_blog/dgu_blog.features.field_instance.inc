@@ -26,6 +26,9 @@ function dgu_blog_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => '0',
@@ -38,6 +41,9 @@ function dgu_blog_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'trim_length' => 600,
         ),
@@ -55,6 +61,9 @@ function dgu_blog_field_default_field_instances() {
           ),
           'more_link' => 0,
           'more_text' => 'Read more',
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
           'summary_handler' => 'trim',
           'trim_length' => 250,
           'trim_options' => array(
@@ -74,6 +83,9 @@ function dgu_blog_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'trim_length' => 600,
         ),
@@ -117,6 +129,9 @@ function dgu_blog_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'taxonomy_term_reference_link',
@@ -171,6 +186,9 @@ function dgu_blog_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',
@@ -229,6 +247,9 @@ function dgu_blog_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'file_default',
@@ -339,6 +360,9 @@ function dgu_blog_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'taxonomy_term_reference_link',
         'weight' => '2',
@@ -398,6 +422,9 @@ function dgu_blog_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'link' => FALSE,
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'entityreference_label',
         'weight' => '3',
@@ -412,6 +439,9 @@ function dgu_blog_field_default_field_instances() {
             'field_replies_revision' => '',
           ),
           'link' => FALSE,
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'entityreference_label',
         'weight' => '1',
