@@ -224,6 +224,38 @@ function dgu_user_user_login(&$edit, $account) {
 }
 
 /**
+ * Implements hook_menu().
+ */
+function dgu_user_menu() {
+
+  $items['help'] = array(
+    'title' => 'Help', // The link text
+    'description' => 'Help page with site tours',
+    'page callback' => 'dgu_user_help_page',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'menu_name' => 'management',
+    'weight' => 1000,
+  );
+  return $items;
+}
+
+
+function dgu_user_help_page() {
+  $tours = bootstrap_tour_load_all();
+  $tour_links = array();
+  foreach ($tours as $tour) {
+    $roles = array_map('intval',explode(',', $tour->roles));
+    global $user;
+    $user_roles = array_keys($user->roles);
+    if (is_array($user->roles) && array_intersect($user_roles, $roles)) {
+      $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
+    }
+  }
+  return theme_item_list(array('items' => $tour_links, 'title' => 'Tutorials', 'type' => 'ul', 'attributes' => array('id' => 'available-site-tours')));
+}
+
+/**
  * Implements hook_page_alter().
  */
 function dgu_user_page_alter(&$page) {
