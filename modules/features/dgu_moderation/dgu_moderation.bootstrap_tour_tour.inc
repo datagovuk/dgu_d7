@@ -21,7 +21,7 @@ function dgu_moderation_default_bootstrap_tour() {
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '.nav-user',
-      'path' => 'user',
+      'path' => 'help',
       'placement' => 'left',
       'title' => 'User account',
       'content' => '<p>To moderate new content please go to user account page.</p>
@@ -30,7 +30,7 @@ function dgu_moderation_default_bootstrap_tour() {
     ),
     1 => array(
       'selector' => 'a[href="/admin/workbench/needs-review"]',
-      'path' => '',
+      'path' => 'user',
       'placement' => 'bottom',
       'title' => 'Needs review',
       'content' => '<p>All new content submitter by users is waiting for moderation, you can find it in &#39;Needs review&#39; list.</p>
