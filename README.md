@@ -28,6 +28,20 @@ $ drush --yes en dgu_app dgu_blog dgu_consultation dgu_data_set dgu_data_set_req
 $ drush --yes en ckan
 ````
 
+To configure the shared assets, sample files and sample database use the following commands.
+
+````bash
+$ cd <workspace>
+$ git clone git@github.com:datagovuk/shared_dguk_assets.git
+$ cd shared_dguk_assets/
+$ npm install
+$ grunt
+$ cd /var/www/
+$ ln -s <workspace>/shared_dguk_assets/assets
+$ cp -r <path-to-repository>/dgu_d7/sample/images/files/* /var/www/sites/default/files/
+$ zcat <path-to-repository>/dgu_d7/sample/dgud7_default_db.sql.gz | mysql -u root -pdev dgud7
+````
+
 You will need to configure drupal with the url of your CKAN instance.  We use the following drush commands:
 ````bash
 $ drush vset ckan_url 'http://data.gov.uk/api/';
