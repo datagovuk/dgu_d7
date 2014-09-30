@@ -15,13 +15,13 @@ function dgu_data_set_request_default_bootstrap_tour() {
   $bootstrap_tour->api_version = 1;
   $bootstrap_tour->name = 'data_request_administration';
   $bootstrap_tour->title = 'Data request administration';
-  $bootstrap_tour->roles = '2,3,10';
+  $bootstrap_tour->roles = '3,10';
   $bootstrap_tour->autorun = 0;
   $bootstrap_tour->description = 'Data request adminisration tour';
   $bootstrap_tour->steps = array(
     0 => array(
       'selector' => '.nav-user',
-      'path' => 'user',
+      'path' => 'help',
       'placement' => 'left',
       'title' => 'User account',
       'content' => '<p>To access data requests administration functions please go to user account page.</p>
@@ -34,7 +34,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
     ),
     1 => array(
       'selector' => 'a[href="/admin/workbench"]',
-      'path' => '',
+      'path' => 'user',
       'placement' => 'bottom',
       'title' => 'Manage my content',
       'content' => '<p>Next please click &#39;Manage my content&#39; tab.</p>
