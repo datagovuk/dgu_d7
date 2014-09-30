@@ -274,6 +274,9 @@ projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message
 projects[quickedit][version] = "1.1"
 projects[quickedit][subdir] = "contrib"
 
+projects[autologout][version] = "4.3"
+projects[autologout][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
