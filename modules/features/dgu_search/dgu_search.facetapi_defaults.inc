@@ -249,7 +249,7 @@ function dgu_search_facetapi_default_facet_settings() {
   $facet->searcher = 'apachesolr@solr';
   $facet->realm = 'block';
   $facet->facet = 'im_field_barriers_reason';
-  $facet->enabled = FALSE;
+  $facet->enabled = TRUE;
   $facet->settings = array(
     'weight' => 0,
     'widget' => 'facetapi_links',
