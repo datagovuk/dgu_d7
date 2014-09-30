@@ -13,7 +13,7 @@ function dgu_data_set_field_default_field_instances() {
   // Exported field_instance: 'ckan_dataset-ckan_dataset-field_comment'
   $field_instances['ckan_dataset-ckan_dataset-field_comment'] = array(
     'bundle' => 'ckan_dataset',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'comments' => array(
@@ -30,6 +30,9 @@ function dgu_data_set_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',

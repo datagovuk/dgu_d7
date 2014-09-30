@@ -25,6 +25,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'reply_default',
         'weight' => 5,
@@ -72,6 +75,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 4,
@@ -118,6 +124,9 @@ function dgu_glossary_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -170,6 +179,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'taxonomy_term_reference_link',
         'weight' => 3,
@@ -212,6 +224,9 @@ function dgu_glossary_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',
@@ -260,6 +275,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 1,
@@ -307,6 +325,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => 0,
@@ -351,6 +372,9 @@ function dgu_glossary_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'reply_default',
@@ -398,6 +422,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'default',
         'weight' => 4,
@@ -441,6 +468,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => 6,
@@ -480,6 +510,9 @@ function dgu_glossary_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'style' => 'average',
           'text' => 'average',
@@ -530,6 +563,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'taxonomy_term_reference_link',
         'weight' => 2,
@@ -570,6 +606,9 @@ function dgu_glossary_field_default_field_instances() {
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
         ),
         'type' => 'list_default',
         'weight' => 0,
@@ -606,6 +645,9 @@ function dgu_glossary_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'link_default',

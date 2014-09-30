@@ -26,6 +26,9 @@ function dgu_consultation_field_default_field_instances() {
             'field_replies_instance' => '',
             'field_replies_revision' => '',
           ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
+          ),
         ),
         'type' => 'text_default',
         'weight' => '0',
@@ -38,6 +41,9 @@ function dgu_consultation_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_instance' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
           'trim_length' => 600,
         ),
@@ -119,6 +125,9 @@ function dgu_consultation_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => 'field_field_comments',
             'field_replies_revision' => 0,
+          ),
+          'quickedit' => array(
+            'editor' => 'plain_text',
           ),
         ),
         'type' => 'text_default',

@@ -271,13 +271,11 @@ projects[message_digest][download][revision] = "2ad5c154dc21028d153e455bda6c2722
 projects[message_digest][subdir] = "contrib"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest-remove_mail_header-2236179-8.patch"
 
-projects[edit][type] = "module"
-projects[edit][download][type] = "git"
-projects[edit][download][url] = "http://git.drupal.org/project/edit.git"
-projects[edit][download][revision] = "c777f843eb32ab0e6f50324f9ca0c7037edc076f"
-projects[edit][subdir] = "contrib"
+projects[quickedit][version] = "1.1"
+projects[quickedit][subdir] = "contrib"
 
-
+projects[autologout][version] = "4.3"
+projects[autologout][subdir] = "contrib"
 
 ; Themes
 ; --------

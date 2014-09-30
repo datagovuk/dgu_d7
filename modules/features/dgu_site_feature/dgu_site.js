@@ -6,6 +6,12 @@
         $(this).parents('form').submit();
         $('button.form-submit').attr("disabled", true);
       });
+
+      $('ul.tabs--primary li.quick-edit a').click(function(e){
+          e.preventDefault();
+          $('ul.contextual-links li.quick-quickedit a').trigger( 'click');
+      });
+
     }
   };
 

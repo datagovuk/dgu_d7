@@ -14,6 +14,9 @@ function dgu_user_block_info() {
   $blocks['dgu_user_email_validation'] = array(
     'info' => t('Unverified email message'),
   );
+  $blocks['dgu_user_help'] = array(
+    'info' => t('Help page with site tours'),
+  );
   return $blocks;
 }
 
@@ -27,6 +30,23 @@ function dgu_user_block_view($delta='') {
     case 'dgu_user_email_validation' :
       global $user;
       $block['content'] = 'You will now receive  an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email.<br />Use <a href="/user/' . $user->uid . '/profile">My profile</a> tab to add more detail to your profile.<br /><a href="/toboggan/revalidate/' . $user->uid . '">Re-send</a> validation e-mail.';
+      break;
+    case 'dgu_user_help' :
+      global $user;
+      $tours = bootstrap_tour_load_all();
+      $user_roles = array_keys($user->roles);
+
+      $tour_links = array();
+      foreach ($tours as $tour) {
+        $roles = array_map('intval',explode(',', $tour->roles));
+        if (is_array($user->roles) && array_intersect($user_roles, $roles)) {
+          $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
+        }
+      }
+
+      if(!empty($tour_links)) {
+        $block['content'] = theme_item_list(array('items' => $tour_links, 'title' => 'Tutorials', 'type' => 'ul', 'attributes' => array('id' => 'available-site-tours')));
+      }
       break;
   }
   return $block;
