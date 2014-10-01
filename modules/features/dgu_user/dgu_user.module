@@ -333,13 +333,13 @@ function dgu_user_workbench_content_alter(&$output) {
   $output['workbench_my_content'] = array(
     '#view' => 'my_content',
     '#view_display' => 'block',
-    '#attributes' => array('class' => array('clearfix')),
+    '#attributes' => array('class' => array('my-content', 'clearfix')),
     '#theme' => 'workbench_element',
   );
   $output['workbench_my_comments'] = array(
     '#view' => 'user_replies',
     '#view_display' => 'block_1',
-    '#attributes' => array('class' => array('clearfix')),
+    '#attributes' => array('class' => array('my-comments', 'clearfix')),
     '#theme' => 'workbench_element',
   );
 }
