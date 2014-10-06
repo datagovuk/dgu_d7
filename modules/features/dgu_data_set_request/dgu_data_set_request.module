@@ -293,6 +293,36 @@ function dgu_data_set_request_node_presave($node) {
 }
 
 /**
+ * Implements hook_entity_insert().
+ */
+function dgu_data_set_request_entity_insert($entity, $type) {
+  if($type == 'reply' && $entity->bundle == 'review_comment') {
+
+    // This is taken from message stack examples.
+    // It's related to message_notify how it stores rendered subject and body via view modes.
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
+
+    // Get data_request_update message bundle and set required fields.
+    $message = message_create('data_request_review_comment_new');
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $data_request_node = new stdClass();
+    $data_request_node->nid = $entity->entity_id;
+    $wrapper->field_data_request_reference->set($data_request_node);
+    $wrapper->field_reply_reference->set($entity);
+
+    $uids = _dgu_data_set_request_get_subscribers($data_request_node->nid, $data_request_admin_roles, FALSE);
+    message_subscribe_send_message('node', $data_request_node, $message, $options, array('uids' => $uids));
+
+  }
+}
+
+/**
  * Implements hook_node_update().
  */
 function dgu_data_set_request_node_update($node) {
@@ -325,7 +355,7 @@ function dgu_data_set_request_node_update($node) {
 
     if (isset($node->field_assignee[LANGUAGE_NONE][0]['uid']) && $previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
 
-      // There is new assignee, this is special case where an assignee
+      // There is a new assignee, this is special case where an assignee
       // must receive different message than all other subscribers.
       $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
 
