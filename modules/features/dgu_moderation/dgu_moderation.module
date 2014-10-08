@@ -6,7 +6,7 @@
 
 include_once 'dgu_moderation.features.inc';
 
-define('PUBLISHED_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
+define('PUBLISHED_GRANT', 2147483647); // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
 define('MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
 
 /**
@@ -20,6 +20,10 @@ function dgu_moderation_menu_alter(&$items) {
   // Override the node view menu item title.
   $items['node/%node/view']['title callback'] = 'dgu_moderation_view_tab_title';
   $items['node/%node/view']['title arguments'] = array(1);
+
+  // Override workbench_moderation_moderate_callback().
+  $items['node/%node/moderation/%/change-state/%']['page callback'] = 'dgu_moderation_moderate_callback';
+
 
   // Rename 'My Workbench' to 'Manage my content'.
   $items['admin/workbench']['title'] = 'Manage my content';
@@ -70,6 +74,125 @@ function dgu_moderation_view_tab_title($node) {
   return workbench_moderation_view_tab_title($node);
 }
 
+
+/**
+ * Override workbench_moderation_moderate_callback() to add message to the user when changing back to draft.
+ * See dgu_moderation_menu_alter().
+ */
+function dgu_moderation_moderate_callback($node, $state) {
+  if (!isset($_GET['token']) || !drupal_valid_token($_GET['token'], "{$node->nid}:{$node->vid}:$state")) {
+    return MENU_ACCESS_DENIED;
+  }
+
+  if ($state == 'draft' && isset($node->workbench_moderation['current']) && $node->workbench_moderation['current']->state == 'needs_review') {
+    drupal_set_title('Revert to draft');
+    return drupal_get_form('dgu_moderation_message_back_to_draft', $node, $state);
+  }
+
+  workbench_moderation_moderate($node, $state);
+  drupal_goto(isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $node->nid . '/moderation');
+}
+
+function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state) {
+  global $base_url;
+  $type = strtolower(node_type_get_name($node));
+
+  $form['title'] = array(
+    '#markup' => '<p>You are about to change moderation state of ' . $type . ' <a href="' . $node->path['alias'] . '">'
+      . $node->title . '</a> from <strong>Needs review</strong> to <strong>Draft</strong>.</p>'
+      . '<p>Please provide additional information for the user why you are changing state to draft.',
+  );
+  $form['message'] = array(
+    '#title' => 'Message for the submitter',
+    '#type' => 'textarea',
+    '#default_value' => "Your " . $type . ": " . $node->title . "\nhas been reverted to draft state.\n\nThis is direct link to the edit form:\n" . $base_url . base_path() . "node/" . $node->nid . "/edit\n\n",
+    '#description' => 'Description here',
+    '#rows' => 15,
+    '#resizable' => TRUE,
+  );
+
+  if (isset($form_state['values']['message'])) {
+    $form['preview'] = array(
+      '#prefix' => '<h4>Preview:</h4><p>',
+      // The same text "To see all your draft content..." is repeated in dgu_moderation_workbench_moderation_transition().
+      '#markup' => nl2br($form_state['values']['message'] . "\n\nTo see all your draft content please go to\n" . $base_url . base_path() .  'admin/workbench/content/drafts'),
+      '#suffix' => '</p>',
+    );
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Change to Draft',
+    );
+  }
+
+  $form['preview_button'] = array(
+    '#type' => 'button',
+    '#value' => 'Preview',
+  );
+
+  $form['node'] = array(
+    '#type' => 'value',
+    '#value' => $node,
+  );
+  $form['state'] = array(
+    '#type' => 'value',
+    '#value' => $state,
+  );
+  return $form;
+}
+
+function dgu_moderation_message_back_to_draft_submit($form, &$form_state) {
+
+  $state_draft_message = &drupal_static('state_draft_message');
+  $state_draft_message = $form_state['values']['message'];
+  workbench_moderation_moderate($form['node']['#value'], $form['state']['#value']);
+  drupal_goto(isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $form['node']['#value']->nid . '/moderation');
+}
+
+function dgu_moderation_workbench_moderation_transition($node, $previous_state, $new_state) {
+
+  global $base_url;
+
+  // Use static cache to get this message available in hook_tokens().
+  $moderation_state_change_short = & drupal_static('moderation_state_change_short');
+  $moderation_state_change_full = & drupal_static('moderation_state_change_full');
+
+  // Message from dgu_moderation_message_back_to_draft form.
+  $state_draft_message = &drupal_static('state_draft_message');
+  $type = strtolower(node_type_get_name($node));
+
+  if ($previous_state == 'needs_review' && $new_state == 'published') {
+    $moderation_state_change_full = "Your " . $type . ": " . $node->title . "\n" . $base_url . base_path() . $node->path['alias'] . "\nhas been published.";
+    $moderation_state_change_short = 'published';
+
+  }
+  elseif($previous_state == 'needs_review' && $new_state == 'draft' && isset($state_draft_message)) {
+    // The same text "To see all your draft content..." is repeated in dgu_moderation_message_back_to_draft().
+    $moderation_state_change_full = $state_draft_message . "\n\nTo see all your draft content please go to\n" . $base_url . base_path() .  'admin/workbench/content/drafts';
+    $moderation_state_change_short = 'reverted to draft';
+  }
+  else {
+    return;
+  }
+
+  // This is taken from message stack examples.
+  // It's related to message_notify how it stores rendered subject and body via view modes.
+  $options = array(
+    'rendered fields' => array(
+      'message_notify_email_subject' => 'field_message_rendered_subject',
+      'message_notify_email_body' => 'field_message_rendered_body',
+    ),
+  );
+
+  // Get dgu_moderation_state_change message bundle and set required fields.
+  $message = message_create('dgu_moderation_state_change');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_node_reference->set($node);
+
+  // TODO - test this with two different emails - one for submitter second one for moderator
+  message_subscribe_send_message('node', $node, $message, $options);
+}
+
+
 /**
  * Implements hook_page_alter().
  *
@@ -88,7 +211,7 @@ function dgu_moderation_page_alter(&$page) {
 /**
  * Helper function called in content type specific form_hook_alter().
  */
-function dgu_moderation_node_forms_alter (&$form) {
+function dgu_moderation_node_forms_alter(&$form) {
   $form['revision_information']['#type'] = 'hidden';
   $form['actions']['publish']['#access'] = TRUE;
   $form['actions']['publish']['#value'] = 'Submit for moderation';
@@ -99,11 +222,11 @@ function dgu_moderation_node_forms_alter (&$form) {
   $form['#submit'][] = 'dgu_moderation_node_submit';
 }
 
-function dgu_moderation_node_forms_after_build ($form) {
+function dgu_moderation_node_forms_after_build($form) {
   if (isset($form['options']['workbench_moderation_state_new']['#value'])) {
     $form['options']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
   }
-  elseif($form['revision_information']['workbench_moderation_state_new']['#value']) {
+  elseif ($form['revision_information']['workbench_moderation_state_new']['#value']) {
     $form['revision_information']['workbench_moderation_state_new']['#value'] = $form['workbench_moderation_state_current']['#value'];
   }
   return $form;
@@ -113,7 +236,7 @@ function dgu_moderation_node_forms_after_build ($form) {
  * Custom submit function for data_set_request content type.
  */
 function dgu_moderation_node_submit($form, &$form_state) {
-  if(isset($form_state['clicked_button'])) {
+  if (isset($form_state['clicked_button'])) {
 
     $content_types = node_type_get_types();
     $content_type = $content_types[$form['#node']->type]->name;
@@ -121,12 +244,12 @@ function dgu_moderation_node_submit($form, &$form_state) {
 
     if ($form_state['clicked_button']['#value'] == "Submit for moderation") {
       $form_state['values']['workbench_moderation_state_new'] = 'needs_review';
-      $message = &drupal_static('dgu_moderation_message');
+      $message = & drupal_static('dgu_moderation_message');
       $message = 'Your ' . $content_type . ' has been ' . $action . ' and submitted for moderation. You can update it in <a href="/admin/workbench">Manage my content</a> section.<br />Please ensure your <a href="/user">profile</a> is up to date as we may use these details to contact you about your ' . $content_type . '.';
     }
     elseif ($form_state['clicked_button']['#value'] == "Save draft") {
       $form_state['values']['workbench_moderation_state_new'] = 'draft';
-      $message = &drupal_static('dgu_moderation_message');
+      $message = & drupal_static('dgu_moderation_message');
       $message = 'Your draft ' . $content_type . ' has been ' . $action . '. You can update it in <a href="/admin/workbench/content/drafts">My Drafts</a> section.<br />Please ensure your <a href="/user">profile</a> is up to date as we may use these details to contact you about your ' . $content_type . '.';
     }
   }
@@ -149,7 +272,7 @@ function dgu_moderation_exit() {
  * Implements hook_node_presave().
  */
 function dgu_moderation_node_presave($node) {
-  if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+  if ($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
     // Avoid reverting to draft published nodes during quick editing.
     $node->workbench_moderation_state_new = $node->workbench_moderation['published']->state;
   }
@@ -168,7 +291,7 @@ function dgu_moderation_node_load($nodes, $types) {
     $node = reset($nodes);
     // If user can edit any nodes of this type then we don't want this user moderate self actions.
     // We terminate execution here to avoid workbench moderation reverting current revision to previous revision and preserve the state.
-    if($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
+    if ($_SERVER['REQUEST_URI'] == '/quickedit/entity/node/' . $node->nid && user_access('edit any ' . $node->type . ' content')) {
       die;
     }
   }
@@ -176,12 +299,12 @@ function dgu_moderation_node_load($nodes, $types) {
 
 
 function dgu_moderation_access($account, $node, $permission) {
-  if(!($node->uid == $account->uid || user_access($permission) || $node->status)) {
+  if (!($node->uid == $account->uid || user_access($permission) || $node->status)) {
     return NODE_ACCESS_DENY;
   }
 }
 
-function dgu_moderation_get_node_grants(&$node){
+function dgu_moderation_get_node_grants(&$node) {
   $grants = array();
   $grants[] = array(
     'realm' => 'moderation',
@@ -216,7 +339,7 @@ function dgu_moderation_get_node_grants(&$node){
   return $grants;
 }
 
-function dgu_moderation_get_account_grants(&$account, $permission){
+function dgu_moderation_get_account_grants(&$account, $permission) {
   $grants = array();
   $grants['moderation'] = array($account->uid);
   $grants['moderation'] = array($account->uid, PUBLISHED_GRANT);
@@ -225,3 +348,40 @@ function dgu_moderation_get_account_grants(&$account, $permission){
   }
   return $grants;
 }
+
+/**
+ * Implements hook_token_info().
+ */
+function dgu_moderation_token_info() {
+  $info['tokens']['message']['dgu_moderation_state_change_short'] = array(
+    'name' => t('Moderation state change short'),
+    'description' => t('Returns short moderation change message'),
+  );
+  $info['tokens']['message']['dgu_moderation_state_change_full'] = array(
+    'name' => t('Moderation state change full'),
+    'description' => t('Returns full moderation change message'),
+  );
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function dgu_moderation_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+  if ($type == 'message') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'dgu_moderation_state_change_short':
+          $replacements[$original] = drupal_static('moderation_state_change_short');
+          break;
+        case
+        'dgu_moderation_state_change_full':
+          $replacements[$original] = drupal_static('moderation_state_change_full');
+          break;
+      }
+    }
+  }
+  return $replacements;
+}
+
