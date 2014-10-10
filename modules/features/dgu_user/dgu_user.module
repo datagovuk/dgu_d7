@@ -463,6 +463,8 @@ function dgu_user_preprocess_user_profile(&$variables) {
   if (dgu_user_accessing_own_account()) {
     $my_publishers = views_embed_view('my_publishers', 'block');
     $variables['my_publishers'] = strpos($my_publishers, 'view-content') ? $my_publishers : FALSE;
+    $active_data_requests = views_embed_view('data_requests_administration', 'block_1');
+    $variables['active_data_requests'] = strpos($active_data_requests, 'view-content') ? $active_data_requests : FALSE;
   }
 
 }

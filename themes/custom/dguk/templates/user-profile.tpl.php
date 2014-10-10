@@ -83,6 +83,15 @@
       <?php print $my_publishers; ?>
     </div>
   <?php endif; ?>
+  <?php if($active_data_requests): ?>
+    <div class="user-engagement col-md-4">
+      <h3>Active Data requests</h3>
+      <?php print $active_data_requests; ?>
+    </div>
+  <?php endif; ?>
+
+
+
 </div>
 <div class="user-other row">
   <div class="col-md-12">
