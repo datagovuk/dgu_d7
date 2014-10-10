@@ -333,6 +333,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_outcome',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
@@ -343,6 +345,8 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_review_status',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
     ),
     'module' => 'field_permissions',
