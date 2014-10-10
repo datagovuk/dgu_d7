@@ -14,6 +14,7 @@ features[field_base][] = body
 features[field_base][] = field_category
 features[field_base][] = field_message_rendered_body
 features[field_base][] = field_message_rendered_subject
+features[field_base][] = field_node_reference
 features[field_base][] = field_sector
 features[field_base][] = field_submitter_email
 features[field_base][] = field_submitter_name
