@@ -459,6 +459,12 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   $recent_comments = views_embed_view('user_replies', 'block_3');
   $variables['recent_comments'] = strpos($recent_comments, 'view-content') ? $recent_comments : FALSE;
+
+  if (dgu_user_accessing_own_account()) {
+    $my_publishers = views_embed_view('my_publishers', 'block');
+    $variables['my_publishers'] = strpos($my_publishers, 'view-content') ? $my_publishers : FALSE;
+  }
+
 }
 
 /**

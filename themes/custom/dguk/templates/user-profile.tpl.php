@@ -77,6 +77,12 @@
         <?php print $recent_comments; ?>
     </div>
   <?php endif; ?>
+  <?php if($my_publishers): ?>
+    <div class="user-engagement col-md-4">
+      <h3>My publishers</h3>
+      <?php print $my_publishers; ?>
+    </div>
+  <?php endif; ?>
 </div>
 <div class="user-other row">
   <div class="col-md-12">
@@ -92,7 +98,6 @@
     hide($user_profile['summary']);
     hide($user_profile['user_picture']);
     ?>
-    <?php print render($user_profile); ?>
   </div>
 </div>
 
