@@ -110,24 +110,18 @@ function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state
     '#rows' => 15,
     '#resizable' => TRUE,
   );
-
-  if (isset($form_state['values']['message'])) {
-    $form['preview'] = array(
-      '#prefix' => '<h4>Preview:</h4><p>',
-      // The same text "To see all your draft content..." is repeated in dgu_moderation_workbench_moderation_transition().
-      '#markup' => nl2br($form_state['values']['message'] . "\n\nTo see all your draft content please go to\n" . $base_url . base_path() .  'admin/workbench/content/drafts'),
-      '#suffix' => '</p>',
-    );
-    $form['submit'] = array(
-      '#type' => 'submit',
-      '#value' => 'Change to Draft',
-    );
-  }
-
   $form['preview_button'] = array(
-    '#type' => 'button',
+    '#type' => 'submit',
     '#value' => 'Preview',
   );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Change to Draft',
+  );
+  if ($form_state['input']['op'] != 'Preview') {
+    $form['submit']['#disabled'] = TRUE;
+  }
 
   $form['node'] = array(
     '#type' => 'value',
@@ -138,6 +132,21 @@ function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state
     '#value' => $state,
   );
   return $form;
+}
+
+function dgu_moderation_message_back_to_draft_validate($form, &$form_state) {
+  global $base_url;
+  // Don't submit the form.
+  if($form_state['clicked_button']['#value'] == 'Preview') {
+    $form_state['rebuild'] = TRUE;
+
+    $submitter_uid = $form_state['values']['node']->uid;
+    $query = db_select('users', 'u');
+    $query->fields('u', array('name'));
+    $query->condition('u.uid', $submitter_uid);
+    $submitter = l($query->execute()->fetchField(), 'user/' . $submitter_uid);
+    drupal_set_message('<h4><strong>User ' . $submitter. ' will receive following message:</strong></h4>' . nl2br($form_state['values']['message'] . "\n\nTo see all your draft content please go to\n" . $base_url . base_path() .  'admin/workbench/content/drafts'));
+  }
 }
 
 function dgu_moderation_message_back_to_draft_submit($form, &$form_state) {
