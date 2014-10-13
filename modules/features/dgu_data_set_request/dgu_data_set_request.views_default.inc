@@ -974,6 +974,32 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['max_length'] = '30';
   $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['label'] = '';
+  $handler->display->display_options['fields']['field_review_status']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_review_status']['alter']['text'] = '[field_review_status] |';
+  $handler->display->display_options['fields']['field_review_status']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_review_status']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_review_status']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = '';
+  $handler->display->display_options['fields']['changed']['element_type'] = 'span';
+  $handler->display->display_options['fields']['changed']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['changed']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'time ago';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Type */
