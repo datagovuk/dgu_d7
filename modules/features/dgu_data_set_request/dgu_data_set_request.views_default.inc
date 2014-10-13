@@ -347,6 +347,14 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
   $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
   $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
+    0 => '0',
+    1 => '1',
+    2 => '2',
+    3 => '3',
+    4 => '4',
+    5 => '5',
+  );
   $handler->display->display_options['filters']['field_review_status_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_review_status_value']['expose']['operator_id'] = 'field_review_status_value_op';
   $handler->display->display_options['filters']['field_review_status_value']['expose']['label'] = 'Status';
@@ -363,10 +371,9 @@ function dgu_data_set_request_views_default_views() {
     6 => 0,
     5 => 0,
     9 => 0,
-    11 => 0,
-    12 => 0,
     10 => 0,
   );
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['reduce'] = TRUE;
   /* Filter criterion: Content: Publication preference (field_publication_preference) */
   $handler->display->display_options['filters']['field_publication_preference_value']['id'] = 'field_publication_preference_value';
   $handler->display->display_options['filters']['field_publication_preference_value']['table'] = 'field_data_field_publication_preference';
@@ -992,6 +999,14 @@ function dgu_data_set_request_views_default_views() {
     5 => 0,
     9 => 0,
   );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
+    6 => '6',
+  );
   $export['data_requests_administration'] = $view;
 
   $view = new view();
@@ -1254,6 +1269,12 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'dataset_request' => 'dataset_request',
   );
+  /* Filter criterion: Content: Post date */
+  $handler->display->display_options['filters']['created_1']['id'] = 'created_1';
+  $handler->display->display_options['filters']['created_1']['table'] = 'node';
+  $handler->display->display_options['filters']['created_1']['field'] = 'created';
+  $handler->display->display_options['filters']['created_1']['operator'] = '>';
+  $handler->display->display_options['filters']['created_1']['value']['value'] = '2012-09-26';
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -1664,248 +1685,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['uid']['table'] = 'node';
   $handler->display->display_options['fields']['uid']['field'] = 'uid';
   $handler->display->display_options['fields']['uid']['label'] = 'Author';
-  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
-  $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Type */
-  $handler->display->display_options['filters']['type']['id'] = 'type';
-  $handler->display->display_options['filters']['type']['table'] = 'node';
-  $handler->display->display_options['filters']['type']['field'] = 'type';
-  $handler->display->display_options['filters']['type']['value'] = array(
-    'dataset_request' => 'dataset_request',
-  );
-  /* Filter criterion: Content: Are you able to provide estimates of the economic or financial benefit of data release? (field_provide_estimates) */
-  $handler->display->display_options['filters']['field_provide_estimates_value']['id'] = 'field_provide_estimates_value';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['table'] = 'field_data_field_provide_estimates';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['field'] = 'field_provide_estimates_value';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['value'] = array(
-    'all' => 'all',
-    0 => '0',
-    1 => '1',
-  );
-  $handler->display->display_options['filters']['field_provide_estimates_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['operator_id'] = 'field_provide_estimates_value_op';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['label'] = 'Estimates';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['operator'] = 'field_provide_estimates_value_op';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['identifier'] = 'field_provide_estimates_value';
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_provide_estimates_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Data themes (field_data_themes) */
-  $handler->display->display_options['filters']['field_data_themes_tid']['id'] = 'field_data_themes_tid';
-  $handler->display->display_options['filters']['field_data_themes_tid']['table'] = 'field_data_field_data_themes';
-  $handler->display->display_options['filters']['field_data_themes_tid']['field'] = 'field_data_themes_tid';
-  $handler->display->display_options['filters']['field_data_themes_tid']['value'] = array(
-    72 => '72',
-    73 => '73',
-    74 => '74',
-    75 => '75',
-    76 => '76',
-    77 => '77',
-    78 => '78',
-    79 => '79',
-    80 => '80',
-    81 => '81',
-    82 => '82',
-    83 => '83',
-    84 => '84',
-  );
-  $handler->display->display_options['filters']['field_data_themes_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['operator_id'] = 'field_data_themes_tid_op';
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['label'] = 'Data theme';
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['operator'] = 'field_data_themes_tid_op';
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['identifier'] = 'field_data_themes_tid';
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_data_themes_tid']['expose']['reduce'] = TRUE;
-  $handler->display->display_options['filters']['field_data_themes_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_data_themes_tid']['vocabulary'] = 'category';
-  /* Filter criterion: Content: Have you faced challenges in accessing this data? (field_barriers_attempted) */
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['id'] = 'field_barriers_attempted_value';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['table'] = 'field_data_field_barriers_attempted';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['field'] = 'field_barriers_attempted_value';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['value'] = array(
-    'all' => 'all',
-    0 => '0',
-    1 => '1',
-  );
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['operator_id'] = 'field_barriers_attempted_value_op';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['label'] = 'Challenges';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['operator'] = 'field_barriers_attempted_value_op';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['identifier'] = 'field_barriers_attempted_value';
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_barriers_attempted_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Organisation type (field_organisation_type) */
-  $handler->display->display_options['filters']['field_organisation_type_value']['id'] = 'field_organisation_type_value';
-  $handler->display->display_options['filters']['field_organisation_type_value']['table'] = 'field_data_field_organisation_type';
-  $handler->display->display_options['filters']['field_organisation_type_value']['field'] = 'field_organisation_type_value';
-  $handler->display->display_options['filters']['field_organisation_type_value']['value'] = array(
-    'all' => 'all',
-    1 => '1',
-    2 => '2',
-    3 => '3',
-    4 => '4',
-    5 => '5',
-    6 => '6',
-    7 => '7',
-  );
-  $handler->display->display_options['filters']['field_organisation_type_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['operator_id'] = 'field_organisation_type_value_op';
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['label'] = 'Organisation type';
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['operator'] = 'field_organisation_type_value_op';
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['identifier'] = 'field_organisation_type_value';
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_organisation_type_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Publication preference (field_publication_preference) */
-  $handler->display->display_options['filters']['field_publication_preference_value']['id'] = 'field_publication_preference_value';
-  $handler->display->display_options['filters']['field_publication_preference_value']['table'] = 'field_data_field_publication_preference';
-  $handler->display->display_options['filters']['field_publication_preference_value']['field'] = 'field_publication_preference_value';
-  $handler->display->display_options['filters']['field_publication_preference_value']['value'] = array(
-    'all' => 'all',
-    1 => '1',
-    0 => '0',
-  );
-  $handler->display->display_options['filters']['field_publication_preference_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['operator_id'] = 'field_publication_preference_value_op';
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['label'] = 'Publication preference';
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['operator'] = 'field_publication_preference_value_op';
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['identifier'] = 'field_publication_preference_value';
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Reason (field_barriers_reason) */
-  $handler->display->display_options['filters']['field_barriers_reason_value']['id'] = 'field_barriers_reason_value';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['table'] = 'field_data_field_barriers_reason';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['field'] = 'field_barriers_reason_value';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['value'] = array(
-    'all' => 'all',
-    1 => '1',
-    2 => '2',
-    3 => '3',
-    4 => '4',
-    5 => '5',
-    6 => '6',
-    7 => '7',
-    8 => '8',
-    9 => '9',
-  );
-  $handler->display->display_options['filters']['field_barriers_reason_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['operator_id'] = 'field_barriers_reason_value_op';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['label'] = 'Barriers reason';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['operator'] = 'field_barriers_reason_value_op';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['identifier'] = 'field_barriers_reason_value';
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_barriers_reason_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Status (field_review_status) */
-  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
-  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
-    'all' => 'all',
-    0 => '0',
-    1 => '1',
-    2 => '2',
-    3 => '3',
-    4 => '4',
-    5 => '5',
-    6 => '6',
-    7 => '7',
-  );
-  $handler->display->display_options['filters']['field_review_status_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator_id'] = 'field_review_status_value_op';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['label'] = 'Review status';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator'] = 'field_review_status_value_op';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['identifier'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['reduce'] = TRUE;
-  /* Filter criterion: Content: Suggested use (field_data_use) */
-  $handler->display->display_options['filters']['field_data_use_value_1']['id'] = 'field_data_use_value_1';
-  $handler->display->display_options['filters']['field_data_use_value_1']['table'] = 'field_data_field_data_use';
-  $handler->display->display_options['filters']['field_data_use_value_1']['field'] = 'field_data_use_value';
-  $handler->display->display_options['filters']['field_data_use_value_1']['value'] = array(
-    'all' => 'all',
-    1 => '1',
-    2 => '2',
-    3 => '3',
-    4 => '4',
-    5 => '5',
-  );
-  $handler->display->display_options['filters']['field_data_use_value_1']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['operator_id'] = 'field_data_use_value_1_op';
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['label'] = 'Suggested use';
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['operator'] = 'field_data_use_value_1_op';
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['identifier'] = 'field_data_use_value_1';
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-  );
-  $handler->display->display_options['filters']['field_data_use_value_1']['expose']['reduce'] = TRUE;
   $handler->display->display_options['path'] = 'admin/all_data_requests';
   $export['dataset_request_extract'] = $view;
 
