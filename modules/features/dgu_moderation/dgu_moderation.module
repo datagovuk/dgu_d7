@@ -33,13 +33,12 @@ function dgu_moderation_menu_alter(&$items) {
  * Implements hook_menu_breadcrumb_alter().
  */
 function dgu_moderation_menu_breadcrumb_alter(&$active_trail, $item) {
-
   $destination = drupal_get_destination();
-  if ($item['path'] == 'node/%/moderation/%/change-state/%' && $destination == 'admin/workbench/needs-review') {
-    $active_trail[1]['title'] = 'Needs review';
-    $active_trail[1]['href'] = 'admin/workbench/needs-review';
-    $active_trail[2]['title'] = 'Change state';
-    unset($active_trail[3]);
+  if ($item['path'] == 'node/%/moderation/%/change-state/%' && $destination['destination'] == 'admin/workbench/needs-review') {
+    $active_trail = array(
+      array('title' => 'Home', 'href' => '', 'localized_options' => array()),
+      array('title' => 'Needs review', 'href' => 'admin/workbench/needs-review', 'localized_options' => array()),
+    );
   }
 }
 
@@ -133,7 +132,7 @@ function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state
     '#type' => 'submit',
     '#value' => 'Change to Draft',
   );
-  if ($form_state['input']['op'] != 'Preview') {
+  if (empty($form_state['input']['op']) || isset($form_state['input']['op']) && $form_state['input']['op'] != 'Preview') {
     $form['submit']['#disabled'] = TRUE;
   }
 
