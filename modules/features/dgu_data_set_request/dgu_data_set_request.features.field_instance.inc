@@ -740,7 +740,7 @@ function dgu_data_set_request_field_default_field_instances() {
     'bundle' => 'dataset_request',
     'default_value' => NULL,
     'deleted' => '0',
-    'description' => '',
+    'description' => 'You can find publisher administrators <a href="/publisher/report_publishers_and_users">here</a>',
     'display' => array(
       'default' => array(
         'label' => 'above',
@@ -2186,6 +2186,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   t('Suggested use');
   t('What data are you requesting?');
   t('What do you plan to do with the data?');
+  t('You can find publisher administrators <a href="/publisher/report_publishers_and_users">here</a>');
 
   return $field_instances;
 }
