@@ -121,7 +121,6 @@ function dgu_moderation_user_default_permissions() {
     'name' => 'use workbench_moderation needs review tab',
     'roles' => array(
       'administrator' => 'administrator',
-      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',

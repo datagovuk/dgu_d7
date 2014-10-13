@@ -30,7 +30,7 @@ Feature: Create blogs as a blogger
       | Blog               |
       | Most popular Blogs |
     And view "most_popular_blog_posts" view should have "6" rows
-    And row "1" of "most_popular_blog_posts" view should match "\d* comments Last \d* years \d* months ago$"
+    And row "1" of "most_popular_blog_posts" view should match "\d* comments Last \d* \w* \d* \w* ago$"
     And pager in "most_popular_blog_posts" view should match "^1 2 3 … »$"
     And view "frequent_bloggers" view should have "15" rows
     And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row

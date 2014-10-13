@@ -18,7 +18,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_assignee',
     'field_permissions' => array(
-      'type' => 2,
+      'type' => '2',
     ),
     'foreign keys' => array(
       'uid' => array(
@@ -239,7 +239,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_data_request_reference',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(
       'node' => array(
@@ -611,6 +611,52 @@ function dgu_data_set_request_field_default_field_bases() {
     'settings' => array(),
     'translatable' => '0',
     'type' => 'ckan_publisher_reference',
+  );
+
+  // Exported field_base: 'field_reply_reference'
+  $field_bases['field_reply_reference'] = array(
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_reply_reference',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
+    'foreign keys' => array(
+      'reply' => array(
+        'columns' => array(
+          'target_id' => 'id',
+        ),
+        'table' => 'reply',
+      ),
+    ),
+    'indexes' => array(
+      'target_id' => array(
+        0 => 'target_id',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'entityreference',
+    'settings' => array(
+      'handler' => 'base',
+      'handler_settings' => array(
+        'behaviors' => array(
+          'views-select-list' => array(
+            'status' => 0,
+          ),
+        ),
+        'sort' => array(
+          'type' => 'none',
+        ),
+        'target_bundles' => array(
+          'review_comment' => 'review_comment',
+        ),
+      ),
+      'target_type' => 'reply',
+    ),
+    'translatable' => '0',
+    'type' => 'entityreference',
   );
 
   // Exported field_base: 'field_review_comments'

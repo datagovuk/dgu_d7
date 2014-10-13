@@ -143,6 +143,10 @@ function dgu_user_profile_validate($form, &$form_state) {
  * Implements hook_menu_local_task_alter().
  */
 function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+//  $roles = array('administrator', 'moderator', 'data request administrator', 'glossary moderator', 'glossary moderator');
+//  $name = dgu_site_feature_user_has_role($roles) ? 'Manage content': 'My content';
+  $name = 'Manage my content';
+
   if ($router_item['tab_root'] == 'user/%' && dgu_user_accessing_own_account()) {
     $view_tab = current($data['tabs'][0]['output']);
 
@@ -166,7 +170,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
 
     $data['tabs'][0]['output'][] = array(
       '#theme' => 'menu_local_task',
-      '#link' => array('title' => 'Manage my content', 'href' => 'admin/workbench', 'localized_options' => array()),
+      '#link' => array('title' => $name, 'href' => 'admin/workbench', 'localized_options' => array()),
       '#active' => FALSE,
     );
 
@@ -207,7 +211,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   }
   elseif ($router_item['tab_root'] == 'admin/workbench') {
     global $user;
-    $data['tabs'][0]['output'][0]['#link']['title'] = 'Manage my content';
+    $data['tabs'][0]['output'][0]['#link']['title'] = $name;
     $my_profile = array(
       array(
         '#theme' => 'menu_local_task',
@@ -333,13 +337,13 @@ function dgu_user_workbench_content_alter(&$output) {
   $output['workbench_my_content'] = array(
     '#view' => 'my_content',
     '#view_display' => 'block',
-    '#attributes' => array('class' => array('clearfix')),
+    '#attributes' => array('class' => array('my-content', 'clearfix')),
     '#theme' => 'workbench_element',
   );
   $output['workbench_my_comments'] = array(
     '#view' => 'user_replies',
     '#view_display' => 'block_1',
-    '#attributes' => array('class' => array('clearfix')),
+    '#attributes' => array('class' => array('my-comments', 'clearfix')),
     '#theme' => 'workbench_element',
   );
 }
@@ -459,6 +463,13 @@ function dgu_user_preprocess_user_profile(&$variables) {
 
   $recent_comments = views_embed_view('user_replies', 'block_3');
   $variables['recent_comments'] = strpos($recent_comments, 'view-content') ? $recent_comments : FALSE;
+
+  if (dgu_user_accessing_own_account()) {
+    $my_publishers = views_embed_view('my_publishers', 'block');
+    $variables['my_publishers'] = strpos($my_publishers, 'view-content') ? $my_publishers : FALSE;
+    $active_data_requests = views_embed_view('data_requests_administration', 'block_1');
+    $variables['active_data_requests'] = strpos($active_data_requests, 'view-content') ? $active_data_requests : FALSE;
+  }
 }
 
 /**
@@ -467,8 +478,25 @@ function dgu_user_preprocess_user_profile(&$variables) {
  * To move field_avatar in to 'My Profile', this causes ajax errors if happens in hook_form_alter().
  */
 function dgu_user_preprocess_page(&$variables) {
+  global $user;
+
   if(arg(0) == 'user' && arg(2) == 'edit' && isset($variables['page']['content']['system_main']['field_avatar'])) {
     $variables['page']['content']['system_main']['profile']['field_avatar'] = $variables['page']['content']['system_main']['field_avatar'];
     unset($variables['page']['content']['system_main']['field_avatar']);
   }
+
+  if (arg(0) == 'user' || arg(0) == 'admin') {
+    $query = db_select('field_data_field_assignee', 'a');
+    $query->fields('a');
+    $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+    $query->condition('a.field_assignee_uid', $user->uid)
+          ->condition('s.field_review_status_value', 6, '<>');
+    $result = $query->execute();
+    $count = $result->rowCount();
+    if($count) {
+      $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
+      drupal_set_message('You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests') . ' that need' . format_plural($count, 's', '') . ' review, <a href="/admin/workbench/content/active">' . $link_title . '</a>');
+    }
+  }
+
 }

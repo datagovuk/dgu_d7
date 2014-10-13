@@ -368,20 +368,20 @@ function dgu_data_set_request_default_page_manager_pages() {
       'admin_title' => '',
       'title' => 'ODUG Members',
       'body' => '<a href="/users/robert_barr">Robert Barr</a><br/>
-<a href="/users/dlazanski">Dominique Lazanski</a><br/>
-<a href="/users/gschimd">Gesche Schmid</a><br/>
 <a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
 <a href="/users/charlieboundy">Charlie Boundy</a><br/>
-<a href="/users/alex-kafetz">Alex Kafetz</a><br/>
-<a href="/users/duncan3ross">Duncan Ross</a><br/>
 <a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>
-<a href="/users/tomsmith">Tom Smith</a><br/>
-Carlos Somohano<br/>
-Paul Fenton<br/>
-<a href="/users/hsavory">Heather Savory</a><br/>
 <a href="/users/pmalyon">Paul Malyon</a><br/>
 <a href="/users/jenit">Jeni Tennison</a><br/>
-<a href="/users/harveylewis">Harvey Lewis</a><br/>',
+Simon Briscoe<br/>
+Stuart Chalmers<br/>
+Hendrick Grothius<br/>
+Paul Hodgson<br/>
+Nick Halliday<br/>
+David Kane<br/>
+Ian Makgill<br/>
+Johanna Walker<br/>
+',
       'format' => 'unfiltered',
       'substitute' => TRUE,
     );
@@ -435,9 +435,13 @@ Paul Fenton<br/>
     $pane->access = array(
       'plugins' => array(
         0 => array(
-          'name' => 'perm',
+          'name' => 'role',
           'settings' => array(
-            'perm' => 'edit any dataset_request content',
+            'rids' => array(
+              0 => 3,
+              1 => 10,
+              2 => 11,
+            ),
           ),
           'context' => 'logged-in-user',
           'not' => FALSE,
