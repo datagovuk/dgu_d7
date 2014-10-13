@@ -30,6 +30,20 @@ function dgu_moderation_menu_alter(&$items) {
 }
 
 /**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_moderation_menu_breadcrumb_alter(&$active_trail, $item) {
+
+  $destination = drupal_get_destination();
+  if ($item['path'] == 'node/%/moderation/%/change-state/%' && $destination == 'admin/workbench/needs-review') {
+    $active_trail[1]['title'] = 'Needs review';
+    $active_trail[1]['href'] = 'admin/workbench/needs-review';
+    $active_trail[2]['title'] = 'Change state';
+    unset($active_trail[3]);
+  }
+}
+
+/**
  * Change the name of the node edit tab, conditionally.
  *
  * @param $node
