@@ -485,7 +485,7 @@ function dgu_user_preprocess_page(&$variables) {
     unset($variables['page']['content']['system_main']['field_avatar']);
   }
 
-  if (dgu_user_accessing_own_account()) {
+  if (arg(0) == 'user' || arg(0) == 'admin') {
     $query = db_select('field_data_field_assignee', 'a');
     $query->fields('a');
     $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
