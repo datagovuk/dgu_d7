@@ -530,17 +530,20 @@ function _dgu_data_request_get_summary_of_changes($current_revision, $previous_r
       }
       else {
         // Otherwise compare the values.
-        if (isset($current_request['#node']->{$key}[LANGUAGE_NONE])) {
-          foreach ($current_request['#node']->{$key}[LANGUAGE_NONE] as $index => &$item) {
+        $current_node = clone $current_request['#node'];
+        $previous_node = clone $previous_request['#node'];
+
+        if (isset($current_node->{$key}[LANGUAGE_NONE])) {
+          foreach ($current_node->{$key}[LANGUAGE_NONE] as $index => &$item) {
 
             // Fix weird discrepancy on text_log fields, for some reason current revision has
             // only 'value' element, previous revision has also 'safe_value' and 'format'.
             $item['format'] = FALSE;
             $item['safe_value'] = FALSE;
-            $previous_request['#node']->{$key}[LANGUAGE_NONE][$index]['format'] = FALSE;
-            $previous_request['#node']->{$key}[LANGUAGE_NONE][$index]['safe_value'] = FALSE;
+            $previous_node->{$key}[LANGUAGE_NONE][$index]['format'] = FALSE;
+            $previous_node->{$key}[LANGUAGE_NONE][$index]['safe_value'] = FALSE;
 
-            if ($item != $previous_request['#node']->{$key}[LANGUAGE_NONE][$index]) {
+            if ($item != $previous_node->{$key}[LANGUAGE_NONE][$index]) {
               _dgu_data_set_request_render_changes($current_revision, $previous_revision, $key, $changes);
             }
           }
