@@ -29,7 +29,7 @@ function dgu_site_feature_default_bootstrap_tour() {
       'format' => 'filtered_html',
     ),
     1 => array(
-      'selector' => 'a[href="/admin/workbench"]',
+      'selector' => '#menu-tabs a[href="/admin/workbench"]',
       'path' => 'user',
       'placement' => 'bottom',
       'title' => 'Manage my content',
@@ -38,7 +38,7 @@ function dgu_site_feature_default_bootstrap_tour() {
       'format' => 'filtered_html',
     ),
     2 => array(
-      'selector' => '.view-my-content',
+      'selector' => '.my-content',
       'path' => 'admin/workbench',
       'placement' => 'top',
       'title' => 'My content',
@@ -56,7 +56,7 @@ function dgu_site_feature_default_bootstrap_tour() {
       'format' => 'filtered_html',
     ),
     4 => array(
-      'selector' => '.view-user-replies',
+      'selector' => '.my-comments',
       'path' => '',
       'placement' => 'top',
       'title' => 'My comments',
@@ -65,7 +65,7 @@ function dgu_site_feature_default_bootstrap_tour() {
       'format' => 'filtered_html',
     ),
     5 => array(
-      'selector' => 'a[href="/admin/workbench/comments/my"]',
+      'selector' => 'a[href="/admin/workbench/content/comments/my"]',
       'path' => '',
       'placement' => 'bottom',
       'title' => 'My comments',
@@ -75,7 +75,7 @@ function dgu_site_feature_default_bootstrap_tour() {
     ),
     6 => array(
       'selector' => 'a[href="/admin/workbench/content/edited"]',
-      'path' => '',
+      'path' => 'admin/workbench',
       'placement' => 'bottom',
       'title' => 'My Edits',
       'content' => '<p>Here you can find your or other users content which you have edited.</p>
@@ -84,10 +84,74 @@ function dgu_site_feature_default_bootstrap_tour() {
     ),
     7 => array(
       'selector' => 'a[href="/admin/workbench/content/drafts"]',
-      'path' => '',
+      'path' => 'admin/workbench',
       'placement' => 'bottom',
       'title' => 'My Drafts',
       'content' => '<p>Here you can find your draft content.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    8 => array(
+      'selector' => '#edit-title',
+      'path' => 'admin/workbench/content/my',
+      'placement' => 'bottom',
+      'title' => 'Title filter',
+      'content' => '<p>You can search through the titles, enter any string contained in the title to perform search.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    9 => array(
+      'selector' => '#edit-type',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Content type',
+      'content' => '<p>You can flter content by type, please select content type from the drop down list.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    10 => array(
+      'selector' => '#edit-items-per-page',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Items per page',
+      'content' => '<p>Here you can choose number items displayed on the list.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    11 => array(
+      'selector' => '#edit-submit-my-content',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Apply button',
+      'content' => '<p>Please don&#39;t forget to press &#39;Apply&#39; button to apply filters.<br />
+	&nbsp;</p>
+',
+      'format' => 'filtered_html',
+    ),
+    12 => array(
+      'selector' => 'ul.tabs--secondary li.active a',
+      'path' => 'admin/workbench/content/edited',
+      'placement' => 'bottom',
+      'title' => 'My Edits',
+      'content' => '<p>Filters on My Edits page are identical.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    13 => array(
+      'selector' => 'ul.tabs--secondary li.active a',
+      'path' => 'admin/workbench/content/comments/my',
+      'placement' => 'bottom',
+      'title' => 'My comments',
+      'content' => '<p>The same on My Comments page.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    14 => array(
+      'selector' => '.views-widget-filter-state',
+      'path' => 'admin/workbench/content/drafts',
+      'placement' => 'bottom',
+      'title' => 'Moderation state filter',
+      'content' => '<p>On &#39;My Drafts&#39; page you have the same filters and also new State filter which lets you filter by moderation state.</p>
 ',
       'format' => 'filtered_html',
     ),

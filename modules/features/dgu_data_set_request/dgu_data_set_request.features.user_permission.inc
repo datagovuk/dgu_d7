@@ -15,6 +15,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'create dataset_request content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -25,6 +26,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -35,6 +37,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -45,6 +48,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -56,6 +60,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -66,6 +71,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -76,6 +82,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -86,6 +93,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -95,6 +103,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'delete any dataset_request content',
     'roles' => array(
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -104,6 +113,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'delete own dataset_request content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -114,6 +124,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -126,6 +137,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -137,6 +149,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -148,6 +161,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -158,6 +172,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -169,6 +184,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -179,6 +195,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -189,6 +206,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -198,6 +216,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit own dataset_request content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -208,6 +227,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -218,6 +238,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -228,6 +249,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -239,6 +261,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -249,6 +272,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -259,6 +283,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -269,6 +294,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -279,6 +305,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -289,6 +316,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -301,6 +329,7 @@ function dgu_data_set_request_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -312,6 +341,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -324,6 +354,7 @@ function dgu_data_set_request_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -336,6 +367,7 @@ function dgu_data_set_request_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -348,6 +380,7 @@ function dgu_data_set_request_user_default_permissions() {
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -358,6 +391,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -368,6 +402,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -378,6 +413,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -389,6 +425,7 @@ function dgu_data_set_request_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -399,6 +436,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -409,6 +447,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );
@@ -419,6 +458,7 @@ function dgu_data_set_request_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'field_permissions',
   );

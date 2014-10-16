@@ -26,6 +26,7 @@ function dgu_glossary_user_default_permissions() {
     'name' => 'create suggested_definition content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -36,6 +37,7 @@ function dgu_glossary_user_default_permissions() {
     'name' => 'create suggested_term content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -45,6 +47,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['delete any suggested_definition content'] = array(
     'name' => 'delete any suggested_definition content',
     'roles' => array(
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -54,6 +57,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['delete any suggested_term content'] = array(
     'name' => 'delete any suggested_term content',
     'roles' => array(
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -72,6 +76,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit any suggested_definition content'] = array(
     'name' => 'edit any suggested_definition content',
     'roles' => array(
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -81,6 +86,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit any suggested_term content'] = array(
     'name' => 'edit any suggested_term content',
     'roles' => array(
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'node',
@@ -90,6 +96,7 @@ function dgu_glossary_user_default_permissions() {
   $permissions['edit terms in document_type'] = array(
     'name' => 'edit terms in document_type',
     'roles' => array(
+      'editor' => 'editor',
       'glossary moderator' => 'glossary moderator',
     ),
     'module' => 'taxonomy',

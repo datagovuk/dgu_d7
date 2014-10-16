@@ -15,6 +15,7 @@ function dgu_forum_user_default_permissions() {
     'name' => 'create forum content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -22,14 +23,18 @@ function dgu_forum_user_default_permissions() {
   // Exported permission: 'delete any forum content'.
   $permissions['delete any forum content'] = array(
     'name' => 'delete any forum content',
-    'roles' => array(),
+    'roles' => array(
+      'editor' => 'editor',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: 'delete own forum content'.
   $permissions['delete own forum content'] = array(
     'name' => 'delete own forum content',
-    'roles' => array(),
+    'roles' => array(
+      'editor' => 'editor',
+    ),
     'module' => 'node',
   );
 
@@ -37,6 +42,7 @@ function dgu_forum_user_default_permissions() {
   $permissions['edit any forum content'] = array(
     'name' => 'edit any forum content',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -47,6 +53,7 @@ function dgu_forum_user_default_permissions() {
     'name' => 'edit own forum content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
