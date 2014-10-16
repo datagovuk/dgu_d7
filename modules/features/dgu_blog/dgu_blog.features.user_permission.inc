@@ -15,6 +15,7 @@ function dgu_blog_user_default_permissions() {
     'name' => 'create blog content',
     'roles' => array(
       'blogger' => 'blogger',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -22,7 +23,9 @@ function dgu_blog_user_default_permissions() {
   // Exported permission: 'delete any blog content'.
   $permissions['delete any blog content'] = array(
     'name' => 'delete any blog content',
-    'roles' => array(),
+    'roles' => array(
+      'editor' => 'editor',
+    ),
     'module' => 'node',
   );
 
@@ -31,6 +34,7 @@ function dgu_blog_user_default_permissions() {
     'name' => 'delete own blog content',
     'roles' => array(
       'blogger' => 'blogger',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -39,6 +43,7 @@ function dgu_blog_user_default_permissions() {
   $permissions['edit any blog content'] = array(
     'name' => 'edit any blog content',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -49,6 +54,7 @@ function dgu_blog_user_default_permissions() {
     'name' => 'edit own blog content',
     'roles' => array(
       'blogger' => 'blogger',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );

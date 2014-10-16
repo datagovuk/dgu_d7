@@ -33,6 +33,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'delete comment reply',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'reply',
@@ -42,6 +43,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['delete field_comment reply'] = array(
     'name' => 'delete field_comment reply',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'reply',
@@ -52,6 +54,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'delete own comment reply',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -59,7 +62,9 @@ function dgu_reply_user_default_permissions() {
   // Exported permission: 'delete own field_comment reply'.
   $permissions['delete own field_comment reply'] = array(
     'name' => 'delete own field_comment reply',
-    'roles' => array(),
+    'roles' => array(
+      'editor' => 'editor',
+    ),
     'module' => 'reply',
   );
 
@@ -69,6 +74,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -78,6 +84,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'delete review_comment reply',
     'roles' => array(
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -87,6 +94,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'edit comment reply',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'reply',
@@ -96,6 +104,7 @@ function dgu_reply_user_default_permissions() {
   $permissions['edit field_comment reply'] = array(
     'name' => 'edit field_comment reply',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'reply',
@@ -107,6 +116,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -116,6 +126,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'edit own field_comment reply',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -126,6 +137,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -135,6 +147,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'edit review_comment reply',
     'roles' => array(
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -145,6 +158,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -154,6 +168,7 @@ function dgu_reply_user_default_permissions() {
     'name' => 'post field_comment reply',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -164,6 +179,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );
@@ -175,6 +191,7 @@ function dgu_reply_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
       'unverified user' => 'unverified user',
     ),
     'module' => 'reply',
@@ -186,6 +203,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
       'unverified user' => 'unverified user',
     ),
     'module' => 'reply',
@@ -197,6 +215,7 @@ function dgu_reply_user_default_permissions() {
     'roles' => array(
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
     ),
     'module' => 'reply',
   );

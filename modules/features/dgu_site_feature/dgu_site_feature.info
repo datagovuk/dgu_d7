@@ -83,6 +83,7 @@ features[page_manager_pages][] = data
 features[page_manager_pages][] = help
 features[panels_mini][] = what_s_data_gov_uk_all_about_
 features[user_permission][] = access in-place editing
+features[user_role][] = editor
 features[variable][] = extlink_alert
 features[variable][] = extlink_alert_text
 features[variable][] = extlink_class

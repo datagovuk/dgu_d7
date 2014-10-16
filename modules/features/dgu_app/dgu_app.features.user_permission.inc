@@ -15,6 +15,7 @@ function dgu_app_user_default_permissions() {
     'name' => 'create app content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -23,6 +24,7 @@ function dgu_app_user_default_permissions() {
   $permissions['delete any app content'] = array(
     'name' => 'delete any app content',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -33,6 +35,7 @@ function dgu_app_user_default_permissions() {
     'name' => 'delete own app content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -41,6 +44,7 @@ function dgu_app_user_default_permissions() {
   $permissions['edit any app content'] = array(
     'name' => 'edit any app content',
     'roles' => array(
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -51,6 +55,7 @@ function dgu_app_user_default_permissions() {
     'name' => 'edit own app content',
     'roles' => array(
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );

@@ -17,6 +17,7 @@ function dgu_site_feature_user_default_permissions() {
       'administrator' => 'administrator',
       'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'quickedit',

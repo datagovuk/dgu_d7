@@ -35,6 +35,7 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
       'unverified user' => 'unverified user',
     ),
     'module' => 'node',
@@ -45,6 +46,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access content overview',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -55,6 +57,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access contextual links',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'contextual',
@@ -163,6 +166,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'administer nodes',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -218,6 +222,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'bypass node access',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -265,6 +270,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'delete revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -284,6 +290,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'revert revisions',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
       'moderator' => 'moderator',
     ),
     'module' => 'node',
@@ -351,6 +358,7 @@ function dgu_user_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
@@ -362,6 +370,7 @@ function dgu_user_user_default_permissions() {
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
       'data publisher' => 'data publisher',
+      'editor' => 'editor',
     ),
     'module' => 'node',
   );
