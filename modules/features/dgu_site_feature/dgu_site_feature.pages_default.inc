@@ -428,7 +428,10 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->admin_title = 'Help';
   $page->admin_description = 'Help page with interactive site tours. ';
   $page->path = 'help';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'normal',
     'title' => 'Help',
