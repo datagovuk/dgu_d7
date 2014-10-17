@@ -75,6 +75,8 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
     'wrapper' => 'edit-field-assignee',
   );
 
+  $form['#after_build'][] = 'dgu_data_set_request_form_dataset_request_node_afterbuild';
+
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
 
@@ -90,10 +92,18 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   }
 }
 
+function dgu_data_set_request_form_dataset_request_node_afterbuild($form, &$form_state) {
+  if(isset($_SESSION['assignee_options'][$form_state['node']->nid])) {
+    $form['field_assignee'][LANGUAGE_NONE]['#options'] = $_SESSION['assignee_options'][$form_state['node']->nid];
+  }
+  return  $form;
+}
+
 function dgu_data_set_request_form_ajax_callback($form, $form_state) {
   $node = $form_state['node'];
   $node->field_publisher_ref[LANGUAGE_NONE][0]['id'] = $form_state['values']['field_publisher_ref'][LANGUAGE_NONE][0]['id'];
   $options = dgu_data_set_request_assignee_get_users(NULL, NULL, NULL, $node);
+  $_SESSION['assignee_options'][$node->nid] = array_merge(array('_none' => '- None -'), $options);
   $form['field_assignee'][LANGUAGE_NONE]['#options'] = $options;
   $form['field_assignee'][LANGUAGE_NONE]['#prefix'] = '<div id="edit-field-assignee" class="field-type-assignee field-name-field-assignee field-widget-options-select form-wrapper">';
   $form['field_assignee'][LANGUAGE_NONE]['#suffix'] = '</div>';
