@@ -738,6 +738,7 @@ function dgu_data_set_request_field_default_field_bases() {
         1 => 'Data cannot be released',
         2 => 'Data already available',
         3 => 'Not a data request or a data issue',
+        4 => 'Technical issue resolved',
       ),
       'allowed_values_function' => '',
     ),
