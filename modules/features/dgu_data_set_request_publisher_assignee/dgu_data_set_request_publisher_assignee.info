@@ -1,0 +1,16 @@
+name = DGU Data set request publisher assignee
+description = Provides functionality related to Publisher Assignee field
+core = 7.x
+package = DGU Features
+dependencies[] = dgu_assignee
+dependencies[] = features
+dependencies[] = field_permissions
+dependencies[] = options
+features[features_api][] = api:2
+features[field_base][] = field_publisher_assignee
+features[field_instance][] = node-dataset_request-field_publisher_assignee
+features[user_permission][] = create field_publisher_assignee
+features[user_permission][] = edit field_publisher_assignee
+features[user_permission][] = edit own field_publisher_assignee
+features[user_permission][] = view field_publisher_assignee
+features[user_permission][] = view own field_publisher_assignee

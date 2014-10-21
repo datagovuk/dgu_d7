@@ -1,0 +1,90 @@
+<?php
+/**
+ * @file
+ * Drupal needs this blank file.
+ */
+
+/**
+ * Implements hook_assignee_get_users().
+ */
+function dgu_data_set_request_publisher_assignee_assignee_get_users($field = NULL, $instance = NULL, $entity_type = NULL, $entity) {
+
+  $options = array();
+
+  if (isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id'])) {
+    //$publisher = ckan_publisher_load($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
+
+    $query = db_select('users', 'u')
+      ->fields('u', array('uid', 'name'));
+    $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
+    $query->condition('fp.field_publishers_target_id', $entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
+    $options = $query->execute()->fetchAllKeyed();
+
+    //$options[$publisher->title] = $publishing_users;
+  }
+
+  return $options;
+}
+
+function dgu_data_set_request_publisher_assignee_get_assignees($nid) {
+  // TODO add static cache
+  $query = db_select('field_revision_field_publisher_assignee', 'fpa')
+    ->distinct()
+    ->fields('fpa', array('field_publisher_assignee_uid'))
+    ->condition('entity_type', 'node')
+    ->condition('entity_id', $nid);
+  return $query->execute()->fetchCol();
+}
+
+function is_or_was_assignee($nid, $account = NULL) {
+  global $user;
+
+  if (!isset($account)) {
+    $account = $user;
+  }
+
+  $assignees = dgu_data_set_request_publisher_assignee_get_assignees($nid);
+  return in_array($account->uid, $assignees);
+}
+
+/**
+ * Implements Hook hook_form_FORM_ID_alter().
+ */
+function dgu_data_set_request_publisher_assignee_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['field_publisher_ref'][LANGUAGE_NONE]['#ajax'] = array(
+    'callback' => 'dgu_data_set_request_publisher_assignee_form_ajax_callback',
+    'wrapper' => 'edit-field-publisher-assignee',
+  );
+  $form['#after_build'][] = 'dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild';
+
+}
+
+function dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild($form, &$form_state) {
+  if(isset($form_state['node']->nid) && isset($_SESSION['publisher_assignee_options'][$form_state['node']->nid]) && $_SERVER['REQUEST_URI'] != '/system/ajax') {
+    $form['field_publisher_assignee'][LANGUAGE_NONE]['#options'] = $_SESSION['publisher_assignee_options'][$form_state['node']->nid];
+  }
+  return  $form;
+}
+
+function dgu_data_set_request_publisher_assignee_form_ajax_callback($form, $form_state) {
+  $node = $form_state['node'];
+  $node->field_publisher_ref[LANGUAGE_NONE][0]['id'] = $form_state['values']['field_publisher_ref'][LANGUAGE_NONE][0]['id'];
+  $options = dgu_data_set_request_publisher_assignee_assignee_get_users(NULL, NULL, NULL, $node);
+  $options = array('_none' => '- None -') + $options;
+  $_SESSION['publisher_assignee_options'][$node->nid] = $options;
+  $form['field_publisher_assignee'][LANGUAGE_NONE]['#options'] = $options;
+  $form['field_publisher_assignee'][LANGUAGE_NONE]['#prefix'] = '<div id="edit-field-publisher-assignee" class="field-type-assignee field-name-field-publisher-assignee field-widget-options-buttons form-wrapper">';
+  $form['field_publisher_assignee'][LANGUAGE_NONE]['#suffix'] = '</div>';
+  $form['field_publisher_assignee']['#processed'] = FALSE;
+
+  foreach ($form['field_publisher_assignee'][LANGUAGE_NONE] as $key => $value) {
+    if(is_numeric($key)) {
+      unset($form['field_publisher_assignee'][LANGUAGE_NONE][$key]);
+    }
+
+  }
+
+  form_builder('dataset_request_node_form', $form['field_publisher_assignee'], $form_state);
+
+  return  $form['field_publisher_assignee'][LANGUAGE_NONE];
+}
