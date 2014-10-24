@@ -48,6 +48,7 @@ function dgu_data_set_request_publisher_assignee_user_default_permissions() {
     'name' => 'view field_publisher_assignee',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'editor' => 'editor',
     ),

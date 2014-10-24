@@ -31,7 +31,7 @@ function dgu_data_set_request_publisher_assignee_field_default_field_instances()
           ),
         ),
         'type' => 'dgu_assignee_default',
-        'weight' => 25,
+        'weight' => '3',
       ),
       'rss' => array(
         'label' => 'above',
@@ -65,7 +65,7 @@ function dgu_data_set_request_publisher_assignee_field_default_field_instances()
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => '4',
+      'weight' => '5',
     ),
   );
 
