@@ -283,7 +283,7 @@ projects[bootstrap][type] = "theme"
 projects[bootstrap][subdir] = "contrib"
 projects[bootstrap][download][type] = "git"
 projects[bootstrap][download][url] = "http://git.drupal.org/project/bootstrap.git"
-projects[bootstrap][download][tag] = "7.x-3.0-rc2"
+projects[bootstrap][download][tag] = "7.x-3.0"
 
 ; Libraries
 ; --------
