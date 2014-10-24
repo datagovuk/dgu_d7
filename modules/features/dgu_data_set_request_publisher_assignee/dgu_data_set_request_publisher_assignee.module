@@ -15,10 +15,22 @@ function dgu_data_set_request_publisher_assignee_assignee_get_users($field = NUL
     //$publisher = ckan_publisher_load($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
 
     $query = db_select('users', 'u')
-      ->fields('u', array('uid', 'name'));
+      ->fields('u', array('uid', 'name', 'data'));
     $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
     $query->condition('fp.field_publishers_target_id', $entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
-    $options = $query->execute()->fetchAllKeyed();
+    $result = $query->execute()->fetchAll();
+
+    $options = array();
+
+    foreach ($result as $row) {
+      $data = unserialize($row->data);
+      $publisher_id = isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']) ? $entity->field_publisher_ref[LANGUAGE_NONE][0]['id'] : FALSE;
+      $role = '';
+      if(isset($data['ckan_publishers'][$publisher_id]) && $data['ckan_publishers'][$publisher_id] == 'admin') {
+        $role = ' <strong>[admin]</strong>';
+      }
+      $options[$row->uid] = $row->name . $role;
+    }
 
     //$options[$publisher->title] = $publishing_users;
   }
@@ -51,12 +63,16 @@ function is_or_was_assignee($nid, $account = NULL) {
  * Implements Hook hook_form_FORM_ID_alter().
  */
 function dgu_data_set_request_publisher_assignee_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
+  $path = drupal_get_path('module', 'dgu_data_set_request_publisher_assignee');
+  $form['#attached']['css'][] = $path . '/css/publisher_assignee.css';
+  $form['#attached']['js'][] = $path . '/js/publisher_assignee.js';
+
   $form['field_publisher_ref'][LANGUAGE_NONE]['#ajax'] = array(
     'callback' => 'dgu_data_set_request_publisher_assignee_form_ajax_callback',
     'wrapper' => 'edit-field-publisher-assignee',
   );
-  $form['#after_build'][] = 'dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild';
 
+  $form['#after_build'][] = 'dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild';
 }
 
 function dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild($form, &$form_state) {
