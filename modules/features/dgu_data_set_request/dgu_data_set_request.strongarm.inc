@@ -289,7 +289,7 @@ function dgu_data_set_request_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '6',
+          'weight' => '7',
         ),
         'path' => array(
           'weight' => '25',
@@ -304,7 +304,7 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'flag_spam_node' => array(
           'default' => array(
-            'weight' => '13',
+            'weight' => '14',
             'visible' => TRUE,
           ),
           'rss' => array(
@@ -322,7 +322,7 @@ function dgu_data_set_request_strongarm() {
         ),
         'flag_subscribe_node' => array(
           'default' => array(
-            'weight' => '14',
+            'weight' => '15',
             'visible' => TRUE,
           ),
           'teaser' => array(
