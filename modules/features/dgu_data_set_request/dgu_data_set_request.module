@@ -71,10 +71,33 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
       'data' => '#edit-submit-top {float: right;}',
       'type' => 'inline',
     );
+    $assignee_uids = dgu_data_set_request_get_assignees($node->nid);
+    $assignees = array();
+    foreach($assignee_uids as $uid) {
+      $user = user_load($uid);
+      if (empty($form['field_assignee'][LANGUAGE_NONE]['#default_value'][0]) || isset($form['field_assignee'][LANGUAGE_NONE]['#default_value'][0]) && $form['field_assignee'][LANGUAGE_NONE]['#default_value'][0] != $user->uid) {
+        $assignees[] = $user->name;
+      }
+    }
+    if(!empty($assignees)) {
+      $assignees = '<div class="help-block">Previous RM\'s: ' . implode(', ', $assignees) . '</div>';
+      $form['field_assignee']['#suffix'] = $assignees;
+    }
   }
+
   else {
     dgu_moderation_node_forms_alter($form);
   }
+}
+
+function dgu_data_set_request_get_assignees($nid) {
+  // TODO add static cache
+  $query = db_select('field_revision_field_assignee', 'fpa')
+    ->distinct()
+    ->fields('fpa', array('field_assignee_uid'))
+    ->condition('entity_type', 'node')
+    ->condition('entity_id', $nid);
+  return $query->execute()->fetchCol();
 }
 
 function dgu_data_set_request_node_access($node, $op, $account) {
