@@ -277,6 +277,10 @@ projects[quickedit][subdir] = "contrib"
 projects[autologout][version] = "4.3"
 projects[autologout][subdir] = "contrib"
 
+projects[maxlength][version] = "3.0"
+projects[maxlength][subdir] = "contrib"
+
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
