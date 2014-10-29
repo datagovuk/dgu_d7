@@ -89,6 +89,12 @@
       <?php print $active_data_requests; ?>
     </div>
   <?php endif; ?>
+  <?php if($my_data_requests): ?>
+    <div class="user-engagement col-md-4">
+      <h3>My Data requests</h3>
+      <?php print $my_data_requests; ?>
+    </div>
+  <?php endif; ?>
 
 
 
