@@ -283,7 +283,8 @@ projects[maxlength][subdir] = "contrib"
 projects[mass_contact][version] = "1.0"
 projects[mass_contact][subdir] = "contrib"
 
-
+projects[contact_deeplink][version] = "1.0"
+projects[contact_deeplink][subdir] = "contrib"
 
 ; Themes
 ; --------
