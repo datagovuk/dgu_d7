@@ -88,6 +88,22 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   else {
     dgu_moderation_node_forms_alter($form);
   }
+
+  // This is temporary until bugs in conditional_fields module are fixed.
+  $form['#validate'][] = 'dgu_data_set_request_form_validate';
+}
+
+// This is temporary until bugs in conditional_fields module are fixed.
+function dgu_data_set_request_form_validate($form, &$form_state) {
+  // Random example, if the title is 'test' throw an error
+  if (isset($form_state['values']['field_submitter_type'][LANGUAGE_NONE][0]['value']) && $form_state['values']['field_submitter_type'][LANGUAGE_NONE][0]['value'] == '2') {
+    if(empty($form_state['values']['field_organisation_type'][LANGUAGE_NONE][0]['value'])) {
+      form_set_error('field_organisation_type', 'Organisation type field is required.');
+    }
+    if(empty($form_state['values']['field_organisation_name'][LANGUAGE_NONE][0]['value'])) {
+      form_set_error('field_organisation_name', 'Organisation name field is required.');
+    }
+  }
 }
 
 function dgu_data_set_request_get_assignees($nid) {
