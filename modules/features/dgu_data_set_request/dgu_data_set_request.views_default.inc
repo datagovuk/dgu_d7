@@ -412,7 +412,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Relationship Manager */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -710,7 +710,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Relationship Manager */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -750,7 +750,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['label'] = 'Actions';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Relationship Manager (field_assignee) */
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
   $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
   $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
@@ -961,7 +961,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Relationship Manager */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -1064,7 +1064,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Relationship Manager */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -1316,7 +1316,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Relationship Manager (field_assignee) */
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
   $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
   $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
@@ -1495,7 +1495,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['changed']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['changed']['date_format'] = 'time ago';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Relationship Manager (field_assignee) */
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
   $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
   $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
@@ -1774,7 +1774,7 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Relationship Manager */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';

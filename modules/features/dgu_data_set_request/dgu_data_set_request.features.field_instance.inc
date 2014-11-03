@@ -779,7 +779,7 @@ function dgu_data_set_request_field_default_field_instances() {
     ),
     'entity_type' => 'node',
     'field_name' => 'field_assignee',
-    'label' => 'Relationship Manager',
+    'label' => 'Relationship manager',
     'required' => 0,
     'settings' => array(
       'user_list_provider' => 'dgu_data_set_request',
@@ -2178,7 +2178,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
   t('Publication preference');
   t('Publisher');
   t('Reason');
-  t('Relationship Manager');
+  t('Relationship manager');
   t('Rendered subject');
   t('Rendered_body');
   t('Reply reference');
