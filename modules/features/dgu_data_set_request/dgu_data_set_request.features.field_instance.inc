@@ -1600,14 +1600,14 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'label' => 'Organisation name',
     'required' => 1,
     'settings' => array(
-      'text_processing' => 0,
+      'text_processing' => '0',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
       'active' => 1,
       'module' => 'text',
       'settings' => array(
-        'size' => 60,
+        'size' => '60',
       ),
       'type' => 'text_textfield',
       'weight' => '12',
@@ -2096,7 +2096,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_buttons',
-      'weight' => '0',
+      'weight' => 0,
     ),
   );
 

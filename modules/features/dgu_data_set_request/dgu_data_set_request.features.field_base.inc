@@ -470,6 +470,9 @@ function dgu_data_set_request_field_default_field_bases() {
     'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_organisation_name',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
     'foreign keys' => array(
       'format' => array(
         'columns' => array(
@@ -500,7 +503,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_organisation_type',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(),
     'indexes' => array(
@@ -788,7 +791,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'entity_types' => array(),
     'field_name' => 'field_submitter_type',
     'field_permissions' => array(
-      'type' => 0,
+      'type' => '0',
     ),
     'foreign keys' => array(),
     'indexes' => array(
