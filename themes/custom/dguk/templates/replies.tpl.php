@@ -6,10 +6,10 @@
     <?php endif; ?>
     <div class="replies"><?php print render($replies) ?></div>
   <?php endif; ?>
-  <?php if ($links): ?>
+  <?php if (!empty($links)): ?>
     <div class="replies-links"><?php print render($links) ?></div>
   <?php endif; ?>
-  <?php if ($reply_form): ?>
+  <?php if (!empty($reply_form)): ?>
     <div class="replies-form"><?php print render($reply_form) ?></div>
   <?php endif; ?>
 </div>
