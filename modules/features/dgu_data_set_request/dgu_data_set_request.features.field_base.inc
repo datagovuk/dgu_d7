@@ -804,7 +804,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'settings' => array(
       'allowed_values' => array(
         1 => 'As a private individual',
-        2 => 'In behalf of an organisation',
+        2 => 'On behalf of an Organisation',
       ),
       'allowed_values_function' => '',
     ),

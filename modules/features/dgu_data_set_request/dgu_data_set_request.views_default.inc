@@ -2393,7 +2393,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_organisation_name']['id'] = 'field_organisation_name';
   $handler->display->display_options['fields']['field_organisation_name']['table'] = 'field_data_field_organisation_name';
   $handler->display->display_options['fields']['field_organisation_name']['field'] = 'field_organisation_name';
-  $handler->display->display_options['fields']['field_organisation_name']['label'] = 'In behalf of';
+  $handler->display->display_options['fields']['field_organisation_name']['label'] = 'On behalf of';
   $handler->display->display_options['fields']['field_organisation_name']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_colon'] = FALSE;
