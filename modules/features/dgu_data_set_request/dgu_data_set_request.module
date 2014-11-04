@@ -348,7 +348,7 @@ function dgu_data_set_request_node_update($node) {
       $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
-          $assignee => array(
+          $assignee->uid => array(
             'notifiers' => $notifier,
           ),
         ),
