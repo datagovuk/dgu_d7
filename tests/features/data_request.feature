@@ -54,6 +54,8 @@ Feature: Request new data
     And I should see "Are you able to provide estimates of the economic or financial benefit of data release? field is required."
     And I should see "Publication preference field is required."
     And I should see "I request this data field is required."
+    And I should not see "Organisation name field is required."
+    And I should not see "Organisation type field is required."
     And the field "Data request title" should be outlined in red
     And the field "Data request description" should be outlined in red
     # Fill out new dataset request form
@@ -61,7 +63,7 @@ Feature: Request new data
     And I fill in "Data request description" with "My Dataset request description"
     And I select the radio button "Request is public"
     And I select the radio button "In behalf of an organisation"
-    And I wait 1 second
+    And I wait 2 seconds
     And I select the radio button "Start up"
     And I fill in "Organisation name" with "My organisation"
     And I check the box "Finance"
@@ -123,28 +125,31 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    And I select "test_data_request_manager" from "Assignee"
-    And I select the radio button "Academics"
+    And I select "test_data_request_manager" from "Relationship manager"
     When I press "Save"
     And I wait until the page loads
     Given I am not logged in
     And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     When I visit "/admin/workbench"
-    And I follow "Active Data requests"
+    And I follow "My Data requests"
     And I wait until the page loads
     And I follow "My Dataset request title"
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    And I select "test_data_publisher" from "Assignee"
+    And I select the radio button "Escalated to data holder"
+    And I wait 2 seconds
+    And I select the radio button "Academics"
+    And I wait 2 seconds
+    And I select the radio button "test_data_publisher"
     And I press "Save"
     And I wait until the page loads
-    Then I should see "Add note"
+    Then I should see "Add review note"
     Given I visit "/admin/workbench"
     And I wait until the page loads
-    When I follow "Active Data requests"
+    When I follow "My Data requests"
     And I wait until the page loads
-    Then I should not see "My Dataset request title"
+    Then I should see "My Dataset request title"
     When I follow "My Edits"
     And I wait until the page loads
     Then I should see "My Dataset request title"
@@ -156,16 +161,16 @@ Feature: Request new data
     And I follow "Active Data requests"
     And I wait until the page loads
     And I follow "My Dataset request title"
-    Then I should see "Add note"
+    Then I should see "Add review note"
     # Set digest last run to 2 days ago to trigger daily notifications
     And I set digest last run to 2 days ago
     And I run cron
     Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
     # TODO - test summary of changes
     #Summary of changes:
-    #Field "Assignee" changed
-    #from: test_data_request_manager
-    #to:   test_data_publisher
+    #Field "Publisher assignee" changed
+    #from:
+    #to: test_data_publisher
     And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
     # Set digest last run to 10 days ago to trigger daily and weekly notifications
@@ -195,16 +200,22 @@ Feature: Request new data
     And I click "Unsubscribe"
     And I wait 2 seconds
     Then I should see the link "Subscribe"
+    # Log in as test_data_request_manager and change relationship manager
+    Given I am not logged in
+    And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
+    And I visit "/admin/workbench"
+    And I wait until the page loads
+    And I follow "My Data requests"
+    And I wait until the page loads
     When I follow "My Dataset request title"
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
-    # Set assignee to test_data_request_admin
-    And I select "test_data_request_admin" from "Assignee"
+    And I select "test_data_request_admin" from "Relationship manager"
     And I press "Save"
     Then the "test_data_request_admin" user received an email 'Data request "My Dataset request title" has been assigned to you'
-    And I should see "Add note"
-    Given I visit "/admin/workbench/content/active"
+    And I should see "Add review note"
+    Given I visit "/admin/workbench/content/my-data-requests"
     And I wait until the page loads
     Then I should not see "My Dataset request title"
     When I follow "My Edits"
