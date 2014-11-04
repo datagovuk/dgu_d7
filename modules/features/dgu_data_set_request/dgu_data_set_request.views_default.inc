@@ -136,6 +136,28 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
+  /* Field: Content: Publisher */
+  $handler->display->display_options['fields']['field_publisher_ref']['id'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['table'] = 'field_data_field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['field'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publisher assignee */
+  $handler->display->display_options['fields']['field_publisher_assignee']['id'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['field'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
   /* Field: Content: Edit link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -146,15 +168,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Assignee (field_assignee) */
-  $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
-  $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
-  $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
-  $handler->display->display_options['arguments']['field_assignee_uid']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['field_assignee_uid']['default_argument_type'] = 'current_user';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary_options']['items_per_page'] = '25';
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -282,9 +295,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['access'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
-    3 => '3',
     6 => '6',
-    10 => '10',
   );
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
@@ -294,6 +305,139 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['pager']['options']['expose']['items_per_page'] = TRUE;
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options'] = '5, 10, 25, 40, 60';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'type' => 'type',
+    'changed' => 'changed',
+    'field_review_status' => 'field_review_status',
+    'field_publication_preference' => 'field_publication_preference',
+    'field_assignee' => 'field_assignee',
+    'edit_node' => 'edit_node',
+  );
+  $handler->display->display_options['style_options']['default'] = 'changed';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'type' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_review_status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publication_preference' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_assignee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Type */
+  $handler->display->display_options['fields']['type']['id'] = 'type';
+  $handler->display->display_options['fields']['type']['table'] = 'node';
+  $handler->display->display_options['fields']['type']['field'] = 'type';
+  $handler->display->display_options['fields']['type']['exclude'] = TRUE;
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'Last updated';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'raw time ago';
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publication preference */
+  $handler->display->display_options['fields']['field_publication_preference']['id'] = 'field_publication_preference';
+  $handler->display->display_options['fields']['field_publication_preference']['table'] = 'field_data_field_publication_preference';
+  $handler->display->display_options['fields']['field_publication_preference']['field'] = 'field_publication_preference';
+  $handler->display->display_options['fields']['field_publication_preference']['label'] = 'Preference';
+  $handler->display->display_options['fields']['field_publication_preference']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_publication_preference']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_publication_preference']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Relationship manager */
+  $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
+  $handler->display->display_options['fields']['field_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Edit link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Actions';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Publisher assignee (field_publisher_assignee) */
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['id'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['field'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Type */
@@ -427,6 +571,8 @@ function dgu_data_set_request_views_default_views() {
     'field_review_outcome' => 'field_review_outcome',
     'field_publication_preference' => 'field_publication_preference',
     'field_assignee' => 'field_assignee',
+    'field_publisher_ref' => 'field_publisher_ref',
+    'field_publisher_assignee' => 'field_publisher_assignee',
     'edit_node' => 'edit_node',
   );
   $handler->display->display_options['style_options']['default'] = 'changed';
@@ -474,6 +620,20 @@ function dgu_data_set_request_views_default_views() {
       'empty_column' => 0,
     ),
     'field_assignee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publisher_ref' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publisher_assignee' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -550,12 +710,34 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Assignee */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['empty'] = 'Not assigned';
   $handler->display->display_options['fields']['field_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publisher */
+  $handler->display->display_options['fields']['field_publisher_ref']['id'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['table'] = 'field_data_field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['field'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publisher assignee */
+  $handler->display->display_options['fields']['field_publisher_assignee']['id'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['field'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -568,7 +750,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['label'] = 'Actions';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Assignee (field_assignee) */
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
   $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
   $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
@@ -779,7 +961,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Assignee */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -882,7 +1064,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Assignee */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
@@ -1000,6 +1182,328 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['changed']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['changed']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['changed']['date_format'] = 'time ago';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Publisher assignee (field_publisher_assignee) */
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['id'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['field'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_publisher_assignee_uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dataset_request' => 'dataset_request',
+  );
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+  );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
+    6 => '6',
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'My Data requests';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    10 => '10',
+  );
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '25';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page'] = TRUE;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options'] = '5, 10, 25, 40, 60';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'type' => 'type',
+    'changed' => 'changed',
+    'field_review_status' => 'field_review_status',
+    'field_publication_preference' => 'field_publication_preference',
+    'field_publisher_ref' => 'field_publisher_ref',
+    'field_publisher_assignee' => 'field_publisher_assignee',
+    'edit_node' => 'edit_node',
+  );
+  $handler->display->display_options['style_options']['default'] = 'changed';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'type' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_review_status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publication_preference' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publisher_ref' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_publisher_assignee' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
+  $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
+  $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
+  $handler->display->display_options['arguments']['field_assignee_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_assignee_uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dataset_request' => 'dataset_request',
+  );
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Type';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+  );
+  /* Filter criterion: Content: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'contains';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Title';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    11 => 0,
+    12 => 0,
+    10 => 0,
+  );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
+    0 => '0',
+    1 => '1',
+    2 => '2',
+    3 => '3',
+    4 => '4',
+    5 => '5',
+  );
+  $handler->display->display_options['filters']['field_review_status_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator_id'] = 'field_review_status_value_op';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator'] = 'field_review_status_value_op';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['identifier'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+  );
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['reduce'] = TRUE;
+  /* Filter criterion: Content: Publication preference (field_publication_preference) */
+  $handler->display->display_options['filters']['field_publication_preference_value']['id'] = 'field_publication_preference_value';
+  $handler->display->display_options['filters']['field_publication_preference_value']['table'] = 'field_data_field_publication_preference';
+  $handler->display->display_options['filters']['field_publication_preference_value']['field'] = 'field_publication_preference_value';
+  $handler->display->display_options['filters']['field_publication_preference_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['operator_id'] = 'field_publication_preference_value_op';
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['label'] = 'Preference';
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['operator'] = 'field_publication_preference_value_op';
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['identifier'] = 'field_publication_preference_value';
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_publication_preference_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    11 => 0,
+    12 => 0,
+    10 => 0,
+  );
+  $handler->display->display_options['path'] = 'admin/workbench/content/my-data-requests';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'My Data requests';
+  $handler->display->display_options['menu']['weight'] = '100';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block_2');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'My Data requests';
+  $handler->display->display_options['defaults']['use_more'] = FALSE;
+  $handler->display->display_options['use_more'] = TRUE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['defaults']['use_more_text'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'See all';
+  $handler->display->display_options['defaults']['link_display'] = FALSE;
+  $handler->display->display_options['link_display'] = 'page_2';
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '5';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '30';
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  /* Field: Content: Status */
+  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
+  $handler->display->display_options['fields']['field_review_status']['label'] = '';
+  $handler->display->display_options['fields']['field_review_status']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_review_status']['alter']['text'] = '[field_review_status] |';
+  $handler->display->display_options['fields']['field_review_status']['element_type'] = 'span';
+  $handler->display->display_options['fields']['field_review_status']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_review_status']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = '';
+  $handler->display->display_options['fields']['changed']['element_type'] = 'span';
+  $handler->display->display_options['fields']['changed']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['changed']['element_wrapper_type'] = 'span';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'time ago';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Content: Relationship manager (field_assignee) */
+  $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
+  $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
+  $handler->display->display_options['arguments']['field_assignee_uid']['default_action'] = 'default';
+  $handler->display->display_options['arguments']['field_assignee_uid']['default_argument_type'] = 'current_user';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_assignee_uid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Type */
@@ -1094,6 +1598,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Data request title';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
   /* Field: Content: Data request description */
   $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
   $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
@@ -1122,8 +1627,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_first_name']['table'] = 'field_data_field_first_name';
   $handler->display->display_options['fields']['field_first_name']['field'] = 'field_first_name';
   $handler->display->display_options['fields']['field_first_name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_first_name']['label'] = '';
-  $handler->display->display_options['fields']['field_first_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_first_name']['label'] = 'First name';
   $handler->display->display_options['fields']['field_first_name']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_first_name']['settings'] = array(
     'field_replies' => '',
@@ -1137,8 +1641,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_surname']['table'] = 'field_data_field_surname';
   $handler->display->display_options['fields']['field_surname']['field'] = 'field_surname';
   $handler->display->display_options['fields']['field_surname']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['field_surname']['label'] = '';
-  $handler->display->display_options['fields']['field_surname']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_surname']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_surname']['settings'] = array(
     'field_replies' => '',
@@ -1152,15 +1654,14 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'Submitter name';
-  $handler->display->display_options['fields']['name']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['name']['label'] = 'User name';
   $handler->display->display_options['fields']['name']['alter']['text'] = '[name] ([field_first_name] [field_surname])';
+  $handler->display->display_options['fields']['name']['link_to_user'] = FALSE;
   /* Field: User: E-mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
   $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['mail']['label'] = 'Submitter e-mail';
   /* Field: Content: Organisation type */
   $handler->display->display_options['fields']['field_organisation_type']['id'] = 'field_organisation_type';
   $handler->display->display_options['fields']['field_organisation_type']['table'] = 'field_data_field_organisation_type';
@@ -1273,11 +1774,33 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Assignee */
+  /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['fields']['field_assignee']['field'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publisher */
+  $handler->display->display_options['fields']['field_publisher_ref']['id'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['table'] = 'field_data_field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['field'] = 'field_publisher_ref';
+  $handler->display->display_options['fields']['field_publisher_ref']['settings'] = array(
+    'field_replies' => '',
+    'field_replies_settings' => array(
+      'field_replies_reply_field_name' => '',
+      'field_replies_revision' => '',
+    ),
+  );
+  /* Field: Content: Publisher assignee */
+  $handler->display->display_options['fields']['field_publisher_assignee']['id'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['field'] = 'field_publisher_assignee';
+  $handler->display->display_options['fields']['field_publisher_assignee']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
@@ -1870,7 +2393,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_organisation_name']['id'] = 'field_organisation_name';
   $handler->display->display_options['fields']['field_organisation_name']['table'] = 'field_data_field_organisation_name';
   $handler->display->display_options['fields']['field_organisation_name']['field'] = 'field_organisation_name';
-  $handler->display->display_options['fields']['field_organisation_name']['label'] = 'In behalf of';
+  $handler->display->display_options['fields']['field_organisation_name']['label'] = 'On behalf of';
   $handler->display->display_options['fields']['field_organisation_name']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_colon'] = FALSE;

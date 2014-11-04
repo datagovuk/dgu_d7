@@ -135,7 +135,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_assignee',
     'roles' => array(
       'administrator' => 'administrator',
-      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'editor' => 'editor',
     ),
@@ -159,7 +158,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_publisher_ref',
     'roles' => array(
       'administrator' => 'administrator',
-      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'editor' => 'editor',
     ),
@@ -182,7 +180,6 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'edit field_review_notes',
     'roles' => array(
       'administrator' => 'administrator',
-      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'editor' => 'editor',
     ),
@@ -304,6 +301,7 @@ function dgu_data_set_request_user_default_permissions() {
     'name' => 'view field_assignee',
     'roles' => array(
       'administrator' => 'administrator',
+      'data publisher' => 'data publisher',
       'data request administrator' => 'data request administrator',
       'editor' => 'editor',
     ),

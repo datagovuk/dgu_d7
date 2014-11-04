@@ -54,26 +54,13 @@ function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
 }
 
 /**
- * @param $form
- * @param $form_state
- * @param $form_id
- *
- *
  * Implements Hook hook_form_FORM_ID_alter which:
- * -  creates our own hidden input for review status and hides the select
- * box for any user who does not have the "Dataset Request: Edit any content" permission.
- * - adds a button to submit the data request for moderation.
  */
 function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$form_state, $form_id) {
   $node = $form['#node'];
   drupal_set_title('Create a dataset request');
   unset($form['actions']['preview']);
   $form['#attributes']['class'][] = "boxed";
-
-  $form['field_publisher_ref'][LANGUAGE_NONE]['#ajax'] = array(
-    'callback' => 'dgu_data_set_request_form_ajax_callback',
-    'wrapper' => 'edit-field-assignee',
-  );
 
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
@@ -84,27 +71,40 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
       'data' => '#edit-submit-top {float: right;}',
       'type' => 'inline',
     );
+    $assignee_uids = dgu_data_set_request_get_assignees($node->nid);
+    $assignees = array();
+    foreach($assignee_uids as $uid) {
+      $user = user_load($uid);
+      if (empty($form['field_assignee'][LANGUAGE_NONE]['#default_value'][0]) || isset($form['field_assignee'][LANGUAGE_NONE]['#default_value'][0]) && $form['field_assignee'][LANGUAGE_NONE]['#default_value'][0] != $user->uid) {
+        $assignees[] = $user->name;
+      }
+    }
+    if(!empty($assignees)) {
+      $assignees = '<div class="help-block">Previous RM\'s: ' . implode(', ', $assignees) . '</div>';
+      $form['field_assignee']['#suffix'] = $assignees;
+    }
   }
+
   else {
     dgu_moderation_node_forms_alter($form);
   }
 }
 
-function dgu_data_set_request_form_ajax_callback($form, $form_state) {
-  $node = $form_state['node'];
-  $node->field_publisher_ref[LANGUAGE_NONE][0]['id'] = $form_state['values']['field_publisher_ref'][LANGUAGE_NONE][0]['id'];
-  $options = dgu_data_set_request_assignee_get_users(NULL, NULL, NULL, $node);
-  $form['field_assignee'][LANGUAGE_NONE]['#options'] = $options;
-  $form['field_assignee'][LANGUAGE_NONE]['#prefix'] = '<div id="edit-field-assignee" class="field-type-assignee field-name-field-assignee field-widget-options-select form-wrapper">';
-  $form['field_assignee'][LANGUAGE_NONE]['#suffix'] = '</div>';
-  return  $form['field_assignee'][LANGUAGE_NONE];
+function dgu_data_set_request_get_assignees($nid) {
+  // TODO add static cache
+  $query = db_select('field_revision_field_assignee', 'fpa')
+    ->distinct()
+    ->fields('fpa', array('field_assignee_uid'))
+    ->condition('entity_type', 'node')
+    ->condition('entity_id', $nid);
+  return $query->execute()->fetchCol();
 }
 
 function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request') {
     if(!($node->uid == $account->uid || user_access(DATA_REQUEST_MODERATION_PERMISSION))) {
       if(isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
-        $assignees = dgu_data_set_request_get_assignees($node->nid);
+        $assignees = dgu_data_set_request_publisher_assignee_get_assignees($node->nid);
         if(!in_array($account->uid, $assignees)) {
           return NODE_ACCESS_DENY;
         }
@@ -117,7 +117,7 @@ function dgu_data_set_request_node_access($node, $op, $account) {
 function dgu_data_set_request_node_access_records($node) {
   if ($node->type == 'dataset_request') {
 
-    $assignees = dgu_data_set_request_get_assignees($node->nid);
+    $assignees = dgu_data_set_request_publisher_assignee_get_assignees($node->nid);
 
     $grants = array();
     if (isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
@@ -224,53 +224,18 @@ function dgu_data_set_request_assignee_get_users($field = NULL, $instance = NULL
   $query = db_select('role', 'r');
   $query->join('users_roles', 'ur', 'r.rid = ur.rid');
   $query->join('users', 'u', 'u.uid = ur.uid');
-  $query->fields('r', array('name'))
-        ->fields('ur', array('uid'))
+  $query->fields('ur', array('uid'))
         ->fields('u', array('name'))
-        ->condition('r.name', 'data request %', 'LIKE');
+        ->condition('r.name', 'data request administrator');
   $users = $query->execute()->fetchAll();
 
   $options = array();
   foreach ($users as $user) {
-    $options[$user->name][$user->uid] = $user->u_name;
-  }
-
-  if (isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id'])) {
-    $publisher = ckan_publisher_load($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
-
-    $query = db_select('users', 'u')
-      ->fields('u', array('uid', 'name'));
-    $query->join('field_data_field_publishers', 'fp','fp.entity_id = u.uid');
-    $query->condition('fp.field_publishers_target_id', $entity->field_publisher_ref[LANGUAGE_NONE][0]['id']);
-    $publishing_users = $query->execute()->fetchAllKeyed();
-
-    $options[$publisher->title] = $publishing_users;
+    $options[$user->uid] = $user->name;
   }
 
   return $options;
 }
-
-function dgu_data_set_request_get_assignees($nid) {
-  // TODO add static cache
-  $query = db_select('field_revision_field_assignee', 'fa')
-    ->distinct()
-    ->fields('fa', array('field_assignee_uid'))
-    ->condition('entity_type', 'node')
-    ->condition('entity_id', $nid);
-  return $query->execute()->fetchCol();
-}
-
-function is_or_was_assignee($nid, $account = NULL) {
-  global $user;
-
-  if (!isset($account)) {
-    $account = $user;
-  }
-
-  $assignees = dgu_data_set_request_get_assignees($nid);
-  return in_array($account->uid, $assignees);
-}
-
 
 /**
  * Implements hook_node_presave().
@@ -343,7 +308,8 @@ function dgu_data_set_request_node_update($node) {
     }
 
     $previous_data_request_revision = &drupal_static('previous_data_request_revision');
-    $previous_assignee = isset($previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
+    $previous_rm = isset($previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
+    $previous_publisher_assignee = isset($previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
 
     $fields_for_short_summary = array('field_review_status' => 'value', 'field_review_outcome' =>'value', 'field_review_notes' => 'value');
     $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
@@ -360,11 +326,17 @@ function dgu_data_set_request_node_update($node) {
     // Use static cache to get this summary available in hook_tokens().
     $summary_of_changes = &drupal_static('data_request_summary_of_changes');
 
-    if (isset($node->field_assignee[LANGUAGE_NONE][0]['uid']) && $previous_assignee != $node->field_assignee[LANGUAGE_NONE][0]['uid']) {
+    if (isset($node->field_assignee[LANGUAGE_NONE][0]['uid']) && $previous_rm != $node->field_assignee[LANGUAGE_NONE][0]['uid']
+     || isset($node->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) && $previous_publisher_assignee != $node->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) {
 
-      // There is a new assignee, this is special case where an assignee
+      // There is a new publisher assignee or new RM, this is special case where an assignee
       // must receive different message than all other subscribers.
-      $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
+      if (isset($node->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) && $previous_publisher_assignee != $node->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) {
+        $assignee = user_load($node->field_publisher_assignee[LANGUAGE_NONE][0]['uid']);
+      }
+      else {
+        $assignee = user_load($node->field_assignee[LANGUAGE_NONE][0]['uid']);
+      }
 
       // Get data_request_assignee message bundle and set required fields.
       $message_assignee = message_create('data_request_assignee');
@@ -376,7 +348,7 @@ function dgu_data_set_request_node_update($node) {
       $notifier = isset($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($assignee->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $assignee->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
       $subscribe_options = array(
         'uids' => array(
-          $node->field_assignee[LANGUAGE_NONE][0]['uid'] => array(
+          $assignee->uid => array(
             'notifiers' => $notifier,
           ),
         ),
@@ -642,7 +614,7 @@ function  dgu_data_set_request_preprocess_replies(&$variables) {
  */
 function dgu_data_set_request_form_reply_add_form_alter(&$form, &$form_state, $form_id) {
   if($form['#bundle'] = 'review_comment') {
-    $form['field_review_comment'][LANGUAGE_NONE][0]['#title'] = 'Add note';
-    $form['submit']['#value'] = 'Submit note';
+    $form['field_review_comment'][LANGUAGE_NONE][0]['#title'] = 'Add review note <span class="submitted">(for non-public view)</span>';
+    $form['submit']['#value'] = 'Submit review note';
   }
 }

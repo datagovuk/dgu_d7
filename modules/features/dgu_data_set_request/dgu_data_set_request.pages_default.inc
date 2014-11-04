@@ -367,7 +367,8 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'ODUG Members',
-      'body' => '<a href="/users/robert_barr">Robert Barr</a><br/>
+      'body' => '<a href="/users/hsavory">Heather Savory</a><br/>
+<a href="/users/robert_barr">Robert Barr</a><br/>
 <a href="/users/jacqui-taylor">Jacqui Taylor</a><br/>
 <a href="/users/charlieboundy">Charlie Boundy</a><br/>
 <a href="/users/puntofisso">Giuseppe Sollazzo</a><br/>

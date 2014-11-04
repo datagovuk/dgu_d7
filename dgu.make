@@ -277,13 +277,22 @@ projects[quickedit][subdir] = "contrib"
 projects[autologout][version] = "4.3"
 projects[autologout][subdir] = "contrib"
 
+projects[maxlength][version] = "3.0"
+projects[maxlength][subdir] = "contrib"
+
+projects[mass_contact][version] = "1.0"
+projects[mass_contact][subdir] = "contrib"
+
+projects[contact_deeplink][version] = "1.0"
+projects[contact_deeplink][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
 projects[bootstrap][subdir] = "contrib"
 projects[bootstrap][download][type] = "git"
 projects[bootstrap][download][url] = "http://git.drupal.org/project/bootstrap.git"
-projects[bootstrap][download][tag] = "7.x-3.0-rc2"
+projects[bootstrap][download][tag] = "7.x-3.0"
 
 ; Libraries
 ; --------

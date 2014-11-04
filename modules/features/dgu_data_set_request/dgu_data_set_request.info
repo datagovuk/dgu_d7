@@ -10,6 +10,7 @@ dependencies[] = conditional_fields
 dependencies[] = context
 dependencies[] = ctools
 dependencies[] = dgu_assignee
+dependencies[] = dgu_data_set_request_publisher_assignee
 dependencies[] = dgu_reply
 dependencies[] = dgu_shared_fields
 dependencies[] = dgu_taxonomy

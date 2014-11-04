@@ -1,0 +1,40 @@
+#edit-field-publisher-assignee {
+  position: relative;
+  width: 45%;
+  margin-left: 2%;
+  float: left;
+}
+
+#edit-field-publisher-assignee .form-type-radios {
+  position: absolute;
+  background: #f0fcff;
+  padding: 3px 6px;
+  width: 100%;
+}
+
+#edit-field-publisher-assignee .form-item strong {
+  color: #31aae9;
+}
+
+.publisher-assignee-connector {
+  width: 200px;
+  height: 21px;
+  background: #f0fcff;
+  position: absolute;
+  left: -199px;
+  top: 0;
+}
+
+#edit-field-publisher-ref {
+  width: 45%;
+  float: left
+}
+
+#edit-field-publisher-ref li {
+  padding-left: 5px;
+}
+
+#edit-field-data-set-link,
+#edit-field-review-notes {
+  clear: both;
+}

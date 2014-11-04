@@ -464,11 +464,16 @@ function dgu_user_preprocess_user_profile(&$variables) {
   $recent_comments = views_embed_view('user_replies', 'block_3');
   $variables['recent_comments'] = strpos($recent_comments, 'view-content') ? $recent_comments : FALSE;
 
+  $variables['my_publishers'] = FALSE;
+  $variables['active_data_requests'] = FALSE;
+  $variables['my_data_requests'] = FALSE;
   if (dgu_user_accessing_own_account()) {
     $my_publishers = views_embed_view('my_publishers', 'block');
     $variables['my_publishers'] = strpos($my_publishers, 'view-content') ? $my_publishers : FALSE;
     $active_data_requests = views_embed_view('data_requests_administration', 'block_1');
     $variables['active_data_requests'] = strpos($active_data_requests, 'view-content') ? $active_data_requests : FALSE;
+    $my_data_requests = views_embed_view('data_requests_administration', 'block_2');
+    $variables['my_data_requests'] = strpos($my_data_requests, 'view-content') ? $my_data_requests : FALSE;
   }
 }
 
@@ -486,10 +491,10 @@ function dgu_user_preprocess_page(&$variables) {
   }
 
   if (arg(0) == 'user' || arg(0) == 'admin') {
-    $query = db_select('field_data_field_assignee', 'a');
+    $query = db_select('field_data_field_publisher_assignee', 'a');
     $query->fields('a');
     $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
-    $query->condition('a.field_assignee_uid', $user->uid)
+    $query->condition('a.field_publisher_assignee_uid', $user->uid)
           ->condition('s.field_review_status_value', 6, '<>');
     $result = $query->execute();
     $count = $result->rowCount();
