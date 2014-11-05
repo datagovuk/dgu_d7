@@ -740,6 +740,7 @@ function dgu_data_set_request_field_default_field_instances() {
     'bundle' => 'dataset_request',
     'default_value' => NULL,
     'deleted' => '0',
+    'description' => '',
     'display' => array(
       'default' => array(
         'label' => 'above',
