@@ -26,9 +26,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
-    3 => '3',
     6 => '6',
-    10 => '10',
   );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -369,6 +367,11 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Content: Author */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
@@ -412,6 +415,17 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
+  /* Field: User: E-mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  $handler->display->display_options['fields']['mail']['relationship'] = 'uid';
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Requestor';
   /* Field: Content: Relationship manager */
   $handler->display->display_options['fields']['field_assignee']['id'] = 'field_assignee';
   $handler->display->display_options['fields']['field_assignee']['table'] = 'field_data_field_assignee';
@@ -516,6 +530,8 @@ function dgu_data_set_request_views_default_views() {
     5 => 0,
     9 => 0,
     10 => 0,
+    11 => 0,
+    12 => 0,
   );
   $handler->display->display_options['filters']['field_review_status_value']['expose']['reduce'] = TRUE;
   /* Filter criterion: Content: Publication preference (field_publication_preference) */
@@ -541,6 +557,15 @@ function dgu_data_set_request_views_default_views() {
     11 => 0,
     12 => 0,
     10 => 0,
+  );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value_1']['id'] = 'field_review_status_value_1';
+  $handler->display->display_options['filters']['field_review_status_value_1']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value_1']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value_1']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_review_status_value_1']['value'] = array(
+    0 => '0',
+    6 => '6',
   );
   $handler->display->display_options['path'] = 'admin/workbench/content/active';
   $handler->display->display_options['menu']['type'] = 'tab';
@@ -1223,6 +1248,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
   $handler->display->display_options['filters']['field_review_status_value']['operator'] = 'not';
   $handler->display->display_options['filters']['field_review_status_value']['value'] = array(
+    0 => '0',
     6 => '6',
   );
 
