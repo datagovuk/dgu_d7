@@ -141,5 +141,4 @@ Feature: Register an account on data.gov.uk with valid username and email
     When I press "Upload"
     And I wait until the page loads
     Then I should see "Click on the image and drag to mark how the image will be cropped"
-    #And I break
     #Then I should see an "field_avatar_und_0_remove_button" element

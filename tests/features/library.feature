@@ -48,7 +48,7 @@ Feature: Create a Library Resource and search for library resources
   @api
   Scenario: Create a new library resource as the "test_user" and then update it.
     Given that the user "test_user" is not registered
-    And I am logged in as a user "test_user" with the "administrator" role
+    And I am logged in as a user "test_user" with the "editor" role
     When I visit "/admin/workbench/create"
     And I follow "Library resource"
     And I wait until the page loads
@@ -61,13 +61,15 @@ Feature: Create a Library Resource and search for library resources
     And I fill in "Tags" with "Test"
     And I select "Public sector" from "Sector"
     And I select "Guidance" from "Document Type"
+    And I wait 2 seconds
+    Then I should see "The selected file Test image.png cannot be uploaded. Only files with the following extensions are allowed: pdf, txt, rtf, csv, odt, ods, odp, odg, odf, doc, docx, xls, xlsx, ppt."
     When I press "Save"
     And I wait until the page loads
-    Then I should see "The selected file Test image.png cannot be uploaded. Only files with the following extensions are allowed: pdf, txt, rtf, csv, odt, ods, odp, odg, odf, doc, docx, xls, xlsx, ppt."
+    And I follow "Edit"
     Given I have a txt file titled "Test file" located in "/tmp/" folder
     And I attach the file "/tmp/Test file.txt" to "files[field_resource_file_und_0]"
     When I press "Save"
-    Then I should see "Library resource Test Library resource has been created."
+    Then I should see "Library resource Test Library resource has been updated."
     And I should see node title "Test Library resource"
     And I should see "Submitted on"
     And I should see "Test Library resource description text"
@@ -79,5 +81,3 @@ Feature: Create a Library Resource and search for library resources
       | Library               |
       | Test Library resource |
     And I should see "updated on"
-
-#TODO use editor role instead of adminsitrator when creating a Test library resource.

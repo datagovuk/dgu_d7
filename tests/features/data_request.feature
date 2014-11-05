@@ -62,7 +62,7 @@ Feature: Request new data
     And I fill in "Data request title" with "My Dataset request title"
     And I fill in "Data request description" with "My Dataset request description"
     And I select the radio button "Request is public"
-    And I select the radio button "In behalf of an organisation"
+    And I select the radio button "On behalf of an Organisation"
     And I wait 2 seconds
     And I select the radio button "Start up"
     And I fill in "Organisation name" with "My organisation"
