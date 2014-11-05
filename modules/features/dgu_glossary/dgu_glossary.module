@@ -292,24 +292,32 @@ function dgu_glossary_preprocess(&$variables, $hook)
             $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . "<a href='#glossary'>go to top</a>";
             break;
         case 'lexicon_overview':
-          $variables['suggest_new_term_link'] = user_access('suggest new terms') ? 'glossary/suggest_new' : '/user/login?destination=glossary/suggest_new';
-          $variables['suggest_new_term_text'] = user_access('suggest new terms') ? 'Suggest a new Term' : 'Log in to Suggest a new Term';
+            $variables['suggest_new_term_link'] = user_access('suggest new terms') ? 'glossary/suggest_new' : '/user/login?destination=glossary/suggest_new';
+            $variables['suggest_new_term_text'] = user_access('suggest new terms') ? 'Suggest a new Term' : 'Log in to Suggest a new Term';
             break;
         case 'lexicon_alphabar':
             $path = drupal_get_path('module', 'dgu_glossary');
             drupal_add_js($path . '/js/glossary.js');
             break;
         case 'lexicon_overview_item':
-            $term = $variables['term'];
-            $term->extralinks['search for term']['path'] = "search/everything/" .$term->name;
+            $variables['term']->extralinks['search for term'] = array(
+                'name' => t('search for term'),
+                'path' => 'search/everything/' . $variables['term']->name,
+                'options' => array(
+                    'attributes' => array(
+                        'class' => array('glossary-search-term'),
+                        'title' => t('search for content using this term'),
+                    )
+                )
+            );
             $instance = field_info_instance('taxonomy_term', 'field_comment', 'glossary');
-            $entity = reply_get_entity($term->tid, 'taxonomy_term', $instance['id']);
+            $entity = reply_get_entity($variables['term']->tid, 'taxonomy_term', $instance['id']);
             $variables['count'] = count($entity);
             $variables['directory'] = 'profile/dgu/modules/features/dgu_glossary';
-            $variables['term_class'] = empty($term->field_is_new[LANGUAGE_NONE][0]['value']) ? 'term-existing' : 'term-new';
+            $variables['term_class'] = empty($variables['term']->field_is_new[LANGUAGE_NONE][0]['value']) ? 'term-existing' : 'term-new';
             break;
         case 'page':
-            if (arg(0) == 'glossary' && is_numeric(arg(1))){
+            if (arg(0) == 'glossary' && is_numeric(arg(1))) {
                 $term = menu_get_object('taxonomy_term');
                 if (!empty($term)){
                     drupal_set_title(variable_get('lexicon_title_' . $term->vid, t('Glossary')));
