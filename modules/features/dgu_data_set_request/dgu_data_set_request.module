@@ -88,6 +88,16 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   else {
     dgu_moderation_node_forms_alter($form);
   }
+
+  $form['#validate'][] = 'dgu_data_set_request_form_validate';
+}
+
+function dgu_data_set_request_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value']) && ($form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value'] == '0' || $form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value'] == 2)) {
+    if(empty($form_state['values']['field_data_set_link'][LANGUAGE_NONE][0]['value'])) {
+      form_set_error('field_organisation_type', 'Dataset link field is required.');
+    }
+  }
 }
 
 function dgu_data_set_request_get_assignees($nid) {
