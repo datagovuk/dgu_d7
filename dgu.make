@@ -26,6 +26,9 @@ projects[apachesolr_panels][download][revision] = "7b49e370f22866283d8fe2c88bb66
 projects[apachesolr_panels][subdir] = "contrib"
 projects[apachesolr_panels][patch][] = "http://drupal.org/files/apachesolr_panels-retain-facets-2103701-2.patch"
 
+projects[book_access][version] = "2.1"
+projects[book_access][subdir] = "contrib"
+
 projects[facetapi][version] = "1.3"
 projects[facetapi][subdir] = "contrib"
 
