@@ -632,7 +632,7 @@ function  dgu_data_set_request_preprocess_replies(&$variables) {
  * Implements hook_form_FORM_ID_form_alter().
  */
 function dgu_data_set_request_form_reply_add_form_alter(&$form, &$form_state, $form_id) {
-  if($form['#bundle'] = 'review_comment') {
+  if($form['#bundle'] == 'review_comment') {
     $form['field_review_comment'][LANGUAGE_NONE][0]['#title'] = 'Add review note <span class="submitted">(for non-public view)</span>';
     $form['submit']['#value'] = 'Submit review note';
   }
