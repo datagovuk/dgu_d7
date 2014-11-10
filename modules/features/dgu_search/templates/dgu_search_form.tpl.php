@@ -5,7 +5,7 @@
       <div class="left-inner auto-height form-search">
         <div class="input-group">
         <form action="<?php print $form['#action']?>" method="post" id="<?php print $form['#form_id']?>" >
-            <input class="form-control" type="text" name="<?php print $form['search_block_form']['#name'] ?>" value="<?php if(!empty($form['keyword']['#value']))print $form['keyword']['#value']?>" results="0" placeholder="Search <?php print strtolower($form['content_type']['#value']); ?>...">
+            <input class="form-control" type="text" name="<?php print $form['search_block_form']['#name'] ?>" value="<?php if(!empty($form['keyword']['#value'])) print check_plain($form['keyword']['#value']); ?>" results="0" placeholder="Search <?php print strtolower($form['content_type']['#value']); ?>...">
             <span class="input-group-btn">
               <button type="submit" class="btn btn-default">
                 <i class="icon-search"></i>
