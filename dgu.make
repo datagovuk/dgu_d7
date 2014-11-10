@@ -286,6 +286,9 @@ projects[mass_contact][subdir] = "contrib"
 projects[contact_deeplink][version] = "1.0"
 projects[contact_deeplink][subdir] = "contrib"
 
+;TODO - lock to some revision
+projects[d3][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
@@ -310,3 +313,8 @@ libraries[underscore][download][type] = "get"
 libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.6.0.zip"
 libraries[underscore][directory_name] = "underscore"
 libraries[underscore][destination] = "libraries"
+
+libraries[d3][download][type] = "get"
+libraries[d3][download][url] = "https://github.com/mbostock/d3/zipball/master"
+libraries[d3][directory_name] = "d3"
+libraries[d3][destination] = "libraries"
