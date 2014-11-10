@@ -11,6 +11,15 @@ define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (a
 
 include_once 'dgu_data_set_request.features.inc';
 
+/*
+ * Implements hook_ctools_plugin_directory().
+ */
+function dgu_data_set_request_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
 /**
  * Implements hook_menu_breadcrumb_alter().
  */
