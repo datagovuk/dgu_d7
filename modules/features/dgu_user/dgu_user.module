@@ -38,8 +38,11 @@ function dgu_user_block_view($delta='') {
 
       $tour_links = array();
       foreach ($tours as $tour) {
-        $roles = array_map('intval',explode(',', $tour->roles));
+        $roles = array_map('intval', explode(',', $tour->roles));
         if (is_array($user->roles) && array_intersect($user_roles, $roles)) {
+          if($tour->name == 'data_requests_user_guide' && !_dgu_data_set_request_active_requests_count()) {
+            continue;
+          }
           $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
         }
       }

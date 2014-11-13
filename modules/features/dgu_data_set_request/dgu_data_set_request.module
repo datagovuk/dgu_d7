@@ -642,8 +642,22 @@ function dgu_data_set_request_form_reply_add_form_alter(&$form, &$form_state, $f
  * Implements hook_preprocess_page().
  */
 function dgu_data_set_request_preprocess_page(&$variables) {
-  global $user;
   if (arg(0) == 'user' || arg(0) == 'admin') {
+    if($count = _dgu_data_set_request_active_requests_count()) {
+      $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
+      drupal_set_message(
+        'You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests')
+        . ' that need' . format_plural($count, 's', '')
+        . ' review, <a class="active-requests-link" href="/admin/workbench/content/active">'
+        . $link_title . '</a>.<br />See <a href="#">Data requests user guide</a>.'
+      );
+    }
+  }
+}
+
+function _dgu_data_set_request_active_requests_count() {
+  global $user;
+  if (in_array('data publisher', $user->roles)) {
     $query = db_select('field_data_field_publisher_assignee', 'a');
     $query->fields('a');
     $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
@@ -651,11 +665,6 @@ function dgu_data_set_request_preprocess_page(&$variables) {
       ->condition('s.field_review_status_value', 0, '<>')
       ->condition('s.field_review_status_value', 6, '<>');
     $result = $query->execute();
-    $count = $result->rowCount();
-    if($count) {
-      $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
-      drupal_set_message('You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests') . ' that need' . format_plural($count, 's', '') . ' review, <a href="/admin/workbench/content/active">' . $link_title . '</a>');
-    }
+    return $result->rowCount();
   }
-
 }
