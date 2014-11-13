@@ -668,3 +668,60 @@ function _dgu_data_set_request_active_requests_count() {
     return $result->rowCount();
   }
 }
+
+/**
+ * Implements hook_bootstrap_tour_alter().
+ */
+function dgu_data_set_request_bootstrap_tour_alter($tour) {
+  global $user;
+  foreach($tour->steps as &$step) {
+    if (substr($step['path'], 0, 13) == 'tour-redirect') {
+      $redirect = substr($step['path'], 14);
+      switch ($redirect) {
+        case 'active-data-request':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = drupal_get_path_alias('node/' . $active_request_nid) . '?' . $query;
+          break;
+
+        case 'active-data-request-author':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $active_request = node_load($active_request_nid);
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = drupal_get_path_alias('user/' . $active_request->uid) . '?' . $query;
+          break;
+
+        case 'active-data-request-author-contact':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $active_request = node_load($active_request_nid);
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = 'user/' . $active_request->uid . '/contact?' . $query;
+          break;
+      }
+    }
+  }
+}
