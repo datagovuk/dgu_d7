@@ -649,7 +649,7 @@ function dgu_data_set_request_preprocess_page(&$variables) {
         'You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests')
         . ' that need' . format_plural($count, 's', '')
         . ' review, <a class="active-requests-link" href="/admin/workbench/content/active">'
-        . $link_title . '</a>.<br />See <a href="#">Data requests user guide</a>.'
+        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_user_guide">Data requests user guide</a>.'
       );
     }
   }
