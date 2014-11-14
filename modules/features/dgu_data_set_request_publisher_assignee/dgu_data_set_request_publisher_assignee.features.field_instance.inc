@@ -21,7 +21,9 @@ function dgu_data_set_request_publisher_assignee_field_default_field_instances()
         'label' => 'above',
         'module' => 'dgu_assignee',
         'settings' => array(
-          'field_replies' => '',
+          'empty_fields_emptyfieldtext_empty_text' => '- None -',
+          'empty_fields_handler' => 'EmptyFieldText',
+          'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
