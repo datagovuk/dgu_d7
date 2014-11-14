@@ -286,6 +286,9 @@ projects[mass_contact][subdir] = "contrib"
 projects[contact_deeplink][version] = "1.0"
 projects[contact_deeplink][subdir] = "contrib"
 
+projects[empty_fields][version] = "2.0"
+projects[empty_fields][subdir] = "contrib"
+
 ;TODO - lock to some revision
 projects[d3][subdir] = "contrib"
 
