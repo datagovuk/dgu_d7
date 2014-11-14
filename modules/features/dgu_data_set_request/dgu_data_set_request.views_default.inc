@@ -775,16 +775,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['label'] = 'Actions';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
-  /* Contextual filter: Content: Relationship manager (field_assignee) */
-  $handler->display->display_options['arguments']['field_assignee_uid']['id'] = 'field_assignee_uid';
-  $handler->display->display_options['arguments']['field_assignee_uid']['table'] = 'field_data_field_assignee';
-  $handler->display->display_options['arguments']['field_assignee_uid']['field'] = 'field_assignee_uid';
-  $handler->display->display_options['arguments']['field_assignee_uid']['default_action'] = 'default';
-  $handler->display->display_options['arguments']['field_assignee_uid']['default_argument_type'] = 'current_user';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['number_of_records'] = '0';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary']['format'] = 'default_summary';
-  $handler->display->display_options['arguments']['field_assignee_uid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['field_assignee_uid']['not'] = TRUE;
   $handler->display->display_options['defaults']['filter_groups'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Content: Type */
@@ -942,6 +932,78 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['state']['field'] = 'state';
   $handler->display->display_options['filters']['state']['value'] = array(
     'published' => 'published',
+  );
+  /* Filter criterion: Content: Relationship manager (field_assignee) */
+  $handler->display->display_options['filters']['field_assignee_uid']['id'] = 'field_assignee_uid';
+  $handler->display->display_options['filters']['field_assignee_uid']['table'] = 'field_data_field_assignee';
+  $handler->display->display_options['filters']['field_assignee_uid']['field'] = 'field_assignee_uid';
+  $handler->display->display_options['filters']['field_assignee_uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['operator_id'] = 'field_assignee_uid_op';
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['label'] = 'Relationship manager';
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['operator'] = 'field_assignee_uid_op';
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['identifier'] = 'field_assignee_uid';
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_assignee_uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+  );
+  /* Filter criterion: Content: Publisher (field_publisher_ref) */
+  $handler->display->display_options['filters']['field_publisher_ref_id']['id'] = 'field_publisher_ref_id';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['table'] = 'field_data_field_publisher_ref';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['field'] = 'field_publisher_ref_id';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['operator_id'] = 'field_publisher_ref_id_op';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['label'] = 'Publisher';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['operator'] = 'field_publisher_ref_id_op';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['identifier'] = 'field_publisher_ref_id';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+  );
+  /* Filter criterion: Content: Publisher assignee (field_publisher_assignee) */
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['id'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['table'] = 'field_data_field_publisher_assignee';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['field'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['operator_id'] = 'field_publisher_assignee_uid_op';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['label'] = 'Publisher assignee';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['operator'] = 'field_publisher_assignee_uid_op';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['identifier'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
   );
   $handler->display->display_options['path'] = 'admin/workbench/content/data-requests';
   $handler->display->display_options['menu']['type'] = 'tab';
