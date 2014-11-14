@@ -1,5 +1,6 @@
 name = Assignee
-description = Defines a field type for an assignee in a workflow.
+description = Defines a field type and a Views filter handler plugin for an assignee in a workflow.
 package = Fields
 core = 7.x
 dependencies[] = field
+files[]= dgu_assignee_views_handler_filter_field_assignee.views.inc
