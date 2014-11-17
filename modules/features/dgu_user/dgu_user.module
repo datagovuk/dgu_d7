@@ -248,6 +248,24 @@ function dgu_user_accessing_own_account() {
  */
 function dgu_user_user_login(&$edit, $account) {
   $_SESSION['ping_ckan'] = TRUE;
+
+  $toolbar_tree = toolbar_get_menu_tree();
+  $toolbar = array();
+  foreach ($toolbar_tree as $item) {
+    $toolbar[$item['link']['router_path']] = $item['link']['link_title'];
+  }
+  $_SESSION['menu']['toolbar'] = $toolbar;
+}
+
+/**
+ * Implements hook_user_update().
+ */
+function dgu_user_user_update(&$edit, $account, $category) {
+  global $user;
+  if ($account->uid != $user->uid) {
+    // Delete session to avoid toolbar menu discrepancy in Drupal and CKAN.
+    db_delete('sessions')->condition('uid', $account->uid)->execute();
+  }
 }
 
 /**
