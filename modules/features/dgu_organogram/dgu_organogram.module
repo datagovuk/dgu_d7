@@ -16,12 +16,15 @@ function dgu_organogram_menu_breadcrumb_alter(&$active_trail, $item) {
   }
 }
 
-function dgu_organogram_preprocess_node(&$variables, $hook){
-  if ($hook == 'node'){
-    if ($variables['type'] == 'organogram') {
-      $variables['field_endpoint'][0]['value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'http://data.gov.uk', $variables['field_endpoint'][0]['value']);
-      $variables['field_endpoint'][0]['safe_value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'http://data.gov.uk', $variables['field_endpoint'][0]['safe_value']);
-    }
+function dgu_organogram_node_load($nodes, $types){
+  $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http:' : $_SERVER['HTTP_X_FORWARDED_PROTO'];
+  if ($scheme == 'https') {
+    if (in_array('organogram', $types)) {
+        foreach ($nodes as $nid => $node) {
+          $nodes[$nid]->field_endpoint[LANGUAGE_NONE][0]['value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'https://data.gov.uk',$nodes[$nid]->field_endpoint[LANGUAGE_NONE][0]['value']);
+          $nodes[$nid]->field_endpoint[LANGUAGE_NONE][0]['safe_value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'https://data.gov.uk', $nodes[$nid]->field_endpoint[LANGUAGE_NONE][0]['safe_value'] );
+        }
+      }
   }
-    error_log($hook);
+
 }
