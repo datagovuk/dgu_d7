@@ -11,6 +11,15 @@ define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (a
 
 include_once 'dgu_data_set_request.features.inc';
 
+/*
+ * Implements hook_ctools_plugin_directory().
+ */
+function dgu_data_set_request_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools' && !empty($plugin)) {
+    return "plugins/$plugin";
+  }
+}
+
 /**
  * Implements hook_menu_breadcrumb_alter().
  */
@@ -87,6 +96,16 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 
   else {
     dgu_moderation_node_forms_alter($form);
+  }
+
+  $form['#validate'][] = 'dgu_data_set_request_form_validate';
+}
+
+function dgu_data_set_request_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value']) && ($form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value'] == '0' || $form_state['values']['field_review_outcome'][LANGUAGE_NONE][0]['value'] == 2)) {
+    if(empty($form_state['values']['field_data_set_link'][LANGUAGE_NONE][0]['value'])) {
+      form_set_error('field_organisation_type', 'Dataset link field is required.');
+    }
   }
 }
 
@@ -613,8 +632,96 @@ function  dgu_data_set_request_preprocess_replies(&$variables) {
  * Implements hook_form_FORM_ID_form_alter().
  */
 function dgu_data_set_request_form_reply_add_form_alter(&$form, &$form_state, $form_id) {
-  if($form['#bundle'] = 'review_comment') {
+  if($form['#bundle'] == 'review_comment') {
     $form['field_review_comment'][LANGUAGE_NONE][0]['#title'] = 'Add review note <span class="submitted">(for non-public view)</span>';
     $form['submit']['#value'] = 'Submit review note';
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function dgu_data_set_request_preprocess_page(&$variables) {
+  if (arg(0) == 'user' || arg(0) == 'admin') {
+    if($count = _dgu_data_set_request_active_requests_count()) {
+      $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
+      drupal_set_message(
+        'You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests')
+        . ' that need' . format_plural($count, 's', '')
+        . ' review, <a class="active-requests-link" href="/admin/workbench/content/active">'
+        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_user_guide">Data requests user guide</a>.'
+      );
+    }
+  }
+}
+
+function _dgu_data_set_request_active_requests_count() {
+  global $user;
+  if (in_array('data publisher', $user->roles)) {
+    $query = db_select('field_data_field_publisher_assignee', 'a');
+    $query->fields('a');
+    $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+    $query->condition('a.field_publisher_assignee_uid', $user->uid)
+      ->condition('s.field_review_status_value', 0, '<>')
+      ->condition('s.field_review_status_value', 6, '<>');
+    $result = $query->execute();
+    return $result->rowCount();
+  }
+}
+
+/**
+ * Implements hook_bootstrap_tour_alter().
+ */
+function dgu_data_set_request_bootstrap_tour_alter($tour) {
+  global $user;
+  foreach($tour->steps as &$step) {
+    if (substr($step['path'], 0, 13) == 'tour-redirect') {
+      $redirect = substr($step['path'], 14);
+      switch ($redirect) {
+        case 'active-data-request':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = drupal_get_path_alias('node/' . $active_request_nid) . '?' . $query;
+          break;
+
+        case 'active-data-request-author':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $active_request = node_load($active_request_nid);
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = drupal_get_path_alias('user/' . $active_request->uid) . '?' . $query;
+          break;
+
+        case 'active-data-request-author-contact':
+          $query = db_select('field_data_field_publisher_assignee', 'a');
+          $query->fields('a', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->condition('a.field_publisher_assignee_uid', $user->uid)
+            ->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->orderBy('entity_id', 'DESC');
+          $active_request_nid = $query->execute()->fetchField();
+          $active_request = node_load($active_request_nid);
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = 'user/' . $active_request->uid . '/contact?' . $query;
+          break;
+      }
+    }
   }
 }

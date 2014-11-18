@@ -1,0 +1,16 @@
+diff --git a/get_user_data.php b/get_user_data.php
+new file mode 100644
+index 0000000..fb94ea6
+--- /dev/null
++++ b/get_user_data.php
+@@ -0,0 +1,10 @@
++<?php
++
++define('DRUPAL_ROOT', getcwd());
++
++require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
++drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
++
++if (!empty($_GET['menu']) && !empty($_SESSION['menu'][$_GET['menu']])) {
++  print json_encode($_SESSION['menu'][$_GET['menu']]);
++}

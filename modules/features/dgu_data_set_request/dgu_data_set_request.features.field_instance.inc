@@ -137,6 +137,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -204,6 +206,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -271,6 +275,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -340,6 +346,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -407,6 +415,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -474,6 +484,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -543,6 +555,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'entityreference',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -612,6 +626,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -679,6 +695,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -746,7 +764,9 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'dgu_assignee',
         'settings' => array(
-          'field_replies' => '',
+          'empty_fields_emptyfieldtext_empty_text' => '- None -',
+          'empty_fields_handler' => 'EmptyFieldText',
+          'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
@@ -809,6 +829,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -867,6 +889,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -928,6 +952,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -986,6 +1012,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1046,6 +1074,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'reply',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1159,6 +1189,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1175,6 +1207,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1191,6 +1225,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'smart_trim',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1249,6 +1285,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'link',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1271,6 +1309,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'link',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1303,12 +1343,12 @@ function dgu_data_set_request_field_default_field_instances() {
         'title' => '',
       ),
       'display' => array(
-        'url_cutoff' => 80,
+        'url_cutoff' => '80',
       ),
       'enable_tokens' => 1,
       'rel_remove' => 'default',
       'title' => 'none',
-      'title_maxlength' => 128,
+      'title_maxlength' => '128',
       'title_value' => '',
       'url' => 0,
       'user_register_form' => FALSE,
@@ -1334,6 +1374,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'taxonomy',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1392,6 +1434,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1450,6 +1494,8 @@ function dgu_data_set_request_field_default_field_instances() {
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1513,6 +1559,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1625,6 +1673,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'hidden',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1743,6 +1793,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1789,7 +1841,9 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'ckan_publisher_tree',
         'settings' => array(
-          'field_replies' => '',
+          'empty_fields_emptyfieldtext_empty_text' => 'To be confirmed',
+          'empty_fields_handler' => 'EmptyFieldText',
+          'field_replies' => 0,
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
@@ -1848,6 +1902,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'reply',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1910,6 +1966,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'text',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -1971,6 +2029,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -2033,6 +2093,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -2049,6 +2111,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'above',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
@@ -2065,6 +2129,8 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
         'label' => 'hidden',
         'module' => 'list',
         'settings' => array(
+          'empty_fields_emptyfieldtext_empty_text' => '',
+          'empty_fields_handler' => '',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',

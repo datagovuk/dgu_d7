@@ -27,23 +27,23 @@
  *      ["name"], ["path"] and ["attributes"] per element.
  */
 ?>
-<div class="glossary-term <?php print $term_class ?>" >
-<dt>
-<a id="<?php print $term->id; ?>"></a>
-  <a href="/glossary/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
-  <?php if (isset($term->extralinks)) : ?>
-    <span class="lexicon-extralinks">
-    <?php foreach ($term->extralinks as $link) : ?>
-      <?php print l($link["name"], $link["path"], $link["attributes"] ? $link["attributes"] : array()); ?>
-    <?php endforeach; ?>
-    </span>
+<div class="glossary-term <?php print $term_class ?>">
+    <dt>
+        <a id="<?php print $term->id; ?>"></a>
+        <a href="/glossary/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
+        <?php if (isset($term->extralinks)): ?>
+            <span class="lexicon-extralinks">
+                <?php foreach ($term->extralinks as $link): ?>
+                    <?php print l($link['name'], $link['path'], isset($link['options']) ? $link['options'] : array()); ?>
+                <?php endforeach; ?>
+            </span>
+        <?php endif; ?>
 
-  <?php endif; ?>
-  <?php if ($term->field_is_new[LANGUAGE_NONE][0]['value']): ?>
-  <span class="glossary-new-term">New</span>
-  <?php endif; ?>
-
+        <?php if ($term->field_is_new[LANGUAGE_NONE][0]['value']): ?>
+            <span class="glossary-new-term">New</span>
+        <?php endif; ?>
 </dt>
+
 <?php if (isset($term->safe_description) || isset($term->synonyms) || isset($term->image) || isset ($term->related)) : ?>
   <dd>
   <?php if (isset($term->image)) : ?>

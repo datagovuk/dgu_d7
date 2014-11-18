@@ -106,6 +106,23 @@ function dgu_moderation_moderate_callback($node, $state) {
   drupal_goto(isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $node->nid . '/moderation');
 }
 
+/**
+ * Implements Hook hook_form_FORM_ID_alter which:
+ */
+function dgu_moderation_form_workbench_moderation_moderate_form_alter(&$form, &$form_state, $form_id) {
+  $form['#validate'][] = 'dgu_moderation_workbench_moderation_moderate_form_validate';
+}
+
+function dgu_moderation_workbench_moderation_moderate_form_validate($form, &$form_state) {
+  $node = $form_state['values']['node'];
+  $state = $form_state['values']['state'];
+  if ($state == 'draft' && isset($node->workbench_moderation['current']) && $node->workbench_moderation['current']->state == 'needs_review') {
+    $token = drupal_get_token($value = "{$node->nid}:{$node->vid}:$state");
+    // We don't want this form to be submitted.
+    drupal_goto('node/' . $node->nid . '/moderation/' . $node->vid . '/change-state/draft', array('query' => array('token' => $token)));
+  }
+}
+
 function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state) {
   global $base_url;
   $type = strtolower(node_type_get_name($node));
@@ -163,10 +180,11 @@ function dgu_moderation_message_back_to_draft_validate($form, &$form_state) {
 }
 
 function dgu_moderation_message_back_to_draft_submit($form, &$form_state) {
-
   $state_draft_message = &drupal_static('state_draft_message');
   $state_draft_message = $form_state['values']['message'];
-  workbench_moderation_moderate($form['node']['#value'], $form['state']['#value']);
+  $node = $form['node']['#value'];
+  workbench_moderation_moderate($node, $form['state']['#value']);
+  drupal_set_message(node_type_get_name($node) . ' <a href="/' . $node->path['alias'] . '">' . $node->title . '</a> has been reverted to draft state. Go to <a href="/admin/workbench/needs-review">Needs review</a> list.');
   drupal_goto(isset($_GET['destination']) ? $_GET['destination'] : 'node/' . $form['node']['#value']->nid . '/moderation');
 }
 
