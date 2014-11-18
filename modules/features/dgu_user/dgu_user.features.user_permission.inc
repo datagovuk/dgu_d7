@@ -177,6 +177,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'administer permissions',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'user',
   );
@@ -340,6 +341,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'use text format full_html',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'filter',
   );
