@@ -15,3 +15,13 @@ function dgu_organogram_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1] = array('title' => 'Public Roles & Salaries', 'href' => 'organogram', 'localized_options' => array());
   }
 }
+
+function dgu_organogram_preprocess_node(&$variables, $hook){
+  if ($hook == 'node'){
+    if ($variables['type'] == 'organogram') {
+      $variables['field_endpoint'][0]['value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'http://data.gov.uk', $variables['field_endpoint'][0]['value']);
+      $variables['field_endpoint'][0]['safe_value'] = preg_replace('/^http:\/\/reference.data.gov.uk/i', 'http://data.gov.uk', $variables['field_endpoint'][0]['safe_value']);
+    }
+  }
+    error_log($hook);
+}
