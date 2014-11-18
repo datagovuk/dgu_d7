@@ -26,7 +26,7 @@ function dgu_data_set_request_publisher_assignee_assignee_get_users($field = NUL
       $data = unserialize($row->data);
       $publisher_id = isset($entity->field_publisher_ref[LANGUAGE_NONE][0]['id']) ? $entity->field_publisher_ref[LANGUAGE_NONE][0]['id'] : FALSE;
       $role = '';
-      if(isset($data['ckan_publishers'][$publisher_id]) && $data['ckan_publishers'][$publisher_id] == 'admin') {
+      if (isset($data['ckan_publishers'][$publisher_id]) && $data['ckan_publishers'][$publisher_id] == 'admin') {
         $role = ' <strong>[admin]</strong>';
       }
       $options[$row->uid] = $row->name . $role;
@@ -76,8 +76,11 @@ function dgu_data_set_request_publisher_assignee_form_dataset_request_node_form_
 }
 
 function dgu_data_set_request_publisher_assignee_form_dataset_request_node_afterbuild($form, &$form_state) {
-  if(isset($form_state['node']->nid) && isset($_SESSION['publisher_assignee_options'][$form_state['node']->nid]) && $_SERVER['REQUEST_URI'] != '/system/ajax') {
+  if (isset($form_state['node']->nid) && isset($_SESSION['publisher_assignee_options'][$form_state['node']->nid]) && $_SERVER['REQUEST_URI'] != '/system/ajax') {
     $form['field_publisher_assignee'][LANGUAGE_NONE]['#options'] = $_SESSION['publisher_assignee_options'][$form_state['node']->nid];
+  }
+  elseif ($_SERVER['REQUEST_URI'] == '/system/ajax') {
+    $form['field_publisher_assignee'][LANGUAGE_NONE]['#value'] = '_none';
   }
   return  $form;
 }
@@ -91,10 +94,12 @@ function dgu_data_set_request_publisher_assignee_form_ajax_callback($form, $form
   $form['field_publisher_assignee'][LANGUAGE_NONE]['#options'] = $options;
   $form['field_publisher_assignee'][LANGUAGE_NONE]['#prefix'] = '<div id="edit-field-publisher-assignee" class="field-type-assignee field-name-field-publisher-assignee field-widget-options-buttons form-wrapper">';
   $form['field_publisher_assignee'][LANGUAGE_NONE]['#suffix'] = '</div>';
+  $form['field_publisher_assignee'][LANGUAGE_NONE]['#value'] = '_none';
+  $form['field_publisher_assignee'][LANGUAGE_NONE]['#default_value'] = '_none';
   $form['field_publisher_assignee']['#processed'] = FALSE;
 
   foreach ($form['field_publisher_assignee'][LANGUAGE_NONE] as $key => $value) {
-    if(is_numeric($key)) {
+    if (is_numeric($key)) {
       unset($form['field_publisher_assignee'][LANGUAGE_NONE][$key]);
     }
 

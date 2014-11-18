@@ -220,7 +220,7 @@ projects[tagclouds][subdir] = "contrib"
 projects[mollom][version] = "2.10"
 projects[mollom][subdir] = "contrib"
 
-projects[google_analytics][version] = "1.4"
+projects[google_analytics][version] = "2.0"
 projects[google_analytics][subdir] = "contrib"
 
 projects[views_bulk_operations][version] = "3.1"
@@ -289,6 +289,12 @@ projects[mass_contact][subdir] = "contrib"
 projects[contact_deeplink][version] = "1.0"
 projects[contact_deeplink][subdir] = "contrib"
 
+projects[empty_fields][version] = "2.0"
+projects[empty_fields][subdir] = "contrib"
+
+;TODO - lock to some revision
+projects[d3][subdir] = "contrib"
+
 ; Themes
 ; --------
 projects[bootstrap][type] = "theme"
@@ -313,3 +319,8 @@ libraries[underscore][download][type] = "get"
 libraries[underscore][download][url] = "https://github.com/jashkenas/underscore/archive/1.6.0.zip"
 libraries[underscore][directory_name] = "underscore"
 libraries[underscore][destination] = "libraries"
+
+libraries[d3][download][type] = "get"
+libraries[d3][download][url] = "https://github.com/mbostock/d3/zipball/master"
+libraries[d3][directory_name] = "d3"
+libraries[d3][destination] = "libraries"

@@ -38,8 +38,11 @@ function dgu_user_block_view($delta='') {
 
       $tour_links = array();
       foreach ($tours as $tour) {
-        $roles = array_map('intval',explode(',', $tour->roles));
+        $roles = array_map('intval', explode(',', $tour->roles));
         if (is_array($user->roles) && array_intersect($user_roles, $roles)) {
+          if($tour->name == 'data_requests_user_guide' && !_dgu_data_set_request_active_requests_count()) {
+            continue;
+          }
           $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
         }
       }
@@ -245,6 +248,24 @@ function dgu_user_accessing_own_account() {
  */
 function dgu_user_user_login(&$edit, $account) {
   $_SESSION['ping_ckan'] = TRUE;
+
+  $toolbar_tree = toolbar_get_menu_tree();
+  $toolbar = array();
+  foreach ($toolbar_tree as $item) {
+    $toolbar[$item['link']['router_path']] = $item['link']['link_title'];
+  }
+  $_SESSION['menu']['toolbar'] = $toolbar;
+}
+
+/**
+ * Implements hook_user_update().
+ */
+function dgu_user_user_update(&$edit, $account, $category) {
+  global $user;
+  if ($account->uid != $user->uid) {
+    // Delete session to avoid toolbar menu discrepancy in Drupal and CKAN.
+    db_delete('sessions')->condition('uid', $account->uid)->execute();
+  }
 }
 
 /**
@@ -483,26 +504,8 @@ function dgu_user_preprocess_user_profile(&$variables) {
  * To move field_avatar in to 'My Profile', this causes ajax errors if happens in hook_form_alter().
  */
 function dgu_user_preprocess_page(&$variables) {
-  global $user;
-
   if(arg(0) == 'user' && arg(2) == 'edit' && isset($variables['page']['content']['system_main']['field_avatar'])) {
     $variables['page']['content']['system_main']['profile']['field_avatar'] = $variables['page']['content']['system_main']['field_avatar'];
     unset($variables['page']['content']['system_main']['field_avatar']);
   }
-
-  if (arg(0) == 'user' || arg(0) == 'admin') {
-    $query = db_select('field_data_field_publisher_assignee', 'a');
-    $query->fields('a');
-    $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
-    $query->condition('a.field_publisher_assignee_uid', $user->uid)
-          ->condition('s.field_review_status_value', 0, '<>')
-          ->condition('s.field_review_status_value', 6, '<>');
-    $result = $query->execute();
-    $count = $result->rowCount();
-    if($count) {
-      $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
-      drupal_set_message('You have ' . $count . ' active data ' . format_plural($count, 'request', 'requests') . ' that need' . format_plural($count, 's', '') . ' review, <a href="/admin/workbench/content/active">' . $link_title . '</a>');
-    }
-  }
-
 }

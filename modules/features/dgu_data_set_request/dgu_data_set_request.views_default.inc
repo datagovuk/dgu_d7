@@ -311,6 +311,8 @@ function dgu_data_set_request_views_default_views() {
     'changed' => 'changed',
     'field_review_status' => 'field_review_status',
     'field_publication_preference' => 'field_publication_preference',
+    'mail' => 'mail',
+    'name' => 'name',
     'field_assignee' => 'field_assignee',
     'edit_node' => 'edit_node',
   );
@@ -345,6 +347,20 @@ function dgu_data_set_request_views_default_views() {
       'empty_column' => 0,
     ),
     'field_publication_preference' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mail' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -437,11 +453,6 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Edit link */
-  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
-  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Actions';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Contextual filter: Content: Publisher assignee (field_publisher_assignee) */
   $handler->display->display_options['arguments']['field_publisher_assignee_uid']['id'] = 'field_publisher_assignee_uid';
@@ -1147,6 +1158,14 @@ function dgu_data_set_request_views_default_views() {
     11 => 0,
     12 => 0,
     10 => 0,
+  );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value_1']['id'] = 'field_review_status_value_1';
+  $handler->display->display_options['filters']['field_review_status_value_1']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value_1']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value_1']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_review_status_value_1']['value'] = array(
+    6 => '6',
   );
   $handler->display->display_options['path'] = 'admin/workbench/content/my-data-requests';
   $handler->display->display_options['menu']['type'] = 'tab';
