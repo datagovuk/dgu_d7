@@ -18,6 +18,8 @@ class dgu_assignee_views_handler_filter_assignee extends views_handler_filter_in
    */
   function get_value_options() {
 
+    $this->value_options = array();
+
     // If we can populate the drop-down with real data, do so.
     if ($this->ensure_my_table()) {
       // SELECT DISTINCT :uid_field, name FROM {field_data_table} JOIN {users} ON :uid_field = uid ORDER BY name;
@@ -29,10 +31,9 @@ class dgu_assignee_views_handler_filter_assignee extends views_handler_filter_in
 
       $query->innerJoin('users', 'u', "ta.{$this->real_field} = u.uid");
 
-      return $this->value_options = $query->execute()->fetchAllKeyed();
+      $this->value_options = $query->execute()->fetchAllKeyed();
     }
 
-    // Else throw placeholders in (eg for the Configure Filter dialog).
-    return $this->value_options = array('Element One', 'Element Two', 'Element Three');
+    return $this->value_options;
   }
 }
