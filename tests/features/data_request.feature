@@ -98,6 +98,7 @@ Feature: Request new data
     Given that the user "test_data_publisher" is not registered
     And I am logged in as a user "test_data_publisher" with the "data publisher" role
     And user "test_data_publisher" belongs to "Academics" publisher
+    And I am logged in as a user "test_data_publisher" with the "data publisher" role
     # Set weekly notifications for test_data_publisher
     And I visit "user"
     And I wait until the page loads
@@ -188,7 +189,6 @@ Feature: Request new data
     Then I should be on "admin/workbench/content/active"
     And I should see the link "My Dataset request title"
     And I should see "Request is public"
-    And I should see the link "edit"
     Then I should see the following <breadcrumbs>
       | Active Data requests |
     When user "test_data_publisher" clicks link containing "message-subscribe" in mail "data.gov.uk Message Digest"
