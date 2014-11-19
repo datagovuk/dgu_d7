@@ -183,7 +183,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
       '#active' => FALSE,
     );
 
-    if(user_access('bypass node access')) {
+    if(user_access('bypass file access')) {
       $data['tabs'][0]['output'][] = array(
         '#theme' => 'menu_local_task',
         '#link' => array('title' => 'File list', 'href' => 'admin/workbench/files', 'localized_options' => array()),

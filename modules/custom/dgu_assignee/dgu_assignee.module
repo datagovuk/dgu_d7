@@ -1,6 +1,15 @@
 <?php
 
 /**
+ * Implements hook_views_api().
+ */
+function dgu_assignee_views_api($module = NULL, $api = NULL) {
+  return array(
+    'api' => '3.0',
+  );
+}
+
+/**
  * Implements hook_field_info().
  */
 function dgu_assignee_field_info() {
