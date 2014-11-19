@@ -1,5 +1,5 @@
 diff --git a/editors/ckeditor.inc b/editors/ckeditor.inc
-index 6ff60d5..ee3818a 100644
+index 6ff60d5..c66d173 100644
 --- a/editors/ckeditor.inc
 +++ b/editors/ckeditor.inc
 @@ -193,7 +193,12 @@ function wysiwyg_ckeditor_init($editor) {
@@ -9,7 +9,7 @@ index 6ff60d5..ee3818a 100644
 -  $library_path = base_path() . $editor['library path'] . '/';
 +  $base_path = base_path();
 +  if (substr($base_path, 0, 2) == '//'){
-+    $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http:' : 'https:';
++    $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http:' : $_SERVER['HTTP_X_FORWARDED_PROTO'];
 +    $base_path = $scheme . $base_path;
 +  }
 +  $library_path = $base_path . $editor['library path'] . '/';
