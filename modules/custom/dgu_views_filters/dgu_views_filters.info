@@ -1,6 +1,0 @@
-name = DGU Views Filters
-description = Profiles Views filter handler for the field_publisher_ref field.
-core = 7.x
-dependencies[] = ckan_publisher
-dependencies[] = field
-files[]= dgu_views_filters_field_publisher_ref.views.inc
