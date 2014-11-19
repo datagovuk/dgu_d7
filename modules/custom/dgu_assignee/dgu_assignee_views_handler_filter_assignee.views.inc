@@ -21,6 +21,8 @@ class dgu_assignee_views_handler_filter_assignee extends views_handler_filter_in
       return;
     }
 
+    $this->value_options = array();
+
     // If we can populate the drop-down with real data, do so.
     if ($this->ensure_my_table()) {
       // SELECT DISTINCT :uid_field, name FROM {field_data_table} JOIN {users} ON :uid_field = uid ORDER BY name;
@@ -34,5 +36,7 @@ class dgu_assignee_views_handler_filter_assignee extends views_handler_filter_in
 
       return $this->value_options = $query->execute()->fetchAllKeyed();
     }
+
+    return $this->value_options = array();
   }
 }
