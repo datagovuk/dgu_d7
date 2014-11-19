@@ -212,10 +212,10 @@ function dgu_site_feature_get_plural_content_types(){
 }
 
 function dgu_site_feature_tokens_alter(&$replacements, $context){
-  foreach($replacements as $token => $value){
+  foreach ($replacements as $token => $value){
     if (strstr($token, 'url')){
-      //$replacements[$token] =
+      $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http' : $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://';
+      $replacements[$token] = preg_replace('/^\/\//i', $scheme ,$value);
     }
   }
-  error_log('here');
 }
