@@ -21,6 +21,24 @@ function dgu_data_set_request_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
+ * Implements hook_libraries_info_file_paths().
+ */
+function dgu_data_set_request_libraries_info_file_paths() {
+  return drupal_get_path('module', 'dgu_data_set_request') . '/libraries';
+}
+
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
+function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'dataset_request') {
+    if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
+      return TRUE;
+    }
+  }
+}
+
+/**
  * Implements hook_menu_breadcrumb_alter().
  */
 function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
@@ -54,13 +72,6 @@ function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
   }
 }
 
-function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
-  if ($node->type == 'dataset_request') {
-    if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
-      return TRUE;
-    }
-  }
-}
 
 /**
  * Implements Hook hook_form_FORM_ID_alter which:
