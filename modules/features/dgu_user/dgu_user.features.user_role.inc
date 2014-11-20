@@ -10,9 +10,9 @@
 function dgu_user_user_default_roles() {
   $roles = array();
 
-  // Exported role: ckan adminstrator.
-  $roles['ckan adminstrator'] = array(
-    'name' => 'ckan adminstrator',
+  // Exported role: CKAN sysadmin.
+  $roles['CKAN sysadmin'] = array(
+    'name' => 'CKAN sysadmin',
     'weight' => '7',
   );
 

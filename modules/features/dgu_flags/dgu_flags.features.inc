@@ -20,7 +20,7 @@ function dgu_flags_flag_default_flags() {
   $flags['spam_node'] = array(
     'entity_type' => 'node',
     'title' => 'Spam node',
-    'global' => 0,
+    'global' => '0',
     'types' => array(
       0 => 'app',
       1 => 'dataset_request',
@@ -60,7 +60,7 @@ function dgu_flags_flag_default_flags() {
   $flags['spam_reply'] = array(
     'entity_type' => 'reply',
     'title' => 'Spam reply',
-    'global' => 0,
+    'global' => '0',
     'types' => array(
       0 => 'comment',
       1 => 'field_comment',
