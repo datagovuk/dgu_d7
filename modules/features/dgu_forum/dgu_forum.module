@@ -119,6 +119,9 @@ function dgu_forum_replies_unread($term) {
   }
 }
 
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
 function dgu_forum_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'forum') {
     return user_access(FORUM_MODERATION_PERMISSION);
