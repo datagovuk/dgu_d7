@@ -23,10 +23,10 @@ function dgu_flags_user_default_permissions() {
   $permissions['flag spam_node'] = array(
     'name' => 'flag spam_node',
     'roles' => array(
+      'CKAN sysadmin' => 'CKAN sysadmin',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
-      'ckan adminstrator' => 'ckan adminstrator',
       'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
@@ -39,10 +39,10 @@ function dgu_flags_user_default_permissions() {
   $permissions['flag spam_reply'] = array(
     'name' => 'flag spam_reply',
     'roles' => array(
+      'CKAN sysadmin' => 'CKAN sysadmin',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
-      'ckan adminstrator' => 'ckan adminstrator',
       'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
@@ -55,10 +55,10 @@ function dgu_flags_user_default_permissions() {
   $permissions['unflag spam_node'] = array(
     'name' => 'unflag spam_node',
     'roles' => array(
+      'CKAN sysadmin' => 'CKAN sysadmin',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
-      'ckan adminstrator' => 'ckan adminstrator',
       'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
@@ -71,10 +71,10 @@ function dgu_flags_user_default_permissions() {
   $permissions['unflag spam_reply'] = array(
     'name' => 'unflag spam_reply',
     'roles' => array(
+      'CKAN sysadmin' => 'CKAN sysadmin',
       'administrator' => 'administrator',
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
-      'ckan adminstrator' => 'ckan adminstrator',
       'data publisher' => 'data publisher',
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',

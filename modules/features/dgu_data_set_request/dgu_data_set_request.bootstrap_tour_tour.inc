@@ -24,7 +24,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'help',
       'placement' => 'left',
       'title' => 'User account',
-      'content' => '<p>To access data requests administration functions please go to user account page.</p>
+      'content' => '<p>To access the data requests administration functions please go to the user account page.</p>
 
 <p>At this stage all new data requests should be already moderated.</p>
 
@@ -46,7 +46,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'admin/workbench',
       'placement' => 'bottom',
       'title' => 'List of all data requests',
-      'content' => '<p>Then click &#39;Data Requests&#39; secondary tab to access data requests administration page.</p>
+      'content' => '<p>Then click &#39;Data Requests&#39;&nbsp;tab to access the data requests administration page.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -55,7 +55,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'admin/workbench/content/data-requests',
       'placement' => 'top',
       'title' => 'List of all data request',
-      'content' => '<p>This list contains all data reuqests, you can narow down nubmer of requests using filters above.</p>
+      'content' => '<p>This contains a list of all active and closed&nbsp;data requests for all publishers and Relationship Managers, you can narow down nubmer of requests displayed using filters above.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -64,7 +64,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Title filter',
-      'content' => '<p>You can search through the titles, enter any string contained in the title to perform search.<br />
+      'content' => '<p>You can search through the titles, entering any string contained in the title to perform the search.<br />
 	&nbsp;</p>
 ',
       'format' => 'filtered_html',
@@ -74,7 +74,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Status filter',
-      'content' => '<p>You can flter requests by their status,&nbsp; in order to do that please select status filter from the drop down list.</p>
+      'content' => '<p>You can also flter requests by their status.&nbsp; In order to do that please select the status filter from the drop down list.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -93,7 +93,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Outcome filter',
-      'content' => '<p>... or by reuqest outcome. Setting outcome filter narrows down results to only these data requests with status &#39;Closed&#39; because &#39;Outcome&#39; field is available only for closed requests.</p>
+      'content' => '<p>... or by request&nbsp;outcome. Setting the outcome filter narrows down the results to only&nbsp;data requests with the status &#39;Closed&#39;, because the&nbsp;&#39;Outcome&#39; field is available only for closed requests.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -102,7 +102,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Issue filter',
-      'content' => '<p>You can use issue filter in similar way like status and outcome filters.<br />
+      'content' => '<p>You can use &#39;issue&#39; filter in similar way to&nbsp;status and outcome filters.<br />
 	&nbsp;</p>
 ',
       'format' => 'filtered_html',
@@ -112,7 +112,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Items per page',
-      'content' => '<p>Here you can choose number items displayed on the list.</p>
+      'content' => '<p>Here you can choose the number of&nbsp;data requests that will be displayed&nbsp;on the list per page.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -131,7 +131,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'top',
       'title' => 'Default sort',
-      'content' => '<p>The default sort on this list is by modification date, you can change the sort by clicking other column labels.</p>
+      'content' => '<p>By default the list is sorted&nbsp;by modification date.&nbsp;You can change this by clicking on other column labels.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -140,7 +140,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Link to the data request',
-      'content' => '<p>Title of the request is the link to the data request view page.</p>
+      'content' => '<p>The title of the data request is the link to the data request view page.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -168,7 +168,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'top',
       'title' => 'Pager',
-      'content' => '<p>Here is the pager to navigate tgrough the data request pages.</p>
+      'content' => '<p>You can&nbsp;navigate through all the data request pages here.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -195,7 +195,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Fitlers',
-      'content' => '<p>Here are the filters, they are working in the same way like on Data requests list.</p>
+      'content' => '<p>The filters&nbsp;work&nbsp;in the same way as&nbsp;on the data requests list.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -222,7 +222,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'node/651/edit',
       'placement' => 'bottom',
       'title' => 'Editing data request',
-      'content' => '<p>You are on data request edit page.</p>
+      'content' => '<p>You are now on the data request edit page.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -240,7 +240,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Moderation',
-      'content' => '<p>Click &#39;Moderate&#39; to see moderation history, unpublish or change moderation state of current revision.</p>
+      'content' => '<p>Click &#39;Moderate&#39; to see the moderation history, unpublish or change the moderation state of the current revision.</p>
 ',
       'format' => 'filtered_html',
     ),
