@@ -37,7 +37,7 @@ function dgu_data_set_request_outcome_render($subtype, $conf, $panel_args, $cont
 
   $chart = array(
     'id' => 'data_requests_by_outcome',
-    'type' => 'piechart',
+    'type' => 'dgu_piechart',
     'rows' => $rows,
   );
 

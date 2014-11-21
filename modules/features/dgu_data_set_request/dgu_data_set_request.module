@@ -24,7 +24,31 @@ function dgu_data_set_request_ctools_plugin_directory($module, $plugin) {
  * Implements hook_libraries_info_file_paths().
  */
 function dgu_data_set_request_libraries_info_file_paths() {
-  return drupal_get_path('module', 'dgu_data_set_request') . '/libraries';
+  $d3_libraries = drupal_get_path('module', 'dgu_data_set_request') . '/libraries/';
+  foreach (dgu_data_set_request_d3_libraries() as $library) {
+    $paths[] = $d3_libraries . $library;
+  }
+  return $paths;
+}
+
+/**
+ * Implements hook_libraries_info_alter().
+ */
+function dgu_data_set_request_libraries_info_alter(&$libraries) {
+  $path = drupal_get_path('module', 'dgu_data_set_request') . '/libraries/';
+  foreach (dgu_data_set_request_d3_libraries() as $library) {
+    // Change library path to path/to/module/d3/libraries
+    $libraries[$library]['library path'] = $path . $library;
+  }
+}
+
+/**
+ * Helper callback to return all d3 libraries located inside this module.
+ */
+function dgu_data_set_request_d3_libraries() {
+  $module_path = drupal_get_path('module', 'dgu_data_set_request');
+  $d3_libraries = str_replace($module_path . '/libraries/', '', glob($module_path . '/libraries/*' , GLOB_ONLYDIR));
+  return $d3_libraries;
 }
 
 /**
