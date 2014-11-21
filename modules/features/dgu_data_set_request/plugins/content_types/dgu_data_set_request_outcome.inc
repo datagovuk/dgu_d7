@@ -37,9 +37,36 @@ function dgu_data_set_request_outcome_render($subtype, $conf, $panel_args, $cont
 
   $chart = array(
     'id' => 'data_requests_by_outcome',
-    'type' => 'dgu_piechart',
+    'type' => 'dgu_barchart',
     'rows' => $rows,
   );
+
+
+  // Temporary data until I get randomization working.
+  $chart = array(
+    'id' => 'visualization',
+    'type' => 'BarChart',
+    'legend' => array(
+      'Development',
+      'QA',
+      'Strategy',
+      'Design',
+    ),
+    'rows' => array(
+      array('2010 - (Data only available after 3rd quarter)'),
+      array('1st Quarter 2011'),
+      array('2nd Quarter 2011'),
+      array('3rd Quarter 2011'),
+      array('4th Quarter 2011'),
+      array('1st Quarter 2012'),
+    ),
+  );
+
+  for ($i = 0; $i < count($chart['rows']); $i++) {
+    for ($j = 0; $j < 4; $j++) {
+      array_push($chart['rows'][$i], rand(1, 70) * rand(1, 70));
+    }
+  }
 
   $block = new stdClass();
   $block->content = d3_draw($chart);

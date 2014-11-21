@@ -14,7 +14,6 @@
 (function($) {
 
   Drupal.d3.dgu_piechart = function (select, settings) {
-    alert('dupa');
     var wedges = settings.rows,
       // Each wedge has a label and a value
       key = wedges.map(function(d) { return String(d[0]); }),
@@ -63,12 +62,14 @@
       .enter().append("g")
         .attr("class", function(d, i) { return "arc arc-" + i; });
 
+    // outer wedges
     g.append("path")
         .attr("d", arc_effect)
         .attr('fill', '#fff')
         .attr('fill-opacity', 0)
         .attr('class', function(d, i) { return 'arc-' + i + '-over'; });
 
+    //main wedges
     g.append("path")
         .attr("d", arc)
         .style("fill", function(d, i) { return color(i); })
@@ -78,12 +79,6 @@
         .on('mouseout', function(d, i) { interact('out', i); })
         .attr('class', function(d, i) { return 'color_' + color(i) + ' arc-' + i; });
 
-    g.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("dy", ".35em")
-        .style("text-anchor", "middle")
-        .style('fill', 'white')
-        .text(function(d, i) { return percent(i); });
 
     /* LEGEND */
     var legend = svg.append("g")
