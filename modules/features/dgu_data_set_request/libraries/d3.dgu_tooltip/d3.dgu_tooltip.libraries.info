@@ -1,0 +1,5 @@
+name = DGU Tooltip
+description = DGU Tooltip functionality for any graph object.
+files[js][] = tooltip.js
+version = 0.1
+dependencies[] = d3
