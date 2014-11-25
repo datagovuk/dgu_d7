@@ -2,8 +2,15 @@ g.rule text {
   font-size: 12px;
 }
 g.ticks text {
-  font-size: 11px;
+  font-size: 13px;
 }
 .tooltip {
   z-index: 1000;
+}
+
+.color_bar1 {
+    fill: #8bc658;
+}
+.color_bar2 {
+    fill: #5140FF;
 }

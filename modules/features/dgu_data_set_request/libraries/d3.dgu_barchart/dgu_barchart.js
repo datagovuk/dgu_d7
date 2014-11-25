@@ -11,42 +11,42 @@
  */
 
 (function($) {
-
   Drupal.d3.dgu_barchart = function (select, settings) {
-
-    var rows = settings.rows,
+      var rows = settings.rows,
       // Use first value in each row as the label.
-      yLabels = rows.map(function(d) { return d.shift(); })
-      key = settings.legend,
-      // From inside out:
-      // - Convert all values to numeric numbers.
-      // - Merge all sub-arrays into one flat array.
-      // - Return the highest (numeric) value from flat array.
+      yLabels = rows.map(function(d) { return d.shift(); });
+
+      // Legend
+      key = ["Public", "Confidential"];
+
+      // The highest (numeric) value from flat array.
       max = d3.max(d3.merge(settings.rows).map(function(d) { return + d; })),
       // Padding is top, right, bottom, left as in css padding.
-      p = [10, 50, 30, 50],
-      w = 800,
-      h = 400,
-      // chart is 65% and 80% of overall height
-      chart = {w: w * .65, h: h * .80},
-      legend = {w: w * .35, h:h},
-      // bar width is calculated based on chart width, and amount of data
-      // items - will resize if there is more or less
-      barWidth = ((.90 * chart.h) / (rows.length * key.length)),
-      // each cluster of bars - makes coding later easier
-      barGroupWidth = (key.length * barWidth),
-      // space in between each set
-      barSpacing = (.10 * chart.h) / rows.length,
-      x = d3.scale.linear().domain([0,max]).range([20,chart.w]),
-      y = d3.scale.linear().domain([0,rows.length]).range([0, chart.h]),
-      z = d3.scale.ordinal().range(["blue", "red", "orange", "green"]),
-      div = (settings.id) ? settings.id : 'visualization';
 
-    var svg = d3.select('#' + div).append("svg")
-      .attr("width", w)
+      padding = {top: 10, right: 10, bottom: 20, left: 10};
+      w = parseInt(d3.select('#' + settings.id).style('width'));
+      h = 200;
+      labelsWidth = 210;
+      legendWidth = 140;
+      textHeight = 20;
+      if (w < 700) {
+        legendWidth = 0;
+        h = h + 40 + textHeight;
+        padding.bottom = 80;
+      }
+      chart = {w: w - labelsWidth - legendWidth - padding.left - padding.right, h: h - padding.top - padding.bottom};
+      barWidth = .08 * chart.h;
+      barGroupWidth = barWidth * 2;
+      barSpacing = (.2 * chart.h) / rows.length;
+      x = d3.scale.linear().domain([0,max]).range([20,chart.w]);
+      y = d3.scale.linear().domain([0,rows.length]).range([0, chart.h]);
+      z = d3.scale.ordinal().range(["bar1", "bar2"]);
+
+    var svg = d3.select('#' + settings.id).append("svg")
+      .attr("width", w - padding.left - padding.right)
       .attr("height", h)
       .append("g")
-      .attr("transform", "translate(" + p[3] + "," + p[0] + ")");
+      .attr("transform", "translate(" + labelsWidth + "," + padding.right + ")");
 
     var graph = svg.append("g")
       .attr("class", "chart");
@@ -61,11 +61,11 @@
 
     // This adds the labels to the ytick groups.
     yTicks.append('text')
-      .attr("dy", ".35em")
-      .attr('dx', 15)
+      .attr("dy", ".25em")
+      .attr('dx', 5)
       .attr("text-anchor", "end")
       .text(function(d, i) { return yLabels[i]; })
-      .ellipsis(60);
+      .ellipsis(labelsWidth);
 
     /* LINES */
     var rule = graph.selectAll("g.rule")
@@ -81,7 +81,7 @@
 
     /* X AXIS */
     rule.append("text")
-      .attr("y", 15)
+      .attr("y", textHeight)
       .attr("text-anchor", "end")
       .text(d3.format(",d"))
       .attr("x", function(d) {return this.getComputedTextLength() / 2;});
@@ -100,7 +100,7 @@
       .attr("height", barWidth)
       .attr('x', function (d,i) { return 0; })
       .attr('y', function (d,i) { return i * barWidth; })
-      .attr('fill', function(d,i) { return d3.rgb(z(i)); })
+      //.attr('fill', function(d,i) { return d3.rgb(z(i)); })
       .attr("class", function(d,i) {return "color_" + z(i); })
       .on('mouseover', function(d, i) { showToolTip(d, i, this); })
       .on('mouseout', function(d, i) { hideToolTip(d, i, this); });
@@ -108,15 +108,22 @@
     /* LEGEND */
     var legend = svg.append("g")
       .attr("class", "legend")
-      .attr("transform", "translate(" + (chart.w + 20) + "," + 0 + ")");
+
+    if(legendWidth > 0) {
+        legend.attr("transform", "translate(" + (chart.w + 30) + "," + 0 + ")");
+    }
+    else {
+        legend.attr("transform", "translate(" + 20 + "," + 200 + ")");
+    }
+
 
     var keys = legend.selectAll("g")
       .data(key)
       .enter().append("g")
-      .attr("transform", function(d,i) { return "translate(0," + d3.tileText(d,15) + ")"});
+      .attr("transform", function(d,i) { return "translate(0," + d3.tileText(d,10) + ")"});
 
     keys.append("rect")
-      .attr("fill", function(d,i) { return d3.rgb(z(i)); })
+      //.attr("fill", function(d,i) { return d3.rgb(z(i)); })
       .attr("class", function(d,i) {return "color_" + z(i); })
       .attr("width", 16)
       .attr("height", 16)
@@ -167,15 +174,12 @@
 
     function highlightBars(d, i) {
       var like_color = d3.selectAll('.color_' + z(i));
-      like_color.attr('stroke', '#ccc')
-        .attr('stroke-width', '1')
-        .attr('opacity', '0.75');
+      like_color.attr('stroke', '#ccc').attr('opacity', '0.75');
     }
 
     function unhighlightBars(d, i) {
       var like_color = d3.selectAll('.color_' + z(i));
-      like_color.attr('stroke-width', '0')
-        .attr('opacity', 1);
+      like_color.attr('opacity', 1);
     }
 
   }
