@@ -1,3 +1,19 @@
 .tooltip {
   z-index: 1000;
 }
+
+.color_pie1 {
+    fill: #8bc658;
+}
+.color_pie2 {
+    fill: #FFF300;
+}
+.color_pie3 {
+    fill: #5140FF;
+}
+.color_pie4 {
+    fill: #856499;
+}
+.color_pie5 {
+    fill: #56C8F9;
+}

@@ -25,7 +25,7 @@
       radius = Math.min((w - p[1] - p[3]), (h - p[0] - p[2])) / 2,
       // Maximum width and height for the legend minus padding.
       legend = {w: (w - p[3] - p[1] - radius * 2), h: h - p[0] - p[2]},
-      color = d3.scale.ordinal().range(['blue', 'red', 'orange', 'green', 'purple', 'lightblue', 'palevioletred', 'orangered', 'mediumpurple', 'pink', 'yellow', 'olive', 'mediumorchid']),
+      color = d3.scale.ordinal().range(['pie1', 'pie2', 'pie3', 'pie4', 'pie5']),
       div = (settings.id) ? settings.id : 'visualization';
 
     var svg = d3.select('#' + div).append("svg")
@@ -72,7 +72,6 @@
     //main wedges
     g.append("path")
         .attr("d", arc)
-        .style("fill", function(d, i) { return color(i); })
         .style('stroke', '#fff')
         .style('stroke-width', 1)
         .on('mouseover', function(d, i) { interact('over', i); })
@@ -91,7 +90,6 @@
       .attr("transform", function(d,i) { return "translate(0," + d3.tileText(d,15) + ")"});
 
     keys.append("rect")
-      .attr("fill", function(d,i) { return d3.rgb(color(i)); })
       .attr("class", function(d,i) {return "color_" + color(i); })
       .attr("width", 16)
       .attr("height", 16)
@@ -159,8 +157,6 @@
      * @return none
      */
     function hideToolTip(i) {
-      var group = d3.select('g.arc-' + i);
-
       var bar = d3.selectAll('.color_' + color(i));
       bar.attr('stroke-width', '0')
         .attr('opacity', 1);
@@ -178,7 +174,7 @@
      */
     function highlightSlice(i) {
       d3.selectAll('.arc-' + i + '-over')
-        .attr('fill', color(i))
+        .attr('fill', '#ccc')
         .attr('fill-opacity', 0.3);
     }
 
