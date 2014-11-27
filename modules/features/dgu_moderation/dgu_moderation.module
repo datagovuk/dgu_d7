@@ -241,7 +241,7 @@ function dgu_moderation_workbench_moderation_transition($node, $previous_state, 
 function dgu_moderation_page_alter(&$page) {
 
   //if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['#form_id']) && strlen($page['content']['system_main']['#form_id']) > 10 && substr($page['content']['system_main']['#form_id'], -10,10) == '_node_form') {
-  if (isset($page['content']['workbench_block']) && $page['content']['system_main']['#node_edit_form']) {
+  if (isset($page['content']['workbench_block']) && isset($page['content']['system_main']['#node_edit_form'])) {
     unset($page['content']['workbench_block']);
     unset($page['help']['system_help']);
 
