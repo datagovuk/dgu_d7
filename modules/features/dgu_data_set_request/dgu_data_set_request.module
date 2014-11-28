@@ -809,6 +809,9 @@ function dgu_data_set_request_views_query_alter(&$view, &$query) {
         $publishers[] = $publisher_ref['target_id'];
       }
     }
+    else {
+      return;
+    }
 
     $query->where[1]['conditions'][] = array(
       'field' => 'field_data_field_publisher_ref.field_publisher_ref_id',
