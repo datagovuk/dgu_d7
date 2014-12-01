@@ -378,7 +378,7 @@ function dgu_data_set_request_node_update($node) {
     $previous_publisher_assignee = isset($previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
 
     $fields_for_short_summary = array('field_review_status' => 'value', 'field_review_outcome' =>'value', 'field_review_notes' => 'value');
-    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10, 12)); // 3 = administrator, 6 = data publisher, 10 = data request administrator, 12 = editor
 
     // This is taken from message stack examples.
     // It's related to message_notify how it stores rendered subject and body via view modes.
@@ -456,7 +456,19 @@ function dgu_data_set_request_node_update($node) {
     }
     else {
       // Something else than assignee has been changed, simply notify all subscribers.
-      // First test if particular fields has changed and notify all non admin users.
+
+      // First notify admin users with full summary of changes.
+
+      // Get data_request_update message bundle and set required fields.
+      $message_update = message_create('data_request_update');
+      $wrapper = entity_metadata_wrapper('message', $message_update);
+      $wrapper->field_data_request_reference->set($node);
+
+      $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
+      $admin_uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
+      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $admin_uids));
+
+      // Then test if public fields has changed and notify all non admin users.
       if(_dgu_data_set_request_fields_changed($fields_for_short_summary, $node, $previous_data_request_revision)) {
         // Get data_request_update message bundle and set required fields.
         $message_update = message_create('data_request_update');
@@ -465,19 +477,9 @@ function dgu_data_set_request_node_update($node) {
 
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
-        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+        $non_admin_uids = array_diff($uids, $admin_uids);
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $non_admin_uids));
       }
-
-      // Then notify admin users with full summary of changes.
-
-      // Get data_request_update message bundle and set required fields.
-      $message_update = message_create('data_request_update');
-      $wrapper = entity_metadata_wrapper('message', $message_update);
-      $wrapper->field_data_request_reference->set($node);
-
-      $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
-      $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
     }
   }
 }
@@ -487,11 +489,9 @@ function dgu_data_set_request_node_update($node) {
  * Helper function to test if particular fields has changed between revisions.
  */
 function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
-
   // Get all flags on given entity type.
   $flags = message_subscribe_flag_get_flags('node');
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
-
   $fids = array();
   foreach ($flags as $flag) {
     $fids[$flag->fid] = $flag->name;
@@ -509,21 +509,17 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
     ->condition('f.entity_type', 'node')
     ->condition('f.entity_id', $nid)
     ->condition('fid', array_keys($fids), 'IN');
-
   if ($in_rids == TRUE) {
     $query->condition('ur.rid', $rids, 'IN');
   }
   else {
     $query->condition(db_or()->where('ur.rid NOT IN (' . implode (', ', $rids) . ')')->isNull('ur.rid'));
   }
-
   $result = $query->execute()->fetchAll();
-
   $uids = array();
   foreach ($result as $row) {
     $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
   }
-
   return $uids;
 }
 
