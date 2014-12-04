@@ -94,6 +94,11 @@ function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
   if (isset($item['map'][1]->type) && $item['map'][1]->type == 'dataset_request') {
     $active_trail[2] = $active_trail[1];
     $active_trail[1] = array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array());
+
+    if (isset($item['map'][2]) && $item['map'][2] == 'edit') {
+      unset($active_trail[2]);
+    }
+
   }
 }
 
@@ -822,6 +827,10 @@ function dgu_data_set_request_views_query_alter(&$view, &$query) {
  */
 function dgu_data_set_request_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
   if ($form_state['view']->name == 'data_requests_administration' && $form_state['view']->current_display == 'page_1') {
+
+    $form['field_review_status_value']['#type'] = 'checkboxes';
+    $form['field_review_outcome_value']['#type'] = 'checkboxes';
+
     if ($admin_publishers = dgu_user_get_admin_publishers()) {
       // Remove publishers which are filtered out in dgu_user_views_query_alter() from exposed filter.
       foreach ($form['field_publisher_ref_id']['#options'] as $key => $value) {

@@ -17,3 +17,11 @@
 .color_pie5 {
     fill: #56C8F9;
 }
+
+.dgu_piechart {
+    float: left;
+}
+
+.dgu_piechart text {
+    font-size: 13px;
+}
