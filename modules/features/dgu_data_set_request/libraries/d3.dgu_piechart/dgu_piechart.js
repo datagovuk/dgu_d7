@@ -65,7 +65,7 @@
     }
 
     var wedges = Drupal.d3.dgu_piechart.settings.rows;
-    var padding = {top: 0, right: 10, bottom: 20, left: 10};
+    var padding = {top: 0, right: 10, bottom: 20, left: 15};
     var radius = (w - padding.left - padding.right - legendWidth) / 2;
     var key = wedges.map(function(d) { return String(d[0]); });
     var color = d3.scale.ordinal().range(['pie1', 'pie2', 'pie3', 'pie4', 'pie5', 'pie6', 'pie7', 'pie8', 'pie9']);

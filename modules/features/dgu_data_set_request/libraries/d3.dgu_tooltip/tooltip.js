@@ -24,24 +24,20 @@
    */
   d3.tooltip = function(tipjar, txt, h, w) {
     var tooltip = {
-      w: 75,
-      h: 20,
+      w: 63,
+      h: 38,
       // The width of the triangular tip as it is on the base
       tipW: 10,
       // Tip length, vertically
       tipL: 5,
       // Tip offset point, from the very tip to the middle of the square
-      tipO: 5,
-      // 'Requests' text offset
-      offset: 15
+      tipO: 5
     };
     if (parseInt(txt) > 9 ) {
-        tooltip.w += 7;
-        tooltip.offset += 7;
+        tooltip.w += 4;
     }
     if (parseInt(txt) > 99 ) {
-        tooltip.w += 7;
-        tooltip.offset += 7;
+        tooltip.w += 4;
     }
 
     var svg = tipjar.node();
@@ -70,24 +66,20 @@
 
     var textbox = tipjar.append('g')
     .attr('class', 'text')
-    .attr('transform', function(d) { return 'translate(-' + offset + ',-' + tooltip.h + ')'})
+    .attr('transform', function(d) { return 'translate(' + (w/2 - offset) + ', 25)'; })
 
     textbox.append('text')
     .text(txt)
-    .attr('text-anchor', 'start')
-    .attr('dx', 5)
-    .attr('dy', 9)
-    .attr('font-family', 'Arial,sans-serif')
-    .attr('font-size', '12')
-    .attr('font-weight', 'normal');
+    .attr('text-anchor', 'middle')
+    .attr('dx', -5)
+    .attr('dy', -28)
+    .attr('font-weight', 'bold');
 
     textbox.append('text')
     .text('Requests')
-    .attr('text-anchor', 'start')
-    .attr('dx', tooltip.offset)
-    .attr('dy', 9)
-    .attr('font-family', 'Arial,sans-serif')
-    .attr('font-size', '12')
+    .attr('text-anchor', 'middle')
+    .attr('dx', -5)
+    .attr('dy', -13)
     .attr('font-weight', 'normal');
   }
 })(jQuery);
