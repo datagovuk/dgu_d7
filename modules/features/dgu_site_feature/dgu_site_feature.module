@@ -210,25 +210,3 @@ function dgu_site_feature_get_plural_content_types(){
     'book' => t('Books'),
   );
 }
-
-function dgu_site_feature_tokens_alter(&$replacements, $context){
-  $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http' : $_SERVER['HTTP_X_FORWARDED_PROTO'] . '://';
-  foreach ($replacements as $token => $value){
-    if (strstr($token, 'url')){
-      $replacements[$token] = preg_replace('/^\/\//i', $scheme, $value);
-    }
-  }
-}
-
-function dgu_site_feature_url_outbound_alter(&$path, &$options, $original_path) {
-  $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http' : $_SERVER['HTTP_X_FORWARDED_PROTO'];
-  $options['https'] = $scheme == 'https';
-}
-
-function dgu_site_feature_init() {
-  global $base_url, $base_secure_url, $base_insecure_url;
-  $scheme = empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? 'http' : $_SERVER['HTTP_X_FORWARDED_PROTO'] . ":";
-  $base_insecure_url = $scheme . $base_url;
-  $base_secure_url = $scheme . $base_url;
-  $base_url = $scheme . $base_url;
-}
