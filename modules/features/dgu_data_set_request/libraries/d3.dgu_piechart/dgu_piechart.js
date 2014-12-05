@@ -23,35 +23,52 @@
 
     d3.y = 0;
 
-    var legendWidth = 170;
+    var legendWidth = 370 * Drupal.d3.dgu_piechart.settings.width;
+    var labelBreak = 44 * Drupal.d3.dgu_piechart.settings.width; // break line after 44 characters
     var w = parseInt($('#' + Drupal.d3.dgu_piechart.settings.id).parent().width()) * Drupal.d3.dgu_piechart.settings.width;
+
+    if (legendWidth > w/2) {
+      legendWidth = w/2;
+      labelBreak = legendWidth / 7;
+    }
+
+
     var legendOffsetY = 10;
     var legendOffsetX = w - legendWidth;
     var h = w - legendWidth;
-    var labelBreak = 22; // break line after 22 characters
 
-    if (w < 200) {
-        w = parseInt($('#' + Drupal.d3.dgu_piechart.settings.id).parent().width()) - 20;
-        legendOffsetX = 10;
-        legendOffsetY = w;
-        legendWidth = 0;
-        h = w;
-        labelBreak = 35;
-
+    if (Drupal.d3.dgu_piechart.settings.width > 0.9) {
+        if (w < 600) {
+            legendOffsetX = 10;
+            legendOffsetY = w;
+            legendWidth = 0;
+            h = w;
+            labelBreak = w / 6.5;
+        }
     }
-    else if (w < 350) {
-        legendOffsetX = 10;
-        legendOffsetY = w;
-        legendWidth = 0;
-        h = w;
-        labelBreak = 27;
+    else {
+        if (w < 200) {
+            w = parseInt($('#' + Drupal.d3.dgu_piechart.settings.id).parent().width()) - 20;
+            legendOffsetX = 10;
+            legendOffsetY = w;
+            legendWidth = 0;
+            h = w;
+            labelBreak = 70 * Drupal.d3.dgu_piechart.settings.width;
+        }
+        else if (w < 350) {
+            legendOffsetX = 10;
+            legendOffsetY = w;
+            legendWidth = 0;
+            h = w;
+            labelBreak = 54 * Drupal.d3.dgu_piechart.settings.width;
+        }
     }
 
     var wedges = Drupal.d3.dgu_piechart.settings.rows;
     var padding = {top: 0, right: 10, bottom: 20, left: 10};
     var radius = (w - padding.left - padding.right - legendWidth) / 2;
     var key = wedges.map(function(d) { return String(d[0]); });
-    var color = d3.scale.ordinal().range(['pie1', 'pie2', 'pie3', 'pie4', 'pie5']);
+    var color = d3.scale.ordinal().range(['pie1', 'pie2', 'pie3', 'pie4', 'pie5', 'pie6', 'pie7', 'pie8', 'pie9']);
 
     // Remove previously rendered h3 and svg elements if exist.
     d3.select('#' + Drupal.d3.dgu_piechart.settings.id + ' svg').remove();

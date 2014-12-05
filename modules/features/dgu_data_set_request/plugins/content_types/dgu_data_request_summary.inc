@@ -27,7 +27,7 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
     ->groupBy('field_review_outcome_value')
     ->condition('n.status', 1)
     ->condition('field_review_status_value', 6)
-    ->addExpression('COUNT(o.entity_id)', 'outcome_count');
+    ->addExpression('COUNT(o.entity_id)', 'count');
   $result = $query->execute();
 
   $outcome_field_info = field_info_field('field_review_outcome');
@@ -36,9 +36,8 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
   $id = 'data_requests_by_outcome';
   $rows = array();
   foreach($result as $row) {
-    $rows[] = array($allowed_values[$row->field_review_outcome_value], $row->outcome_count, $id);
+    $rows[] = array($allowed_values[$row->field_review_outcome_value], $row->count, $id);
   }
-
   $chart = array(
     'id' => $id,
     'type' => 'dgu_piechart',
@@ -46,7 +45,6 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
     'width' => '0.49',
     'rows' => $rows,
   );
-
   $block->content = d3_draw($chart);
 
 
@@ -55,7 +53,7 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
   $query->fields('s', array('field_review_status_value'))
     ->groupBy('field_review_status_value')
     ->condition('field_review_status_value', array(1, 2, 3, 4, 5), 'IN')
-    ->addExpression('COUNT(s.entity_id)', 'status_count');
+    ->addExpression('COUNT(s.entity_id)', 'count');
   $result = $query->execute();
 
   $status_field_info = field_info_field('field_review_status');
@@ -64,9 +62,8 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
   $id = 'data_requests_by_status';
   $rows = array();
   foreach($result as $row) {
-    $rows[] = array($allowed_values[$row->field_review_status_value], $row->status_count, $id);
+    $rows[] = array($allowed_values[$row->field_review_status_value], $row->count, $id);
   }
-
   $chart = array(
     'id' => $id,
     'type' => 'dgu_piechart',
@@ -74,8 +71,64 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
     'width' => '0.49',
     'rows' => $rows,
   );
-
   $block->content .= d3_draw($chart);
+
+  $query = db_select('node', 'n');
+  $query->leftJoin('field_data_field_organisation_type', 't', 't.entity_id = n.nid');
+  $query->fields('t', array('field_organisation_type_value'))
+    ->condition('n.type', 'dataset_request')
+    ->groupBy('field_organisation_type_value')
+    ->addExpression('COUNT(n.nid)', 'count');
+  $result = $query->execute();
+
+  $status_field_info = field_info_field('field_organisation_type');
+  $allowed_values = list_allowed_values($status_field_info);
+
+  $id = 'data_requests_by_organisation_type';
+  $rows = array();
+  foreach($result as $row) {
+    if (empty($row->field_organisation_type_value)) {
+      $rows[] = array('Private individual', $row->count, $id);
+    }
+    else {
+      $rows[] = array($allowed_values[$row->field_organisation_type_value], $row->count, $id);
+    }
+  }
+  $chart = array(
+    'id' => $id,
+    'type' => 'dgu_piechart',
+    'title' => 'Requests by organisation type',
+    'width' => '0.99',
+    'rows' => $rows,
+  );
+  $hidden = d3_draw($chart);
+
+
+  $query = db_select('field_data_field_barriers_reason', 'r');
+  $query->join('node', 'n', 'r.entity_id = n.nid');
+  $query->fields('r', array('field_barriers_reason_value'))
+    ->groupBy('field_barriers_reason_value')
+    ->addExpression('COUNT(r.entity_id)', 'count');
+  $result = $query->execute();
+
+  $status_field_info = field_info_field('field_barriers_reason');
+  $allowed_values = list_allowed_values($status_field_info);
+
+  $id = 'data_requests_by_reason';
+  $rows = array();
+  foreach($result as $row) {
+    $rows[] = array($allowed_values[$row->field_barriers_reason_value], $row->count, $id);
+  }
+  $chart = array(
+    'id' => $id,
+    'type' => 'dgu_piechart',
+    'title' => 'Requests by reason',
+    'width' => '0.99',
+    'rows' => $rows,
+  );
+  $hidden .= d3_draw($chart);
+
+  $block->content .= '<a class="vis-see-more pull-right" href="#">See more</a><div class="vis-hidden" style="display: none;">' . $hidden . '</div>';
 
   return $block;
 }
