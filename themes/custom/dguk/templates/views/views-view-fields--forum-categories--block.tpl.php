@@ -29,7 +29,7 @@ $new_topics = dgu_forum_topics_unread($row->tid);
 <div class="views-field views-field-name">
   <?php print $fields['name']->content; ?>
 </div>
-<?php if ($fields['description']->content): ?>
+<?php if (!empty($fields['description']->content)): ?>
 <div class="views-field views-field-description">
   <?php print $fields['description']->content; ?>
 </div>
