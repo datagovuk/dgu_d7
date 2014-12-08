@@ -216,7 +216,7 @@ function dgu_data_set_request_node_access_records($node) {
             'realm' => 'private_data_request',
             'gid' => $assignee_uid,
             'grant_view' => 1,
-            'grant_update' => 1,
+            'grant_update' => 0,
             'grant_delete' => 0,
             'priority' => 1,
           );
@@ -251,7 +251,7 @@ function dgu_data_set_request_node_access_records($node) {
             'realm' => 'public_data_request',
             'gid' => $assignee_uid,
             'grant_view' => 1,
-            'grant_update' => 1,
+            'grant_update' => 0,
             'grant_delete' => 0,
             'priority' => 1,
           );
