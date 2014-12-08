@@ -179,10 +179,3 @@ function dgu_consultation_build_paragraph($link, &$outline){
   }
   return $paras;
 }
-
-function dgu_consultation_to_roman($n){
-  $c='IVXLCDM';
-  for($a=5,$b=$s='';$n;$b++,$a^=7)
-    for($o=$n%$a,$n=$n/$a^0;$o--;$s=$c[$o>2?$b+$n-($n&=-2)+$o=1:$b].$s);
-  return $s;
-}
