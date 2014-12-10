@@ -128,7 +128,7 @@ function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $con
   );
   $hidden .= d3_draw($chart);
 
-  $block->content .= '<a class="vis-see-more pull-right" href="#">See more</a><div class="vis-hidden" style="display: none;">' . $hidden . '</div>';
+  $block->content .= '<div class="vis-hidden" style="display: none;">' . $hidden . '</div><a class="vis-see-more pull-right" href="#">See more</a>';
 
   return $block;
 }
