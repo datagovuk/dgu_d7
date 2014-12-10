@@ -12,14 +12,14 @@ function dgu_consultation_field_default_field_bases() {
 
   // Exported field_base: 'field_field_comments'
   $field_bases['field_field_comments'] = array(
-    'active' => '1',
-    'cardinality' => '1',
-    'deleted' => '0',
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_field_comments',
     'foreign keys' => array(),
     'indexes' => array(),
-    'locked' => '0',
+    'locked' => 0,
     'module' => 'reply',
     'settings' => array(
       'access' => -1,
@@ -28,15 +28,15 @@ function dgu_consultation_field_default_field_bases() {
       'display' => -1,
       'form' => -1,
     ),
-    'translatable' => '0',
+    'translatable' => 0,
     'type' => 'reply',
   );
 
   // Exported field_base: 'field_paragraph'
   $field_bases['field_paragraph'] = array(
-    'active' => '1',
-    'cardinality' => '-1',
-    'deleted' => '0',
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_paragraph',
     'foreign keys' => array(
@@ -52,10 +52,10 @@ function dgu_consultation_field_default_field_bases() {
         0 => 'format',
       ),
     ),
-    'locked' => '0',
+    'locked' => 0,
     'module' => 'text',
     'settings' => array(),
-    'translatable' => '0',
+    'translatable' => 0,
     'type' => 'text_long',
   );
 
