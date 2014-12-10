@@ -20,4 +20,3 @@ features[variable][] = field_bundle_settings_node__book
 features[variable][] = field_bundle_settings_reply__field_comment
 features[variable][] = node_options_book
 features_exclude[dependencies][dgu_forum] = dgu_forum
-mtime = 1418136517
