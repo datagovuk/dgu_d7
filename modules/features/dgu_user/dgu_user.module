@@ -556,7 +556,7 @@ function dgu_user_get_publisher_with_children($publisher_id) {
 function dgu_user_get_admin_publishers() {
   global $user;
   if (empty($user->data['ckan_publishers'])) {
-    return;
+    return array();
   }
 
   $admin_publishers = &drupal_static('current_user_admin_publishers');
