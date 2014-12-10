@@ -667,14 +667,18 @@ function dgu_data_set_request_tokens($type, $tokens, array $data = array(), arra
  * Implements hook_preprocess_replies().
  */
 function  dgu_data_set_request_preprocess_replies(&$variables) {
-  if ($variables['bundle'] == 'review_comment' && $variables['entity_type'] == 'node' && !node_access('update', $variables['entity'])) {
-    // Check if current user is an admin for this publisher or parent publisher.
-    if(isset($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id']) && !in_array($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id'], dgu_user_get_admin_publishers())) {
-      // Hide reply forms for users which haven't got access to edit entity.
-      // We need to give them full access to create/update review_comment replies
-      // but only on nodes they have permissions to edit, e.g data request assignee grant.
-      unset($variables['replies']);
-      unset($variables['reply_form']);
+  if ($variables['bundle'] == 'review_comment' && $variables['entity_type'] == 'node') {
+    if(!node_access('update', $variables['entity'])) {
+      global $user;
+      $assignees = dgu_data_set_request_publisher_assignee_get_assignees($variables['entity_id']);
+      // Check if current user is or wes publisher assignee or if is an admin for referenced publisher or parent publisher.
+      if(!in_array($user->uid, $assignees) && !(isset($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id']) && in_array($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id'], dgu_user_get_admin_publishers()))) {
+        // Hide reply forms for users which haven't got access to edit entity.
+        // We need to give them full access to create/update review_comment replies
+        // but only on nodes they have permissions to edit, e.g data request assignee grant.
+        unset($variables['replies']);
+        unset($variables['reply_form']);
+      }
     }
   }
 }
@@ -827,9 +831,6 @@ function dgu_data_set_request_views_query_alter(&$view, &$query) {
  */
 function dgu_data_set_request_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
   if ($form_state['view']->name == 'data_requests_administration' && $form_state['view']->current_display == 'page_1') {
-
-    $form['field_review_status_value']['#type'] = 'checkboxes';
-    $form['field_review_outcome_value']['#type'] = 'checkboxes';
 
     if ($admin_publishers = dgu_user_get_admin_publishers()) {
       // Remove publishers which are filtered out in dgu_user_views_query_alter() from exposed filter.
