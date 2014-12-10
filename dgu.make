@@ -68,6 +68,9 @@ projects[views][patch][] = "http://drupal.org/files/views-1511396-110-array_diff
 projects[views_data_export][version] = "3.0-beta6"
 projects[views_data_export][subdir] = "contrib"
 
+projects[better_exposed_filters][version] = "3.0-beta4"
+projects[better_exposed_filters][subdir] = "contrib"
+
 projects[link][version] = "1.1"
 projects[link][subdir] = "contrib"
 projects[linkchecker][version] = "1.1"
