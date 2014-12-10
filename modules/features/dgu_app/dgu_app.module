@@ -33,6 +33,9 @@ function dgu_app_menu_breadcrumb_alter(&$active_trail, $item) {
   }
 }
 
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
 function dgu_app_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'app') {
     return user_access(APP_MODERATION_PERMISSION);

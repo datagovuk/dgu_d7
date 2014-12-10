@@ -26,7 +26,9 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
+    6 => '6',
     10 => '10',
+    12 => '12',
   );
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
@@ -589,6 +591,163 @@ function dgu_data_set_request_views_default_views() {
   $handler = $view->new_display('page', 'Page', 'page_1');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'Data requests';
+  $handler->display->display_options['defaults']['exposed_form'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'better_exposed_filters';
+  $handler->display->display_options['exposed_form']['options']['bef'] = array(
+    'general' => array(
+      'allow_secondary' => 0,
+      'secondary_label' => 'Advanced options',
+    ),
+    'pager' => array(
+      'bef_format' => 'default',
+      'is_secondary' => 0,
+    ),
+    'field_review_status_value' => array(
+      'bef_format' => 'bef',
+      'more_options' => array(
+        'bef_select_all_none' => 1,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'field_review_outcome_value' => array(
+      'bef_format' => 'bef',
+      'more_options' => array(
+        'bef_select_all_none' => 1,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'title' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'field_publication_preference_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '"0"|Confidential
+"1"|Public',
+        ),
+      ),
+    ),
+    'field_barriers_reason_value' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'field_assignee_uid' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'field_publisher_ref_id' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+    'field_publisher_assignee_uid' => array(
+      'bef_format' => 'default',
+      'more_options' => array(
+        'bef_select_all_none' => FALSE,
+        'bef_collapsible' => 0,
+        'is_secondary' => 0,
+        'any_label' => '',
+        'bef_filter_description' => '',
+        'tokens' => array(
+          'available' => array(
+            0 => 'global_types',
+          ),
+        ),
+        'rewrite' => array(
+          'filter_rewrite_values' => '',
+        ),
+      ),
+    ),
+  );
+  $handler->display->display_options['exposed_form']['options']['input_required'] = 0;
+  $handler->display->display_options['exposed_form']['options']['text_input_required_format'] = 'filtered_html';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
@@ -692,6 +851,14 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['header']['area']['field'] = 'area';
   $handler->display->display_options['header']['area']['content'] = 'This list contains only moderated requests, to manage requests awaiting moderation please go to <a href="/admin/workbench/needs-review">Needs Review</a> page';
   $handler->display->display_options['header']['area']['format'] = 'filtered_html';
+  $handler->display->display_options['defaults']['empty'] = FALSE;
+  /* No results behavior: Global: Text area */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'There are no data requests matching your filter criteria';
+  $handler->display->display_options['empty']['area']['format'] = 'filtered_html';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
@@ -812,6 +979,58 @@ function dgu_data_set_request_views_default_views() {
     5 => 0,
     9 => 0,
   );
+  /* Filter criterion: Content: Status (field_review_status) */
+  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
+  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_review_status_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator_id'] = 'field_review_status_value_op';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator'] = 'field_review_status_value_op';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['identifier'] = 'field_review_status_value';
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+  );
+  /* Filter criterion: Content: Outcome (field_review_outcome) */
+  $handler->display->display_options['filters']['field_review_outcome_value']['id'] = 'field_review_outcome_value';
+  $handler->display->display_options['filters']['field_review_outcome_value']['table'] = 'field_data_field_review_outcome';
+  $handler->display->display_options['filters']['field_review_outcome_value']['field'] = 'field_review_outcome_value';
+  $handler->display->display_options['filters']['field_review_outcome_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_review_outcome_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['operator_id'] = 'field_review_outcome_value_op';
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['label'] = 'Outcome';
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['operator'] = 'field_review_outcome_value_op';
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['identifier'] = 'field_review_outcome_value';
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['remember'] = TRUE;
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+    7 => 0,
+    8 => 0,
+    6 => 0,
+    5 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+  );
   /* Filter criterion: Content: Title */
   $handler->display->display_options['filters']['title']['id'] = 'title';
   $handler->display->display_options['filters']['title']['table'] = 'node';
@@ -824,31 +1043,6 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
   $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
   $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-    9 => 0,
-    11 => 0,
-    12 => 0,
-    10 => 0,
-  );
-  /* Filter criterion: Content: Status (field_review_status) */
-  $handler->display->display_options['filters']['field_review_status_value']['id'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['table'] = 'field_data_field_review_status';
-  $handler->display->display_options['filters']['field_review_status_value']['field'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_review_status_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator_id'] = 'field_review_status_value_op';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['label'] = 'Status';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['operator'] = 'field_review_status_value_op';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['identifier'] = 'field_review_status_value';
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember'] = TRUE;
-  $handler->display->display_options['filters']['field_review_status_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
@@ -887,31 +1081,6 @@ function dgu_data_set_request_views_default_views() {
     12 => 0,
     10 => 0,
   );
-  /* Filter criterion: Content: Outcome (field_review_outcome) */
-  $handler->display->display_options['filters']['field_review_outcome_value']['id'] = 'field_review_outcome_value';
-  $handler->display->display_options['filters']['field_review_outcome_value']['table'] = 'field_data_field_review_outcome';
-  $handler->display->display_options['filters']['field_review_outcome_value']['field'] = 'field_review_outcome_value';
-  $handler->display->display_options['filters']['field_review_outcome_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_review_outcome_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['operator_id'] = 'field_review_outcome_value_op';
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['label'] = 'Outcome';
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['operator'] = 'field_review_outcome_value_op';
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['identifier'] = 'field_review_outcome_value';
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['remember'] = TRUE;
-  $handler->display->display_options['filters']['field_review_outcome_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
-    7 => 0,
-    8 => 0,
-    6 => 0,
-    5 => 0,
-    9 => 0,
-    11 => 0,
-    12 => 0,
-    10 => 0,
-  );
   /* Filter criterion: Content: Reason (field_barriers_reason) */
   $handler->display->display_options['filters']['field_barriers_reason_value']['id'] = 'field_barriers_reason_value';
   $handler->display->display_options['filters']['field_barriers_reason_value']['table'] = 'field_data_field_barriers_reason';
@@ -933,9 +1102,9 @@ function dgu_data_set_request_views_default_views() {
     6 => 0,
     5 => 0,
     9 => 0,
+    10 => 0,
     11 => 0,
     12 => 0,
-    10 => 0,
   );
   /* Filter criterion: Workbench Moderation: State */
   $handler->display->display_options['filters']['state']['id'] = 'state';
@@ -944,10 +1113,12 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['state']['value'] = array(
     'published' => 'published',
   );
+  $handler->display->display_options['filters']['state']['group'] = 1;
   /* Filter criterion: Content: Relationship manager (field_assignee) */
   $handler->display->display_options['filters']['field_assignee_uid']['id'] = 'field_assignee_uid';
   $handler->display->display_options['filters']['field_assignee_uid']['table'] = 'field_data_field_assignee';
   $handler->display->display_options['filters']['field_assignee_uid']['field'] = 'field_assignee_uid';
+  $handler->display->display_options['filters']['field_assignee_uid']['group'] = 1;
   $handler->display->display_options['filters']['field_assignee_uid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_assignee_uid']['expose']['operator_id'] = 'field_assignee_uid_op';
   $handler->display->display_options['filters']['field_assignee_uid']['expose']['label'] = 'Relationship manager';
@@ -972,6 +1143,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['field_publisher_ref_id']['id'] = 'field_publisher_ref_id';
   $handler->display->display_options['filters']['field_publisher_ref_id']['table'] = 'field_data_field_publisher_ref';
   $handler->display->display_options['filters']['field_publisher_ref_id']['field'] = 'field_publisher_ref_id';
+  $handler->display->display_options['filters']['field_publisher_ref_id']['group'] = 1;
   $handler->display->display_options['filters']['field_publisher_ref_id']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['operator_id'] = 'field_publisher_ref_id_op';
   $handler->display->display_options['filters']['field_publisher_ref_id']['expose']['label'] = 'Publisher';
@@ -996,6 +1168,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['id'] = 'field_publisher_assignee_uid';
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['table'] = 'field_data_field_publisher_assignee';
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['field'] = 'field_publisher_assignee_uid';
+  $handler->display->display_options['filters']['field_publisher_assignee_uid']['group'] = 1;
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['operator_id'] = 'field_publisher_assignee_uid_op';
   $handler->display->display_options['filters']['field_publisher_assignee_uid']['expose']['label'] = 'Publisher assignee';
@@ -1027,6 +1200,9 @@ function dgu_data_set_request_views_default_views() {
   $handler = $view->new_display('page', 'Page', 'page_2');
   $handler->display->display_options['defaults']['title'] = FALSE;
   $handler->display->display_options['title'] = 'My Data requests';
+  $handler->display->display_options['defaults']['access'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'edit any dataset_request content';
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
@@ -1524,9 +1700,12 @@ function dgu_data_set_request_views_default_views() {
     9 => 0,
   );
   $handler->display->display_options['displays'] = array(
-    'page_1' => 'page_1',
+    'page_2' => 'page_2',
     'default' => 0,
     'page' => 0,
+    'page_1' => 0,
+    'block_1' => 0,
+    'block_2' => 0,
   );
   $handler->display->display_options['attachment_position'] = 'after';
 
@@ -1639,9 +1818,12 @@ function dgu_data_set_request_views_default_views() {
     9 => 0,
   );
   $handler->display->display_options['displays'] = array(
-    'page_1' => 'page_1',
+    'page_2' => 'page_2',
     'default' => 0,
     'page' => 0,
+    'page_1' => 0,
+    'block_1' => 0,
+    'block_2' => 0,
   );
   $handler->display->display_options['attachment_position'] = 'after';
   $export['data_requests_administration'] = $view;
@@ -2504,6 +2686,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_organisation_name']['element_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_organisation_name']['element_wrapper_type'] = 'span';
   $handler->display->display_options['fields']['field_organisation_name']['hide_empty'] = TRUE;
   $handler->display->display_options['fields']['field_organisation_name']['hide_alter_empty'] = FALSE;
   $handler->display->display_options['fields']['field_organisation_name']['settings'] = array(
@@ -2513,14 +2696,15 @@ function dgu_data_set_request_views_default_views() {
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Content: Status */
-  $handler->display->display_options['fields']['field_review_status']['id'] = 'field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['table'] = 'field_data_field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['field'] = 'field_review_status';
-  $handler->display->display_options['fields']['field_review_status']['element_type'] = 'strong';
-  $handler->display->display_options['fields']['field_review_status']['element_label_type'] = 'span';
-  $handler->display->display_options['fields']['field_review_status']['element_wrapper_type'] = 'div';
-  $handler->display->display_options['fields']['field_review_status']['settings'] = array(
+  /* Field: Content: Data request description */
+  $handler->display->display_options['fields']['field_data_set_description']['id'] = 'field_data_set_description';
+  $handler->display->display_options['fields']['field_data_set_description']['table'] = 'field_data_field_data_set_description';
+  $handler->display->display_options['fields']['field_data_set_description']['field'] = 'field_data_set_description';
+  $handler->display->display_options['fields']['field_data_set_description']['label'] = '';
+  $handler->display->display_options['fields']['field_data_set_description']['alter']['max_length'] = '255';
+  $handler->display->display_options['fields']['field_data_set_description']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_data_set_description']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_data_set_description']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',

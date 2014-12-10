@@ -16,11 +16,9 @@ Feature: Request new data
       | Latest data requests  |
     And "Data Requests" item in "Data" subnav should be active
     And I should see the link "Login to request new data"
-    And I should see the link "See Dashboard"
     And view "latest_dataset_requests" view should have "5" rows
     And pager in "latest_dataset_requests" view should match "^1 2 3 … »$"
-    And I should see "ODUG OVERVIEW" pane in "first" column in "second" row
-    And I should see "PROGRESS ON REQUESTS" pane in "last" column in "second" row
+    And I should see "OPEN DATA USER GROUP" pane in "first" column in "second" row
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
@@ -135,7 +133,6 @@ Feature: Request new data
     And I follow "My Data requests"
     And I wait until the page loads
     And I follow "My Dataset request title"
-    And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
     And I select the radio button "Escalated to data holder"

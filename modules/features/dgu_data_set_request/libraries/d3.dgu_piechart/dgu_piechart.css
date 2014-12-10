@@ -1,0 +1,38 @@
+.tooltip {
+  z-index: 1000;
+}
+
+.color_pie1 {
+    fill: #8bc658;
+}
+.color_pie2 {
+    fill: #5140FF;
+}
+.color_pie3 {
+    fill: #dade81;
+}
+.color_pie4 {
+    fill: #856499;
+}
+.color_pie5 {
+    fill: #c69178;
+}
+.color_pie6 {
+    fill: #56C8F9;
+}
+.color_pie7 {
+    fill: #c4b276;
+}
+.color_pie8 {
+    fill: #edc7f9;
+}
+.color_pie9 {
+    fill: #90fcc3;
+}
+.dgu_piechart {
+    float: left;
+}
+
+.dgu_piechart text {
+    font-size: 13px;
+}

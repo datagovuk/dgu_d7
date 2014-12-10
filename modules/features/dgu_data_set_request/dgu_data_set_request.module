@@ -8,6 +8,7 @@
 define('DATA_REQUEST_MODERATION_PERMISSION', 'edit any dataset_request content');
 define('PUBLIC_DATA_REQUEST_GRANT', 2147483647);    // maximum possible value (avialable in Solr) to avoid conflict with $node->uid
 define('DATA_REQUEST_MODERATOR_GRANT', 2147483646); // maximum possible value (avialable in Solr) -1 to avoid conflict with $node->uid
+define('DATA_REQUEST_CKAN_ADMIN_GRANT', 2147483645); // maximum possible value (avialable in Solr) -2 to avoid conflict with $node->uid
 
 include_once 'dgu_data_set_request.features.inc';
 
@@ -17,6 +18,48 @@ include_once 'dgu_data_set_request.features.inc';
 function dgu_data_set_request_ctools_plugin_directory($module, $plugin) {
   if ($module == 'ctools' && !empty($plugin)) {
     return "plugins/$plugin";
+  }
+}
+
+/**
+ * Implements hook_libraries_info_file_paths().
+ */
+function dgu_data_set_request_libraries_info_file_paths() {
+  $d3_libraries = drupal_get_path('module', 'dgu_data_set_request') . '/libraries/';
+  foreach (dgu_data_set_request_d3_libraries() as $library) {
+    $paths[] = $d3_libraries . $library;
+  }
+  return $paths;
+}
+
+/**
+ * Implements hook_libraries_info_alter().
+ */
+function dgu_data_set_request_libraries_info_alter(&$libraries) {
+  $path = drupal_get_path('module', 'dgu_data_set_request') . '/libraries/';
+  foreach (dgu_data_set_request_d3_libraries() as $library) {
+    // Change library path to path/to/module/d3/libraries
+    $libraries[$library]['library path'] = $path . $library;
+  }
+}
+
+/**
+ * Helper callback to return all d3 libraries located inside this module.
+ */
+function dgu_data_set_request_d3_libraries() {
+  $module_path = drupal_get_path('module', 'dgu_data_set_request');
+  $d3_libraries = str_replace($module_path . '/libraries/', '', glob($module_path . '/libraries/*' , GLOB_ONLYDIR));
+  return $d3_libraries;
+}
+
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
+function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
+  if ($node->type == 'dataset_request') {
+    if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
+      return TRUE;
+    }
   }
 }
 
@@ -51,16 +94,14 @@ function dgu_data_set_request_menu_breadcrumb_alter(&$active_trail, $item) {
   if (isset($item['map'][1]->type) && $item['map'][1]->type == 'dataset_request') {
     $active_trail[2] = $active_trail[1];
     $active_trail[1] = array('title' => 'Data Requests', 'href' => 'data-request', 'localized_options' => array());
+
+    if (isset($item['map'][2]) && $item['map'][2] == 'edit') {
+      unset($active_trail[2]);
+    }
+
   }
 }
 
-function dgu_data_set_request_dgu_moderation_moderator_permission(&$node) {
-  if ($node->type == 'dataset_request') {
-    if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || is_or_was_assignee($node->nid)) {
-      return TRUE;
-    }
-  }
-}
 
 /**
  * Implements Hook hook_form_FORM_ID_alter which:
@@ -149,6 +190,14 @@ function dgu_data_set_request_node_access_records($node) {
         'grant_delete' => 1,
         'priority' => 1,
       );
+      $grants[] = array(
+        'realm' => 'private_data_request',
+        'gid' => DATA_REQUEST_CKAN_ADMIN_GRANT,
+        'grant_view' => 1,
+        'grant_update' => 0,
+        'grant_delete' => 0,
+        'priority' => 1,
+      );
       if ($node->uid) {
         // Grant author permission only if author is not anonymous.
         $grants[] = array(
@@ -167,7 +216,7 @@ function dgu_data_set_request_node_access_records($node) {
             'realm' => 'private_data_request',
             'gid' => $assignee_uid,
             'grant_view' => 1,
-            'grant_update' => 1,
+            'grant_update' => 0,
             'grant_delete' => 0,
             'priority' => 1,
           );
@@ -202,7 +251,7 @@ function dgu_data_set_request_node_access_records($node) {
             'realm' => 'public_data_request',
             'gid' => $assignee_uid,
             'grant_view' => 1,
-            'grant_update' => 1,
+            'grant_update' => 0,
             'grant_delete' => 0,
             'priority' => 1,
           );
@@ -230,6 +279,9 @@ function dgu_data_set_request_node_grants($account, $op) {
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION, $account)) {
     $grants['private_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
     $grants['public_data_request'] = array(DATA_REQUEST_MODERATOR_GRANT);
+  }
+  if (!empty($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
+    $grants['private_data_request'][] = DATA_REQUEST_CKAN_ADMIN_GRANT;
   }
   return $grants;
 }
@@ -331,7 +383,7 @@ function dgu_data_set_request_node_update($node) {
     $previous_publisher_assignee = isset($previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid']) ? $previous_data_request_revision->field_publisher_assignee[LANGUAGE_NONE][0]['uid'] : NULL;
 
     $fields_for_short_summary = array('field_review_status' => 'value', 'field_review_outcome' =>'value', 'field_review_notes' => 'value');
-    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10, 12)); // 3 = administrator, 6 = data publisher, 10 = data request administrator, 12 = editor
 
     // This is taken from message stack examples.
     // It's related to message_notify how it stores rendered subject and body via view modes.
@@ -409,7 +461,19 @@ function dgu_data_set_request_node_update($node) {
     }
     else {
       // Something else than assignee has been changed, simply notify all subscribers.
-      // First test if particular fields has changed and notify all non admin users.
+
+      // First notify admin users with full summary of changes.
+
+      // Get data_request_update message bundle and set required fields.
+      $message_update = message_create('data_request_update');
+      $wrapper = entity_metadata_wrapper('message', $message_update);
+      $wrapper->field_data_request_reference->set($node);
+
+      $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
+      $admin_uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
+      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $admin_uids));
+
+      // Then test if public fields has changed and notify all non admin users.
       if(_dgu_data_set_request_fields_changed($fields_for_short_summary, $node, $previous_data_request_revision)) {
         // Get data_request_update message bundle and set required fields.
         $message_update = message_create('data_request_update');
@@ -418,19 +482,9 @@ function dgu_data_set_request_node_update($node) {
 
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
-        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+        $non_admin_uids = array_diff($uids, $admin_uids);
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $non_admin_uids));
       }
-
-      // Then notify admin users with full summary of changes.
-
-      // Get data_request_update message bundle and set required fields.
-      $message_update = message_create('data_request_update');
-      $wrapper = entity_metadata_wrapper('message', $message_update);
-      $wrapper->field_data_request_reference->set($node);
-
-      $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
-      $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
     }
   }
 }
@@ -440,11 +494,9 @@ function dgu_data_set_request_node_update($node) {
  * Helper function to test if particular fields has changed between revisions.
  */
 function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
-
   // Get all flags on given entity type.
   $flags = message_subscribe_flag_get_flags('node');
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
-
   $fids = array();
   foreach ($flags as $flag) {
     $fids[$flag->fid] = $flag->name;
@@ -462,21 +514,17 @@ function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
     ->condition('f.entity_type', 'node')
     ->condition('f.entity_id', $nid)
     ->condition('fid', array_keys($fids), 'IN');
-
   if ($in_rids == TRUE) {
     $query->condition('ur.rid', $rids, 'IN');
   }
   else {
     $query->condition(db_or()->where('ur.rid NOT IN (' . implode (', ', $rids) . ')')->isNull('ur.rid'));
   }
-
   $result = $query->execute()->fetchAll();
-
   $uids = array();
   foreach ($result as $row) {
     $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
   }
-
   return $uids;
 }
 
@@ -619,12 +667,19 @@ function dgu_data_set_request_tokens($type, $tokens, array $data = array(), arra
  * Implements hook_preprocess_replies().
  */
 function  dgu_data_set_request_preprocess_replies(&$variables) {
-  if ($variables['bundle'] == 'review_comment' && $variables['entity_type'] == 'node' && !node_access('update', $variables['entity'])) {
-    // Hide reply forms for users which haven't got access to edit entity.
-    // We need to give them full access to create/update review_comment replies
-    // but only on nodes they have permissions to edit, e.g data request assignee grant.
-    unset($variables['replies']);
-    unset($variables['reply_form']);
+  if ($variables['bundle'] == 'review_comment' && $variables['entity_type'] == 'node') {
+    if(!node_access('update', $variables['entity'])) {
+      global $user;
+      $assignees = dgu_data_set_request_publisher_assignee_get_assignees($variables['entity_id']);
+      // Check if current user is or wes publisher assignee or if is an admin for referenced publisher or parent publisher.
+      if(!in_array($user->uid, $assignees) && !(isset($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id']) && in_array($variables['entity']->field_publisher_ref[LANGUAGE_NONE][0]['id'], dgu_user_get_admin_publishers()))) {
+        // Hide reply forms for users which haven't got access to edit entity.
+        // We need to give them full access to create/update review_comment replies
+        // but only on nodes they have permissions to edit, e.g data request assignee grant.
+        unset($variables['replies']);
+        unset($variables['reply_form']);
+      }
+    }
   }
 }
 
@@ -721,6 +776,82 @@ function dgu_data_set_request_bootstrap_tour_alter($tour) {
           $query = drupal_http_build_query($query_parameters);
           $step['path'] = 'user/' . $active_request->uid . '/contact?' . $query;
           break;
+      }
+    }
+  }
+}
+
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function dgu_data_set_request_views_pre_view(&$view, &$display_id, &$args) {
+  global $user;
+  // If not moderator or editor then unset 'Data request' view header which tells about 'Needs review' page.
+  if ($view->name == 'data_requests_administration' && $display_id == 'page_1') {
+    if (!in_array('moderator', $user->roles) && !in_array('editor', $user->roles)) {
+      $view->set_item_option($display_id, 'header', 'area', 'content', '');
+    }
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ */
+function dgu_data_set_request_views_query_alter(&$view, &$query) {
+  global $user;
+  if ($view->name == 'data_requests_administration' && $view->current_display == 'page_1' && !in_array('data request administrator', $user->roles) && !in_array('editor', $user->roles)) {
+    $publishers = array();
+    if (!empty($user->data['ckan_publishers']) && in_array('admin', $user->data['ckan_publishers'])) {
+      // Limit requests only to publisher (with all sub publishers) in which current user has 'admin' capacity.
+      $publishers = dgu_user_get_admin_publishers();
+    }
+    elseif (in_array('data publisher', $user->roles)) {
+      // Limit requests only to publishers (without sub publishers) in which current user has 'editor' capacity.
+      $full_account = user_load($user->uid);
+
+      foreach ($full_account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
+        $publishers[] = $publisher_ref['target_id'];
+      }
+    }
+    else {
+      return;
+    }
+
+    $query->where[1]['conditions'][] = array(
+      'field' => 'field_data_field_publisher_ref.field_publisher_ref_id',
+      'value' => array($publishers),
+      'operator' => 'in'
+    );
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dgu_data_set_request_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_state['view']->name == 'data_requests_administration' && $form_state['view']->current_display == 'page_1') {
+
+    if ($admin_publishers = dgu_user_get_admin_publishers()) {
+      // Remove publishers which are filtered out in dgu_user_views_query_alter() from exposed filter.
+      foreach ($form['field_publisher_ref_id']['#options'] as $key => $value) {
+        if (!in_array($key, $admin_publishers) && $key != 'All') {
+          unset($form['field_publisher_ref_id']['#options'][$key]);
+        }
+      }
+
+      $query = db_select('field_data_field_publisher_assignee', 'pa');
+      $query->join('field_data_field_publisher_ref', 'p', 'p.entity_id = pa.entity_id');
+      $query->fields('pa', array('field_publisher_assignee_uid'))
+        ->condition('p.field_publisher_ref_id', $admin_publishers, 'IN')
+        ->distinct();
+      $publisher_assignees = $query->execute()->fetchCol();
+
+      // Also remove not relevant publisher assignees.
+      foreach ($form['field_publisher_assignee_uid']['#options'] as $key => $value) {
+        if (!in_array($key, $publisher_assignees) && $key != 'All') {
+          unset($form['field_publisher_assignee_uid']['#options'][$key]);
+        }
       }
     }
   }

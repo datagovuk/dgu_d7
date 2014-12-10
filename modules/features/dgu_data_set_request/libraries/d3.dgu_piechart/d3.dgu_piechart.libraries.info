@@ -1,0 +1,8 @@
+name = DGU Pie Chart
+description = DGU D3 Pie Chart library
+files[js][] = dgu_piechart.js
+files[css][] = dgu_piechart.css
+version = 0.1
+dependencies[] = d3.extend
+dependencies[] = d3.dgu_tooltip
+views = 3.0

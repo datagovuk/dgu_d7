@@ -240,16 +240,13 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-2';
     $pane->panel = 'left';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
+    $pane->type = 'dgu_data_request_summary';
+    $pane->subtype = 'dgu_data_request_summary';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'ODUG overview',
-      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li> </ul></div>',
-      'format' => 'filtered_html',
-      'substitute' => TRUE,
+      'title_override' => FALSE,
+      'title_override_text' => '',
     );
     $pane->cache = array();
     $pane->style = array(
@@ -263,6 +260,33 @@ function dgu_data_set_request_default_page_manager_pages() {
     $display->panels['left'][1] = 'new-2';
     $pane = new stdClass();
     $pane->pid = 'new-3';
+    $pane->panel = 'left';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => '',
+      'title' => 'Open Data User Group',
+      'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li>
+<li><a href="/library/?f[0]=im_field_document_type%3A90"><strong>ODUG minutes</strong></a></li>
+</ul></div>
+',
+      'format' => 'unfiltered',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-3'] = $pane;
+    $display->panels['left'][2] = 'new-3';
+    $pane = new stdClass();
+    $pane->pid = 'new-4';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -294,10 +318,10 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['right'][0] = 'new-3';
+    $display->content['new-4'] = $pane;
+    $display->panels['right'][0] = 'new-4';
     $pane = new stdClass();
-    $pane->pid = 'new-4';
+    $pane->pid = 'new-5';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -331,14 +355,47 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['right'][1] = 'new-4';
+    $display->content['new-5'] = $pane;
+    $display->panels['right'][1] = 'new-5';
     $pane = new stdClass();
-    $pane->pid = 'new-5';
+    $pane->pid = 'new-6';
+    $pane->panel = 'right';
+    $pane->type = 'views';
+    $pane->subtype = 'blogs';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_pager_settings' => 0,
+      'use_pager' => 0,
+      'nodes_per_page' => '3',
+      'pager_id' => '0',
+      'offset' => '0',
+      'more_link' => 0,
+      'feed_icons' => 0,
+      'panel_args' => 0,
+      'link_to_view' => 0,
+      'args' => '',
+      'url' => '',
+      'display' => 'block_2',
+      'override_title' => 1,
+      'override_title_text' => 'ODUG Blogs',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['right'][2] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
@@ -353,12 +410,12 @@ function dgu_data_set_request_default_page_manager_pages() {
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['right'][2] = 'new-5';
+    $display->content['new-7'] = $pane;
+    $display->panels['right'][3] = 'new-7';
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-8';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -392,12 +449,12 @@ Johanna Walker<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['right'][3] = 'new-6';
+    $display->content['new-8'] = $pane;
+    $display->panels['right'][4] = 'new-8';
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-9';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -423,12 +480,12 @@ Johanna Walker<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['right'][4] = 'new-7';
+    $display->content['new-9'] = $pane;
+    $display->panels['right'][5] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-10';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -442,6 +499,7 @@ Johanna Walker<br/>
               0 => 3,
               1 => 10,
               2 => 11,
+              3 => 12,
             ),
           ),
           'context' => 'logged-in-user',
@@ -454,7 +512,7 @@ Johanna Walker<br/>
       'title' => 'Data request administration',
       'body' => '<a href="/admin/all_data_requests">Browse data requests</a>
 <br />
-<a href="/admin/all_data_requests/csv">Download data requests</a>',
+<a href="/admin/sanitised_data_requests/csv">Download data requests</a>',
       'format' => 'unfiltered',
       'substitute' => TRUE,
     );
@@ -464,12 +522,12 @@ Johanna Walker<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 5;
+    $pane->position = 6;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['right'][5] = 'new-8';
+    $display->content['new-10'] = $pane;
+    $display->panels['right'][6] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-11';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -491,10 +549,10 @@ Johanna Walker<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['top'][0] = 'new-9';
+    $display->content['new-11'] = $pane;
+    $display->panels['top'][0] = 'new-11';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-12';
     $pane->panel = 'top';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-data-requests-tabs';
@@ -515,10 +573,10 @@ Johanna Walker<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['top'][1] = 'new-10';
+    $display->content['new-12'] = $pane;
+    $display->panels['top'][1] = 'new-12';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-3';
+  $display->title_pane = 'new-4';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data_requests'] = $page;
@@ -589,7 +647,7 @@ Johanna Walker<br/>
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-13';
     $pane->panel = 'left';
     $pane->type = 'views';
     $pane->subtype = 'blogs';
@@ -619,10 +677,10 @@ Johanna Walker<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['left'][0] = 'new-11';
+    $display->content['new-13'] = $pane;
+    $display->panels['left'][0] = 'new-13';
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-14';
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -643,10 +701,10 @@ Johanna Walker<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['left'][1] = 'new-12';
+    $display->content['new-14'] = $pane;
+    $display->panels['left'][1] = 'new-14';
     $pane = new stdClass();
-    $pane->pid = 'new-13';
+    $pane->pid = 'new-15';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -678,10 +736,43 @@ Johanna Walker<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-13'] = $pane;
-    $display->panels['right'][0] = 'new-13';
+    $display->content['new-15'] = $pane;
+    $display->panels['right'][0] = 'new-15';
     $pane = new stdClass();
-    $pane->pid = 'new-14';
+    $pane->pid = 'new-16';
+    $pane->panel = 'right';
+    $pane->type = 'views';
+    $pane->subtype = 'blogs';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'override_pager_settings' => 0,
+      'use_pager' => 0,
+      'nodes_per_page' => '1',
+      'pager_id' => '0',
+      'offset' => '0',
+      'more_link' => 0,
+      'feed_icons' => 0,
+      'panel_args' => 0,
+      'link_to_view' => 0,
+      'args' => '',
+      'url' => '',
+      'display' => 'block_2',
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-16'] = $pane;
+    $display->panels['right'][1] = 'new-16';
+    $pane = new stdClass();
+    $pane->pid = 'new-17';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -713,12 +804,12 @@ Johanna Walker<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-14'] = $pane;
-    $display->panels['right'][1] = 'new-14';
+    $display->content['new-17'] = $pane;
+    $display->panels['right'][2] = 'new-17';
     $pane = new stdClass();
-    $pane->pid = 'new-15';
+    $pane->pid = 'new-18';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -737,12 +828,12 @@ Johanna Walker<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-15'] = $pane;
-    $display->panels['right'][2] = 'new-15';
+    $display->content['new-18'] = $pane;
+    $display->panels['right'][3] = 'new-18';
     $pane = new stdClass();
-    $pane->pid = 'new-16';
+    $pane->pid = 'new-19';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -775,12 +866,12 @@ Paul Fenton<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-16'] = $pane;
-    $display->panels['right'][3] = 'new-16';
+    $display->content['new-19'] = $pane;
+    $display->panels['right'][4] = 'new-19';
     $pane = new stdClass();
-    $pane->pid = 'new-17';
+    $pane->pid = 'new-20';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -802,12 +893,12 @@ Paul Fenton<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-17'] = $pane;
-    $display->panels['right'][4] = 'new-17';
+    $display->content['new-20'] = $pane;
+    $display->panels['right'][5] = 'new-20';
     $pane = new stdClass();
-    $pane->pid = 'new-18';
+    $pane->pid = 'new-21';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -839,12 +930,12 @@ Paul Fenton<br/>
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 5;
+    $pane->position = 6;
     $pane->locks = array();
-    $display->content['new-18'] = $pane;
-    $display->panels['right'][5] = 'new-18';
+    $display->content['new-21'] = $pane;
+    $display->panels['right'][6] = 'new-21';
     $pane = new stdClass();
-    $pane->pid = 'new-19';
+    $pane->pid = 'new-22';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -866,10 +957,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-19'] = $pane;
-    $display->panels['top'][0] = 'new-19';
+    $display->content['new-22'] = $pane;
+    $display->panels['top'][0] = 'new-22';
     $pane = new stdClass();
-    $pane->pid = 'new-20';
+    $pane->pid = 'new-23';
     $pane->panel = 'top';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-data-requests-tabs';
@@ -890,10 +981,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-20'] = $pane;
-    $display->panels['top'][1] = 'new-20';
+    $display->content['new-23'] = $pane;
+    $display->panels['top'][1] = 'new-23';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-13';
+  $display->title_pane = 'new-15';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data_requests_blogs'] = $page;
@@ -964,7 +1055,7 @@ Paul Fenton<br/>
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-21';
+    $pane->pid = 'new-24';
     $pane->panel = 'left';
     $pane->type = 'views';
     $pane->subtype = 'minutes';
@@ -994,10 +1085,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-21'] = $pane;
-    $display->panels['left'][0] = 'new-21';
+    $display->content['new-24'] = $pane;
+    $display->panels['left'][0] = 'new-24';
     $pane = new stdClass();
-    $pane->pid = 'new-22';
+    $pane->pid = 'new-25';
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1018,10 +1109,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-22'] = $pane;
-    $display->panels['left'][1] = 'new-22';
+    $display->content['new-25'] = $pane;
+    $display->panels['left'][1] = 'new-25';
     $pane = new stdClass();
-    $pane->pid = 'new-23';
+    $pane->pid = 'new-26';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1053,10 +1144,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-23'] = $pane;
-    $display->panels['right'][0] = 'new-23';
+    $display->content['new-26'] = $pane;
+    $display->panels['right'][0] = 'new-26';
     $pane = new stdClass();
-    $pane->pid = 'new-24';
+    $pane->pid = 'new-27';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1090,10 +1181,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-24'] = $pane;
-    $display->panels['right'][1] = 'new-24';
+    $display->content['new-27'] = $pane;
+    $display->panels['right'][1] = 'new-27';
     $pane = new stdClass();
-    $pane->pid = 'new-25';
+    $pane->pid = 'new-28';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1114,10 +1205,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-25'] = $pane;
-    $display->panels['right'][2] = 'new-25';
+    $display->content['new-28'] = $pane;
+    $display->panels['right'][2] = 'new-28';
     $pane = new stdClass();
-    $pane->pid = 'new-26';
+    $pane->pid = 'new-29';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1152,10 +1243,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-26'] = $pane;
-    $display->panels['right'][3] = 'new-26';
+    $display->content['new-29'] = $pane;
+    $display->panels['right'][3] = 'new-29';
     $pane = new stdClass();
-    $pane->pid = 'new-27';
+    $pane->pid = 'new-30';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1179,10 +1270,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-27'] = $pane;
-    $display->panels['right'][4] = 'new-27';
+    $display->content['new-30'] = $pane;
+    $display->panels['right'][4] = 'new-30';
     $pane = new stdClass();
-    $pane->pid = 'new-28';
+    $pane->pid = 'new-31';
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -1216,10 +1307,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-28'] = $pane;
-    $display->panels['right'][5] = 'new-28';
+    $display->content['new-31'] = $pane;
+    $display->panels['right'][5] = 'new-31';
     $pane = new stdClass();
-    $pane->pid = 'new-29';
+    $pane->pid = 'new-32';
     $pane->panel = 'top';
     $pane->type = 'dgu_search_form';
     $pane->subtype = 'dgu_search_form';
@@ -1241,10 +1332,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-29'] = $pane;
-    $display->panels['top'][0] = 'new-29';
+    $display->content['new-32'] = $pane;
+    $display->panels['top'][0] = 'new-32';
     $pane = new stdClass();
-    $pane->pid = 'new-30';
+    $pane->pid = 'new-33';
     $pane->panel = 'top';
     $pane->type = 'block';
     $pane->subtype = 'menu-menu-data-requests-tabs';
@@ -1265,10 +1356,10 @@ Paul Fenton<br/>
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-30'] = $pane;
-    $display->panels['top'][1] = 'new-30';
+    $display->content['new-33'] = $pane;
+    $display->panels['top'][1] = 'new-33';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-23';
+  $display->title_pane = 'new-26';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data_requests_minutes'] = $page;
