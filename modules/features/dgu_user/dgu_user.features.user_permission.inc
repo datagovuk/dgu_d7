@@ -68,6 +68,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'access printer-friendly version',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'book',
   );
@@ -139,6 +140,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'add content to books',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'book',
   );
