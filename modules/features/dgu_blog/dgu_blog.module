@@ -36,6 +36,9 @@ function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
 
 }
 
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
 function dgu_blog_dgu_moderation_moderator_permission(&$node) {
   if ($node->type == 'blog') {
     return user_access(BLOG_MODERATION_PERMISSION);

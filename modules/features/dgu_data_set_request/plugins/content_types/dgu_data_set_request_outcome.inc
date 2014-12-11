@@ -24,7 +24,8 @@ function dgu_data_set_request_outcome_render($subtype, $conf, $panel_args, $cont
     ->groupBy('field_review_outcome_value')
     ->condition('n.status', 1)
     ->condition('field_review_status_value', 6)
-    ->addExpression('COUNT(o.entity_id)', 'outcome_count');
+    ->addExpression('COUNT(o.entity_id)', 'count');
+
   $result = $query->execute();
 
   $outcome_field_info = field_info_field('field_review_outcome');
@@ -32,17 +33,27 @@ function dgu_data_set_request_outcome_render($subtype, $conf, $panel_args, $cont
 
   $rows = array();
   foreach($result as $row) {
-    $rows[] = array($allowed_values[$row->field_review_outcome_value], $row->outcome_count);
+    $rows[$row->field_review_outcome_value] = array($allowed_values[$row->field_review_outcome_value], $row->count);
   }
+
 
   $chart = array(
     'id' => 'data_requests_by_outcome',
-    'type' => 'piechart',
+    'type' => 'dgu_piechart',
+    'width' => '0.49',
     'rows' => $rows,
   );
 
   $block = new stdClass();
   $block->content = d3_draw($chart);
+
+  $chart = array(
+    'id' => 'data_requests_by_outcome2',
+    'type' => 'dgu_piechart',
+    'width' => '0.49',
+    'rows' => $rows,
+  );
+  $block->content .= d3_draw($chart);
 
   return $block;
 }

@@ -500,6 +500,9 @@ function dgu_glossary_vud_votes_alter(&$votes) {
   drupal_set_message("Your vote has been recorded");
 }
 
+/**
+ * Implements hook_dgu_moderation_moderator_permission().
+ */
 function dgu_glossary_dgu_moderation_moderator_permission(&$node) {
   if (($node->type == 'suggested_definition') || ($node->type == 'suggested_term')) {
     return user_access(GLOSSARY_MODERATION_PERMISSION);

@@ -1,0 +1,8 @@
+name = DGU Bar Chart
+description = DGU D3 Bar Chart library
+files[js][] = dgu_barchart.js
+files[css][] = dgu_barchart.css
+version = 0.1
+dependencies[] = d3.extend
+dependencies[] = d3.dgu_tooltip
+views = 3.0

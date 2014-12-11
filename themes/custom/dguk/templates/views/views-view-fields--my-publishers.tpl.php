@@ -23,27 +23,17 @@
  *
  * @ingroup views_templates
  */
-$new_topics = dgu_forum_topics_unread($row->tid);
-
 ?>
-<div class="views-field views-field-name">
-  <?php print $fields['name']->content; ?>
-</div>
-<?php if (!empty($fields['description']->content)): ?>
-<div class="views-field views-field-description">
-  <?php print $fields['description']->content; ?>
-</div>
+<?php foreach ($fields as $id => $field): ?>
+  <?php if (!empty($field->separator)): ?>
+    <?php print $field->separator; ?>
+  <?php endif; ?>
+
+  <?php print $field->wrapper_prefix; ?>
+  <?php print $field->label_html; ?>
+  <?php print $field->content; ?>
+  <?php print $field->wrapper_suffix; ?>
+<?php endforeach; ?>
+<?php if (!empty($row->active)): ?>
+  <a class="active-requests" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=0&field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25"><?php print $row->active; ?> active data requests</a>
 <?php endif; ?>
-<div class="views-field views-field-stats forum-category-stats">
-    <span><span class="counter"><?php print $fields['nid']->raw; ?></span> topics</span>
-  <?php if ($new_topics): ?>
-    <span class="new"><?php print $new_topics; ?> new</span>
-  <?php endif; ?>
-  <?php if (isset($fields['id']->raw)): ?>
-      <span><span class="counter"> <?php print $fields['id']->raw; ?></span> replies</span>
-      <?php $new_replies = dgu_forum_replies_unread($row->tid); ?>
-      <?php if ($new_replies): ?>
-        <span class="new"><?php print $new_replies; ?> new</span>
-      <?php endif; ?>
-  <?php endif; ?>
-</div>

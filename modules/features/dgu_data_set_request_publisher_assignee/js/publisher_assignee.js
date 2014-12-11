@@ -11,6 +11,10 @@
 
             $('#edit-field-publisher-ref li').css({ 'background': 'none'});
             $('#edit-field-publisher-ref input:checked').closest('li').css({ 'background': '#f0fcff'});
+
+
+            $('#edit-field-publisher-assignee input.form-radio:first').attr('checked','checked');
+
         }
     }
 
@@ -28,6 +32,5 @@
             });
         }
     }
-
 
 })(jQuery);

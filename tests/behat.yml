@@ -82,6 +82,14 @@ prod2:
     Drupal\DrupalExtension\Extension:
       drush:
         alias: 'dgud7.prod2'
+nprod2:
+  extensions:
+    Behat\MinkExtension\Extension:
+      base_url: 'http://dgud7_noels.co-prod2.dh.bytemark.co.uk'
+    Drupal\DrupalExtension\Extension:
+      drush:
+        alias: 'dgud7.nprod2'
+
 pawel:
   extensions:
     Behat\MinkExtension\Extension:

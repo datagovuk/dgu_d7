@@ -68,6 +68,9 @@ projects[views][patch][] = "http://drupal.org/files/views-1511396-110-array_diff
 projects[views_data_export][version] = "3.0-beta6"
 projects[views_data_export][subdir] = "contrib"
 
+projects[better_exposed_filters][version] = "3.0-beta4"
+projects[better_exposed_filters][subdir] = "contrib"
+
 projects[link][version] = "1.1"
 projects[link][subdir] = "contrib"
 projects[linkchecker][version] = "1.1"
@@ -88,6 +91,7 @@ projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][revision] = "7012839b9eb828f089f2cee02f6e719308eb1569"
 projects[reply][subdir] = "contrib"
 #projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
+#projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
