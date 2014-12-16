@@ -15,7 +15,7 @@ Feature: Create blogs as a blogger
       | Blog         |
       | Latest Blogs |
     And view "latest_blog_posts" view should have "6" rows
-    And pager in "latest_blog_posts" view should match "^1 2 3 … »$"
+    And I should see the link "See all"
     And view "frequent_bloggers" view should have "15" rows
     And search result counter should match "^\d* Blogs$"
     And I should see "FREQUENT BLOGGERS" pane in "last" column in "second" row
