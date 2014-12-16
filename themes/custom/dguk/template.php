@@ -50,7 +50,7 @@ function dguk_preprocess_node(&$variables) {
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__' . $variables['view_mode'];
 
-  if ($variables['node']->type == 'resource'){
+  if ($variables['node']->type == 'resource' || $variables['node']->type == 'book'){
     $variables['submitted'] = 'Submitted on ' . format_date($variables['created']);
   }
   
