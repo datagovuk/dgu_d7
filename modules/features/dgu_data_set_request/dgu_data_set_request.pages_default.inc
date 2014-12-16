@@ -270,6 +270,7 @@ function dgu_data_set_request_default_page_manager_pages() {
       'title' => 'Open Data User Group',
       'body' => '<p>The Open Data User Group (ODUG) exists to help government understand the requirements of people who are using, or could use, the datasets it collects.</p> <div class="item-list"><ul> <li><a href="/odug/overview"><strong>What Are Datasets?</strong><p>A dataset is a collection of information of the same type. Examples of datasets are...</p></a></li> <li><a href="/odug/overview"><strong>How You Can Help?</strong><p>We need to know which datasets, held by government to release entire datasets...</p></a></li> <li><a href="/odug/overview"><strong>What Happens to Data Requests?</strong><p>Alongside the Cabinet Office and members of the community we will, on a routine basis, categorise...</p></a></li>
 <li><a href="/library/?f[0]=im_field_document_type%3A90"><strong>ODUG minutes</strong></a></li>
+<li><a href="/odug/roadmap"><strong>ODUG business reporting on data requests</strong></a></li>
 </ul></div>
 ',
       'format' => 'unfiltered',
@@ -512,7 +513,7 @@ Johanna Walker<br/>
       'title' => 'Data request administration',
       'body' => '<a href="/admin/all_data_requests">Browse data requests</a>
 <br />
-<a href="/admin/sanitised_data_requests/csv">Download data requests</a>',
+<a href="/admin/all_data_requests/csv">Download data requests</a>',
       'format' => 'unfiltered',
       'substitute' => TRUE,
     );
