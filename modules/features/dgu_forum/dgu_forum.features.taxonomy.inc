@@ -13,7 +13,7 @@ function dgu_forum_taxonomy_default_vocabularies() {
       'name' => 'Forums',
       'machine_name' => 'forums',
       'description' => 'Forum navigation vocabulary',
-      'hierarchy' => '1',
+      'hierarchy' => '0',
       'module' => 'forum',
       'weight' => '-10',
       'rdf_mapping' => array(
