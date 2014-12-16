@@ -17,7 +17,7 @@ Feature: Create new forum topic as a site user
     And I should see the link "Login to take part in forums »"
     And search result counter should match "^\d* Forum topics$"
     And view "panel_pane_latest_forum" view should have "6" rows
-    And pager in "panel_pane_latest_forum" view should match "^1 2 3 … »$"
+    And I should see the link "See all"
 
   @anon
   Scenario: View the latest forum topics RSS

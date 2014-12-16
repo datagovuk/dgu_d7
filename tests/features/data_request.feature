@@ -17,7 +17,7 @@ Feature: Request new data
     And "Data Requests" item in "Data" subnav should be active
     And I should see the link "Login to request new data"
     And view "latest_dataset_requests" view should have "5" rows
-    And pager in "latest_dataset_requests" view should match "^1 2 3 … »$"
+    And I should see the link "See all"
     And I should see "OPEN DATA USER GROUP" pane in "first" column in "second" row
     And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row

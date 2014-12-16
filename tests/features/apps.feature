@@ -12,12 +12,12 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I wait until the page loads
     Then I should be on "/apps"
     And view "latest_apps" view should have "5" rows
+    And I should see the link "See all"
     And I should see the link "Login to add your app »"
     And I should see the following <breadcrumbs>
       | Apps        |
       | Latest apps |
     And search result counter should match "^\d* Apps$"
-    And pager should match "^1 2 3 … »$"
     When I follow "Top rated apps"
     And I wait until the page loads
     Then I should be on "/apps/top"
