@@ -343,7 +343,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Login to take part in forums (for anonymous users)',
       'title' => '',
-      'body' => '<a class="btn-default btn btn-primary" href="/user/login?destination=/forum">Login to take part in forums &raquo;</a>
+      'body' => '<p class="text-center"><a href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => TRUE,
@@ -382,7 +382,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Create new forum topic (for authenticated users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic &raquo;</a></p>
+      'body' => '<p class="text-center"><a href="/node/add/forum">Create new forum topic &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => TRUE,
@@ -502,7 +502,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Create new forum topic (for authenticated users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic »</a></p>',
+      'body' => '<p class="text-center"><a href="/node/add/forum">Create new forum topic »</a></p>',
       'format' => 'full_html',
       'substitute' => 1,
     );
@@ -542,7 +542,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Login to take part in forums (for anonymous users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/user/login?destination=/forum">Login to take part in forums »</a></p>',
+      'body' => '<p class="text-center"><a href="/user/login?destination=/forum">Login to take part in forums »</a></p>',
       'format' => 'full_html',
       'substitute' => 1,
     );
@@ -1033,7 +1033,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Create new forum topic (for authenticated users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary" href="/node/add/forum">Create new forum topic &raquo;</a></p>
+      'body' => '<p class="text-center"><a href="/node/add/forum">Create new forum topic &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => TRUE,
@@ -1074,7 +1074,7 @@ function dgu_forum_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'Login to take part in forums (for anonymous users)',
       'title' => '',
-      'body' => '<p><a class="btn-default btn btn-primary"  href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
+      'body' => '<p class="text-center"><a href="/user/login?destination=/forum">Login to take part in forums &raquo;</a></p>
 ',
       'format' => 'filtered_html',
       'substitute' => TRUE,
