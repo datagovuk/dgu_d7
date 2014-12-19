@@ -34,6 +34,3 @@
   <?php print $field->content; ?>
   <?php print $field->wrapper_suffix; ?>
 <?php endforeach; ?>
-<?php if (!empty($row->active)): ?>
-  <a class="active-requests" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=0&field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25"><?php print $row->active; ?> active data requests</a>
-<?php endif; ?>
