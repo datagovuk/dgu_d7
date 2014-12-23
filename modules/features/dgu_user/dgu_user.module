@@ -40,7 +40,7 @@ function dgu_user_block_view($delta='') {
       foreach ($tours as $tour) {
         $roles = array_map('intval', explode(',', $tour->roles));
         if (is_array($user->roles) && array_intersect($user_roles, $roles)) {
-          if($tour->name == 'data_requests_user_guide' && !_dgu_data_set_request_active_requests_count()) {
+          if($tour->name == 'data_requests_user_guide' && !_dgu_data_set_request_active_requests_publisher_assignee_count()) {
             continue;
           }
           $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
@@ -570,27 +570,3 @@ function dgu_user_get_admin_publishers() {
   }
   return $admin_publishers;
 }
-
-/**
- * Implements hook_views_pre_render().
- */
-function dgu_user_views_pre_render(&$view) {
-  if ($view->name == 'my_publishers') {
-    // Add links to 'Data request' view under each publisher on user profile page.
-    foreach ($view->result as &$row) {
-      $publisher_hierarchy = dgu_user_get_publisher_with_children($row->id);
-
-      $query = db_select('field_data_field_publisher_ref', 'p');
-      $query->join('node', 'n', 'n.nid = p.entity_id');
-      $query->fields('p');
-      $query->join('field_data_field_review_status', 's','p.entity_id = s.entity_id');
-      $query->condition('s.field_review_status_value', 0, '<>')
-            ->condition('s.field_review_status_value', 6, '<>')
-            ->condition('p.field_publisher_ref_id', $publisher_hierarchy, 'IN');
-      $query->addTag('node_access');
-      $result = $query->execute();
-      $row->active = $result->rowCount();
-    }
-  }
-}
-
