@@ -84,7 +84,7 @@ function dgu_consultation_preprocess_node(&$variables) {
       foreach ($variables['content']['field_paragraph']['#items'] as $index => $para){
         $variables['content']['field_paragraph']['#theme'] = 'consultation_paragraph';
         $variables['content']['field_paragraph'][$index]['section'] = $current_page['paragraphs'][$index]['section'];
-        if (!empty($variables['content']['field_paragraph'][$index]['replies'])){
+        if (!empty($variables['content']['field_paragraph'][$index]['links']['reply'])){
           $variables['content']['field_paragraph'][$index]['links']['#weight'] = '2';
           $variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']['attributes']['class'][] = 'btn-default';
           $variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']['attributes']['class'][] = 'btn';
