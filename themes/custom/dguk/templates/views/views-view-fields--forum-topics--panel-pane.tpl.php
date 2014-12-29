@@ -59,7 +59,7 @@ if ($user->uid) {
 <div class="forum-topic-replies">
   <?php if ($fields['created_1']->raw): ?>
     <div class="reply-counter">
-      <a href="<?php print drupal_get_path_alias('node/' . $row->nid) . '#comments'; ?>">
+      <a href="/<?php print drupal_get_path_alias('node/' . $row->nid) . '#comments'; ?>">
         <span><?php print $fields['id']->raw; ?></span>
         <?php print format_plural($fields['id']->raw, ' reply', ' replies'); ?>
         <?php if ($new_replies): ?>
