@@ -702,8 +702,8 @@ function dgu_data_set_request_preprocess_page(&$variables) {
       $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
       drupal_set_message(
         'There ' . format_plural($count, 'is ', 'are ') . $count . ' active data ' . format_plural($count, 'request', 'requests')
-        . ' for publishers that you administer which need review, <a class="active-requests-link" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25">'
-        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_administration_guide">Data requests administration guide</a>.'
+        . ' for publishers that you administer, <a class="active-requests-link" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25">'
+        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_administration_guide">Data requests practitioners guide</a>.'
       );
     }
     if($count = _dgu_data_set_request_active_requests_publisher_assignee_count()) {
