@@ -55,6 +55,13 @@ function dgu_services_default_services_endpoint() {
         ),
       ),
     ),
+    'user' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'views' => array(
       'operations' => array(
         'retrieve' => array(
