@@ -270,29 +270,20 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'user',
       'placement' => 'bottom',
       'title' => 'Publisher active data requests',
-      'content' => '<p>step 2</p>
+      'content' => '<p>As a practitioner, you can view all data requests assigned to your publishers by clicking on this link.</p>
 ',
       'format' => 'filtered_html',
     ),
     2 => array(
-      'selector' => '.view-data-requests-administration .views-table',
-      'path' => 'tour-redirect/publisher-active-data-request-url',
-      'placement' => 'top',
-      'title' => 'Data requests',
-      'content' => '<p>step 3</p>
-',
-      'format' => 'filtered_html',
-    ),
-    3 => array(
       'selector' => 'th.views-field-changed',
-      'path' => '',
+      'path' => 'tour-redirect/publisher-active-data-request-url',
       'placement' => 'top',
       'title' => 'Sort data requests',
       'content' => '<p>You can sort your data requests by clicking on the title of the relevant column.</p>
 ',
       'format' => 'filtered_html',
     ),
-    4 => array(
+    3 => array(
       'selector' => '#edit-title',
       'path' => '',
       'placement' => 'bottom',
@@ -301,7 +292,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
 ',
       'format' => 'filtered_html',
     ),
-    5 => array(
+    4 => array(
       'selector' => '.views-submit-button input.btn',
       'path' => '',
       'placement' => 'bottom',
@@ -310,34 +301,34 @@ function dgu_data_set_request_default_bootstrap_tour() {
 ',
       'format' => 'filtered_html',
     ),
-    6 => array(
+    5 => array(
       'selector' => '.views-row-first .flag-subscribe-node',
       'path' => '',
       'placement' => 'left',
       'title' => 'Subscribe to alerts',
-      'content' => '<p>step 7</p>
+      'content' => '<p>You can choose whether to be subscribed to alerts when requests are updated. Click subscribe/unsubscribe to change your status.</p>
 ',
       'format' => 'filtered_html',
     ),
-    7 => array(
+    6 => array(
       'selector' => '.views-row-first .views-field-title',
       'path' => '',
       'placement' => 'right',
       'title' => 'Choose data request to view',
-      'content' => '<p>To edit a specific data request, click the title of the relevant request.</p>
+      'content' => '<p>To view a specific data request, click the title of the relevant request.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    7 => array(
+      'selector' => 'article.node',
+      'path' => 'tour-redirect/publisher-active-data-request',
+      'placement' => 'top',
+      'title' => 'View full detail and review updates',
+      'content' => '<p>This page will show the full detail of the request, when it was submitted and who by, as well as the current status, Cabinet Office relationship manager and any review notes added to reflect progress.</p>
 ',
       'format' => 'filtered_html',
     ),
     8 => array(
-      'selector' => 'article.node',
-      'path' => 'tour-redirect/publisher-active-data-request',
-      'placement' => 'top',
-      'title' => 'View full detail and edit request',
-      'content' => '<p>This page will show the full detail of the request, when it was submitted and who by, as well as the current status and Cabinet Office relationship manager.</p>
-',
-      'format' => 'filtered_html',
-    ),
-    9 => array(
       'selector' => '.field-name-field-review-comments form',
       'path' => '',
       'placement' => 'top',
@@ -350,7 +341,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
 ',
       'format' => 'filtered_html',
     ),
-    10 => array(
+    9 => array(
       'selector' => '.field-name-field-review-comments input.btn',
       'path' => '',
       'placement' => 'right',
