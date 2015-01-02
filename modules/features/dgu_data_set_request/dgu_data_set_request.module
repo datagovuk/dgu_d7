@@ -771,7 +771,7 @@ function dgu_data_set_request_bootstrap_tour_alter($tour) {
           $query = db_select('field_data_field_publisher_assignee', 'a');
           $query->fields('a', array('entity_id'));
           $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
-          $query->join('node', 'n','p.entity_id = n.nid');
+          $query->join('node', 'n','a.entity_id = n.nid');
           $query->condition('a.field_publisher_assignee_uid', $user->uid)
             ->condition('s.field_review_status_value', 0, '<>')
             ->condition('s.field_review_status_value', 6, '<>')
