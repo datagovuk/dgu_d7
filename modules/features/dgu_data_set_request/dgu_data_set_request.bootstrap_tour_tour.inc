@@ -270,7 +270,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'user',
       'placement' => 'bottom',
       'title' => 'Publisher active data requests',
-      'content' => '<p>As a practitioner, you can view all data requests assigned to your publishers by clicking on this link.</p>
+      'content' => '<p>As a practitioner, you can view all open data requests assigned to your publishers by clicking on this link.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -279,7 +279,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'tour-redirect/publisher-active-data-request-url',
       'placement' => 'top',
       'title' => 'Sort data requests',
-      'content' => '<p>You can sort your data requests by clicking on the title of the relevant column.</p>
+      'content' => '<p>You can sort the data requests by clicking on the title of the relevant column.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -288,7 +288,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => '',
       'placement' => 'bottom',
       'title' => 'Filter data requests',
-      'content' => '<p>Alternatively, if you have a large number of requests, you can filter by title, status, preference and number of items on the page.</p>
+      'content' => '<p>Alternatively, if there are a large number of requests, you can filter by title, status, outcome (for closed requests), preference, issue, relationship manager, publisher, publisher assignee (ie the person to whom the request has been allocated) and number of items on the page.</p>
 ',
       'format' => 'filtered_html',
     ),
@@ -338,6 +338,8 @@ function dgu_data_set_request_default_bootstrap_tour() {
 <p>Review notes are only visible to publishers and administrators. Nothing added here is published on data.gov.uk</p>
 
 <p>A note should be added each time there is a change to keep practitioners and relationship managers informed of the status, and to enable updates to the public view when appropriate.</p>
+
+<p>You should submit review notes to provide an update or to ask questions of the publisher assignee or Cabinet Office.</p>
 ',
       'format' => 'filtered_html',
     ),
