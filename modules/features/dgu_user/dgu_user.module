@@ -43,6 +43,10 @@ function dgu_user_block_view($delta='') {
           if($tour->name == 'data_requests_user_guide' && !_dgu_data_set_request_active_requests_publisher_assignee_count()) {
             continue;
           }
+          if($tour->name == 'data_requests_practitioners_guide' && !_dgu_data_set_request_active_requests_publisher_admin_count()) {
+            continue;
+          }
+
           $tour_links[] = l($tour->title, $tour->steps[0]['path'], array('query' => array('tour' => $tour->name)));
         }
       }

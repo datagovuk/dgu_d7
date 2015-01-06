@@ -702,8 +702,8 @@ function dgu_data_set_request_preprocess_page(&$variables) {
       $link_title = 'view ' . format_plural($count, 'it', 'these') . ' now';
       drupal_set_message(
         'There ' . format_plural($count, 'is ', 'are ') . $count . ' active data ' . format_plural($count, 'request', 'requests')
-        . ' for publishers that you administer which need review, <a class="active-requests-link" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25">'
-        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_administration_guide">Data requests administration guide</a>.'
+        . ' for publishers that you administer, <a class="publishers-active-requests-link" href="/admin/workbench/content/data-requests?field_review_status_value%5B%5D=1&field_review_status_value%5B%5D=2&field_review_status_value%5B%5D=3&field_review_status_value%5B%5D=4&field_review_status_value%5B%5D=5&title=&field_publication_preference_value=All&field_barriers_reason_value=All&field_assignee_uid=All&field_publisher_ref_id=All&field_publisher_assignee_uid=All&items_per_page=25">'
+        . $link_title . '</a>.<br />See <a href="/help?tour=data_requests_practitioners_guide">Data requests practitioners guide</a>.'
       );
     }
     if($count = _dgu_data_set_request_active_requests_publisher_assignee_count()) {
@@ -771,16 +771,50 @@ function dgu_data_set_request_bootstrap_tour_alter($tour) {
           $query = db_select('field_data_field_publisher_assignee', 'a');
           $query->fields('a', array('entity_id'));
           $query->join('field_data_field_review_status', 's','a.entity_id = s.entity_id');
+          $query->join('node', 'n','a.entity_id = n.nid');
           $query->condition('a.field_publisher_assignee_uid', $user->uid)
             ->condition('s.field_review_status_value', 0, '<>')
             ->condition('s.field_review_status_value', 6, '<>')
-            ->orderBy('entity_id', 'DESC');
+            ->orderBy('n.nid', 'DESC');
           $active_request_nid = $query->execute()->fetchField();
           $query_parameters = drupal_get_query_parameters();
           $query = drupal_http_build_query($query_parameters);
           $step['path'] = drupal_get_path_alias('node/' . $active_request_nid) . '?' . $query;
           break;
-
+        case 'publisher-active-data-request-url':
+          $query_parameters = drupal_get_query_parameters();
+          $query_parameters['field_review_status_value'] = array('1','2','3','4','5');
+          $query_parameters['field_publication_preference_value'] = 'All';
+          $query_parameters['field_barriers_reason_value'] = 'All';
+          $query_parameters['field_assignee_uid'] = 'All';
+          $query_parameters['field_publisher_ref_id'] = 'All';
+          $query_parameters['field_publisher_assignee_uid'] = 'All';
+          $query_parameters['items_per_page'] = '25';
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = 'admin/workbench/content/data-requests' . '?' . $query;
+          break;
+        case 'publisher-active-data-request':
+          $publishers = array();
+          foreach ($user->data['ckan_publishers'] as $publisher_id => $capacity) {
+            if($capacity == 'admin' && !in_array($publisher_id, $publishers)) {
+              $publishers = array_merge($publishers, dgu_user_get_publisher_with_children($publisher_id));
+            }
+          }
+          $query = db_select('field_data_field_publisher_ref', 'p');
+          $query->join('node', 'n', 'n.nid = p.entity_id');
+          $query->fields('p', array('entity_id'));
+          $query->join('field_data_field_review_status', 's','p.entity_id = s.entity_id');
+          $query->join('node', 'n','p.entity_id = n.nid');
+          $query->condition('s.field_review_status_value', 0, '<>')
+            ->condition('s.field_review_status_value', 6, '<>')
+            ->condition('p.field_publisher_ref_id', $publishers, 'IN')
+            ->orderBy('n.nid', 'DESC');
+          $query->addTag('node_access');
+          $active_request_nid = $query->execute()->fetchField();
+          $query_parameters = drupal_get_query_parameters();
+          $query = drupal_http_build_query($query_parameters);
+          $step['path'] = drupal_get_path_alias('node/' . $active_request_nid) . '?' . $query;
+          break;
         case 'active-data-request-author':
           $query = db_select('field_data_field_publisher_assignee', 'a');
           $query->fields('a', array('entity_id'));

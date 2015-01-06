@@ -247,5 +247,286 @@ function dgu_data_set_request_default_bootstrap_tour() {
   );
   $export['data_request_administration'] = $bootstrap_tour;
 
+  $bootstrap_tour = new stdClass();
+  $bootstrap_tour->disabled = FALSE; /* Edit this to true to make a default bootstrap_tour disabled initially */
+  $bootstrap_tour->api_version = 1;
+  $bootstrap_tour->name = 'data_requests_practitioners_guide';
+  $bootstrap_tour->title = 'Data requests practitioners guide';
+  $bootstrap_tour->roles = '6';
+  $bootstrap_tour->autorun = 0;
+  $bootstrap_tour->description = '';
+  $bootstrap_tour->steps = array(
+    0 => array(
+      'selector' => '.nav-user',
+      'path' => 'help',
+      'placement' => 'left',
+      'title' => 'User account',
+      'content' => '<p>To access data requests administration functions please go to user account page.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    1 => array(
+      'selector' => '.publishers-active-requests-link',
+      'path' => 'user',
+      'placement' => 'bottom',
+      'title' => 'Publisher active data requests',
+      'content' => '<p>As a practitioner, you can view all open data requests assigned to your publishers by clicking on this link.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    2 => array(
+      'selector' => 'th.views-field-changed',
+      'path' => 'tour-redirect/publisher-active-data-request-url',
+      'placement' => 'top',
+      'title' => 'Sort data requests',
+      'content' => '<p>You can sort the data requests by clicking on the title of the relevant column.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    3 => array(
+      'selector' => '#edit-title',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Filter data requests',
+      'content' => '<p>Alternatively, if there are a large number of requests, you can filter by title, status, outcome (for closed requests), preference, issue, relationship manager, publisher, publisher assignee (ie the person to whom the request has been allocated) and number of items on the page.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    4 => array(
+      'selector' => '.views-submit-button input.btn',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Apply button',
+      'content' => '<p>Click &lsquo;apply&rsquo; after choosing your filter criteria.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    5 => array(
+      'selector' => '.views-row-first .flag-subscribe-node',
+      'path' => '',
+      'placement' => 'left',
+      'title' => 'Subscribe to alerts',
+      'content' => '<p>You can choose whether to be subscribed to alerts when requests are updated. Click subscribe/unsubscribe to change your status.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    6 => array(
+      'selector' => '.views-row-first .views-field-title',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Choose data request to view',
+      'content' => '<p>To view a specific data request, click the title of the relevant request.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    7 => array(
+      'selector' => 'article.node',
+      'path' => 'tour-redirect/publisher-active-data-request',
+      'placement' => 'top',
+      'title' => 'View full detail and review updates',
+      'content' => '<p>This page will show the full detail of the request, when it was submitted and who by, as well as the current status, Cabinet Office relationship manager and any review notes added to reflect progress.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    8 => array(
+      'selector' => '.field-name-field-review-comments form',
+      'path' => '',
+      'placement' => 'top',
+      'title' => 'Updating the request',
+      'content' => '<p>Review notes should be added to keep track of progress in reviewing a request.</p>
+
+<p>Review notes are only visible to publishers and administrators. Nothing added here is published on data.gov.uk</p>
+
+<p>A note should be added each time there is a change to keep practitioners and relationship managers informed of the status, and to enable updates to the public view when appropriate.</p>
+
+<p>You should submit review notes to provide an update or to ask questions of the publisher assignee or Cabinet Office.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    9 => array(
+      'selector' => '.field-name-field-review-comments input.btn',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Submit review note',
+      'content' => '<p>Once you&rsquo;ve added your notes, click this button to save it.</p>
+
+<p>Each review note will automatically include the name of the person making the comment as well as the date.</p>
+
+<p>An alert will be sent to all subscribers when changes are made to keep them aware of updates.</p>
+
+<p>Relationship managers will change the status of the request as necessary based on the information provided in the review notes.</p>
+',
+      'format' => 'filtered_html',
+    ),
+  );
+  $export['data_requests_practitioners_guide'] = $bootstrap_tour;
+
+  $bootstrap_tour = new stdClass();
+  $bootstrap_tour->disabled = FALSE; /* Edit this to true to make a default bootstrap_tour disabled initially */
+  $bootstrap_tour->api_version = 1;
+  $bootstrap_tour->name = 'data_requests_user_guide';
+  $bootstrap_tour->title = 'Data requests user guide';
+  $bootstrap_tour->roles = '6';
+  $bootstrap_tour->autorun = 0;
+  $bootstrap_tour->description = 'Data requests user guide for assignees';
+  $bootstrap_tour->steps = array(
+    0 => array(
+      'selector' => '.nav-user',
+      'path' => 'help',
+      'placement' => 'left',
+      'title' => 'User account',
+      'content' => '<p>To access data requests administration functions please go to user account page.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    1 => array(
+      'selector' => '.view-data-requests-administration',
+      'path' => 'user',
+      'placement' => 'top',
+      'title' => 'Active Data requests',
+      'content' => '<p>The most recent data requests that have been assigned to you are shown here.</p>
+
+<p>A maximum of 5 data requests will be displayed, if you want to see all data requests assigned to you can either click &quot;See all&quot; below or &quot;View these now&quot; in the green message bar above.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    2 => array(
+      'selector' => '.active-requests-link',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Alert about active data requests',
+      'content' => '<p>When you log in, the current total of data requests assigned to you is displayed in the green message bar on the user account page.</p>
+
+<p>There are links here for you to access a list of all data requests assigned to you and the data request user guide.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    3 => array(
+      'selector' => '.tabs--secondary a[href="/admin/workbench/content/active"]',
+      'path' => 'admin/workbench/content/active',
+      'placement' => 'bottom',
+      'title' => 'Active data requests',
+      'content' => '<p>Data requests that have not been closed and that are assigned to you are displayed here. You will only see data requests that have been assigned to you.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    4 => array(
+      'selector' => '.view-data-requests-administration th.views-field-changed a',
+      'path' => '',
+      'placement' => 'top',
+      'title' => 'Sort data requests',
+      'content' => '<p>You can sort your data requests by clicking on the title of the relevant column.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    5 => array(
+      'selector' => '.view-data-requests-administration #edit-title',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Filter data requests',
+      'content' => '<p>Alternatively, if you have a large number of requests, you can filter by title, status, preference and number of items on the page.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    6 => array(
+      'selector' => '.view-data-requests-administration  .views-submit-button input.btn',
+      'path' => '',
+      'placement' => 'bottom',
+      'title' => 'Apply button',
+      'content' => '<p>Click &lsquo;apply&rsquo; after choosing your filter criteria.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    7 => array(
+      'selector' => '.view-data-requests-administration .views-row-first .views-field-title a',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Choose data request to edit',
+      'content' => '<p>To edit a specific data request, click the title of the relevant request.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    8 => array(
+      'selector' => 'article.node',
+      'path' => 'tour-redirect/active-data-request',
+      'placement' => 'top',
+      'title' => 'View full detail and edit request',
+      'content' => '<p>This page will show the full detail of the request, when it was submitted and who by, as well as the current status and Cabinet Office relationship manager.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    9 => array(
+      'selector' => '.field-name-field-review-comments form',
+      'path' => '',
+      'placement' => 'top',
+      'title' => 'Updating the request',
+      'content' => '<p>Review notes should be added to keep track of progress in reviewing a request.</p>
+
+<p>Review notes are only visible to publishers and administrators. Nothing added here is published on data.gov.uk</p>
+
+<p>A note should be added each time there is a change to keep practitioners and relationship managers informed of the status, and to enable updates to the public view when appropriate.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    10 => array(
+      'selector' => '.field-name-field-review-comments input.btn',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Submit review note',
+      'content' => '<p>Once you&rsquo;ve added your notes, click this button to save it.</p>
+
+<p>Each review note will automatically include the name of the person making the comment as well as the date.</p>
+
+<p>An alert will be sent to all subscribers when changes are made to keep them aware of updates.</p>
+
+<p>Relationship managers will change the status of the request as necessary based on the information provided in the review notes.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    11 => array(
+      'selector' => 'article.node header a.username',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Requestor details',
+      'content' => '<p>If you have a query about the request, you can contact them via their profile.</p>
+
+<p>To access their profile, click on their username at the top of the request.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    12 => array(
+      'selector' => '.tabs--primary',
+      'path' => 'tour-redirect/active-data-request-author',
+      'placement' => 'right',
+      'title' => 'Contact requestor',
+      'content' => '<p>Click on the &lsquo;Contact&rsquo; tab to bring up a contact form.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    13 => array(
+      'selector' => 'form.contact-form',
+      'path' => 'tour-redirect/active-data-request-author-contact',
+      'placement' => 'top',
+      'title' => 'Contact form',
+      'content' => '<p>Complete the contact form ensuring you include a clear reference to the data request in the subject line as this will not automatically link to the data request.</p>
+
+<p>The form will automatically fill in your name and email address from your profile but can be changed if necessary. The email address you include will be the one any responses are sent to so ensure it is correct.</p>
+',
+      'format' => 'filtered_html',
+    ),
+    14 => array(
+      'selector' => 'form.contact-form #edit-submit',
+      'path' => '',
+      'placement' => 'right',
+      'title' => 'Send message',
+      'content' => '<p>Once the form is complete you can choose whether to have a copy of the message sent to you by ticking the box. Click &lsquo;Send message&rsquo; when you are done.</p>
+
+<p>It is important to ensure you add a review note to the relevant request to reflect the action that has been taken.</p>
+',
+      'format' => 'filtered_html',
+    ),
+  );
+  $export['data_requests_user_guide'] = $bootstrap_tour;
+
   return $export;
 }
