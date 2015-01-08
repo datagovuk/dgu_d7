@@ -7,19 +7,19 @@
 /**
  * Implements hook_menu().
  */
-function dgu_printpdf_menu() {
+function dgu_print_menu() {
   $items['print/header'] = array(
-    'page callback' => 'dgu_printpdf_header',
+    'page callback' => 'dgu_print_header',
     'access callback' => TRUE,
   );
   $items['print/footer'] = array(
-    'page callback' => 'dgu_printpdf_footer',
+    'page callback' => 'dgu_print_footer',
     'access callback' => TRUE,
   );
   return $items;
 }
 
-function dgu_printpdf_header() {
+function dgu_print_header() {
 //[page] => 3
 //[section] => ISB Standard: Business Data Standards
 //[sitepage] => 3
@@ -59,7 +59,7 @@ function dgu_printpdf_header() {
 
 }
 
-function dgu_printpdf_footer() {
+function dgu_print_footer() {
 //[page] => 3
 //[section] => ISB Standard: Business Data Standards
 //[sitepage] => 3

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * dgu_printpdf.features.user_permission.inc
+ * dgu_print.features.user_permission.inc
  */
 
 /**
