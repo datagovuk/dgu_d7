@@ -21,6 +21,13 @@
             <?php print render($content['field_tags']); ?>
         </div>
     </header>
+    <?php if (!empty($body[0]['safe_summary'])): ?>
+    <header>
+        <div class="summary">
+          <?php print $body[0]['safe_summary']; ?>
+        </div>
+    </header>
+    <?php endif; ?>
 
     <?php
     // Hide comments, tags, and links now so that we can render them later.
