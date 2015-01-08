@@ -31,6 +31,8 @@
 
     <?php
     // Hide comments, tags, and links now so that we can render them later.
+    hide($content['links']);
     print render($content);
+    print render($content['links']);
     ?>
 </article> <!-- /.node -->
