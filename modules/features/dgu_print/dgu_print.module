@@ -115,25 +115,31 @@ function dgu_print_footer() {
 
 }
 function dgu_print_cover() {
-  $title = $_GET['tile'];
+  $title = $_GET['title'];
   print <<<EOT
 <!DOCTYPE html><html>
   <head>
     <style>
-    table {border-top: 1px solid #000;}
+      body {
+        color: #000;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica;
+      }
+      h1 {
+        font-size: 25px;
+        padding-top: 5px;
+      }
+      .centered{
+        margin: auto;
+        width: 400px;
+      }
     </style>
   </head>
   <body style="position: relative;">
-    <h1> Data.gov.uk</h1>
-    <h2>$title</h2>
-    <div style="display: block; width: 100%; height: 55px; ">
-      <table style="width: 100%;">
-        <tr>
-          <td>Version: $version</td>
-          <td>Status: $status</td>
-          <td>Issue date: $date</td>
-        </tr>
-      </table>
+    <img src="/assets/img/dgu-header-cropped.png" />
+    <div style="
+        margin: auto;
+        width: 400px;" class="centered">
+      <h1>$title</h1>
     </div>
   </body>
 </html>
