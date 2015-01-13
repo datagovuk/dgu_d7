@@ -16,6 +16,10 @@ function dgu_print_menu() {
     'page callback' => 'dgu_print_footer',
     'access callback' => TRUE,
   );
+  $items['print/cover'] = array(
+      'page callback' => 'dgu_print_cover',
+      'access callback' => TRUE,
+  );
   return $items;
 }
 
@@ -110,3 +114,37 @@ function dgu_print_footer() {
   }
 
 }
+function dgu_print_cover() {
+  $title = $_GET['title'];
+  print <<<EOT
+<!DOCTYPE html><html>
+  <head>
+    <style>
+      body {
+        color: #000;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica;
+      }
+      h1 {
+        font-size: 25px;
+        padding-top: 5px;
+      }
+      .centered{
+        margin: auto;
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body style="position: relative;">
+    <img src="/assets/img/dgu-header-cropped.png" />
+    <div style="
+        margin: auto;
+        width: 400px;" class="centered">
+      <h1>$title</h1>
+    </div>
+  </body>
+</html>
+EOT;
+}
+
+
+
