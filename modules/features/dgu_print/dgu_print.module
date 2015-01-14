@@ -24,21 +24,7 @@ function dgu_print_menu() {
 }
 
 function dgu_print_header() {
-//[page] => 3
-//[section] => ISB Standard: Business Data Standards
-//[sitepage] => 3
-//[title] => Contributing qualification element (QE) outcome data standard
-//[subsection] => Standard identifier:ISB-000003
-//[frompage] => 1
-//[subsubsection] =>
-//[topage] => 3
-//[doctitle] => Contributing qualification element (QE) outcome data standard
-//[sitepages] => 3
-//[webpage] => -
-//[time] => 14:56:43
-//[date] => 22 Sep 2014
-
-  $page = (int)$_GET['page'];
+    $page = (int)$_GET['page'];
   $title = $_GET['title'];
   $margin_top = strlen($title) > 90 ? 0 : 30;
 
@@ -64,33 +50,7 @@ function dgu_print_header() {
 }
 
 function dgu_print_footer() {
-//[page] => 3
-//[section] => ISB Standard: Business Data Standards
-//[sitepage] => 3
-//[title] => Contributing qualification element (QE) outcome data standard
-//[subsection] => Standard identifier:ISB-000003
-//[frompage] => 1
-//[subsubsection] =>
-//[topage] => 3
-//[doctitle] => Contributing qualification element (QE) outcome data standard
-//[sitepages] => 3
-//[webpage] => -
-//[time] => 14:56:43
-//[date] => 22 Sep 2014
-
-  syslog (LOG_DEBUG, 'called ' . print_r($_GET, 1));
-
-  $page = $_GET['page'];
-  $topage = $_GET['topage'];
-
-//  $id = $_GET['standard_identifier'];
-//  $type = $_GET['standard_type'];
-  $status = $_GET['standard_status'];
-  $version = $_GET['standard_version'];
-  $date = date('d/m/Y', $_GET['standard_date']);
-
-  if ($page > 1) {
-    print '<!DOCTYPE html><html>
+   print '<!DOCTYPE html><html>
    <head>
      <style>
        table {border-top: 1px solid #000;}
