@@ -164,6 +164,9 @@ function dgu_data_set_request_node_access($node, $op, $account) {
   if ($op != 'create' && $node->type == 'dataset_request') {
     if(!($node->uid == $account->uid || user_access(DATA_REQUEST_MODERATION_PERMISSION))) {
       if(isset($node->field_publication_preference[LANGUAGE_NONE][0]['value']) && $node->field_publication_preference[LANGUAGE_NONE][0]['value'] == 0) {
+        if(isset($node->field_publisher_ref[LANGUAGE_NONE][0]['id']) && isset($account->data['ckan_publishers'][$node->field_publisher_ref[LANGUAGE_NONE][0]['id']]) && $account->data['ckan_publishers'][$node->field_publisher_ref[LANGUAGE_NONE][0]['id']] == 'admin') {
+          return NODE_ACCESS_ALLOW;
+        }
         $assignees = dgu_data_set_request_publisher_assignee_get_assignees($node->nid);
         if(!in_array($account->uid, $assignees)) {
           return NODE_ACCESS_DENY;
