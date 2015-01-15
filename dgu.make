@@ -139,7 +139,7 @@ projects[lexicon][subdir] = "contrib"
 projects[file_entity][version] = "2.0-alpha3"
 projects[file_entity][subdir] = "contrib"
 
-projects[media][version] = "2.0-alpha3"
+projects[media][version] = "2.0-alpha4"
 projects[media][subdir] = "contrib"
 
 projects[votingapi][version] = "2.10"
