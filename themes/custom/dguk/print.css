@@ -5,7 +5,8 @@ body div.replies-wrapper,
 body div.replies-wrapper .replies,
 body div.print-source_url,
 body div.print-links,
-body div.print-hr
+body hr.print-hr,
+body div.print-site_name
 {
     visibility: hidden;
     display: none;
