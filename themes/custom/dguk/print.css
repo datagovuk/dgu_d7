@@ -1,0 +1,12 @@
+
+body div.print-breadcrumb,
+body div.link-wrapper ,
+body div.replies-wrapper,
+body div.replies-wrapper .replies,
+body div.print-source_url,
+body div.print-links
+{
+    visibility: hidden;
+    display: none;
+}
+
