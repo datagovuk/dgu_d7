@@ -7,7 +7,7 @@
 /**
  * Implements hook_user_default_permissions().
  */
-function dgu_printpdf_user_default_permissions() {
+function dgu_print_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: 'access PDF version'.
@@ -30,6 +30,16 @@ function dgu_printpdf_user_default_permissions() {
       'authenticated user' => 'authenticated user',
     ),
     'module' => 'print',
+  );
+
+  // Exported permission: 'access printer-friendly version'.
+  $permissions['access printer-friendly version'] = array(
+    'name' => 'access printer-friendly version',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'editor' => 'editor',
+    ),
+    'module' => 'book',
   );
 
   // Exported permission: 'administer print'.

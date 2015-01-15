@@ -1,8 +1,10 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the dgu_print feature.
  */
+
+include_once 'dgu_print.features.inc';
 
 /**
  * Implements hook_menu().
@@ -24,95 +26,48 @@ function dgu_print_menu() {
 }
 
 function dgu_print_header() {
-//[page] => 3
-//[section] => ISB Standard: Business Data Standards
-//[sitepage] => 3
-//[title] => Contributing qualification element (QE) outcome data standard
-//[subsection] => Standard identifier:ISB-000003
-//[frompage] => 1
-//[subsubsection] =>
-//[topage] => 3
-//[doctitle] => Contributing qualification element (QE) outcome data standard
-//[sitepages] => 3
-//[webpage] => -
-//[time] => 14:56:43
-//[date] => 22 Sep 2014
-
-  $page = (int)$_GET['page'];
   $title = $_GET['title'];
-  $margin_top = strlen($title) > 90 ? 0 : 30;
-
-  global $theme_key;
-  $logo_path = theme_get_setting('logo', $theme_key);
-
-
-  if ($page > 1) {
-    print '<!DOCTYPE html><html>
-   <body style="position: relative;">
-     <div style="display: block; width: 100%; height: 55px; position: absolute; top: 0; left: 0; border-bottom: 1px solid #000;">
-     <img style="width:152px; height: 45px;" src="' . $logo_path . '" />
-     <div style="position: absolute; top: ' . $margin_top .'px; right: 0; width: 80%; text-align: right;"><strong>' . $title . '</strong></div>
-     </div>
-   </body></html>';
-    //syslog (LOG_DEBUG, 'called ' . print_r($title, 1));
-  }
-  else {
-    print '<!DOCTYPE html><html><body><br/></body></html>';
-    //syslog (LOG_DEBUG, 'called, printed empty ');
-  }
-
+print <<<EOT
+<!DOCTYPE html><html>
+  <body style="position: relative;">
+    <div style="display: block; width: 100%; height: 100px; position: absolute; top: 0; left: 0; border-bottom: 1px solid #000; ">
+      <img style="position: relative;
+  top: 50%;
+  transform: translateY(-50%);" src="/assets/img/dgu-header-cropped.png" />
+      <div style="position: absolute; top: ${margin_top}px; right: 0; width: 80%; text-align: right;"><strong>$title</strong></div>
+    </div>
+  </body>
+</html>
+EOT;
 }
 
 function dgu_print_footer() {
-//[page] => 3
-//[section] => ISB Standard: Business Data Standards
-//[sitepage] => 3
-//[title] => Contributing qualification element (QE) outcome data standard
-//[subsection] => Standard identifier:ISB-000003
-//[frompage] => 1
-//[subsubsection] =>
-//[topage] => 3
-//[doctitle] => Contributing qualification element (QE) outcome data standard
-//[sitepages] => 3
-//[webpage] => -
-//[time] => 14:56:43
-//[date] => 22 Sep 2014
-
-  syslog (LOG_DEBUG, 'called ' . print_r($_GET, 1));
-
+  $url = $_GET['link'];
+  $updated = $_GET['updated'];
   $page = $_GET['page'];
-  $topage = $_GET['topage'];
-
-//  $id = $_GET['standard_identifier'];
-//  $type = $_GET['standard_type'];
-  $status = $_GET['standard_status'];
-  $version = $_GET['standard_version'];
-  $date = date('d/m/Y', $_GET['standard_date']);
-
-  if ($page > 1) {
-    print '<!DOCTYPE html><html>
-   <head>
-     <style>
-       table {border-top: 1px solid #000;}
-     </style>
-   </head>
-   <body style="position: relative;">
-     <div style="display: block; width: 100%; height: 55px; ">
-       <table style="width: 100%;">
-         <tr>
-           <td>Version: ' . $version . '</td>
-           <td>Status: ' . $status . '</td>
-           <td>Issue date: ' . $date . '</td>
-           <td style="text-align: right;">Page ' . $page . ' of ' . $topage . '</td>
-         </tr>
-       </table>
-     </div>
-   </body></html>';
-  }
-  else {
-    print '<!DOCTYPE html><html><body><br/></body></html>';
-  }
-
+  $total = $_GET['topage'];
+   print <<<EOT
+<!DOCTYPE html><html>
+  <head>
+    <style>
+      table {border-top: 1px solid #000;}
+    </style>
+  </head>
+  <body style="position: relative;">
+    <div style="display: block; width: 100%; height: 55px; ">
+      <table style="width: 100%;">
+        <tr>
+          <td>Updated on $updated</td>
+          <td style="align: right">page $page of $total</td>
+        </tr>
+        <tr>
+          <td colspan="3">$url</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+EOT;
 }
 function dgu_print_cover() {
   $title = $_GET['title'];
