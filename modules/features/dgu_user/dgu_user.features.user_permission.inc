@@ -63,16 +63,6 @@ function dgu_user_user_default_permissions() {
     'module' => 'contextual',
   );
 
-  // Exported permission: 'access printer-friendly version'.
-  $permissions['access printer-friendly version'] = array(
-    'name' => 'access printer-friendly version',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'editor' => 'editor',
-    ),
-    'module' => 'book',
-  );
-
   // Exported permission: 'access site in maintenance mode'.
   $permissions['access site in maintenance mode'] = array(
     'name' => 'access site in maintenance mode',
