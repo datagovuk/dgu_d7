@@ -353,6 +353,7 @@ function dgu_user_user_default_permissions() {
     'name' => 'use workbench_media add form',
     'roles' => array(
       'administrator' => 'administrator',
+      'editor' => 'editor',
     ),
     'module' => 'workbench_media',
   );
