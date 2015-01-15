@@ -1,8 +1,10 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the dgu_print feature.
  */
+
+include_once 'dgu_print.features.inc';
 
 /**
  * Implements hook_menu().
