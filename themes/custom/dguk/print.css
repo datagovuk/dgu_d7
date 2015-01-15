@@ -4,7 +4,8 @@ body div.link-wrapper ,
 body div.replies-wrapper,
 body div.replies-wrapper .replies,
 body div.print-source_url,
-body div.print-links
+body div.print-links,
+body div.print-hr
 {
     visibility: hidden;
     display: none;
