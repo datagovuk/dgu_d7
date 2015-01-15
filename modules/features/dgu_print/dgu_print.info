@@ -1,4 +1,4 @@
-name = dgu_print
+name = DGU Print
 description = Feature to contain print settings.
 core = 7.x
 package = DGU Features
