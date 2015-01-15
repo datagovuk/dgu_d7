@@ -211,7 +211,7 @@ projects[libraries][subdir] = "contrib"
 projects[wysiwyg][type] = "module"
 projects[wysiwyg][download][type] = "git"
 projects[wysiwyg][download][url] = "http://git.drupal.org/project/wysiwyg.git"
-projects[wysiwyg][download][revision] = "31840cbfd1386f4ce138d74f4d6878a1cfe31d2c"
+projects[wysiwyg][download][revision] = "898d022cf7d0b6c6a6e7d813199d561b4ad39f8b"
 projects[wysiwyg][subdir] = "contrib"
 
 projects[redirect][type] = "module"
