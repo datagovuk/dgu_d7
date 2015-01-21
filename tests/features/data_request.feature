@@ -226,47 +226,13 @@ Feature: Request new data
     And the "test_data_admin" user have not received an email 'data.gov.uk Message Digest'
 
   @anon
-  Scenario: View ODUG blogs page
-    Given I am not logged in
-    And I am on "/data-request"
-    When I follow "ODUG Blogs"
-    Then I should be on "/data-request/blogs"
-    And I should see the following <breadcrumbs>
-      | Data Requests |
-      | ODUG Blogs    |
-    And I should see the link "Login to request new data"
-    And I should see the link "See Dashboard"
-    And I should see "ODUG OVERVIEW" pane in "first" column in "second" row
-    And I should see "PROGRESS ON REQUESTS" pane in "last" column in "second" row
-    And I should see "ODUG MEMBERS" pane in "last" column in "second" row
-    And I should see "USEFUL LINKS" pane in "last" column in "second" row
-    And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
-    And view "blogs_odug" view should have "6" rows
-    And "title" field in row "1" of "blogs_odug" view should match "\w*"
-    And "name" field in row "1" of "blogs_odug" view should match "^Created by"
-    And row "1" of "blogs_odug" view should match "\d* comments? \d* \w* \d* \w* ago$|No comments so far$"
-    And pager in "blogs_odug" view should match "^1 2 3 … »|1 2 3 »$"
-
-  @anon
   Scenario: View ODUG minutes page
     Given I am not logged in
     And I am on "/data-request"
-    When I follow "ODUG Minutes"
-    Then I should see the following <breadcrumbs>
-      | Data Requests |
-      | ODUG Minutes  |
-    And I should be on "/data-request/minutes"
-    And I should see the link "Login to request new data"
-    And I should see the link "See Dashboard"
-    And I should see "ODUG OVERVIEW" pane in "first" column in "second" row
-    And I should see "PROGRESS ON REQUESTS" pane in "last" column in "second" row
-    And I should see "ODUG MEMBERS" pane in "last" column in "second" row
-    And I should see "USEFUL LINKS" pane in "last" column in "second" row
-    And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
-    And view "odug_minutes_block" view should have "6" rows
-    And "title" field in row "1" of "odug_minutes_block" view should match "\w*"
-    And "field-resource-file" field in row "1" of "odug_minutes_block" view should match "^Resources:"
-    And pager in "odug_minutes_block" view should match "^1 2 3 … »|1 2 3 »"
+    When I follow "ODUG minutes"
+    And I should be on "/library/?f[0]=im_field_document_type%3A90"
+    And "Library" item in "Interact" subnav should be active
+    And search result counter should match "^\d* Library resources$"
 
   @anon
   Scenario: View the data requests RSS
