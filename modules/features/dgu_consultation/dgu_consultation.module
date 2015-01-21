@@ -94,7 +94,7 @@ function dgu_consultation_preprocess_node(&$variables) {
           $bundle = $field_info['settings']['bundle'];
           $settings = reply_settings($bundle, $field_info['settings'], $instance['settings'], $entity_settings);
 
-          if ($settings['access'] == REPLY_ACCESS_READ){
+          if ($settings['access'] == REPLY_ACCESS_READ || $settings['access'] == REPLY_ACCESS_NONE){
             unset($variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']);
             continue;
           }
