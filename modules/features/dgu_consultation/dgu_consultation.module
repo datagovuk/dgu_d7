@@ -85,6 +85,19 @@ function dgu_consultation_preprocess_node(&$variables) {
         $variables['content']['field_paragraph']['#theme'] = 'consultation_paragraph';
         $variables['content']['field_paragraph'][$index]['section'] = $current_page['paragraphs'][$index]['section'];
         if (!empty($variables['content']['field_paragraph'][$index]['links']['reply'])){
+
+          // Load settings for this entity
+          $instance = field_info_instance('node', 'field_field_comments', 'book');
+          $field_info = field_info_field($instance['field_name']);
+          $entity_settings = field_get_items('node', $variables['node'], $instance['field_name']);
+          $entity_settings = empty($entity_settings) ? $instance['settings'] : reset($entity_settings);
+          $bundle = $field_info['settings']['bundle'];
+          $settings = reply_settings($bundle, $field_info['settings'], $instance['settings'], $entity_settings);
+
+          if ($settings['access'] == REPLY_ACCESS_READ || $settings['access'] == REPLY_ACCESS_NONE){
+            unset($variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']);
+            continue;
+          }
           $variables['content']['field_paragraph'][$index]['links']['#weight'] = '2';
           $variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']['attributes']['class'][] = 'btn-default';
           $variables['content']['field_paragraph'][$index]['links']['reply']['#links']['replies-links']['attributes']['class'][] = 'btn';
