@@ -196,7 +196,7 @@ function dgu_print_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'print_pdf_pdf_tool';
-  $strongarm->value = 'print_pdf_wkhtmltopdf|sites/all/modules/print/lib/wkhtmltopdf';
+  $strongarm->value = 'print_pdf_wkhtmltopdf|profiles/dgu/modules/contrib/print/lib/wkhtmltopdf';
   $export['print_pdf_pdf_tool'] = $strongarm;
 
   $strongarm = new stdClass();
