@@ -37,6 +37,8 @@ function dgu_print_user_default_permissions() {
     'name' => 'access printer-friendly version',
     'roles' => array(
       'administrator' => 'administrator',
+      'anonymous user' => 'anonymous user',
+      'authenticated user' => 'authenticated user',
       'editor' => 'editor',
     ),
     'module' => 'book',

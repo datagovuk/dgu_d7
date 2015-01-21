@@ -1,4 +1,4 @@
-name = dgu_print
+name = DGU Print
 description = Feature to contain print settings.
 core = 7.x
 package = DGU Features
@@ -167,3 +167,4 @@ features[variable][] = print_sourceurl_enabled
 features[variable][] = print_sourceurl_forcenode
 features[variable][] = print_urls
 features[variable][] = print_urls_anchors
+mtime = 1421854676
