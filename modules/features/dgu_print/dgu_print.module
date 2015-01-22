@@ -58,7 +58,7 @@ function dgu_print_footer() {
       <table style="width: 100%;">
         <tr>
           <td>Updated on $updated</td>
-          <td style="align: right">page $page of $total</td>
+          <td style="text-align: right;">page $page of $total</td>
         </tr>
       </table>
     </div>
