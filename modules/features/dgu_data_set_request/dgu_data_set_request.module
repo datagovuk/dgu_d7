@@ -140,6 +140,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
   }
 
   $form['#validate'][] = 'dgu_data_set_request_form_validate';
+  $form['#submit'][] = 'dgu_data_set_request_form_submit';
 }
 
 function dgu_data_set_request_form_validate($form, &$form_state) {
@@ -147,6 +148,13 @@ function dgu_data_set_request_form_validate($form, &$form_state) {
     if(empty($form_state['values']['field_data_set_link'][LANGUAGE_NONE][0]['url'])) {
       form_set_error('field_organisation_type', 'Dataset link field is required.');
     }
+  }
+}
+
+function dgu_data_set_request_form_submit($form, &$form_state) {
+  if (isset($form_state['values']['field_review_status'][LANGUAGE_NONE][0]['value']) && ($form_state['values']['field_review_status'][LANGUAGE_NONE][0]['value'] != '6')) {
+    // Empty outcome field if a request is re-opened.
+    $form_state['node']->field_review_outcome = array();
   }
 }
 
