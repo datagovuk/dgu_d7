@@ -78,8 +78,9 @@ projects[extlink][subdir] = "contrib"
 projects[email][version] = "1.2"
 projects[email][subdir] = "contrib"
 
-projects[entity][version] = "1.5"
+projects[entity][version] = "1.0-rc3"
 projects[entity][subdir] = "contrib"
+projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditions-20.patch"
 
 projects[reply][type] = "module"
 projects[reply][download][type] = "git"
