@@ -27,6 +27,10 @@ function dgu_app_menu_breadcrumb_alter(&$active_trail, $item) {
     );
     drupal_set_title('Top rated apps');
   }
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'app') {
+    $active_trail[2] = $active_trail[1];
+    $active_trail[1] = array('title' => 'Apps', 'href' => 'apps', 'localized_options' => array());
+  }
 }
 
 /**

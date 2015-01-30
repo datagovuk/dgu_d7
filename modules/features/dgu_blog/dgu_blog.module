@@ -29,6 +29,10 @@ function dgu_blog_menu_breadcrumb_alter(&$active_trail, $item) {
     );
     drupal_set_title('Most popular Blogs');
   }
+  if (isset($item['map'][1]->type) && $item['map'][1]->type == 'blog') {
+    $active_trail[2] = $active_trail[1];
+    $active_trail[1] = array('title' => 'Blog', 'href' => 'blog', 'localized_options' => array());
+  }
 }
 
 /**
