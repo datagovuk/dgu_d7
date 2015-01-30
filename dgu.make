@@ -190,7 +190,7 @@ projects[panels][subdir] = "contrib"
 projects[fieldable_panels_panes][version] = "1.5"
 projects[fieldable_panels_panes][subdir] = "contrib"
 
-projects[context][version] = "3.3"
+projects[context][version] = "3.0"
 projects[context][subdir] = "contrib"
 
 projects[services][version] = "3.11"
