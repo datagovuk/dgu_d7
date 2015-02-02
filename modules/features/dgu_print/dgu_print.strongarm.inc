@@ -997,7 +997,7 @@ function dgu_print_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'print_pdf_wkhtmltopdf_options';
-  $strongarm->value = '--footer-spacing 20 --footer-html "[site:url]/print/footer?updated=[node:changed]" --header-html "[site:url]/print/header" --header-spacing  30';
+  $strongarm->value = '--footer-spacing 10 --footer-html "[site:url]/print/footer?updated=[node:changed]" --header-html "[site:url]/print/header" --header-spacing  30';
   $export['print_pdf_wkhtmltopdf_options'] = $strongarm;
 
   $strongarm = new stdClass();

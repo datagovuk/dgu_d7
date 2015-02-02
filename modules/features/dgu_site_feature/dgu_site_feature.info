@@ -21,6 +21,7 @@ dependencies[] = jquery_update
 dependencies[] = link
 dependencies[] = list
 dependencies[] = media
+dependencies[] = media_wysiwyg
 dependencies[] = menu
 dependencies[] = options
 dependencies[] = page_manager

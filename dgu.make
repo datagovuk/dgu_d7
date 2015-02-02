@@ -52,18 +52,15 @@ projects[admin_menu][subdir] = "contrib"
 projects[module_filter][version] = "1.7"
 projects[module_filter][subdir] = "contrib"
 
-projects[ctools][version] = "1.3"
+projects[ctools][version] = "1.6"
 projects[ctools][subdir] = "contrib"
-# Patch prevents ctools from running filter_xss_admin on an un-rendered array.
-projects[ctools][patch][] = "http://drupal.org/files/ctools-1925018-61.patch"
 
 projects[features][version] = "2.0"
 projects[features][subdir] = "contrib"
 projects[features][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/features_dont_convert_strings_to_integers.patch"
 
-projects[views][version] = "3.7"
+projects[views][version] = "3.8"
 projects[views][subdir] = "contrib"
-projects[views][patch][] = "http://drupal.org/files/views-1511396-110-array_diff_recursive.patch"
 
 projects[views_data_export][version] = "3.0-beta6"
 projects[views_data_export][subdir] = "contrib"
@@ -90,8 +87,8 @@ projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
 projects[reply][download][revision] = "7012839b9eb828f089f2cee02f6e719308eb1569"
 projects[reply][subdir] = "contrib"
-#projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 #projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
+#projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
 projects[rules][version] = "2.3"
 projects[rules][subdir] = "contrib"
@@ -109,7 +106,7 @@ projects[field_replies][subdir] = "contrib"
 projects[field_permissions][version] = "1.0-beta2"
 projects[field_permissions][subdir] = "contrib"
 
-projects[entityreference][version] = "1.0"
+projects[entityreference][version] = "1.1"
 projects[entityreference][subdir] = "contrib"
 
 projects[migrate][type] = "module"
@@ -165,7 +162,7 @@ projects[conditional_fields][download][revision] = "cd29b003a592d375f3fdb4c46f56
 projects[conditional_fields][patch][] = "http://drupal.org/files/issues/conditional_fields-jquery_update_1.7_states_incompatible-1815896.patch"
 projects[conditional_fields][subdir] = "contrib"
 
-projects[logintoboggan][version] = "1.3"
+projects[logintoboggan][version] = "1.4"
 projects[logintoboggan][subdir] = "contrib"
 projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
 
@@ -196,10 +193,10 @@ projects[fieldable_panels_panes][subdir] = "contrib"
 projects[context][version] = "3.0-beta7"
 projects[context][subdir] = "contrib"
 
-projects[services][version] = "3.5"
+projects[services][version] = "3.11"
 projects[services][subdir] = "contrib"
 
-projects[services_views][version] = "1.0-beta2"
+projects[services_views][version] = "1.0"
 projects[services_views][subdir] = "contrib"
 
 projects[smtp][version] = "1.0"
@@ -224,10 +221,10 @@ projects[redirect][patch][] = "https://www.drupal.org/files/issues/fix_and_preve
 projects[tagclouds][version] = "1.9"
 projects[tagclouds][subdir] = "contrib"
 
-projects[mollom][version] = "2.10"
+projects[mollom][version] = "2.13"
 projects[mollom][subdir] = "contrib"
 
-projects[google_analytics][version] = "2.0"
+projects[google_analytics][version] = "2.1"
 projects[google_analytics][subdir] = "contrib"
 
 projects[views_bulk_operations][version] = "3.1"
