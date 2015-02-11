@@ -60,7 +60,7 @@
 
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
             <span class="dropdown">
-              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#"><i class="icon-lock"></i></a>
+              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#"><i class="icon-wrench"></i></a>
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
                 <li role="presentation" class="dropdown-header">Tools</li>
                 <li><a href="/dataset/new">Add a Dataset</a></li>
