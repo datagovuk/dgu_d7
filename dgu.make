@@ -4,7 +4,7 @@ api = 2
 ; Modules
 ; --------
 
-projects[bootstrap_tour][version] = "1.0-beta8"
+projects[bootstrap_tour][version] = "1.0-beta9"
 projects[bootstrap_tour][subdir] = "contrib"
 
 projects[apachesolr][type] = "module"
