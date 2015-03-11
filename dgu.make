@@ -90,7 +90,7 @@ projects[reply][subdir] = "contrib"
 #projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
 #projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
-projects[rules][version] = "2.8"
+projects[rules][version] = "2.7"
 projects[rules][subdir] = "contrib"
 
 projects[rules_url_argument][version] = "1.2"
