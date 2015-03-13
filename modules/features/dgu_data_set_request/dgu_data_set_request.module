@@ -1854,6 +1854,7 @@ EOT;
 
   foreach ($variables['themed_rows'] as &$row) {
     $nid = str_replace('"', '', $row['nid']);
-    $row['counter'] = $map[$nid] ? $map[$nid] : 'N/A';
+    $row['counter'] = $map[$nid] ? '"' . $map[$nid] . '"' : '"N/A"';
   }
+
 }
