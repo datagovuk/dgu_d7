@@ -210,3 +210,12 @@ function dgu_site_feature_get_plural_content_types(){
     'book' => t('Books'),
   );
 }
+
+/**
+ * Implements hook_entity_presave().
+ */
+function dgu_site_feature_entity_presave($entity, $type) {
+  if (!empty($entity->field_link[LANGUAGE_NONE][0]['url']) && strpos($entity->field_link[LANGUAGE_NONE][0]['url'], 'http://data.gov.uk/') !== FALSE) {
+    $entity->field_link[LANGUAGE_NONE][0]['url'] = str_replace('http://data.gov.uk/' , '', $entity->field_link[LANGUAGE_NONE][0]['url']);
+  }
+}
