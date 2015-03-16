@@ -1891,15 +1891,24 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['counter']['id'] = 'counter';
   $handler->display->display_options['fields']['counter']['table'] = 'views';
   $handler->display->display_options['fields']['counter']['field'] = 'counter';
-  $handler->display->display_options['fields']['counter']['label'] = 'R number';
+  $handler->display->display_options['fields']['counter']['label'] = '';
+  $handler->display->display_options['fields']['counter']['exclude'] = TRUE;
   $handler->display->display_options['fields']['counter']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['counter']['counter_start'] = '1';
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
-  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'd/m/Y - H:i';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Field: Content: Updated date */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'short';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'd/m/Y - H:i';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -1937,6 +1946,7 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_first_name']['field'] = 'field_first_name';
   $handler->display->display_options['fields']['field_first_name']['relationship'] = 'uid';
   $handler->display->display_options['fields']['field_first_name']['label'] = 'First name';
+  $handler->display->display_options['fields']['field_first_name']['exclude'] = TRUE;
   $handler->display->display_options['fields']['field_first_name']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_first_name']['settings'] = array(
     'field_replies' => '',
@@ -1950,6 +1960,8 @@ function dgu_data_set_request_views_default_views() {
   $handler->display->display_options['fields']['field_surname']['table'] = 'field_data_field_surname';
   $handler->display->display_options['fields']['field_surname']['field'] = 'field_surname';
   $handler->display->display_options['fields']['field_surname']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['field_surname']['label'] = 'Real name';
+  $handler->display->display_options['fields']['field_surname']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_surname']['alter']['text'] = '[field_first_name] [field_surname]';
   $handler->display->display_options['fields']['field_surname']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_surname']['settings'] = array(
