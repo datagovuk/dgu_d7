@@ -4,7 +4,7 @@ api = 2
 ; Modules
 ; --------
 
-projects[bootstrap_tour][version] = "1.0-beta8"
+projects[bootstrap_tour][version] = "1.0-beta9"
 projects[bootstrap_tour][subdir] = "contrib"
 
 projects[apachesolr][type] = "module"
@@ -90,7 +90,7 @@ projects[reply][subdir] = "contrib"
 #projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
 #projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
-projects[rules][version] = "2.3"
+projects[rules][version] = "2.8"
 projects[rules][subdir] = "contrib"
 
 projects[rules_url_argument][version] = "1.2"
