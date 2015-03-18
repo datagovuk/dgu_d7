@@ -114,6 +114,7 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 
   if (user_access(DATA_REQUEST_MODERATION_PERMISSION) || (isset($node->nid) && is_or_was_assignee($node->nid))) {
     $form['#after_build'][] = 'dgu_moderation_node_forms_after_build';
+    $form['#after_build'][] = 'dgu_data_set_request_existing_title_disable_maxlength';
 
     $form['submit_top'] = $form['actions']['submit'];
     $form['submit_top']['#weight'] = -100;
@@ -141,6 +142,15 @@ function dgu_data_set_request_form_dataset_request_node_form_alter(&$form, &$for
 
   $form['#validate'][] = 'dgu_data_set_request_form_validate';
   $form['#submit'][] = 'dgu_data_set_request_form_submit';
+}
+
+function dgu_data_set_request_existing_title_disable_maxlength($form, &$form_state) {
+  global $user;
+  if (in_array('data request administrator', $user->roles) || in_array('editor', $user->roles)) {
+    unset($form['title']['#maxlength']);
+    $form['title']['#maxlength_js'] = FALSE;
+  }
+  return $form;
 }
 
 function dgu_data_set_request_form_validate($form, &$form_state) {
