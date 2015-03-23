@@ -1741,6 +1741,21 @@ function dgu_data_set_request_process_views_data_export_csv_body(&$variables) {
 3251:R0787,
 3254:R0788,
 3257:R0789,
+3771:R0106,
+3772:R0168,
+3773:R0219,
+3774:R0257,
+3775:R0262,
+3776:R0347,
+3777:R0410,
+3778:R0426,
+3779:R0460,
+3780:R0465,
+3781:R0576,
+3782:R0602,
+3783:R0630,
+3784:R0693,
+3785:R0732,
 EOT;
 
   $map_string = variable_get('odug_r_numbers', $map_string);
