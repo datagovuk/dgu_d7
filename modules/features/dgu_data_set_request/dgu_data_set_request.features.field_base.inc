@@ -737,7 +737,7 @@ function dgu_data_set_request_field_default_field_bases() {
     'module' => 'list',
     'settings' => array(
       'allowed_values' => array(
-        0 => 'New data released',
+        0 => 'New dataset released',
         1 => 'Data cannot be released',
         2 => 'Data already available',
         3 => 'Not a data request or a data issue',
