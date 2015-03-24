@@ -435,16 +435,8 @@ return $node->uid;
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['style_plugin'] = 'rss';
-  $handler->display->display_options['row_plugin'] = 'rss_fields';
-  $handler->display->display_options['row_options']['title_field'] = 'title';
-  $handler->display->display_options['row_options']['link_field'] = 'view_node';
-  $handler->display->display_options['row_options']['description_field'] = 'body';
-  $handler->display->display_options['row_options']['creator_field'] = 'name';
-  $handler->display->display_options['row_options']['date_field'] = 'created_1';
-  $handler->display->display_options['row_options']['guid_field_options'] = array(
-    'guid_field' => 'nid',
-    'guid_field_is_permalink' => 0,
-  );
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['row_options']['item_length'] = 'rss';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
@@ -659,16 +651,8 @@ return $node->uid;
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['style_plugin'] = 'rss';
-  $handler->display->display_options['row_plugin'] = 'rss_fields';
-  $handler->display->display_options['row_options']['title_field'] = 'title';
-  $handler->display->display_options['row_options']['link_field'] = 'view_node';
-  $handler->display->display_options['row_options']['description_field'] = 'body';
-  $handler->display->display_options['row_options']['creator_field'] = 'name';
-  $handler->display->display_options['row_options']['date_field'] = 'created_1';
-  $handler->display->display_options['row_options']['guid_field_options'] = array(
-    'guid_field' => 'nid',
-    'guid_field_is_permalink' => 0,
-  );
+  $handler->display->display_options['row_plugin'] = 'node_rss';
+  $handler->display->display_options['row_options']['item_length'] = 'rss';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Content: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
