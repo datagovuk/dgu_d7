@@ -524,7 +524,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       throw new Exception('No panel panes were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
     }
     foreach ($h2 as $text) {
-        $a = $text->getText();
       if (trim($text->getText()) == $pane_title) {
         if(!$text->isVisible()) {
           throw new Exception('Pane "' . $pane_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row but it\'s not visible');
@@ -533,6 +532,33 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       }
     }
     throw new Exception('Panel pane "' . $pane_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+  }
+
+  /**
+   * @Given /^I should not see "([^"]*)" pane in "([^"]*)" column in "([^"]*)" row$/
+   */
+  public function iShouldNotSeePaneInColumnInRow($pane_title, $column, $row) {
+
+    $row_element = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
+    if (empty($row_element)) {
+      throw new Exception(ucfirst($row) . ' row not found');
+    }
+
+    $column_element = $row_element->find('css', '.panel-col-' . $column);
+    if (empty($column_element)) {
+      throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
+    }
+
+    $h2 = $column_element->findAll('css', '.panel-pane h2');
+    if (empty($h2)) {
+      throw new Exception('No panel panes were found in the ' . $column . ' column in '. ucfirst($row) . ' row');
+    }
+    foreach ($h2 as $text) {
+      if (trim($text->getText()) == $pane_title) {
+        throw new Exception('Pane "' . $pane_title . '" found in ' . ucfirst($column) . ' column in '. ucfirst($row) . ' row');
+      }
+    }
+    return;
   }
 
 
