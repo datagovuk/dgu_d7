@@ -28,7 +28,7 @@ Feature: Create a Library Resource and search for library resources
     And I should see "DOCUMENT TYPE" pane in "first" column in "first" row
     And I should see "CATEGORY" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
+    And I should not see "TAGS" pane in "first" column in "first" row
     When I fill in "Search library resources..." with "data"
     And I click search icon
     Then I should be on "/search/everything/data?f[0]=bundle%3Aresource&solrsort=score"
@@ -41,7 +41,7 @@ Feature: Create a Library Resource and search for library resources
     And I should see "CATEGORY" pane in "first" column in "first" row
     And I should see "DOCUMENT TYPE" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
+    And I should not see "TAGS" pane in "first" column in "first" row
     And search result counter should match "^\d* Library resources$"
     And pager should match "^1 2 3 … »$"
 
@@ -58,7 +58,6 @@ Feature: Create a Library Resource and search for library resources
     And I fill in "Title" with "Test Library resource"
     And I type "Test Library resource description text" in the "edit-body-und-0-value" WYSIWYG editor
     And I check the box "Health"
-    And I fill in "Tags" with "Test"
     And I select "Public sector" from "Sector"
     And I select "Guidance" from "Document Type"
     And I wait 2 seconds

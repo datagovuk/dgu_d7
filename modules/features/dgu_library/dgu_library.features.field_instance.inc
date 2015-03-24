@@ -334,54 +334,8 @@ function dgu_library_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-resource-field_tags'
-  $field_instances['node-resource-field_tags'] = array(
-    'bundle' => 'resource',
-    'default_value' => NULL,
-    'deleted' => '0',
-    'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '3',
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '3',
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '0',
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tags',
-    'label' => 'Tags',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'taxonomy',
-      'settings' => array(
-        'autocomplete_path' => 'taxonomy/autocomplete',
-        'size' => 60,
-      ),
-      'type' => 'taxonomy_autocomplete',
-      'weight' => 1,
-    ),
-  );
-
   // Translatables
   // Included for use with string extractors like potx.
-  t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('Body');
   t('Category');
   t('Comments');
@@ -389,7 +343,6 @@ function dgu_library_field_default_field_instances() {
   t('Please specify if the application you are submitting has been commission by public sector department, private sector or 3rd sector (voluntary/non-profit).');
   t('Resources');
   t('Sector');
-  t('Tags');
 
   return $field_instances;
 }

@@ -853,67 +853,6 @@ All images will be shown on your app page which click through to the full sized 
     ),
   );
 
-  // Exported field_instance: 'node-app-field_tags'
-  $field_instances['node-app-field_tags'] = array(
-    'bundle' => 'app',
-    'default_value' => NULL,
-    'deleted' => '0',
-    'description' => 'A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'module' => 'taxonomy',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-          'quickedit' => array(
-            'editor' => 'form',
-          ),
-        ),
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => '2',
-      ),
-      'rss' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '6',
-      ),
-      'search_result' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '8',
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => '0',
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_tags',
-    'label' => 'Tags',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 0,
-      'module' => 'taxonomy',
-      'settings' => array(
-        'autocomplete_path' => 'taxonomy/autocomplete',
-        'size' => 60,
-      ),
-      'type' => 'taxonomy_autocomplete',
-      'weight' => 12,
-    ),
-  );
-
   // Exported field_instance: 'node-app-field_uses_dataset'
   $field_instances['node-app-field_uses_dataset'] = array(
     'bundle' => 'app',
@@ -1001,7 +940,6 @@ All images will be shown on your app page which click through to the full sized 
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('A comma-separated list of terms describing this content. Example: funny, bungee jumping, "Company, Inc.".');
   t('App Link');
   t('App charge');
   t('App thumbnail');
@@ -1019,7 +957,6 @@ All images will be shown on your app page which click through to the full sized 
   t('Sector');
   t('Submitter Name');
   t('Submitter e-mail');
-  t('Tags');
   t('This information will not relayed to other users of the site.');
   t('Uses dataset');
   t('rating');

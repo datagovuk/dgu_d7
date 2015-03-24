@@ -67,7 +67,7 @@ Feature: Search content as a site user
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
     And I should see "CATEGORY" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
+    And I should not see "TAGS" pane in "first" column in "first" row
     And there should be "10" search results on the page
     And search result counter should match "^\d* Pages"
     And pager should match "^1 2 3 … »$"

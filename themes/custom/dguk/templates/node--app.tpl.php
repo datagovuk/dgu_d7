@@ -19,7 +19,6 @@
     <?php endif; ?>
     <div class="taxonomy">
       <?php print render($content['field_category']); ?>
-      <?php print render($content['field_tags']); ?>
     </div>
     <?php print render($content['field_developed_by']); ?>
     <?php print render($content['field_app_link']); ?>

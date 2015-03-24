@@ -36,7 +36,6 @@ features[field_instance][] = node-resource-field_comment
 features[field_instance][] = node-resource-field_document_type
 features[field_instance][] = node-resource-field_resource_file
 features[field_instance][] = node-resource-field_sector
-features[field_instance][] = node-resource-field_tags
 features[node][] = resource
 features[page_manager_handlers][] = node_view_panel_context_7
 features[page_manager_pages][] = library
