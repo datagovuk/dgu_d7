@@ -64,7 +64,7 @@ Feature: Create blogs as a blogger
     And I should see "CONTENT TYPE" pane in "first" column in "first" row
     And I should see "CATEGORY" pane in "first" column in "first" row
     And I should see "SECTOR" pane in "first" column in "first" row
-    And I should see "TAGS" pane in "first" column in "first" row
+    And I should not see "TAGS" pane in "first" column in "first" row
     When I click "Blog entry"
     And I wait until the page loads
     Then I should be on "/search/everything/"

@@ -12,13 +12,12 @@
           <?php print $submitted; ?>
         </span>
         <?php if ($updated): ?>
-            <span class="submitted">
+        <span class="submitted">
           <?php print $updated; ?>
         </span>
         <?php endif; ?>
         <div class="taxonomy">
             <?php print render($content['field_category']); ?>
-            <?php print render($content['field_tags']); ?>
         </div>
     </header>
     <?php if (!empty($body[0]['safe_summary'])): ?>

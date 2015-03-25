@@ -20,7 +20,6 @@
     <?php endif; ?>
     <div class="taxonomy">
       <?php print render($content['field_category']); ?>
-      <?php print render($content['field_tags']); ?>
     </div>
   </header>
 
