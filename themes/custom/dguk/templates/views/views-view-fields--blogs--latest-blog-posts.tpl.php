@@ -24,12 +24,9 @@
  * @ingroup views_templates
  */
 
-//$history = dgu_site_feature_user_last_visit($row->nid);
-//$new_replies = dgu_site_feature_num_new_replies($row->nid, $history);
+$history = dgu_site_feature_user_last_visit($row->nid);
+$new_replies = dgu_site_feature_num_new_replies($row->nid, $history);
 $colour = $row->users_node_uid % 10;
-//
-//$last_viewed = node_last_viewed(node_last_viewed);
-//$new = $last_viewed ? FALSE : $row->node_created > NODE_NEW_LIMIT;
 
 ?>
 <div class="blog-posts">
