@@ -1,5 +1,8 @@
 <div id="reply-<?php print $reply->id; ?>" class="<?php print $classes ?> boxed">
   <div class="inner">
+    <?php if($new): ?>
+      <div class="new">New</div>
+    <?php endif; ?>
     <div class="reply-header">
       <?php print $avatar; ?>
       <?php hide($content['field_reply_subject']); ?>
