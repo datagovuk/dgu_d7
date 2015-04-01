@@ -100,3 +100,12 @@ function dgu_reply_menu_breadcrumb_alter(&$active_trail, $item) {
     drupal_set_title('Comment');
   }
 }
+
+/**
+ *  Implements hook_preprocess_reply().
+ */
+function dgu_reply_preprocess_reply(&$variables) {
+  $function = $variables['reply']->entity_type . '_mark';
+  $variables['new'] = $function($variables['reply']->entity_id, $variables['reply']->changed);
+}
+
