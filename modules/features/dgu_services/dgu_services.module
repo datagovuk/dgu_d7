@@ -113,6 +113,8 @@ function dgu_services_get_replies($ckan_id) {
       // Fix flag on replies on ckan side so user is redirected back to a dataset vie page instead of drupal api endpoint
       $rendered_output = str_replace('destination=comment/get', 'destination=dataset', $rendered_output);
       print $rendered_output;
+      // Update the history table, stating that this user viewed this dataset.
+      ckan_dataset_tag_new($dataset);
       drupal_exit();
     }
   }
