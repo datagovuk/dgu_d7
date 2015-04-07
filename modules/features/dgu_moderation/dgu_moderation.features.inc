@@ -45,9 +45,9 @@ function dgu_moderation_default_message_type() {
           "safe_value" : "\\u003Cp\\u003EContent\\u00a0submitted by you for moderation has been @{message:dgu_moderation_state_change_short}\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003E@{message:dgu_moderation_state_change_full}\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003EYou can choose how often you receive email notifications in your account settings:\\u003Cbr \\/\\u003E\\r\\n\\t[site:url]user\\/[message:current-subscriber-uid]\\/edit\\u003C\\/p\\u003E\\r\\n",
+          "value" : "\\u003Cp\\u003E@{message:dgu_moderation_state_change_full}\\u003C\\/p\\u003E\\r\\n",
           "format" : "filtered_html",
-          "safe_value" : "\\u003Cp\\u003E@{message:dgu_moderation_state_change_full}\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou can choose how often you receive email notifications in your account settings:\\u003Cbr \\/\\u003E\\n\\t[site:url]user\\/[message:current-subscriber-uid]\\/edit\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003E@{message:dgu_moderation_state_change_full}\\u003C\\/p\\u003E\\n"
         }
       ]
     },

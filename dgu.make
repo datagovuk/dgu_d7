@@ -277,6 +277,7 @@ projects[message_digest][download][url] = "http://git.drupal.org/project/message
 projects[message_digest][download][revision] = "2ad5c154dc21028d153e455bda6c27224862bc62"
 projects[message_digest][subdir] = "contrib"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest-remove_mail_header-2236179-8.patch"
+projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest_pass_uid.patch"
 
 projects[quickedit][version] = "1.1"
 projects[quickedit][subdir] = "contrib"
