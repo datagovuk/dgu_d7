@@ -31,6 +31,7 @@
     <dt>
         <a id="<?php print $term->id; ?>"></a>
         <a href="/glossary/<?php print $term->tid?>"><?php print $term->safe_name; ?></a>
+        <?php if (!empty($term->field_is_law) && $term->field_is_law['und'][0]['value']):?><i class="icon-legal"></i><?php endif; ?>
         <?php if (isset($term->extralinks)): ?>
             <span class="lexicon-extralinks">
                 <?php foreach ($term->extralinks as $link): ?>

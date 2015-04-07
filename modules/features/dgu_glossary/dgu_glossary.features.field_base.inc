@@ -29,6 +29,35 @@ function dgu_glossary_field_default_field_bases() {
     'type' => 'vud_field',
   );
 
+  // Exported field_base: 'field_is_law'
+  $field_bases['field_is_law'] = array(
+    'active' => '1',
+    'cardinality' => '1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_is_law',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
+    'foreign keys' => array(),
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => '0',
+    'type' => 'list_boolean',
+  );
+
   // Exported field_base: 'field_is_new'
   $field_bases['field_is_new'] = array(
     'active' => '1',
@@ -141,6 +170,9 @@ function dgu_glossary_field_default_field_bases() {
     'deleted' => '0',
     'entity_types' => array(),
     'field_name' => 'field_source',
+    'field_permissions' => array(
+      'type' => '0',
+    ),
     'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
@@ -158,6 +190,14 @@ function dgu_glossary_field_default_field_bases() {
         'Opening up government - glossary of key terms' => 'Opening up government - glossary of key terms',
         'Open Data White Paper' => 'Open Data White Paper',
         'APPSI definition from Web searches, dictionaries or member proposal' => 'APPSI definition from Web searches, dictionaries or member proposal',
+        'Wikipedia (modified by APPSI)' => 'Wikipedia (modified by APPSI)',
+        'Wikipedia' => 'Wikipedia',
+        'The Big Data Opportunity, Policy Exchange, ISBN: 978-1-907689-22-2, 2012' => 'The Big Data Opportunity, Policy Exchange, ISBN: 978-1-907689-22-2, 2012',
+        'HM Treasury Glossary (Managing Public Money)' => 'HM Treasury Glossary (Managing Public Money)',
+        'OECD Glossary of Statistical Terms' => 'OECD Glossary of Statistical Terms',
+        'EU PSI Directive' => 'EU PSI Directive',
+        'Webopedia' => 'Webopedia',
+        'Data Protection Act 1998' => 'Data Protection Act 1998',
       ),
       'allowed_values_function' => '',
     ),
