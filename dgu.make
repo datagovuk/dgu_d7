@@ -181,7 +181,7 @@ projects[ckan_publisher_tree][download][url] = "http://git.drupal.org/project/ck
 projects[ckan_publisher_tree][download][branch] = "7.x-1.x"
 projects[ckan_publisher_tree][subdir] = "contrib"
 
-projects[composer_manager][version] = "1.0-beta7"
+projects[composer_manager][version] = "1.7"
 projects[composer_manager][subdir] = "contrib"
 
 projects[panels][version] = "3.3"
