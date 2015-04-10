@@ -1,25 +1,25 @@
 <?php
 
 use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext;
+  Behat\Behat\Context\TranslatedContextInterface,
+  Behat\Behat\Context\BehatContext;
 
 use Behat\Behat\Event\SuiteEvent,
-    Behat\Behat\Event\FeatureEvent,
-    Behat\Behat\Event\ScenarioEvent,
-    Behat\Behat\Event\StepEvent;
+  Behat\Behat\Event\FeatureEvent,
+  Behat\Behat\Event\ScenarioEvent,
+  Behat\Behat\Event\StepEvent;
 
 use Behat\Behat\Context\Step\Given,
-    Behat\Behat\Context\Step\When,
-    Behat\Behat\Context\Step\Then;
+  Behat\Behat\Context\Step\When,
+  Behat\Behat\Context\Step\Then;
 
 use Behat\Behat\Exception\PendingException;
 
 use Behat\Mink\Exception\ElementException,
-    Behat\Mink\Exception\ElementNotFoundException;
+  Behat\Mink\Exception\ElementNotFoundException;
 
 use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+  Behat\Gherkin\Node\TableNode;
 
 use Drupal\Component\Utility\Random;
 
@@ -42,14 +42,14 @@ abstract class HackyDataRegistry {
       $value = self::$data[$name];
     }
     if ($value === "") {
-        $backtrace = debug_backtrace(FALSE, 2);
-        $calling = $backtrace[1];
-        if (array_key_exists('line', $calling) && array_key_exists('file', $calling)) {
-            throw new PendingException(sprintf("Fix HackyDataRegistry accessing with unset key at %s:%d in %s.", $calling['file'], $calling['line'], $calling['function']));
-        } else {
-            // Disabled primarily for calls from AfterScenario for now due to too many errors.
-            //throw new PendingException(sprintf("Fix HackyDataRegistry accessing with unset key in %s.", $calling['function']));
-        }
+      $backtrace = debug_backtrace(FALSE, 2);
+      $calling = $backtrace[1];
+      if (array_key_exists('line', $calling) && array_key_exists('file', $calling)) {
+        throw new PendingException(sprintf("Fix HackyDataRegistry accessing with unset key at %s:%d in %s.", $calling['file'], $calling['line'], $calling['function']));
+      } else {
+        // Disabled primarily for calls from AfterScenario for now due to too many errors.
+        //throw new PendingException(sprintf("Fix HackyDataRegistry accessing with unset key in %s.", $calling['function']));
+      }
     }
     return $value;
   }
@@ -108,14 +108,14 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $this->mailMessages = array();
   }
 
-    /**
-     * @BeforeFeature
-     */
-    public static function prepare(FeatureEvent $event)
-    {
-        //$cmd = 'drush @standards.test ev \'$query = new EntityFieldQuery(); $result = $query->entityCondition("entity_type", "node")->propertyCondition("title", "Test ", "STARTS_WITH")->execute(); if (isset($result["node"])) {$nids = array_keys($result["node"]); foreach ($nids as $nid) {node_delete($nid);}}\'';
-        //shell_exec($cmd);
-    }
+  /**
+   * @BeforeFeature
+   */
+  public static function prepare(FeatureEvent $event)
+  {
+    //$cmd = 'drush @standards.test ev \'$query = new EntityFieldQuery(); $result = $query->entityCondition("entity_type", "node")->propertyCondition("title", "Test ", "STARTS_WITH")->execute(); if (isset($result["node"])) {$nids = array_keys($result["node"]); foreach ($nids as $nid) {node_delete($nid);}}\'';
+    //shell_exec($cmd);
+  }
 
   /**
    * Hold the execution until the page is/resource are completely loaded OR timeout
@@ -343,7 +343,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     return;
   }
 
-   /**
+  /**
    * @Given /^I fill in "([^"]*)" with random text$/
    */
   public function iFillInWithRandomText($label) {
@@ -356,7 +356,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
 
-   /**
+  /**
    * @Given /^I should not see the following <texts>$/
    */
   public function iShouldNotSeeTheFollowingTexts(TableNode $table) {
@@ -393,8 +393,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-  * @Given /^I (?:should |)see the following <links>$/
-  */
+   * @Given /^I (?:should |)see the following <links>$/
+   */
   public function iShouldSeeTheFollowingLinks(TableNode $table) {
     $page = $this->getSession()->getPage();
     $table = $table->getHash();
@@ -504,17 +504,17 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     throw new Exception('The block "' . $block_title . '" was not found in the ' . $column . ' column in '. ucfirst($row) . ' row');
   }
 
-    /**
-     * @Given /^I should see "([^"]*)" pane in "([^"]*)" column in "([^"]*)" row$/
-     */
-    public function iShouldSeePaneInColumnInRow($pane_title, $column, $row) {
+  /**
+   * @Given /^I should see "([^"]*)" pane in "([^"]*)" column in "([^"]*)" row$/
+   */
+  public function iShouldSeePaneInColumnInRow($pane_title, $column, $row) {
 
     $row_element = $this->getSession()->getPage()->find('css', '.panel-display .row-' . $row);
     if (empty($row_element)) {
       throw new Exception(ucfirst($row) . ' row not found');
     }
 
-      $column_element = $row_element->find('css', '.panel-col-' . $column);
+    $column_element = $row_element->find('css', '.panel-col-' . $column);
     if (empty($column_element)) {
       throw new Exception(ucfirst($column) . ' column not found in '. ucfirst($row) . ' row');
     }
@@ -642,14 +642,14 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
           if ($msg->to == $mail_address && strpos($msg->subject, $title) !== FALSE) {
-          $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
-          // Consider if we start sending HTML emails.
-          //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
-          $this->mailMessages[$user][] = $msg;
-          imap_delete($mbox, $msg->msgno);
-          $received = true;
-          break 2;
-        }
+            $msg->body = imap_fetchbody($mbox, $msg->msgno, 1);
+            // Consider if we start sending HTML emails.
+            //$msg->body['html'] = imap_fetchbody($mbox, $msg->msgno, 2);
+            $this->mailMessages[$user][] = $msg;
+            imap_delete($mbox, $msg->msgno);
+            $received = true;
+            break 2;
+          }
         }
       }
       sleep(3);
@@ -1236,8 +1236,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I wait 2 seconds"),
       new Given("I follow \"Moderate\""),
       new Given("I should see \"Currently there is no published revision of this node.\""),
-      new Given("I should see \"Created by test_user.\""),
-      new Given("I should see \"Edited by $author.\""),
+      new Given("I should see \"Revised by $author\""),
       new Given("I should see the link \"$author\" in the \"main_content\" region"),
       new Given("I should not see the link \"test_moderator\" in the \"main_content\" region"),
       new Given("\"Published\" option in \"Moderation state\" should be selected"),

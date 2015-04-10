@@ -44,6 +44,7 @@ Disallow: /user/password/
 Disallow: /user/login/
 Disallow: /user/logout/
 Disallow: /user
+Disallow: /flag/
 # Paths (no clean URLs)
 Disallow: /?q=admin/
 Disallow: /?q=reply/add/
