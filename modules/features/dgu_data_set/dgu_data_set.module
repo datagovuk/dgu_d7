@@ -67,15 +67,22 @@ function _dgu_data_set_get_parent_publisher_id($publisher_id) {
     ->fetchField();
 }
 
+/**
+ * Implements hook_url_outbound_alter().
+ */
 function dgu_data_set_url_outbound_alter(&$path, &$options, $original_path) {
   if(substr($path, 0, 12) == 'ckan_dataset') {
     $dataset = entity_load_single('ckan_dataset', substr($path, 13));
     $path = 'dataset/' . $dataset->name;
   }
 }
+
+/**
+ * Implements hook_menu().
+ */
 function dgu_data_set_menu(){
-  $items['dataset/%/comments'] = array(
-    'title' => 'Dataset comments report',
+  $items['dataset-comments/%'] = array(
+    'title' => 'Dataset comments',
     'page callback' => 'dgu_data_set_comments',
     'page arguments' => array(1),
     'access arguments' => array('access content'),
@@ -83,6 +90,9 @@ function dgu_data_set_menu(){
   return $items;
 }
 
+/**
+ * Implements hook_theme().
+ */
 function dgu_data_set_theme($existing, $type, $theme, $path) {
   return array(
     'dataset_comments_report' => array(
@@ -97,7 +107,7 @@ function dgu_data_set_theme($existing, $type, $theme, $path) {
 
 function dgu_data_set_comments($ckan_publisher_id){
   $publisher_sql = "SELECT
-    title, ckan_id
+    title, name
     FROM ckan_publisher p
     WHERE  p.id = :pid OR p.ckan_id = :pid
     LIMIT 1";
@@ -107,13 +117,16 @@ function dgu_data_set_comments($ckan_publisher_id){
     p.title AS publisher_name,
     FROM_UNIXTIME(MAX(r.created), '%d/%m/%Y') as post_date,
     MAX(r.created) as created,
+    u.name as user_name,
+    u.uid,
     d.title as dataset_title,
     field_reply_comment_value as comment,
     field_reply_subject_value as subject,
-    d.ckan_id as ckan_id
+    d.name as name
     FROM reply r
+    JOIN users u ON r.uid = u.uid
     LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r.id
-    LEFT JOIN field_data_field_reply_subject s on s.entity_id = r.id
+    LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r.id
     LEFT JOIN ckan_dataset d ON d.id = r.entity_id
     LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
     WHERE r.entity_type = 'ckan_dataset'
@@ -122,5 +135,4 @@ function dgu_data_set_comments($ckan_publisher_id){
     ORDER BY created DESC";
   $dataset_result = db_query($sql, array(':pid' => $ckan_publisher_id));
    return theme('dataset_comments_report',  array('dataset_comments' => $dataset_result, 'publisher' => $publisher_result->fetchObject()));
-
 }
