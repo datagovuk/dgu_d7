@@ -6,6 +6,67 @@
 
 include_once 'dgu_data_set.features.inc';
 
+/**
+ * Implements hook_entity_insert().
+ */
+function dgu_data_set_entity_insert($entity, $type) {
+
+  if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type == 'ckan_dataset' && module_exists('message_subscribe')) {
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+
+    // Get dataset_comment_new message bundle and set required fields.
+    $message = message_create('dataset_comment_new');
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $dataset = ckan_dataset_load($entity->entity_id);
+    $wrapper->field_dataset_reference->set($dataset);
+    $wrapper->field_reply_reference->set($entity);
+
+    $uids = _dgu_data_set_get_subscribers($dataset->publisher_id);
+    message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $uids));
+
+  }
+}
+
+function _dgu_data_set_get_subscribers($publisher_id) {
+  $publishers = array($publisher_id);
+  while($publisher_id = _dgu_data_set_get_parent_publisher_id($publisher_id)) {
+    $publishers[] = $publisher_id;
+  }
+
+  $uids = db_select('field_data_field_publishers', 'p')
+    ->fields('p', array('entity_id'))
+    ->condition('p.field_publishers_target_id', $publishers, 'IN')
+    ->execute()
+    ->fetchCol();
+
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+  $ckan_admin_uids = array();
+
+  foreach($uids as $uid) {
+    $user = user_load($uid);
+    foreach ($publishers as $publisher_id) {
+      if(isset($user->data['ckan_publishers'][$publisher_id]) && $user->data['ckan_publishers'][$publisher_id] == 'admin') {
+        $ckan_admin_uids[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
+      }
+    }
+
+  }
+  return $ckan_admin_uids;
+}
+
+function _dgu_data_set_get_parent_publisher_id($publisher_id) {
+  return db_select('ckan_publisher', 'p')
+    ->fields('p', array('parent_id'))
+    ->condition('p.id', $publisher_id)
+    ->execute()
+    ->fetchField();
+}
+
 function dgu_data_set_url_outbound_alter(&$path, &$options, $original_path) {
   if(substr($path, 0, 12) == 'ckan_dataset') {
     $dataset = entity_load_single('ckan_dataset', substr($path, 13));
