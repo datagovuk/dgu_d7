@@ -46,7 +46,6 @@ function dgu_data_set_comments($ckan_publisher_id){
     p.title AS publisher_name,
     FROM_UNIXTIME(MAX(r.created), '%d/%m/%Y') as post_date,
     MAX(r.created) as created,
-    MAX(r.created) as reply_date,
     d.title as dataset_title,
     field_reply_comment_value as comment,
     field_reply_subject_value as subject,
