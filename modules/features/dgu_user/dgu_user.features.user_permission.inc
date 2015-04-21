@@ -99,6 +99,7 @@ function dgu_user_user_default_permissions() {
     'roles' => array(
       'administrator' => 'administrator',
       'authenticated user' => 'authenticated user',
+      'unverified user' => 'unverified user',
     ),
     'module' => 'toolbar',
   );
