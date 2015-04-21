@@ -1,5 +1,7 @@
 <h1>Dataset comments</h1>
 <h3>Latest comments on all datasets published by <a href="/publisher/<?php print $publisher->name ?>"><?php print($publisher->title); ?></a></h3>
+<h4>Email notifications for dataset comments are <strong><?php print $email_notifications;?></strong>. You can change this preference in your <a href="/user/<?php print $uid; ?>/edit?destination=<?php $destination = drupal_get_destination(); print $destination['destination']; ?>">account settings</a></h4>
+<br/>
 <div class="dataset-comment-report">
 <?php
 foreach  ($dataset_comments as $row):?>
