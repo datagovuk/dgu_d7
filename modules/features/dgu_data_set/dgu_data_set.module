@@ -81,7 +81,7 @@ function dgu_data_set_url_outbound_alter(&$path, &$options, $original_path) {
  * Implements hook_menu().
  */
 function dgu_data_set_menu(){
-  $items['dataset-comments/%'] = array(
+  $items['comments/%'] = array(
     'title' => 'Dataset comments',
     'page callback' => 'dgu_data_set_comments',
     'page arguments' => array(1),
