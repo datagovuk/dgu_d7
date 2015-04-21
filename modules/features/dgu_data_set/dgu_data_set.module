@@ -49,12 +49,13 @@ function _dgu_data_set_get_subscribers($publisher_id) {
 
   foreach($uids as $uid) {
     $user = user_load($uid);
-    foreach ($publishers as $publisher_id) {
-      if(isset($user->data['ckan_publishers'][$publisher_id]) && $user->data['ckan_publishers'][$publisher_id] == 'admin') {
-        $ckan_admin_uids[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
+    if (isset($user->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $user->field_dataset_comments[LANGUAGE_NONE][0]['value']) {
+      foreach ($publishers as $publisher_id) {
+        if(isset($user->data['ckan_publishers'][$publisher_id]) && $user->data['ckan_publishers'][$publisher_id] == 'admin') {
+          $ckan_admin_uids[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
+        }
       }
     }
-
   }
   return $ckan_admin_uids;
 }
