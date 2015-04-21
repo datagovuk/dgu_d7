@@ -92,6 +92,8 @@ projects[reply][subdir] = "contrib"
 
 projects[rules][version] = "2.8"
 projects[rules][subdir] = "contrib"
+#https://www.drupal.org/node/2186363
+projects[rules][patch][] = "http://drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-1.patch"
 
 projects[rules_url_argument][version] = "1.2"
 projects[rules_url_argument][subdir] = "contrib"
