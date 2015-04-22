@@ -106,39 +106,35 @@ function dgu_data_set_theme($existing, $type, $theme, $path) {
   );
 }
 
-function dgu_data_set_comments($ckan_publisher_id){
+function dgu_data_set_comments($publisher_id){
 
   global $user;
   $account = user_load($user->uid);
   $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
-
-  $publisher_sql = "SELECT
-    title, name
-    FROM ckan_publisher p
-    WHERE  p.id = :pid OR p.ckan_id = :pid
-    LIMIT 1";
-  $publisher_result = db_query($publisher_sql, array(':pid' => $ckan_publisher_id));
+  $publisher = ckan_publisher_load($publisher_id);
 
   $sql = "SELECT
-    p.title AS publisher_name,
-    FROM_UNIXTIME(MAX(r.created), '%d/%m/%Y') as post_date,
-    MAX(r.created) as created,
-    u.name as user_name,
-    u.uid,
-    d.title as dataset_title,
-    field_reply_comment_value as comment,
-    field_reply_subject_value as subject,
-    d.name as name
-    FROM reply r
-    JOIN users u ON r.uid = u.uid
-    LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r.id
-    LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r.id
-    LEFT JOIN ckan_dataset d ON d.id = r.entity_id
-    LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
-    WHERE r.entity_type = 'ckan_dataset'
-    AND p.id = :pid OR p.ckan_id = :pid
-    GROUP BY r.entity_id
-    ORDER BY created DESC";
-  $dataset_result = db_query($sql, array(':pid' => $ckan_publisher_id));
-  return theme('dataset_comments_report',  array('dataset_comments' => $dataset_result, 'publisher' => $publisher_result->fetchObject(), 'email_notifications' => $email_notifications, 'uid' => $user->uid));
+  r1.created,
+  d.title,
+  d.name,
+  field_reply_subject_value as subject,
+  field_reply_comment_value as comment,
+  u.name as user_name,
+  u.uid
+  FROM ckan_dataset d
+  JOIN reply r1 ON (d.id = r1.entity_id AND r1.entity_type = 'ckan_dataset')
+  LEFT JOIN reply r2 ON (d.id = r2.entity_id AND r2.entity_type = 'ckan_dataset' AND (r1.created < r2.created))
+  LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r1.id
+  LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r1.id
+  JOIN users u ON r1.uid = u.uid
+  LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
+  WHERE p.id = :pid
+  AND r2.id IS NULL
+  ORDER BY created DESC
+  ";
+
+  $dataset_result = db_query($sql, array(':pid' => $publisher->id));
+
+
+  return theme('dataset_comments_report',  array('dataset_comments' => $dataset_result, 'publisher' => $publisher, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
 }
