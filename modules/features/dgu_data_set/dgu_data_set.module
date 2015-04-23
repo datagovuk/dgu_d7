@@ -86,6 +86,7 @@ function dgu_data_set_menu(){
     'title' => 'Dataset comments',
     'page callback' => 'dgu_data_set_comments',
     'page arguments' => array(2),
+    'access arguments' => array('access content'),
   );
   return $items;
 }
@@ -112,7 +113,7 @@ function dgu_data_set_comments($publisher_id){
   $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
   $publisher = ckan_publisher_load($publisher_id);
 
-  if($user->uid == 1 || isset($user->data['ckan_publishers'][$publisher->id]) && $user->data['ckan_publishers'][$publisher->id] == 'admin') {
+  if($user->uid == 1 || (isset($user->data['ckan_publishers'][$publisher->id]) && $user->data['ckan_publishers'][$publisher->id] == 'admin')) {
     $sql = "SELECT
     r1.created,
     d.title,
