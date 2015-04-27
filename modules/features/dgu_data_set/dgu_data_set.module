@@ -113,32 +113,68 @@ function dgu_data_set_comments($publisher_id){
   $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
   $publisher = ckan_publisher_load($publisher_id);
 
-  if($user->uid == 1 || (isset($user->data['ckan_publishers'][$publisher->id]) && $user->data['ckan_publishers'][$publisher->id] == 'admin')) {
-    $sql = "SELECT
-    r1.created,
-    d.title,
-    d.name,
-    field_reply_subject_value as subject,
-    field_reply_comment_value as comment,
-    u.name as user_name,
-    u.uid
-    FROM ckan_dataset d
-    JOIN reply r1 ON (d.id = r1.entity_id AND r1.entity_type = 'ckan_dataset')
-    LEFT JOIN reply r2 ON (d.id = r2.entity_id AND r2.entity_type = 'ckan_dataset' AND (r1.created < r2.created))
-    LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r1.id
-    LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r1.id
-    JOIN users u ON r1.uid = u.uid
-    LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
-    WHERE p.id = :pid
-    AND r2.id IS NULL
-    ORDER BY created DESC
-    ";
-
-    $dataset_result = db_query($sql, array(':pid' => $publisher->id));
+  $sql = "SELECT
+  r1.created,
+  d.title,
+  d.name,
+  field_reply_subject_value as subject,
+  field_reply_comment_value as comment,
+  u.name as user_name,
+  u.uid
+  FROM ckan_dataset d
+  JOIN reply r1 ON (d.id = r1.entity_id AND r1.entity_type = 'ckan_dataset')
+  LEFT JOIN reply r2 ON (d.id = r2.entity_id AND r2.entity_type = 'ckan_dataset' AND (r1.created < r2.created))
+  LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r1.id
+  LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r1.id
+  JOIN users u ON r1.uid = u.uid
+  LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
+  WHERE p.id = :pid
+  AND r2.id IS NULL
+  ORDER BY created DESC
+  ";
 
 
-    return theme('dataset_comments_report',  array('dataset_comments' => $dataset_result, 'publisher' => $publisher, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
+  $sql = "SELECT
+  d.title,
+  d.name,
+  d.ckan_id
+  FROM ckan_dataset d
+  JOIN ckan_publisher p ON  p.id = d.publisher_id
+  JOIN reply r ON (d.id = r.entity_id AND r.entity_type = 'ckan_dataset')
+  WHERE p.id = :pid
+  ";
+
+
+
+  $result = db_query($sql, array(':pid' => $publisher->id));
+
+
+  $datasets_comments = array();
+  foreach  ($result as $row) {
+
+    if ($dataset = dgu_services_get_dataset_from_ckan_id($row->ckan_id)) {
+
+      $output = field_attach_view('ckan_dataset', $dataset, 'default');
+      if (isset($output['field_comment'][0]['#markup'])) {
+        // Fix flag on replies on ckan side so user is redirected back to a dataset vie page instead of drupal api endpoint
+        $output['field_comment'][0]['#markup'] = str_replace('destination=comment/get', 'destination=dataset', $output['field_comment'][0]['#markup']);
+
+        $datasets_comments[$row->ckan_id] = array(
+          'title' => $row->title,
+          'name' => $row->name,
+          'comments' => $output['field_comment'][0]['#markup'],
+        );
+
+      }
+    }
+
+
   }
-  return drupal_access_denied();
+
+
+
+
+
+  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
 
 }
