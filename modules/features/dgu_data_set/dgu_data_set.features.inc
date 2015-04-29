@@ -49,9 +49,9 @@ function dgu_data_set_default_message_type() {
           "safe_value" : "\\u003Cp\\u003EUser @{message:user:name} commented on dataset \\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003EUser \\u0026quot;@{message:user:name}\\u0026quot; (@{message:user:url}) commented on dataset:\\u003Cbr \\/\\u003E\\r\\n\\t\\u0026quot;[message:field-dataset-reference:title]\\u0026quot;\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003EDataset URL: [message:field-dataset-reference:url]\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003EComment:\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003E[message:field-reply-reference:field_comment]\\u003C\\/p\\u003E\\r\\n",
+          "value" : "\\u003Cp\\u003EUser \\u0026quot;@{message:user:name}\\u0026quot; (@{message:user:url}) commented on dataset:\\u003Cbr \\/\\u003E\\r\\n\\t\\u0026quot;[message:field-dataset-reference:title]\\u0026quot;\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003EDataset URL: [message:field-dataset-reference:url]\\u003C\\/p\\u003E\\r\\n\\r\\n\\u003Cp\\u003EComment:[message:field-reply-reference:field-reply-comment:value]\\u003C\\/p\\u003E\\r\\n",
           "format" : "filtered_html",
-          "safe_value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url}) commented on dataset:\\u003Cbr \\/\\u003E\\n\\t\\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E\\n\\u003Cp\\u003EDataset URL: [message:field-dataset-reference:url]\\u003C\\/p\\u003E\\n\\u003Cp\\u003EComment:\\u003C\\/p\\u003E\\n\\u003Cp\\u003E[message:field-reply-reference:field_comment]\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url}) commented on dataset:\\u003Cbr \\/\\u003E\\n\\t\\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E\\n\\u003Cp\\u003EDataset URL: [message:field-dataset-reference:url]\\u003C\\/p\\u003E\\n\\u003Cp\\u003EComment:[message:field-reply-reference:field-reply-comment:value]\\u003C\\/p\\u003E\\n"
         }
       ]
     },
