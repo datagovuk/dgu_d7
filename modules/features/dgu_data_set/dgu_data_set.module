@@ -110,7 +110,6 @@ function dgu_data_set_comments($publisher_id){
 
   global $user;
   $account = user_load($user->uid);
-  $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
   $publisher = ckan_publisher_load($publisher_id);
 
   $sql = "SELECT
@@ -173,8 +172,12 @@ function dgu_data_set_comments($publisher_id){
 
 
 
+  $is_admin = isset($user->data['ckan_publishers'])? in_array('admin', $user->data['ckan_publishers']) : FALSE;
+  if ($is_admin) {
+    $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
+  }
 
 
-  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
+  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
 
 }
