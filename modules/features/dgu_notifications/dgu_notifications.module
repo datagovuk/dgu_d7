@@ -81,7 +81,12 @@ function dgu_notifications_mail_alter(&$message) {
     }
 
     if ($uid) {
-      $message['body'][] = "You can choose how often you receive email notifications in your account settings:\n" . $base_url . '/user/' . $uid . '/edit';
+      if($message['id'] == 'message_notify_dataset_comment_new') {
+        $message['body'][] = "You can unsubscribe or choose how often you receive email notifications in your account settings:\n" . $base_url . '/user/' . $uid . '/edit';
+      }
+      else {
+        $message['body'][] = "You can choose how often you receive email notifications in your account settings:\n" . $base_url . '/user/' . $uid . '/edit';
+      }
     }
 
   }
