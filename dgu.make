@@ -281,6 +281,9 @@ projects[message_digest][subdir] = "contrib"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest-remove_mail_header-2236179-8.patch"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest_pass_uid.patch"
 
+projects[message_ui][version] = "1.4"
+projects[message_ui][subdir] = "contrib"
+
 projects[quickedit][version] = "1.1"
 projects[quickedit][subdir] = "contrib"
 
