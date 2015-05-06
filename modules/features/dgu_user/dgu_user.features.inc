@@ -97,3 +97,33 @@ function dgu_user_image_default_styles() {
 
   return $styles;
 }
+
+/**
+ * Implements hook_default_message_type().
+ */
+function dgu_user_default_message_type() {
+  $items = array();
+  $items['user_operation'] = entity_import('message_type', '{
+    "name" : "user_operation",
+    "description" : "User account operation",
+    "argument_keys" : [],
+    "argument" : [],
+    "category" : "message_type",
+    "data" : {
+      "token options" : { "clear" : 0 },
+      "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
+    },
+    "language" : "",
+    "arguments" : null,
+    "message_text" : { "und" : [
+        {
+          "value" : "\\u003Cp\\u003EUser account [message:field-user-reference:url] has been [message:field-operation].\\u003C\\/p\\u003E\\r\\n",
+          "format" : "filtered_html",
+          "safe_value" : "\\u003Cp\\u003EUser account [message:field-user-reference:url] has been [message:field-operation].\\u003C\\/p\\u003E\\n"
+        }
+      ]
+    },
+    "rdf_mapping" : []
+  }');
+  return $items;
+}

@@ -279,6 +279,19 @@ function dgu_user_user_login(&$edit, $account) {
 }
 
 /**
+ * Implements hook_user_insert().
+ */
+function dgu_user_user_insert(&$edit, $account, $category) {
+  global $user;
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_reference->set($user);
+  $wrapper->field_operation->set('create');
+  $message->save();
+}
+
+
+/**
  * Implements hook_user_update().
  */
 function dgu_user_user_update(&$edit, $account, $category) {
@@ -287,6 +300,23 @@ function dgu_user_user_update(&$edit, $account, $category) {
     // Delete session to avoid toolbar menu discrepancy in Drupal and CKAN.
     db_delete('sessions')->condition('uid', $account->uid)->execute();
   }
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_reference->set($user);
+  $wrapper->field_operation->set('update');
+  $message->save();
+}
+
+/**
+ * Implements hook_user_delete().
+ */
+function dgu_user_user_delete($account) {
+  global $user;
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_reference->set($user);
+  $wrapper->field_operation->set('delete');
+  $message->save();
 }
 
 /**
