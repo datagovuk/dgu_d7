@@ -35,6 +35,13 @@ function dgu_services_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'dataset_referrers' => array(
+      'operations' => array(
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'node' => array(
       'operations' => array(
         'retrieve' => array(
@@ -60,18 +67,21 @@ function dgu_services_default_services_endpoint() {
         'retrieve' => array(
           'enabled' => '1',
         ),
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'user_account_operation' => array(
+      'operations' => array(
+        'index' => array(
+          'enabled' => '1',
+        ),
       ),
     ),
     'views' => array(
       'operations' => array(
         'retrieve' => array(
-          'enabled' => '1',
-        ),
-      ),
-    ),
-    'dataset_referrers' => array(
-      'operations' => array(
-        'index' => array(
           'enabled' => '1',
         ),
       ),

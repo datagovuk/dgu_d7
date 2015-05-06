@@ -16,3 +16,4 @@ features[features_api][] = api:2
 features[services_endpoint][] = rest
 features[services_endpoint][] = xmlrpc
 features[views_view][] = dataset_referrers
+features[views_view][] = user_account_operations
