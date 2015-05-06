@@ -74,8 +74,8 @@ function dgu_user_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'message-user_operation-field_user_reference'
-  $field_instances['message-user_operation-field_user_reference'] = array(
+  // Exported field_instance: 'message-user_operation-field_user_account_uid'
+  $field_instances['message-user_operation-field_user_account_uid'] = array(
     'bundle' => 'user_operation',
     'default_value' => NULL,
     'deleted' => '0',
@@ -83,20 +83,23 @@ function dgu_user_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'entityreference',
+        'module' => 'number',
         'settings' => array(
+          'decimal_separator' => '.',
           'field_replies' => '',
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
           ),
-          'link' => FALSE,
+          'prefix_suffix' => TRUE,
           'quickedit' => array(
             'editor' => 'form',
           ),
+          'scale' => 0,
+          'thousand_separator' => ' ',
         ),
-        'type' => 'entityreference_label',
-        'weight' => 0,
+        'type' => 'number_integer',
+        'weight' => 2,
       ),
       'message_notify_daily_digest' => array(
         'label' => 'above',
@@ -124,22 +127,22 @@ function dgu_user_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'message',
-    'field_name' => 'field_user_reference',
-    'label' => 'User reference',
+    'field_name' => 'field_user_account_uid',
+    'label' => 'UID',
     'required' => 0,
     'settings' => array(
+      'max' => '',
+      'min' => '0',
+      'prefix' => '',
+      'suffix' => '',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
-      'active' => 1,
-      'module' => 'entityreference',
-      'settings' => array(
-        'match_operator' => 'CONTAINS',
-        'path' => '',
-        'size' => '60',
-      ),
-      'type' => 'entityreference_autocomplete',
-      'weight' => '1',
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => '3',
     ),
   );
 
@@ -669,7 +672,7 @@ function dgu_user_field_default_field_instances() {
   t('Publishers');
   t('Surname');
   t('Twitter');
-  t('User reference');
+  t('UID');
 
   return $field_instances;
 }

@@ -117,9 +117,9 @@ function dgu_user_default_message_type() {
     "arguments" : null,
     "message_text" : { "und" : [
         {
-          "value" : "\\u003Cp\\u003EUser account [message:field-user-reference:url] has been [message:field-operation].\\u003C\\/p\\u003E\\r\\n",
+          "value" : "\\u003Cp\\u003EUser #[message:field-user-account-uid] has been [message:field-operation].\\u003C\\/p\\u003E\\r\\n",
           "format" : "filtered_html",
-          "safe_value" : "\\u003Cp\\u003EUser account [message:field-user-reference:url] has been [message:field-operation].\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EUser #[message:field-user-account-uid] has been [message:field-operation].\\u003C\\/p\\u003E\\n"
         }
       ]
     },

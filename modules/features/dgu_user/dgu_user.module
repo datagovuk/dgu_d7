@@ -285,7 +285,7 @@ function dgu_user_user_insert(&$edit, $account, $category) {
   global $user;
   $message = message_create('user_operation');
   $wrapper = entity_metadata_wrapper('message', $message);
-  $wrapper->field_user_reference->set($account);
+  $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('create');
   $message->save();
 }
@@ -302,7 +302,7 @@ function dgu_user_user_update(&$edit, $account, $category) {
   }
   $message = message_create('user_operation');
   $wrapper = entity_metadata_wrapper('message', $message);
-  $wrapper->field_user_reference->set($account);
+  $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('update');
   $message->save();
 }
@@ -314,7 +314,7 @@ function dgu_user_user_delete($account) {
   global $user;
   $message = message_create('user_operation');
   $wrapper = entity_metadata_wrapper('message', $message);
-  $wrapper->field_user_reference->set($account);
+  $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('delete');
   $message->save();
 }

@@ -120,25 +120,25 @@ function dgu_services_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Message: Operation */
-  $handler->display->display_options['fields']['field_operation']['id'] = 'field_operation';
-  $handler->display->display_options['fields']['field_operation']['table'] = 'field_data_field_operation';
-  $handler->display->display_options['fields']['field_operation']['field'] = 'field_operation';
-  $handler->display->display_options['fields']['field_operation']['label'] = 'operation';
-  $handler->display->display_options['fields']['field_operation']['settings'] = array(
+  /* Field: Message: UID */
+  $handler->display->display_options['fields']['field_user_account_uid']['id'] = 'field_user_account_uid';
+  $handler->display->display_options['fields']['field_user_account_uid']['table'] = 'field_data_field_user_account_uid';
+  $handler->display->display_options['fields']['field_user_account_uid']['field'] = 'field_user_account_uid';
+  $handler->display->display_options['fields']['field_user_account_uid']['label'] = 'uid';
+  $handler->display->display_options['fields']['field_user_account_uid']['type'] = 'number_unformatted';
+  $handler->display->display_options['fields']['field_user_account_uid']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
       'field_replies_revision' => '',
     ),
   );
-  /* Field: Message: User reference */
-  $handler->display->display_options['fields']['field_user_reference']['id'] = 'field_user_reference';
-  $handler->display->display_options['fields']['field_user_reference']['table'] = 'field_data_field_user_reference';
-  $handler->display->display_options['fields']['field_user_reference']['field'] = 'field_user_reference';
-  $handler->display->display_options['fields']['field_user_reference']['label'] = 'uid';
-  $handler->display->display_options['fields']['field_user_reference']['type'] = 'entityreference_entity_id';
-  $handler->display->display_options['fields']['field_user_reference']['settings'] = array(
+  /* Field: Message: Operation */
+  $handler->display->display_options['fields']['field_operation']['id'] = 'field_operation';
+  $handler->display->display_options['fields']['field_operation']['table'] = 'field_data_field_operation';
+  $handler->display->display_options['fields']['field_operation']['field'] = 'field_operation';
+  $handler->display->display_options['fields']['field_operation']['label'] = 'operation';
+  $handler->display->display_options['fields']['field_operation']['settings'] = array(
     'field_replies' => '',
     'field_replies_settings' => array(
       'field_replies_reply_field_name' => '',
