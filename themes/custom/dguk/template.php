@@ -148,7 +148,7 @@ function dguk_preprocess_field(&$variables) {
  */
 function dguk_preprocess_reply(&$variables) {
   global $user;
-  if($user->uid == $variables['reply']->uid) {
+  if($user->uid && $user->uid == $variables['reply']->uid) {
     $variables['classes_array'][] = 'own-reply';
   }
 
