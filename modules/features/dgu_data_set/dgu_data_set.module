@@ -113,40 +113,19 @@ function dgu_data_set_comments($publisher_id){
   $publisher = ckan_publisher_load($publisher_id);
 
   $sql = "SELECT
-  r1.created,
   d.title,
   d.name,
-  field_reply_subject_value as subject,
-  field_reply_comment_value as comment,
-  u.name as user_name,
-  u.uid
-  FROM ckan_dataset d
-  JOIN reply r1 ON (d.id = r1.entity_id AND r1.entity_type = 'ckan_dataset')
-  LEFT JOIN reply r2 ON (d.id = r2.entity_id AND r2.entity_type = 'ckan_dataset' AND (r1.created < r2.created))
-  LEFT JOIN field_data_field_reply_comment c ON c.entity_id = r1.id
-  LEFT JOIN field_data_field_reply_subject s ON s.entity_id = r1.id
-  JOIN users u ON r1.uid = u.uid
-  LEFT JOIN ckan_publisher p ON  p.id = d.publisher_id
-  WHERE p.id = :pid
-  AND r2.id IS NULL
-  ORDER BY created DESC
-  ";
-
-
-  $sql = "SELECT
-  d.title,
-  d.name,
-  d.ckan_id
+  d.ckan_id,
+  MAX(r.created) as reply_max_created
   FROM ckan_dataset d
   JOIN ckan_publisher p ON  p.id = d.publisher_id
   JOIN reply r ON (d.id = r.entity_id AND r.entity_type = 'ckan_dataset')
   WHERE p.id = :pid
+  GROUP BY d.ckan_id
+  ORDER BY reply_max_created DESC
   ";
 
-
-
   $result = db_query($sql, array(':pid' => $publisher->id));
-
 
   $datasets_comments = array();
   foreach  ($result as $row) {
@@ -156,28 +135,25 @@ function dgu_data_set_comments($publisher_id){
       $output = field_attach_view('ckan_dataset', $dataset, 'default');
       if (isset($output['field_comment'][0]['#markup'])) {
         // Fix flag on replies on ckan side so user is redirected back to a dataset vie page instead of drupal api endpoint
-        $output['field_comment'][0]['#markup'] = str_replace('destination=comment/get', 'destination=dataset', $output['field_comment'][0]['#markup']);
+        $comments = preg_replace('/<div class="replies-links">.*<\/div>/i', '', $output['field_comment'][0]['#markup']);
+        $comments = preg_replace('/<div class="reply-links.*<\/div>/i', '', $comments);
+        $comments = preg_replace('/<a href="\/flag\/flag\/spam.*/im', '', $comments);
 
         $datasets_comments[$row->ckan_id] = array(
           'title' => $row->title,
           'name' => $row->name,
-          'comments' => $output['field_comment'][0]['#markup'],
+          'reply_max_created' => $row->reply_max_created,
+          'comments' => $comments,
         );
 
       }
     }
-
-
   }
 
-
-
-  $is_admin = isset($user->data['ckan_publishers'])? in_array('admin', $user->data['ckan_publishers']) : FALSE;
+  $is_admin = dgu_user_is_ckan_admin($user);
   if ($is_admin) {
     $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
   }
 
-
   return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
-
 }
