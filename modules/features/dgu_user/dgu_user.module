@@ -282,7 +282,6 @@ function dgu_user_user_login(&$edit, $account) {
  * Implements hook_user_insert().
  */
 function dgu_user_user_insert(&$edit, $account, $category) {
-  global $user;
   $message = message_create('user_operation');
   $wrapper = entity_metadata_wrapper('message', $message);
   $wrapper->field_user_account_uid->set($account->uid);
@@ -305,18 +304,34 @@ function dgu_user_user_update(&$edit, $account, $category) {
   $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('update');
   $message->save();
+
+}
+
+/**
+ * Implements hook_user_presave().
+ */
+function dgu_user_user_presave(&$edit, $account, $category) {
+  if(dgu_user_is_ckan_admin($account)) {
+    if(!isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value'])) {
+      $edit['field_dataset_comments'][LANGUAGE_NONE][0]['value'] = 1;
+    }
+  }
 }
 
 /**
  * Implements hook_user_delete().
  */
 function dgu_user_user_delete($account) {
-  global $user;
   $message = message_create('user_operation');
   $wrapper = entity_metadata_wrapper('message', $message);
   $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('delete');
   $message->save();
+}
+
+
+function dgu_user_is_ckan_admin($account) {
+  return isset($account->data['ckan_publishers'])? in_array('admin', $account->data['ckan_publishers']) : FALSE;
 }
 
 /**
