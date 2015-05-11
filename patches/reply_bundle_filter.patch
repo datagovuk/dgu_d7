@@ -1,15 +1,24 @@
-1677,1682c1677,1683
-<   $ids = db_select('reply', 'r')
-<     ->fields('r', array('id'))
-<     ->extend('PagerDefault')->limit(20)
-<     ->extend('TableSort')->orderByHeader($header)
-<     ->execute()
-<     ->fetchCol();
----
->   $parameters = drupal_get_query_parameters();
->   $query = db_select('reply', 'r')->fields('r', array('id'));
->   if (isset($parameters['bundle'])) {
->     $query->condition('r.bundle', $_GET['bundle']);
->   }
->   $query->extend('PagerDefault')->limit(20)->extend('TableSort')->orderByHeader($header);
->   $ids = $query->execute()->fetchCol();
+diff --git a/reply.module b/reply.module
+index 359b08c..3d00267 100644
+--- a/reply.module
++++ b/reply.module
+@@ -1674,12 +1674,13 @@ function reply_page_list() {
+     array('data' => t('Operations'), 'colspan' => 3)
+   );
+ 
+-  $ids = db_select('reply', 'r')
+-    ->fields('r', array('id'))
+-    ->extend('PagerDefault')->limit(20)
+-    ->extend('TableSort')->orderByHeader($header)
+-    ->execute()
+-    ->fetchCol();
++  $parameters = drupal_get_query_parameters();
++  $query = db_select('reply', 'r')->fields('r', array('id'));
++  if (isset($parameters['bundle'])) {
++    $query->condition('r.bundle', $_GET['bundle']);
++  }
++  $query->extend('PagerDefault')->limit(20)->extend('TableSort')->orderByHeader($header);
++  $ids = $query->execute()->fetchCol();
+ 
+   $languages = language_list();
+   $loadBundles = reply_load_bundles();
