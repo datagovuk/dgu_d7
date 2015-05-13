@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="/assets/css/datagovuk.min.css" />
     <link rel="stylesheet" href="/assets/css/dgu-drupal.min.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+      //<![CDATA[
+      window.jQuery || document.write('<script src="/assets/js/jquery-1.8.3.min.js"><\/script>')
+      // ]]>
+    </script>
     <script src="/assets/js/vendor.min.js"></script>
     <script src="/assets/js/dgu-drupal.min.js"></script>
     <script src="/assets/js/dgu-shared.min.js"></script>
