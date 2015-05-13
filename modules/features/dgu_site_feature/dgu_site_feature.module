@@ -219,3 +219,12 @@ function dgu_site_feature_entity_presave($entity, $type) {
     $entity->field_link[LANGUAGE_NONE][0]['url'] = str_replace('http://data.gov.uk/' , '', $entity->field_link[LANGUAGE_NONE][0]['url']);
   }
 }
+
+/**
+ * Implements hook_js_alter().
+ */
+function dgu_site_feature_js_alter(&$javascript) {
+  if (arg(0) == 'search' || arg(0) == 'library') {
+    unset($javascript['profiles/dgu/modules/contrib/quickedit/js/quickedit.js']);
+  }
+}
