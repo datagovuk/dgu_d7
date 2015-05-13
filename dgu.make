@@ -305,6 +305,9 @@ projects[empty_fields][subdir] = "contrib"
 projects[print][version] = "2.0"
 projects[print][subdir] = "contrib"
 
+projects[linkit][version] = "3.3"
+projects[linkit][subdir] = "contrib"
+
 ;TODO - lock to some revision
 projects[d3][subdir] = "contrib"
 
