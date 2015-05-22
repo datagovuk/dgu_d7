@@ -119,7 +119,7 @@ function dgu_user_strongarm() {
   $strongarm->name = 'locale_custom_strings_en';
   $strongarm->value = array(
     '' => array(
-      'A validation e-mail has been sent to your e-mail address. In order to gain full access to the site, you will need to follow the instructions in that message.' => 'Thanks for registering with data.gov.uk - to complete registration - you will soon get an email to verify the email you supplied.',
+      'A validation e-mail has been sent to your e-mail address. You will need to follow the instructions in that message in order to gain full access to the site.' => 'Thanks for registering with data.gov.uk - to complete registration - you will soon get an email to verify the email you supplied.',
       'Please enter some keywords.' => 'Please enter some keywords to refine your search further.',
     ),
   );
