@@ -164,7 +164,7 @@ projects[conditional_fields][download][revision] = "cd29b003a592d375f3fdb4c46f56
 projects[conditional_fields][patch][] = "http://drupal.org/files/issues/conditional_fields-jquery_update_1.7_states_incompatible-1815896.patch"
 projects[conditional_fields][subdir] = "contrib"
 
-projects[logintoboggan][version] = "1.4"
+projects[logintoboggan][version] = "1.5"
 projects[logintoboggan][subdir] = "contrib"
 projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
 
