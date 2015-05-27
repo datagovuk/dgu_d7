@@ -30,6 +30,7 @@ $colour = $row->users_node_uid % 10;
 
 // Mark new nodes only for authenticated users.
 global $user;
+$new = FALSE;
 if ($user->uid) {
   $last_viewed = node_last_viewed($row->nid);
   $new = $last_viewed ? FALSE : $row->node_created > NODE_NEW_LIMIT;
