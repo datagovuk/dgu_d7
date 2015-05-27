@@ -741,7 +741,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       $this->getDriver()->drush('user-cancel', array($user_name), array('yes' => NULL, 'delete-content' => NULL));
     }
     catch (Exception $e) {
-      if(strpos($e->getMessage(), "Could not find a user account with the name") !== 0){
+      if(strpos($e->getMessage(), 'Unable to find') < 1){
         // Print exception message if exception is different than expected
         print $e->getMessage();
       }
