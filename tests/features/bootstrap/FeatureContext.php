@@ -700,7 +700,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @When /^user "([^"]*)" clicks link containing "(?P<link>[^"]*)" in mail(?: (?:titled )?"(?P<title>[^"]*)")?$/
+   * @When /^user "([^"]*)" clicks link containing "(?P<link>[^"]*)" in mail(?: (?:titled )?'(?P<title>[^']*)')?$/
    */
   public function userClickLinkContainingInMail($user, $link_substring, $title = NULL) {
 
@@ -708,7 +708,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $title = $title ? $this->fixStepArgument($title) : NULL;
 
     foreach ($this->mailMessages[$user] as $msg) {
-      if ($title && $msg->subject == $title) {
+      if ($title && trim($msg->subject) == $title) {
 
         if (!empty($msg->body)) {
 
