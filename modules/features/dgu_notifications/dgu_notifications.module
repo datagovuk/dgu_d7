@@ -26,6 +26,86 @@ function dgu_notifications_theme_registry_alter(&$theme_registry) {
 }
 
 /**
+ * Implements hook_node_update().
+ */
+function dgu_notifications_node_update($node) {
+  // Data request notification is specific and implemented in dgu_data_set_request.module
+  if ($node->type != 'dataset_request' && module_exists('message_subscribe')) {
+
+    // Ignore second node update in single request.
+    // See dgu_data_set_request_node_presave();
+    $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+    if (is_array($updates_to_ignore) && in_array($node->nid, $updates_to_ignore)) {
+      return;
+    }
+
+    // Don't create a message about moderation here, there should be
+    // an universal message about moderation state change for all content types.
+    if (empty($node->workbench_moderation_state_current) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'published'
+      || $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'draft') {
+      return;
+    }
+
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+      $message_update = message_create('dgu_notifications_node_update');
+      $wrapper = entity_metadata_wrapper('message', $message_update);
+      $wrapper->field_node_reference->set($node);
+      message_subscribe_send_message('node', $node, $message_update, $options);
+  }
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function dgu_notifications_node_presave($node) {
+  if ($node->type != 'dataset_request') {
+    $previous_node_revision = &drupal_static('previous_node_revision');
+    // Workbench moderation uses shutdown function to update the node for the second time in the same request.
+    // To avoid messages being created twice we ignore second node update in single request.
+    if (isset($previous_node_revision)) {
+      $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+      $updates_to_ignore = isset($updates_to_ignore) ? $updates_to_ignore : array();
+      $updates_to_ignore[] = $node->nid;
+    }
+    // Store previous revision of the node in static cache to be available for comparison in hook_node_update().
+    $previous_node_revision = node_load($node->nid);
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function dgu_notifications_entity_insert($entity, $type) {
+  if($type == 'reply' && $entity->bundle == 'comment' && module_exists('message_subscribe')) {
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
+
+    // Get data_request_update message bundle and set required fields.
+    $message = message_create('dgu_notifications_reply_new');
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $node = new stdClass();
+    $node->nid = $entity->entity_id;
+    $wrapper->field_node_reference->set($node);
+    $wrapper->field_reply_reference->set($entity);
+
+    $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
+    message_subscribe_send_message('node', $node, $message, $options, array('uids' => $uids));
+
+  }
+}
+
+
+/**
  * Implements hook_message_digest_view_mode_alter().
  *
  * This isn't intended to actually alter anything in the context but

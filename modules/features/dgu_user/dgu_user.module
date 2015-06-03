@@ -79,10 +79,6 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   unset($form['field_digest_notifier']);
   unset($form['account']['field_digest_notifier'][LANGUAGE_NONE]['#options']['_none']);
 
-  // Temporarily hide 'Notification frequency' for users with only authenticated role.
-  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = count($form['#user']->roles) > 1;
-
-
   $form['account']['field_dataset_comments'] = $form['field_dataset_comments'];
   unset($form['field_dataset_comments']);
   $form['account']['field_dataset_comments'][LANGUAGE_NONE]['#access'] = isset($form['#user']->data['ckan_publishers'])? in_array('admin', $form['#user']->data['ckan_publishers']) : FALSE;

@@ -120,9 +120,9 @@ function dgu_data_set_request_default_message_type() {
           "safe_value" : "\\u003Cp\\u003EData request \\u0022\\u003Ca href=\\u0022[message:field-data-request-reference:url]\\u0022\\u003E[message:field-data-request-reference:title]\\u003C\\/a\\u003E\\u0022 has been updated by \\u003Ca href=\\u0022[message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003EData request [message:field-data-request-reference:title] has been updated by @{message:user:name}\\u003C\\/p\\u003E",
+          "value" : "\\u003Cp\\u003EData request \\u0022[message:field-data-request-reference:title]\\u0022 has been updated by @{message:user:name}\\u003C\\/p\\u003E",
           "format" : "full_html",
-          "safe_value" : "\\u003Cp\\u003EData request [message:field-data-request-reference:title] has been updated by @{message:user:name}\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EData request \\u0022[message:field-data-request-reference:title]\\u0022 has been updated by @{message:user:name}\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url}) has updated data request:\\u003Cbr\\u003E\\u0022[message:field-data-request-reference:title]\\u0022.\\u003C\\/p\\u003E\\u003Cp\\u003EYou can see this request at:\\u003Cbr\\u003E[message:field-data-request-reference:url]\\u003C\\/p\\u003E\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about this data request.\\u003Cbr\\u003EYou can unsubscribe at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/message-subscribe\\u003C\\/p\\u003E\\u003Cp\\u003E@{message:data_request-summary_of_changes}\\u003C\\/p\\u003E",

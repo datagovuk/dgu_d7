@@ -27,7 +27,7 @@ function dgu_data_set_default_message_type() {
   $items = array();
   $items['dataset_comment_new'] = entity_import('message_type', '{
     "name" : "dataset_comment_new",
-    "description" : "Dataset new comment",
+    "description" : "Dataset new reply",
     "argument_keys" : [],
     "argument" : [],
     "category" : "message_type",

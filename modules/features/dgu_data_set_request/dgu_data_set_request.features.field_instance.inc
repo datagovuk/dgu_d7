@@ -537,7 +537,7 @@ function dgu_data_set_request_field_default_field_instances() {
       'settings' => array(
         'match_operator' => 'CONTAINS',
         'path' => '',
-        'size' => 60,
+        'size' => '60',
       ),
       'type' => 'entityreference_autocomplete',
       'weight' => 3,
@@ -2083,7 +2083,7 @@ Consider benefits in terms of economic impact such as employment, revenues or mo
     'bundle' => 'dataset_request',
     'default_value' => array(
       0 => array(
-        'value' => 0,
+        'value' => '0',
       ),
     ),
     'deleted' => '0',
