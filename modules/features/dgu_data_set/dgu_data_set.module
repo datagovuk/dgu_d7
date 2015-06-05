@@ -49,7 +49,7 @@ function _dgu_data_set_get_subscribers($publisher_id) {
 
   foreach($uids as $uid) {
     $user = user_load($uid);
-    if (isset($user->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $user->field_dataset_comments[LANGUAGE_NONE][0]['value']) {
+    if (isset($user->data['dataset_comments']) && $user->data['dataset_comments']) {
       foreach ($publishers as $publisher_id) {
         if(isset($user->data['ckan_publishers'][$publisher_id]) && $user->data['ckan_publishers'][$publisher_id] == 'admin') {
           $ckan_admin_uids[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
@@ -152,7 +152,7 @@ function dgu_data_set_comments($publisher_id){
 
   $is_admin = dgu_user_is_ckan_admin($user);
   if ($is_admin) {
-    $email_notifications = isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value']) && $account->field_dataset_comments[LANGUAGE_NONE][0]['value'] ? 'enabled' : 'disabled';
+    $email_notifications = isset($account->data['dataset_comments']) && $account->data['dataset_comments'] ? 'enabled' : 'disabled';
   }
 
   return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'email_notifications' => $email_notifications, 'uid' => $user->uid));

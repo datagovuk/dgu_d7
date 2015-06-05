@@ -16,10 +16,9 @@ function dgu_data_set_update_7000() {
 
   foreach ($publisher_users as $uid => $data) {
     if (strpos($data, 'admin') !== FALSE) {
-      $user = user_load($uid);
-      $wrapper = entity_metadata_wrapper('user', $user);
-      $wrapper->field_dataset_comments = 1;
-      $wrapper->save();
+      $account = user_load($uid);
+      $account->data['dataset_comments'] = 1;
+      user_save($account);
     }
   }
 }
