@@ -7,24 +7,23 @@
 
 function dgu_notifications_my_subscriptions($user) {
 
-  $uid = $user->uid;
+  $query = db_select('flagging', 'fl');
+  $query->leftJoin('node', 'n', 'fl.entity_id = n.nid ');
+  $query->leftJoin('ckan_dataset', 'd', 'fl.entity_id = d.id');
+  $query->fields('d', array('id', 'title','name'));
+  $query->addField('d', 'title', 'dataset_title');
+  $query->fields('n', array('nid', 'title','type'));
+  $query->addField('n', 'title', 'node_title');
+  $query->condition('fl.fid', array(3,4), 'IN')
+    ->condition('fl.uid', $user->uid)
+    ->orderBy('fl.timestamp', 'DESC');
 
-  $sql = "SELECT d.title as dataset_title, n.title as node_title, d.id, d.name, n.nid, n.type
-          FROM {flagging} fl
-          LEFT JOIN {node} n ON fl.entity_id = n.nid AND fl.entity_type = 'node'
-          LEFT JOIN {ckan_dataset} d ON fl.entity_id = d.id AND fl.entity_type = 'ckan_dataset'
-          WHERE fl.uid = :uid
-          AND fl.fid = 3 OR fl.fid = 4
-          ORDER BY fl.timestamp DESC";
 
-  $query = db_query($sql, array(':uid' => $user->uid));
-
-  $result = $query->fetchAll();
-
+  $result = $query->execute()->fetchAll();
 
   $header = array('Title', 'Type', 'Actions');
   $rows = array();
-  $types = _node_types_build()->names;
+  $types = node_type_get_names();
 
   foreach ($result as $row) {
 
