@@ -73,35 +73,6 @@ function dgu_user_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_dataset_comments'
-  $field_bases['field_dataset_comments'] = array(
-    'active' => '1',
-    'cardinality' => '1',
-    'deleted' => '0',
-    'entity_types' => array(),
-    'field_name' => 'field_dataset_comments',
-    'field_permissions' => array(
-      'type' => '0',
-    ),
-    'foreign keys' => array(),
-    'indexes' => array(
-      'value' => array(
-        0 => 'value',
-      ),
-    ),
-    'locked' => '0',
-    'module' => 'list',
-    'settings' => array(
-      'allowed_values' => array(
-        0 => '',
-        1 => 'Receive email notifications about comments on all datasets published by publishers I administer',
-      ),
-      'allowed_values_function' => '',
-    ),
-    'translatable' => '0',
-    'type' => 'list_boolean',
-  );
-
   // Exported field_base: 'field_digest_notifier'
   $field_bases['field_digest_notifier'] = array(
     'active' => '1',

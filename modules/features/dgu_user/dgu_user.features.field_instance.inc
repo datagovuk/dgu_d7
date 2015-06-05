@@ -246,52 +246,6 @@ function dgu_user_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'user-user-field_dataset_comments'
-  $field_instances['user-user-field_dataset_comments'] = array(
-    'bundle' => 'user',
-    'default_value' => array(
-      0 => array(
-        'value' => 1,
-      ),
-    ),
-    'deleted' => '0',
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'module' => 'list',
-        'settings' => array(
-          'field_replies' => '',
-          'field_replies_settings' => array(
-            'field_replies_reply_field_name' => '',
-            'field_replies_revision' => '',
-          ),
-          'quickedit' => array(
-            'editor' => 'form',
-          ),
-        ),
-        'type' => 'list_default',
-        'weight' => 11,
-      ),
-    ),
-    'entity_type' => 'user',
-    'field_name' => 'field_dataset_comments',
-    'label' => 'Dataset comments',
-    'required' => 0,
-    'settings' => array(
-      'user_register_form' => 0,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'display_label' => 0,
-      ),
-      'type' => 'options_onoff',
-      'weight' => '101',
-    ),
-  );
-
   // Exported field_instance: 'user-user-field_digest_notifier'
   $field_instances['user-user-field_digest_notifier'] = array(
     'bundle' => 'user',
@@ -661,7 +615,6 @@ function dgu_user_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Avatar');
   t('Bio');
-  t('Dataset comments');
   t('Facebook URL');
   t('First Name');
   t('How often would you like to receive email notifications?');

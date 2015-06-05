@@ -79,11 +79,9 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   unset($form['field_digest_notifier']);
   unset($form['account']['field_digest_notifier'][LANGUAGE_NONE]['#options']['_none']);
 
-  $form['account']['field_dataset_comments'] = $form['field_dataset_comments'];
-  unset($form['field_dataset_comments']);
-  $form['account']['field_dataset_comments'][LANGUAGE_NONE]['#access'] = isset($form['#user']->data['ckan_publishers'])? in_array('admin', $form['#user']->data['ckan_publishers']) : FALSE;
 
-
+  // Don't allow setting this field here, it's managed on 'My subscriptions' tab
+  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = FALSE;
 
   $form['profile']['#type'] = 'fieldset';
   $form['profile']['#collapsible'] = FALSE;
@@ -285,7 +283,6 @@ function dgu_user_user_insert(&$edit, $account, $category) {
   $message->save();
 }
 
-
 /**
  * Implements hook_user_update().
  */
@@ -300,18 +297,6 @@ function dgu_user_user_update(&$edit, $account, $category) {
   $wrapper->field_user_account_uid->set($account->uid);
   $wrapper->field_operation->set('update');
   $message->save();
-
-}
-
-/**
- * Implements hook_user_presave().
- */
-function dgu_user_user_presave(&$edit, $account, $category) {
-  if(dgu_user_is_ckan_admin($account)) {
-    if(!isset($account->field_dataset_comments[LANGUAGE_NONE][0]['value'])) {
-      $edit['field_dataset_comments'][LANGUAGE_NONE][0]['value'] = 1;
-    }
-  }
 }
 
 /**
