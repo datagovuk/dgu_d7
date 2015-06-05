@@ -7,6 +7,50 @@
 include_once 'dgu_notifications.features.inc';
 
 /**
+ * Implements hook_menu().
+ */
+function dgu_notifications_menu() {
+  $items['user/%user/subscriptions'] = array(
+    'title' => 'My subscriptions',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'dgu_notifications_my_subscriptions',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'weight' => 1,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/my-subscriptions'] = array(
+    'title' => 'Current subscriptions',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'page callback' => 'dgu_notifications_my_subscriptions',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+    'weight' => 1,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/delivery'] = array(
+    'title' => 'Delivery of notifications',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_delivery', 1),
+    'access arguments' => array('access content'),
+    'weight' => 2,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/auto-subscribe'] = array(
+    'title' => 'Auto subscribe',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_auto_subscribe', 1),
+    'access arguments' => array('access content'),
+    'weight' => 3,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_theme_registry_alter().
  *
  * To allow the theme files for the message_digest to reside in
