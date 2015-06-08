@@ -28,11 +28,11 @@ function dgu_notifications_strongarm() {
             'weight' => '1',
             'visible' => FALSE,
           ),
-          'message_notify_weekly_digest' => array(
+          'message_notify_daily_digest' => array(
             'weight' => '2',
             'visible' => FALSE,
           ),
-          'message_notify_daily_digest' => array(
+          'message_notify_weekly_digest' => array(
             'weight' => '2',
             'visible' => FALSE,
           ),
@@ -46,11 +46,11 @@ function dgu_notifications_strongarm() {
             'weight' => '2',
             'visible' => FALSE,
           ),
-          'message_notify_weekly_digest' => array(
+          'message_notify_daily_digest' => array(
             'weight' => '0',
             'visible' => TRUE,
           ),
-          'message_notify_daily_digest' => array(
+          'message_notify_weekly_digest' => array(
             'weight' => '0',
             'visible' => TRUE,
           ),
@@ -89,38 +89,22 @@ function dgu_notifications_strongarm() {
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'weight' => '1',
-            'visible' => FALSE,
+            'visible' => TRUE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '1',
             'visible' => FALSE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '2',
-            'visible' => FALSE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '2',
-            'visible' => FALSE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
-            'weight' => '0',
-            'visible' => TRUE,
+            'visible' => FALSE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '2',
-            'visible' => FALSE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '0',
             'visible' => TRUE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '0',
-            'visible' => TRUE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__2' => array(
