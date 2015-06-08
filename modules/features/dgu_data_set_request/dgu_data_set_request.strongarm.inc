@@ -58,46 +58,22 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'weight' => '1',
-            'visible' => FALSE,
+            'visible' => TRUE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '2',
             'visible' => FALSE,
-          ),
-          'default' => array(
-            'weight' => '0',
-            'visible' => TRUE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '0',
-            'visible' => FALSE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '0',
-            'visible' => FALSE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
-            'weight' => '0',
-            'visible' => TRUE,
+            'visible' => FALSE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '1',
-            'visible' => FALSE,
-          ),
-          'default' => array(
-            'weight' => '1',
-            'visible' => FALSE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '1',
             'visible' => TRUE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '1',
-            'visible' => TRUE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__2' => array(
@@ -128,26 +104,52 @@ function dgu_data_set_request_strongarm() {
   $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_message__data_request_review_comment_new';
   $strongarm->value = array(
-    'view_modes' => array(),
+    'view_modes' => array(
+      'message_notify_weekly_digest' => array(
+        'custom_settings' => TRUE,
+      ),
+      'message_notify_daily_digest' => array(
+        'custom_settings' => TRUE,
+      ),
+      'message_notify_email_subject' => array(
+        'custom_settings' => TRUE,
+      ),
+      'message_notify_email_body' => array(
+        'custom_settings' => TRUE,
+      ),
+      'full' => array(
+        'custom_settings' => FALSE,
+      ),
+      'diff_standard' => array(
+        'custom_settings' => FALSE,
+      ),
+      'token' => array(
+        'custom_settings' => FALSE,
+      ),
+    ),
     'extra_fields' => array(
       'form' => array(),
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'weight' => '0',
+            'weight' => '1',
             'visible' => FALSE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '0',
+            'weight' => '1',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
-            'weight' => '0',
+            'weight' => '2',
             'visible' => FALSE,
           ),
           'message_notify_weekly_digest' => array(
-            'weight' => '0',
+            'weight' => '2',
             'visible' => FALSE,
+          ),
+          'default' => array(
+            'weight' => '0',
+            'visible' => TRUE,
           ),
         ),
         'message__message_text__1' => array(
@@ -156,34 +158,42 @@ function dgu_data_set_request_strongarm() {
             'visible' => TRUE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '0',
+            'weight' => '2',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
-            'weight' => '1',
+            'weight' => '0',
             'visible' => TRUE,
           ),
           'message_notify_weekly_digest' => array(
-            'weight' => '1',
+            'weight' => '0',
             'visible' => TRUE,
+          ),
+          'default' => array(
+            'weight' => '5',
+            'visible' => FALSE,
           ),
         ),
         'message__message_text__2' => array(
           'message_notify_email_body' => array(
-            'weight' => '2',
+            'weight' => '0',
             'visible' => TRUE,
           ),
           'message_notify_email_subject' => array(
-            'weight' => '2',
+            'weight' => '6',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
-            'weight' => '2',
+            'weight' => '1',
             'visible' => TRUE,
           ),
           'message_notify_weekly_digest' => array(
-            'weight' => '2',
+            'weight' => '1',
             'visible' => TRUE,
+          ),
+          'default' => array(
+            'weight' => '6',
+            'visible' => FALSE,
           ),
         ),
       ),
@@ -202,38 +212,22 @@ function dgu_data_set_request_strongarm() {
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'weight' => '0',
-            'visible' => FALSE,
+            'visible' => TRUE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '0',
             'visible' => FALSE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '0',
-            'visible' => FALSE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '0',
-            'visible' => FALSE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
-            'weight' => '0',
-            'visible' => TRUE,
+            'visible' => FALSE,
+            'weight' => 0,
           ),
           'message_notify_email_body' => array(
-            'weight' => '0',
-            'visible' => FALSE,
-          ),
-          'message_notify_daily_digest' => array(
-            'weight' => '1',
             'visible' => TRUE,
-          ),
-          'message_notify_weekly_digest' => array(
-            'weight' => '1',
-            'visible' => TRUE,
+            'weight' => 0,
           ),
         ),
         'message__message_text__2' => array(
