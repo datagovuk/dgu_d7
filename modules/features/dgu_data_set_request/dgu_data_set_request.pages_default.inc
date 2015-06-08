@@ -361,6 +361,30 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane = new stdClass();
     $pane->pid = 'new-6';
     $pane->panel = 'right';
+    $pane->type = 'custom';
+    $pane->subtype = 'custom';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'admin_title' => '',
+      'title' => 'Progress on requests',
+      'body' => '<p><a href="/odug/roadmap"><img alt="" src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png"> </a></p><p><a class="btn-default btn btn-primary" href="/odug/roadmap">See Dashboard</a></p><p><a href="/odug/status">Find out more about data request status</a></p>',
+      'format' => 'full_html',
+      'substitute' => TRUE,
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 2;
+    $pane->locks = array();
+    $display->content['new-6'] = $pane;
+    $display->panels['right'][2] = 'new-6';
+    $pane = new stdClass();
+    $pane->pid = 'new-7';
+    $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'blogs';
     $pane->shown = TRUE;
@@ -380,30 +404,6 @@ function dgu_data_set_request_default_page_manager_pages() {
       'display' => 'block_2',
       'override_title' => 1,
       'override_title_text' => 'ODUG Blogs',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['right'][2] = 'new-6';
-    $pane = new stdClass();
-    $pane->pid = 'new-7';
-    $pane->panel = 'right';
-    $pane->type = 'custom';
-    $pane->subtype = 'custom';
-    $pane->shown = FALSE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'admin_title' => '',
-      'title' => 'Progress on requests',
-      'body' => '<p><a href="/odug/roadmap"><img alt="" src="/profiles/dgu/modules/features/dgu_data_set_request/odug-roadmap.png"> </a></p><p><a class="btn-default btn btn-primary" href="/odug/roadmap">See Dashboard</a></p><p><a href="/odug/status">Find out more about data request status</a></p>',
-      'format' => 'full_html',
-      'substitute' => TRUE,
     );
     $pane->cache = array();
     $pane->style = array(
@@ -511,9 +511,7 @@ Johanna Walker<br/>
     $pane->configuration = array(
       'admin_title' => '',
       'title' => 'Data request administration',
-      'body' => '<a href="/admin/all_data_requests">Browse data requests</a>
-<br />
-<a href="/admin/all_data_requests/csv">Download data requests</a>',
+      'body' => '<a href="/admin/all_data_requests/csv">Download data requests</a>',
       'format' => 'unfiltered',
       'substitute' => TRUE,
     );
