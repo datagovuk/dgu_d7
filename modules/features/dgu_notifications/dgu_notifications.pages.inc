@@ -68,7 +68,7 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
     $form['content_types']['#default_value'] = $account->data['auto_subscribe'];
   }
 
-  if (in_array('admin', $account->data['ckan_publishers'])) {
+  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
 
     $form['dataset_comments_label'] = array('#markup' => '<strong>Comments on datasets</strong>',);
 
@@ -92,7 +92,7 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
 function dgu_notifications_auto_subscribe_submit($form, &$form_state) {
   $account = user_load($form['account']['#account']->uid);
   $account->data['auto_subscribe'] = $form_state['values']['content_types'];
-  if (in_array('admin', $account->data['ckan_publishers'])) {
+  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
     $account->data['dataset_comments'] = $form_state['values']['dataset_comments'];
   }
   user_save($account);

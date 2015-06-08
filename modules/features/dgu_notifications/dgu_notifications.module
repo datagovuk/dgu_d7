@@ -15,7 +15,7 @@ function dgu_notifications_menu() {
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'dgu_notifications_my_subscriptions',
     'page arguments' => array(1),
-    'access arguments' => array('access content'),
+    'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 1,
     'file' => 'dgu_notifications.pages.inc',
   );
@@ -24,7 +24,7 @@ function dgu_notifications_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'page callback' => 'dgu_notifications_my_subscriptions',
     'page arguments' => array(1),
-    'access arguments' => array('access content'),
+    'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 1,
     'file' => 'dgu_notifications.pages.inc',
   );
@@ -33,7 +33,7 @@ function dgu_notifications_menu() {
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('dgu_notifications_delivery', 1),
-    'access arguments' => array('access content'),
+    'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 2,
     'file' => 'dgu_notifications.pages.inc',
   );
@@ -42,12 +42,16 @@ function dgu_notifications_menu() {
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('dgu_notifications_auto_subscribe', 1),
-    'access arguments' => array('access content'),
+    'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 3,
     'file' => 'dgu_notifications.pages.inc',
   );
 
   return $items;
+}
+
+function _dgu_notifications_subscriptions_access() {
+  return user_access('administer users') || dgu_user_accessing_own_account();
 }
 
 /**
