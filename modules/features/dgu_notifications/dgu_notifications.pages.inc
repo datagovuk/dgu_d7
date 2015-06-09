@@ -21,28 +21,41 @@ function dgu_notifications_my_subscriptions($user) {
 
   $result = $query->execute()->fetchAll();
 
-  $header = array('Title', 'Type', 'Actions');
+  $header = array('Title', 'Type');
+  if(dgu_user_accessing_own_account()) {
+    $header[] = array('data' => 'Actions', 'class' => 'actions');
+  }
   $rows = array();
   $types = node_type_get_names();
 
   foreach ($result as $row) {
 
     if (empty($row->dataset_title)) {
-      $rows[] = array(
+       $cells = array(
         l($row->node_title, 'node/'. $row->nid),
         $types[$row->type],
-        flag_create_link('subscribe_node', $row->nid),
       );
+
+      if(dgu_user_accessing_own_account()) {
+        $cells[] = array('data' => flag_create_link('subscribe_node', $row->id), 'class' => 'views-field');
+      }
+      $rows[] = $cells;
     }
     else {
-      $rows[] = array(
+      $cells = array(
         l($row->dataset_title, 'dataset/' . $row->name),
         'Dataset',
-        flag_create_link('dataset', $row->id),
       );
+
+      if(dgu_user_accessing_own_account()) {
+        $cells[] = array('data' => flag_create_link('dataset', $row->id), 'class' => 'views-field');
+      }
+      $rows[] = $cells;
     }
   }
-  return theme('table', array('header' => $header, 'rows' => $rows));
+  $output = '<h3>Current subscriptions</h3>';
+  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('view'))));
+  return $output;
 }
 
 function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
