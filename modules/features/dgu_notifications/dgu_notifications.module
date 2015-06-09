@@ -129,7 +129,7 @@ function dgu_notifications_node_presave($node) {
  * Implements hook_entity_insert().
  */
 function dgu_notifications_entity_insert($entity, $type) {
-  if($type == 'reply' && $entity->bundle == 'comment' && module_exists('message_subscribe')) {
+  if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type != 'ckan_dataset' && module_exists('message_subscribe')) {
     $options = array(
       'rendered fields' => array(
         'message_notify_email_subject' => 'field_message_rendered_subject',
@@ -138,7 +138,6 @@ function dgu_notifications_entity_insert($entity, $type) {
     );
     $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
 
-    // Get data_request_update message bundle and set required fields.
     $message = message_create('dgu_notifications_reply_new');
     $wrapper = entity_metadata_wrapper('message', $message);
     $node = new stdClass();
