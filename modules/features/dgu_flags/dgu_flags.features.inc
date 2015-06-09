@@ -16,38 +16,6 @@ function dgu_flags_views_api($module = NULL, $api = NULL) {
  */
 function dgu_flags_flag_default_flags() {
   $flags = array();
-  // Exported flag: "Dataset".
-  $flags['dataset'] = array(
-    'entity_type' => 'ckan_dataset',
-    'title' => 'Dataset',
-    'global' => '0',
-    'types' => array(),
-    'flag_short' => 'Subscribe',
-    'flag_long' => '',
-    'flag_message' => '',
-    'unflag_short' => 'Unsubscribe',
-    'unflag_long' => '',
-    'unflag_message' => '',
-    'unflag_denied_text' => '',
-    'link_type' => 'toggle',
-    'weight' => 0,
-    'show_in_links' => array(
-      'full' => 0,
-      'teaser' => 0,
-      'comments' => 0,
-      'diff_standard' => 0,
-      'token' => 0,
-    ),
-    'show_as_field' => 1,
-    'show_on_form' => 0,
-    'access_author' => '',
-    'show_contextual_link' => 0,
-    'api_version' => 3,
-    'module' => 'dgu_flags',
-    'locked' => array(
-      0 => 'name',
-    ),
-  );
   // Exported flag: "Spam node".
   $flags['spam_node'] = array(
     'entity_type' => 'node',
@@ -112,6 +80,38 @@ function dgu_flags_flag_default_flags() {
       'token' => 0,
     ),
     'show_as_field' => 0,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'module' => 'dgu_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'api_version' => 3,
+  );
+  // Exported flag: "Dataset".
+  $flags['subscribe_dataset'] = array(
+    'entity_type' => 'ckan_dataset',
+    'title' => 'Dataset',
+    'global' => '0',
+    'types' => array(),
+    'flag_short' => 'Subscribe',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unsubscribe',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'comments' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+    ),
+    'show_as_field' => 1,
     'show_on_form' => 0,
     'access_author' => '',
     'show_contextual_link' => 0,
