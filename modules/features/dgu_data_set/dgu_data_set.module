@@ -99,7 +99,7 @@ function _dgu_data_set_get_subscribers($dataset_id) {
     ->distinct()
     ->condition('f.entity_type', 'ckan_dataset')
     ->condition('f.entity_id', $dataset_id)
-    ->condition('fid', 4); // fid 4 is dataset subscribe flag
+    ->condition('fid', 4); // fid 4 is subscribe_dataset flag
 
   $result = $query->execute()->fetchAll();
   $uids = array();
