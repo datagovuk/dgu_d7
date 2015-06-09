@@ -230,7 +230,7 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
     $my_subscriptions = array(
       array(
         '#theme' => 'menu_local_task',
-        '#link' => array('title' => 'My subscriptions', 'href' => 'user/' . $user->uid . '/message-subscribe', 'localized_options' => array()),
+        '#link' => array('title' => 'My subscriptions', 'href' => 'user/' . $user->uid . '/subscriptions', 'localized_options' => array()),
         '#active' => FALSE,
       ),
     );
@@ -371,7 +371,7 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1]['path'] = 'user/' . $user->uid;
   }
 
-  if ($item['path'] == 'user/%/message-subscribe') {
+  if ($item['path'] == 'user/%/subscriptions') {
     if (dgu_user_accessing_own_account()) {
       unset($active_trail[1]);
       drupal_set_title('My subscriptions');
