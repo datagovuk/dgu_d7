@@ -511,7 +511,7 @@ function dgu_data_set_request_node_update($node) {
 
 
 /**
- * Helper function to test if particular fields has changed between revisions.
+ * Helper function to get all users subscribed to a data request.
  */
 function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
   // Get all flags on given entity type.
