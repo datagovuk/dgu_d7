@@ -10,7 +10,6 @@ include_once 'dgu_data_set.features.inc';
  * Implements hook_entity_insert().
  */
 function dgu_data_set_entity_insert($entity, $type) {
-
   if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type == 'ckan_dataset' && module_exists('message_subscribe')) {
     $options = array(
       'rendered fields' => array(
@@ -19,20 +18,46 @@ function dgu_data_set_entity_insert($entity, $type) {
       ),
     );
 
-    // Get dataset_comment_new message bundle and set required fields.
     $message = message_create('dataset_comment_new');
     $wrapper = entity_metadata_wrapper('message', $message);
     $dataset = ckan_dataset_load($entity->entity_id);
     $wrapper->field_dataset_reference->set($dataset);
     $wrapper->field_reply_reference->set($entity);
 
-    $uids = _dgu_data_set_get_subscribers($dataset->publisher_id);
-    message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $uids));
+    // First get publisher admins subscribed to comments on all datasets published by this publisher.
+    $admin_uids = _dgu_data_set_get_admin_subscribers($dataset->publisher_id);
+    // Then get all other subscribes subscribed via flag
+    $uids = _dgu_data_set_get_subscribers($dataset->id);
+    $all_uids = array_merge($uids, $admin_uids);
 
+    message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $all_uids));
   }
 }
 
-function _dgu_data_set_get_subscribers($publisher_id) {
+/**
+ * Implements hook_entity_update().
+ */
+function dgu_data_set_entity_update($entity, $type) {
+  if($type == 'ckan_dataset' && module_exists('message_subscribe')) {
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+
+    $message = message_create('dataset_update');
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $dataset = ckan_dataset_load($entity->id);
+    $wrapper->field_dataset_reference->set($dataset);
+
+    $uids = _dgu_data_set_get_subscribers($dataset->id);
+    message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $uids));
+  }
+
+}
+
+function _dgu_data_set_get_admin_subscribers($publisher_id) {
   $publishers = array($publisher_id);
   while($publisher_id = _dgu_data_set_get_parent_publisher_id($publisher_id)) {
     $publishers[] = $publisher_id;
@@ -59,6 +84,31 @@ function _dgu_data_set_get_subscribers($publisher_id) {
   }
   return $ckan_admin_uids;
 }
+
+function _dgu_data_set_get_subscribers($dataset_id) {
+  // Get all flags on given entity type.
+  // We can't use message_subscribe_flag_get_flags() here because it checks user permissions which are missing when drupal bootstrapped with drush
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+
+  $query = db_select('flagging', 'f');
+  $query->join('users', 'u', 'u.uid = f.uid');
+  $query->leftJoin('users_roles', 'ur', 'ur.uid = u.uid');
+  $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = u.uid');
+  $query->fields('f', array('uid'));
+  $query->fields('fdn', array('field_digest_notifier_value'))
+    ->distinct()
+    ->condition('f.entity_type', 'ckan_dataset')
+    ->condition('f.entity_id', $dataset_id)
+    ->condition('fid', 4); // fid 4 is dataset subscribe flag
+
+  $result = $query->execute()->fetchAll();
+  $uids = array();
+  foreach ($result as $row) {
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
+  }
+  return $uids;
+}
+
 
 function _dgu_data_set_get_parent_publisher_id($publisher_id) {
   return db_select('ckan_publisher', 'p')
