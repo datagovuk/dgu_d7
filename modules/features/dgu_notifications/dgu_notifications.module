@@ -7,6 +7,16 @@
 include_once 'dgu_notifications.features.inc';
 
 /**
+ * Implements hook_menu_alter().
+ */
+function dgu_notifications_menu_alter(&$items) {
+  // Remove callbacks registered by message_subscribe.
+  unset($items['user/%user/message-subscribe']);
+  unset($items['user/%user/message-subscribe/subscribe_node']);
+  unset($items['user/%user/message-subscribe/subscribe_dataset']);
+}
+
+/**
  * Implements hook_menu().
  */
 function dgu_notifications_menu() {
@@ -147,7 +157,6 @@ function dgu_notifications_entity_insert($entity, $type) {
 
     $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
     message_subscribe_send_message('node', $node, $message, $options, array('uids' => $uids));
-
   }
 }
 
