@@ -18,6 +18,38 @@ function dgu_notifications_ctools_plugin_api($module = NULL, $api = NULL) {
  */
 function dgu_notifications_default_message_type() {
   $items = array();
+  $items['dgu_notifications_node_new'] = entity_import('message_type', '{
+    "name" : "dgu_notifications_node_new",
+    "description" : "Node created",
+    "argument_keys" : [],
+    "argument" : [],
+    "category" : "message_type",
+    "data" : {
+      "token options" : { "clear" : 0 },
+      "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
+    },
+    "language" : "",
+    "arguments" : null,
+    "message_text" : { "und" : [
+        {
+          "value" : "\\u003Cp\\u003E@{message:field-node-reference:content-type} \\u0022\\u003Ca href=\\u0022[message:field-node-reference::url]\\u0022\\u003E[message:field-node-reference::title]\\u003C\\/a\\u003E\\u0022 has been created by \\u003Ca href=\\u0022message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003E@{message:field-node-reference:content-type} \\u0022\\u003Ca href=\\u0022[message:field-node-reference::url]\\u0022\\u003E[message:field-node-reference::title]\\u003C\\/a\\u003E\\u0022 has been created by \\u003Ca href=\\u0022message:user:url]\\u0022\\u003E@{message:user:name}\\u003C\\/a\\u003E\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003E@{message:field-node-reference:content-type} \\u0022[message:field-node-reference:title]\\u0022 has been created by @{message:user:name}\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003E@{message:field-node-reference:content-type} \\u0022[message:field-node-reference:title]\\u0022 has been created by @{message:user:name}\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url}) has created @{message:field-node-reference:content-type}:\\u003Cbr\\u003E\\u0022[message:field-node-reference:title]\\u0022.\\u003C\\/p\\u003E\\u003Cp\\u003EYou can see this @{message:field-node-reference:content-type} at:\\u003Cbr\\u003E[message:field-node-reference:url]\\u003C\\/p\\u003E\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about new content.\\u003Cbr\\u003EYou can change your auto subscription preferences at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\/auto-subscribe\\u003C\\/p\\u003E\\u003Cp\\u003EOr unsubscribe from updates about this dataset at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EUser \\u0022@{message:user:name}\\u0022 (@{message:user:url}) has created @{message:field-node-reference:content-type}:\\u003Cbr \\/\\u003E\\u0022[message:field-node-reference:title]\\u0022.\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou can see this @{message:field-node-reference:content-type} at:\\u003Cbr \\/\\u003E[message:field-node-reference:url]\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about new content.\\u003Cbr \\/\\u003EYou can change your auto subscription preferences at:\\u003Cbr \\/\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\/auto-subscribe\\u003C\\/p\\u003E\\n\\u003Cp\\u003EOr unsubscribe from updates about this dataset at:\\u003Cbr \\/\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\u003C\\/p\\u003E\\n"
+        }
+      ]
+    },
+    "rdf_mapping" : []
+  }');
   $items['dgu_notifications_node_update'] = entity_import('message_type', '{
     "name" : "dgu_notifications_node_update",
     "description" : "Node updated",
