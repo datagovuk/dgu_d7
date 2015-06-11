@@ -14,47 +14,54 @@ function dgu_notifications_my_subscriptions($user) {
   $query->addField('d', 'title', 'dataset_title');
   $query->fields('n', array('nid', 'title','type'));
   $query->addField('n', 'title', 'node_title');
-  $query->condition('fl.fid', array(3,4), 'IN')
+  $query->condition('fl.fid', array(3,5), 'IN')
     ->condition('fl.uid', $user->uid)
     ->orderBy('fl.timestamp', 'DESC');
 
 
   $result = $query->execute()->fetchAll();
 
-  $header = array('Title', 'Type');
-  if(dgu_user_accessing_own_account()) {
-    $header[] = array('data' => 'Actions', 'class' => 'actions');
-  }
-  $rows = array();
-  $types = node_type_get_names();
-
-  foreach ($result as $row) {
-
-    if (empty($row->dataset_title)) {
-       $cells = array(
-        l($row->node_title, 'node/'. $row->nid),
-        $types[$row->type],
-      );
-
-      if(dgu_user_accessing_own_account()) {
-        $cells[] = array('data' => flag_create_link('subscribe_node', $row->id), 'class' => 'views-field');
-      }
-      $rows[] = $cells;
+  if(!empty($result)) {
+    $header = array('Title', 'Type');
+    if(dgu_user_accessing_own_account()) {
+      $header[] = array('data' => 'Actions', 'class' => 'actions');
     }
-    else {
-      $cells = array(
-        l($row->dataset_title, 'dataset/' . $row->name),
-        'Dataset',
-      );
+    $rows = array();
+    $types = node_type_get_names();
 
-      if(dgu_user_accessing_own_account()) {
-        $cells[] = array('data' => flag_create_link('dataset', $row->id), 'class' => 'views-field');
+    foreach ($result as $row) {
+
+      if (empty($row->dataset_title)) {
+        $cells = array(
+          l($row->node_title, 'node/'. $row->nid),
+          $types[$row->type],
+        );
+
+        if(dgu_user_accessing_own_account()) {
+          $cells[] = array('data' => flag_create_link('subscribe_node', $row->nid), 'class' => 'views-field');
+        }
+        $rows[] = $cells;
       }
-      $rows[] = $cells;
+      else {
+        $cells = array(
+          l($row->dataset_title, 'dataset/' . $row->name),
+          'Dataset',
+        );
+
+        if(dgu_user_accessing_own_account()) {
+          $cells[] = array('data' => flag_create_link('subscribe_dataset', $row->id), 'class' => 'views-field');
+        }
+        $rows[] = $cells;
+      }
     }
+
+    $output = '<h3>Current subscriptions</h3>';
+    $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('view'))));
   }
-  $output = '<h3>Current subscriptions</h3>';
-  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('class' => array('view'))));
+  else {
+    $output = 'You are not subscribed to any content.';
+  }
+
   return $output;
 }
 
@@ -77,12 +84,11 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
     '#options' => $content_types,
   );
 
-  if (!empty($account->data['auto_subscribe'])) {
-    $form['content_types']['#default_value'] = $account->data['auto_subscribe'];
-  }
+  $options = db_select('users_auto_subscribe', 'uas')->fields('uas', array('type'))->condition('uid', $account->uid)->execute()->fetchCol();
+
+  $form['content_types']['#default_value'] = $options;
 
   if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
-
     $form['dataset_comments_label'] = array('#markup' => '<strong>Comments on datasets</strong>',);
 
     $form['dataset_comments'] = array(
@@ -103,12 +109,21 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
 }
 
 function dgu_notifications_auto_subscribe_submit($form, &$form_state) {
+
   $account = user_load($form['account']['#account']->uid);
-  $account->data['auto_subscribe'] = $form_state['values']['content_types'];
+
+  $types = array_filter($form_state['values']['content_types']);
+  db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
+  $query = db_insert('users_auto_subscribe')->fields(array('uid', 'type'));
+  foreach ($types as $type) {
+    $query->values(array($account->uid, $type));
+  }
+  $query->execute();
+
   if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
     $account->data['dataset_comments'] = $form_state['values']['dataset_comments'];
+    user_save($account);
   }
-  user_save($account);
 }
 
 
