@@ -57,5 +57,37 @@ function dgu_data_set_default_message_type() {
     },
     "rdf_mapping" : []
   }');
+  $items['dataset_update'] = entity_import('message_type', '{
+    "name" : "dataset_update",
+    "description" : "Dataset updated",
+    "argument_keys" : [],
+    "argument" : [],
+    "category" : "message_type",
+    "data" : {
+      "token options" : { "clear" : 0 },
+      "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
+    },
+    "language" : "",
+    "arguments" : null,
+    "message_text" : { "und" : [
+        {
+          "value" : "\\u003Cp\\u003EDataset \\u003Ca href=\\u0022[message:field-dataset-reference:url]\\u0022\\u003E[message:field-dataset-reference:title]\\u003C\\/a\\u003E has been updated\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EDataset \\u003Ca href=\\u0022[message:field-dataset-reference:url]\\u0022\\u003E[message:field-dataset-reference:title]\\u003C\\/a\\u003E has been updated\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003EDataset \\u0022[message:field-dataset-reference:title]\\u0022 has been updated\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EDataset \\u0022[message:field-dataset-reference:title]\\u0022 has been updated\\u003C\\/p\\u003E\\n"
+        },
+        {
+          "value" : "\\u003Cp\\u003EYou can see this dataset at:\\u003Cbr\\u003E[message:field-dataset-reference:url]\\u003C\\/p\\u003E\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about this content.\\u003Cbr\\u003EYou can unsubscribe at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\u003C\\/p\\u003E",
+          "format" : "full_html",
+          "safe_value" : "\\u003Cp\\u003EYou can see this dataset at:\\u003Cbr \\/\\u003E[message:field-dataset-reference:url]\\u003C\\/p\\u003E\\n\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about this content.\\u003Cbr \\/\\u003EYou can unsubscribe at:\\u003Cbr \\/\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\u003C\\/p\\u003E\\n"
+        }
+      ]
+    },
+    "rdf_mapping" : []
+  }');
   return $items;
 }
