@@ -13,7 +13,8 @@ function dgu_notifications_menu_alter(&$items) {
   // Remove callbacks registered by message_subscribe.
   unset($items['user/%user/message-subscribe']);
   unset($items['user/%user/message-subscribe/subscribe_node']);
-  unset($items['user/%user/message-subscribe/subscribe_dataset']);
+  unset($items['user/%user/message-subscribe/subscribe_dataset_update']);
+  unset($items['user/%user/message-subscribe/subscribe_dataset_comment']);
 }
 
 /**

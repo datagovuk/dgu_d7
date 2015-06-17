@@ -45,10 +45,13 @@ function dgu_data_set_entity_insert($entity, $type) {
       $uids = _dgu_data_set_get_auto_subscribers();
       message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $uids));
 
+      // TODO - subscribe to comments and updates based on user preference
+
       foreach ($uids as $uid => $ignore_this) {
         // Subscribe users to following notifications about this content.
         $account = user_load($uid);
-        flag('flag', 'subscribe_dataset', $entity->id, $account);
+        //flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+        //flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
       }
 
     }
@@ -129,16 +132,18 @@ function _dgu_data_set_get_subscribers($dataset_id) {
   // We can't use message_subscribe_flag_get_flags() here because it checks user permissions which are missing when drupal bootstrapped with drush
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
 
-  $query = db_select('flagging', 'f');
-  $query->join('users', 'u', 'u.uid = f.uid');
+  $query = db_select('flagging', 'fl');
+  $query->join('users', 'u', 'u.uid = fl.uid');
+  $query->join('flag', 'fg', 'fl.fid = fg.fid');
   $query->leftJoin('users_roles', 'ur', 'ur.uid = u.uid');
   $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = u.uid');
-  $query->fields('f', array('uid'));
+  $query->fields('fl', array('uid'));
+  $query->fields('fg', array('name'));
   $query->fields('fdn', array('field_digest_notifier_value'))
     ->distinct()
-    ->condition('f.entity_type', 'ckan_dataset')
-    ->condition('f.entity_id', $dataset_id)
-    ->condition('fid', 4); // fid 4 is subscribe_dataset flag
+    ->condition('fl.entity_type', 'ckan_dataset')
+    ->condition('fl.entity_id', $dataset_id)
+    ->condition('fg.name', array('subscribe_dataset_comment', 'subscribe_dataset_update'), 'IN');
 
   $result = $query->execute()->fetchAll();
   $uids = array();

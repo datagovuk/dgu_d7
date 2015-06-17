@@ -8,13 +8,16 @@
 function dgu_notifications_my_subscriptions($user) {
 
   $query = db_select('flagging', 'fl');
+  $query->join('flag', 'fg', 'fl.fid = fg.fid ');
   $query->leftJoin('node', 'n', 'fl.entity_id = n.nid ');
   $query->leftJoin('ckan_dataset', 'd', 'fl.entity_id = d.id');
+  $query->fields('fg', array('name', 'title','name'));
+  $query->addField('fg', 'name', 'flag_name');
   $query->fields('d', array('id', 'title','name'));
   $query->addField('d', 'title', 'dataset_title');
   $query->fields('n', array('nid', 'title','type'));
   $query->addField('n', 'title', 'node_title');
-  $query->condition('fl.fid', array(3,5), 'IN')
+  $query->condition('fg.name', array('subscribe_node', 'subscribe_dataset_comment', 'subscribe_dataset_update'), 'IN')
     ->condition('fl.uid', $user->uid)
     ->orderBy('fl.timestamp', 'DESC');
 
@@ -49,7 +52,7 @@ function dgu_notifications_my_subscriptions($user) {
         );
 
         if(dgu_user_accessing_own_account()) {
-          $cells[] = array('data' => flag_create_link('subscribe_dataset', $row->id), 'class' => 'views-field');
+          $cells[] = array('data' => flag_create_link($row->flag_name, $row->id), 'class' => 'views-field');
         }
         $rows[] = $cells;
       }

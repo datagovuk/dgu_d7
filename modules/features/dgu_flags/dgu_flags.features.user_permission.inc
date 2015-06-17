@@ -51,9 +51,18 @@ function dgu_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
-  // Exported permission: 'flag subscribe_dataset'.
-  $permissions['flag subscribe_dataset'] = array(
-    'name' => 'flag subscribe_dataset',
+  // Exported permission: 'flag subscribe_dataset_comment'.
+  $permissions['flag subscribe_dataset_comment'] = array(
+    'name' => 'flag subscribe_dataset_comment',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag subscribe_dataset_update'.
+  $permissions['flag subscribe_dataset_update'] = array(
+    'name' => 'flag subscribe_dataset_update',
     'roles' => array(
       'authenticated user' => 'authenticated user',
     ),
@@ -104,9 +113,18 @@ function dgu_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
-  // Exported permission: 'unflag subscribe_dataset'.
-  $permissions['unflag subscribe_dataset'] = array(
-    'name' => 'unflag subscribe_dataset',
+  // Exported permission: 'unflag subscribe_dataset_comment'.
+  $permissions['unflag subscribe_dataset_comment'] = array(
+    'name' => 'unflag subscribe_dataset_comment',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag subscribe_dataset_update'.
+  $permissions['unflag subscribe_dataset_update'] = array(
+    'name' => 'unflag subscribe_dataset_update',
     'roles' => array(
       'authenticated user' => 'authenticated user',
     ),
