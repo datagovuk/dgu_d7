@@ -15,6 +15,7 @@ function dgu_notifications_my_subscriptions($user) {
   $query->addField('fg', 'name', 'flag_name');
   $query->fields('d', array('id', 'title','name'));
   $query->addField('d', 'title', 'dataset_title');
+  $query->addField('d', 'name', 'dataset_path');
   $query->fields('n', array('nid', 'title','type'));
   $query->addField('n', 'title', 'node_title');
   $query->condition('fg.name', array('subscribe_node', 'subscribe_dataset_comment', 'subscribe_dataset_update'), 'IN')
@@ -47,7 +48,7 @@ function dgu_notifications_my_subscriptions($user) {
       }
       else {
         $cells = array(
-          l($row->dataset_title, 'dataset/' . $row->name),
+          l($row->dataset_title, 'dataset/' . $row->dataset_path),
           'Dataset',
         );
 
