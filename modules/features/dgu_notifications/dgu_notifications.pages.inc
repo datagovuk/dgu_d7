@@ -67,21 +67,34 @@ function dgu_notifications_my_subscriptions($user) {
 
 function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
 
+  $path = drupal_get_path('module', 'dgu_notifications');
+
   $content_types = array(
     'ckan_dataset' => 'Dataset',
+    'ckan_dataset_update_subscribe' => 'Automatically subscribe to dataset updates',
+    'ckan_dataset_comment_subscribe' => 'Automatically subscribe to comments on datasets',
     'app' => 'App',
+    'app_subscribe' => 'Automatically subscribe to updates and comments',
     'blog' => 'Blog entry',
+    'blog_subscribe' => 'Automatically subscribe to updates and comments',
     'dataset_request' => 'Data request',
+    'dataset_request_subscribe' => 'Automatically subscribe to updates and comments',
     'forum' => 'Forum topic',
+    'forum_subscribe' => 'Automatically subscribe to updates and comments',
     'resource' => 'Library resource',
+    'resource_subscribe' => 'Automatically subscribe to updates and comments',
   );
 
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
   $form['content_types'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Auto subscribe to new content'),
+    '#title' => t('Notifications about new content'),
     '#options' => $content_types,
+    '#attached' => array (
+      'js' => array($path . '/js/dgu_notifications.js'),
+      'css' => array($path . '/css/dgu_notifications.css'),
+    ),
   );
 
   $options = db_select('users_auto_subscribe', 'uas')->fields('uas', array('type'))->condition('uid', $account->uid)->execute()->fetchCol();
