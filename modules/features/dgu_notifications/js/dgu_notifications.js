@@ -26,7 +26,7 @@
                     $('#edit-content-types .form-type-checkbox').each(function (index) {
                         var classes = $(this).attr('class');
                         if (classes.indexOf('subscribe') >= 0 && classes.indexOf(content_type) >= 0) {
-                            $(this).toggle();
+                            $(this).toggle().children('input').prop('checked', false);
                         }
                     });
                 });
