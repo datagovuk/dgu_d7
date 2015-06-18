@@ -45,20 +45,44 @@ function dgu_data_set_entity_insert($entity, $type) {
       $uids = _dgu_data_set_get_auto_subscribers();
       message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $uids));
 
-      // TODO - subscribe to comments and updates based on user preference
+      // Subscribe to following updates of this new dataset.
+      $subscribers = db_select('users_auto_subscribe', 'uas')
+        ->fields('uas', array('uid'))
+        ->condition('uas.type', 'ckan_dataset_update_subscribe')
+        ->execute()
+        ->fetchAll();
 
-      foreach ($uids as $uid => $ignore_this) {
-        // Subscribe users to following notifications about this content.
+      foreach ($subscribers as $uid) {
         $account = user_load($uid);
-        //flag('flag', 'subscribe_dataset_update', $entity->id, $account);
-        //flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
+        flag('flag', 'subscribe_dataset_update', $entity->id, $account);
       }
 
+      // Subscribe to comments on this new dataset.
+      $subscribers = db_select('users_auto_subscribe', 'uas')
+        ->fields('uas', array('uid'))
+        ->condition('uas.type', 'ckan_dataset_comment_subscribe')
+        ->execute()
+        ->fetchAll();
+
+      foreach ($subscribers as $uid) {
+        $account = user_load($uid);
+        flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
+      }
     }
   }
 }
 
+//'ckan_dataset_update_subscribe', 'ckan_dataset_comment_subscribe'
+
 function _dgu_data_set_get_auto_subscribers() {
+
+  $dataset_comment_subscribers = db_select('users_auto_subscribe', 'uas')
+    ->fields('uas', array('uid'))
+    ->condition('uas.type', 'ckan_dataset_comment_subscribe')
+    ->execute()
+    ->fetchCol();
+
+
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
 
   $query = db_select('users_auto_subscribe', 'uas');
