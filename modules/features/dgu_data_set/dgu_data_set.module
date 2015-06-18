@@ -50,7 +50,7 @@ function dgu_data_set_entity_insert($entity, $type) {
         ->fields('uas', array('uid'))
         ->condition('uas.type', 'ckan_dataset_update_subscribe')
         ->execute()
-        ->fetchAll();
+        ->fetchCol();
 
       foreach ($subscribers as $uid) {
         $account = user_load($uid);
@@ -62,7 +62,7 @@ function dgu_data_set_entity_insert($entity, $type) {
         ->fields('uas', array('uid'))
         ->condition('uas.type', 'ckan_dataset_comment_subscribe')
         ->execute()
-        ->fetchAll();
+        ->fetchCol();
 
       foreach ($subscribers as $uid) {
         $account = user_load($uid);
@@ -75,14 +75,6 @@ function dgu_data_set_entity_insert($entity, $type) {
 //'ckan_dataset_update_subscribe', 'ckan_dataset_comment_subscribe'
 
 function _dgu_data_set_get_auto_subscribers() {
-
-  $dataset_comment_subscribers = db_select('users_auto_subscribe', 'uas')
-    ->fields('uas', array('uid'))
-    ->condition('uas.type', 'ckan_dataset_comment_subscribe')
-    ->execute()
-    ->fetchCol();
-
-
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
 
   $query = db_select('users_auto_subscribe', 'uas');

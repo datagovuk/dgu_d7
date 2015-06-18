@@ -270,7 +270,7 @@ function dgu_moderation_workbench_moderation_transition($node, $previous_state, 
       ->fields('uas', array('uid'))
       ->condition('uas.type', $node->type . '_subscribe')
       ->execute()
-      ->fetchAll();
+      ->fetchCol();
 
     foreach ($subscribers as $uid) {
       $account = user_load($uid);
