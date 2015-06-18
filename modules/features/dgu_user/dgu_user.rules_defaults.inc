@@ -15,6 +15,7 @@ function dgu_user_default_rules_configuration() {
       "ACTIVE" : false,
       "OWNER" : "rules",
       "REQUIRES" : [ "rules_url_argument", "rules" ],
+      "ON" : { "user_login" : [] },
       "IF" : [
         { "NOT rules_url_argument_argument_exists" : { "argument" : "destination" } }
       ],
