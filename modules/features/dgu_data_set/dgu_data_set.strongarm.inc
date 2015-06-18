@@ -50,22 +50,38 @@ function dgu_data_set_strongarm() {
       'display' => array(
         'message__message_text__0' => array(
           'message_notify_email_subject' => array(
-            'visible' => TRUE,
-            'weight' => 0,
+            'weight' => '1',
+            'visible' => FALSE,
           ),
           'message_notify_email_body' => array(
+            'weight' => '1',
             'visible' => FALSE,
-            'weight' => 0,
+          ),
+          'message_notify_daily_digest' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+          'message_notify_weekly_digest' => array(
+            'weight' => '2',
+            'visible' => FALSE,
           ),
         ),
         'message__message_text__1' => array(
           'message_notify_email_subject' => array(
-            'visible' => FALSE,
-            'weight' => 0,
+            'weight' => '0',
+            'visible' => TRUE,
           ),
           'message_notify_email_body' => array(
+            'weight' => '2',
+            'visible' => FALSE,
+          ),
+          'message_notify_daily_digest' => array(
+            'weight' => '0',
             'visible' => TRUE,
-            'weight' => 0,
+          ),
+          'message_notify_weekly_digest' => array(
+            'weight' => '0',
+            'visible' => TRUE,
           ),
         ),
         'message__message_text__2' => array(
@@ -106,7 +122,7 @@ function dgu_data_set_strongarm() {
             'visible' => FALSE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '2',
+            'weight' => '1',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
@@ -124,7 +140,7 @@ function dgu_data_set_strongarm() {
             'visible' => TRUE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '1',
+            'weight' => '2',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
@@ -174,7 +190,7 @@ function dgu_data_set_strongarm() {
             'visible' => FALSE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '2',
+            'weight' => '1',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
@@ -192,7 +208,7 @@ function dgu_data_set_strongarm() {
             'visible' => TRUE,
           ),
           'message_notify_email_body' => array(
-            'weight' => '1',
+            'weight' => '2',
             'visible' => FALSE,
           ),
           'message_notify_daily_digest' => array(
