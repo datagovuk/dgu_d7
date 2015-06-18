@@ -265,8 +265,14 @@ function dgu_moderation_workbench_moderation_transition($node, $previous_state, 
     $uids = _dgu_moderation_get_auto_subscribers($node->type);
     message_subscribe_send_message('node', $node, $message_node_new, $options, array('uids' => $uids));
 
-    foreach ($uids as $uid => $ignore_this) {
-      // Subscribe users to following notifications about this content.
+    // Subscribe users.
+    $subscribers = db_select('users_auto_subscribe', 'uas')
+      ->fields('uas', array('uid'))
+      ->condition('uas.type', $node->type . '_subscribe')
+      ->execute()
+      ->fetchAll();
+
+    foreach ($subscribers as $uid) {
       $account = user_load($uid);
       flag('flag', 'subscribe_node', $node->nid, $account);
     }
