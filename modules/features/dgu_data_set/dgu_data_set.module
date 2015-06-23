@@ -28,12 +28,14 @@ function dgu_data_set_entity_insert($entity, $type) {
       $wrapper->field_reply_reference->set($entity);
 
       // First get publisher admins subscribed to comments on all datasets published by this publisher.
-      $admin_uids = _dgu_data_set_get_admin_subscribers($dataset->publisher_id);
+      $admins = _dgu_data_set_get_admin_subscribers($dataset->publisher_id);
       // Then get all other subscribes subscribed via flag
-      $uids = _dgu_data_set_get_subscribers($dataset->id, 'comment');
-      $all_uids = array_merge($uids, $admin_uids);
+      $subscribers = _dgu_data_set_get_subscribers($dataset->id, 'comment');
 
-      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $all_uids));
+      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $admins));
+
+      $other_users = $users_to_notify_only = array_diff_assoc($subscribers, $admins);
+      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $other_users));
     }
 
     if($type == 'ckan_dataset') {
