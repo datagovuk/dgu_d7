@@ -69,7 +69,7 @@ function dgu_data_set_entity_insert($entity, $type) {
         // Subscribe to comments on this dataset.
         foreach (array_keys($users_to_notify_and_subscribe_to_comments) as $uid) {
           $account = user_load($uid);
-          flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+          flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
         }
       }
 
