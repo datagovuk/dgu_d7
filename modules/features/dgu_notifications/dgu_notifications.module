@@ -111,11 +111,34 @@ function dgu_notifications_node_update($node) {
         'message_notify_email_body' => 'field_message_rendered_body',
       ),
     );
-      $message_update = message_create('dgu_notifications_node_update');
-      $wrapper = entity_metadata_wrapper('message', $message_update);
-      $wrapper->field_node_reference->set($node);
-      message_subscribe_send_message('node', $node, $message_update, $options);
+    $message_update = message_create('dgu_notifications_node_update');
+    $wrapper = entity_metadata_wrapper('message', $message_update);
+    $wrapper->field_node_reference->set($node);
+    message_subscribe_send_message('node', $node, $message_update, $options);
   }
+}
+
+function _dgu_notifications_get_auto_subscribers($type, $subscribe = FALSE) {
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+
+  $query = db_select('users_auto_subscribe', 'uas');
+  $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = uas.uid');
+  $query->fields('uas', array('uid'));
+  $query->fields('fdn', array('field_digest_notifier_value'));
+
+  if (!$subscribe) {
+    $query->condition('uas.type', $type);
+  }
+  else {
+    $query->condition('uas.type', $type . '_subscribe');
+  }
+
+  $result = $query->execute()->fetchAll();
+  $uids = array();
+  foreach ($result as $row) {
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
+  }
+  return $uids;
 }
 
 /**
@@ -151,8 +174,7 @@ function dgu_notifications_entity_insert($entity, $type) {
 
     $message = message_create('dgu_notifications_reply_new');
     $wrapper = entity_metadata_wrapper('message', $message);
-    $node = new stdClass();
-    $node->nid = $entity->entity_id;
+    $node = node_load($entity->entity_id);
     $wrapper->field_node_reference->set($node);
     $wrapper->field_reply_reference->set($entity);
 
