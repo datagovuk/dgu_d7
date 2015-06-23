@@ -37,60 +37,69 @@ function dgu_data_set_entity_insert($entity, $type) {
     }
 
     if($type == 'ckan_dataset') {
+      $users_to_notify_or_subscribe = _dgu_data_set_get_auto_subscribers();
+      $users_to_notify_and_subscribe_to_updates = _dgu_data_set_get_auto_subscribers('update');
+      $users_to_notify_and_subscribe_to_comments = _dgu_data_set_get_auto_subscribers('comment');
+      $users_to_notify_only = array_diff_assoc($users_to_notify_or_subscribe, $users_to_notify_and_subscribe_to_updates, $users_to_notify_and_subscribe_to_comments);
 
-      $message = message_create('dataset_new');
-      $wrapper = entity_metadata_wrapper('message', $message);
+      $message_dataset_new = message_create('dataset_new');
+      $wrapper = entity_metadata_wrapper('message', $message_dataset_new);
       $wrapper->field_dataset_reference->set($entity);
+      message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new, $options, array('uids' => $users_to_notify_only));
 
-      $uids = _dgu_data_set_get_auto_subscribers();
-      message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $uids));
+      if (!empty($users_to_notify_and_subscribe_to_updates)) {
+        $message_dataset_new_subscribe_update = message_create('dataset_new_subscribe_update');
+        $wrapper = entity_metadata_wrapper('message', $message_dataset_new_subscribe_update);
+        $wrapper->field_dataset_reference->set($entity);
+        message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new_subscribe_update, $options, array('uids' => $users_to_notify_and_subscribe_to_updates));
 
-      // Subscribe to following updates of this new dataset.
-      $subscribers = db_select('users_auto_subscribe', 'uas')
-        ->fields('uas', array('uid'))
-        ->condition('uas.type', 'ckan_dataset_update_subscribe')
-        ->execute()
-        ->fetchCol();
-
-      foreach ($subscribers as $uid) {
-        $account = user_load($uid);
-        flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+        // Subscribe to following updates of this dataset.
+        foreach (array_keys($users_to_notify_and_subscribe_to_updates) as $uid) {
+          $account = user_load($uid);
+          flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+        }
       }
 
-      // Subscribe to comments on this new dataset.
-      $subscribers = db_select('users_auto_subscribe', 'uas')
-        ->fields('uas', array('uid'))
-        ->condition('uas.type', 'ckan_dataset_comment_subscribe')
-        ->execute()
-        ->fetchCol();
+      if (!empty($users_to_notify_and_subscribe_to_comments)) {
+        $message_dataset_new_subscribe_comment = message_create('dataset_new_subscribe_comment');
+        $wrapper = entity_metadata_wrapper('message', $message_dataset_new_subscribe_comment);
+        $wrapper->field_dataset_reference->set($entity);
+        message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new_subscribe_comment, $options, array('uids' => $users_to_notify_and_subscribe_to_comments));
 
-      foreach ($subscribers as $uid) {
-        $account = user_load($uid);
-        flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
+        // Subscribe to comments on this dataset.
+        foreach (array_keys($users_to_notify_and_subscribe_to_comments) as $uid) {
+          $account = user_load($uid);
+          flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+        }
       }
+
     }
   }
 }
 
-//'ckan_dataset_update_subscribe', 'ckan_dataset_comment_subscribe'
-
-function _dgu_data_set_get_auto_subscribers() {
+function _dgu_data_set_get_auto_subscribers($subscribe = FALSE) {
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
 
   $query = db_select('users_auto_subscribe', 'uas');
   $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = uas.uid');
   $query->fields('uas', array('uid'));
-  $query->fields('fdn', array('field_digest_notifier_value'))
-    ->condition('uas.type', 'ckan_dataset');
+  $query->fields('fdn', array('field_digest_notifier_value'));
+
+  if (!$subscribe) {
+    $query->condition('uas.type', 'ckan_dataset');
+  }
+  else {
+    $query->condition('uas.type', 'ckan_dataset_' . $subscribe . '_subscribe');
+  }
 
   $result = $query->execute()->fetchAll();
+
   $uids = array();
   foreach ($result as $row) {
     $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
   }
   return $uids;
 }
-
 
 /**
  * Implements hook_entity_update().
