@@ -108,22 +108,23 @@ function _dgu_data_set_get_auto_subscribers($subscribe = FALSE) {
  */
 function dgu_data_set_entity_update($entity, $type) {
   if($type == 'ckan_dataset' && module_exists('message_subscribe')) {
-    $options = array(
-      'rendered fields' => array(
-        'message_notify_email_subject' => 'field_message_rendered_subject',
-        'message_notify_email_body' => 'field_message_rendered_body',
-      ),
-    );
 
-    $message = message_create('dataset_update');
-    $wrapper = entity_metadata_wrapper('message', $message);
-    $dataset = ckan_dataset_load($entity->id);
-    $wrapper->field_dataset_reference->set($dataset);
+    if ($entity->data['resources'] != $entity->original->data['resources']) {
+      $options = array(
+        'rendered fields' => array(
+          'message_notify_email_subject' => 'field_message_rendered_subject',
+          'message_notify_email_body' => 'field_message_rendered_body',
+        ),
+      );
 
-    $uids = _dgu_data_set_get_subscribers($dataset->id, 'update');
-    message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $uids));
+      $message = message_create('dataset_update');
+      $wrapper = entity_metadata_wrapper('message', $message);
+      $wrapper->field_dataset_reference->set($entity);
+
+      $uids = _dgu_data_set_get_subscribers($entity->id, 'update');
+      message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $uids));
+    }
   }
-
 }
 
 function _dgu_data_set_get_admin_subscribers($publisher_id) {
