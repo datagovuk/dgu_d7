@@ -56,7 +56,7 @@ function dgu_organogram_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Public Roles & Salaries';
+  $display->title = 'Organograms';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();

@@ -273,7 +273,7 @@ function dguk_get_data_menu() {
       'href' => 'publisher',
     ),
     'menu-organogram' => array(
-      'title' => 'Public Roles & Salaries',
+      'title' => 'Organograms',
       'href' => 'organogram/cabinet-office',
     ),
     'menu-openspending-report' => array(
@@ -287,6 +287,10 @@ function dguk_get_data_menu() {
     'menu-reports' => array(
       'title' => 'Reports',
       'href' => 'data/report',
+    ),
+    'menu-contracts' => array(
+      'title' => 'Contracts',
+      'href' => 'data/contracts-finder-archive',
     ),
   );
 
