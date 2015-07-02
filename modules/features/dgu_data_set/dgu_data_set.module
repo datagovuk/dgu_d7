@@ -127,6 +127,15 @@ function dgu_data_set_entity_update($entity, $type) {
   }
 }
 
+/**
+ * Implements hook_ckan_dataset_delete().
+ */
+function dgu_data_set_ckan_dataset_delete($ckan_dataset) {
+  foreach (flag_get_flags('ckan_dataset') as $flag) {
+    _flag_entity_delete('ckan_dataset', $ckan_dataset->id, $flag->fid);
+  }
+}
+
 function _dgu_data_set_get_admin_subscribers($publisher_id) {
   $publishers = array($publisher_id);
   while($publisher_id = _dgu_data_set_get_parent_publisher_id($publisher_id)) {
