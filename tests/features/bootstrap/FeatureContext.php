@@ -1107,7 +1107,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
-
   /**
    * @Given /^user "([^"]*)" created "([^"]*)" titled "([^"]*)"$/
    */
@@ -1116,6 +1115,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       $drush = $this->getDriver();
       $uid = $drush->drush('ev', array('"\$user = user_load_by_name(\'' . $user_name . '\'); print \$user->uid;"'));
       $drush->drush('ev', array('"\$values = array(\'type\' => \'' . $node_type . '\', \'uid\' => \'' . $uid . '\', \'status\' => \'1\', \'comment\' => \'1\',); \$entity = entity_create(\'node\', \$values); \$wrapper = entity_metadata_wrapper(\'node\', \$entity); \$wrapper->title->set(\'' . $title . '\'); \$wrapper->body->set(array(\'value\' => \'Lorem ipsum\')); \$wrapper->save();"'));
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @Given /^(?:|that )the dataset with name "([^"]*)" doesn\'t exist in Drupal$/
+   */
+  public function thatTheDatasetDoesnTExistInDrupal($dataset_name) {
+    try {
+      $drush = $this->getDriver();
+      $dataset_id = $drush->drush('ev', array('"\$query = new EntityFieldQuery(); \$result = \$query->entityCondition(\'entity_type\', \'ckan_dataset\')->propertyCondition(\'name\', \'' . $dataset_name . '\')->execute(); print empty(\$result[\'ckan_dataset\']) ? \'false\' : reset(\$result[\'ckan_dataset\'])->id;"'));
+      if (is_numeric($dataset_id)) {
+        $drush->drush('ev', array('"entity_delete(\'ckan_dataset\', ' . $dataset_id . ');"'));
+      }
     }
     catch (Exception $e) {
       throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
