@@ -1,6 +1,7 @@
 {
   "require": {
-    "drupal/drupal-extension": "1.0.*@stable"
+    "drupal/drupal-extension": "1.0.*@stable",
+    "silex/ckan_client": "dev-master"
   },
   "config": {
     "bin-dir": "bin/"

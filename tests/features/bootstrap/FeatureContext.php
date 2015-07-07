@@ -1122,6 +1122,24 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * Get a ckan client instance.
+   */
+  private function ckan_get_client() {
+    try {
+      $drush = $this->getDriver();
+      $base_url = json_decode($drush->drush('vget', array('ckan_url', '--format=json')));
+      $api_key = json_decode($drush->drush('vget', array('ckan_apikey', '--format=json')));
+
+      return Silex\ckan\CkanClient::factory(array(
+        'baseUrl' => $base_url->ckan_url,
+        'apiKey' => $api_key->ckan_apikey,
+      ));
+    }
+    catch (Exception $e) {
+      throw new \Exception('Unable to instantiate CKAN client. ' . $e->getMessage());
+    }
+  }
 
   /**
    * @Given /^TEST$/
