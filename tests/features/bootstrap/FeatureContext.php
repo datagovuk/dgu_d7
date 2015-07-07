@@ -1220,6 +1220,34 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     return json_encode($package);
   }
 
+  /**
+   * @When /^I synchronise dataset with name "([^"]*)"$/
+   */
+  public function iSynchroniseDatasetWithName($dataset_name) {
+
+    try {
+      $client = $this->ckan_get_client();
+
+      $response = $client->PackageSearch(array('fq' => "name: $dataset_name"));
+      $result = $response->toArray();
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+
+    try {
+      if (!empty($result['result']['results']['0']['id'])) {
+        $drush = $this->getDriver();
+        $drush->drush('ckan_resync_dataset', array($result['result']['results']['0']['id']));
+      }
+      else {
+        throw new \Exception("Dataset '$dataset_name' doesn't exist in CKAN.");
+      }
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
 
   /**
    * Get a ckan client instance.
