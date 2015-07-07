@@ -627,7 +627,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^the "([^"]*)" user received an email '([^']*)'$/
    */
   public function theUserReceivedAnEmail($user, $title) {
-
+    sleep(3);
     $mail_address = $this->getMailAddress($user);
     $title = $this->fixStepArgument($title);
 
@@ -636,8 +636,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $all = imap_check($mbox);
 
     $received = false;
-    // Trying 150 times with three seconds pause
-    for ($attempts = 0; $attempts++ < 150; ) {
+    // Trying 100 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 100; ) {
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
@@ -665,7 +665,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^the "([^"]*)" user have not received an email '([^']*)'$/
    */
   public function theUserNotReceivedAnEmail($user, $title) {
-
     $mail_address = $this->getMailAddress($user);
     $title = $this->fixStepArgument($title);
 
@@ -1121,26 +1120,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     catch (Exception $e) {
       throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
     }
-//    $values = array(
-//      'type' => 'YOUR_NODE_TYPE',
-//      'uid' => 1,
-//      'status' => 1,
-//      'comment' => 1,
-//      'promote' => 0,
-//    );
-//    $entity = entity_create('node', $values);
-//    $wrapper = entity_metadata_wrapper('node', $entity);
-//    $wrapper->title->set('YOUR TITLE');
-//    $wrapper->body->set(array('value' => 'Lorem ipsum'));
-//    $wrapper->body->summary->set('Things that interest me');
-//    $wrapper->field_my_entity_ref->set(intval(15));
-//    $my_date = new DateTime('January 1, 2013');
-//    $entity->field_my_date[LANGUAGE_NONE][0] = array(
-//      'value' => date_format($my_date, 'Y-m-d'),
-//      'timezone' => 'UTC',
-//      'timezone_db' => 'UTC',
-//    );
-//    $wrapper->save();
   }
 
 
