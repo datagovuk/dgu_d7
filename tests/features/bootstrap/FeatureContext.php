@@ -1138,6 +1138,53 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @Given /^that dataset with titled "([^"]*)" with name "([^"]*)" published by "([^"]*)" exists and has no resources$/
+   */
+  public function thatDatasetWithTitledWithNamePublishedByExistsAndHasNoResources($title, $name, $publisher) {
+
+    try {
+      $client = $this->ckan_get_client();
+
+      $response = $client->PackageSearch(array('fq' => "name: $name"));
+      $result = $response->toArray();
+
+      $package_json = $this->get_json_package($title, $name, $publisher);
+
+      if (empty($result['result']['results'])) {
+        $response = $client->PackageCreate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to create '$title' dataset.");
+        }
+
+      } else {
+        $response = $client->PackageUpdate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to purge resources on '$title' dataset.");
+        }
+      }
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  private function get_json_package($title, $name, $publisher, array $resources = array()) {
+    $package = array(
+      'name' => $name,
+      'title' => $title,
+      'owner_org' => $publisher,
+      'license_id' => 'uk-ogl',
+      'notes' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'resources' => $resources,
+    );
+
+    return json_encode($package);
+  }
+
+
+  /**
    * Get a ckan client instance.
    */
   private function ckan_get_client() {
