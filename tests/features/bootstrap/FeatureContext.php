@@ -1250,6 +1250,30 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @When /^I open comment form for dataset with name "([^"]*)"$/
+   */
+  public function iOpenCommentFormForDatasetWithName($dataset_name) {
+    try {
+      $client = $this->ckan_get_client();
+
+      $dataset = $client->GetDataset(array('id' => $dataset_name))->toArray();
+
+      if (!empty($dataset['result'])) {
+
+        $ckan_id = $dataset['result']['id'];
+        $this->getSession()->visit($this->locatePath('/comment/dataset/' . $ckan_id));
+
+      } else {
+        throw new \Exception("Dataset '$dataset_name' not found.");
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
    * Get a ckan client instance.
    */
   private function ckan_get_client() {
