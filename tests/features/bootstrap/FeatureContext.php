@@ -1170,6 +1170,43 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * @Given /^I attach "([^"]*)" resource to "([^"]*)" dataset$/
+   */
+  public function iAttachResourceToDataset($resource_url, $dataset_name) {
+    try {
+      $client = $this->ckan_get_client();
+
+      $dataset = $client->GetDataset(array('id' => $dataset_name))->toArray();
+
+      if (!empty($dataset['result'])) {
+
+        $title = $dataset['result']['title'];
+        $publisher = $dataset['result']['organization']['name'];
+        $url_parts = explode('/', $resource_url);
+        $resource_description = end($url_parts);
+
+        $resources = empty($dataset['result']['resources']) ? array() : $dataset['result']['resources'];
+        $resources[] = array('url' => $resource_url, 'description' => $resource_description, 'format' => 'TEST');
+
+        $package_json = $this->get_json_package($title, $dataset_name, $publisher, $resources);
+
+        $response = $client->PackageUpdate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to purge resources on '$title' dataset.");
+        }
+
+      } else {
+        throw new \Exception("Dataset '$dataset_name' not found.");
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
   private function get_json_package($title, $name, $publisher, array $resources = array()) {
     $package = array(
       'name' => $name,
