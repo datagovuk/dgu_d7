@@ -108,9 +108,9 @@ function dgu_data_set_default_message_type() {
           "safe_value" : "\\u003Cp\\u003EDataset \\u003Ca href=\\u0022[message:field-dataset-reference:url]\\u0022\\u003E[message:field-dataset-reference:title]\\u003C\\/a\\u003E has been created\\u003C\\/p\\u003E\\n"
         },
         {
-          "value" : "\\u003Cp\\u003EYou\\u0027ve been subscribed to comments about new dataset \\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E",
+          "value" : "\\u003Cp\\u003EYou have been subscribed to comments on new dataset \\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E",
           "format" : "full_html",
-          "safe_value" : "\\u003Cp\\u003EYou\\u0027ve been subscribed to comments about new dataset \\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E\\n"
+          "safe_value" : "\\u003Cp\\u003EYou have been subscribed to comments on new dataset \\u0022[message:field-dataset-reference:title]\\u0022\\u003C\\/p\\u003E\\n"
         },
         {
           "value" : "\\u003Cp\\u003EYou can see this dataset at:\\u003Cbr\\u003E[message:field-dataset-reference:url]\\u003C\\/p\\u003E\\u003Cp\\u003EYou have received this message because you are subscribed to notifications about dataset comments.\\u003C\\/p\\u003E\\u003Cp\\u003EYou can change your auto subscription preferences at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\/auto-subscribe\\u003C\\/p\\u003E\\u003Cp\\u003EYou can also keep your subscription preferences but unsubscribe from notifications about comments on this dataset at:\\u003Cbr\\u003E[site:url]user\\/[message:current-subscriber-uid]\\/subscriptions\\u003C\\/p\\u003E",
