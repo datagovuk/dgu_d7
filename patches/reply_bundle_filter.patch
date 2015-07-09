@@ -13,11 +13,13 @@ index 359b08c..3d00267 100644
 -    ->execute()
 -    ->fetchCol();
 +  $parameters = drupal_get_query_parameters();
-+  $query = db_select('reply', 'r')->fields('r', array('id'));
++  $query = db_select('reply', 'r')
++    ->fields('r', array('id'))
++    ->extend('PagerDefault')->limit(20)
++    ->extend('TableSort')->orderByHeader($header);
 +  if (isset($parameters['bundle'])) {
 +    $query->condition('r.bundle', $_GET['bundle']);
 +  }
-+  $query->extend('PagerDefault')->limit(20)->extend('TableSort')->orderByHeader($header);
 +  $ids = $query->execute()->fetchCol();
  
    $languages = language_list();
