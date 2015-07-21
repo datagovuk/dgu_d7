@@ -15,7 +15,6 @@ Feature: Create blogs as a blogger
       | Blog         |
       | Latest Blogs |
     And view "latest_blog_posts" view should have "6" rows
-    And I break
     And I should see the link "See all"
     And view "frequent_bloggers" view should have "15" rows
     And search result counter should match "^\d* Blogs$"
