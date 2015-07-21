@@ -115,6 +115,7 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   $form['#after_build'][] = 'dgu_user_profile_after_build';
   $form['#validate'][] = 'dgu_user_profile_validate';
+  $form['#submit'][] = 'dgu_user_profile_submit';
 }
 
 function dgu_user_profile_after_build($form, &$form_state) {
@@ -144,6 +145,13 @@ function dgu_user_profile_validate($form, &$form_state) {
     if (!preg_match('/^[A-Za-z0-9_]{1,15}$/', $twitter_username)) {
       form_set_error('field_twitter', 'Please use just twitter user name e.g \'@username\'');
     }
+  }
+}
+
+function dgu_user_profile_submit($form, &$form_state) {
+  if(isset($_GET['pass-reset-token'])) {
+    $identifier = $form_state['user']->uid . '-' . ip_address();
+    db_delete('flood')->condition('identifier', $identifier)->execute();
   }
 }
 
