@@ -181,13 +181,13 @@ Feature: Create blogs as a blogger
     And I should see "Test subject"
     And I should see "Test comment"
     And I should see the link "Reply"
+    Given the cache has been cleared
+    When I visit "/blog"
+    Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
     And the "test_subscriber_updates_comments" user received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
     And the "test_subscriber_new_blog" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
     And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
     And the "test_user" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
-    Given the cache has been cleared
-    When I visit "/blog"
-    Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
 
   @api
   Scenario: Subscribe user to existing blog and test notifications about comment and blog update
