@@ -62,6 +62,25 @@ function dgu_user_block_view($delta='') {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function dgu_user_form_user_login_alter(&$form, &$form_state, $form_id) {
+  $form['#validate'][] = 'dgu_user_form_user_login_validate';
+}
+
+function dgu_user_form_user_login_validate($form, &$form_state) {
+  $messages = drupal_get_messages('error');
+  if (!empty($messages)) {
+    foreach($messages['error'] as &$message) {
+      if ($message == 'Sorry, there have been more than 5 failed login attempts for this account. It is temporarily blocked. Try again later or <a href="/user/password">request a new password</a>.') {
+        $message = 'Sorry, there have been more than 5 failed login attempts for this account. It is temporarily blocked. Try again after one hour or <a href="/user/password">request a new password</a>.';
+      }
+      drupal_set_message($message, 'error');
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   $current_pass_description = 'If you want to change your password or email address please enter your current password here. If you have forgotten your password you can <a href="/user/password" title="Request new password via e-mail.">reset it here.</a>';
 
