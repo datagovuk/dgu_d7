@@ -733,6 +733,40 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @When /^user "([^"]*)" clicks link matching "(?P<link_regex>[^"]*)" in mail(?: (?:titled )?'(?P<title>[^']*)')?$/
+   */
+  public function userClickLinkMatchingInMail($user, $link_regex, $title = NULL) {
+
+    $title = $title ? $this->fixStepArgument($title) : NULL;
+
+    foreach ($this->mailMessages[$user] as $msg) {
+      if ($title && trim($msg->subject) == $title) {
+
+        if (!empty($msg->body)) {
+
+          // Look for matching link text.
+          $body = str_replace('\n', '', $msg->body);
+
+          // Get all links.
+          if (preg_match_all('/https?:\/\/.*/i', $body, $matches)) {
+            $links = array_shift($matches);
+
+            foreach ($links as $link) {
+              preg_match('/' . $link_regex . '/i', trim($link), $hef_matches);
+              if (!empty($hef_matches)) {
+                $this->getSession()->visit($link);
+              }
+            }
+          }
+        }
+      }
+    }
+//    throw new \Exception('Email "' . $title . '" does not have a link with the text "' . $link_substring . '".');
+//    throw new \Exception('Email "' . $title . '" not received.');
+//    throw new \Exception('Email "' . $title . '" does not have any links.');
+  }
+
+  /**
    * @Given /^that the user "([^"]*)" is not registered$/
    */
   public function thatTheUserIsNotRegistered($user_name) {
