@@ -109,9 +109,11 @@ Feature: Request new data
     # Set weekly notifications for test_data_publisher
     And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Weekly" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I wait until the page loads
+    And I select the radio button "Weekly"
     And I press "Save"
     # Register test_data_request_manager user
     And that the user "test_data_request_manager" is not registered
@@ -119,9 +121,10 @@ Feature: Request new data
     # Set daily notifications for test_data_publisher
     And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Daily" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I select the radio button "Daily"
     And I press "Save"
     # Register test_data_request_admin user
     And that the user "test_data_request_admin" is not registered
@@ -138,7 +141,6 @@ Feature: Request new data
     And I wait until the page loads
     # Subscriber shouldn't be notified because it can't see this change, "Relationship manager" is a backend field which shouldn't be visible to normal users
     Then the "test_subscriber" user have not received an email 'Data request "Test data request" has been updated by test_data_request_admin '
-    And I break
     Given I am not logged in
     And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     When I visit "/admin/workbench"
