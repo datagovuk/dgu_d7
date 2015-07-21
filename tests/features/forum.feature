@@ -109,8 +109,36 @@ Feature: Create new forum topic as a site user
     And the field "Forums" should be outlined in red
 
   @api
-  Scenario: Create a new forum topic
+  Scenario: Create a new forum topic, test notifications
     Given that the user "test_user" is not registered
+    And that the user "test_subscriber_new_forum" is not registered
+    And that the user "test_subscriber_updates_comments" is not registered
+    And that the user "test_non_subscriber" is not registered
+    And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
+    And I am logged in as a user "test_subscriber_new_forum" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "Forum topic"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
+    And I am logged in as a user "test_subscriber_updates_comments" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "Forum topic"
+    And I wait 1 second
+    And I check "Automatically subscribe to updates and comments"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
     And I am logged in as a user "test_user" with the "authenticated user" role
     And I visit "/forum"
     And I follow "Create new forum topic"
@@ -122,12 +150,17 @@ Feature: Create new forum topic as a site user
     And I should see node title "Test forum topic"
     When I submit "Forum topic" titled "Test forum topic" for moderation
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
+    And the "test_user" user have not received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_non_subscriber" user have not received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_subscriber_new_forum" user received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_subscriber_updates_comments" user received an email 'Forum topic "Test forum topic" has been created '
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test forum topic" in My content and All content tabs but not in My drafts tab
     # Comment on "Test forum topic" as "test_commenting_user"
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
     And I am on "/forum/general-discussion/test-forum-topic"
+    And I should see the link "Subscribe"
     When I follow "Add new comment"
     And I wait until the page loads
     Then I should see the following <breadcrumbs>
@@ -145,6 +178,10 @@ Feature: Create new forum topic as a site user
     And I should see "Test subject"
     And I should see "Body content of test comment"
     And I should see the link "Reply"
+    And the "test_subscriber_updates_comments" user received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
+    And the "test_subscriber_new_forum" user have not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
+    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
+    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
     # Clear the cache so the forum topic will show up on the forum landing page
     Given the cache has been cleared
     When I visit "/forum"

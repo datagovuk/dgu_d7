@@ -2,7 +2,7 @@
 Feature: Sync datasets from CKAN to Drupal
 
   @api
-  Scenario: Synchronise CKAN dataset to Drupal
+  Scenario: Subscribe to dataset comemnts and updates
     Given that dataset with titled "Test dataset" with name "test-dataset" published by "cabinet-office" exists and has no resources
     And that the user "test_user" is not registered
     And that the user "test_user_updates" is not registered

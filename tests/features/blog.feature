@@ -15,6 +15,7 @@ Feature: Create blogs as a blogger
       | Blog         |
       | Latest Blogs |
     And view "latest_blog_posts" view should have "6" rows
+    And I break
     And I should see the link "See all"
     And view "frequent_bloggers" view should have "15" rows
     And search result counter should match "^\d* Blogs$"
@@ -97,8 +98,36 @@ Feature: Create blogs as a blogger
     And the field "Title" should be outlined in red
 
   @api
-  Scenario: Create a new blog entry and comment on it
+  Scenario: Create a new blog entry and comment on it and test notification about new content
     Given that the user "test_user" is not registered
+    And that the user "test_subscriber_new_blog" is not registered
+    And that the user "test_subscriber_updates_comments" is not registered
+    And that the user "test_non_subscriber" is not registered
+    And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
+    And I am logged in as a user "test_subscriber_new_blog" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "Blog entry"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
+    And I am logged in as a user "test_subscriber_updates_comments" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "Blog entry"
+    And I wait 1 second
+    And I check "Automatically subscribe to updates and comments"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
     And I am logged in as a user "test_user" with the "blogger" role
     And I visit "/node/add/blog"
     And I wait until the page loads
@@ -115,6 +144,10 @@ Feature: Create blogs as a blogger
     And I should see "Test body"
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"
+    And the "test_user" user have not received an email 'Blog entry "Test blog" has been created '
+    And the "test_non_subscriber" user have not received an email 'Blog entry "Test blog" has been created '
+    And the "test_subscriber_new_blog" user received an email 'Blog entry "Test blog" has been created '
+    And the "test_subscriber_updates_comments" user received an email 'Blog entry "Test blog" has been created '
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test blog" in My content and All content tabs but not in My drafts tab
     Given the cache has been cleared
@@ -125,6 +158,7 @@ Feature: Create blogs as a blogger
     And row "1" of "latest_blog_posts" view should match "No comments so far$"
     When I click "title" field in row "1" of "latest_blog_posts" view
     Then I should be on "/blog/test-blog"
+    And I should see the link "Subscribe"
     # Testing comments as different user
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
@@ -148,14 +182,81 @@ Feature: Create blogs as a blogger
     And I should see "Test subject"
     And I should see "Test comment"
     And I should see the link "Reply"
+    And the "test_subscriber_updates_comments" user received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
+    And the "test_subscriber_new_blog" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
+    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
+    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
     Given the cache has been cleared
     When I visit "/blog"
     Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
 
-  @anon
-  Scenario: Make sure that comments can not be posted by anonymous users
-    Given I am on "/blog"
+  @api
+  Scenario: Subscribe user to existing blog and test notifications about comment and blog update
+    # Create a blog
+    Given that the user "test_editor" is not registered
+    And I am logged in as a user "test_editor" with the "editor" role
+    And user "test_editor" created "blog" titled "Test blog"
+    # Subscribe to this blog by test_user
+    And that the user "test_user" is not registered
+    And I am logged in as a user "test_user" with the "authenticated user" role
+    And the cache has been cleared
+    And I visit "/blog"
     And I wait until the page loads
-    When I click "title" field in row "1" of "latest_blog_posts" view
+    And I click "Test blog"
     And I wait until the page loads
-    Then I should see the link "Login to make a comment"
+    And I should not see "Unsubscribe"
+    When I click "Subscribe"
+    And I wait 1 second
+    Then I should see the link "Unsubscribe"
+    Given I am logged in as a user "test_editor" with the "editor" role
+    And I visit "/user"
+    And I wait until the page loads
+    And I click "Test blog"
+    And I wait until the page loads
+    And I click "Edit"
+    And I wait until the page loads
+    And I fill in "Title" with "Amended test blog"
+    And I click "Publishing options"
+    And I wait 1 second
+    And I select "Published" from "Moderation state"
+    When I press "Save"
+    And I wait until the page loads
+    Then I should see "Amended test blog"
+    # test_editor isn't subscribed
+    And I should see the link "Subscribe"
+    And the "test_user" user received an email 'Blog entry "Test blog" has been updated'
+    And I follow "Add new comment"
+    And I fill in "Subject" with "Test subject"
+    And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
+    When I press "Submit"
+    Then the "test_user" user received an email 'User test_editor posted a comment on Blog entry "Amended test blog"'
+    Given I am logged in as a user "test_user" with the "authenticated user" role
+    When user "test_user" clicks link containing "/blog/" in mail 'User test_editor posted a comment on Blog entry "Amended test blog"'
+    And I wait until the page loads
+    Then I should see the following <breadcrumbs>
+      | Blog              |
+      | Amended test blog |
+    When user "test_user" clicks link matching ".*\/subscriptions$" in mail 'Blog entry "Test blog" has been updated'
+    Then I should see the following <breadcrumbs>
+      | My subscriptions |
+    And I should see the link "Amended test blog"
+    And I should see "Blog entry"
+    And I should see the link "Unsubscribe"
+    When user "test_user" clicks link containing "/subscriptions/delivery" in mail 'Blog entry "Test blog" has been updated'
+    And I break
+    Then I should see the following <breadcrumbs>
+      | My subscriptions          |
+      | Delivery of notifications |
+    And I click "My subscriptions"
+    And I should see the link "Amended test blog"
+    When I click "Unsubscribe"
+    And I wait 1 second
+    Then I should not see "Unsubscribe"
+    And I should see the link "Subscribe"
+    And the cache has been cleared
+    And I visit "/blog"
+    And I wait until the page loads
+    And I click "Amended test blog"
+    And I wait until the page loads
+    And I should not see "Unsubscribe"
+    And I should see the link "Subscribe"
