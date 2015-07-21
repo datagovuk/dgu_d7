@@ -61,6 +61,21 @@ function dgu_notifications_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_notifications_menu_breadcrumb_alter(&$active_trail, $item) {
+  global $user;
+  if ($item['path'] == 'user/%/subscriptions/delivery') {
+    unset($active_trail[1]);
+    drupal_set_title('Delivery of notifications');
+  }
+  elseif ($item['path'] == 'user/%/subscriptions/auto-subscribe') {
+    unset($active_trail[1]);
+    drupal_set_title('Auto subscribe');
+  }
+}
+
 function _dgu_notifications_subscriptions_access() {
   return user_access('administer users') || dgu_user_accessing_own_account();
 }
@@ -100,8 +115,8 @@ function dgu_notifications_node_update($node) {
 
     // Don't create a message about moderation here, there should be
     // an universal message about moderation state change for all content types.
-    if (empty($node->workbench_moderation_state_current) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'published'
-      || $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'draft') {
+    if (!empty($node->workbench_moderation) && empty($node->workbench_moderation_state_current) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'published'
+      || !empty($node->workbench_moderation) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'draft') {
       return;
     }
 
