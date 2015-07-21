@@ -243,7 +243,6 @@ Feature: Create blogs as a blogger
     And I should see "Blog entry"
     And I should see the link "Unsubscribe"
     When user "test_user" clicks link containing "/subscriptions/delivery" in mail 'Blog entry "Test blog" has been updated'
-    And I break
     Then I should see the following <breadcrumbs>
       | My subscriptions          |
       | Delivery of notifications |
