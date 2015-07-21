@@ -192,9 +192,9 @@ Feature: Request new data
     And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
     # Test links in the email
-    When user "test_data_publisher" clicks link containing "data-request/my-dataset-request-title" in mail 'data.gov.uk Message Digest'
+    When user "test_data_publisher" clicks link containing "data-request/test-data-request" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
-    Then I should be on "data-request/my-dataset-request-title"
+    Then I should be on "data-request/test-data-request"
     When user "test_data_publisher" clicks link containing "admin/workbench/content/active" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
     Then I should be on "admin/workbench/content/active"
@@ -202,7 +202,7 @@ Feature: Request new data
     And I should see "Request is public"
     Then I should see the following <breadcrumbs>
       | Active Data requests |
-    When user "test_data_publisher" clicks link containing "message-subscribe" in mail 'data.gov.uk Message Digest'
+    When user "test_data_publisher" clicks link matching ".*\/subscriptions$" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
     Then I should see the following <breadcrumbs>
       | My subscriptions |
