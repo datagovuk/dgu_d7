@@ -15,3 +15,43 @@ function dgu_library_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1] = array('title' => 'Library', 'href' => 'library', 'localized_options' => array());
   }
 }
+
+/**
+ * Implements hook_node_insert().
+ */
+function dgu_library_node_insert($node) {
+  if ($node->type == 'resource' && module_exists('message_subscribe')) {
+
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+
+    // Message about new content for users which don't want to be subscribed to this content.
+    $message_node_new = message_create('dgu_notifications_node_new');
+    $wrapper = entity_metadata_wrapper('message', $message_node_new);
+    $wrapper->field_node_reference->set($node);
+
+    // Message about new content for users which want to be subscribed to this content.
+    $message_node_new_subscribe = message_create('dgu_notifications_node_new_subscribe');
+    $wrapper = entity_metadata_wrapper('message', $message_node_new_subscribe);
+    $wrapper->field_node_reference->set($node);
+
+    $users_to_notify_or_subscribe = _dgu_notifications_get_auto_subscribers($node->type);
+    $users_to_notify_and_subscribe = _dgu_notifications_get_auto_subscribers($node->type, TRUE);
+    $users_to_notify_only = array_diff_assoc($users_to_notify_or_subscribe, $users_to_notify_and_subscribe);
+    message_subscribe_send_message('node', $node, $message_node_new, $options, array('uids' => $users_to_notify_only));
+
+    if (!empty($users_to_notify_and_subscribe)) {
+      message_subscribe_send_message('node', $node, $message_node_new_subscribe, $options, array('uids' => $users_to_notify_and_subscribe));
+
+      foreach (array_keys($users_to_notify_and_subscribe) as $uid) {
+        $account = user_load($uid);
+        flag('flag', 'subscribe_node', $node->nid, $account);
+      }
+    }
+
+  }
+}
