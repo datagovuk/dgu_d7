@@ -86,7 +86,7 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
     'forum' => 'Forum topic',
     'forum_subscribe' => 'Automatically subscribe to updates and comments',
     'resource' => 'Library resource',
-    'resource_subscribe' => 'Automatically subscribe to updates and comments',
+    'resource_subscribe' => 'Automatically subscribe to updates',
   );
 
   $form = array('account' => array('#type' => 'value', '#account' => $account));
