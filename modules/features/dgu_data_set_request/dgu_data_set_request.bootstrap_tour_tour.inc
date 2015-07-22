@@ -406,7 +406,7 @@ function dgu_data_set_request_default_bootstrap_tour() {
       'path' => 'admin/workbench/content/active',
       'placement' => 'bottom',
       'title' => 'Active data requests',
-      'content' => '<p>Data requests that have not been closed and that are assigned to you are displayed here. You will only see data requests that have been assigned to you.</p>
+      'content' => '<p>Data requests that have not been closed and that are assigned to you are displayed here.</p>
 ',
       'format' => 'filtered_html',
     ),

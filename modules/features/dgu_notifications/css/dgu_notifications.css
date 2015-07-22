@@ -1,0 +1,35 @@
+#edit-content-types .form-item-content-types-ckan-dataset-update-subscribe label,
+#edit-content-types .form-item-content-types-ckan-dataset-comment-subscribe label,
+#edit-content-types .form-item-content-types-app-subscribe label,
+#edit-content-types .form-item-content-types-blog-subscribe label,
+#edit-content-types .form-item-content-types-dataset-request-subscribe label,
+#edit-content-types .form-item-content-types-forum-subscribe label,
+#edit-content-types .form-item-content-types-resource-subscribe label {
+    font-size: 12px;
+}
+
+#edit-content-types .form-item-content-types-ckan-dataset-update-subscribe,
+#edit-content-types .form-item-content-types-ckan-dataset-comment-subscribe,
+#edit-content-types .form-item-content-types-app-subscribe,
+#edit-content-types .form-item-content-types-blog-subscribe,
+#edit-content-types .form-item-content-types-dataset-request-subscribe,
+#edit-content-types .form-item-content-types-forum-subscribe,
+#edit-content-types .form-item-content-types-resource-subscribe {
+    padding-left: 40px;
+}
+
+#edit-content-types input {
+    margin-top: 7px;
+}
+
+#edit-content-types label {
+    line-height: 28px;
+}
+
+#edit-content-types .form-type-checkbox {
+    margin-bottom: 5px;
+}
+
+#edit-content-types .content-type {
+    border-top: 2px solid #ddd;
+}

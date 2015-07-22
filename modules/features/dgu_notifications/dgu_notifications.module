@@ -7,6 +7,80 @@
 include_once 'dgu_notifications.features.inc';
 
 /**
+ * Implements hook_menu_alter().
+ */
+function dgu_notifications_menu_alter(&$items) {
+  // Remove callbacks registered by message_subscribe.
+  unset($items['user/%user/message-subscribe']);
+  unset($items['user/%user/message-subscribe/subscribe_node']);
+  unset($items['user/%user/message-subscribe/subscribe_dataset_update']);
+  unset($items['user/%user/message-subscribe/subscribe_dataset_comment']);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function dgu_notifications_menu() {
+  $items['user/%user/subscriptions'] = array(
+    'title' => 'My subscriptions',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'dgu_notifications_my_subscriptions',
+    'page arguments' => array(1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 1,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/my-subscriptions'] = array(
+    'title' => 'Current subscriptions',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'page callback' => 'dgu_notifications_my_subscriptions',
+    'page arguments' => array(1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 1,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/delivery'] = array(
+    'title' => 'Delivery of notifications',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_delivery', 1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 2,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+  $items['user/%user/subscriptions/auto-subscribe'] = array(
+    'title' => 'Auto subscribe',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_auto_subscribe', 1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 3,
+    'file' => 'dgu_notifications.pages.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ */
+function dgu_notifications_menu_breadcrumb_alter(&$active_trail, $item) {
+  global $user;
+  if ($item['path'] == 'user/%/subscriptions/delivery') {
+    unset($active_trail[1]);
+    drupal_set_title('Delivery of notifications');
+  }
+  elseif ($item['path'] == 'user/%/subscriptions/auto-subscribe') {
+    unset($active_trail[1]);
+    drupal_set_title('Auto subscribe');
+  }
+}
+
+function _dgu_notifications_subscriptions_access() {
+  return user_access('administer users') || dgu_user_accessing_own_account();
+}
+
+/**
  * Implements hook_theme_registry_alter().
  *
  * To allow the theme files for the message_digest to reside in
@@ -24,6 +98,106 @@ function dgu_notifications_theme_registry_alter(&$theme_registry) {
   $theme_registry['message_digest_row']['path'] = $module_path . "/templates";
 
 }
+
+/**
+ * Implements hook_node_update().
+ */
+function dgu_notifications_node_update($node) {
+  // Data request notification is specific and implemented in dgu_data_set_request.module
+  if ($node->type != 'dataset_request' && module_exists('message_subscribe')) {
+
+    // Ignore second node update in single request.
+    // See dgu_data_set_request_node_presave();
+    $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+    if (is_array($updates_to_ignore) && in_array($node->nid, $updates_to_ignore)) {
+      return;
+    }
+
+    // Don't create a message about moderation here, there should be
+    // an universal message about moderation state change for all content types.
+    if (!empty($node->workbench_moderation) && empty($node->workbench_moderation_state_current) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'published'
+      || !empty($node->workbench_moderation) && $node->workbench_moderation['current']->from_state == 'needs_review' && $node->workbench_moderation['current']->state == 'draft') {
+      return;
+    }
+
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+    $message_update = message_create('dgu_notifications_node_update');
+    $wrapper = entity_metadata_wrapper('message', $message_update);
+    $wrapper->field_node_reference->set($node);
+    message_subscribe_send_message('node', $node, $message_update, $options);
+  }
+}
+
+function _dgu_notifications_get_auto_subscribers($type, $subscribe = FALSE) {
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+
+  $query = db_select('users_auto_subscribe', 'uas');
+  $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = uas.uid');
+  $query->fields('uas', array('uid'));
+  $query->fields('fdn', array('field_digest_notifier_value'));
+
+  if (!$subscribe) {
+    $query->condition('uas.type', $type);
+  }
+  else {
+    $query->condition('uas.type', $type . '_subscribe');
+  }
+
+  $result = $query->execute()->fetchAll();
+  $uids = array();
+  foreach ($result as $row) {
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
+  }
+  return $uids;
+}
+
+/**
+ * Implements hook_node_presave().
+ */
+function dgu_notifications_node_presave($node) {
+  if ($node->type != 'dataset_request') {
+    $previous_node_revision = &drupal_static('previous_node_revision');
+    // Workbench moderation uses shutdown function to update the node for the second time in the same request.
+    // To avoid messages being created twice we ignore second node update in single request.
+    if (isset($previous_node_revision)) {
+      $updates_to_ignore = &drupal_static('node_updates_to_ignore');
+      $updates_to_ignore = isset($updates_to_ignore) ? $updates_to_ignore : array();
+      $updates_to_ignore[] = $node->nid;
+    }
+    // Store previous revision of the node in static cache to be available for comparison in hook_node_update().
+    $previous_node_revision = node_load($node->nid);
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function dgu_notifications_entity_insert($entity, $type) {
+  if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type != 'ckan_dataset' && module_exists('message_subscribe')) {
+    $options = array(
+      'rendered fields' => array(
+        'message_notify_email_subject' => 'field_message_rendered_subject',
+        'message_notify_email_body' => 'field_message_rendered_body',
+      ),
+    );
+    $data_request_admin_roles = variable_get('dgu_data_set_request_data_request_admin_roles',array(3, 6, 10)); // 3 = administrator, 6 = data publisher, 10 = data request administrator
+
+    $message = message_create('dgu_notifications_reply_new');
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $node = node_load($entity->entity_id);
+    $wrapper->field_node_reference->set($node);
+    $wrapper->field_reply_reference->set($entity);
+
+    $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
+    message_subscribe_send_message('node', $node, $message, $options, array('uids' => $uids));
+  }
+}
+
 
 /**
  * Implements hook_message_digest_view_mode_alter().
@@ -81,7 +255,12 @@ function dgu_notifications_mail_alter(&$message) {
     }
 
     if ($uid) {
-      $message['body'][] = "You can choose how often you receive email notifications in your account settings:\n" . $base_url . '/user/' . $uid . '/edit';
+      if($message['id'] == 'message_notify_dataset_comment_new') {
+        $message['body'][] = "You can unsubscribe from receiving email notifications about dataset comments in your auto subscriptions settings:\n" . $base_url . '/user/' . $uid . '/subscriptions/auto-subscribe';
+      }
+      else {
+        $message['body'][] = "You can choose how often you receive email notifications in your subscriptions settings:\n" . $base_url . '/user/' . $uid . '/subscriptions/delivery';
+      }
     }
 
   }

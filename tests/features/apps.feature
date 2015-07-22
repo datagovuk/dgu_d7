@@ -70,8 +70,36 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And pager should match "^1 2 3 … »$"
 
   @api
-  Scenario: Create a new app as the "test_user" and update it before submitting it for moderation
+  Scenario: Create a new app as the "test_user", update it before submitting for moderation, test notifications
     Given that the user "test_user" is not registered
+    And that the user "test_subscriber_new_app" is not registered
+    And that the user "test_subscriber_updates_comments" is not registered
+    And that the user "test_non_subscriber" is not registered
+    And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
+    And I am logged in as a user "test_subscriber_new_app" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "App"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
+    And I am logged in as a user "test_subscriber_updates_comments" with the "authenticated user" role
+    When I visit "/user"
+    And I wait until the page loads
+    And I follow "My subscriptions"
+    And I wait until the page loads
+    And I click "Auto subscribe"
+    And I wait until the page loads
+    And I check "App"
+    And I wait 1 second
+    And I check "Automatically subscribe to updates and comments"
+    And I wait 1 second
+    And I press "Save"
+    And I wait until the page loads
     And I am logged in as a user "test_user" with the "authenticated user" role
     When I visit "/apps"
     And I follow "Add your app"
@@ -98,8 +126,7 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     Then I should see a message about created draft "App"
     And I should see node title "Test app"
     And I should see "Test developer"
-
-  #App title is used as the hyperlink title so we check the link title then check if there is a link
+    #App title is used as the hyperlink title so we check the link title then check if there is a link
     And I should see "App Link: Test app"
     And I should see the link "Test app"
     Then I should be on "/apps/test-app"
@@ -116,20 +143,22 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I wait until the page loads
     Then I should see " Your draft App has been updated. You can update it in My Drafts section."
     And I should see "Updated on"
+    And I should see the link "Subscribe"
     And I submit "App" titled "Test app" for moderation
-
-# Moderate "Test app" as a "test_moderator"
+    # Moderate "Test app" as a "test_moderator"
     Given user with "moderator" role moderates "Test app" authored by "test_user"
-
-# Clear the cache so the new app will show up on the latest apps landing page
+    # Clear the cache so the new app will show up on the latest apps landing page
+    And the "test_user" user have not received an email 'App "Test app" has been created '
+    And the "test_non_subscriber" user have not received an email 'App "Test app" has been created '
+    And the "test_subscriber_new_app" user received an email 'App "Test app" has been created '
+    And the "test_subscriber_updates_comments" user received an email 'App "Test app" has been created '
     Given the cache has been cleared
     When I visit "/apps"
     And I wait until the page loads
     Then "title" field in row "1" of "latest_apps" view should match "^Test app$"
     When I click "title" field in row "1" of "latest_apps" view
     Then I should be on "/apps/test-app"
-
-# Comment on "Test app" as "test_commenting_user"
+    # Comment on "Test app" as "test_commenting_user"
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
     And I am on "/apps/test-app"
@@ -150,8 +179,11 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "Test subject"
     And I should see "Body content of test comment"
     And I should see the link "Reply"
-
-#View the Test App and check the author link
+    And the "test_subscriber_updates_comments" user received an email 'User test_commenting_user posted a comment on App "Test app" '
+    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on App "Test app" '
+    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on App "Test app" '
+    And the "test_subscriber_new_app" user have not received an email 'User test_commenting_user posted a comment on App "Test app" '
+    #View the Test App and check the author link
     Given I am on "/apps/test-app"
     When I follow "test_user" in the "main_content"
     And I wait until the page loads

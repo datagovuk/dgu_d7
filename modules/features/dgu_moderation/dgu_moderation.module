@@ -107,10 +107,18 @@ function dgu_moderation_moderate_callback($node, $state) {
 }
 
 /**
- * Implements Hook hook_form_FORM_ID_alter which:
+ * Implements hook_form_FORM_ID_alter.
  */
 function dgu_moderation_form_workbench_moderation_moderate_form_alter(&$form, &$form_state, $form_id) {
   $form['#validate'][] = 'dgu_moderation_workbench_moderation_moderate_form_validate';
+
+  // Replace workbench moderation submit function with our to allow our custom form redirect.
+  // workbench_moderation_moderate_form_submit function redirects the form and our submit handler is not called
+  $key = array_search('workbench_moderation_moderate_form_submit', $form['#submit']);
+  if ($key !== FALSE) {
+    unset($form['#submit'][$key]);
+  }
+  $form['#submit'][] = 'dgu_moderation_workbench_moderation_moderate_form_submit';
 }
 
 function dgu_moderation_workbench_moderation_moderate_form_validate($form, &$form_state) {
@@ -122,6 +130,23 @@ function dgu_moderation_workbench_moderation_moderate_form_validate($form, &$for
     drupal_goto('node/' . $node->nid . '/moderation/' . $node->vid . '/change-state/draft', array('query' => array('token' => $token)));
   }
 }
+
+function dgu_moderation_workbench_moderation_moderate_form_submit($form, &$form_state) {
+  if (_workbench_moderation_moderate_access($form_state['values']['node'], $form_state['values']['state'])) {
+    workbench_moderation_moderate(node_load($form_state['values']['node']->nid, $form_state['values']['node']->vid), $form_state['values']['state']);
+  }
+
+  if (!empty($form['#destination'])) {
+    if ($form_state['values']['state'] == workbench_moderation_state_published()) {
+        $form_state['redirect'] = array('admin/workbench/needs-review');
+      }
+    else {
+      $form_state['redirect'] = $form['#destination'];
+    }
+    drupal_redirect_form($form_state);
+  }
+}
+
 
 function dgu_moderation_message_back_to_draft($form, &$form_state, $node, $state) {
   global $base_url;
@@ -230,6 +255,47 @@ function dgu_moderation_workbench_moderation_transition($node, $previous_state, 
 
   // TODO - test this with two different emails - one for submitter second one for moderator
   message_subscribe_send_message('node', $node, $message, $options);
+
+
+  if ($moderation_state_change_short == 'published' && dgu_moderation_is_published_first_time($node->nid)) {
+
+    // Message about new content for users which don't want to be subscribed to this content.
+    $message_node_new = message_create('dgu_notifications_node_new');
+    $wrapper = entity_metadata_wrapper('message', $message_node_new);
+    $wrapper->field_node_reference->set($node);
+
+    // Message about new content for users which want to be subscribed to this content.
+    $message_node_new_subscribe = message_create('dgu_notifications_node_new_subscribe');
+    $wrapper = entity_metadata_wrapper('message', $message_node_new_subscribe);
+    $wrapper->field_node_reference->set($node);
+
+    $users_to_notify_or_subscribe = _dgu_notifications_get_auto_subscribers($node->type);
+    $users_to_notify_and_subscribe = _dgu_notifications_get_auto_subscribers($node->type, TRUE);
+    $users_to_notify_only = array_diff_assoc($users_to_notify_or_subscribe, $users_to_notify_and_subscribe);
+
+    message_subscribe_send_message('node', $node, $message_node_new, $options, array('uids' => $users_to_notify_only));
+
+    if (!empty($users_to_notify_and_subscribe)) {
+      message_subscribe_send_message('node', $node, $message_node_new_subscribe, $options, array('uids' => $users_to_notify_and_subscribe));
+
+      foreach (array_keys($users_to_notify_and_subscribe) as $uid) {
+        $account = user_load($uid);
+        flag('flag', 'subscribe_node', $node->nid, $account);
+      }
+    }
+
+  }
+}
+
+/**
+ * Helper function to find if this is first time publication or publication of new revision.
+ */
+function dgu_moderation_is_published_first_time($nid) {
+  $query = db_select('workbench_moderation_node_history', 'wmnh')
+    ->condition('wmnh.nid', $nid)
+    ->condition('wmnh.state', 'published')
+    ->fields('wmnh', array('state'));
+  return $query->execute()->rowCount() == 1;
 }
 
 

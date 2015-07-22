@@ -51,6 +51,36 @@ function dgu_flags_user_default_permissions() {
     'module' => 'flag',
   );
 
+  // Exported permission: 'flag subscribe_dataset_comment'.
+  $permissions['flag subscribe_dataset_comment'] = array(
+    'name' => 'flag subscribe_dataset_comment',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag subscribe_dataset_update'.
+  $permissions['flag subscribe_dataset_update'] = array(
+    'name' => 'flag subscribe_dataset_update',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'flag subscribe_node'.
+  $permissions['flag subscribe_node'] = array(
+    'name' => 'flag subscribe_node',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
+    ),
+    'module' => 'flag',
+  );
+
   // Exported permission: 'unflag spam_node'.
   $permissions['unflag spam_node'] = array(
     'name' => 'unflag spam_node',
@@ -79,6 +109,36 @@ function dgu_flags_user_default_permissions() {
       'glossary moderator' => 'glossary moderator',
       'moderator' => 'moderator',
       'unverified user' => 'unverified user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag subscribe_dataset_comment'.
+  $permissions['unflag subscribe_dataset_comment'] = array(
+    'name' => 'unflag subscribe_dataset_comment',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag subscribe_dataset_update'.
+  $permissions['unflag subscribe_dataset_update'] = array(
+    'name' => 'unflag subscribe_dataset_update',
+    'roles' => array(
+      'authenticated user' => 'authenticated user',
+    ),
+    'module' => 'flag',
+  );
+
+  // Exported permission: 'unflag subscribe_node'.
+  $permissions['unflag subscribe_node'] = array(
+    'name' => 'unflag subscribe_node',
+    'roles' => array(
+      'administrator' => 'administrator',
+      'authenticated user' => 'authenticated user',
+      'data publisher' => 'data publisher',
+      'data request administrator' => 'data request administrator',
     ),
     'module' => 'flag',
   );

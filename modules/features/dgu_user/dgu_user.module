@@ -62,6 +62,25 @@ function dgu_user_block_view($delta='') {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
+function dgu_user_form_user_login_alter(&$form, &$form_state, $form_id) {
+  $form['#validate'][] = 'dgu_user_form_user_login_validate';
+}
+
+function dgu_user_form_user_login_validate($form, &$form_state) {
+  $messages = drupal_get_messages('error');
+  if (!empty($messages)) {
+    foreach($messages['error'] as &$message) {
+      if ($message == 'Sorry, there have been more than 5 failed login attempts for this account. It is temporarily blocked. Try again later or <a href="/user/password">request a new password</a>.') {
+        $message = 'Sorry, there have been more than 5 failed login attempts for this account. It is temporarily blocked. Try again after one hour or <a href="/user/password">request a new password</a>.';
+      }
+      drupal_set_message($message, 'error');
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   $current_pass_description = 'If you want to change your password or email address please enter your current password here. If you have forgotten your password you can <a href="/user/password" title="Request new password via e-mail.">reset it here.</a>';
 
@@ -79,8 +98,9 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   unset($form['field_digest_notifier']);
   unset($form['account']['field_digest_notifier'][LANGUAGE_NONE]['#options']['_none']);
 
-  // Temporarily hide 'Notification frequency' for users with only authenticated role.
-  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = count($form['#user']->roles) > 1;
+
+  // Don't allow setting this field here, it's managed on 'My subscriptions' tab
+  $form['account']['field_digest_notifier'][LANGUAGE_NONE]['#access'] = FALSE;
 
   $form['profile']['#type'] = 'fieldset';
   $form['profile']['#collapsible'] = FALSE;
@@ -114,6 +134,7 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
 
   $form['#after_build'][] = 'dgu_user_profile_after_build';
   $form['#validate'][] = 'dgu_user_profile_validate';
+  $form['#submit'][] = 'dgu_user_profile_submit';
 }
 
 function dgu_user_profile_after_build($form, &$form_state) {
@@ -143,6 +164,13 @@ function dgu_user_profile_validate($form, &$form_state) {
     if (!preg_match('/^[A-Za-z0-9_]{1,15}$/', $twitter_username)) {
       form_set_error('field_twitter', 'Please use just twitter user name e.g \'@username\'');
     }
+  }
+}
+
+function dgu_user_profile_submit($form, &$form_state) {
+  if(isset($_GET['pass-reset-token'])) {
+    $identifier = $form_state['user']->uid . '-' . ip_address();
+    db_delete('flood')->condition('identifier', $identifier)->execute();
   }
 }
 
@@ -229,14 +257,14 @@ function dgu_user_menu_local_tasks_alter(&$data, $router_item, $root_path) {
     $my_subscriptions = array(
       array(
         '#theme' => 'menu_local_task',
-        '#link' => array('title' => 'My subscriptions', 'href' => 'user/' . $user->uid . '/message-subscribe', 'localized_options' => array()),
+        '#link' => array('title' => 'My subscriptions', 'href' => 'user/' . $user->uid . '/subscriptions', 'localized_options' => array()),
         '#active' => FALSE,
       ),
     );
     array_unshift($data['tabs'][0]['output'], $my_profile, $my_subscriptions);
 
     if ($user->uid >1 && !in_array('data request administrator', $user->roles) && !in_array('editor', $user->roles)) {
-      if (empty($user->data['ckan_publishers']) || !in_array('admin', $user->data['ckan_publishers'])) {
+      if (isset($data['tabs'][1]) && (empty($user->data['ckan_publishers']) || !in_array('admin', $user->data['ckan_publishers']))) {
         foreach ($data['tabs'][1]['output'] as $key => &$tab) {
           if ($tab['#link']['path'] == 'admin/workbench/content/data-requests') {
             unset($data['tabs'][1]['output'][$key]);
@@ -272,6 +300,17 @@ function dgu_user_user_login(&$edit, $account) {
 }
 
 /**
+ * Implements hook_user_insert().
+ */
+function dgu_user_user_insert(&$edit, $account, $category) {
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_account_uid->set($account->uid);
+  $wrapper->field_operation->set('create');
+  $message->save();
+}
+
+/**
  * Implements hook_user_update().
  */
 function dgu_user_user_update(&$edit, $account, $category) {
@@ -280,6 +319,27 @@ function dgu_user_user_update(&$edit, $account, $category) {
     // Delete session to avoid toolbar menu discrepancy in Drupal and CKAN.
     db_delete('sessions')->condition('uid', $account->uid)->execute();
   }
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_account_uid->set($account->uid);
+  $wrapper->field_operation->set('update');
+  $message->save();
+}
+
+/**
+ * Implements hook_user_delete().
+ */
+function dgu_user_user_delete($account) {
+  $message = message_create('user_operation');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_user_account_uid->set($account->uid);
+  $wrapper->field_operation->set('delete');
+  $message->save();
+}
+
+
+function dgu_user_is_ckan_admin($account) {
+  return isset($account->data['ckan_publishers'])? in_array('admin', $account->data['ckan_publishers']) : FALSE;
 }
 
 /**
@@ -306,7 +366,7 @@ function dgu_user_page_alter(&$page) {
  */
 function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
 
-  if($active_trail[1]['href'] == 'node/add') {
+  if(isset($active_trail[1]) && $active_trail[1]['href'] == 'node/add') {
     $active_trail[1]['href'] = 'admin/workbench/create';
   }
 
@@ -338,7 +398,7 @@ function dgu_user_menu_breadcrumb_alter(&$active_trail, $item) {
     $active_trail[1]['path'] = 'user/' . $user->uid;
   }
 
-  if ($item['path'] == 'user/%/message-subscribe') {
+  if ($item['path'] == 'user/%/subscriptions') {
     if (dgu_user_accessing_own_account()) {
       unset($active_trail[1]);
       drupal_set_title('My subscriptions');

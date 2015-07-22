@@ -57,7 +57,7 @@ Feature: Request new data
     And the field "Data request title" should be outlined in red
     And the field "Data request description" should be outlined in red
     # Fill out new dataset request form
-    And I fill in "Data request title" with "My Dataset request title"
+    And I fill in "Data request title" with "Test data request"
     And I fill in "Data request description" with "My Dataset request description"
     And I select the radio button "Request is public"
     And I select the radio button "On behalf of an Organisation"
@@ -77,42 +77,54 @@ Feature: Request new data
     And I wait until the page loads
     Then I should see the following <breadcrumbs>
       | Data Requests            |
-      | My Dataset request title |
+      | Test data request |
     And I should see "Your draft Dataset Request has been created. You can update it in My Drafts section."
     And I should see "Please ensure your profile is up to date as we may use these details to contact you about your Dataset Request."
-    When I submit "Dataset Request" titled "My Dataset request title" for moderation
+    When I submit "Dataset Request" titled "Test data request" for moderation
     # Moderate newly created dataset request
-    And user with "moderator" role moderates "My Dataset request title" authored by "test_user"
+    And user with "moderator" role moderates "Test data request" authored by "test_user"
     And the cache has been cleared
     And I visit "/data-request"
     And I wait until the page loads
-    Then "title" field in row "1" of "latest_dataset_requests" view should match "^My Dataset request title$"
+    Then "title" field in row "1" of "latest_dataset_requests" view should match "^Test data request$"
     And "name" field in row "1" of "latest_dataset_requests" view should match "^Submitted by test_user$"
     And "created" field in row "1" of "latest_dataset_requests" view should match "^\d* min \d* sec ago|\d* sec ago$"
     #
     # Test administration workflow
     #
+    # Register test_subscriber
+    And that the user "test_subscriber" is not registered
+    And I am logged in as a user "test_subscriber" with the "authenticated user" role
+    And I visit "/data-request"
+    And I follow "Test data request"
+    And I wait until the page loads
+    When I click "Subscribe"
+    And I wait 1 second
+    Then I should see the link "Unsubscribe"
     # Register test_data_publisher user and assign it to "Academics" publisher
     Given that the user "test_data_publisher" is not registered
     And I am logged in as a user "test_data_publisher" with the "data publisher" role
     And user "test_data_publisher" belongs to "Academics" publisher
     And I am logged in as a user "test_data_publisher" with the "data publisher" role
     # Set weekly notifications for test_data_publisher
-    And I visit "user"
+    And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Weekly" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I wait until the page loads
+    And I select the radio button "Weekly"
     And I press "Save"
     # Register test_data_request_manager user
     And that the user "test_data_request_manager" is not registered
     And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     # Set daily notifications for test_data_publisher
-    And I visit "user"
+    And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Daily" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I select the radio button "Daily"
     And I press "Save"
     # Register test_data_request_admin user
     And that the user "test_data_request_admin" is not registered
@@ -120,19 +132,21 @@ Feature: Request new data
     And I am on "/admin/workbench"
     And I follow "Data requests"
     And I wait until the page loads
-    And I follow "My Dataset request title"
+    And I follow "Test data request"
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
     And I select "test_data_request_manager" from "Relationship manager"
     When I press "Save"
     And I wait until the page loads
+    # Subscriber shouldn't be notified because it can't see this change, "Relationship manager" is a backend field which shouldn't be visible to normal users
+    Then the "test_subscriber" user have not received an email 'Data request "Test data request" has been updated by test_data_request_admin '
     Given I am not logged in
     And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     When I visit "/admin/workbench"
     And I follow "My Data requests"
     And I wait until the page loads
-    And I follow "My Dataset request title"
+    And I follow "Test data request"
     And I follow "Edit"
     And I wait until the page loads
     And I select the radio button "Escalated to data holder"
@@ -142,15 +156,16 @@ Feature: Request new data
     And I select the radio button "test_data_publisher"
     And I press "Save"
     And I wait until the page loads
-    Then I should see "Add review note"
+    Then the "test_subscriber" user received an email 'Data request "Test data request" has been updated by test_data_request_manager '
+    And I should see "Add review note"
     Given I visit "/admin/workbench"
     And I wait until the page loads
     When I follow "My Data requests"
     And I wait until the page loads
-    Then I should see "My Dataset request title"
+    Then I should see "Test data request"
     When I follow "My Edits"
     And I wait until the page loads
-    Then I should see "My Dataset request title"
+    Then I should see "Test data request"
     Given I am not logged in
     # Log in as test_data_publisher
     And I am logged in as a user "test_data_publisher" with the "data publisher" role
@@ -158,7 +173,7 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "Active Data requests"
     And I wait until the page loads
-    And I follow "My Dataset request title"
+    And I follow "Test data request"
     Then I should see "Add review note"
     # Set digest last run to 2 days ago to trigger daily notifications
     And I set digest last run to 2 days ago
@@ -178,22 +193,22 @@ Feature: Request new data
     And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
     # Test links in the email
-    When user "test_data_publisher" clicks link containing "data-request/my-dataset-request-title" in mail "data.gov.uk Message Digest"
+    When user "test_data_publisher" clicks link containing "data-request/test-data-request" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
-    Then I should be on "data-request/my-dataset-request-title"
-    When user "test_data_publisher" clicks link containing "admin/workbench/content/active" in mail "data.gov.uk Message Digest"
+    Then I should be on "data-request/test-data-request"
+    When user "test_data_publisher" clicks link containing "admin/workbench/content/active" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
     Then I should be on "admin/workbench/content/active"
-    And I should see the link "My Dataset request title"
+    And I should see the link "Test data request"
     And I should see "Request is public"
     Then I should see the following <breadcrumbs>
       | Active Data requests |
-    When user "test_data_publisher" clicks link containing "message-subscribe" in mail "data.gov.uk Message Digest"
+    When user "test_data_publisher" clicks link matching ".*\/subscriptions$" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
     Then I should see the following <breadcrumbs>
       | My subscriptions |
-    And I should see the link "My Dataset request title"
-    # Unsubscribe test_data_publisher from "My Dataset request title"
+    And I should see the link "Test data request"
+    # Unsubscribe test_data_publisher from "Test data request"
     And I click "Unsubscribe"
     And I wait 2 seconds
     Then I should see the link "Subscribe"
@@ -204,20 +219,20 @@ Feature: Request new data
     And I wait until the page loads
     And I follow "My Data requests"
     And I wait until the page loads
-    When I follow "My Dataset request title"
+    When I follow "Test data request"
     And I wait until the page loads
     And I follow "Edit"
     And I wait until the page loads
     And I select "test_data_request_admin" from "Relationship manager"
     And I press "Save"
-    Then the "test_data_request_admin" user received an email 'Data request "My Dataset request title" has been assigned to you'
+    Then the "test_data_request_admin" user received an email 'Data request "Test data request" has been assigned to you'
     And I should see "Add review note"
     Given I visit "/admin/workbench/content/my-data-requests"
     And I wait until the page loads
-    Then I should not see "My Dataset request title"
+    Then I should not see "Test data request"
     When I follow "My Edits"
     And I wait until the page loads
-    Then I should see "My Dataset request title"
+    Then I should see "Test data request"
     # Set digest last run to 10 days ago to trigger daily and weekly notifications
     And I set digest last run to 10 days ago
     And I run cron

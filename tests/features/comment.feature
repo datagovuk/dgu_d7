@@ -4,6 +4,14 @@ Feature: Make comments as a regular site user
   As a site user
   I should be able to make comments
 
+  @anon
+  Scenario: Make sure that comments can not be posted by anonymous users
+    Given I am on "/blog"
+    And I wait until the page loads
+    When I click "title" field in row "1" of "latest_blog_posts" view
+    And I wait until the page loads
+    Then I should see the link "Login to make a comment"
+
   @api
   Scenario: Create new comment and reply to this comment
     Given there is a test page with "test-page" path

@@ -89,6 +89,70 @@ function dgu_flags_flag_default_flags() {
     ),
     'api_version' => 3,
   );
+  // Exported flag: "Dataset comment".
+  $flags['subscribe_dataset_comment'] = array(
+    'entity_type' => 'ckan_dataset',
+    'title' => 'Dataset comment',
+    'global' => '0',
+    'types' => array(),
+    'flag_short' => 'Subscribe to comments',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unsubscribe from comments',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'comments' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+    ),
+    'show_as_field' => 1,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'api_version' => 3,
+    'module' => 'dgu_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+  );
+  // Exported flag: "Dataset update".
+  $flags['subscribe_dataset_update'] = array(
+    'entity_type' => 'ckan_dataset',
+    'title' => 'Dataset update',
+    'global' => '0',
+    'types' => array(),
+    'flag_short' => 'Subscribe to updates',
+    'flag_long' => '',
+    'flag_message' => '',
+    'unflag_short' => 'Unsubscribe from updates',
+    'unflag_long' => '',
+    'unflag_message' => '',
+    'unflag_denied_text' => '',
+    'link_type' => 'toggle',
+    'weight' => 0,
+    'show_in_links' => array(
+      'full' => 0,
+      'teaser' => 0,
+      'comments' => 0,
+      'diff_standard' => 0,
+      'token' => 0,
+    ),
+    'show_as_field' => 1,
+    'show_on_form' => 0,
+    'access_author' => '',
+    'show_contextual_link' => 0,
+    'module' => 'dgu_flags',
+    'locked' => array(
+      0 => 'name',
+    ),
+    'api_version' => 3,
+  );
   return $flags;
 
 }

@@ -13,8 +13,9 @@ function dgu_user_default_rules_configuration() {
       "LABEL" : "Login redirection",
       "PLUGIN" : "reaction rule",
       "ACTIVE" : false,
+      "OWNER" : "rules",
       "REQUIRES" : [ "rules_url_argument", "rules" ],
-      "ON" : [],
+      "ON" : { "user_login" : [] },
       "IF" : [
         { "NOT rules_url_argument_argument_exists" : { "argument" : "destination" } }
       ],

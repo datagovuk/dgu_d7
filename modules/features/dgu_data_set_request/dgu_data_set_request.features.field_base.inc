@@ -653,6 +653,7 @@ function dgu_data_set_request_field_default_field_bases() {
           'type' => 'none',
         ),
         'target_bundles' => array(
+          'comment' => 'comment',
           'review_comment' => 'review_comment',
         ),
       ),

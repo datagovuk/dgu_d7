@@ -463,7 +463,9 @@ function dgu_data_set_request_node_update($node) {
 
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
-        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+        if (!empty($uids)) {
+          message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+        }
 
       }
       // Then notify admin users with full summary of changes.
@@ -474,7 +476,10 @@ function dgu_data_set_request_node_update($node) {
 
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
       $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+
+      if (!empty($uids)) {
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $uids));
+      }
 
       // Subscribe an assignee to following notifications about data request updates.
       flag('flag', 'subscribe_node', $node->nid, $assignee);
@@ -491,7 +496,9 @@ function dgu_data_set_request_node_update($node) {
 
       $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision);
       $admin_uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles);
-      message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $admin_uids));
+      if (!empty($admin_uids)) {
+        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $admin_uids));
+      }
 
       // Then test if public fields has changed and notify all non admin users.
       if(_dgu_data_set_request_fields_changed($fields_for_short_summary, $node, $previous_data_request_revision)) {
@@ -503,7 +510,9 @@ function dgu_data_set_request_node_update($node) {
         $summary_of_changes = _dgu_data_request_get_summary_of_changes($node, $previous_data_request_revision, $fields_for_short_summary);
         $uids = _dgu_data_set_request_get_subscribers($node->nid, $data_request_admin_roles, FALSE);
         $non_admin_uids = array_diff($uids, $admin_uids);
-        message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $non_admin_uids));
+        if (!empty($non_admin_uids)) {
+          message_subscribe_send_message('node', $node, $message_update, $options, array('uids' => $non_admin_uids));
+        }
       }
     }
   }
@@ -511,7 +520,7 @@ function dgu_data_set_request_node_update($node) {
 
 
 /**
- * Helper function to test if particular fields has changed between revisions.
+ * Helper function to get all users subscribed to a data request.
  */
 function _dgu_data_set_request_get_subscribers($nid, $rids, $in_rids = TRUE) {
   // Get all flags on given entity type.

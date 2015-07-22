@@ -85,13 +85,15 @@ projects[entity][patch][] = "http://drupal.org/files/1514764-fix_entity_conditio
 projects[reply][type] = "module"
 projects[reply][download][type] = "git"
 projects[reply][download][url] = "http://git.drupal.org/project/reply.git"
-projects[reply][download][revision] = "7012839b9eb828f089f2cee02f6e719308eb1569"
+projects[reply][download][revision] = "4ea5b1b863c9bf2fac46eaf04143192086bf7f1d"
 projects[reply][subdir] = "contrib"
-#projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
+projects[reply][patch][] = "http://raw.github.com/ratajczak/dgu_d7/master/patches/reply_bundle_filter.patch"
 #projects[reply][patch][] = "http://drupal.org/files/issues/reply_mollom_integration_2.patch"
 
-projects[rules][version] = "2.8"
+projects[rules][version] = "2.9"
 projects[rules][subdir] = "contrib"
+#https://www.drupal.org/node/2186363
+#projects[rules][patch][] = "http://drupal.org/files/issues/rules-fix-fatal-error-features-revert-2186363-1.patch"
 
 projects[rules_url_argument][version] = "1.2"
 projects[rules_url_argument][subdir] = "contrib"
@@ -162,7 +164,7 @@ projects[conditional_fields][download][revision] = "cd29b003a592d375f3fdb4c46f56
 projects[conditional_fields][patch][] = "http://drupal.org/files/issues/conditional_fields-jquery_update_1.7_states_incompatible-1815896.patch"
 projects[conditional_fields][subdir] = "contrib"
 
-projects[logintoboggan][version] = "1.4"
+projects[logintoboggan][version] = "1.5"
 projects[logintoboggan][subdir] = "contrib"
 projects[logintoboggan][patch][] = "http://drupal.org/files/logintoboggin-unified-form-validation-errors-1163172-13.patch"
 
@@ -279,6 +281,9 @@ projects[message_digest][subdir] = "contrib"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest-remove_mail_header-2236179-8.patch"
 projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message_digest_pass_uid.patch"
 
+projects[message_ui][version] = "1.4"
+projects[message_ui][subdir] = "contrib"
+
 projects[quickedit][version] = "1.1"
 projects[quickedit][subdir] = "contrib"
 
@@ -299,6 +304,9 @@ projects[empty_fields][subdir] = "contrib"
 
 projects[print][version] = "2.0"
 projects[print][subdir] = "contrib"
+
+projects[linkit][version] = "3.3"
+projects[linkit][subdir] = "contrib"
 
 ;TODO - lock to some revision
 projects[d3][subdir] = "contrib"

@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function dgu_notifications_schema() {
+  $schema['users_auto_subscribe'] = array(
+    'description' => 'Stores content types for auto subscription.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'User ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Content type',
+        'type' => 'varchar',
+        'length' => '64',
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'uid' => array('uid'),
+      'type' => array('type'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Create new database table {users_auto_subscribe}.
+ */
+function dgu_notifications_update_7000() {
+  $schema = array(
+    'description' => 'Stores content types for auto subscription.',
+    'fields' => array(
+      'uid' => array(
+        'description' => 'User ID',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'Content type',
+        'type' => 'varchar',
+        'length' => '64',
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'uid' => array('uid'),
+      'type' => array('type'),
+    ),
+  );
+  db_create_table('users_auto_subscribe', $schema);
+}
+?>

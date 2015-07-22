@@ -627,7 +627,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^the "([^"]*)" user received an email '([^']*)'$/
    */
   public function theUserReceivedAnEmail($user, $title) {
-
+    sleep(3);
     $mail_address = $this->getMailAddress($user);
     $title = $this->fixStepArgument($title);
 
@@ -636,8 +636,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $all = imap_check($mbox);
 
     $received = false;
-    // Trying 150 times with three seconds pause
-    for ($attempts = 0; $attempts++ < 150; ) {
+    // Trying 100 times with three seconds pause
+    for ($attempts = 0; $attempts++ < 100; ) {
 
       if ($all->Nmsgs) {
         foreach (imap_fetch_overview($mbox, "1:$all->Nmsgs") as $msg) {
@@ -665,7 +665,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    * @Given /^the "([^"]*)" user have not received an email '([^']*)'$/
    */
   public function theUserNotReceivedAnEmail($user, $title) {
-
     $mail_address = $this->getMailAddress($user);
     $title = $this->fixStepArgument($title);
 
@@ -700,7 +699,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @When /^user "([^"]*)" clicks link containing "(?P<link>[^"]*)" in mail(?: (?:titled )?"(?P<title>[^"]*)")?$/
+   * @When /^user "([^"]*)" clicks link containing "(?P<link>[^"]*)" in mail(?: (?:titled )?'(?P<title>[^']*)')?$/
    */
   public function userClickLinkContainingInMail($user, $link_substring, $title = NULL) {
 
@@ -708,7 +707,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $title = $title ? $this->fixStepArgument($title) : NULL;
 
     foreach ($this->mailMessages[$user] as $msg) {
-      if ($title && $msg->subject == $title) {
+      if ($title && trim($msg->subject) == $title) {
 
         if (!empty($msg->body)) {
 
@@ -734,6 +733,40 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
+   * @When /^user "([^"]*)" clicks link matching "(?P<link_regex>[^"]*)" in mail(?: (?:titled )?'(?P<title>[^']*)')?$/
+   */
+  public function userClickLinkMatchingInMail($user, $link_regex, $title = NULL) {
+
+    $title = $title ? $this->fixStepArgument($title) : NULL;
+
+    foreach ($this->mailMessages[$user] as $msg) {
+      if ($title && trim($msg->subject) == $title) {
+
+        if (!empty($msg->body)) {
+
+          // Look for matching link text.
+          $body = str_replace('\n', '', $msg->body);
+
+          // Get all links.
+          if (preg_match_all('/https?:\/\/.*/i', $body, $matches)) {
+            $links = array_shift($matches);
+
+            foreach ($links as $link) {
+              preg_match('/' . $link_regex . '/i', trim($link), $hef_matches);
+              if (!empty($hef_matches)) {
+                $this->getSession()->visit($link);
+              }
+            }
+          }
+        }
+      }
+    }
+//    throw new \Exception('Email "' . $title . '" does not have a link with the text "' . $link_substring . '".');
+//    throw new \Exception('Email "' . $title . '" not received.');
+//    throw new \Exception('Email "' . $title . '" does not have any links.');
+  }
+
+  /**
    * @Given /^that the user "([^"]*)" is not registered$/
    */
   public function thatTheUserIsNotRegistered($user_name) {
@@ -741,7 +774,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       $this->getDriver()->drush('user-cancel', array($user_name), array('yes' => NULL, 'delete-content' => NULL));
     }
     catch (Exception $e) {
-      if(strpos($e->getMessage(), "Could not find a user account with the name") !== 0){
+      if(strpos($e->getMessage(), 'Unable to find') < 1){
         // Print exception message if exception is different than expected
         print $e->getMessage();
       }
@@ -1108,7 +1141,190 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     }
   }
 
+  /**
+   * @Given /^user "([^"]*)" created "([^"]*)" titled "([^"]*)"$/
+   */
+  public function userCreatedTitled($user_name, $node_type, $title) {
+    try {
+      $drush = $this->getDriver();
+      $uid = $drush->drush('ev', array('"\$user = user_load_by_name(\'' . $user_name . '\'); print \$user->uid;"'));
+      $drush->drush('ev', array('"\$values = array(\'type\' => \'' . $node_type . '\', \'uid\' => \'' . $uid . '\', \'status\' => \'1\', \'comment\' => \'1\',); \$entity = entity_create(\'node\', \$values); \$wrapper = entity_metadata_wrapper(\'node\', \$entity); \$wrapper->title->set(\'' . $title . '\'); \$wrapper->body->set(array(\'value\' => \'Lorem ipsum\')); \$wrapper->save();"'));
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
 
+  /**
+   * @Given /^(?:|that )the dataset with name "([^"]*)" doesn\'t exist in Drupal$/
+   */
+  public function thatTheDatasetDoesnTExistInDrupal($dataset_name) {
+    try {
+      $drush = $this->getDriver();
+      $dataset_id = $drush->drush('ev', array('"\$query = new EntityFieldQuery(); \$result = \$query->entityCondition(\'entity_type\', \'ckan_dataset\')->propertyCondition(\'name\', \'' . $dataset_name . '\')->execute(); print empty(\$result[\'ckan_dataset\']) ? \'false\' : reset(\$result[\'ckan_dataset\'])->id;"'));
+      if (is_numeric($dataset_id)) {
+        $drush->drush('ev', array('"entity_delete(\'ckan_dataset\', ' . $dataset_id . ');"'));
+      }
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @Given /^that dataset with titled "([^"]*)" with name "([^"]*)" published by "([^"]*)" exists and has no resources$/
+   */
+  public function thatDatasetWithTitledWithNamePublishedByExistsAndHasNoResources($title, $name, $publisher) {
+
+    try {
+      $client = $this->ckan_get_client();
+
+      $response = $client->PackageSearch(array('fq' => "name: $name"));
+      $result = $response->toArray();
+
+      $package_json = $this->get_json_package($title, $name, $publisher);
+
+      if (empty($result['result']['results'])) {
+        $response = $client->PackageCreate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to create '$title' dataset.");
+        }
+
+      } else {
+        $response = $client->PackageUpdate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to purge resources on '$title' dataset.");
+        }
+      }
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @Given /^I attach "([^"]*)" resource to "([^"]*)" dataset$/
+   */
+  public function iAttachResourceToDataset($resource_url, $dataset_name) {
+    try {
+      $client = $this->ckan_get_client();
+
+      $dataset = $client->GetDataset(array('id' => $dataset_name))->toArray();
+
+      if (!empty($dataset['result'])) {
+
+        $title = $dataset['result']['title'];
+        $publisher = $dataset['result']['organization']['name'];
+        $url_parts = explode('/', $resource_url);
+        $resource_description = end($url_parts);
+
+        $resources = empty($dataset['result']['resources']) ? array() : $dataset['result']['resources'];
+        $resources[] = array('url' => $resource_url, 'description' => $resource_description, 'format' => 'TEST');
+
+        $package_json = $this->get_json_package($title, $dataset_name, $publisher, $resources);
+
+        $response = $client->PackageUpdate(array('data'=>$package_json));
+        $result = $response->toArray();
+        if (!$result['success']) {
+          throw new \Exception("Failed to purge resources on '$title' dataset.");
+        }
+
+      } else {
+        throw new \Exception("Dataset '$dataset_name' not found.");
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  private function get_json_package($title, $name, $publisher, array $resources = array()) {
+    $package = array(
+      'name' => $name,
+      'title' => $title,
+      'owner_org' => $publisher,
+      'license_id' => 'uk-ogl',
+      'notes' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'resources' => $resources,
+    );
+
+    return json_encode($package);
+  }
+
+  /**
+   * @When /^I synchronise dataset with name "([^"]*)"$/
+   */
+  public function iSynchroniseDatasetWithName($dataset_name) {
+
+    try {
+      $client = $this->ckan_get_client();
+
+      $response = $client->PackageSearch(array('fq' => "name: $dataset_name"));
+      $result = $response->toArray();
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+
+    try {
+      if (!empty($result['result']['results']['0']['id'])) {
+        $drush = $this->getDriver();
+        $drush->drush('ckan_resync_dataset', array($result['result']['results']['0']['id']));
+      }
+      else {
+        throw new \Exception("Dataset '$dataset_name' doesn't exist in CKAN.");
+      }
+    }
+    catch (Exception $e) {
+      throw new \Exception('PHP evaluation failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @When /^I open comment form for dataset with name "([^"]*)"$/
+   */
+  public function iOpenCommentFormForDatasetWithName($dataset_name) {
+    try {
+      $client = $this->ckan_get_client();
+
+      $dataset = $client->GetDataset(array('id' => $dataset_name))->toArray();
+
+      if (!empty($dataset['result'])) {
+
+        $ckan_id = $dataset['result']['id'];
+        $this->getSession()->visit($this->locatePath('/comment/dataset/' . $ckan_id));
+
+      } else {
+        throw new \Exception("Dataset '$dataset_name' not found.");
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * Get a ckan client instance.
+   */
+  private function ckan_get_client() {
+    try {
+      $drush = $this->getDriver();
+      $base_url = json_decode($drush->drush('vget', array('ckan_url', '--format=json')));
+      $api_key = json_decode($drush->drush('vget', array('ckan_apikey', '--format=json')));
+
+      return Silex\ckan\CkanClient::factory(array(
+        'baseUrl' => $base_url->ckan_url,
+        'apiKey' => $api_key->ckan_apikey,
+      ));
+    }
+    catch (Exception $e) {
+      throw new \Exception('Unable to instantiate CKAN client. ' . $e->getMessage());
+    }
+  }
 
   /**
    * @Given /^TEST$/

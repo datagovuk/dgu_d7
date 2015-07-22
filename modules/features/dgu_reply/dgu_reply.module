@@ -106,6 +106,8 @@ function dgu_reply_menu_breadcrumb_alter(&$active_trail, $item) {
  */
 function dgu_reply_preprocess_reply(&$variables) {
   $function = $variables['reply']->entity_type . '_mark';
-  $variables['new'] = $function($variables['reply']->entity_id, $variables['reply']->changed);
+  if (function_exists($function)) {
+    $variables['new'] = $function($variables['reply']->entity_id, $variables['reply']->changed);
+  }
 }
 
