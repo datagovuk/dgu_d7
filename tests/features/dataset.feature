@@ -89,8 +89,9 @@ Feature: Sync datasets from CKAN to Drupal
     And I fill in "Subject" with "Test subject"
     And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
     And I press "Submit"
-    And I wait until the page loads
-    Then I should see the success message "Comment was successfully created"
+    And I wait 5 second
+    Then I should see the link "test_user_updates"
+    And I should see "Test subject"
     And the "test_user_comments" user received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
     And the "test_user_comments" user have not received an email 'Dataset "Test dataset" has been updated '
     And the "test_user_updates" user have not received an email 'Dataset "Test dataset" has been updated '
