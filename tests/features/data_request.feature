@@ -156,7 +156,8 @@ Feature: Request new data
     And I select the radio button "test_data_publisher"
     And I press "Save"
     And I wait until the page loads
-    Then I should see "Add review note"
+    Then the "test_subscriber" user received an email 'Data request "Test data request" has been updated by test_data_request_manager '
+    And I should see "Add review note"
     Given I visit "/admin/workbench"
     And I wait until the page loads
     When I follow "My Data requests"
