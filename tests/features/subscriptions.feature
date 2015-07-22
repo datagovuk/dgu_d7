@@ -16,9 +16,11 @@ Feature: Subscribe to content updates
     And I am logged in as a user "test_daily_subscriber" with the "authenticated user" role
     And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Daily" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I wait until the page loads
+    And I select the radio button "Daily"
     And I press "Save"
     And I visit "/blog"
     And I wait until the page loads
@@ -29,11 +31,14 @@ Feature: Subscribe to content updates
     # Set weekly notifications for test_daily_subscriber and subscribe to Test blog
     And that the user "test_weekly_subscriber" is not registered
     And I am logged in as a user "test_weekly_subscriber" with the "authenticated user" role
+
     And I visit "/user"
     And I wait until the page loads
-    And I follow "Edit"
+    And I follow "My subscriptions"
     And I wait until the page loads
-    And I select "Weekly" from "Notification frequency"
+    And I follow "Delivery of notifications"
+    And I wait until the page loads
+    And I select the radio button "Weekly"
     And I press "Save"
     And I visit "/blog"
     And I wait until the page loads
