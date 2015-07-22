@@ -93,7 +93,5 @@ Feature: Sync datasets from CKAN to Drupal
     Then I should see the link "test_user_updates"
     And I should see "Test subject"
     And the "test_user_comments" user received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
-    And the "test_user_comments" user have not received an email 'Dataset "Test dataset" has been updated '
-    And the "test_user_updates" user have not received an email 'Dataset "Test dataset" has been updated '
     And the "test_user_updates" user have not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
     And the "test_user" user have not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
