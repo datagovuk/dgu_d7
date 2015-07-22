@@ -117,3 +117,4 @@ Feature: Create a Library Resource and search for library resources
       | Library               |
       | Test Library resource |
     And I should see "updated on"
+    And the "test_subscriber_updates" user received an email 'Library resource "Test Library resource" has been updated '
