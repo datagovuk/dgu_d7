@@ -367,8 +367,7 @@ function dgu_data_set_request_entity_insert($entity, $type) {
     // Get data_request_update message bundle and set required fields.
     $message = message_create('data_request_review_comment_new');
     $wrapper = entity_metadata_wrapper('message', $message);
-    $data_request_node = new stdClass();
-    $data_request_node->nid = $entity->entity_id;
+    $data_request_node = node_load($entity->entity_id);
     $wrapper->field_data_request_reference->set($data_request_node);
     $wrapper->field_reply_reference->set($entity);
 
