@@ -6,7 +6,7 @@
 }
 
 #edit-field-publisher-assignee .form-type-radios {
-  position: absolute;
+  position: relative;
   background: #f0fcff;
   padding: 3px 6px;
   width: 100%;
