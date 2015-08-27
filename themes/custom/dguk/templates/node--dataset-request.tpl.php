@@ -19,7 +19,7 @@
     <?php endif; ?>
     <?php if (!empty($field_organisation_name[LANGUAGE_NONE][0]['safe_value'])): ?>
       <div class="submitted">
-        In behalf of <?php print $field_organisation_name[LANGUAGE_NONE][0]['safe_value']; ?>
+        On behalf of <?php print $field_organisation_name[LANGUAGE_NONE][0]['safe_value']; ?>
         <span><?php print l('(' . $content['field_organisation_type'][0]['#markup'] . ')', 'search/everything/', array('query' => array('f[0]' => 'bundle:dataset_request', 'f[1]' => 'im_field_organisation_type:'. $field_organisation_type[0]['value']))); ?></span>
       </div>
     <?php endif; ?>
