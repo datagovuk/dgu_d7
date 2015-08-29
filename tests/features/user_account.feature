@@ -81,14 +81,30 @@ Feature: Register an account on data.gov.uk with valid username and email
     # Password reset using user name.
     Given I am not logged in
     And I go to "/user"
-    And I follow "Request new password"
+    And I fill in "Username " with "test_user"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    Then I should see "Sorry, unrecognized username or password"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    And I fill in "Password" with "invalid"
+    And I press "Log in"
+    And I wait until the page loads
+    And I should see "Sorry, there have been more than 5 failed login attempts for this account. It is temporarily blocked. Try again after one hour or request a new password."
+    When I follow "Request new password"
     And I wait until the page loads
     And I fill in "Username or e-mail address" with "test_user"
     And I press "E-mail new password"
     And I wait 3 seconds
-    Then the "test_user" user received an email 'Replacement login information for test_user at data.gov.uk'
+    And the "test_user" user received an email 'Replacement login information for test_user at data.gov.uk'
     And I should see "Further instructions have been sent to your e-mail address."
-    When user "test_user" clicks link containing "user/reset" in mail 'Replacement login information for test_user at data.gov.uk'
+    And user "test_user" clicks link containing "user/reset" in mail 'Replacement login information for test_user at data.gov.uk'
     And I wait until the page loads
     Then I should see "Reset password"
     And I should see "Click on this button to log in to the site and change your password."

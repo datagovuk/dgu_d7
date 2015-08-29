@@ -634,3 +634,14 @@ function dgu_user_get_admin_publishers() {
   }
   return $admin_publishers;
 }
+
+/**
+ * Implement hook_mail_alter().
+ */
+function dgu_user_mail_alter(&$message) {
+  global $base_url;
+  if ($message['module'] == 'contact' && $message['id'] == 'contact_page_copy') {
+    $message['from'] = variable_get('site_mail', 'teak@data.gov.uk');
+    $message['headers']['From'] = variable_get('site_mail', 'team@data.gov.uk');
+  }
+}
