@@ -52,7 +52,7 @@ projects[admin_menu][subdir] = "contrib"
 projects[module_filter][version] = "1.7"
 projects[module_filter][subdir] = "contrib"
 
-projects[ctools][version] = "1.6"
+projects[ctools][version] = "1.9"
 projects[ctools][subdir] = "contrib"
 
 projects[features][version] = "2.0"
