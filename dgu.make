@@ -284,7 +284,7 @@ projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message
 projects[message_ui][version] = "1.4"
 projects[message_ui][subdir] = "contrib"
 
-projects[quickedit][version] = "1.2"
+projects[quickedit][version] = "1.1"
 projects[quickedit][subdir] = "contrib"
 
 projects[autologout][version] = "4.3"
