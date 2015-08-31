@@ -49,7 +49,7 @@ projects[pathauto][patch][] = "http://drupal.org/files/pathauto-persist-936222-1
 projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
 
-projects[module_filter][version] = "1.7"
+projects[module_filter][version] = "2.0"
 projects[module_filter][subdir] = "contrib"
 
 projects[ctools][version] = "1.9"
