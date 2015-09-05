@@ -49,17 +49,17 @@ projects[pathauto][patch][] = "http://drupal.org/files/pathauto-persist-936222-1
 projects[admin_menu][version] = "3.0-rc4"
 projects[admin_menu][subdir] = "contrib"
 
-projects[module_filter][version] = "1.7"
+projects[module_filter][version] = "2.0"
 projects[module_filter][subdir] = "contrib"
 
-projects[ctools][version] = "1.6"
+projects[ctools][version] = "1.9"
 projects[ctools][subdir] = "contrib"
 
 projects[features][version] = "2.0"
 projects[features][subdir] = "contrib"
 projects[features][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/features_dont_convert_strings_to_integers.patch"
 
-projects[views][version] = "3.8"
+projects[views][version] = "3.11"
 projects[views][subdir] = "contrib"
 
 projects[views_data_export][version] = "3.0-beta6"
@@ -195,7 +195,7 @@ projects[fieldable_panels_panes][subdir] = "contrib"
 projects[context][version] = "3.0-beta7"
 projects[context][subdir] = "contrib"
 
-projects[services][version] = "3.11"
+projects[services][version] = "3.12"
 projects[services][subdir] = "contrib"
 
 projects[services_views][version] = "1.0"
@@ -261,7 +261,7 @@ projects[imagefield_crop][patch][] = "http://raw.github.com/datagovuk/dgu_d7/mas
 projects[emptyparagraphkiller][version] = "1.0-beta2"
 projects[emptyparagraphkiller][subdir] = "contrib"
 
-projects[smart_trim][version] = "1.4"
+projects[smart_trim][version] = "1.5"
 projects[smart_trim][subdir] = "contrib"
 
 projects[message][version] = "1.9"
@@ -284,7 +284,7 @@ projects[message_digest][patch][] = "https://www.drupal.org/files/issues/message
 projects[message_ui][version] = "1.4"
 projects[message_ui][subdir] = "contrib"
 
-projects[quickedit][version] = "1.1"
+projects[quickedit][version] = "1.2"
 projects[quickedit][subdir] = "contrib"
 
 projects[autologout][version] = "4.3"
@@ -307,6 +307,9 @@ projects[print][subdir] = "contrib"
 
 projects[linkit][version] = "3.3"
 projects[linkit][subdir] = "contrib"
+
+projects[masquerade][version] = "1.0-rc7"
+projects[masquerade][subdir] = "contrib"
 
 ;TODO - lock to some revision
 projects[d3][subdir] = "contrib"

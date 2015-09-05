@@ -35,7 +35,7 @@ function dgu_notifications_my_subscriptions($user) {
 
     foreach ($result as $row) {
 
-      if (empty($row->dataset_title)) {
+      if ($row->flag_name == 'subscribe_node') {
         $cells = array(
           l($row->node_title, 'node/'. $row->nid),
           $types[$row->type],

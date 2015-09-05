@@ -15,7 +15,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Accessibility';
   $page->admin_description = '';
-  $page->path = 'accessibility-statement';
+  $page->path = 'accessibility-statement/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -32,7 +32,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -55,6 +64,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -107,7 +129,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Code of conduct';
   $page->admin_description = '';
-  $page->path = 'code-conduct';
+  $page->path = 'code-conduct/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -124,7 +146,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -147,6 +178,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -199,7 +243,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Cookies policy';
   $page->admin_description = '';
-  $page->path = 'cookies-policy';
+  $page->path = 'cookies-policy/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -216,7 +260,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -239,6 +292,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -292,7 +358,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'FAQ';
   $page->admin_description = '';
-  $page->path = 'faq';
+  $page->path = 'faq/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -309,7 +375,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -332,6 +407,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -385,7 +473,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Moderation policy';
   $page->admin_description = '';
-  $page->path = 'moderation-policy';
+  $page->path = 'moderation-policy/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -402,7 +490,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -425,6 +522,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -477,7 +587,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Privacy';
   $page->admin_description = '';
-  $page->path = 'privacy';
+  $page->path = 'privacy/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -494,7 +604,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -517,6 +636,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
@@ -569,7 +701,7 @@ function dgu_footer_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'Terms and conditions';
   $page->admin_description = '';
-  $page->path = 'terms-and-conditions';
+  $page->path = 'terms-and-conditions/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -586,7 +718,16 @@ function dgu_footer_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -609,6 +750,19 @@ function dgu_footer_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'onecol';
