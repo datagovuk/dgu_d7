@@ -136,7 +136,7 @@ function dgu_site_feature_default_page_manager_pages() {
   $page->task = 'page';
   $page->admin_title = 'About';
   $page->admin_description = 'About us page.';
-  $page->path = 'about';
+  $page->path = 'about/!string';
   $page->access = array(
     'type' => 'none',
     'settings' => NULL,
@@ -153,7 +153,16 @@ function dgu_site_feature_default_page_manager_pages() {
       'weight' => '0',
     ),
   );
-  $page->arguments = array();
+  $page->arguments = array(
+    'string' => array(
+      'id' => 1,
+      'identifier' => 'String',
+      'name' => 'string',
+      'settings' => array(
+        'use_tail' => 0,
+      ),
+    ),
+  );
   $page->conf = array(
     'admin_paths' => FALSE,
   );
@@ -176,6 +185,19 @@ function dgu_site_feature_default_page_manager_pages() {
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
+    'access' => array(
+      'plugins' => array(
+        0 => array(
+          'name' => 'context_exists',
+          'settings' => array(
+            'exists' => '1',
+          ),
+          'context' => 'argument_string_1',
+          'not' => TRUE,
+        ),
+      ),
+      'logic' => 'and',
+    ),
   );
   $display = new panels_display();
   $display->layout = 'dgu_twocol';
