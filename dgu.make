@@ -308,6 +308,9 @@ projects[print][subdir] = "contrib"
 projects[linkit][version] = "3.3"
 projects[linkit][subdir] = "contrib"
 
+projects[masquerade][version] = "1.0-rc7"
+projects[masquerade][subdir] = "contrib"
+
 ;TODO - lock to some revision
 projects[d3][subdir] = "contrib"
 
