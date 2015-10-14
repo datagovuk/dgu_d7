@@ -152,7 +152,7 @@ Feature: Create blogs as a blogger
     Given the cache has been cleared
     When I visit "/blog"
     Then "title" field in row "1" of "latest_blog_posts" view should match "^Test blog$"
-    And "name" field in row "1" of "latest_blog_posts" view should match "^Created by test_user (\d* min \d*|\d*) sec ago$"
+    And "name" field in row "1" of "latest_blog_posts" view should match "^Created by test_user (\d* min \d* sec|\d* min|\d* sec) ago$"
     And avatar in row "1" of "latest_blog_posts" view should link to "/users/testuser"
     And row "1" of "latest_blog_posts" view should match "No comments so far$"
     When I click "title" field in row "1" of "latest_blog_posts" view
