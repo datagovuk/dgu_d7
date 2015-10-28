@@ -7,53 +7,6 @@
 include_once 'dgu_reply.features.inc';
 
 /**
- * Implements hook_menu().
- */
-function dgu_reply_menu() {
-  $items = array();
-  $items['comments-links'] = array(
-    'page callback' => 'dgu_reply_comments_links',
-    'access arguments' => array('access content'),
-    'type' => MENU_CALLBACK,
-  );
-  return $items;
-}
-
-function dgu_reply_comments_links() {
-
-  $sql = "SELECT r.id, u.name, u.uid, field_reply_subject_value, field_reply_comment_value, n.nid, n.title
-          FROM {field_data_field_reply_comment} rc
-          JOIN {field_data_field_reply_subject} rs ON rc.entity_id = rs.entity_id
-          JOIN {reply} r ON r.id = rs.entity_id
-          JOIN {users} u ON u.uid = r.uid
-          JOIN {node} n on n.nid = r.entity_id
-          WHERE u.uid NOT IN (15260, 7974, 3455, 191841, 5601, 390192, 8615, 845)
-          AND upper(`field_reply_comment_value`) LIKE '%<A%';";
-
-  $result = db_query($sql);
-  $output = '<ol>';
-
-  $nodes = array();
-
-  foreach ($result as $row) {
-    $nodes[$row->nid]['title'] = $row->title;
-    $nodes[$row->nid]['replies'][$row->id] = $row;
-  }
-
-  foreach ($nodes as $nid => $title_replies) {
-    $output .= '<li><h2 style="font-size: 25px; line-height: 30px;">' . l($title_replies['title'], 'reply/' . $nid) . '</h2>';
-    foreach ($title_replies['replies'] as $rid => $reply) {
-      $output .= '<h4>' . l($reply->field_reply_subject_value, 'reply/' . $reply->id) . '</h4>'
-        . 'By: ' . l($reply->name, 'user/' . $reply->uid) . '<br />'
-        . $reply->field_reply_comment_value . '<div style="width: 100%; border-bottom: 1px solid grey;"><br />';
-    }
-    $output .= '</li>';
-  }
-
-  return $output . '</ol>';
-}
-
-/**
  * @param $form
  * @param $form_state
  * @param $form_id
