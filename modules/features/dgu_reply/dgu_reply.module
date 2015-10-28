@@ -37,6 +37,12 @@ function dgu_reply_form_submit($form, &$form_state) {
         }
         $form_state['values']['field_reply_subject'][LANGUAGE_NONE][0]['value'] = truncate_utf8(trim(decode_entities(strip_tags($reply_comment))), 29, TRUE);
     }
+    if ($form_state['values']['field_reply_comment'][LANGUAGE_NONE][0]['format'] == 'plain_text'
+      && strpos($form_state['values']['field_reply_comment'][LANGUAGE_NONE][0]['value'], '</a>') !== FALSE) {
+      form_set_error('field_reply_comment', 'Your post has triggered spam filter. Please <a href="/contact">contact us</a> if you think that\'s an error.');
+      $destination = drupal_get_destination();
+      drupal_goto($destination['destination']);
+    }
 }
 
 /**
