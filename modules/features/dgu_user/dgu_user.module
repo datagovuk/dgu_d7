@@ -165,6 +165,12 @@ function dgu_user_profile_validate($form, &$form_state) {
       form_set_error('field_twitter', 'Please use just twitter user name e.g \'@username\'');
     }
   }
+
+  if(!empty($form_state['values']['field_bio'][LANGUAGE_NONE][0]['value'])) {
+    if ( $form_state['values']['field_bio'][LANGUAGE_NONE][0]['value'] != strip_tags($form_state['values']['field_bio'][LANGUAGE_NONE][0]['value']) ) {
+      form_set_error('field_bio', 'HTML is not allowed in Bio field');
+    }
+  }
 }
 
 function dgu_user_profile_submit($form, &$form_state) {
