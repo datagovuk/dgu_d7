@@ -27,7 +27,7 @@ function dgu_reply_comments_links() {
           JOIN {reply} r ON r.id = rs.entity_id
           JOIN {users} u ON u.uid = r.uid
           JOIN {node} n on n.nid = r.entity_id
-          WHERE u.uid <> 15260
+          WHERE u.uid NOT IN (15260, 7974, 3455, 191841, 5601, 390192, 8615, 845)
           AND upper(`field_reply_comment_value`) LIKE '%<A%';";
 
   $result = db_query($sql);
