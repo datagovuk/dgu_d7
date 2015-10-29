@@ -164,8 +164,13 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     $form_state['signoff_dates'] = $dates;
     $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
     if ($group) {
-      $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-      if ($package  && $package['state'] == 'active'){
+      try {
+        $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+      }
+      catch (Exception $e){
+        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
+      }
+      if (!empty($package)  && $package['state'] == 'active'){
         $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
 
         drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
