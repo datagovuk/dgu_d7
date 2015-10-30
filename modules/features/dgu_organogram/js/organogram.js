@@ -360,8 +360,9 @@ var Orgvis = {
 
 var OrgDataLoader = {
     docBase: "/organogram/preview/",
-    load: function (filename, infovisId) {
-        $.ajax({cache: false, dataType: "json", url: this.docBase+filename, success : function(ret){
+    load: function (filename, infovisId, previewMarkup) {
+        $.ajax({cache: false, dataType: "json", url: this.docBase+filename,
+            success : function(ret) {
             var data = ret.data;
             $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-senior.csv",
                 success : function(seniorcsv){
@@ -379,13 +380,27 @@ var OrgDataLoader = {
                                             Orgvis.showSpaceTree(OrgDataLoader.buildTree(data.name), infovisId);
                                         }
                                     });
+                                },
+                                error: function() {
+                                    OrgDataLoader.errorMessage(ret.responseText);
+                                    $('tr.preview--show').hide();
                                 }
                             });
                         }
                     });
+                },
+                error: function() {
+                    OrgDataLoader.errorMessage(ret.responseText);
+                    $('tr.preview--show').hide();
                 }
             });
-        }});
+        },
+        error: function(ret) {
+            OrgDataLoader.errorMessage(ret.responseText);
+            $('tr.preview--show').hide();
+        }
+
+        });
     },
 
     buildTree: function(department) {
@@ -514,6 +529,10 @@ var OrgDataLoader = {
             }
         });
         return tree[0];
+    },
+    errorMessage: function (message){
+        $('.field-name-field-organogram .form-type-managed-file').append('<div class="alert alert-block alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Error message</h4>'
+            + message +'</div>');
     }
 };
 
@@ -610,7 +629,7 @@ var OrgDataLoader = {
 
                 var filename = $(this).attr('data-organogram-file');
                 $('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
-                OrgDataLoader.load(filename, infovisId);
+                OrgDataLoader.load(filename, infovisId, previewMarkup);
             });
         },
 

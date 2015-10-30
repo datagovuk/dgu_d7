@@ -63,7 +63,17 @@ function dgu_organogram_preprocess(&$variables, $hook){
  * Loads and transforms a xls file into CSV and saves these in the temp directory for the javascript to load
  */
 function dgu_organogram_preview ($fid){
-  $json = _dgu_organogram_read_index(_dgu_organogram_generate_csv_files($fid));
+  try {
+    $file = _dgu_organogram_generate_csv_files($fid);
+    $json = _dgu_organogram_read_index($file);
+  }
+  catch (Exception $e) {
+    drupal_add_http_header('Status', '500 Internal server error');
+    print $e->getMessage();
+    drupal_exit();
+
+  }
+
   drupal_json_output(array('status' => 0, 'data' => $json[0]));
 }
 
@@ -99,7 +109,7 @@ function _dgu_organogram_generate_csv_files($fid) {
   exec($command, $output, $ret);
   if ($ret == 1){
     error_log(print_r($output, TRUE));
-    throw new Exception ("There was an error: \n" . print_r($output, TRUE));
+    throw new Exception ($output[3]);
   }
     preg_match("/([^:]*:\ )(.*)/i", $output[5], $matches);
   return $matches[2];
@@ -152,39 +162,41 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   hide($form['title']);
   hide($form['ckan_id']);
 
-  try{
-    $result = db_query("SELECT fid, deadline_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-    $dates = $result->fetchAllKeyed();
-    $form_state['organogram_dates'] = $dates;
-    $result = db_query("SELECT fid, publish_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-    $dates = $result->fetchAllKeyed();
-    $form_state['publish_dates'] = $dates;
-    $result = db_query("SELECT fid, signoff_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-    $dates = $result->fetchAllKeyed();
-    $form_state['signoff_dates'] = $dates;
-    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
-    if ($group) {
-      try {
-        $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-      }
-      catch (Exception $e){
-        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
-      }
-      if (!empty($package)  && $package['state'] == 'active'){
-        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
+  //TODO: temporarily commented out to speed up page load, uncomment when ready
 
-        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
-      }
-    }
-  } catch (Exception $e){
-    drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
-  }
+//  try{
+//    $result = db_query("SELECT fid, deadline_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+//    $dates = $result->fetchAllKeyed();
+//    $form_state['organogram_dates'] = $dates;
+//    $result = db_query("SELECT fid, publish_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+//    $dates = $result->fetchAllKeyed();
+//    $form_state['publish_dates'] = $dates;
+//    $result = db_query("SELECT fid, signoff_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+//    $dates = $result->fetchAllKeyed();
+//    $form_state['signoff_dates'] = $dates;
+//    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
+//    if ($group) {
+//      try {
+//        $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+//      }
+//      catch (Exception $e){
+//        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
+//      }
+//      if (!empty($package)  && $package['state'] == 'active'){
+//        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
+//
+//        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
+//      }
+//    }
+//  } catch (Exception $e){
+//    drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
+//  }
 
   $form['#attached']['js'][] = array(
     'data' => '(function($) {
       Drupal.behaviors.fileUpload = {
         attach: function(context, settings) {
-            jQuery("body").ajaxComplete(function(event,request, settings){
+             jQuery("body").ajaxComplete(function(event,request, settings){
                 if(window.location.pathname.match(/ckan_publisher\/\d+\/edit/)) {
                     form_build_id = "ckan-publisher-form";
                     //jQuery("#"+form_build_id).find("[id^=edit-submit]").click()
