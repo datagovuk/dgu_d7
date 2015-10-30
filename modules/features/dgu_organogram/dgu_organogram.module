@@ -162,35 +162,33 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   hide($form['title']);
   hide($form['ckan_id']);
 
-  //TODO: temporarily commented out to speed up page load, uncomment when ready
+  try{
+    $result = db_query("SELECT fid, deadline_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+    $dates = $result->fetchAllKeyed();
+    $form_state['organogram_dates'] = $dates;
+    $result = db_query("SELECT fid, publish_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+    $dates = $result->fetchAllKeyed();
+    $form_state['publish_dates'] = $dates;
+    $result = db_query("SELECT fid, signoff_date FROM dgu_organogram where id = " . $ckan_publisher->id );
+    $dates = $result->fetchAllKeyed();
+    $form_state['signoff_dates'] = $dates;
+    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
+    if ($group) {
+      try {
+        $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+      }
+      catch (Exception $e){
+        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
+      }
+      if (!empty($package)  && $package['state'] == 'active'){
+        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
 
-//  try{
-//    $result = db_query("SELECT fid, deadline_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-//    $dates = $result->fetchAllKeyed();
-//    $form_state['organogram_dates'] = $dates;
-//    $result = db_query("SELECT fid, publish_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-//    $dates = $result->fetchAllKeyed();
-//    $form_state['publish_dates'] = $dates;
-//    $result = db_query("SELECT fid, signoff_date FROM dgu_organogram where id = " . $ckan_publisher->id );
-//    $dates = $result->fetchAllKeyed();
-//    $form_state['signoff_dates'] = $dates;
-//    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
-//    if ($group) {
-//      try {
-//        $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-//      }
-//      catch (Exception $e){
-//        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
-//      }
-//      if (!empty($package)  && $package['state'] == 'active'){
-//        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
-//
-//        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
-//      }
-//    }
-//  } catch (Exception $e){
-//    drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
-//  }
+        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
+      }
+    }
+  } catch (Exception $e){
+    drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
+  }
 
   $form['#attached']['js'][] = array(
     'data' => '(function($) {
@@ -311,14 +309,12 @@ function theme_organogram_file_widget($variables) {
 
   // Build up a table of applicable fields.
   $headers = array();
-  $headers[] = t('File information');
+  $headers[] = array('data' => 'File information', 'class' => array('information'));
+
   if ($element['#display_field']) {
-    $headers[] = array(
-      'data' => t('Display'),
-      'class' => array('checkbox'),
-    );
+    $headers[] = array('data' => 'Display', 'class' => array('checkbox', 'display'));
   }
-  $headers[] = t('Operations');
+  $headers[] = array('data' => 'Operations', 'class' => array('operations'));
 
   // Get our list of widgets in order (needed when the form comes back after
   // preview or failed validation).
@@ -384,11 +380,12 @@ function theme_organogram_file_widget($variables) {
     }
     // Arrange the row with all of the rendered columns.
     $row = array();
-    $row[] = $information;
+    $row[] = array('data' => $information, 'class' => 'information');
     if ($element['#display_field']) {
-      $row[] = $display;
+      $row[] = array('data' => $display, 'class' => 'display');
     }
-    $row[] = $operations;
+    $row[] = array('data' => $operations, 'class' => 'operations');
+
     $rows[] = array(
       'data' => $row,
       'class' => isset($widget['#attributes']['class']) ? array_merge($widget['#attributes']['class'], array('draggable')) : array('draggable'),
@@ -459,9 +456,7 @@ function dgu_organogram_after($element, $form_state){
       $element['filename']['#markup'] .= "<span class='signoff_date'>Signed off: ". date('d-m-Y', $signoff) . "<span> ";
     }
     $btnName = "preview_organogram_{$element['#language']}_{$element['#file']->fid}_button";
-    $element['buttons'] = array(
 
-    );
     $element['preview'] = array(
       '#name' => $btnName,
       '#type' => 'button',
