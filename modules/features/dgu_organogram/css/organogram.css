@@ -58,7 +58,6 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
 }
 .field-name-field-organogram table.table {
     margin: 0 auto;
-    width: inherit; /* override 100% table width */
 }
 div.chart {
     position: relative;
@@ -816,10 +815,7 @@ a.categorydata:hover
 
 #live-link a {color: #fff; text-decoration: underline;}
 
-.file-widget.form-managed-file.clearfix.input-group {
-    margin: 0 auto;
-    width: 60%;
-}
+
 #edit-field-organogram-und span.file {
     display: block;
 }
@@ -829,4 +825,21 @@ a.categorydata:hover
 }
 #edit-field-organogram-und td{
     vertical-align: inherit;
+}
+
+#edit-field-organogram-und .form-type-managed-file .input-group {
+    margin: auto;
+}
+
+#edit-field-organogram-und .input-group .input-group-btn,
+#edit-field-organogram-und .input-group .form-control {
+    display: inline;
+}
+
+#edit-field-organogram-und-table .information {
+    text-align: left;
+}
+
+#edit-field-organogram-und-table .operations {
+    text-align: right;
 }
