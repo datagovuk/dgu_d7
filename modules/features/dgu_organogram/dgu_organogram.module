@@ -273,7 +273,7 @@ function dgu_organogram_form_submit($form, &$form_state){
  * Hook form_alter - replaces the default widget theme with a dgu_organogram theme so that we can add in the preview button.
  */
 function dgu_organogram_field_widget_form_alter(&$element, &$form_state, $context) {
-  if ($element['#field_name'] == 'field_organogram'){
+  if (isset($element['#field_name']) && $element['#field_name'] == 'field_organogram'){
     $children = element_children($element);
     foreach ($children as $key){
       $element[$key]['#process'][] = 'dgu_organogram_after';
