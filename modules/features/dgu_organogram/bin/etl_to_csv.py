@@ -129,7 +129,8 @@ def main(input_files, output_folder):
         junior = load_junior(filename,errors)
         # TODO verify the graph makes sense
         for error in list(set(errors)):
-            print "ERROR:",error
+            # encode to avoid UnicodeEncodeError: 'ascii' codec can't encode character u'\xa3' in position 53: ordinal not in range(128)
+            print "ERROR:", error.encode("UTF-8")
         # Calculate Organogram name
         _org  = senior['Organisation']
         _org  = _org[_org.notnull()].unique()

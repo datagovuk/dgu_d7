@@ -836,6 +836,7 @@ a.categorydata:hover
     display: inline;
 }
 
+#edit-field-organogram-und .alert,
 #edit-field-organogram-und-table .information {
     text-align: left;
 }

@@ -100,11 +100,25 @@ function _dgu_organogram_generate_csv_files($fid) {
   }
   $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
   $command = "/usr/bin/python 2>&1 ${script} '${filename}' " . file_directory_temp();
+
   exec($command, $output, $ret);
   if ($ret == 1) {
-    error_log(print_r($output, TRUE));
-    throw new Exception ($output[3]);
+    watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
+    throw new Exception (implode('<br />', $output));
   }
+
+  $errors = array();
+  foreach ($output as $output_row) {
+    if (substr($output_row, 0 , 5) == 'ERROR') {
+      $errors[] = $output_row;
+    }
+  }
+
+  if (!empty($errors)) {
+    watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
+    throw new Exception (implode('<br />', $errors));
+  }
+
   preg_match("/([^:]*:\ )(.*)/i", $output[5], $matches);
   return $matches[2];
 }
