@@ -19,6 +19,9 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
 
   $empty = 'You are not subscribed to any content.';
   $query_parameters = drupal_get_query_parameters();
+  $title = !empty($query_parameters['title']) ? check_plain($query_parameters['title']) : '';
+  $type = !empty($query_parameters['type']) ? check_plain($query_parameters['type']) : 'all';
+  $items_per_page = !empty($query_parameters['items_per_page']) ? (int) $query_parameters['items_per_page'] : 25;
 
   $query = db_select('flagging', 'fl')->extend('PagerDefault'); //->extend('TableSort');
   $query->join('flag', 'fg', 'fl.fid = fg.fid ');
@@ -50,12 +53,16 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
     $query->condition('fg.name', array('subscribe_node', 'subscribe_dataset_comment', 'subscribe_dataset_update'), 'IN');
   }
 
-
-
+  if (!empty($title)) {
+    $or = db_or();
+    $or->condition('n.title', '%' . $title . '%', 'LIKE');
+    $or->condition('d.title', '%' . $title . '%', 'LIKE');
+    $query->condition($or);
+  }
 
   $query->condition('fl.uid', $account->uid)
     ->orderBy('fl.timestamp', 'DESC');
-  $query->limit(10);
+  $query->limit($items_per_page);
   $result = $query->execute()->fetchAll();
 
   $header = array(
@@ -118,13 +125,32 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
 
   );
 
+  $form['filter']['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#size' => 30,
+    '#maxlength' => 128,
+    '#prefix' => '<div class="views-exposed-widget">',
+    '#suffix' => '</div>',
+    '#default_value' => $title,
+  );
+
   $form['filter']['type'] = array(
     '#type' => 'select',
     '#title' => 'Type',
     '#prefix' => '<div class="views-exposed-widget">',
     '#suffix' => '</div>',
     '#options' => $types,
-    '#default_value' => !empty($query_parameters['type']) ? $query_parameters['type'] : 'all',
+    '#default_value' => $type,
+  );
+
+  $form['filter']['items_per_page'] = array(
+    '#type' => 'select',
+    '#title' => 'Items per page',
+    '#prefix' => '<div class="views-exposed-widget">',
+    '#suffix' => '</div>',
+    '#options' => drupal_map_assoc(array(10, 25, 50, 100, 200)),
+    '#default_value' => $items_per_page,
   );
 
   $form['filter']['filter'] = array(
@@ -164,9 +190,21 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
 
 function dgu_notifications_my_subscriptions_submit($form, &$form_state) {
 
+  $query = array();
+
+  if (!empty($form_state['values']['type'])) {
+    $query['type'] = $form_state['values']['type'];
+  }
+  if (!empty($form_state['values']['title'])) {
+    $query['title'] = $form_state['values']['title'];
+  }
+  if (!empty($form_state['values']['items_per_page'])) {
+    $query['items_per_page'] = $form_state['values']['items_per_page'];
+  }
+
   $form_state['redirect'] = array(
     '/user/' . $form['uid']['#value'] . '/subscriptions',
-    array('query' => array('type' => $form_state['values']['type'])),
+    array('query' => $query),
   );
 
   if ($form_state['clicked_button']['#value'] == 'Unsubscribe') {
