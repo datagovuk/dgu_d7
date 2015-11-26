@@ -199,7 +199,6 @@ function dgu_notifications_my_subscriptions_submit($form, &$form_state) {
   );
 
   if ($form_state['clicked_button']['#value'] == 'Unsubscribe') {
-    drupal_set_message(print_r($form_state['values']['table'], 1));
     foreach ($form_state['values']['table'] as $flagging_id => $selected) {
       if ($selected) {
         $flagging = flagging_load($flagging_id);
