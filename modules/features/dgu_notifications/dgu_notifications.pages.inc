@@ -172,18 +172,9 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
 
   $form['pager'] = array('#markup' => theme('pager'));
 
-  $form['#attached']['js']['
-    jQuery( document ).ready(function() {
-        jQuery(\'#dgu-notifications-my-subscriptions .form-checkbox\').on(\'click\', function(){
-          if ( jQuery(\'#dgu-notifications-my-subscriptions .form-checkbox\').is(\':checked\') ) {
-              jQuery("#edit-unsubscribe").removeAttr("disabled");
-          }
-          else {
-              jQuery("#edit-unsubscribe").attr("disabled","disabled");
-          }
-        });
-    });
-  '] = array( 'type' => 'inline');
+  $form['#attached']['js'] = array(
+    drupal_get_path('module', 'dgu_notifications') . '/js/dgu_notifications.js',
+  );
 
   return $form;
 }
