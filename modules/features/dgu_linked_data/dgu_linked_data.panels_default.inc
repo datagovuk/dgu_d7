@@ -43,7 +43,20 @@ function dgu_linked_data_default_panels_mini() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<div class="item-list"><ul><li><a href="/linked-data/overview-of-linked-data"><strong>Overview of Linked Data</strong></a><p>Across government over the last ten years there has been a growing realisation to the power of linked data for exposing, sharing, and connecting pieces of data and information using uniform resource identifiers (URIs).</p></li><li><a href="/linked-data/what-is-linked-data"><strong>What is Linked Data?</strong></a><p>Linked Data is data in which real-world things are given addresses on the web (URIs), and data is published about them in machine-readable formats.</p></li><li><a href="/linked-data/who-is-doing-what"><strong>Who is doing what?</strong></a><p>Linked Data approaches across the public sector have over the last 12 months have been moving from pilots to proven business as usual.</p></li></ul></div>',
+      'body' => '<div class="item-list">
+	<ul>
+		<li><a href="/linked-data/overview-of-linked-data"><strong>Overview of Linked Data</strong></a>
+			<p>Across government over the last ten years there has been a growing realisation to the power of linked data for exposing, sharing, and connecting pieces of data and information using uniform resource identifiers (URIs).</p>
+		</li>
+		<li><a href="/linked-data/what-is-linked-data"><strong>What is Linked Data?</strong></a>
+			<p>Linked Data is data in which real-world things are given addresses on the web (URIs), and data is published about them in machine-readable formats.</p>
+		</li>
+		<li><a href="/linked-data/list-linked-datasets-vocabularies"><strong>List of Linked Datasets &amp; Vocabularies</strong></a>
+			<p>Linked data to explore, use and build other data on.</p>
+		</li>
+	</ul>
+</div>
+',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
