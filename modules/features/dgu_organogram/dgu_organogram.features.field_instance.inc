@@ -13,7 +13,7 @@ function dgu_organogram_field_default_field_instances() {
   // Exported field_instance: 'ckan_publisher-ckan_publisher-field_organogram'
   $field_instances['ckan_publisher-ckan_publisher-field_organogram'] = array(
     'bundle' => 'ckan_publisher',
-    'deleted' => 0,
+    'deleted' => '0',
     'description' => '',
     'display' => array(
       'default' => array(
@@ -24,6 +24,9 @@ function dgu_organogram_field_default_field_instances() {
           'field_replies_settings' => array(
             'field_replies_reply_field_name' => '',
             'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
           ),
         ),
         'type' => 'file_default',

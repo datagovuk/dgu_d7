@@ -7,6 +7,5 @@ project = dgu_organogram
 dependencies[] = features
 dependencies[] = file
 features[features_api][] = api:2
-features[node][] = organogram
 features[field_base][] = field_organogram
 features[field_instance][] = ckan_publisher-ckan_publisher-field_organogram
