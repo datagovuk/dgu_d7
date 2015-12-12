@@ -158,7 +158,6 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
     '#value' => t('Apply'),
     '#prefix' => '<div class="views-exposed-widget">',
     '#suffix' => '</div>',
-    '#attributes' => array('style' => array('background-color: #5bc0de; border-color: #46b8da; color: #fff; padding: 6px 12px;')),
   );
 
   $form['table'] = array(
@@ -211,54 +210,20 @@ function dgu_notifications_my_subscriptions_submit($form, &$form_state) {
 
 function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
 
-  $path = drupal_get_path('module', 'dgu_notifications');
-
-  $content_types = array(
-    'ckan_dataset' => 'Dataset',
-    'ckan_dataset_update_subscribe' => 'Automatically subscribe to dataset updates',
-    'ckan_dataset_comment_subscribe' => 'Automatically subscribe to comments on datasets',
-    'app' => 'App',
-    'app_subscribe' => 'Automatically subscribe to updates and comments',
-    'blog' => 'Blog entry',
-    'blog_subscribe' => 'Automatically subscribe to updates and comments',
-    'dataset_request' => 'Data request',
-    'dataset_request_subscribe' => 'Automatically subscribe to updates and comments',
-    'forum' => 'Forum topic',
-    'forum_subscribe' => 'Automatically subscribe to updates and comments',
-    'resource' => 'Library resource',
-    'resource_subscribe' => 'Automatically subscribe to updates',
-  );
-
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
-  $form['content_types'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Notifications about new content'),
-    '#options' => $content_types,
-    '#attached' => array (
-      'js' => array($path . '/js/dgu_notifications.js'),
-      'css' => array($path . '/css/dgu_notifications.css'),
-    ),
-  );
+  $form_tmp = array();
+  field_attach_form('user', $account, $form_tmp, $form_state, NULL, array(
+    'field_name' => 'field_publisher_subscribe'
+  ));
 
-  $options = db_select('users_auto_subscribe', 'uas')->fields('uas', array('type'))->condition('uid', $account->uid)->execute()->fetchCol();
+  $form['field_publisher_subscribe'] = $form_tmp['field_publisher_subscribe'];
 
-  $form['content_types']['#default_value'] = $options;
-
-  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
-    $form['dataset_comments_label'] = array('#markup' => '<strong>Comments on datasets</strong>',);
-
-    $form['dataset_comments'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Receive email notifications about comments on all datasets published by publishers I administer'),
-    );
-    if (!empty($account->data['dataset_comments'])) {
-      $form['dataset_comments']['#default_value'] = $account->data['dataset_comments'];
-    }
-  }
+  unset($form['field_publisher_subscribe'][LANGUAGE_NONE]['#title']);
 
   $form['submit'] = array(
     '#type' => 'submit',
+    '#weight' => 200,
     '#value' => t('Save'),
   );
 
@@ -266,23 +231,12 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
 }
 
 function dgu_notifications_auto_subscribe_submit($form, &$form_state) {
-
   $account = user_load($form['account']['#account']->uid);
-
-  $types = array_filter($form_state['values']['content_types']);
-  db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
-  $query = db_insert('users_auto_subscribe')->fields(array('uid', 'type'));
-  foreach ($types as $type) {
-    $query->values(array($account->uid, $type));
-  }
-  $query->execute();
-
-  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
-    $account->data['dataset_comments'] = $form_state['values']['dataset_comments'];
+  if (!empty($form_state['values']['field_publisher_subscribe'][LANGUAGE_NONE])) {
+    $account->field_publisher_subscribe = $form_state['values']['field_publisher_subscribe'];
     user_save($account);
   }
 }
-
 
 function dgu_notifications_delivery($form, &$form_state, $account) {
 
