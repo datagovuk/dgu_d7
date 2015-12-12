@@ -231,7 +231,7 @@ Feature: Create blogs as a blogger
     Then the "test_user" user received an email 'User test_editor posted a comment on Blog entry "Amended test blog"'
     Given I am logged in as a user "test_user" with the "authenticated user" role
     When user "test_user" clicks link containing "/blog/" in mail 'User test_editor posted a comment on Blog entry "Amended test blog"'
-    And I wait until the page loads
+    And I wait 5 seconds
     Then I should see the following <breadcrumbs>
       | Blog              |
       | Amended test blog |
