@@ -18,8 +18,6 @@ Feature: Request new data
     And I should see the link "Login to request new data"
     And view "latest_dataset_requests" view should have "5" rows
     And I should see the link "See all"
-    And I should see "OPEN DATA USER GROUP" pane in "first" column in "second" row
-    And I should see "ODUG MEMBERS" pane in "last" column in "second" row
     And I should see "USEFUL LINKS" pane in "last" column in "second" row
     And search result counter should match "^\d* Dataset requests \+ \d* confidential requests$"
     When I follow "Login to request new data"
@@ -239,15 +237,6 @@ Feature: Request new data
     Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
     And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
     And the "test_data_admin" user have not received an email 'data.gov.uk Message Digest'
-
-  @anon
-  Scenario: View ODUG minutes page
-    Given I am not logged in
-    And I am on "/data-request"
-    When I follow "ODUG minutes"
-    And I should be on "/library/?f[0]=im_field_document_type%3A90"
-    And "Library" item in "Interact" subnav should be active
-    And search result counter should match "^\d* Library resources$"
 
   @anon
   Scenario: View the data requests RSS

@@ -32,5 +32,17 @@
                 });
             };
         });
+
+
+        $('#dgu-notifications-my-subscriptions .form-checkbox').change(function(){
+            if ( $('#dgu-notifications-my-subscriptions .form-checkbox').is(':checked') ) {
+                $("#edit-unsubscribe").removeAttr("disabled");
+            }
+            else {
+                $("#edit-unsubscribe").attr("disabled","disabled");
+            }
+
+        });
+
     });
 })(jQuery);
