@@ -263,7 +263,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
@@ -363,7 +363,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
@@ -387,7 +387,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->panel = 'right';
     $pane->type = 'views';
     $pane->subtype = 'blogs';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'override_pager_settings' => 0,
@@ -420,7 +420,7 @@ function dgu_data_set_request_default_page_manager_pages() {
     $pane->panel = 'right';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
-    $pane->shown = TRUE;
+    $pane->shown = FALSE;
     $pane->access = array();
     $pane->configuration = array(
       'admin_title' => '',
@@ -467,8 +467,6 @@ Johanna Walker<br/>
       'body' => '<a href="http://www.theodi.org ">The Open Data Institute</a>
 <br/>
 <a href="http://www.bis.gov.uk/transparency/data-strategy-board ">The Data Strategy board</a>
-<br/>
-<a href="http://www.cabinetoffice.gov.uk/content/open-data-user-group ">Cabinet Office ODUG page</a>
 <br/>
 <a href="https://www.gov.uk/government/groups/public-data-group">Public Data Group</a>
 ',
