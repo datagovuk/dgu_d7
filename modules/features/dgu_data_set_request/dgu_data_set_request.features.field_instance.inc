@@ -1231,9 +1231,11 @@ function dgu_data_set_request_field_default_field_instances() {
           ),
           'summary_handler' => 'full',
           'trim_length' => 250,
+          'trim_link' => FALSE,
           'trim_options' => array(
             'text' => 'text',
           ),
+          'trim_preserve_tags' => '',
           'trim_suffix' => '...',
           'trim_type' => 'chars',
         ),
