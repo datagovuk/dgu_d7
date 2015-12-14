@@ -150,7 +150,7 @@ Feature: Request new data
     And I select the radio button "Escalated to data holder"
     And I wait 2 seconds
     And I select the radio button "Academics"
-    And I wait 2 seconds
+    And I wait 5 seconds
     And I select the radio button "test_data_publisher"
     And I press "Save"
     And I wait until the page loads
@@ -186,6 +186,8 @@ Feature: Request new data
     And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
     # Set digest last run to 10 days ago to trigger daily and weekly notifications
     When I set digest last run to 10 days ago
+    # Allow previous cron job to finish
+    And I wait 30 seconds
     And I run cron
     Then the "test_data_publisher" user received an email 'data.gov.uk Message Digest'
     And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
