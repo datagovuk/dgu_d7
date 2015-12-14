@@ -78,31 +78,6 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     # Create these accounts to test if they receive emails.
     And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
     And I am logged in as a user "test_subscriber" with the "authenticated user" role
-#    When I visit "/user"
-#    And I wait until the page loads
-#    And I follow "My subscriptions"
-#    And I wait until the page loads
-#    And I click "Auto subscribe"
-#    And I wait until the page loads
-#    And I check "App"
-#    And I wait 1 second
-#    And I press "Save"
-#    And I wait until the page loads
-#    And I am logged in as a user "test_subscriber_updates_comments" with the "authenticated user" role
-#
-#    When I visit "/user"
-#    And I wait until the page loads
-#    And I follow "My subscriptions"
-#    And I wait until the page loads
-#    And I click "Auto subscribe"
-#    And I wait until the page loads
-#    And I check "App"
-#    And I wait 1 second
-#    And I check "Automatically subscribe to updates and comments"
-#    And I wait 1 second
-#    And I press "Save"
-#    And I wait until the page loads
-
     And I am logged in as a user "test_user" with the "authenticated user" role
     When I visit "/apps"
     And I follow "Add your app"
