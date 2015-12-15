@@ -99,33 +99,8 @@ Feature: Create blogs as a blogger
   @api
   Scenario: Create a new blog entry and comment on it and test notification about new content
     Given that the user "test_user" is not registered
-    And that the user "test_subscriber_new_blog" is not registered
-    And that the user "test_subscriber_updates_comments" is not registered
     And that the user "test_non_subscriber" is not registered
     And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
-    And I am logged in as a user "test_subscriber_new_blog" with the "authenticated user" role
-    When I visit "/user"
-    And I wait until the page loads
-    And I follow "My subscriptions"
-    And I wait until the page loads
-    And I click "Auto subscribe"
-    And I wait until the page loads
-    And I check "Blog entry"
-    And I wait 1 second
-    And I press "Save"
-    And I wait until the page loads
-    And I am logged in as a user "test_subscriber_updates_comments" with the "authenticated user" role
-    When I visit "/user"
-    And I wait until the page loads
-    And I follow "My subscriptions"
-    And I wait until the page loads
-    And I click "Auto subscribe"
-    And I wait until the page loads
-    And I check "Blog entry"
-    And I wait 1 second
-    And I check "Automatically subscribe to updates and comments"
-    And I wait 1 second
-    And I press "Save"
     And I wait until the page loads
     And I am logged in as a user "test_user" with the "blogger" role
     And I visit "/node/add/blog"
@@ -145,8 +120,6 @@ Feature: Create blogs as a blogger
     And user with "moderator" role moderates "Test blog" authored by "test_user"
     And the "test_user" user have not received an email 'Blog entry "Test blog" has been created '
     And the "test_non_subscriber" user have not received an email 'Blog entry "Test blog" has been created '
-    And the "test_subscriber_new_blog" user received an email 'Blog entry "Test blog" has been created '
-    And the "test_subscriber_updates_comments" user received an email 'Blog entry "Test blog" has been created '
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test blog" in My content and All content tabs but not in My drafts tab
     Given the cache has been cleared
@@ -157,7 +130,6 @@ Feature: Create blogs as a blogger
     And row "1" of "latest_blog_posts" view should match "No comments so far$"
     When I click "title" field in row "1" of "latest_blog_posts" view
     Then I should be on "/blog/test-blog"
-    And I should see the link "Subscribe"
     # Testing comments as different user
     Given that the user "test_commenting_user" is not registered
     And I am logged in as a user "test_commenting_user" with the "authenticated user" role
@@ -184,10 +156,6 @@ Feature: Create blogs as a blogger
     Given the cache has been cleared
     When I visit "/blog"
     Then row "1" of "latest_blog_posts" view should match "\d* comment \d* sec ago$"
-    And the "test_subscriber_updates_comments" user received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
-    And the "test_subscriber_new_blog" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
-    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
-    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on Blog entry "Test blog" '
 
   @api
   Scenario: Subscribe user to existing blog and test notifications about comment and blog update
