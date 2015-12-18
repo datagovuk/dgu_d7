@@ -208,7 +208,7 @@ function dgu_notifications_my_subscriptions_submit($form, &$form_state) {
   }
 }
 
-function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
+function dgu_notifications_publisher_subscribe($form, &$form_state, $account) {
 
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
@@ -230,7 +230,7 @@ function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
   return $form;
 }
 
-function dgu_notifications_auto_subscribe_submit($form, &$form_state) {
+function dgu_notifications_publisher_subscribe_submit($form, &$form_state) {
   $account = user_load($form['account']['#account']->uid);
   if (!empty($form_state['values']['field_publisher_subscribe'][LANGUAGE_NONE])) {
     $account->field_publisher_subscribe = $form_state['values']['field_publisher_subscribe'];
