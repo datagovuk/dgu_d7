@@ -293,7 +293,7 @@ projects[autologout][subdir] = "contrib"
 projects[maxlength][version] = "3.0"
 projects[maxlength][subdir] = "contrib"
 
-projects[mass_contact][version] = "1.0"
+projects[mass_contact][version] = "1.1"
 projects[mass_contact][subdir] = "contrib"
 
 projects[contact_deeplink][version] = "1.0"
