@@ -236,6 +236,11 @@ function dgu_notifications_publisher_subscribe_submit($form, &$form_state) {
     $account->field_publisher_subscribe = $form_state['values']['field_publisher_subscribe'];
     user_save($account);
   }
+
+  if (empty($account->field_digest_notifier[LANGUAGE_NONE][0]['value'])
+    || (isset($account->field_digest_notifier[LANGUAGE_NONE][0]['value']) && $account->field_digest_notifier[LANGUAGE_NONE][0]['value'] == 'email')) {
+    $form_state['redirect'] = '/about';
+  }
 }
 
 function dgu_notifications_delivery($form, &$form_state, $account) {
@@ -267,4 +272,42 @@ function dgu_notifications_delivery_submit($form, &$form_state) {
   $wrapper = entity_metadata_wrapper('user', $form['account']['#account']);
   $wrapper->field_digest_notifier->set($form_state['values']['digest_notifier']);
   $wrapper->save();
+}
+
+
+function dgu_notifications_delivery_confirm($form, &$form_state, $account) {
+
+  $field = field_info_field('field_digest_notifier');
+  $allowed_values = list_allowed_values($field);
+  unset($allowed_values['email']);
+
+  $form = array('account' => array('#type' => 'value', '#account' => $account));
+
+  $form['message'] = array(
+    '#markup' => '<p>Message here</p>',
+  );
+
+  $form['email'] = array(
+    '#type' => 'submit',
+    '#value' => t('Keep immediate delivery'),
+    '#name' => 'email',
+  );
+
+  foreach ($allowed_values as $key => $notifier) {
+    $form[$key] = array(
+      '#type' => 'submit',
+      '#value' => t('Change to ' . strtolower($notifier) . ' digest'),
+      '#name' => $key,
+    ) ;
+  }
+
+  return $form;
+}
+
+function dgu_notifications_delivery_confirm_submit($form, &$form_state) {
+  if ($form_state['triggering_element']['#name'] != 'email') {
+    $wrapper = entity_metadata_wrapper('user', $form['account']['#account']);
+    $wrapper->field_digest_notifier->set($form_state['triggering_element']['#name']);
+    $wrapper->save();
+  }
 }

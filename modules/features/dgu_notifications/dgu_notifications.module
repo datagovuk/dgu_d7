@@ -57,6 +57,14 @@ function dgu_notifications_menu() {
     'weight' => 3,
     'file' => 'dgu_notifications.pages.inc',
   );
+  $items['user/%user/subscriptions/delivery/confirm'] = array(
+    'title' => 'Delivery of notifications',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_delivery_confirm', 1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 10,
+    'file' => 'dgu_notifications.pages.inc',
+  );
   return $items;
 }
 
