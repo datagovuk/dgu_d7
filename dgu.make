@@ -189,7 +189,7 @@ projects[composer_manager][subdir] = "contrib"
 projects[panels][version] = "3.3"
 projects[panels][subdir] = "contrib"
 
-projects[fieldable_panels_panes][version] = "1.5"
+projects[fieldable_panels_panes][version] = "1.7"
 projects[fieldable_panels_panes][subdir] = "contrib"
 
 projects[context][version] = "3.0-beta7"
