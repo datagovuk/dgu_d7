@@ -24,8 +24,8 @@ function dgu_notifications_menu() {
   $items['user/%user/subscriptions'] = array(
     'title' => 'My subscriptions',
     'type' => MENU_LOCAL_TASK,
-    'page callback' => 'dgu_notifications_my_subscriptions',
-    'page arguments' => array(1),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_my_subscriptions', 1),
     'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 1,
     'file' => 'dgu_notifications.pages.inc',
@@ -33,8 +33,8 @@ function dgu_notifications_menu() {
   $items['user/%user/subscriptions/my-subscriptions'] = array(
     'title' => 'Current subscriptions',
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'page callback' => 'dgu_notifications_my_subscriptions',
-    'page arguments' => array(1),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_my_subscriptions', 1),
     'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 1,
     'file' => 'dgu_notifications.pages.inc',
@@ -202,7 +202,7 @@ function dgu_notifications_entity_insert($entity, $type) {
  * Implements hook_user_delete().
  */
 function dgu_notifications_user_delete($account) {
-    db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
+  db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
 }
 
 /**
