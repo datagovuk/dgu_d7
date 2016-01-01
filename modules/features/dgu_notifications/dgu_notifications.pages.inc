@@ -239,7 +239,7 @@ function dgu_notifications_publisher_subscribe_submit($form, &$form_state) {
 
   if (empty($account->field_digest_notifier[LANGUAGE_NONE][0]['value'])
     || (isset($account->field_digest_notifier[LANGUAGE_NONE][0]['value']) && $account->field_digest_notifier[LANGUAGE_NONE][0]['value'] == 'email')) {
-    $form_state['redirect'] = '/about';
+    $form_state['redirect'] = '/user/' . $account->uid . '/subscriptions/delivery/confirm';
   }
 }
 
@@ -284,7 +284,7 @@ function dgu_notifications_delivery_confirm($form, &$form_state, $account) {
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
   $form['message'] = array(
-    '#markup' => '<p>Message here</p>',
+    '#markup' => '<p>Bulk dataset updates can couse sending hundreds of notifications. We strongly recommend changing your preference to daily or weekly digest.</p>',
   );
 
   $form['email'] = array(
@@ -298,6 +298,7 @@ function dgu_notifications_delivery_confirm($form, &$form_state, $account) {
       '#type' => 'submit',
       '#value' => t('Change to ' . strtolower($notifier) . ' digest'),
       '#name' => $key,
+      '#attributes' => array('class' => array('btn-info')),
     ) ;
   }
 
@@ -309,5 +310,7 @@ function dgu_notifications_delivery_confirm_submit($form, &$form_state) {
     $wrapper = entity_metadata_wrapper('user', $form['account']['#account']);
     $wrapper->field_digest_notifier->set($form_state['triggering_element']['#name']);
     $wrapper->save();
+    drupal_set_message('You have changed your notification frequency to ' . $form_state['triggering_element']['#name'] . ' digest.');
   }
+  $form_state['redirect'] = '/user/' . $form['account']['#account']->uid . '/subscriptions/publisher';
 }

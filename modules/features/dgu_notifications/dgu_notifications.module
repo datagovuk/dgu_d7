@@ -59,6 +59,7 @@ function dgu_notifications_menu() {
   );
   $items['user/%user/subscriptions/delivery/confirm'] = array(
     'title' => 'Delivery of notifications',
+    'type' => MENU_LOCAL_TASK,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('dgu_notifications_delivery_confirm', 1),
     'access callback' => '_dgu_notifications_subscriptions_access',
