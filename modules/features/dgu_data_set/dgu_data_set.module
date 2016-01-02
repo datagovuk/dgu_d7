@@ -21,7 +21,6 @@ function dgu_data_set_entity_insert($entity, $type) {
 
     // A new comment on a dataset.
     if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type == 'ckan_dataset') {
-
       $message = message_create('dataset_comment_new');
       $wrapper = entity_metadata_wrapper('message', $message);
       $dataset = ckan_dataset_load($entity->entity_id);
@@ -33,7 +32,7 @@ function dgu_data_set_entity_insert($entity, $type) {
       // Then get all other subscribes subscribed via flag
       $subscribers = _dgu_data_set_get_subscribers($dataset->id, 'comment');
       // Users which subscribed via flag to the dataset but not to the publisher.
-      $dataset_subscribers = $users_to_notify_only = array_diff_assoc($subscribers, $publisher_subscribers);
+      $dataset_subscribers = array_diff_assoc($subscribers, $publisher_subscribers);
 
       message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $publisher_subscribers));
       message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $dataset_subscribers));
@@ -45,7 +44,7 @@ function dgu_data_set_entity_insert($entity, $type) {
       $message_dataset_new = message_create('dataset_new');
       $wrapper = entity_metadata_wrapper('message', $message_dataset_new);
       $wrapper->field_dataset_reference->set($entity);
-      message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new, $options, array('uids' => $users_to_notify_only));
+      message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new, $options, array('uids' => $publisher_subscribers));
     }
   }
 }
@@ -73,7 +72,7 @@ function dgu_data_set_entity_update($entity, $type) {
       // Then get all other subscribes subscribed via flag
       $subscribers = _dgu_data_set_get_subscribers($entity->id, 'update');
       // Users which subscribed via flag to the dataset but not to the publisher.
-      $dataset_subscribers = $users_to_notify_only = array_diff_assoc($subscribers, $publisher_subscribers);
+      $dataset_subscribers = array_diff_assoc($subscribers, $publisher_subscribers);
 
       message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $publisher_subscribers));
       message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $dataset_subscribers));
