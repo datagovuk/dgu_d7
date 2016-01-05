@@ -138,7 +138,7 @@ Feature: Request new data
     When I press "Save"
     And I wait until the page loads
     # Subscriber shouldn't be notified because it can't see this change, "Relationship manager" is a backend field which shouldn't be visible to normal users
-    Then the "test_subscriber" user have not received an email 'Data request "Test data request" has been updated by test_data_request_admin '
+    Then the "test_subscriber" user has not received an email 'Data request "Test data request" has been updated by test_data_request_admin '
     Given I am not logged in
     And I am logged in as a user "test_data_request_manager" with the "data request administrator" role
     When I visit "/admin/workbench"
@@ -182,16 +182,16 @@ Feature: Request new data
     #Field "Publisher assignee" changed
     #from:
     #to: test_data_publisher
-    And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
-    And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_publisher" user has not received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_admin" user has not received an email 'data.gov.uk Message Digest'
     # Set digest last run to 10 days ago to trigger daily and weekly notifications
     When I set digest last run to 10 days ago
     # Allow previous cron job to finish
     And I wait 30 seconds
     And I run cron
     Then the "test_data_publisher" user received an email 'data.gov.uk Message Digest'
-    And the "test_data_request_manager" user have not received an email 'data.gov.uk Message Digest'
-    And the "test_data_request_admin" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_manager" user has not received an email 'data.gov.uk Message Digest'
+    And the "test_data_request_admin" user has not received an email 'data.gov.uk Message Digest'
     # Test links in the email
     When user "test_data_publisher" clicks link containing "data-request/test-data-request" in mail 'data.gov.uk Message Digest'
     And I wait until the page loads
@@ -237,8 +237,8 @@ Feature: Request new data
     And I set digest last run to 10 days ago
     And I run cron
     Then the "test_data_request_manager" user received an email 'data.gov.uk Message Digest'
-    And the "test_data_publisher" user have not received an email 'data.gov.uk Message Digest'
-    And the "test_data_admin" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_data_publisher" user has not received an email 'data.gov.uk Message Digest'
+    And the "test_data_admin" user has not received an email 'data.gov.uk Message Digest'
 
   @anon
   Scenario: View the data requests RSS

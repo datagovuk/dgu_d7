@@ -126,9 +126,9 @@ Feature: Create new forum topic as a site user
     And I should see node title "Test forum topic"
     When I submit "Forum topic" titled "Test forum topic" for moderation
     And user with "moderator" role moderates "Test forum topic" authored by "test_user"
-    And the "test_user" user have not received an email 'Forum topic "Test forum topic" has been created '
-    And the "test_non_subscriber" user have not received an email 'Forum topic "Test forum topic" has been created '
-    And the "test_subscriber" user have not received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_user" user has not received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_non_subscriber" user has not received an email 'Forum topic "Test forum topic" has been created '
+    And the "test_subscriber" user has not received an email 'Forum topic "Test forum topic" has been created '
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test forum topic" in My content and All content tabs but not in My drafts tab
     And I am logged in as a user "test_subscriber" with the "authenticated user" role
@@ -159,8 +159,8 @@ Feature: Create new forum topic as a site user
     And I should see "Body content of test comment"
     And I should see the link "Reply"
     And the "test_subscriber" user received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
-    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
-    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
+    And the "test_non_subscriber" user has not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
+    And the "test_user" user has not received an email 'User test_commenting_user posted a comment on Forum topic "Test forum topic" '
     # Clear the cache so the forum topic will show up on the forum landing page
     Given the cache has been cleared
     When I visit "/forum"

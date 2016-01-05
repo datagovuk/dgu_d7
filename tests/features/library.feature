@@ -67,9 +67,9 @@ Feature: Create a Library Resource and search for library resources
     And I wait 2 seconds
     Then I should see "The selected file Test image.png cannot be uploaded. Only files with the following extensions are allowed: pdf, txt, rtf, csv, odt, ods, odp, odg, odf, doc, docx, xls, xlsx, ppt."
     When I press "Save"
-    Then the "test_editor" user have not received an email 'Library resource "Test Library resource" has been created '
-    And the "test_non_subscriber" user have not received an email 'Library resource "Test Library resource" has been created '
-    And the "test_subscriber" user have not received an email 'Library resource "Test Library resource" has been created '
+    Then the "test_editor" user has not received an email 'Library resource "Test Library resource" has been created '
+    And the "test_non_subscriber" user has not received an email 'Library resource "Test Library resource" has been created '
+    And the "test_subscriber" user has not received an email 'Library resource "Test Library resource" has been created '
     And I am logged in as a user "test_subscriber" with the "authenticated user" role
     And I am on "/library/test-library-resource"
     And I click "Subscribe"
@@ -82,5 +82,5 @@ Feature: Create a Library Resource and search for library resources
     When I press "Save"
     Then I should see "Library resource Test Library resource has been updated."
     And the "test_subscriber" user received an email 'Library resource "Test Library resource" has been updated '
-    And the "test_editor" user have not received an email 'Library resource "Test Library resource" has been updated '
-    And the "test_non_subscriber" user have not received an email 'Library resource "Test Library resource" has been updated '
+    And the "test_editor" user has not received an email 'Library resource "Test Library resource" has been updated '
+    And the "test_non_subscriber" user has not received an email 'Library resource "Test Library resource" has been updated '

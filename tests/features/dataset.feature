@@ -17,7 +17,7 @@ Feature: Sync datasets from CKAN to Drupal
     And I visit "/ckan_dataset/test-dataset"
     Then I should see the link "Test dataset"
     And I should see "Published by"
-    And the "test_user" user have not received an email 'Dataset "Test dataset" has been created '
+    And the "test_user" user has not received an email 'Dataset "Test dataset" has been created '
     # Subscribe to a publisher
     And I am logged in as a user "test_publisher_subscriber" with the "authenticated user" role
     When I visit "/user"
@@ -41,15 +41,15 @@ Feature: Sync datasets from CKAN to Drupal
     Given that the dataset with name "test-dataset" doesn't exist in Drupal
     When I synchronise dataset with name "test-dataset"
     Then the "test_publisher_subscriber" user received an email 'Dataset "Test dataset" has been created '
-    And the "test_user" user have not received an email 'Dataset "Test dataset" has been created '
-    And the "test_update_subscriber" user have not received an email 'Dataset "Test dataset" has been created '
-    And the "test_comment_subscriber" user have not received an email 'Dataset "Test dataset" has been created '
+    And the "test_user" user has not received an email 'Dataset "Test dataset" has been created '
+    And the "test_update_subscriber" user has not received an email 'Dataset "Test dataset" has been created '
+    And the "test_comment_subscriber" user has not received an email 'Dataset "Test dataset" has been created '
     # nobody should be notified about a new dataset on next sync
     When I synchronise dataset with name "test-dataset"
-    Then the "test_publisher_subscriber" user have not received an email 'Dataset "Test dataset" has been created '
-    And the "test_user" user have not received an email 'Dataset "Test dataset" has been created '
-    And the "test_update_subscriber" user have not received an email 'Dataset "Test dataset" has been created '
-    And the "test_comment_subscriber" user have not received an email 'Dataset "Test dataset" has been created '
+    Then the "test_publisher_subscriber" user has not received an email 'Dataset "Test dataset" has been created '
+    And the "test_user" user has not received an email 'Dataset "Test dataset" has been created '
+    And the "test_update_subscriber" user has not received an email 'Dataset "Test dataset" has been created '
+    And the "test_comment_subscriber" user has not received an email 'Dataset "Test dataset" has been created '
     Given I am logged in as a user "test_update_subscriber" with the "authenticated user" role
     And I get comments of dataset named "test-dataset"
     And I click "Subscribe to updates"
@@ -61,14 +61,14 @@ Feature: Sync datasets from CKAN to Drupal
     And I synchronise dataset with name "test-dataset"
     Then the "test_update_subscriber" user received an email 'Dataset "Test dataset" has been updated '
     And the "test_publisher_subscriber" user received an email 'Dataset "Test dataset" has been updated '
-    And the "test_user" user have not received an email 'Dataset "Test dataset" has been updated '
-    And the "test_comment_subscriber" user have not received an email 'Dataset "Test dataset" has been updated '
+    And the "test_user" user has not received an email 'Dataset "Test dataset" has been updated '
+    And the "test_comment_subscriber" user has not received an email 'Dataset "Test dataset" has been updated '
     # all 3 users shouldn't receive emails about new dataset on next sync if resources are the same
     When I synchronise dataset with name "test-dataset"
-    Then the "test_update_subscriber" user have not received an email 'Dataset "Test dataset" has been updated '
-    And the "test_publisher_subscriber" user have not received an email 'Dataset "Test dataset" has been updated '
-    And the "test_user" user have not received an email 'Dataset "Test dataset" has been updated '
-    And the "test_comment_subscriber" user have not received an email 'Dataset "Test dataset" has been updated '
+    Then the "test_update_subscriber" user has not received an email 'Dataset "Test dataset" has been updated '
+    And the "test_publisher_subscriber" user has not received an email 'Dataset "Test dataset" has been updated '
+    And the "test_user" user has not received an email 'Dataset "Test dataset" has been updated '
+    And the "test_comment_subscriber" user has not received an email 'Dataset "Test dataset" has been updated '
     # all 3 users shouldn't receive emails about new dataset on next sync if resources are the same
     # only "test_user_updates" user should be notified about dataset update when new resource attached
     When I open comment form for dataset with name "test-dataset"
@@ -81,5 +81,5 @@ Feature: Sync datasets from CKAN to Drupal
     Then I should see the link "test_user_updates"
     #And I should see "Test subject"
     And the "test_comment_subscriber" user received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
-    And the "test_update_subscriber" user have not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
-    And the "test_user" user have not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
+    And the "test_update_subscriber" user has not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
+    And the "test_user" user has not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '

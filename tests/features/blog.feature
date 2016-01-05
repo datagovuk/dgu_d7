@@ -118,8 +118,8 @@ Feature: Create blogs as a blogger
     And I should see "Test body"
     When I submit "Blog entry" titled "Test blog" for moderation
     And user with "moderator" role moderates "Test blog" authored by "test_user"
-    And the "test_user" user have not received an email 'Blog entry "Test blog" has been created '
-    And the "test_non_subscriber" user have not received an email 'Blog entry "Test blog" has been created '
+    And the "test_user" user has not received an email 'Blog entry "Test blog" has been created '
+    And the "test_non_subscriber" user has not received an email 'Blog entry "Test blog" has been created '
     When I am logged in as a user "test_user" with the "authenticated user" role
     Then I should see "Test blog" in My content and All content tabs but not in My drafts tab
     Given the cache has been cleared

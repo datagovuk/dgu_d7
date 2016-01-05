@@ -662,7 +662,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^the "([^"]*)" user have not received an email '([^']*)'$/
+   * @Given /^the "([^"]*)" user has not received an email '([^']*)'$/
    */
   public function theUserNotReceivedAnEmail($user, $title) {
     $mail_address = $this->getMailAddress($user);

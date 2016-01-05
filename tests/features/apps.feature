@@ -125,9 +125,9 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I submit "App" titled "Test app" for moderation
     # Moderate "Test app" as a "test_moderator"
     Given user with "moderator" role moderates "Test app" authored by "test_user"
-    And the "test_user" user have not received an email 'App "Test app" has been created '
-    And the "test_non_subscriber" user have not received an email 'App "Test app" has been created '
-    And the "test_subscriber" user have not received an email 'App "Test app" has been created '
+    And the "test_user" user has not received an email 'App "Test app" has been created '
+    And the "test_non_subscriber" user has not received an email 'App "Test app" has been created '
+    And the "test_subscriber" user has not received an email 'App "Test app" has been created '
     # Clear the cache so the new app will show up on the latest apps landing page
     Given the cache has been cleared
     And I am logged in as a user "test_subscriber" with the "authenticated user" role
@@ -159,8 +159,8 @@ Feature: View latest apps landing page and submit a new app for moderation as a 
     And I should see "Body content of test comment"
     And I should see the link "Reply"
     And the "test_subscriber" user received an email 'User test_commenting_user posted a comment on App "Test app" '
-    And the "test_user" user have not received an email 'User test_commenting_user posted a comment on App "Test app" '
-    And the "test_non_subscriber" user have not received an email 'User test_commenting_user posted a comment on App "Test app" '
+    And the "test_user" user has not received an email 'User test_commenting_user posted a comment on App "Test app" '
+    And the "test_non_subscriber" user has not received an email 'User test_commenting_user posted a comment on App "Test app" '
     #View the Test App and check the author link
     Given I am on "/apps/test-app"
     When I follow "test_user" in the "main_content"
