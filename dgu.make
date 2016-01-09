@@ -189,7 +189,7 @@ projects[composer_manager][subdir] = "contrib"
 projects[panels][version] = "3.3"
 projects[panels][subdir] = "contrib"
 
-projects[fieldable_panels_panes][version] = "1.5"
+projects[fieldable_panels_panes][version] = "1.7"
 projects[fieldable_panels_panes][subdir] = "contrib"
 
 projects[context][version] = "3.0-beta7"
@@ -293,7 +293,7 @@ projects[autologout][subdir] = "contrib"
 projects[maxlength][version] = "3.0"
 projects[maxlength][subdir] = "contrib"
 
-projects[mass_contact][version] = "1.0"
+projects[mass_contact][version] = "1.1"
 projects[mass_contact][subdir] = "contrib"
 
 projects[contact_deeplink][version] = "1.0"
