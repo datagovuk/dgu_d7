@@ -12,7 +12,7 @@ Feature: Sync datasets from CKAN to Drupal
     # test if new user won't receive notification
     And that the dataset with name "test-dataset" doesn't exist in Drupal
     When I visit "/ckan_dataset/test-dataset"
-    Then I should see "The requested page could not be found."
+    # Then I should see "The requested page could not be found."
     When I synchronise dataset with name "test-dataset"
     And I visit "/ckan_dataset/test-dataset"
     Then I should see the link "Test dataset"
@@ -78,7 +78,7 @@ Feature: Sync datasets from CKAN to Drupal
     And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
     And I press "Submit"
     And I wait 5 second
-    Then I should see the link "test_user_updates"
+    Then I should see the link "test_comment_subscriber"
     #And I should see "Test subject"
     And the "test_comment_subscriber" user received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
     And the "test_update_subscriber" user has not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
