@@ -10,6 +10,25 @@
  * Implements hook_menu()
  */
 function dgu_organogram_menu() {
+  $items['organogram'] = array(
+    'page callback' => 'dgu_organogram_viz',
+    'access arguments' => array('access content'),
+  );
+  $items['organogram/%'] = array(
+    'page callback' => 'dgu_organogram_viz',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+  $items['organogram/%/%'] = array(
+    'page callback' => 'dgu_organogram_viz',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('access content'),
+  );
+//  $items['organogram/department/%/version/%'] = array(
+//    'page callback' => 'dgu_organogram_viz',
+//    'page arguments' => array(2, 4),
+//    'access arguments' => array('access content'),
+//  );
   $items['organogram/preview/data'] = array(
     'page callback' => 'dgu_organogram_preview_data',
     'access arguments' => array('access content'),
@@ -19,7 +38,6 @@ function dgu_organogram_menu() {
     'access arguments' => array('access content'),
   );
   return $items;
-
 }
 
 /**
@@ -51,6 +69,226 @@ function dgu_organogram_preprocess(&$variables, $hook) {
     $variables['orgname'] = $variables['form']['title']['#value'];
   }
 }
+
+/**
+ * @param $fid - file id for the organogram to preview.
+ *
+ * Loads and transforms a xls file into CSV and saves these in the temp directory for the javascript to load
+ */
+function dgu_organogram_viz($department = NULL, $version = NULL) {
+  $endpoint = 'http://46.43.41.16/sparql/organogram/query';
+  $result = getDepartments($endpoint);
+
+  $json = json_decode($result);
+//  foreach($json->results->bindings as $line){
+//    $uriParts = explode("/", $line->uri->value);
+//    $type = $uriParts[4];
+//    $parent = '';
+//    if (!empty($line->parent))
+//      $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
+//    $deptName = str_replace("@en","",$line->dept->value);
+//    $type = $type == 'department' ? 'dept' : 'pubbod';
+//    $uri = "/organogram/?$type=" . $uriParts[5];
+//    $arrDepts[$uriParts[5]] = array('type' => $type, 'label' => $deptName, 'uri' => $uri, 'parent' => $parent);
+//  }
+//
+//  $deptsJSON = array();
+//  foreach ($arrDepts as $dept => $values) {
+//    $entry =  array('label' => $values['label'], 'uri' => $values['uri']);
+//    $parent = $values['parent'];
+//    if ($parent) {
+//      $index = $parent;
+//      if (isset($arrDepts[$parent])) {
+//        $label = $arrDepts[$parent]['label'];
+//      }
+//      else {
+//        // ideally should get here if all parent names are accurate
+//        $label = $dept;
+//      }
+//    }
+//    else {
+//      $index = $dept;
+//      $label = $values['label'];
+//    }
+//    if (!isset($deptsJSON[$index])) {
+//      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
+//    }
+//    else {
+//      $deptsJSON[$index]['departments'][] = $entry;
+//    }
+//  }
+//  $arrDepts = array();
+//  // remove key
+//  foreach ($deptsJSON as $entry) {
+//    $arrDepts[] = $entry;
+//  }
+//  //return $arrDepts;
+
+  $output = '';
+  foreach ($json->results->bindings as $line) {
+    $output .= $line->dept->value . ' : ' . $line->uri->value . ' [' . end(explode('/', $line->g->value))  . ']<br />';
+  }
+
+  return $output;
+}
+
+
+function getVersions($versions, $deptUri, $pubbodyUri) {
+  $arrVersions = array();
+  foreach($versions as $version1 => $endpoint1) {
+    $api_cache = new API_cache (array("isInDB", $deptUri,$pubbodyUri, $endpoint1));
+    if ($api_cache->get_api_cache()) {
+      $arrDateArray = explode("-", $version1);
+      $arrVersions[] = array('version_name' => $arrDateArray[2].'/'.$arrDateArray[1].'/'.$arrDateArray[0],'version_value' => $version1);
+    }
+  }
+  return $arrVersions;
+}
+
+//function getDepartmentsJSON($versions) {
+//  foreach($versions as $version => $endpoint) {
+//    $api_cache = new API_cache (array("getDepartments", $endpoint,));
+//    $json = json_decode($api_cache->get_api_cache());
+//    foreach($json->results->bindings as $line){
+//      $uriParts = explode("/", $line->uri->value);
+//      $type = $uriParts[4];
+//      $parent = '';
+//      if (!empty($line->parent))
+//        $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
+//      $deptName = str_replace("@en","",$line->dept->value);
+//      $type = $type == 'department' ? 'dept' : 'pubbod';
+//      $uri = "/organogram/?$type=" . $uriParts[5];
+//      $arrDepts[$uriParts[5]] = array('type' => $type, 'label' => $deptName, 'uri' => $uri, 'parent' => $parent);
+//    }
+//  }
+//  $deptsJSON = array();
+//  foreach ($arrDepts as $dept => $values) {
+//    $entry =  array('label' => $values['label'], 'uri' => $values['uri']);
+//    $parent = $values['parent'];
+//    if ($parent) {
+//      $index = $parent;
+//      if (isset($arrDepts[$parent])) {
+//        $label = $arrDepts[$parent]['label'];
+//      }
+//      else {
+//        // ideally should get here if all parent names are accurate
+//        $label = $dept;
+//      }
+//    }
+//    else {
+//      $index = $dept;
+//      $label = $values['label'];
+//    }
+//    if (!isset($deptsJSON[$index])) {
+//      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
+//    }
+//    else {
+//      $deptsJSON[$index]['departments'][] = $entry;
+//    }
+//  }
+//  $arrDepts = array();
+//  // remove key
+//  foreach ($deptsJSON as $entry) {
+//    $arrDepts[] = $entry;
+//  }
+//  return $arrDepts;
+//}
+
+
+function getDepartments($endpoint){
+
+  $getDepartments = <<<GETDEPT
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX rdf-schema: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT DISTINCT ?uri ?dept ?parent
+
+ WHERE {
+	?uri rdf:type org:Organization;
+	rdf-schema:label ?dept
+	OPTIONAL {
+	?uri <http://reference.data.gov.uk/def/central-government/parentDepartment> ?parent
+	}
+}
+order by (?uri)
+
+GETDEPT;
+
+
+  $getDepartments = <<<GETDEPT
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX org: <http://www.w3.org/ns/org#>
+  PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+  PREFIX rdf-schema: <http://www.w3.org/2000/01/rdf-schema#>
+
+  SELECT DISTINCT ?uri ?dept ?parent ?g
+  WHERE {
+  GRAPH ?g {
+    ?uri rdf:type org:Organization;
+              rdf-schema:label ?dept
+      OPTIONAL {
+      ?uri <http://reference.data.gov.uk/def/central-government/parentDepartment> ?parent
+              }
+          }
+      }
+      order by (?uri)
+
+GETDEPT;
+
+
+
+  $result = query($endpoint, $getDepartments);
+  if($result){
+    return $result;
+  }
+
+}
+
+function query ($endpoint, $query) {
+  $params = array(
+    'http' => array(
+      'method' => 'GET',
+      'header' => 'Accept: application/sparql-results+json',
+      'max_redirects' => 1,
+      'ignore_errors' => true
+    )
+  );
+  $ctx = stream_context_create($params);
+  $query = array(
+    'query' => $query,
+    'output' => 'json'
+  );
+  $queryString = http_build_query($query);
+  try {
+    $fp = fopen($endpoint . '?' . $queryString, 'rb', false, $ctx);
+    if (!$fp) {
+      header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error");
+      echo "<html><head><title>Error Accessing SPARQL Endpoint</title></head><body><p>Problem accessing $endpoint</p></body></html>";
+      return array();
+    } else {
+      $response = stream_get_contents($fp);
+      if ($response === false) {
+        header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error");
+        echo "<html><head><title>Error Getting Data</title></head><body><p>Problem reading data from $endpoint</p></body></html>";
+        return array();
+      } else {
+        return trim($response);
+      }
+    }
+  } catch (Exception $e) {
+    header($_SERVER["SERVER_PROTOCOL"] . " 500 Internal Server Error");
+    echo "<html><head><title>Error Getting Data</title></head><body><p>Exception " . $e->getMessage() . ".</p></body></html>";
+    return array();
+  }
+
+}
+
+
+
+
+
 
 /**
  * @param $fid - file id for the organogram to preview.
