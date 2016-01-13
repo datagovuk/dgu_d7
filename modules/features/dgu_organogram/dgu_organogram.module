@@ -80,55 +80,74 @@ function dgu_organogram_viz($department = NULL, $version = NULL) {
   $result = getDepartments($endpoint);
 
   $json = json_decode($result);
-//  foreach($json->results->bindings as $line){
-//    $uriParts = explode("/", $line->uri->value);
-//    $type = $uriParts[4];
-//    $parent = '';
-//    if (!empty($line->parent))
-//      $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
-//    $deptName = str_replace("@en","",$line->dept->value);
-//    $type = $type == 'department' ? 'dept' : 'pubbod';
-//    $uri = "/organogram/?$type=" . $uriParts[5];
-//    $arrDepts[$uriParts[5]] = array('type' => $type, 'label' => $deptName, 'uri' => $uri, 'parent' => $parent);
-//  }
-//
-//  $deptsJSON = array();
-//  foreach ($arrDepts as $dept => $values) {
-//    $entry =  array('label' => $values['label'], 'uri' => $values['uri']);
-//    $parent = $values['parent'];
-//    if ($parent) {
-//      $index = $parent;
-//      if (isset($arrDepts[$parent])) {
-//        $label = $arrDepts[$parent]['label'];
-//      }
-//      else {
-//        // ideally should get here if all parent names are accurate
-//        $label = $dept;
-//      }
-//    }
-//    else {
-//      $index = $dept;
-//      $label = $values['label'];
-//    }
-//    if (!isset($deptsJSON[$index])) {
-//      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
-//    }
-//    else {
-//      $deptsJSON[$index]['departments'][] = $entry;
-//    }
-//  }
-//  $arrDepts = array();
-//  // remove key
-//  foreach ($deptsJSON as $entry) {
-//    $arrDepts[] = $entry;
-//  }
-//  //return $arrDepts;
+  foreach($json->results->bindings as $line) {
+    $uriParts = explode("/", $line->uri->value);
+    $versionParts = explode("/", $line->g->value);
+    $type = $uriParts[4];
+    $id = $uriParts[5];
+    $version = $versionParts[5];
 
-  $output = '';
-  foreach ($json->results->bindings as $line) {
-    $output .= $line->dept->value . ' : ' . $line->uri->value . ' [' . end(explode('/', $line->g->value))  . ']<br />';
+    $parent = '';
+    if (!empty($line->parent)) {
+      $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
+    }
+
+    $deptName = str_replace("@en","",$line->dept->value);
+    $type = $type == 'department' ? 'dept' : 'pubbod';
+
+    $arrDepts[$id]['type'] = $type;
+    $arrDepts[$id]['label'] = $deptName;
+    $arrDepts[$id]['parent'] = $parent;
+    $arrDepts[$id]['version'][$version] = $version;
   }
 
+  $deptsJSON = array();
+  foreach ($arrDepts as $dept => $values) {
+    $entry =  array('label' => $values['label'], 'id' => $dept);
+    $parent = $values['parent'];
+    if ($parent) {
+      $index = $parent;
+      if (isset($arrDepts[$parent])) {
+        $label = $arrDepts[$parent]['label'];
+      }
+      else {
+        // ideally should get here if all parent names are accurate
+        $label = $dept;
+      }
+    }
+    else {
+      $index = $dept;
+      $label = $values['label'];
+    }
+    if (!isset($deptsJSON[$index])) {
+      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
+    }
+    else {
+      $deptsJSON[$index]['departments'][] = $entry;
+    }
+  }
+  $output = '<select>';
+
+  foreach ($deptsJSON as $entry) {
+    foreach ($entry['departments'] as $department) {
+      if ($department['label'] == $entry['label']) {
+        $output .= '<option value="' . $department['id'] . '">' . $department['label'] . '</option>';
+      }
+      else {
+        $output .= '<option value="' . $department['id'] . '">' . $entry['label'] . ' - ' . $department['label'] . '</option>';
+      }
+
+    }
+    //$arrDepts[] = $entry;
+  }
+  $output .= '</select>';
+
+//  $output = '';
+//  foreach ($json->results->bindings as $line) {
+//    $version_parts = explode('/', $line->g->value);
+//    $output .= $line->dept->value . ' : ' . $line->uri->value . ' [' . end($version_parts)  . ']<br />';
+//  }
+//
   return $output;
 }
 
