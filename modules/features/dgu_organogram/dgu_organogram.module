@@ -24,11 +24,6 @@ function dgu_organogram_menu() {
     'page arguments' => array(1, 2),
     'access arguments' => array('access content'),
   );
-//  $items['organogram/department/%/version/%'] = array(
-//    'page callback' => 'dgu_organogram_viz',
-//    'page arguments' => array(2, 4),
-//    'access arguments' => array('access content'),
-//  );
   $items['organogram/preview/data'] = array(
     'page callback' => 'dgu_organogram_preview_data',
     'access arguments' => array('access content'),
@@ -75,167 +70,154 @@ function dgu_organogram_preprocess(&$variables, $hook) {
  *
  * Loads and transforms a xls file into CSV and saves these in the temp directory for the javascript to load
  */
-function dgu_organogram_viz($department = NULL, $version = NULL) {
+function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $endpoint = 'http://46.43.41.16/sparql/organogram/query';
-  $result = getDepartments($endpoint);
 
-  $json = json_decode($result);
-  foreach($json->results->bindings as $line) {
-    $uriParts = explode("/", $line->uri->value);
-    $versionParts = explode("/", $line->g->value);
-    $type = $uriParts[4];
-    $id = $uriParts[5];
-    $version = $versionParts[5];
+  if ($cache = cache_get('organogram_departments')) {
+    $departmentsHierarchy = $cache->data;
+  }
+  else {
 
-    $parent = '';
-    if (!empty($line->parent)) {
-      $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
+    $rawDepartments = getDepartments($endpoint);
+    $departmentsJSON = json_decode($rawDepartments);
+
+    foreach($departmentsJSON->results->bindings as $line) {
+      $uriParts = explode("/", $line->uri->value);
+      $versionParts = explode("/", $line->g->value);
+      $type = $uriParts[4];
+      $id = $uriParts[5];
+      $version = $versionParts[5];
+
+      $parent = '';
+      if (!empty($line->parent)) {
+        $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
+      }
+
+      $deptName = str_replace("@en","",$line->dept->value);
+      $type = $type == 'department' ? 'dept' : 'pubbod';
+
+      $arrDepts[$id]['type'] = $type;
+      $arrDepts[$id]['label'] = $deptName;
+      $arrDepts[$id]['parent'] = $parent;
+      $arrDepts[$id]['version'][$version] = $version;
     }
 
-    $deptName = str_replace("@en","",$line->dept->value);
-    $type = $type == 'department' ? 'dept' : 'pubbod';
-
-    $arrDepts[$id]['type'] = $type;
-    $arrDepts[$id]['label'] = $deptName;
-    $arrDepts[$id]['parent'] = $parent;
-    $arrDepts[$id]['version'][$version] = $version;
-  }
-
-  $deptsJSON = array();
-  foreach ($arrDepts as $dept => $values) {
-    $entry =  array('label' => $values['label'], 'id' => $dept);
-    $parent = $values['parent'];
-    if ($parent) {
-      $index = $parent;
-      if (isset($arrDepts[$parent])) {
-        $label = $arrDepts[$parent]['label'];
+    $departmentsHierarchy = array();
+    foreach ($arrDepts as $dept => $values) {
+      $entry =  array('label' => $values['label'], 'id' => $dept, 'version' => $values['version']);
+      $parent = $values['parent'];
+      if ($parent) {
+        $index = $parent;
+        if (isset($arrDepts[$parent])) {
+          $label = $arrDepts[$parent]['label'];
+        }
+        else {
+          // ideally should get here if all parent names are accurate
+          $label = $dept;
+        }
       }
       else {
-        // ideally should get here if all parent names are accurate
-        $label = $dept;
+        $index = $dept;
+        $label = $values['label'];
       }
-    }
-    else {
-      $index = $dept;
-      $label = $values['label'];
-    }
-    if (!isset($deptsJSON[$index])) {
-      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
-    }
-    else {
-      $deptsJSON[$index]['departments'][] = $entry;
-    }
-  }
-  $output = '<select>';
-
-  foreach ($deptsJSON as $entry) {
-    foreach ($entry['departments'] as $department) {
-      if ($department['label'] == $entry['label']) {
-        $output .= '<option value="' . $department['id'] . '">' . $department['label'] . '</option>';
+      if (!isset($departmentsHierarchy[$index])) {
+        $departmentsHierarchy[$index] = array('label' => $label, 'departments' => array($entry));
       }
       else {
-        $output .= '<option value="' . $department['id'] . '">' . $entry['label'] . ' - ' . $department['label'] . '</option>';
+        $departmentsHierarchy[$index]['departments'][] = $entry;
       }
-
     }
-    //$arrDepts[] = $entry;
+
+
+    cache_set('organogram_departments', $departmentsHierarchy, 'cache', 60); // Cache for 1 minute
   }
-  $output .= '</select>';
 
-//  $output = '';
-//  foreach ($json->results->bindings as $line) {
-//    $version_parts = explode('/', $line->g->value);
-//    $output .= $line->dept->value . ' : ' . $line->uri->value . ' [' . end($version_parts)  . ']<br />';
-//  }
-//
-  return $output;
-}
-
-
-function getVersions($versions, $deptUri, $pubbodyUri) {
-  $arrVersions = array();
-  foreach($versions as $version1 => $endpoint1) {
-    $api_cache = new API_cache (array("isInDB", $deptUri,$pubbodyUri, $endpoint1));
-    if ($api_cache->get_api_cache()) {
-      $arrDateArray = explode("-", $version1);
-      $arrVersions[] = array('version_name' => $arrDateArray[2].'/'.$arrDateArray[1].'/'.$arrDateArray[0],'version_value' => $version1);
-    }
-  }
-  return $arrVersions;
-}
-
-//function getDepartmentsJSON($versions) {
-//  foreach($versions as $version => $endpoint) {
-//    $api_cache = new API_cache (array("getDepartments", $endpoint,));
-//    $json = json_decode($api_cache->get_api_cache());
-//    foreach($json->results->bindings as $line){
-//      $uriParts = explode("/", $line->uri->value);
-//      $type = $uriParts[4];
-//      $parent = '';
-//      if (!empty($line->parent))
-//        $parent = substr($line->parent->value, strrpos($line->parent->value, "/")  + 1);
-//      $deptName = str_replace("@en","",$line->dept->value);
-//      $type = $type == 'department' ? 'dept' : 'pubbod';
-//      $uri = "/organogram/?$type=" . $uriParts[5];
-//      $arrDepts[$uriParts[5]] = array('type' => $type, 'label' => $deptName, 'uri' => $uri, 'parent' => $parent);
-//    }
-//  }
-//  $deptsJSON = array();
-//  foreach ($arrDepts as $dept => $values) {
-//    $entry =  array('label' => $values['label'], 'uri' => $values['uri']);
-//    $parent = $values['parent'];
-//    if ($parent) {
-//      $index = $parent;
-//      if (isset($arrDepts[$parent])) {
-//        $label = $arrDepts[$parent]['label'];
+//  $output = '<select>';
+//  foreach ($departmentsHierarchy as $entry) {
+//    foreach ($entry['departments'] as $department) {
+//      if ($department['label'] == $entry['label']) {
+//        $output .= '<option value="' . $department['id'] . '">' . $department['label'] . '</option>';
 //      }
 //      else {
-//        // ideally should get here if all parent names are accurate
-//        $label = $dept;
+//        $output .= '<option value="' . $department['id'] . '">' . $entry['label'] . ' - ' . $department['label'] . '</option>';
 //      }
-//    }
-//    else {
-//      $index = $dept;
-//      $label = $values['label'];
-//    }
-//    if (!isset($deptsJSON[$index])) {
-//      $deptsJSON[$index] = array('label' => $label, 'departments' => array($entry));
-//    }
-//    else {
-//      $deptsJSON[$index]['departments'][] = $entry;
+//
 //    }
 //  }
-//  $arrDepts = array();
-//  // remove key
-//  foreach ($deptsJSON as $entry) {
-//    $arrDepts[] = $entry;
-//  }
-//  return $arrDepts;
-//}
+//  $output .= '</select>';
 
+  $departmentOptions = array();
+  $departmentVersions = array();
+  foreach ($departmentsHierarchy as $entry) {
+    foreach ($entry['departments'] as $department) {
+      if ($department['label'] == $entry['label']) {
+        $departmentOptions[$department['id']] = $department['label'];
+      }
+      else {
+        $departmentOptions[$department['id']] = $entry['label'] . ' - ' . $department['label'];
+        $departmentOptions[$department['id']] = '   - ' . $department['label'];
+      }
+      $departmentVersions[$department['id']] = $department['version'];
+    }
+  }
+  if (!empty($currentDepartment)) {
+    $versionOptions = $departmentVersions[$currentDepartment];
+    if (empty($currentVersion)) {
+      $currentVersion = end($departmentVersions[$currentDepartment]);
+    }
+  }
+  else {
+    $versionOptions = array();
+  }
+
+  $module_path = drupal_get_path('module', 'dgu_organogram');
+  drupal_add_js($module_path . '/js/jit.js');
+  drupal_add_js($module_path . '/js/jit/jit-yc.js');
+  drupal_add_js($module_path . '/js/papaparse.js');
+  drupal_add_js($module_path . '/js/organogram-view.js');
+
+  return drupal_get_form('dgu_organogram_viz_form', $departmentOptions, $currentDepartment, $versionOptions, $currentVersion);
+}
+
+function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $currentDepartment, $versionOptions = array(), $currentVersion = NULL) {
+  $form['department'] = array(
+    '#type' => 'select',
+    '#title' => t('Department'),
+    '#options' => $departmentOptions,
+    '#default_value' => $currentDepartment,
+    '#attributes' => array('onChange' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
+  );
+
+  if (!empty($versionOptions)) {
+    $form['version'] = array(
+      '#type' => 'select',
+      '#title' => t('Version'),
+      '#options' => $versionOptions,
+      '#default_value' => $currentVersion,
+      '#attributes' => array('onChange' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
+    );
+  }
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Go',
+    '#attributes' => array('class' => array('element-invisible')),
+  );
+
+  return $form;
+}
+
+function dgu_organogram_viz_form_submit($form, &$form_state) {
+
+  drupal_set_message('Department: ' . $form_state['values']['department']);
+  drupal_set_message('Version: ' . $form_state['values']['version'] ? $form_state['values']['version'] : 'NULL');
+
+  $form_state['redirect'] = '/organogram/' . $form_state['values']['department'];
+  if (!empty($form_state['values']['version'])) {
+    $form_state['redirect'] .= '/' . $form_state['values']['version'];
+  }
+}
 
 function getDepartments($endpoint){
-
-  $getDepartments = <<<GETDEPT
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX org: <http://www.w3.org/ns/org#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX rdf-schema: <http://www.w3.org/2000/01/rdf-schema#>
-
-SELECT DISTINCT ?uri ?dept ?parent
-
- WHERE {
-	?uri rdf:type org:Organization;
-	rdf-schema:label ?dept
-	OPTIONAL {
-	?uri <http://reference.data.gov.uk/def/central-government/parentDepartment> ?parent
-	}
-}
-order by (?uri)
-
-GETDEPT;
-
-
   $getDepartments = <<<GETDEPT
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX org: <http://www.w3.org/ns/org#>
@@ -253,7 +235,6 @@ GETDEPT;
           }
       }
       order by (?uri)
-
 GETDEPT;
 
 
@@ -481,7 +462,6 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     array('group' => CSS_THEME, 'every_page' => TRUE));
   drupal_add_css("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css",
     array('type' => 'external'));
-  drupal_add_js($module_path . '/js/organogram.js');
   drupal_add_js($module_path . '/js/jit.js');
   drupal_add_js($module_path . '/js/jit/jit-yc.js');
   drupal_add_js($module_path . '/js/papaparse.js');
