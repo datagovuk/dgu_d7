@@ -53,7 +53,7 @@ function dguk_preprocess_node(&$variables) {
   if ($variables['node']->type == 'resource' || $variables['node']->type == 'book'){
     $variables['submitted'] = 'Submitted on ' . format_date($variables['created']);
   }
-  
+
   $variables['updated'] = $variables['created'] != $variables['changed'] ? '| Updated on ' . format_date($variables['changed']) : FALSE;
 
   // We render user picture only on forum and blog nodes.
@@ -272,13 +272,13 @@ function dguk_get_data_menu() {
       'title' => 'Publishers',
       'href' => 'publisher',
     ),
+     'menu-data-api' => array(
+     'title' => 'Data API',
+      'href' => 'data/api',
+     ),
     'menu-organogram' => array(
       'title' => 'Organograms',
       'href' => 'organogram/cabinet-office',
-    ),
-    'menu-openspending-report' => array(
-      'title' => 'Spend Reports',
-      'href' => 'data/openspending-report/index',
     ),
     'menu-site-usage' => array(
       'title' => 'Site Analytics',
