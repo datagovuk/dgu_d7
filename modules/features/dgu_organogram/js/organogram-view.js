@@ -2,8 +2,6 @@
 
     Drupal.behaviors.organogram = {
         attach: function (context, settings) {
-            console.log(Drupal.settings.dgu_organogram);
-            console.log(Orgvis);
             Orgvis.init(false, false)
         }
     }
@@ -72,13 +70,13 @@
                     {
                         "_about": "http://reference.data.gov.uk/id/department/top",
                         "label": [
-                            "-",
+                            "-"
                         ]
                     },
                     {
                         "_about": "http://reference.data.gov.uk/id/department/top/unit/top",
                         "label": [
-                            "-",
+                            "-"
                         ]
                     }
                 ],
@@ -87,20 +85,19 @@
         },
         getURLParameter:function(name) {
             return decodeURI(
-                (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+                (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,''])[1]
             );
         },
         init:function(pMode, reload){
 
             var deptSlug = Drupal.settings.dgu_organogram.department;
-            var pubbodSlug = Drupal.settings.dgu_organogram.department;
-            var postSlug = '';
+            var pubbodSlug = Drupal.settings.dgu_organogram.publicBody;
             var version = Drupal.settings.dgu_organogram.version;
 
             if(version.length > 0) {
                 Orgvis.vars.global_version = version;
-            } else {
-                Orgvis.notify("Error","Cannot load organogram, no version specified!", true, "error_noVersion");
+            }
+            else {
             }
 
             if(deptSlug.length > 0){
@@ -113,10 +110,11 @@
                 Orgvis.vars.global_postOrg = pubbodSlug;
             }
 
+            var postSlug = '';
             if(postSlug.length < 1){
                 //showLog("No post selected!");
                 Orgvis.notify("Error","Cannot load organogram, no post selected!", true, "error_noPost");
-            } else{
+            } else {
                 Orgvis.vars.global_post = postSlug;
             }
             domain =  '46.43.41.16';
@@ -141,7 +139,6 @@
                 Orgvis.vars.apiBase = domain;
                 Orgvis.startLoadingPosts(false);
             }
-            Orgvis.showSignOff();
             Orgvis.showLiveLink(deptSlug, pubbodSlug);
         },
         showLiveLink:function(dept, pubbod) {
@@ -159,24 +156,6 @@
             }
             else {
                 $("#live-link").hide();
-            }
-        },
-        showSignOff:function() {
-            var filepath = Orgvis.getURLParameter("filepath");
-
-            if (filepath != "null") {
-                $.ajax({cache: false, url: "/sign-off.php?filepath=" + filepath, success : function(data){
-                    if (data == "false") {
-                        $("<button class='sign-off'>Signoff</button>").appendTo("#right").button().css("visibility","visible").click(function () {
-                            $.ajax({cache: false, url: "/sign-off.php?create=true&filepath=" + filepath, success : function(data){
-                                window.location.reload();
-                            }});
-                        });
-                    }
-                    else {
-                        $("<div class='sign-off'>Organogram signed off</div>").appendTo("#right").css("visibility","visible")
-                    }
-                }});
             }
         },
         initSpaceTree:function(){
