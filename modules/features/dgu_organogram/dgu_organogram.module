@@ -73,7 +73,7 @@ function dgu_organogram_preprocess(&$variables, $hook) {
 function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $endpoint = 'http://46.43.41.16/sparql/organogram/query';
 
-  if (!$cache = cache_get('organogram_departments')) {
+  if ($cache = cache_get('organogram_departments')) {
     $departmentsHierarchy = $cache->data['hierarchy'];
     $arrDepts = $cache->data['depts'];
   }
