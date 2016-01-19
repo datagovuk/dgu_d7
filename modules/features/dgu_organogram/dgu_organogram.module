@@ -73,11 +73,11 @@ function dgu_organogram_preprocess(&$variables, $hook) {
 function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $endpoint = 'http://46.43.41.16/sparql/organogram/query';
 
-  if ($cache = cache_get('organogram_departments')) {
-    $departmentsHierarchy = $cache->data;
+  if (!$cache = cache_get('organogram_departments')) {
+    $departmentsHierarchy = $cache->data['hierarchy'];
+    $arrDepts = $cache->data['depts'];
   }
   else {
-
     $rawDepartments = getDepartments($endpoint);
     $departmentsJSON = json_decode($rawDepartments);
 
@@ -129,22 +129,8 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
     }
 
 
-    cache_set('organogram_departments', $departmentsHierarchy, 'cache', 60); // Cache for 1 minute
+    cache_set('organogram_departments', array('depts' => $arrDepts, 'hierarchy' => $departmentsHierarchy), 'cache', 60); // Cache for 1 minute
   }
-
-//  $output = '<select>';
-//  foreach ($departmentsHierarchy as $entry) {
-//    foreach ($entry['departments'] as $department) {
-//      if ($department['label'] == $entry['label']) {
-//        $output .= '<option value="' . $department['id'] . '">' . $department['label'] . '</option>';
-//      }
-//      else {
-//        $output .= '<option value="' . $department['id'] . '">' . $entry['label'] . ' - ' . $department['label'] . '</option>';
-//      }
-//
-//    }
-//  }
-//  $output .= '</select>';
 
   $departmentOptions = array();
   $departmentVersions = array();
@@ -155,15 +141,22 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
       }
       else {
         $departmentOptions[$department['id']] = $entry['label'] . ' - ' . $department['label'];
-        $departmentOptions[$department['id']] = '   - ' . $department['label'];
+        $departmentOptions[$department['id']] = $entry['label'] . ' - ' . $department['label'];
       }
       $departmentVersions[$department['id']] = $department['version'];
     }
   }
+
+  $currentPublicBody = '';
   if (!empty($currentDepartment)) {
     $versionOptions = $departmentVersions[$currentDepartment];
     if (empty($currentVersion)) {
       $currentVersion = end($departmentVersions[$currentDepartment]);
+    }
+    // pubbod not dept
+    if (!array_key_exists($currentDepartment, $departmentsHierarchy)) {
+      $currentPublicBody = $currentDepartment;
+      $currentDepartment = '';
     }
   }
   else {
@@ -184,21 +177,25 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
     array(
       'dgu_organogram' => array(
         'department' => $currentDepartment,
+        'publicBody' => $currentPublicBody,
         'version' => $currentVersion,
       ),
     ),
     'setting'
   );
 
-  return drupal_get_form('dgu_organogram_viz_form', $departmentOptions, $currentDepartment, $versionOptions, $currentVersion);
+  return drupal_get_form('dgu_organogram_viz_form', $departmentOptions, $currentDepartment, $currentPublicBody, $versionOptions, $currentVersion);
 }
 
-function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $currentDepartment, $versionOptions = array(), $currentVersion = NULL) {
+function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $currentDepartment, $currentPublicBody, $versionOptions = array(), $currentVersion = NULL) {
+
+  $currentOption = empty($currentPublicBody) ? $currentDepartment : $currentPublicBody;
+
   $form['department'] = array(
     '#type' => 'select',
     '#title' => t('Department'),
     '#options' => $departmentOptions,
-    '#default_value' => $currentDepartment,
+    '#default_value' => $currentOption,
     '#attributes' => array('onChange' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
   );
 
@@ -226,10 +223,6 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 }
 
 function dgu_organogram_viz_form_submit($form, &$form_state) {
-
-  drupal_set_message('Department: ' . $form_state['values']['department']);
-  drupal_set_message('Version: ' . $form_state['values']['version'] ? $form_state['values']['version'] : 'NULL');
-
   $form_state['redirect'] = '/organogram/' . $form_state['values']['department'];
   if (!empty($form_state['values']['version'])) {
     $form_state['redirect'] .= '/' . $form_state['values']['version'];
