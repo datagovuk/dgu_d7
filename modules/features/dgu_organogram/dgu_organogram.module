@@ -154,7 +154,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
       $currentVersion = end($departmentVersions[$currentDepartment]);
     }
     // pubbod not dept
-    if (!array_key_exists($currentDepartment, $departmentsHierarchy)) {
+    if ($arrDepts[$currentDepartment]['type'] != 'dept') {
       $currentPublicBody = $currentDepartment;
       $currentDepartment = '';
     }
