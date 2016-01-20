@@ -284,7 +284,7 @@ function dgu_notifications_delivery_confirm($form, &$form_state, $account) {
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
   $form['message'] = array(
-    '#markup' => '<p>Bulk dataset updates can couse sending hundreds of notifications. We strongly recommend changing your preference to daily or weekly digest.</p>',
+    '#markup' => '<p>Bulk dataset updates can often trigger hundreds of notifications.  We strongly recommend that you change your preference to daily or weekly update.</p>',
   );
 
   $form['email'] = array(
