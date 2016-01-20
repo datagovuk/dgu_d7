@@ -57,24 +57,24 @@
             transX: 0, 				// Canvas translateOffsetX value
             transY: 0,				// Canvas translateOffsetY value
             apiBase:"",
-            refBase:"http://reference.data.gov.uk",
+            refBase:"https://reference.data.gov.uk",
             apiCallInfo: {},		// Stores information about each API call to be made}
             firstLoad_expectedApiResponses:4, // Used to make the app wait until the correct number of API responses have been gathered
             apiResponses:[],		// Stores JSON responses from the API
             cacheObj:{},			// An object to store API responses
             debug:false,				// Output to console or not
             fakeTop: {
-                "_about": "http:\/\/reference.data.gov.uk\/id\/department\/top\/post\/top",
+                "_about": "https:\/\/reference.data.gov.uk\/id\/department\/top\/post\/top",
                 "label": ["Top Post"],
                 "postIn": [
                     {
-                        "_about": "http://reference.data.gov.uk/id/department/top",
+                        "_about": "https://reference.data.gov.uk/id/department/top",
                         "label": [
                             "-"
                         ]
                     },
                     {
-                        "_about": "http://reference.data.gov.uk/id/department/top/unit/top",
+                        "_about": "https://reference.data.gov.uk/id/department/top/unit/top",
                         "label": [
                             "-"
                         ]
@@ -117,13 +117,13 @@
             } else {
                 Orgvis.vars.global_post = postSlug;
             }
-            domain =  '46.43.41.16';
+            apiBase = 'https://reference-test.data.gov.uk';
 
             // Check for preview parameter
             if(pMode == "true"){
                 log("Param: In preview mode");
                 // In preview mode
-                Orgvis.vars.apiBase = domain;
+                Orgvis.vars.apiBase = apiBase;
                 Orgvis.vars.previewParam = true;
                 Orgvis.vars.previewMode = true;
                 Orgvis.startLoadingPosts(false);
@@ -132,11 +132,11 @@
                 // In preview mode
                 Orgvis.vars.previewMode = true;
                 $("span#previewModeSign").show();
-                Orgvis.vars.apiBase = domain;
+                Orgvis.vars.apiBase = apiBase;
                 Orgvis.startLoadingPosts(false);
             } else {
                 log("Not in preview mode");
-                Orgvis.vars.apiBase = domain;
+                Orgvis.vars.apiBase = apiBase;
                 Orgvis.startLoadingPosts(false);
             }
             Orgvis.showLiveLink(deptSlug, pubbodSlug);
@@ -151,7 +151,7 @@
                     var orgType = "dept";
                 }
 
-                var link = "http://reference.data.gov.uk/gov-structure/organogram/?" + orgType + '=' + dept;
+                var link = "https://reference.data.gov.uk/gov-structure/organogram/?" + orgType + '=' + dept;
                 $("#live-link").html('Live link: <a href="' + link + '">' + link + '</a>');
             }
             else {
@@ -668,7 +668,7 @@
             Orgvis.vars.apiCallInfo.topPosts = {
                 title:"Retrieval of top posts information",
                 description:"This call retrieves information about the top posts in the organogram (Posts that don't report to anyone)",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/top-post",
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/top-post",
                 parameters:""
             };
 
@@ -711,7 +711,7 @@
             Orgvis.vars.apiCallInfo.rootPost = {
                 title:"Retrieval of root post information",
                 description:"This call retrieves information about the root post in the organogram, such as their unit, grade and contact details.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post,
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post,
                 parameters:""
             };
 
@@ -768,7 +768,7 @@
             Orgvis.vars.apiCallInfo.postReports = {
                 title:"Retrieval of posts that report to the root post",
                 description:"This call retrieves information about the posts that report to the root post, such as their unit, grade and contact details.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post+"/reports-full",
+                url:apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post+"/reports-full",
                 parameters:"?_pageSize="+pageSize
             };
 
@@ -856,7 +856,7 @@
             Orgvis.vars.apiCallInfo.juniorStaff = {
                 title:"Retrieval of junior staff who report to the root post",
                 description:"This call retrieves information about the junior staff that report to the posts within this organogram, such as their grade, title and profession.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post+"/immediate-junior-staff",
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+Orgvis.vars.global_post+"/immediate-junior-staff",
                 parameters:"?_pageSize="+pageSize
             };
 
@@ -940,7 +940,7 @@
             Orgvis.vars.apiCallInfo.postStats = {
                 title:"Retrieval of a post's statistics data",
                 description:"An API call to retrieve the statistical data present for an individual post such as the combined salaries of their junior staff.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/statistics",
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/statistics",
                 parameters:"?_pageSize=20"
             };
 
@@ -1004,7 +1004,7 @@
             Orgvis.vars.apiCallInfo.postReportsOnDemand = {
                 title:"Retrieval of posts that report to the clicked post",
                 description:"This call retrieves information about the posts that report to the post that has been clicked within the organogram.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/immediate-reports",
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/immediate-reports",
                 parameters:"?_pageSize="+pageSize
             };
 
@@ -1098,7 +1098,7 @@
             Orgvis.vars.apiCallInfo.juniorStaffOnDemand = {
                 title:"Retrieval of junior staff that report to the clicked post",
                 description:"This call retrieves information about the posts that report to the post that has been clicked within the organogram.",
-                url:"http://"+Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/immediate-junior-staff",
+                url:Orgvis.vars.apiBase+"/"+Orgvis.vars.global_version+"/doc/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/"+postID+"/immediate-junior-staff",
                 parameters:"?_pageSize="+pageSize
             };
 
@@ -1416,7 +1416,7 @@
 
                 //log("Working out PIQRTSLUG...");
                 //
-                //E.g. top-level post reportsTo is hardcoded to xx e.g. http://reference.data.gov.uk/id/department/co/post/xx
+                //E.g. top-level post reportsTo is hardcoded to xx e.g. https://reference.data.gov.uk/id/department/co/post/xx
                 tlPostReportsTo = Orgvis.vars.refBase+"/id/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/xx";
                 if(tempPostEl.reportsTo && tempPostEl.reportsTo[0] != tlPostReportsTo) {
                     for(var a=tempPostEl.reportsTo.length;a--;){
@@ -2370,7 +2370,7 @@
                     html += '<div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">';
 
                     if (tempID != "top") {
-                        html+= '<p class="id"><span>Post ID</span><span class="value">'+tempID+'</span><a class="data postID" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'">Data</a></p>';
+                        html+= '<p class="id"><span>Post ID</span><span class="value">'+tempID+'</span><a class="data postID" target="_blank" href="'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'">Data</a></p>';
                     }
                     else {
                         html+= '<p class="id"><span>Post ID</span><span class="value">'+tempID+'</span></p>';
@@ -2382,14 +2382,14 @@
                     }
 
                     if(nd.salaryRange[i] !== undefined){
-                        html += '<p class="salary"><span>Salary</span><span class="value">'+addCommas(nd.salaryRange[i])+'</span><a class="data" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'">Data</a></p>';
+                        html += '<p class="salary"><span>Salary</span><span class="value">'+addCommas(nd.salaryRange[i])+'</span><a class="data" target="_blank" href="'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'">Data</a></p>';
                     }
 
                     var postObj = Orgvis.vars.postList[tempID];
 
                     if (tempID != "top") {
                         if(nd.gotStats) {
-                            html += '<p class="salaryReports"><span>Combined salary of reporting posts</span><span class="value">'+nd.stats.salaryCostOfReports.formatted+'</span><a class="data" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'/statistics" value="'+nd.stats.salaryCostOfReports.value+'">Data</a><span class="date">'+nd.stats.date.formatted+'</span>';
+                            html += '<p class="salaryReports"><span>Combined salary of reporting posts</span><span class="value">'+nd.stats.salaryCostOfReports.formatted+'</span><a class="data" target="_blank" href="'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'/statistics" value="'+nd.stats.salaryCostOfReports.value+'">Data</a><span class="date">'+nd.stats.date.formatted+'</span>';
                         } else {
                             html += '<p class="salaryReports"><span>Combined salary of reporting posts </span><span class="value">Checking...</span><img class="salaryReports" width="14" height="14" src="../images/loading_white.gif"></p>';
                         }
@@ -2425,7 +2425,7 @@
                     }
 
                     if (tempUnitLabel !== undefined) {
-                        html+= '<p class="unit"><span>Unit(s)</span><span class="value">'+tempUnitLabel+'</span><a class="data" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/unit/'+tempUnitID+'">Data</a>';
+                        html+= '<p class="unit"><span>Unit(s)</span><span class="value">'+tempUnitLabel+'</span><a class="data" target="_blank" href="'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/unit/'+tempUnitID+'">Data</a>';
                     }
 
                     if(hb[i].notes !== undefined){
@@ -2802,11 +2802,11 @@
                     "label" : "Department for Businesss Innovation and Skills",
                     "departments" : [{
                         "label" : "Advisory Concilliation and Arbitration Service",
-                        "uri" : "http://reference.data.gov.uk/gov-structure/organogram/?pubbod=advisory-conciliation-and-arbitration-service&post=1"
+                        "uri" : "https://reference.data.gov.uk/gov-structure/organogram/?pubbod=advisory-conciliation-and-arbitration-service&post=1"
                     },
                         {
                             "label" : " Arbitration Service abc",
-                            "uri" : "http://reference.data.gov.uk/gov-structure/organogram/?pubbod=ahrc&post=1"
+                            "uri" : "https://reference.data.gov.uk/gov-structure/organogram/?pubbod=ahrc&post=1"
                         }
                     ]
                 },
@@ -2814,11 +2814,11 @@
                     "label" : "Agencies and NPDBs",
                     "departments" : [{
                         "label" : "Advisory Concilliation ",
-                        "uri" : "http://reference.data.gov.uk/gov-structure/organogram/?pubbod=advisory-conciliation-and-arbitration-service&post=1"
+                        "uri" : "https://reference.data.gov.uk/gov-structure/organogram/?pubbod=advisory-conciliation-and-arbitration-service&post=1"
                     },
                         {
                             "label" : "Advisory Concilliation and Arbitration Service",
-                            "uri" : "http://reference.data.gov.uk/gov-structure/organogram/?pubbod=ahrc&post=1"
+                            "uri" : "https://reference.data.gov.uk/gov-structure/organogram/?pubbod=ahrc&post=1"
                         }]
                 }]
             if( departmentList.length>0){
