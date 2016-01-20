@@ -1141,7 +1141,7 @@ function _dgu_organogram_get_ckan_api_client() {
 
 function _dgu_organogram_post_files_to_epimorphics($release, $senior_csv, $junior_csv) {
   $client = new \Guzzle\Service\Client();
-  $request = $client->createRequest('POST', variable_get('epimorphics_uri', 'http://46.43.41.16:8080/convert'))
+  $request = $client->createRequest('POST', variable_get('epimorphics_uri', 'https://reference-test.data.gov.uk:8080/convert'))
     ->addPostFields(array('release' => $release))
     ->addPostFiles(array('senior-csv' => $senior_csv))
     ->addPostFiles(array('junior-csv' => $junior_csv));
