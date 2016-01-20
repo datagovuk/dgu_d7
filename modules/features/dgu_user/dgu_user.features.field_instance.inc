@@ -276,7 +276,7 @@ function dgu_user_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => '100',
+      'weight' => '16',
     ),
   );
 
@@ -480,6 +480,48 @@ function dgu_user_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'user-user-field_publisher_subscribe'
+  $field_instances['user-user-field_publisher_subscribe'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => '0',
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'ckan_publisher_tree',
+        'settings' => array(
+          'field_replies' => '',
+          'field_replies_settings' => array(
+            'field_replies_reply_field_name' => '',
+            'field_replies_revision' => '',
+          ),
+          'quickedit' => array(
+            'editor' => 'form',
+          ),
+        ),
+        'type' => 'ckan_publisher_reference_default',
+        'weight' => 11,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_publisher_subscribe',
+    'label' => 'Publisher subscribe',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'ckan_publisher_tree',
+      'settings' => array(
+        'start_minimized' => 1,
+      ),
+      'type' => 'ckan_publisher_tree',
+      'weight' => '12',
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_publishers'
   $field_instances['user-user-field_publishers'] = array(
     'bundle' => 'user',
@@ -622,6 +664,7 @@ function dgu_user_field_default_field_instances() {
   t('LinkedIn URL');
   t('Notification frequency');
   t('Operation');
+  t('Publisher subscribe');
   t('Publishers');
   t('Surname');
   t('Twitter');

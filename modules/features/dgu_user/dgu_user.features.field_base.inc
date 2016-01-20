@@ -257,6 +257,36 @@ function dgu_user_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_publisher_subscribe'
+  $field_bases['field_publisher_subscribe'] = array(
+    'active' => '1',
+    'cardinality' => '-1',
+    'deleted' => '0',
+    'entity_types' => array(),
+    'field_name' => 'field_publisher_subscribe',
+    'field_permissions' => array(
+      'type' => '1',
+    ),
+    'foreign keys' => array(
+      'id' => array(
+        'columns' => array(
+          'id' => 'id',
+        ),
+        'table' => 'ckan_publisher',
+      ),
+    ),
+    'indexes' => array(
+      'id' => array(
+        0 => 'id',
+      ),
+    ),
+    'locked' => '0',
+    'module' => 'ckan_publisher_tree',
+    'settings' => array(),
+    'translatable' => '0',
+    'type' => 'ckan_publisher_reference',
+  );
+
   // Exported field_base: 'field_publishers'
   $field_bases['field_publishers'] = array(
     'active' => '1',

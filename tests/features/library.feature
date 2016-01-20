@@ -46,37 +46,13 @@ Feature: Create a Library Resource and search for library resources
     And pager should match "^1 2 3 … »$"
 
   @api
-  Scenario: Create a new library resource as the "test_user" and then update it.
-    Given that the user "test_user" is not registered
-    And that the user "test_subscriber_new_resource" is not registered
-    And that the user "test_subscriber_updates" is not registered
+  Scenario: Create a new library resource as the "test_editor" and then update it.
+    Given that the user "test_editor" is not registered
+    And that the user "test_subscriber" is not registered
     And that the user "test_non_subscriber" is not registered
     And I am logged in as a user "test_non_subscriber" with the "authenticated user" role
-    And I am logged in as a user "test_subscriber_new_resource" with the "authenticated user" role
-    When I visit "/user"
     And I wait until the page loads
-    And I follow "My subscriptions"
-    And I wait until the page loads
-    And I click "Auto subscribe"
-    And I wait until the page loads
-    And I check "Library resource"
-    And I wait 1 second
-    And I press "Save"
-    And I wait until the page loads
-    And I am logged in as a user "test_subscriber_updates" with the "authenticated user" role
-    When I visit "/user"
-    And I wait until the page loads
-    And I follow "My subscriptions"
-    And I wait until the page loads
-    And I click "Auto subscribe"
-    And I wait until the page loads
-    And I check "Library resource"
-    And I wait 1 second
-    And I check "Automatically subscribe to updates"
-    And I wait 1 second
-    And I press "Save"
-    And I wait until the page loads
-    And I am logged in as a user "test_user" with the "editor" role
+    And I am logged in as a user "test_editor" with the "editor" role
     When I visit "/admin/workbench/create"
     And I follow "Library resource"
     And I wait until the page loads
@@ -91,30 +67,20 @@ Feature: Create a Library Resource and search for library resources
     And I wait 2 seconds
     Then I should see "The selected file Test image.png cannot be uploaded. Only files with the following extensions are allowed: pdf, txt, rtf, csv, odt, ods, odp, odg, odf, doc, docx, xls, xlsx, ppt."
     When I press "Save"
-    And I wait until the page loads
-    And I should see the link "Subscribe"
-    And the "test_user" user have not received an email 'Library resource "Test Library resource" has been created '
-    And the "test_non_subscriber" user have not received an email 'Library resource "Test Library resource" has been created '
-    And the "test_subscriber_new_resource" user received an email 'Library resource "Test Library resource" has been created '
-    And the "test_subscriber_updates" user received an email 'Library resource "Test Library resource" has been created '
+    Then the "test_editor" user has not received an email 'Library resource "Test Library resource" has been created '
+    And the "test_non_subscriber" user has not received an email 'Library resource "Test Library resource" has been created '
+    And the "test_subscriber" user has not received an email 'Library resource "Test Library resource" has been created '
+    And I am logged in as a user "test_subscriber" with the "authenticated user" role
+    And I am on "/library/test-library-resource"
+    And I click "Subscribe"
+    And I wait 2 seconds
+    And I am logged in as a user "test_editor" with the "editor" role
+    And I am on "/library/test-library-resource"
     And I follow "Edit"
     Given I have a txt file titled "Test file" located in "/tmp/" folder
     And I attach the file "/tmp/Test file.txt" to "files[field_resource_file_und_0]"
     When I press "Save"
     Then I should see "Library resource Test Library resource has been updated."
-    And the "test_subscriber_updates" user received an email 'Library resource "Test Library resource" has been updated '
-    And the "test_user" user have not received an email 'Library resource "Test Library resource" has been updated '
-    And the "test_non_subscriber" user have not received an email 'Library resource "Test Library resource" has been updated '
-    And the "test_subscriber_new_resource" user have not received an email 'Library resource "Test Library resource" has been updated '
-    And I should see node title "Test Library resource"
-    And I should see "Submitted on"
-    And I should see "Test Library resource description text"
-    When I follow "Edit"
-    And I wait until the page loads
-    And I press "Save"
-    Then I should see "Library resource Test Library resource has been updated."
-    And I should see the following <breadcrumbs>
-      | Library               |
-      | Test Library resource |
-    And I should see "updated on"
-    And the "test_subscriber_updates" user received an email 'Library resource "Test Library resource" has been updated '
+    And the "test_subscriber" user received an email 'Library resource "Test Library resource" has been updated '
+    And the "test_editor" user has not received an email 'Library resource "Test Library resource" has been updated '
+    And the "test_non_subscriber" user has not received an email 'Library resource "Test Library resource" has been updated '
