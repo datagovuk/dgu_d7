@@ -71,7 +71,7 @@ function dgu_organogram_preprocess(&$variables, $hook) {
  * Loads and transforms a xls file into CSV and saves these in the temp directory for the javascript to load
  */
 function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
-  $endpoint = 'http://46.43.41.16/sparql/organogram/query';
+  $endpoint = 'http://reference-test.data.gov.uk/sparql/organogram/query';
 
   if ($cache = cache_get('organogram_departments')) {
     $departmentsHierarchy = $cache->data['hierarchy'];
