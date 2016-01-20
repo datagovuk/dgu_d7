@@ -120,6 +120,7 @@ function dgu_user_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
   unset($form['field_twitter']);
   unset($form['field_facebook_url']);
   unset($form['field_linkedin_url']);
+  unset($form['field_publisher_subscribe']);
 
   $form['profile']['field_twitter']['#weight'] = 10;
   $form['profile']['field_facebook_url']['#weight'] = 11;

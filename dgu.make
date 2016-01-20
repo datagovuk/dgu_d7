@@ -186,7 +186,7 @@ projects[ckan_publisher_tree][subdir] = "contrib"
 projects[composer_manager][version] = "1.8"
 projects[composer_manager][subdir] = "contrib"
 
-projects[panels][version] = "3.3"
+projects[panels][version] = "3.5"
 projects[panels][subdir] = "contrib"
 
 projects[fieldable_panels_panes][version] = "1.7"

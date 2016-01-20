@@ -113,7 +113,7 @@ function dgu_user_default_message_type() {
       "token options" : { "clear" : 0 },
       "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
     },
-    "language" : "",
+    "language" : "2",
     "arguments" : null,
     "message_text" : { "und" : [
         {

@@ -39,25 +39,33 @@ function dgu_notifications_menu() {
     'weight' => 1,
     'file' => 'dgu_notifications.pages.inc',
   );
+  $items['user/%user/subscriptions/publisher'] = array(
+    'title' => 'Publisher subscriptions',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_publisher_subscribe', 1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 2,
+    'file' => 'dgu_notifications.pages.inc',
+  );
   $items['user/%user/subscriptions/delivery'] = array(
     'title' => 'Delivery of notifications',
     'type' => MENU_LOCAL_TASK,
     'page callback' => 'drupal_get_form',
     'page arguments' => array('dgu_notifications_delivery', 1),
     'access callback' => '_dgu_notifications_subscriptions_access',
-    'weight' => 2,
-    'file' => 'dgu_notifications.pages.inc',
-  );
-  $items['user/%user/subscriptions/auto-subscribe'] = array(
-    'title' => 'Auto subscribe',
-    'type' => MENU_LOCAL_TASK,
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('dgu_notifications_auto_subscribe', 1),
-    'access callback' => '_dgu_notifications_subscriptions_access',
     'weight' => 3,
     'file' => 'dgu_notifications.pages.inc',
   );
-
+  $items['user/%user/subscriptions/delivery/confirm'] = array(
+    'title' => 'Delivery of notifications',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('dgu_notifications_delivery_confirm', 1),
+    'access callback' => '_dgu_notifications_subscriptions_access',
+    'weight' => 10,
+    'file' => 'dgu_notifications.pages.inc',
+  );
   return $items;
 }
 
@@ -70,9 +78,9 @@ function dgu_notifications_menu_breadcrumb_alter(&$active_trail, $item) {
     unset($active_trail[1]);
     drupal_set_title('Delivery of notifications');
   }
-  elseif ($item['path'] == 'user/%/subscriptions/auto-subscribe') {
+  elseif ($item['path'] == 'user/%/subscriptions/publisher') {
     unset($active_trail[1]);
-    drupal_set_title('Auto subscribe');
+    drupal_set_title('Publisher subscriptions');
   }
 }
 

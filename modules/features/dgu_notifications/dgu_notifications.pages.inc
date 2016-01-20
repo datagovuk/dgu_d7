@@ -158,7 +158,6 @@ function dgu_notifications_my_subscriptions($form, &$form_state, $account) {
     '#value' => t('Apply'),
     '#prefix' => '<div class="views-exposed-widget">',
     '#suffix' => '</div>',
-    '#attributes' => array('style' => array('background-color: #5bc0de; border-color: #46b8da; color: #fff; padding: 6px 12px;')),
   );
 
   $form['table'] = array(
@@ -209,80 +208,40 @@ function dgu_notifications_my_subscriptions_submit($form, &$form_state) {
   }
 }
 
-function dgu_notifications_auto_subscribe($form, &$form_state, $account) {
-
-  $path = drupal_get_path('module', 'dgu_notifications');
-
-  $content_types = array(
-    'ckan_dataset' => 'Dataset',
-    'ckan_dataset_update_subscribe' => 'Automatically subscribe to dataset updates',
-    'ckan_dataset_comment_subscribe' => 'Automatically subscribe to comments on datasets',
-    'app' => 'App',
-    'app_subscribe' => 'Automatically subscribe to updates and comments',
-    'blog' => 'Blog entry',
-    'blog_subscribe' => 'Automatically subscribe to updates and comments',
-    'dataset_request' => 'Data request',
-    'dataset_request_subscribe' => 'Automatically subscribe to updates and comments',
-    'forum' => 'Forum topic',
-    'forum_subscribe' => 'Automatically subscribe to updates and comments',
-    'resource' => 'Library resource',
-    'resource_subscribe' => 'Automatically subscribe to updates',
-  );
+function dgu_notifications_publisher_subscribe($form, &$form_state, $account) {
 
   $form = array('account' => array('#type' => 'value', '#account' => $account));
 
-  $form['content_types'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Notifications about new content'),
-    '#options' => $content_types,
-    '#attached' => array (
-      'js' => array($path . '/js/dgu_notifications.js'),
-      'css' => array($path . '/css/dgu_notifications.css'),
-    ),
-  );
+  $form_tmp = array();
+  field_attach_form('user', $account, $form_tmp, $form_state, NULL, array(
+    'field_name' => 'field_publisher_subscribe'
+  ));
 
-  $options = db_select('users_auto_subscribe', 'uas')->fields('uas', array('type'))->condition('uid', $account->uid)->execute()->fetchCol();
+  $form['field_publisher_subscribe'] = $form_tmp['field_publisher_subscribe'];
 
-  $form['content_types']['#default_value'] = $options;
-
-  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
-    $form['dataset_comments_label'] = array('#markup' => '<strong>Comments on datasets</strong>',);
-
-    $form['dataset_comments'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Receive email notifications about comments on all datasets published by publishers I administer'),
-    );
-    if (!empty($account->data['dataset_comments'])) {
-      $form['dataset_comments']['#default_value'] = $account->data['dataset_comments'];
-    }
-  }
+  unset($form['field_publisher_subscribe'][LANGUAGE_NONE]['#title']);
 
   $form['submit'] = array(
     '#type' => 'submit',
+    '#weight' => 200,
     '#value' => t('Save'),
   );
 
   return $form;
 }
 
-function dgu_notifications_auto_subscribe_submit($form, &$form_state) {
-
+function dgu_notifications_publisher_subscribe_submit($form, &$form_state) {
   $account = user_load($form['account']['#account']->uid);
-
-  $types = array_filter($form_state['values']['content_types']);
-  db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
-  $query = db_insert('users_auto_subscribe')->fields(array('uid', 'type'));
-  foreach ($types as $type) {
-    $query->values(array($account->uid, $type));
-  }
-  $query->execute();
-
-  if (isset($account->data['ckan_publishers']) && in_array('admin', $account->data['ckan_publishers'])) {
-    $account->data['dataset_comments'] = $form_state['values']['dataset_comments'];
+  if (!empty($form_state['values']['field_publisher_subscribe'][LANGUAGE_NONE])) {
+    $account->field_publisher_subscribe = $form_state['values']['field_publisher_subscribe'];
     user_save($account);
   }
-}
 
+  if (empty($account->field_digest_notifier[LANGUAGE_NONE][0]['value'])
+    || (isset($account->field_digest_notifier[LANGUAGE_NONE][0]['value']) && $account->field_digest_notifier[LANGUAGE_NONE][0]['value'] == 'email')) {
+    $form_state['redirect'] = '/user/' . $account->uid . '/subscriptions/delivery/confirm';
+  }
+}
 
 function dgu_notifications_delivery($form, &$form_state, $account) {
 
@@ -313,4 +272,45 @@ function dgu_notifications_delivery_submit($form, &$form_state) {
   $wrapper = entity_metadata_wrapper('user', $form['account']['#account']);
   $wrapper->field_digest_notifier->set($form_state['values']['digest_notifier']);
   $wrapper->save();
+}
+
+
+function dgu_notifications_delivery_confirm($form, &$form_state, $account) {
+
+  $field = field_info_field('field_digest_notifier');
+  $allowed_values = list_allowed_values($field);
+  unset($allowed_values['email']);
+
+  $form = array('account' => array('#type' => 'value', '#account' => $account));
+
+  $form['message'] = array(
+    '#markup' => '<p>Bulk dataset updates can often trigger hundreds of notifications.  We strongly recommend that you change your preference to daily or weekly update.</p>',
+  );
+
+  $form['email'] = array(
+    '#type' => 'submit',
+    '#value' => t('Keep immediate delivery'),
+    '#name' => 'email',
+  );
+
+  foreach ($allowed_values as $key => $notifier) {
+    $form[$key] = array(
+      '#type' => 'submit',
+      '#value' => t('Change to ' . strtolower($notifier) . ' digest'),
+      '#name' => $key,
+      '#attributes' => array('class' => array('btn-info')),
+    ) ;
+  }
+
+  return $form;
+}
+
+function dgu_notifications_delivery_confirm_submit($form, &$form_state) {
+  if ($form_state['triggering_element']['#name'] != 'email') {
+    $wrapper = entity_metadata_wrapper('user', $form['account']['#account']);
+    $wrapper->field_digest_notifier->set($form_state['triggering_element']['#name']);
+    $wrapper->save();
+    drupal_set_message('You have changed your notification frequency to ' . $form_state['triggering_element']['#name'] . ' digest.');
+  }
+  $form_state['redirect'] = '/user/' . $form['account']['#account']->uid . '/subscriptions/publisher';
 }
