@@ -164,7 +164,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   }
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
-  drupal_add_js($module_path . '/js/jit.js');
+  drupal_add_js($module_path . '/js/jit-2.0.1.js');
   drupal_add_js($module_path . '/js/jit/jit-yc.js');
   drupal_add_js($module_path . '/js/papaparse.js');
   drupal_add_js($module_path . '/js/jquery.jgrowl.js');
