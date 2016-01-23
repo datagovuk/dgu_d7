@@ -1250,7 +1250,7 @@
 
                     log("adding onDemand subtree for "+postID);
                     Orgvis.onDemandAddNodes(node,postID,originalChildren);
-                }, 500);
+                }, 2000);
 
             }
 
@@ -1284,7 +1284,7 @@
             } else {
                 setTimeout(function(){
                     Orgvis.onDemandAddNodes(node,postID,originalChildren);
-                },500);
+                },2000);
             }
 
             return false;
