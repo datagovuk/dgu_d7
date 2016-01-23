@@ -165,7 +165,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
   drupal_add_js($module_path . '/js/jit-2.0.1.js');
-  drupal_add_js($module_path . '/js/jit/jit-yc.js');
+  //drupal_add_js($module_path . '/js/jit/jit-yc.js');
   drupal_add_js($module_path . '/js/papaparse.js');
   drupal_add_js($module_path . '/js/jquery.jgrowl.js');
   drupal_add_js($module_path . '/js/jquery.cookie.js');
@@ -217,7 +217,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $form['infovis'] = array(
     '#type' => 'markup',
-    '#markup' => '<div id="infovis" style="display: block;width: 100%;height: 500px;"></div>',
+    '#markup' => '<div id="infovis"></div>',
   );
 
   return $form;

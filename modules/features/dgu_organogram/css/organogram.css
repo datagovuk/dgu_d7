@@ -1,3 +1,9 @@
+#infovis {
+    background: #ddd;
+    overflow: hidden;
+    display: block;
+}
+
 .file-widget div.form-type-select {
     display: inline;
 }
@@ -285,12 +291,9 @@ div.expander
 /* Node styles */
 div.node
 {
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px 5px 5px 5px;
     background-color:#EEEEEE;
     color: #000000;
     border:1px solid #AAAAAA;
-    border-radius:5px 5px 5px 5px;
     padding:5px 3px 0;
     height: auto;
     cursor: pointer;
@@ -306,9 +309,6 @@ div.node.selected {
 div.node span.heldBy {
     background-color: #8bc658;;
     border: 1px solid #333333;
-    -moz-border-radius:3px 3px 3px 3px;
-    -webkit-border-radius:3px 3px 3px 3px;
-    border-radius: 3px 3px 3px 3px;
     bottom: -11px;
     color: #FFFFFF;
     display: inline-block;
@@ -319,9 +319,6 @@ div.node span.heldBy {
 }
 div.node span.postIn
 {
-    -moz-border-radius:0 0 3px 3px;
-    -webkit-border-radius:0 0 3px 3px;
-    border-radius: 0 0 3px 3px;
     background: #8bc658;;
     border: medium none;
     color: #FFFFFF;
@@ -331,7 +328,12 @@ div.node span.postIn
     margin-top: 5px;
     padding: 2px 3px;
     position: relative;
-    width: 170px;
+    width: 169px;
+}
+
+div.node.selected span.postIn
+{
+    width: 164px;
 }
 
 /* New Infobox */

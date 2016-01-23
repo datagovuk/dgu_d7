@@ -117,7 +117,7 @@
             } else {
                 Orgvis.vars.global_post = postSlug;
             }
-            apiBase = 'https://reference-test.data.gov.uk';
+            apiBase = '//reference-test.data.gov.uk';
 
             // Check for preview parameter
             if(pMode == "true"){
