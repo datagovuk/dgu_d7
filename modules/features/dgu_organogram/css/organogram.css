@@ -1,5 +1,6 @@
 #infovis {
-    background: #ddd;
+    background: #fff;
+    border: 1px solid #ddd;
     overflow: hidden;
     display: block;
 }
@@ -174,7 +175,7 @@ div.infovis
 
 .infobox hr
 {
-    borderh:3px solid #EEEEEE;
+    borderh:3px solid #fff;
     padding-top:10px;
 }
 
@@ -236,7 +237,7 @@ div.infovis
 }
 .infobox ul.members
 {
-    border-bottom:1px solid #EEEEEE;
+    border-bottom:1px solid #fff;
     display:none;
     font-family:georgia;
     list-style-type:none;
@@ -291,7 +292,7 @@ div.expander
 /* Node styles */
 div.node
 {
-    background-color:#EEEEEE;
+    background-color:#fff;
     color: #000000;
     border:1px solid #AAAAAA;
     padding:5px 3px 0;
@@ -384,7 +385,7 @@ div.panel div.content p
 
 div.panel div.content p span
 {
-    background:none repeat scroll 0 0 #EEEEEE;
+    background:none repeat scroll 0 0 #fff;
     border-bottom:1px solid #CCCCCC;
     border-top:1px solid #CCCCCC;
     color:#888888;
@@ -442,7 +443,7 @@ a.data
     background: none repeat scroll 0 0 #999999;
     border: 1px solid #666666;
     border-radius: 5px 5px 5px 5px;
-    color: #EEEEEE;
+    color: #fff;
     display: inline;
     float: right;
     font-family: "Lucida Grande",Verdana;
@@ -554,8 +555,8 @@ div.jp_child span.jp_grade {
 }
 div.node span.childLoader {
     border-radius: 3px 3px 3px 3px;
-    background: none repeat scroll 0 0 #EEEEEE;
-    border-color: #AAAAAA #AAAAAA #AAAAAA #EEEEEE;
+    background: none repeat scroll 0 0 #fff;
+    border-color: #AAAAAA #AAAAAA #AAAAAA #fff;
     border-style: solid solid solid none;
     border-width: 1px 1px 1px 0px;
     display: none;
@@ -776,7 +777,7 @@ a.categorydata
 {
     background: none repeat scroll 0 0 #999999;
     border: 1px solid #666666;
-    color: #EEEEEE;
+    color: #fff;
     display: block;
     font-family: "Lucida Grande",Verdana;
     font-size: 9px;
