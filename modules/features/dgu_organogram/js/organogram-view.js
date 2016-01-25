@@ -239,25 +239,6 @@
                 onBeforeCompute: function(node){
                 },
                 onAfterCompute: function(){
-                    //changeLog("Done",false);
-                    // Align nodes vertically
-                    /*
-                     $("div#infovis-label").children("div").hide();
-                     var nodes = $("div#infovis-label").children("div").toArray();
-                     var len = nodes.length;
-                     for(var i=len;i--;){
-                     var h = $(nodes[i]).height();
-                     if(h > 60){}
-                     else if (h > 50){
-                     $(nodes[i]).css("margin-top","10px");
-                     } else if (h > 35){
-                     $(nodes[i]).css("margin-top","15px");
-                     } else {
-                     $(nodes[i]).css("margin-top","20px");
-                     }
-                     }
-                     $("div#infovis-label").children("div").show();
-                     */
                     $("div.node").each(function(){
                         var h = $(this).height();
                         if(h > 60){
@@ -277,15 +258,6 @@
 
                     // If the clicked node is a node and not a junior post
                     if(node.data !== undefined && node.data.type != 'junior_posts') {
-
-                        // Change the opacity if the node is not fully loaded
-
-                        //log("onCreateLabel: node.data.childrenAdded: "+node.data.childrenAdded);
-                        /*if(node.data.childrenAdded){
-                         $(label).css({ opacity: 1 });
-                         } else {
-                         $(label).css({ opacity: 0.7 });
-                         }*/
 
                         label.id = node.id;
                         label.innerHTML = node.name;
@@ -352,12 +324,8 @@
                                 break;
                         }
 
-                        //log(node.data.colour);
                         $(label).css('color',node.data.colour);
-                    } else {
-                        //log("clicked something, but not sure what!");
                     }
-
                     label.onclick = function(){
 
                         var m = {
@@ -365,10 +333,6 @@
                             offsetY: st.canvas.translateOffsetY,
                             enable: Orgvis.vars.autoalign
                         };
-
-                        //log("label.onclick - ");
-                        //log("X: "+Orgvis.vars.global_ST.canvas.canvases[0].translateOffsetX);
-                        //log("Y: "+Orgvis.vars.global_ST.canvas.canvases[0].translateOffsetY);
 
                         if(Orgvis.vars.transX != Orgvis.vars.global_ST.canvas.canvases[0].translateOffsetX || Orgvis.vars.transY != Orgvis.vars.global_ST.canvas.canvases[0].translateOffsetY){
                             log("Panning has occurred");
@@ -393,11 +357,6 @@
                                     Orgvis.loadPostInfobox(node);
                                 });
 
-                                //log("### clicked, node.name="+node.name);
-                                //log("### clicked, node.data.childrenAdded="+node.data.childrenAdded);
-                                //log("### clicked, Orgvis.vars.postList[postID].data.childrenAdded="+Orgvis.vars.postList[postID].data.childrenAdded);
-
-                                //log(node.data.gettingStats);
                                 if(!node.data.gotStats && !node.data.gettingStats){
                                     node.data.gettingStats = true;
                                     Orgvis.getStatisticsData(node);
@@ -644,16 +603,12 @@
         startLoadingPosts: function(reload) {
 
             if(Orgvis.vars.previewMode){
-                //Orgvis.notify("Loading","Calling API...",true,"loading_data");
-                //log(Orgvis.vars.apiCallInfo);
-                //log(Orgvis.vars.apiResponses);
                 Orgvis.getTopPostsData(function() {
                     Orgvis.getRootPostData();
                     Orgvis.getPostReportsData();
                     Orgvis.getJuniorStaffData();
                 });
             } else if(!reload){
-                //Orgvis.notify("Loading","Calling API...",true,"loading_data");
                 Orgvis.getTopPostsData(function() {
                     Orgvis.getRootPostData();
                     Orgvis.getPostReportsData();
@@ -677,10 +632,6 @@
                 error:function (){
                     log("API - topPosts - error");
                     $.cookie("organogram-preview-mode", null);
-                    //if(Orgvis.vars.previewMode){
-                    //	Orgvis.showLogin();
-                    //}
-                    //Orgvis.changeLog("Error loading post's data", false);
                     $("div#loading_top_post").trigger("jGrowl.close").remove();
                     Orgvis.notify("Error","Could not retrieve the top post's data",true,"error_top_post");
                 },
@@ -776,7 +727,7 @@
                 url: Orgvis.vars.apiCallInfo.postReports.url+".json"+Orgvis.vars.apiCallInfo.postReports.parameters+"&callback=?",
                 error: function(){
                     log("API - postReports - error");
-                    //Orgvis.changeLog("Error loading post's organogram data", false);
+
                     if(pageNumber > 1) {
                         $("div#loading_reportingPosts_"+pageNumber).trigger("jGrowl.close").remove();
                     } else {
@@ -796,8 +747,6 @@
                     // Grab more pages
                     if(json.result.next !== undefined){
 
-                        //log("Reporting posts ("+pageNumber+") - more pages...");
-                        //log(this);
                         pageNumber++;
                         s.url = s.url+"&_page="+pageNumber;
                         s.url = s.url.replace("&_page="+(pageNumber-1),"");
@@ -816,15 +765,11 @@
 
                     } else if(pageNumber > 1) {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#loading_reportingPosts_"+pageNumber).trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded reporting posts ("+(pageNumber)+")",false,"success_reportingPosts_"+(pageNumber-1));
                         Orgvis.regData(combinedJSON);
                     } else {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#" + "loading_reportingPosts").trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded reporting posts",false,"success_reportingPosts");
                         $("div#loading_reportingPosts").trigger("jGrowl.close").remove();
@@ -846,8 +791,6 @@
 
         },
         getJuniorStaffData:function() {
-
-            //log("getting junior reports data");
 
             var pageSize = 20;
             var combinedJSON = {};
@@ -872,8 +815,6 @@
                     Orgvis.notify("Error","Could not load junior staff",true,"error_juniorStaff");
                 },
                 success: function(json){
-
-                    //log("Junior staff success function, "+pageNumber);
                     // Store results
                     if(combinedJSON.result === undefined){
                         combinedJSON = json;
@@ -883,13 +824,9 @@
 
                     // Grab more pages
                     if(json.result.next !== undefined){
-
-                        //log("Junior staff ("+pageNumber+") - more pages...");
                         pageNumber++;
                         s.url = s.url+"&_page="+pageNumber;
                         s.url = s.url.replace("&_page="+(pageNumber-1),"");
-
-                        //$("div#" + "loading_juniorStaff").trigger("jGrowl.close").remove();
                         $("div#loading_juniorStaff").trigger("jGrowl.close").remove();
                         if(pageNumber > 1){
                             Orgvis.notify("Success","Loaded junior staff ("+(pageNumber-1)+")",false,"success_juniorStaff_"+(pageNumber-1));
@@ -900,17 +837,10 @@
                         $.myJSONP(s,"junior staff",Orgvis.vars.postInQuestion);
 
                     } else if(pageNumber > 1) {
-                        // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
-                        //$("div#" + "loading_juniorStaff").trigger("jGrowl.close").remove();
                         $("div#loading_juniorStaff_"+pageNumber).trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded junior staff ("+(pageNumber)+")",false,"success_juniorStaff_"+(pageNumber-1));
                         Orgvis.regData(combinedJSON);
                     } else {
-                        // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //$("div#" + "loading_juniorStaff").trigger("jGrowl.close").remove();
                         $("div#loading_juniorStaff").trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded junior staff",false,"success_juniorStaff");
                         Orgvis.regData(combinedJSON);
@@ -1012,7 +942,6 @@
                 url: Orgvis.vars.apiCallInfo.postReportsOnDemand.url+".json"+Orgvis.vars.apiCallInfo.postReportsOnDemand.parameters+"&callback=?",
                 error: function(){
                     log("API - postReportsOnDemand - error");
-                    //Orgvis.changeLog("Error loading clicked post's reporting posts data", false);
 
                     if(pageNumber > 1) {
                         $("div#loading_rp_onDemand_" + postID+"_"+pageNumber).trigger("jGrowl.close").remove();
@@ -1036,9 +965,6 @@
 
                     // Grab more pages
                     if(json.result.next !== undefined){
-
-                        //log("Reporting posts on demand ("+pageNumber+") - more pages...");
-                        //log(this);
                         pageNumber++;
                         s.url = s.url+"&_page="+pageNumber;
                         s.url = s.url.replace("&_page="+(pageNumber-1),"");
@@ -1056,15 +982,11 @@
 
                     } else if(pageNumber > 1) {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#loading_rp_onDemand_"+postID+"_"+pageNumber).trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded reporting posts for "+node.name+" ("+(pageNumber)+")",false,"success_rp_onDemand_"+postID+"_"+(pageNumber-1));
                         Orgvis.addOnDemandNodes(combinedJSON,node);
                     } else {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#loading_rp_onDemand_"+postID).trigger("jGrowl.close").remove();
                         Orgvis.notify("Success","Loaded reporting posts for "+node.name,false,"success_rp_onDemand_"+postID);
                         Orgvis.addOnDemandNodes(combinedJSON,node);
@@ -1077,7 +999,6 @@
             if(Orgvis.vars.previewMode || Orgvis.vars.previewParam){
                 s.username = $.cookie('organogram-username');
                 s.password = $.cookie('organogram-password');
-                //s.url = s.url.replace("reportsFull","reports-full");
             }
 
             Orgvis.notify("Loading","Reporting posts for "+node.name+"...",true,"loading_rp_onDemand_"+postID);
@@ -1086,14 +1007,11 @@
         },
         getJuniorStaffOnDemand:function(node) {
 
-            //log("getJuniorStaffOnDemand");
-
             var postID = Orgvis.getSlug(node.data.uri);
             var pageSize = 20;
             var combinedJSON = {};
             var pageNumber = 1;
             var originalChildren = Orgvis.vars.postList[postID].children.length;
-            //log("originalChildren: "+originalChildren);
 
             Orgvis.vars.apiCallInfo.juniorStaffOnDemand = {
                 title:"Retrieval of junior staff that report to the clicked post",
@@ -1106,7 +1024,6 @@
                 url: Orgvis.vars.apiCallInfo.juniorStaffOnDemand.url+".json"+Orgvis.vars.apiCallInfo.juniorStaffOnDemand.parameters+"&callback=?",
                 error: function(){
                     log("API - juniorStaffOnDemand - error");
-                    //Orgvis.changeLog("Error loading clicked post's junior staff data", false);
 
                     if(pageNumber > 1) {
                         $("div#loading_jp_onDemand_" + postID + "_"+pageNumber).trigger("jGrowl.close").remove();
@@ -1131,9 +1048,6 @@
 
                     // Grab more pages
                     if(json.result.next !== undefined){
-
-                        //log("Junior staff on demand ("+pageNumber+") - more pages...");
-                        //log(this);
                         pageNumber++;
                         s.url = s.url+"&_page="+pageNumber;
                         s.url = s.url.replace("&_page="+(pageNumber-1),"");
@@ -1150,15 +1064,11 @@
 
                     } else if(pageNumber > 1) {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#loading_jp_onDemand_"+postID+"_"+pageNumber).trigger("jGrowl.close").remove();
                         Orgvis.addOnDemandNodes(combinedJSON,node);
                         Orgvis.notify("Success","Loaded junior staff for "+node.name+" ("+(pageNumber)+")",false,"success_jp_onDemand_"+postID+"_"+(pageNumber));
                     } else {
                         // Pass data to the regData function
-                        //log("no more pages, passing data to regData");
-                        //log(combinedJSON);
                         $("div#loading_jp_onDemand_"+postID).trigger("jGrowl.close").remove();
                         Orgvis.addOnDemandNodes(combinedJSON,node);
                         Orgvis.notify("Success","Loaded junior staff for "+node.name,false,"success_jp_onDemand_"+postID);
@@ -1180,10 +1090,8 @@
             var postID = json.result._about.split("post/");
             postID = postID[1].split("/");
             postID = postID[0];
-            //log("addOnDemandNodes, postID: "+postID);
 
             var originalChildren = Orgvis.vars.postList[postID].children.length;
-            //log("originalChildren: "+originalChildren);
 
             if(Orgvis.vars.apiResponses["onDemand_"+postID] === undefined){
                 // First on-demand call recieved out of two
@@ -1291,10 +1199,6 @@
         },
         onDemandAfterCompute:function(node,postID,originalChildren){
 
-            //log("onDemandAfterCompute():");
-            //log(node.name+"'s originalChildren: "+originalChildren);
-            //log(node.name+"'s newChildren: "+Orgvis.vars.postList[postID].children.length);
-
             if(Orgvis.vars.postList[postID].children.length > originalChildren) {
                 log("children added");
                 $("div#"+node.id).css("background-color","#96FFA3").animate({ backgroundColor: "#FFFFFF" }, 5000);
@@ -1311,10 +1215,6 @@
             node.data.childrenAdded = true;
             node.data.onDemandInAction = false;
 
-            //Orgvis.getStatsData();
-
-            //Orgvis.updateFilter();
-
             return false;
 
         },
@@ -1324,23 +1224,14 @@
             log(data);
 
             Orgvis.vars.apiResponses.push(data);
-            //log("Orgvis.vars.apiResponses:");
-            //log(Orgvis.vars.apiResponses);
+
             // If both API calls have been made then load the organogram
             if(Orgvis.vars.apiResponses.length == Orgvis.vars.firstLoad_expectedApiResponses){
                 log("length is "+Orgvis.vars.firstLoad_expectedApiResponses);
                 for(var i=Orgvis.vars.apiResponses.length;i--;){
 
-                    //log('Orgvis.vars.apiResponses[i].result._about.indexOf("reports-full"):');
-                    //log(Orgvis.vars.apiResponses[i].result._about.indexOf("reports-full"));
-
                     if(Orgvis.vars.apiResponses[i].result._about.indexOf("reports-full") > 0){
-                        //log("found reports-full data");
-                        //if(Orgvis.vars.apiResponses[i].result.items.length > 0){
                         Orgvis.loadOrganogram(Orgvis.vars.apiResponses[i]);
-                        //} else {
-                        //	Orgvis.notify("Error","No reporting posts could be found.",true,"no_reporting_posts");
-                        //}
                     }
                 }
             } else {
@@ -1360,10 +1251,6 @@
 
                 Orgvis.vars.postInQuestion = json.result.primaryTopic;
 
-                //console.log("Post In Question:");
-                //console.log(Orgvis.vars.postInQuestion);
-                //Orgvis.vars.firstNode = makeNode(json.result.primaryTopic);
-
                 // Extract information for visualisation breadcrumbs
                 $("h1.title button#post").html(Orgvis.getLabel(json.result.primaryTopic.label[0]));
 
@@ -1381,8 +1268,6 @@
                     }
                 }
 
-                //$("h1.title button#unit").attr("rel","../gov-structure?dept="+dSlug+"&unit="+uSlug);
-                //$("h1.title button#dept").attr("rel","../gov-structure?dept="+dSlug);
                 $("h1.title button").css("visibility","visible");
 
                 // only show manage button on preview server, if email and date set, they have come directly from upload. Take them back to preview screen
@@ -1414,18 +1299,13 @@
                 var piqrtSlug = Orgvis.getSlug(tempPostEl._about);
                 Orgvis.vars.postInQuestionReportsTo.push(piqrtSlug);
 
-                //log("Working out PIQRTSLUG...");
-                //
                 //E.g. top-level post reportsTo is hardcoded to xx e.g. https://reference.data.gov.uk/id/department/co/post/xx
                 tlPostReportsTo = Orgvis.vars.refBase+"/id/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/xx";
                 if(tempPostEl.reportsTo && tempPostEl.reportsTo[0] != tlPostReportsTo) {
                     for(var a=tempPostEl.reportsTo.length;a--;){
-                        //log(tempPostEl);
                         if(tempPostEl.reportsTo[a]._about !== undefined){
-                            //log("piqrtSlug _about = "+tempPostEl.reportsTo[a]._about);
                             piqrtSlug = Orgvis.getSlug(tempPostEl.reportsTo[a]._about);
                         } else {
-                            //log("piqrtSlug = "+tempPostEl.reportsTo[a]);
                             piqrtSlug = Orgvis.getSlug(tempPostEl.reportsTo[a]);
                         }
                         Orgvis.vars.postInQuestionReportsTo.push(piqrtSlug);
@@ -1472,9 +1352,6 @@
                 }
             }
 
-            //log('post in question:');
-            //log(Orgvis.vars.postInQuestion);
-
             /*
              * Establish the first node of the organogram
              * (the post that doesn't report to any other posts)
@@ -1494,18 +1371,12 @@
                         j=j-1;
                     } else if(_piq.reportsTo[j]._about !== undefined) {
                         Orgvis.vars.firstNode = Orgvis.makeNode(_piq.reportsTo[j]);
-                        //log('firstNode:');
-                        //log(Orgvis.vars.firstNode);
                     } else {
                         Orgvis.vars.firstNode = Orgvis.makeNode(_piq);
-                        //log('firstNode:');
-                        //log(Orgvis.vars.firstNode);
                     }
                 }
             } else {
                 Orgvis.vars.firstNode = Orgvis.makeNode(_piq);
-                //log('firstNode:');
-                //log(Orgvis.vars.firstNode);
             }
 
             if(Orgvis.vars.firstNode.data.reportsTo.length > 0){
@@ -1767,12 +1638,7 @@
                         }
                     }
                 }
-            } else {
-                // No salary present for post
             }
-
-            //log("made node:");
-            //log(node);
 
             return node;
         },
@@ -1894,8 +1760,6 @@
                 node.data.reportingTo.uri = el.reportingTo._about;
             }
 
-            //log('makeJuniorPostNode: node made:');
-            //log(node);
 
             return node;
         },
@@ -1969,8 +1833,6 @@
 
             var fNodeID = Orgvis.getSlug(Orgvis.vars.firstNode.data.uri);
             Orgvis.vars.postList[fNodeID] = Orgvis.vars.firstNode;
-            // Push an empty Junior Posts node to the first node.
-            // Orgvis.vars.postList[fNodeID].children.push(Orgvis.makeNoJuniorPostNode());
 
             var addNoJuniorPosts = true;
 
@@ -1987,12 +1849,9 @@
                 }
             }
 
-            //log("postList:");
-            //log(Orgvis.vars.postList);
         },
         connectPosts:function(){
 
-            //log("connectPosts:");
             var visJSON;
 
             var postList = Orgvis.vars.postList;
@@ -2000,24 +1859,17 @@
             for(var i in postList) {
 
                 // Find the reportsTo values for each post
-                //log("postList[i]:");
-                //log(postList[i]);
-
                 if(postList[i].data.reportsTo !== undefined && postList[i].data.reportsTo.length > 0 && postList[i].data.reportsTo != 'error') {
-                    //log("postList[i].data:");
-                    //log(postList[i].data);
+
                     var postID = Orgvis.getSlug(postList[i].data.reportsTo[0]);
                     // Use the postID slug from the reportsTo value as a pointer in the associative array
                     // to connect the post to it's parent.
                     if (Orgvis.vars.postList[postID]) {
-                        //var elID = Orgvis.getSlug(el.data.uri);
                         var connectPost = true;
                         var children = Orgvis.vars.postList[postID].children;
                         for(var j in children){
                             if(postList[i].id == children[j].id){
-                                //log("not connecting posts:");
-                                //log(el.id);
-                                //log(Orgvis.vars.postList[postID].children[i].id);
+
                                 connectPost = false;
                             }
                         }
@@ -2031,9 +1883,6 @@
                 }
 
             }
-
-            //log("visJSON:")
-            //log(visJSON);
 
             return visJSON;
 
@@ -2465,8 +2314,7 @@
         loadJuniorPostInfoBox:function(node){
 
             // Construct the HTML for the infobox
-            //log("Building junior post infobox");
-            //log(node);
+
             var nd = node.data;
             var html = '<h1>'+node.name+'</h1>';
             html += '<div class="panel ui-accordion ui-widget ui-helper-reset ui-accordion-icons">';
@@ -2581,17 +2429,12 @@
                 $(this).button({text:true});
             });
 
-            //$( "a.aboutToggle").button();
-            //$( "a.aboutToggle" ).click(function() { $('div.about-tip').dialog('open')});
-
             return false;
         },
         displayDataSources2:function() {
 
             // Need to use a foreach loop to identify the correct key's and values in the
             // new apiCallInfo object.
-
-            //log("displaying data sources");
 
             $('div#apiCalls').hide();
 
@@ -2664,12 +2507,6 @@
             });
             $('a.sourceButton').click(function(){
                 $('div.sources-tip').dialog('open');
-                // if($('div#apiCallLable').css('display') == 'none'){
-                // 			$('div#apiCallLable').show();
-                // 		}else{
-                // 			$('div#apiCallLable').hide();
-                // 		}
-                //$($('div#apiCalls.a.sourceButton')).animate({opacity:'1'},1000);
             });
 
             return false;
@@ -2752,15 +2589,6 @@
                 });
             });
 
-//            if($.browser.msie && $.browser.version.substr(0,1)<8){}
-//            else {
-//                $('a#filterBy-button').remove();
-//                $('ul#filterBy-menu').remove();
-//                $('select#filterBy').selectmenu({style:'dropdown',width:280,menuWidth:280});
-//            }
-
-            // Restore select menu value
-            //log("setting new filter value");
             $("select#filterBy").val(originalValue);
             $("select#filterBy").selectmenu("refreshValue");
 
@@ -2842,7 +2670,6 @@
                 Orgvis.setInfoBoxLinksForCategorybox();
 
                 var height = window.height - 150;
-                //$("#categorybox .panel").css({height: height + "px"});
                 $("#categorybox").show();
 
             }//end of if
@@ -3008,13 +2835,11 @@
             log("callName: "+callName);
 
             var postID = "";
-            try{
+            try {
                 postID = Orgvis.getSlug(node.data.uri);
-            }catch(e){
+            } catch(e){
                 postID = "unknown";
             }
-            //Orgvis.showLog("Error requesting data for "+callName,false);
-            //log("Attempting to close loading notification for postID: "+postID);
 
             // Check for initial loading notifications
             switch(callName)
@@ -3062,9 +2887,6 @@
             };
 
             Orgvis.regData(json);
-
-            // support jquery versions before and after 1.4.3
-            //($.ajax.handleError || $.handleError)(s, o, msg, e);
         }
     };
 
@@ -3077,7 +2899,7 @@
         $("#categorybox").hide();
         $("#infobox").hide();
         $("#infovis").width($(window).width()-0);
-        $("#infovis").height($(window).height()-30);
+        $("#infovis").height($(window).height()-150);
 
         Orgvis.initSpaceTree();
 
@@ -3093,8 +2915,6 @@
             $( "button#unit" ).button({
                 text: true,
                 disabled: true
-            }).click(function() {
-                //window.location = $(this).attr("rel");
             });
             $( "button#dept" ).button({
                 text: true,
@@ -3205,12 +3025,6 @@
         });
 
     }); // end docready
-
-
-
-
-
-
 
 })(jQuery);
 
