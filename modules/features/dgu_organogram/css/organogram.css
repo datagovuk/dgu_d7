@@ -5,6 +5,22 @@
     display: block;
 }
 
+#dgu-organogram-viz-form .form-type-select {
+    float: left;
+}
+
+#dgu-organogram-viz-form .form-type-select select {
+    width: 100%;
+}
+
+#dgu-organogram-viz-form .form-item-department {
+    width: 68%;
+    margin-right: 3%;
+}
+#dgu-organogram-viz-form .form-item-version {
+    width: 28%;
+}
+
 .file-widget div.form-type-select {
     display: inline;
 }
