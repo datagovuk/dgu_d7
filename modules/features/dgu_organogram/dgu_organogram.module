@@ -165,7 +165,6 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
   drupal_add_js($module_path . '/js/jit-2.0.1.js');
-  //drupal_add_js($module_path . '/js/jit/jit-yc.js');
   drupal_add_js($module_path . '/js/papaparse.js');
   drupal_add_js($module_path . '/js/jquery.jgrowl.js');
   drupal_add_js($module_path . '/js/jquery.cookie.js');
@@ -189,7 +188,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
 }
 
 function dgu_organogram_js_alter(&$javascript) {
-  // Swap out jQuery to use an updated version of the library.
+  // Remove apachesolr_autocomplete.js from organogram pages as it's redundant on these pages and causes errors.
   $a=1;
   unset($javascript['profiles/dgu/modules/contrib/apachesolr_autocomplete/apachesolr_autocomplete.js']);
 }
@@ -226,6 +225,15 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
     '#markup' => '<div id="infovis"></div>',
   );
 
+  $form['infobox'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="infobox"></div>',
+  );
+
+  $form['api'] = array(
+    '#type' => 'markup',
+    '#markup' => '<div id="apiCalls"></div>',
+  );
   return $form;
 }
 

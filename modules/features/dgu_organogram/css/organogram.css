@@ -348,9 +348,20 @@ div.node span.postIn
     width: 169px;
 }
 
+div.node.juniorPost span.jp_grade
+{
+    width: 168px;
+}
+
+div.node.juniorPost.selected span.jp_grade,
 div.node.selected span.postIn
 {
     width: 164px;
+}
+
+div.node.juniorPost
+{
+    padding: 0;
 }
 
 /* New Infobox */
@@ -458,7 +469,6 @@ a.data
 {
     background: none repeat scroll 0 0 #999999;
     border: 1px solid #666666;
-    border-radius: 5px 5px 5px 5px;
     color: #fff;
     display: inline;
     float: right;
@@ -514,15 +524,12 @@ div.juniorPost {
     /*text-transform: uppercase;*/
 }
 div.juniorPost span.heldBy {
-    -moz-border-radius: 3px 3px 3px 3px;
-    border-radius: 3px 3px 3px 3px;
-    -webkit-border-radius: 3px 3px 3px 3px;
     border: 1px solid #9A9A9A;
     bottom: -13px;
     color: #000000;
     background-color:#FFFFCC !important;
     font-size: 10px;
-    height: 14px;
+    height: 20px;
     line-height: 20px;
     padding: 0 5px 5px;
     position: absolute;
@@ -555,19 +562,10 @@ div.jp_none span.heldBy {
     display: none;
 }
 div.jp_child span.jp_grade {
-    -moz-border-radius-bottomleft: 5px;
-    -moz-border-radius-bottomright: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
     background-color: #555555;
     color: #FFFFFF;
     display: block;
-    /*font-size: 12px !important;
-    font-weight: normal;*/
-    margin-left:-3px;
-    width:176px;
+    width:168px;
 }
 div.node span.childLoader {
     border-radius: 3px 3px 3px 3px;
@@ -576,13 +574,13 @@ div.node span.childLoader {
     border-style: solid solid solid none;
     border-width: 1px 1px 1px 0px;
     display: none;
-    height: 16px;
+    height: 20px;
     padding: 0 0 0;
     position: inherit;
     right: -15px;
     top: 2px;
     vertical-align: middle;
-    width: 16px;
+    width: 20px;
     z-index: 999;
 }
 div.node div.jp_group_selector {
@@ -634,8 +632,7 @@ div.jp_group span.jp_grade {
     display: block;
     font-size: 10px !important;
     font-weight: normal;
-    margin-left: -3px;
-    width: 176px;
+    width: 168px;
 }
 body.IE7 div.node span.childLoader {
     position:relative;
@@ -644,7 +641,6 @@ body.IE7 div.node span.childLoader {
     top:0;
 }
 div.node span.childLoader img {
-    margin-top: 3px;
     position: static;
     width: 10px;
 }

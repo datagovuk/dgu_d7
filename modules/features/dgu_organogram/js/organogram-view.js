@@ -278,7 +278,7 @@
                             var pi=node.data.postIn;
                             for(var a=pi.length;a--;){
                                 if(pi[a]._about.indexOf("/unit/") > 0 && label.innerHTML.indexOf('childLoader') < 0){
-                                    label.innerHTML = label.innerHTML + '<span class="postIn ui-state-active">'+Orgvis.getLabel(pi[a].label[0])+'</span><span class="childLoader"><img src="../images/childLoader.gif" /></span>';
+                                    label.innerHTML = label.innerHTML + '<span class="postIn ui-state-active">'+Orgvis.getLabel(pi[a].label[0])+'</span><span class="childLoader"><img src="/profiles/dgu/modules/features/dgu_organogram/images/childLoader.gif" /></span>';
                                 } else {}
                             }
                         } else {
@@ -952,7 +952,7 @@
                     Orgvis.notify("Error","Could not load children posts for "+node.name, true,"error_rp_onDemand_"+postID);
                     // Stops another API call being made
                     node.data.childrenAdded = true;
-                    $("div#"+node.id+" span.childLoader img").attr("src","../images/onDemandError.png");
+                    $("div#"+node.id+" span.childLoader img").attr("src","/profiles/dgu/modules/features/dgu_organogram/images/onDemandError.png");
                 },
                 success: function(json){
 
@@ -1035,7 +1035,7 @@
 
                     // Stops another API call being made
                     node.data.juniorStaffAdded = true;
-                    $("div#"+node.id+" span.childLoader img").attr("src","../images/onDemandError.png");
+                    $("div#"+node.id+" span.childLoader img").attr("src","/profiles/dgu/modules/features/dgu_organogram/images/onDemandError.png");
                 },
                 success: function(json){
 
@@ -2240,7 +2240,7 @@
                         if(nd.gotStats) {
                             html += '<p class="salaryReports"><span>Combined salary of reporting posts</span><span class="value">'+nd.stats.salaryCostOfReports.formatted+'</span><a class="data" target="_blank" href="'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'/statistics" value="'+nd.stats.salaryCostOfReports.value+'">Data</a><span class="date">'+nd.stats.date.formatted+'</span>';
                         } else {
-                            html += '<p class="salaryReports"><span>Combined salary of reporting posts </span><span class="value">Checking...</span><img class="salaryReports" width="14" height="14" src="../images/loading_white.gif"></p>';
+                            html += '<p class="salaryReports"><span>Combined salary of reporting posts </span><span class="value">Checking...</span><img class="salaryReports" width="14" height="14" src="/profiles/dgu/modules/features/dgu_organogram/images/loading_white.gif"></p>';
                         }
                     }
 
@@ -2878,7 +2878,7 @@
 
             Orgvis.notify("Error","Could not load "+node.name+"'s "+callName, true,"error_handler_"+postID);
 
-            $("div#"+node.id+" span.childLoader img").attr("src","../images/onDemandError.png");
+            $("div#"+node.id+" span.childLoader img").attr("src","/profiles/dgu/modules/features/dgu_organogram/images/onDemandError.png");
             var json = {
                 result:{
                     _about:s.url,
