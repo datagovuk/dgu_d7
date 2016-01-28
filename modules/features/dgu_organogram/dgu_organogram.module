@@ -222,12 +222,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $form['infovis'] = array(
     '#type' => 'markup',
-    '#markup' => '<div id="infovis"></div>',
-  );
-
-  $form['infobox'] = array(
-    '#type' => 'markup',
-    '#markup' => '<div id="infobox"></div>',
+    '#markup' => '<div id="infovis"><div id="infobox"></div></div>',
   );
 
   $form['api'] = array(

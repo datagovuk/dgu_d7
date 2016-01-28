@@ -3,6 +3,7 @@
     border: 1px solid #ddd;
     overflow: hidden;
     display: block;
+    position: relative;
 }
 
 #dgu-organogram-viz-form .form-type-select {
@@ -152,6 +153,10 @@ body.IE7 div#infobox {
     position:relative;
 }
 
+#infobox .ui-accordion-header-icon {
+    display: none;
+}
+
 /* UI Overrides
  Infobox */
 #infobox .ui-accordion .ui-accordion-header a
@@ -159,6 +164,7 @@ body.IE7 div#infobox {
     font-size:0.8em !important;
     padding:0.3em 0.5em !important;
     text-align:right !important;
+    color: #fff;
 }
 
 #infobox .ui-accordion-content
@@ -177,6 +183,8 @@ body.IE7 div#infobox {
     margin-top:0;
     padding:10px 30px;
     text-align:center;
+    line-height: 20px;
+    font-weight: bold;
 }
 
 #infobox h2
@@ -186,6 +194,14 @@ body.IE7 div#infobox {
     font-weight:normal;
     margin:0;
     padding:0;
+}
+
+#infobox h3
+{
+    background: #8bc658;
+    font-size:16px !important;
+    border: none;
+    border-radius: 0;
 }
 
 #infobox hr
@@ -287,6 +303,18 @@ body.IE7 div#infobox {
     visibility:hidden;
 }
 
+#infobox a.close {
+    background-color: #aaa;
+    color: #333;
+    cursor: pointer;
+    font-size: 10px;
+    padding: 1px 5px 2px;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    margin: 0 !important;
+    opacity: 1;
+}
 
 div.expander
 {
@@ -542,11 +570,12 @@ div.jp_child {
     /*cursor: default !important;*/
 }
 div.jp_none {
-    border:1px dashed #333333 !important;
+    border: 1px dashed #333333 !important;
     background-color: #CCCCCC;
     font-weight: normal;
     cursor: default !important;
 }
+
 div.jp_none span.heldBy {
     display: none;
 }

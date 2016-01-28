@@ -1434,11 +1434,13 @@
                         if(!Orgvis.vars.global_ST.busy){
                             clearInterval(t);
                             Orgvis.vars.global_ST.onClick($("div.post_"+Orgvis.vars.postInQuestionReportsTo[c-1]).attr("id"));
-                            $("div.post_"+Orgvis.vars.postInQuestionReportsTo[c-1]).click();
+
+                            //$("div.post_"+Orgvis.vars.postInQuestionReportsTo[c-1]).click();
+
                             $("div.post_"+Orgvis.vars.postInQuestionReportsTo[c-1]).css("background-color","#FFFFFF");
                             //Orgvis.hideLog();
-                            $("div#"+"aligning").trigger("jGrowl.close").remove();
-                            Orgvis.vars.ST_move = false;
+                            //$("div#"+"aligning").trigger("jGrowl.close").remove();
+                            //Orgvis.vars.ST_move = false;
                             //log("Orgvis.vars.ST_move:"+Orgvis.vars.ST_move);
 
                             return false;
@@ -2300,13 +2302,15 @@
             Orgvis.setInfoBoxLinks();
             $("#infobox").show();
             $("div.heldBy").show();
+            $("div.heldBy .content").show();
+            $("div.heldBy .content").height('auto');
 
             if(Orgvis.vars.firstLoad){
                 $("div.panel h3 a.infobox_"+Orgvis.vars.global_post).click();
                 Orgvis.vars.firstLoad=false;
                 Orgvis.vars.reOpen=false;
             } else {
-                $("div.panel h3 a").eq(0).click();
+                //$("div.panel h3 a").eq(0).click();
                 Orgvis.vars.reOpen=true;
             }
 
@@ -2898,7 +2902,7 @@
 
         $("#categorybox").hide();
         $("#infobox").hide();
-        $("#infovis").width($(window).width()-0);
+        $("#infovis").width($('#main-content > .container').width()-2);
         $("#infovis").height($(window).height()-250);
 
         Orgvis.initSpaceTree();
@@ -3014,7 +3018,7 @@
         }
 
         $(window).resize(function(){
-            $("#infovis").width($(window).width()-0);
+            $("#infovis").width(($('#main-content > .container').width()-2));
             $("#infovis").height($(window).height()-250);
             $("div.jGrowl.top-left").css("max-height",$(window).height()-80);
             $("div.jGrowl.top-left").css('height','expression( this.scrollHeight > '+$(window).height()-79+' ? "'+$(window).height()-80+'px" : "auto" )');
