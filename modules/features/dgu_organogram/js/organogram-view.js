@@ -2544,12 +2544,6 @@
 
             $('.ui-state-default').mouseout(function(){$(this).removeClass('ui-state-focus')});
 
-            //$('div.panel h3 a.categorybox').eq(0).click();
-
-            if($.browser.msie){
-                $("div#categorybox").corner();
-            }
-
             return false;
         },
         updateFilter:function(){ return;
@@ -3005,11 +2999,6 @@
         });
 
         $('div#right').children().css('visibility','visible');
-
-        if($.browser.msie) {
-            $("div#log").corner();
-            $("div#right").corner("tl bl 10px");
-        }
 
         if($.browser.msie && $.browser.version.substr(0,1)<7) {
             // If less than IE7
