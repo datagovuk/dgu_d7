@@ -4,6 +4,7 @@
     overflow: hidden;
     display: block;
     position: relative;
+    min-height: 700px;
 }
 
 #dgu-organogram-viz-form .form-type-select {
@@ -15,11 +16,31 @@
 }
 
 #dgu-organogram-viz-form .form-item-department {
-    width: 68%;
+    width: 83%;
     margin-right: 2%;
 }
 #dgu-organogram-viz-form .form-item-version {
-    width: 30%;
+    width: 15%;
+}
+
+@media screen and (max-width: 799px) {
+    #dgu-organogram-viz-form .form-item-department {
+        width: 73%;
+        margin-right: 2%;
+    }
+    #dgu-organogram-viz-form .form-item-version {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 499px) {
+    #dgu-organogram-viz-form .form-item-department {
+        width: 63%;
+        margin-right: 2%;
+    }
+    #dgu-organogram-viz-form .form-item-version {
+        width: 35%;
+    }
 }
 
 .file-widget div.form-type-select {
