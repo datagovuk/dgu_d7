@@ -137,11 +137,11 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   foreach ($departmentsHierarchy as $entry) {
     foreach ($entry['departments'] as $department) {
       if ($department['label'] == $entry['label']) {
-        $departmentOptions[$department['id']] = $department['label'];
+        $departmentOptions[$entry['label']][$department['id']] = $department['label'];
+
       }
       else {
-        $departmentOptions[$department['id']] = $entry['label'] . ' - ' . $department['label'];
-        $departmentOptions[$department['id']] = $entry['label'] . ' - ' . $department['label'];
+        $departmentOptions[$entry['label']][$department['id']] = ' - ' . $department['label'];
       }
       $departmentVersions[$department['id']] = $department['version'];
     }
