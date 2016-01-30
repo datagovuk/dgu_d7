@@ -2903,7 +2903,7 @@
         $("#categorybox").hide();
         $("#infobox").hide();
         $("#infovis").width($('#main-content > .container').width()-2);
-        $("#infovis").height($(window).height()-250);
+        $("#infovis").height($(window).height()-200);
 
         Orgvis.initSpaceTree();
 
@@ -3019,7 +3019,7 @@
 
         $(window).resize(function(){
             $("#infovis").width(($('#main-content > .container').width()-2));
-            $("#infovis").height($(window).height()-250);
+            $("#infovis").height($(window).height()-200);
             $("div.jGrowl.top-left").css("max-height",$(window).height()-80);
             $("div.jGrowl.top-left").css('height','expression( this.scrollHeight > '+$(window).height()-79+' ? "'+$(window).height()-80+'px" : "auto" )');
 
