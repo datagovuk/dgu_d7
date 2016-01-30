@@ -2528,10 +2528,6 @@
 
             $('div.panel h3').eq(0).click();
 
-            if($.browser.msie){
-                $("div#infobox").corner();
-            }
-
             return false;
         },
         setInfoBoxLinksForCategorybox:function() {
