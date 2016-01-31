@@ -201,16 +201,45 @@
 
             });
 
+            var touchDragChange = {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 0
+            };
+            var isDragging = false;
+
             // Create a new ST instance
             var st = new $jit.ST({
                 'injectInto': 'infovis',
+                Events: {
+                    enable: true,
+                    onTouchStart: function(node, eventInfo, e) {
+                        $('#infovis').addClass('dragging');
+                        touchDragChange.x1 = e.touches[0].pageX;
+                        touchDragChange.y1 = e.touches[0].pageY;
+                    },
+                    onTouchMove: function(node, eventInfo, e) {
+                        touchDragChange.x2 = e.touches[0].pageX;
+                        touchDragChange.y2 = e.touches[0].pageY;
+                        Orgvis.vars.global_ST.canvas.translate(-(touchDragChange.x1-touchDragChange.x2), -(touchDragChange.y1-touchDragChange.y2));
+                        touchDragChange.x1 = e.touches[0].pageX;
+                        touchDragChange.y1 = e.touches[0].pageY;
+                    },
+                    onTouchEnd: function(node, eventInfo, e) {
+                        $('#infovis').removeClass('dragging');
+                    },
+                    onTouchCancel: function(node, eventInfo, e) {
+                        $('#infovis').removeClass('dragging');
+                    }
+                },
                 Navigation: {
                     enable: true,
-                    panning: 'avoid nodes',
+                    panning: true,
                     zooming: false
                 },
                 duration: 200,
-                fps:30,
+                fps:60,
                 orientation: 'left',
                 offsetX: Orgvis.vars.visOffsetX,
                 offsetY: Orgvis.vars.visOffsetY,
@@ -1300,7 +1329,7 @@
                 Orgvis.vars.postInQuestionReportsTo.push(piqrtSlug);
 
                 //E.g. top-level post reportsTo is hardcoded to xx e.g. https://reference.data.gov.uk/id/department/co/post/xx
-                tlPostReportsTo = Orgvis.vars.refBase+"/id/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/xx";
+                var tlPostReportsTo = Orgvis.vars.refBase+"/id/"+Orgvis.vars.global_typeOfOrg+"/"+Orgvis.vars.global_postOrg+"/post/xx";
                 if(tempPostEl.reportsTo && tempPostEl.reportsTo[0] != tlPostReportsTo) {
                     for(var a=tempPostEl.reportsTo.length;a--;){
                         if(tempPostEl.reportsTo[a]._about !== undefined){
@@ -2735,9 +2764,9 @@
     /* Currency formatting */
     function addCommas(nStr) {
         nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
         var rgx = /(\d+)(\d{3})/;
         while (rgx.test(x1)) {
             x1 = x1.replace(rgx, '$1' + ',' + '$2');
@@ -2781,7 +2810,7 @@
 // hat tip to Ricardo Tomasi for the timeout logic
     $.myJSONP = function(s,callName,n) {
 
-        node = n || {name:"Unspecified"};
+        var node = n || {name:"Unspecified"};
 
         //log("myJSONP, recevied node:");
         //log(node);
@@ -2899,6 +2928,7 @@
 
         // Breadcrumbs
         $(function() {
+            $('#infovis.dragging').on("touchmove", false);
 
             $( "button#post" ).button({
                 text: true,
