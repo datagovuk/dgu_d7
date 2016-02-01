@@ -197,6 +197,11 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $currentOption = empty($currentPublicBody) ? $currentDepartment : $currentPublicBody;
 
+  $form['ie_message'] = array(
+    '#type' => 'markup',
+    '#markup' => '<!--[if lt IE 9]><p>This application isn\'t going to work as it makes use of plugins and animation techniques that require Internet Explorer 9 or later or any other relatively modern browser.</p><![endif]-->',
+  );
+
   $form['department'] = array(
     '#type' => 'select',
     '#title' => t('Department'),
