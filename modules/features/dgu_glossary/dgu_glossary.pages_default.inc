@@ -56,10 +56,11 @@ function dgu_glossary_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = 'Thank you for your suggestion';
+  $display->uuid = '86c3e135-5457-43bf-9444-6624798d216c';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-85e5217c-4cc3-42d6-8260-7f8e0ab20f38';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -80,10 +81,11 @@ function dgu_glossary_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $pane->uuid = '85e5217c-4cc3-42d6-8260-7f8e0ab20f38';
+    $display->content['new-85e5217c-4cc3-42d6-8260-7f8e0ab20f38'] = $pane;
+    $display->panels['middle'][0] = 'new-85e5217c-4cc3-42d6-8260-7f8e0ab20f38';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-85e5217c-4cc3-42d6-8260-7f8e0ab20f38';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['glossary_thank_you_page'] = $page;
