@@ -703,9 +703,11 @@ function dgu_site_feature_field_default_field_instances() {
           ),
           'summary_handler' => 'trim',
           'trim_length' => 250,
+          'trim_link' => FALSE,
           'trim_options' => array(
             'text' => 'text',
           ),
+          'trim_preserve_tags' => '',
           'trim_suffix' => '...',
           'trim_type' => 'chars',
         ),

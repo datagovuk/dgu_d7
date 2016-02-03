@@ -31,10 +31,11 @@ function dgu_site_feature_default_panels_mini() {
   );
   $display->cache = array();
   $display->title = 'What\'s data.gov.uk all about?';
+  $display->uuid = '4a4a5a66-148d-41ad-a329-d16101aefe25';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-75223d05-8e09-44a5-81ae-d079cc9cf933';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -55,10 +56,11 @@ function dgu_site_feature_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $pane->uuid = '75223d05-8e09-44a5-81ae-d079cc9cf933';
+    $display->content['new-75223d05-8e09-44a5-81ae-d079cc9cf933'] = $pane;
+    $display->panels['middle'][0] = 'new-75223d05-8e09-44a5-81ae-d079cc9cf933';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-75223d05-8e09-44a5-81ae-d079cc9cf933';
   $mini->display = $display;
   $export['what_s_data_gov_uk_all_about_'] = $mini;
 
