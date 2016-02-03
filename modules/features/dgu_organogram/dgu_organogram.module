@@ -12,6 +12,6 @@ include_once 'dgu_organogram.features.inc';
 function dgu_organogram_menu_breadcrumb_alter(&$active_trail, $item) {
   if (isset($item['map'][1]->type) && $item['map'][1]->type == 'organogram') {
     $active_trail[2] = $active_trail[1];
-    $active_trail[1] = array('title' => 'Organograms', 'href' => 'organogram', 'localized_options' => array());
+    $active_trail[1] = array('title' => 'Public Roles & Salaries', 'href' => 'organogram', 'localized_options' => array());
   }
 }
