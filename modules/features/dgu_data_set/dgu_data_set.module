@@ -216,5 +216,5 @@ function dgu_data_set_comments($publisher_id){
     }
   }
 
-  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'uid' => $user->uid));
+  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'uid' => $user->uid));
 }
