@@ -19,34 +19,88 @@ function dgu_data_set_entity_insert($entity, $type) {
       ),
     );
 
-    // A new comment on a dataset.
     if($type == 'reply' && $entity->bundle == 'comment' && $entity->entity_type == 'ckan_dataset') {
+
       $message = message_create('dataset_comment_new');
       $wrapper = entity_metadata_wrapper('message', $message);
       $dataset = ckan_dataset_load($entity->entity_id);
       $wrapper->field_dataset_reference->set($dataset);
       $wrapper->field_reply_reference->set($entity);
 
-      // First get publisher subscribers.
-      $publisher_subscribers = _dgu_data_set_get_publisher_subscribers($dataset->publisher_id);
+      // First get publisher admins subscribed to comments on all datasets published by this publisher.
+      $admins = _dgu_data_set_get_admin_subscribers($dataset->publisher_id);
       // Then get all other subscribes subscribed via flag
       $subscribers = _dgu_data_set_get_subscribers($dataset->id, 'comment');
-      // Users which subscribed via flag to the dataset but not to the publisher.
-      $dataset_subscribers = array_diff_assoc($subscribers, $publisher_subscribers);
 
-      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $publisher_subscribers));
-      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $dataset_subscribers));
+      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $admins));
+
+      $other_users = $users_to_notify_only = array_diff_assoc($subscribers, $admins);
+      message_subscribe_send_message('ckan_dataset', $dataset, $message, $options, array('uids' => $other_users));
     }
 
-    // A new dataset.
     if($type == 'ckan_dataset') {
-      $publisher_subscribers = _dgu_data_set_get_publisher_subscribers($entity->publisher_id);
+      $users_to_notify_or_subscribe = _dgu_data_set_get_auto_subscribers();
+      $users_to_notify_and_subscribe_to_updates = _dgu_data_set_get_auto_subscribers('update');
+      $users_to_notify_and_subscribe_to_comments = _dgu_data_set_get_auto_subscribers('comment');
+      $users_to_notify_only = array_diff_assoc($users_to_notify_or_subscribe, $users_to_notify_and_subscribe_to_updates, $users_to_notify_and_subscribe_to_comments);
+
       $message_dataset_new = message_create('dataset_new');
       $wrapper = entity_metadata_wrapper('message', $message_dataset_new);
       $wrapper->field_dataset_reference->set($entity);
-      message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new, $options, array('uids' => $publisher_subscribers));
+      message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new, $options, array('uids' => $users_to_notify_only));
+
+      if (!empty($users_to_notify_and_subscribe_to_updates)) {
+        $message_dataset_new_subscribe_update = message_create('dataset_new_subscribe_update');
+        $wrapper = entity_metadata_wrapper('message', $message_dataset_new_subscribe_update);
+        $wrapper->field_dataset_reference->set($entity);
+        message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new_subscribe_update, $options, array('uids' => $users_to_notify_and_subscribe_to_updates));
+
+        // Subscribe to following updates of this dataset.
+        foreach (array_keys($users_to_notify_and_subscribe_to_updates) as $uid) {
+          $account = user_load($uid);
+          flag('flag', 'subscribe_dataset_update', $entity->id, $account);
+        }
+      }
+
+      if (!empty($users_to_notify_and_subscribe_to_comments)) {
+        $message_dataset_new_subscribe_comment = message_create('dataset_new_subscribe_comment');
+        $wrapper = entity_metadata_wrapper('message', $message_dataset_new_subscribe_comment);
+        $wrapper->field_dataset_reference->set($entity);
+        message_subscribe_send_message('ckan_dataset', $entity, $message_dataset_new_subscribe_comment, $options, array('uids' => $users_to_notify_and_subscribe_to_comments));
+
+        // Subscribe to comments on this dataset.
+        foreach (array_keys($users_to_notify_and_subscribe_to_comments) as $uid) {
+          $account = user_load($uid);
+          flag('flag', 'subscribe_dataset_comment', $entity->id, $account);
+        }
+      }
+
     }
   }
+}
+
+function _dgu_data_set_get_auto_subscribers($subscribe = FALSE) {
+  $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+
+  $query = db_select('users_auto_subscribe', 'uas');
+  $query->leftJoin('field_data_field_digest_notifier', 'fdn', 'fdn.entity_id = uas.uid');
+  $query->fields('uas', array('uid'));
+  $query->fields('fdn', array('field_digest_notifier_value'));
+
+  if (!$subscribe) {
+    $query->condition('uas.type', 'ckan_dataset');
+  }
+  else {
+    $query->condition('uas.type', 'ckan_dataset_' . $subscribe . '_subscribe');
+  }
+
+  $result = $query->execute()->fetchAll();
+
+  $uids = array();
+  foreach ($result as $row) {
+    $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
+  }
+  return $uids;
 }
 
 /**
@@ -67,15 +121,8 @@ function dgu_data_set_entity_update($entity, $type) {
       $wrapper = entity_metadata_wrapper('message', $message);
       $wrapper->field_dataset_reference->set($entity);
 
-      // First get publisher subscribers.
-      $publisher_subscribers = _dgu_data_set_get_publisher_subscribers($entity->publisher_id);
-      // Then get all other subscribes subscribed via flag
-      $subscribers = _dgu_data_set_get_subscribers($entity->id, 'update');
-      // Users which subscribed via flag to the dataset but not to the publisher.
-      $dataset_subscribers = array_diff_assoc($subscribers, $publisher_subscribers);
-
-      message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $publisher_subscribers));
-      message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $dataset_subscribers));
+      $uids = _dgu_data_set_get_subscribers($entity->id, 'update');
+      message_subscribe_send_message('ckan_dataset', $entity, $message, $options, array('uids' => $uids));
     }
   }
 }
@@ -87,25 +134,34 @@ function dgu_data_set_ckan_dataset_delete($ckan_dataset) {
   foreach (flag_get_flags('ckan_dataset') as $flag) {
     _flag_entity_delete('ckan_dataset', $ckan_dataset->id, $flag->fid);
   }
-  // TODO - remove entries from field_data_field_publisher_subscribe
 }
 
-function _dgu_data_set_get_publisher_subscribers($publisher_id) {
-  $uids = db_select('field_data_field_publisher_subscribe', 'ps')
-    ->fields('ps', array('entity_id'))
-    ->condition('ps.field_publisher_subscribe_id', $publisher_id)
+function _dgu_data_set_get_admin_subscribers($publisher_id) {
+  $publishers = array($publisher_id);
+  while($publisher_id = _dgu_data_set_get_parent_publisher_id($publisher_id)) {
+    $publishers[] = $publisher_id;
+  }
+
+  $uids = db_select('field_data_field_publishers', 'p')
+    ->fields('p', array('entity_id'))
+    ->condition('p.field_publishers_target_id', $publishers, 'IN')
     ->execute()
     ->fetchCol();
 
   $default_notifier = variable_get('message_subscribe_default_notifiers', array('email' => 'email'));
+  $ckan_admin_uids = array();
 
-  $publisher_subscribers = array();
   foreach($uids as $uid) {
     $user = user_load($uid);
-    $publisher_subscribers[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
+    if (isset($user->data['dataset_comments']) && $user->data['dataset_comments']) {
+      foreach ($publishers as $publisher_id) {
+        if(isset($user->data['ckan_publishers'][$publisher_id]) && $user->data['ckan_publishers'][$publisher_id] == 'admin') {
+          $ckan_admin_uids[$uid]['notifiers'] = isset($user->field_digest_notifier[LANGUAGE_NONE][0]['value']) ? array($user->field_digest_notifier[LANGUAGE_NONE][0]['value'] => $user->field_digest_notifier[LANGUAGE_NONE][0]['value']) : $default_notifier;
+        }
+      }
+    }
   }
-
-  return $publisher_subscribers;
+  return $ckan_admin_uids;
 }
 
 function _dgu_data_set_get_subscribers($dataset_id, $type) {
@@ -132,6 +188,15 @@ function _dgu_data_set_get_subscribers($dataset_id, $type) {
     $uids[$row->uid]['notifiers'] = isset($row->field_digest_notifier_value) ? array($row->field_digest_notifier_value => $row->field_digest_notifier_value) : $default_notifier;
   }
   return $uids;
+}
+
+
+function _dgu_data_set_get_parent_publisher_id($publisher_id) {
+  return db_select('ckan_publisher', 'p')
+    ->fields('p', array('parent_id'))
+    ->condition('p.id', $publisher_id)
+    ->execute()
+    ->fetchField();
 }
 
 /**
@@ -217,9 +282,6 @@ function dgu_data_set_comments($publisher_id){
   }
 
   $is_admin = dgu_user_is_ckan_admin($user);
-  if ($is_admin) {
-    $email_notifications = isset($account->data['dataset_comments']) && $account->data['dataset_comments'] ? 'enabled' : 'disabled';
-  }
 
-  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'email_notifications' => $email_notifications, 'uid' => $user->uid));
+  return theme('dataset_comments_report',  array('datasets_comments' => $datasets_comments, 'publisher' => $publisher, 'is_admin' => $is_admin, 'uid' => $user->uid));
 }
