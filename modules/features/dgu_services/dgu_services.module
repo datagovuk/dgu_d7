@@ -19,9 +19,23 @@ function dgu_services_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['comment/issue/%'] = array(
+    'page callback' => 'dgu_services_add_issue_reply',
+    'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['comment/get/%'] = array(
     'page callback' => 'dgu_services_get_replies',
     'page arguments' => array(2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['comment/issue/get/%'] = array(
+    'page callback' => 'dgu_services_get_issue_replies',
+    'page arguments' => array(3),
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
@@ -153,6 +167,97 @@ function dgu_services_get_dataset_id_from_ckan_id($ckan_id) {
   if (isset($result['ckan_dataset'])) {
     $keys = array_keys($result['ckan_dataset']);
     return array_shift($keys);
+  }
+}
+
+function dgu_services_add_issue_reply($id) {
+  if (!empty($id) && is_numeric($id)) {
+    $issue = ckan_issue_load($id);
+    if (!$issue) {
+      // An issue with this id doesn't exist in Drupal.
+      // Syncing from CKAN on the fly.
+      module_load_include('inc', 'ckan', 'ckan.drush');
+      $client = ckan_get_client();
+
+      try {
+        ckan_resync_issues();
+      }
+      catch (Exception $e) {
+        watchdog('comment_issue_get', 'Error synchronising issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_exit();
+      }
+
+      $issue = ckan_issue_load($id);
+      if (!$issue) {
+        watchdog('comment_issue_get', 'Unable to synchronise issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_not_found();
+        return;
+      }
+    }
+
+    $instance = field_info_instance('ckan_issue', 'field_comment', 'ckan_issue');
+
+    // Return a link.
+    $href = '/reply/add/' . $id . '/' . $instance['id'] . '/0';
+    if(user_is_logged_in()) {
+      return '<a href="' . $href. '">Add reply</a>';
+    }
+    else {
+      return '<a href="/user/login?destination=' . $href . '">Log in</a> or <a href="/user/register?destination=' . $href . '">register</a> to post a reply';
+    }
+  }
+}
+
+function dgu_services_get_issue_replies($id) {
+  if (!empty($id) && is_numeric($id)) {
+    // TODO put duplicated code into a function
+    $issue = ckan_issue_load($id);
+    if (!$issue) {
+      // An issue with this id doesn't exist in Drupal.
+      // Syncing from CKAN on the fly.
+      module_load_include('inc', 'ckan', 'ckan.drush');
+      $client = ckan_get_client();
+
+      try {
+        ckan_resync_issues();
+      }
+      catch (Exception $e) {
+        watchdog('comment_issue_get', 'Error synchronising issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_exit();
+      }
+
+      $issue = ckan_issue_load($id);
+      if (!$issue) {
+        watchdog('comment_issue_get', 'Unable to synchronise issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_not_found();
+        return;
+      }
+    }
+
+    $output = field_attach_view('ckan_issue', $issue, 'default');
+    if (isset($output['field_comment'][0]['#markup'])) {
+
+      // TODO add issue flags.
+      $rendered_output='';
+//      $rendered_output = flag_create_link('subscribe_dataset_update', $issue->id);
+//      $rendered_output .= flag_create_link('subscribe_dataset_comment', $issue->id);
+
+      // Display 'Comemnts' heading only if at least one reply exist (testing if CSS class 'push' exist in the markup).
+      if (strpos($output['field_comment'][0]['#markup'], 'push') !== FALSE) {
+        $rendered_output .= '<div class="replies-header"><h3>Comments</h3></div>';
+      }
+
+      $rendered_output .= $output['field_comment'][0]['#markup'];
+//      // Fix flag on replies on ckan side so user is redirected back to an issue via page instead of drupal api endpoint
+//      $rendered_output = str_replace('destination=comment/get', 'destination=dataset', $rendered_output);
+
+
+
+      print $rendered_output;
+      // Update the history table, stating that this user viewed this issue.
+      ckan_issue_tag_new($issue);
+      drupal_exit();
+    }
   }
 }
 
