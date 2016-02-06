@@ -172,6 +172,29 @@ function dgu_services_get_dataset_id_from_ckan_id($ckan_id) {
 
 function dgu_services_add_issue_reply($id) {
   if (!empty($id) && is_numeric($id)) {
+    $issue = ckan_issue_load($id);
+    if (!$issue) {
+      // An issue with this id doesn't exist in Drupal.
+      // Syncing from CKAN on the fly.
+      module_load_include('inc', 'ckan', 'ckan.drush');
+      $client = ckan_get_client();
+
+      try {
+        ckan_resync_issues();
+      }
+      catch (Exception $e) {
+        watchdog('comment_issue_get', 'Error synchronising issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_exit();
+      }
+
+      $issue = ckan_issue_load($id);
+      if (!$issue) {
+        watchdog('comment_issue_get', 'Unable to synchronise issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_not_found();
+        return;
+      }
+    }
+
     $instance = field_info_instance('ckan_issue', 'field_comment', 'ckan_issue');
 
     // Return a link.
