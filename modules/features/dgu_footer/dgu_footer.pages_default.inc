@@ -90,10 +90,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'ff320155-f7f6-4fd2-9035-9203149a1983';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-498f145e-9992-46e4-b8a8-2e8a1cbc85a2';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -114,10 +115,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $pane->uuid = '498f145e-9992-46e4-b8a8-2e8a1cbc85a2';
+    $display->content['new-498f145e-9992-46e4-b8a8-2e8a1cbc85a2'] = $pane;
+    $display->panels['middle'][0] = 'new-498f145e-9992-46e4-b8a8-2e8a1cbc85a2';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-498f145e-9992-46e4-b8a8-2e8a1cbc85a2';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['accessibility'] = $page;
@@ -204,10 +206,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'dcc063da-db5a-4330-bd35-d3134bbb88a3';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-76be552c-6d4e-48e3-9038-f5b0e86a078f';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -228,10 +231,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['middle'][0] = 'new-2';
+    $pane->uuid = '76be552c-6d4e-48e3-9038-f5b0e86a078f';
+    $display->content['new-76be552c-6d4e-48e3-9038-f5b0e86a078f'] = $pane;
+    $display->panels['middle'][0] = 'new-76be552c-6d4e-48e3-9038-f5b0e86a078f';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-2';
+  $display->title_pane = 'new-76be552c-6d4e-48e3-9038-f5b0e86a078f';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['code_of_conduct'] = $page;
@@ -319,10 +323,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'a23ecd85-0de8-4bf4-bc3f-84d62e699929';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-3';
+    $pane->pid = 'new-a47dc0ca-33d0-4c9a-a4f1-96dd484cf898';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -343,10 +348,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['middle'][0] = 'new-3';
+    $pane->uuid = 'a47dc0ca-33d0-4c9a-a4f1-96dd484cf898';
+    $display->content['new-a47dc0ca-33d0-4c9a-a4f1-96dd484cf898'] = $pane;
+    $display->panels['middle'][0] = 'new-a47dc0ca-33d0-4c9a-a4f1-96dd484cf898';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-3';
+  $display->title_pane = 'new-a47dc0ca-33d0-4c9a-a4f1-96dd484cf898';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['cookies_policy'] = $page;
@@ -434,10 +440,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = '881b5eac-5bdb-401b-9b33-e3a2627561ad';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-4';
+    $pane->pid = 'new-42be6a12-e602-4a03-bbeb-f2b2564c4e14';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -446,7 +453,7 @@ function dgu_footer_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<p>1. <a href="#q1">What is the project doing?</a><br>2. <a href="q2">What is the status of this site?</a><br>3. <a href="#q3">Will personal information be at risk?</a><br>4. <a href="#q4">What is a mashup?</a><br>5. <a href="#q5">What is Linked Data and how does it fit into the Semantic Web?</a><br>6. <a href="#q6">How can people submit applications and visualisations?</a><br>7. <a href="#q8">How can people use data.gov.uk?</a><br>8. <a href="#q9">How were the datasets in data.gov.uk selected?</a><br>9. <a href="#q10">Why is a particular dataset not available yet, and when will it be?</a><br>10. <a href="#q11">Why is a particular dataset not available through an API yet, and when will it be?</a><br>11. <a href="#q12">How can people make contact with the project?</a><br>12. <a href="#q13">Is there a place for developers to discuss ideas, applications and using the data?</a><br>13. <a href="#q14">Will more public data become available in the future?</a><br>14. <a href="#q15">What are the commercial use rights if people have commercial ideas?</a><br>15. <a href="#q16">Under what licence is the data available?</a><br>16. <a href="#q17">Are there any “do”s and “don’t”s?</a><br>17. <a href="#publishing">How can my organization publish data on data.gov.uk?</a></p><p>&nbsp;</p><p>&nbsp;</p><h2><a name="q1"><strong>Q. What is the project doing?</strong></a></h2><p>&nbsp;</p><p>A. The government is opening up its data for other people to re-use. Open government data helps governments be more transparent, supports business, academics and the third sector.</p><p>data.gov.uk is only about non-personal, non-sensitive data – information like the list of schools, crimes or the performance of your local council.</p><p>&nbsp;</p><h2><a name="q2"><strong>Q. What is the status of this site?</strong></a></h2><p>&nbsp;</p><p>A. Data.gov.uk launched publicly with a beta version in January 2010. Since then we have launched a number of enhancements which you can read about via the blog. Developments are continuing across the site so do check back regularly and of course please tell us what you <a href="http://www.data.gov.uk/contact">think</a></p><p>&nbsp;</p><h2><a name="q3"><strong>Q. Will personal information be at risk?</strong></a></h2><p>&nbsp;</p><p>A. The data we publish here, and on related websites, will not identify or provide ways to identify individuals, unless that information is already published (like head teachers of schools).</p><p>&nbsp;</p><h2><a name="q4"><strong>Q. What is a mashup?</strong></a></h2><p>&nbsp;</p><p>A. A mashup is a web page or, more usually, a web application that combines data or code from two or more sources. It provides information or functionality beyond that designed or envisaged by the original producers of the data. The attraction of data mashing lies in the ease and speed with which new web applications can be launched with limited resources. People also create visualisations – pictures that show the data in clear, imaginative ways and tell a story about the underlying information.</p><p>For example, a mashup combining data sources such as school addresses and school league tables to display the results using a mapping tool could show where high-achieving schools are. This would be of interest to parents of school-age children who are considering moving house.</p><p>We expect that new and exciting mashups will be the main product of collaboration through this website: be inventive and make things.</p><p>&nbsp;</p><h2><a name="q5"></a><a name="whatisthesemanticweb"><strong>Q. What is Linked Data and how does it fit into the Semantic Web?</strong></a></h2><p>&nbsp;</p><p>A. The Semantic Web is an evolution of the World Wide Web that, rather than just linking from one document to another, focuses on their meaning in relation to each other. Linked Data is a set of technologies to achieve this for data, creating a web of data. You can check progress on our linked data work by visiting the blogs, the<a href="http://data.gov.uk/linked-data"> linked data section</a>&nbsp;or you can follow the <a href="http://@UKGovLD">UK Linked Data Working Group</a> on twitter for up to date news on developments</p><p><span style="line-height:1.538em">While the technical details are complicated, and very well explained by resources like </span><a href="http://www.jenitennison.com/blog/" style="line-height: 1.538em;">Jeni Tennison’s practitioner’s blog</a><span style="line-height:1.538em"> </span><span style="line-height:1.538em">the important thing is how it enables people to exchange links to information and the context for that information. For example, you might point to Bartholomew School, and it will have attributes such as “head teacher”, and be part of the collection “All schools in Oxfordshire”.</span></p><p>&nbsp;</p><h2><a name="q6"><strong>Q. How can people submit applications and visualisations?</strong></a></h2><p>&nbsp;</p><p>A. Go to the <a href="/apps/">Apps page</a>, where you’ll find information on uses of data, submitted so far, including mobile apps and visualisations. If you log-in you can submit your own application and join the discussions.</p><p>&nbsp;</p><h2><a name="q8"><strong>Q. How can people use data.gov.uk?</strong></a></h2><p>&nbsp;</p><p>&nbsp;</p><p>A. Data.gov.uk provides a search engine to offer several ways of finding the data you want. You can view all the datasets to see everything that is currently available, or search by keyword, category, themes, file format or department/agency. Each dataset provides guidance on accessing its data.&nbsp;</p><p>&nbsp;</p><h2><a name="q9"><strong>Q. How were the datasets in data.gov.uk selected?</strong></a></h2><p>&nbsp;</p><p>A. Excluding personal and sensitive information, all information created by public sector bodies is, in principle, available for re-use. In the past, different approaches were adopted by local and regional authorities and individual agencies. The government is now widely encouraging all previously inaccessible public information to be made accessible through this website. For more details on what is being prioritised you should have a look at the <a href="http://data.gov.uk/blog/bringing-national-information-infrastructure-life">National Information Infrastructure</a>&nbsp;or check the <a href="http://data.gov.uk/odug">data request section</a>&nbsp;of the site.</p><p>Public sector bodies who are encouraged to publish on data.gov.uk include: central government, local government, agencies (NDPBs), arms-length bodies, NHS, police, academics, charities and bodies with any public function.</p><h2><a name="q10"><strong>Q. Why is a particular dataset not available yet, and when will it be?</strong></a></h2><p>&nbsp;</p><p>A. Given the vast volumes of data, it will be some time before everything can be made available. If there are particular datasets that you believe should be made available more quickly, please use the <a href="http://data.gov.uk/data-request">data request process</a>.</p><p>You can also see a list of&nbsp;<a href="http://data.gov.uk/data/search?unpublished=true">unpublished datasets</a>,&nbsp;these are datasets that departments know they have but that have not been made public (yet).</p><p>&nbsp;</p><h2><a name="q11"><strong>Q. Why is a particular dataset not available through an API yet, and when will it be?</strong></a></h2><p>&nbsp;</p><p>A. The W3C guidance on <a href="http://www.w3.org/TR/gov-data/">opening up government data</a> suggests that data should be published in its original raw format so that it’s available for re-use as soon as possible. We encourage publishers to provide APIs to access the data. The data.gov.uk catalog is available via an API (see more information <a href="http://data.gov.uk/data/api">here</a>) or for bulk download (see its dataset <a href="http://data.gov.uk/dataset/data_gov_uk-datasets">here</a>).</p><p>&nbsp;</p><h2><strong><a name="q12"><strong>Q. How can people make contact with the project?</strong></a></strong></h2><p>&nbsp;</p><p>A. Announcements are made on the the&nbsp;<a href="/blog">blogs page</a> and you can ask us questions on Twitter <a href="https://twitter.com/DataGovUK" target="_blank">@DataGovUk</a>. You can also send messages to our team via the <a href="http://data.gov.uk/contact">contact form</a><a href="/contact"> </a>(link in the page footer). To hear about keep up with the uses of data, check the <a href="/apps">apps</a>, and latest discussions are on the <a href="/forum">forum</a>.</p><p>&nbsp;</p><h2><strong><a name="q13"><strong>Q. Is there a place for developers to discuss ideas, applications and using of the data?</strong></a></strong></h2><p>&nbsp;</p><p>A. Yes, the <a href="/forum/">Discussion forum</a> is for that purpose. We realise that you’ll want to ask us and each other questions and we’ll try and help as best we can.</p><p>&nbsp;</p><h2><strong><a name="q14"><strong>Q. Will more public data become available in the future?</strong></a></strong></h2><p>&nbsp;</p><p>A. Since data.gov.uk started there has been lots of key datasets opened up and we aim to continue working on these whilst also recording updates to the existing body of data.</p><p>&nbsp;</p><h2><strong><a name="q15"><strong>Q. What are the commercial use rights if people have commercial ideas?</strong></a></strong></h2><p>&nbsp;</p><p>A. The Open Government Licence enables you to use data for commercial purposes. We are delighted that you see a commercial opportunity in using our data.</p><p>&nbsp;</p><h2><strong><a name="q16"><strong>Q. Under what licence is the data available?</strong></a></strong></h2><p>&nbsp;</p><p>A. In general, the data is licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/">Open Government Licence</a> - please check each dataset for its details.</p><p>&nbsp;</p><h2><strong><a name="q17"><strong>Q. Using the data - are there any "do\'s" and "don\'t"s?</strong></a></strong></h2><p>&nbsp;</p><p>A. We have a simple <a href="/code-conduct/">code of conduct</a> relating to your use of the data in your application. It covers how to relate your application data to the data we provide, and simple common-sense usage of the data.</p><p>&nbsp;</p><h2><a id="publishing" name="publishing"><strong>Q. How can my organization publish data on data.gov.uk?</strong></a></h2><p>A. Guidance for data publishers is found here: <a href="http://datagovuk.github.io/guidance/publishing_on_data_gov_uk_overview.html">Guidance on publishing on data.gov.uk</a></p>',
+      'body' => '<p>1. <a href="#q1">What is the project doing?</a><br>2. <a href="q2">What is the status of this site?</a><br>3. <a href="#q3">Will personal information be at risk?</a><br>4. <a href="#q4">What is a mashup?</a><br>5. <a href="#q5">What is Linked Data and how does it fit into the Semantic Web?</a><br>6. <a href="#q6">How can people submit applications and visualisations?</a><br>7. <a href="#q8">How can people use data.gov.uk?</a><br>8. <a href="#q9">How were the datasets in data.gov.uk selected?</a><br>9. <a href="#q10">Why is a particular dataset not available yet, and when will it be?</a><br>10. <a href="#q11">Why is a particular dataset not available through an API yet, and when will it be?</a><br>11. <a href="#q12">How can people make contact with the project?</a><br>12. <a href="#q13">Is there a place for developers to discuss ideas, applications and using the data?</a><br>13. <a href="#q14">Will more public data become available in the future?</a><br>14. <a href="#q15">What are the commercial use rights if people have commercial ideas?</a><br>15. <a href="#q16">Under what licence is the data available?</a><br>16. <a href="#q17">Are there any “do”s and “don’t”s?</a><br>17. <a href="#publishing">How can my organization publish data on data.gov.uk?</a></p><p>&nbsp;</p><p>&nbsp;</p><h2><a name="q1"><strong>Q. What is the project doing?</strong></a></h2><p>&nbsp;</p><p>A. The government is opening up its data for other people to re-use. Open government data helps governments be more transparent, supports business, academics and the third sector.</p><p>data.gov.uk is only about non-personal, non-sensitive data – information like the list of schools, crimes or the performance of your local council.</p><p>&nbsp;</p><h2><a name="q2"><strong>Q. What is the status of this site?</strong></a></h2><p>&nbsp;</p><p>A. Data.gov.uk launched publicly with a beta version in January 2010. Since then we have launched a number of enhancements which you can read about via the blog. Developments are continuing across the site so do check back regularly and of course please tell us what you <a href="http://www.data.gov.uk/contact">think</a></p><p>&nbsp;</p><h2><a name="q3"><strong>Q. Will personal information be at risk?</strong></a></h2><p>&nbsp;</p><p>A. The data we publish here, and on related websites, will not identify or provide ways to identify individuals, unless that information is already published (like head teachers of schools).</p><p>&nbsp;</p><h2><a name="q4"><strong>Q. What is a mashup?</strong></a></h2><p>&nbsp;</p><p>A. A mashup is a web page or, more usually, a web application that combines data or code from two or more sources. It provides information or functionality beyond that designed or envisaged by the original producers of the data. The attraction of data mashing lies in the ease and speed with which new web applications can be launched with limited resources. People also create visualisations – pictures that show the data in clear, imaginative ways and tell a story about the underlying information.</p><p>For example, a mashup combining data sources such as school addresses and school league tables to display the results using a mapping tool could show where high-achieving schools are. This would be of interest to parents of school-age children who are considering moving house.</p><p>We expect that new and exciting mashups will be the main product of collaboration through this website: be inventive and make things.</p><p>&nbsp;</p><h2><a name="q5"></a><a name="whatisthesemanticweb"><strong>Q. What is Linked Data and how does it fit into the Semantic Web?</strong></a></h2><p>&nbsp;</p><p>A. The Semantic Web is an evolution of the World Wide Web that, rather than just linking from one document to another, focuses on their meaning in relation to each other. Linked Data is a set of technologies to achieve this for data, creating a web of data. You can check progress on our linked data work by visiting the blogs, the<a href="http://data.gov.uk/linked-data"> linked data section</a>&nbsp;or you can follow the <a href="http://@UKGovLD">UK Linked Data Working Group</a> on twitter for up to date news on developments</p><p><span style="line-height:1.538em">While the technical details are complicated, and very well explained by resources like </span><a href="http://www.jenitennison.com/blog/" style="line-height: 1.538em;">Jeni Tennison’s practitioner’s blog</a><span style="line-height:1.538em"> </span><span style="line-height:1.538em">the important thing is how it enables people to exchange links to information and the context for that information. For example, you might point to Bartholomew School, and it will have attributes such as “head teacher”, and be part of the collection “All schools in Oxfordshire”.</span></p><p>&nbsp;</p><h2><a name="q6"><strong>Q. How can people submit applications and visualisations?</strong></a></h2><p>&nbsp;</p><p>A. Go to the <a href="/apps/">Apps page</a>, where you’ll find information on uses of data, submitted so far, including mobile apps and visualisations. If you log-in you can submit your own application and join the discussions.</p><p>&nbsp;</p><h2><a name="q8"><strong>Q. How can people use data.gov.uk?</strong></a></h2><p>&nbsp;</p><p>&nbsp;</p><p>A. Data.gov.uk provides a search engine to offer several ways of finding the data you want. You can view all the datasets to see everything that is currently available, or search by keyword, category, themes, file format or department/agency. Each dataset provides guidance on accessing its data.&nbsp;</p><p>&nbsp;</p><h2><a name="q9"><strong>Q. How were the datasets in data.gov.uk selected?</strong></a></h2><p>&nbsp;</p><p>A. Excluding personal and sensitive information, all information created by public sector bodies is, in principle, available for re-use. In the past, different approaches were adopted by local and regional authorities and individual agencies. The government is now widely encouraging all previously inaccessible public information to be made accessible through this website. For more details on what is being prioritised you should have a look at the <a href="http://data.gov.uk/blog/bringing-national-information-infrastructure-life">National Information Infrastructure</a>&nbsp;or check the <a href="http://data.gov.uk/odug">data request section</a>&nbsp;of the site.</p><p>Public sector bodies who are encouraged to publish on data.gov.uk include: central government, local government, agencies (NDPBs), arms-length bodies, NHS, police, academics, charities and bodies with any public function.</p><h2><a name="q10"><strong>Q. Why is a particular dataset not available yet, and when will it be?</strong></a></h2><p>&nbsp;</p><p>A. Given the vast volumes of data, it will be some time before everything can be made available. If there are particular datasets that you believe should be made available more quickly, please use the <a href="http://data.gov.uk/data-request">data request process</a>.</p><p>You can also see a list of&nbsp;<a href="http://data.gov.uk/data/search?unpublished=true">unpublished datasets</a>,&nbsp;these are datasets that departments know they have but that have not been made public (yet).</p><p>&nbsp;</p><h2><a name="q11"><strong>Q. Why is a particular dataset not available through an API yet, and when will it be?</strong></a></h2><p>&nbsp;</p><p>A. The W3C guidance on <a href="http://www.w3.org/TR/gov-data/">opening up government data</a> suggests that data should be published in its original raw format so that it’s available for re-use as soon as possible. We encourage publishers to provide APIs to access the data. The data.gov.uk catalog is available via an API (see more information <a href="http://data.gov.uk/data/metadata-api-docs">here</a>) or for bulk download (see its dataset <a href="http://data.gov.uk/dataset/data_gov_uk-datasets">here</a>).</p><p>&nbsp;</p><h2><strong><a name="q12"><strong>Q. How can people make contact with the project?</strong></a></strong></h2><p>&nbsp;</p><p>A. Announcements are made on the the&nbsp;<a href="/blog">blogs page</a> and you can ask us questions on Twitter <a href="https://twitter.com/DataGovUK" target="_blank">@DataGovUk</a>. You can also send messages to our team via the <a href="http://data.gov.uk/contact">contact form</a><a href="/contact"> </a>(link in the page footer). To hear about keep up with the uses of data, check the <a href="/apps">apps</a>, and latest discussions are on the <a href="/forum">forum</a>.</p><p>&nbsp;</p><h2><strong><a name="q13"><strong>Q. Is there a place for developers to discuss ideas, applications and using of the data?</strong></a></strong></h2><p>&nbsp;</p><p>A. Yes, the <a href="/forum/">Discussion forum</a> is for that purpose. We realise that you’ll want to ask us and each other questions and we’ll try and help as best we can.</p><p>&nbsp;</p><h2><strong><a name="q14"><strong>Q. Will more public data become available in the future?</strong></a></strong></h2><p>&nbsp;</p><p>A. Since data.gov.uk started there has been lots of key datasets opened up and we aim to continue working on these whilst also recording updates to the existing body of data.</p><p>&nbsp;</p><h2><strong><a name="q15"><strong>Q. What are the commercial use rights if people have commercial ideas?</strong></a></strong></h2><p>&nbsp;</p><p>A. The Open Government Licence enables you to use data for commercial purposes. We are delighted that you see a commercial opportunity in using our data.</p><p>&nbsp;</p><h2><strong><a name="q16"><strong>Q. Under what licence is the data available?</strong></a></strong></h2><p>&nbsp;</p><p>A. In general, the data is licensed under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/">Open Government Licence</a> - please check each dataset for its details.</p><p>&nbsp;</p><h2><strong><a name="q17"><strong>Q. Using the data - are there any "do\'s" and "don\'t"s?</strong></a></strong></h2><p>&nbsp;</p><p>A. We have a simple <a href="/code-conduct/">code of conduct</a> relating to your use of the data in your application. It covers how to relate your application data to the data we provide, and simple common-sense usage of the data.</p><p>&nbsp;</p><h2><a id="publishing" name="publishing"><strong>Q. How can my organization publish data on data.gov.uk?</strong></a></h2><p>A. Guidance for data publishers is found here: <a href="http://datagovuk.github.io/guidance/publishing_on_data_gov_uk_overview.html">Guidance on publishing on data.gov.uk</a></p>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
@@ -458,10 +465,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['middle'][0] = 'new-4';
+    $pane->uuid = '42be6a12-e602-4a03-bbeb-f2b2564c4e14';
+    $display->content['new-42be6a12-e602-4a03-bbeb-f2b2564c4e14'] = $pane;
+    $display->panels['middle'][0] = 'new-42be6a12-e602-4a03-bbeb-f2b2564c4e14';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-4';
+  $display->title_pane = 'new-42be6a12-e602-4a03-bbeb-f2b2564c4e14';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['faq'] = $page;
@@ -548,10 +556,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'fc515b00-51d8-4335-857f-9ec68b280264';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-5';
+    $pane->pid = 'new-e6f78af2-512a-4863-9739-5542f6900ff3';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -572,10 +581,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['middle'][0] = 'new-5';
+    $pane->uuid = 'e6f78af2-512a-4863-9739-5542f6900ff3';
+    $display->content['new-e6f78af2-512a-4863-9739-5542f6900ff3'] = $pane;
+    $display->panels['middle'][0] = 'new-e6f78af2-512a-4863-9739-5542f6900ff3';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-5';
+  $display->title_pane = 'new-e6f78af2-512a-4863-9739-5542f6900ff3';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['moderation_policy'] = $page;
@@ -662,10 +672,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'a2bdb74d-ab2b-45a9-b453-23fe7be1dadb';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-490e6e2f-c597-47b3-b0fd-31f91d62b5e4';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -686,10 +697,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['middle'][0] = 'new-6';
+    $pane->uuid = '490e6e2f-c597-47b3-b0fd-31f91d62b5e4';
+    $display->content['new-490e6e2f-c597-47b3-b0fd-31f91d62b5e4'] = $pane;
+    $display->panels['middle'][0] = 'new-490e6e2f-c597-47b3-b0fd-31f91d62b5e4';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-6';
+  $display->title_pane = 'new-490e6e2f-c597-47b3-b0fd-31f91d62b5e4';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['privacy'] = $page;
@@ -777,10 +789,11 @@ function dgu_footer_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = '63ba00eb-0cfc-43d8-b660-630aadad83f1';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-bdc2beb3-c069-4f85-b6ca-5b5ff033de8f';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -801,10 +814,11 @@ function dgu_footer_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['middle'][0] = 'new-7';
+    $pane->uuid = 'bdc2beb3-c069-4f85-b6ca-5b5ff033de8f';
+    $display->content['new-bdc2beb3-c069-4f85-b6ca-5b5ff033de8f'] = $pane;
+    $display->panels['middle'][0] = 'new-bdc2beb3-c069-4f85-b6ca-5b5ff033de8f';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-7';
+  $display->title_pane = 'new-bdc2beb3-c069-4f85-b6ca-5b5ff033de8f';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['terms_and_conditions'] = $page;

@@ -255,7 +255,7 @@ function dgu_user_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['exclude'] = TRUE;
   $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-  /* Field: Publihser: Label */
+  /* Field: Publihser: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'ckan_publisher';
   $handler->display->display_options['fields']['title']['field'] = 'title';

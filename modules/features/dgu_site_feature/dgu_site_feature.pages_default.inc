@@ -66,10 +66,11 @@ function dgu_site_feature_default_page_manager_handlers() {
   );
   $display->cache = array();
   $display->title = 'About';
+  $display->uuid = '21795b88-d3db-4869-89ff-f7edbd794a09';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-e5cda200-f233-47f5-a8b8-1fd60634df54';
     $pane->panel = 'left';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
@@ -94,10 +95,11 @@ function dgu_site_feature_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['left'][0] = 'new-1';
+    $pane->uuid = 'e5cda200-f233-47f5-a8b8-1fd60634df54';
+    $display->content['new-e5cda200-f233-47f5-a8b8-1fd60634df54'] = $pane;
+    $display->panels['left'][0] = 'new-e5cda200-f233-47f5-a8b8-1fd60634df54';
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-aa9ebb85-44e8-4cef-960b-de9f59a48b6d';
     $pane->panel = 'right';
     $pane->type = 'panels_mini';
     $pane->subtype = 'what_s_data_gov_uk_all_about_';
@@ -115,10 +117,11 @@ function dgu_site_feature_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['right'][0] = 'new-2';
+    $pane->uuid = 'aa9ebb85-44e8-4cef-960b-de9f59a48b6d';
+    $display->content['new-aa9ebb85-44e8-4cef-960b-de9f59a48b6d'] = $pane;
+    $display->panels['right'][0] = 'new-aa9ebb85-44e8-4cef-960b-de9f59a48b6d';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-e5cda200-f233-47f5-a8b8-1fd60634df54';
   $handler->conf['display'] = $display;
   $export['node_view_panel_context_8'] = $handler;
 
@@ -211,10 +214,11 @@ function dgu_site_feature_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'f46532cb-4095-4c12-8731-5174db7aaae0';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-bb54077c-a694-4f13-bea5-bff6a08c8583';
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -245,7 +249,7 @@ function dgu_site_feature_default_page_manager_pages() {
 
 <p>Data.gov.uk is a key part of the Government&#39;s work on Transparency which is being lead by the Transparency Board. Data.gov.uk implementation is being led by the Transparency and Open Data team in the Cabinet Office, working across government departments to ensure that data is released in a timely and accessible way.</p>
 
-<p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the Comprehensive Knowledge Archive Network (CKAN): CKAN runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer&#39;s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/api">http://data.gov.uk/data/api</a>.</p>
+<p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the Comprehensive Knowledge Archive Network (CKAN): CKAN runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer&#39;s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/metadata-api-docs">http://data.gov.uk/datametadata-api-docs</a>.</p>
 
 <p><strong>How can I get involved?</strong></p>
 
@@ -279,10 +283,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['left'][0] = 'new-1';
+    $pane->uuid = 'bb54077c-a694-4f13-bea5-bff6a08c8583';
+    $display->content['new-bb54077c-a694-4f13-bea5-bff6a08c8583'] = $pane;
+    $display->panels['left'][0] = 'new-bb54077c-a694-4f13-bea5-bff6a08c8583';
     $pane = new stdClass();
-    $pane->pid = 'new-2';
+    $pane->pid = 'new-ad015cf4-c2b8-48ba-8de2-02370cd56278';
     $pane->panel = 'right';
     $pane->type = 'panels_mini';
     $pane->subtype = 'what_s_data_gov_uk_all_about_';
@@ -300,10 +305,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['right'][0] = 'new-2';
+    $pane->uuid = 'ad015cf4-c2b8-48ba-8de2-02370cd56278';
+    $display->content['new-ad015cf4-c2b8-48ba-8de2-02370cd56278'] = $pane;
+    $display->panels['right'][0] = 'new-ad015cf4-c2b8-48ba-8de2-02370cd56278';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-bb54077c-a694-4f13-bea5-bff6a08c8583';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['about_us'] = $page;
@@ -368,10 +374,11 @@ function dgu_site_feature_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = '';
+  $display->uuid = 'e921f861-ba2a-483d-9451-0967e85e5c23';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-3';
+    $pane->pid = 'new-5bcf3084-fd72-4845-b918-89f31ff9ef49';
     $pane->panel = 'left';
     $pane->type = 'views';
     $pane->subtype = 'ckan_datasets';
@@ -401,10 +408,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['left'][0] = 'new-3';
+    $pane->uuid = '5bcf3084-fd72-4845-b918-89f31ff9ef49';
+    $display->content['new-5bcf3084-fd72-4845-b918-89f31ff9ef49'] = $pane;
+    $display->panels['left'][0] = 'new-5bcf3084-fd72-4845-b918-89f31ff9ef49';
     $pane = new stdClass();
-    $pane->pid = 'new-4';
+    $pane->pid = 'new-93e3243c-a6ce-4b52-b243-c48c083f7dd5';
     $pane->panel = 'left';
     $pane->type = 'views';
     $pane->subtype = 'ckan_publishers';
@@ -434,10 +442,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['left'][1] = 'new-4';
+    $pane->uuid = '93e3243c-a6ce-4b52-b243-c48c083f7dd5';
+    $display->content['new-93e3243c-a6ce-4b52-b243-c48c083f7dd5'] = $pane;
+    $display->panels['left'][1] = 'new-93e3243c-a6ce-4b52-b243-c48c083f7dd5';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-3';
+  $display->title_pane = 'new-5bcf3084-fd72-4845-b918-89f31ff9ef49';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['data'] = $page;
@@ -504,10 +513,11 @@ function dgu_site_feature_default_page_manager_pages() {
   );
   $display->cache = array();
   $display->title = 'Help';
+  $display->uuid = 'cf391d27-73f0-4519-8ad1-3775778a9209';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-5';
+    $pane->pid = 'new-125d7a0e-f836-4b36-8ef1-210847b57424';
     $pane->panel = 'left';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -529,10 +539,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['left'][0] = 'new-5';
+    $pane->uuid = '125d7a0e-f836-4b36-8ef1-210847b57424';
+    $display->content['new-125d7a0e-f836-4b36-8ef1-210847b57424'] = $pane;
+    $display->panels['left'][0] = 'new-125d7a0e-f836-4b36-8ef1-210847b57424';
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-7cccb247-7388-4957-9844-aec7611eb523';
     $pane->panel = 'right';
     $pane->type = 'block';
     $pane->subtype = 'dgu_user-dgu_user_help';
@@ -550,10 +561,11 @@ function dgu_site_feature_default_page_manager_pages() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['right'][0] = 'new-6';
+    $pane->uuid = '7cccb247-7388-4957-9844-aec7611eb523';
+    $display->content['new-7cccb247-7388-4957-9844-aec7611eb523'] = $pane;
+    $display->panels['right'][0] = 'new-7cccb247-7388-4957-9844-aec7611eb523';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-6';
+  $display->title_pane = 'new-7cccb247-7388-4957-9844-aec7611eb523';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['help'] = $page;

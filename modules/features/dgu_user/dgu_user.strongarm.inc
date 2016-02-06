@@ -86,16 +86,16 @@ function dgu_user_strongarm() {
           'weight' => '2',
         ),
         'googleanalytics' => array(
-          'weight' => '14',
+          'weight' => '15',
         ),
         'redirect' => array(
-          'weight' => '13',
+          'weight' => '14',
         ),
         'contact' => array(
           'weight' => '1',
         ),
         'wysiwyg' => array(
-          'weight' => '12',
+          'weight' => '13',
         ),
         'mollom' => array(
           'weight' => '99',

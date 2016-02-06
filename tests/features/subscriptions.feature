@@ -57,14 +57,14 @@ Feature: Subscribe to content updates
     And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
     When I press "Submit"
     And I wait until the page loads
-    Then the "test_daily_subscriber" user have not received an email 'data.gov.uk Message Digest'
-    And the "test_weekly_subscriber" user have not received an email 'data.gov.uk Message Digest'
+    Then the "test_daily_subscriber" user has not received an email 'data.gov.uk Message Digest'
+    And the "test_weekly_subscriber" user has not received an email 'data.gov.uk Message Digest'
     # Set digest last run to 2 days ago to trigger daily notifications
     When I set digest last run to 2 days ago
     And I run cron
     Then the "test_daily_subscriber" user received an email 'data.gov.uk Message Digest'
-    And the "test_weekly_subscriber" user have not received an email 'data.gov.uk Message Digest'
+    And the "test_weekly_subscriber" user has not received an email 'data.gov.uk Message Digest'
     When I set digest last run to 10 days ago
     And I run cron
-    Then the "test_daily_subscriber" user have not received an email 'data.gov.uk Message Digest'
+    Then the "test_daily_subscriber" user has not received an email 'data.gov.uk Message Digest'
     And the "test_weekly_subscriber" user received an email 'data.gov.uk Message Digest'

@@ -56,11 +56,12 @@ function dgu_organogram_default_page_manager_handlers() {
     ),
   );
   $display->cache = array();
-  $display->title = 'Public Roles & Salaries';
+  $display->title = 'Organograms';
+  $display->uuid = '2cd54fe4-d208-4735-9d5f-a6e8a541e6f1';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-8eb4f738-15c8-42a0-bd3e-7365eca136d9';
     $pane->panel = 'middle';
     $pane->type = 'node_content';
     $pane->subtype = 'node_content';
@@ -85,8 +86,9 @@ function dgu_organogram_default_page_manager_handlers() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $pane->uuid = '8eb4f738-15c8-42a0-bd3e-7365eca136d9';
+    $display->content['new-8eb4f738-15c8-42a0-bd3e-7365eca136d9'] = $pane;
+    $display->panels['middle'][0] = 'new-8eb4f738-15c8-42a0-bd3e-7365eca136d9';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;

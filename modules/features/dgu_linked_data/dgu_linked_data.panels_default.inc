@@ -31,10 +31,11 @@ function dgu_linked_data_default_panels_mini() {
   );
   $display->cache = array();
   $display->title = '10 second tour';
+  $display->uuid = '9d725d19-cf07-4ab3-bbbe-4d3984bb2864';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-1';
+    $pane->pid = 'new-b8e83854-aded-4686-9b80-8acc96915fc5';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -68,10 +69,11 @@ function dgu_linked_data_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['middle'][0] = 'new-1';
+    $pane->uuid = 'b8e83854-aded-4686-9b80-8acc96915fc5';
+    $display->content['new-b8e83854-aded-4686-9b80-8acc96915fc5'] = $pane;
+    $display->panels['middle'][0] = 'new-b8e83854-aded-4686-9b80-8acc96915fc5';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-1';
+  $display->title_pane = 'new-b8e83854-aded-4686-9b80-8acc96915fc5';
   $mini->display = $display;
   $export['10_seconds_tour'] = $mini;
 

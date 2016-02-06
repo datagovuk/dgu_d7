@@ -652,7 +652,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           }
         }
       }
-      sleep(3);
+      sleep(5);
     }
     imap_close($mbox);
     // Throw Exception if message not found.
@@ -662,7 +662,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^the "([^"]*)" user have not received an email '([^']*)'$/
+   * @Given /^the "([^"]*)" user has not received an email '([^']*)'$/
    */
   public function theUserNotReceivedAnEmail($user, $title) {
     $mail_address = $this->getMailAddress($user);
@@ -1296,6 +1296,30 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
         $ckan_id = $dataset['result']['id'];
         $this->getSession()->visit($this->locatePath('/comment/dataset/' . $ckan_id));
+
+      } else {
+        throw new \Exception("Dataset '$dataset_name' not found.");
+      }
+
+    }
+    catch (Exception $e) {
+      throw new \Exception('CKAN client failed. ' . $e->getMessage());
+    }
+  }
+
+  /**
+   * @Given /^I get comments of dataset named "([^"]*)"$/
+   */
+  public function iGetCommentsOfDatasetNamed($dataset_name) {
+    try {
+      $client = $this->ckan_get_client();
+
+      $dataset = $client->GetDataset(array('id' => $dataset_name))->toArray();
+
+      if (!empty($dataset['result'])) {
+
+        $ckan_id = $dataset['result']['id'];
+        $this->getSession()->visit($this->locatePath('/comment/get/' . $ckan_id));
 
       } else {
         throw new \Exception("Dataset '$dataset_name' not found.");
