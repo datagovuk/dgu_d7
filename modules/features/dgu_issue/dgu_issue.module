@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Issue feature.
+ */
+
+include_once 'dgu_issue.features.inc';
