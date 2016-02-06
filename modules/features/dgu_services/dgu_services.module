@@ -209,7 +209,30 @@ function dgu_services_add_issue_reply($id) {
 }
 
 function dgu_services_get_issue_replies($id) {
-  if ($issue = ckan_issue_load($id)) {
+  if (!empty($id) && is_numeric($id)) {
+    // TODO put duplicated code into a function
+    $issue = ckan_issue_load($id);
+    if (!$issue) {
+      // An issue with this id doesn't exist in Drupal.
+      // Syncing from CKAN on the fly.
+      module_load_include('inc', 'ckan', 'ckan.drush');
+      $client = ckan_get_client();
+
+      try {
+        ckan_resync_issues();
+      }
+      catch (Exception $e) {
+        watchdog('comment_issue_get', 'Error synchronising issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_exit();
+      }
+
+      $issue = ckan_issue_load($id);
+      if (!$issue) {
+        watchdog('comment_issue_get', 'Unable to synchronise issue ' . $id, array(), WATCHDOG_ERROR);
+        drupal_not_found();
+        return;
+      }
+    }
 
     $output = field_attach_view('ckan_issue', $issue, 'default');
     if (isset($output['field_comment'][0]['#markup'])) {
@@ -236,7 +259,6 @@ function dgu_services_get_issue_replies($id) {
       drupal_exit();
     }
   }
-  drupal_not_found();
 }
 
 function dgu_services_form_reply_add_form_alter(&$form, $form_state, $form_id) {
