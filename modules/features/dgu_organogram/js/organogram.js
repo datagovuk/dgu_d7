@@ -359,7 +359,7 @@ var Orgvis = {
 };
 
 var OrgDataLoader = {
-    docBase: "/organogram/preview/",
+    docBase: "/organogram-ajax/preview/",
     load: function (filename, infovisId, previewMarkup) {
         $.ajax({cache: false, dataType: "json", url: this.docBase+filename,
             success : function(ret) {
@@ -742,7 +742,7 @@ var OrgDataLoader = {
             });
         }
     };
-    OrgDataLoader.docBase = '/organogram/preview/';
+    OrgDataLoader.docBase = '/organogram-ajax/preview/';
 
     $.fn.listHandlers = function(events, outputFunction) {
         return this.each(function(i){

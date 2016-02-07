@@ -24,11 +24,11 @@ function dgu_organogram_menu() {
     'page arguments' => array(1, 2),
     'access arguments' => array('access content'),
   );
-  $items['organogram/preview/data'] = array(
+  $items['organogram-ajax/preview/data'] = array(
     'page callback' => 'dgu_organogram_preview_data',
     'access arguments' => array('access content'),
   );
-  $items['organogram/preview'] = array(
+  $items['organogram-ajax/preview'] = array(
     'page callback' => 'dgu_organogram_preview',
     'access arguments' => array('access content'),
   );
@@ -476,9 +476,6 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
         $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
         drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
       }
-      else {
-        drupal_set_message('This publisher haven\'t published any organogram datasets yet.', 'status');
-      }
     }
   } catch (Exception $e) {
     drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
@@ -515,6 +512,13 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   drupal_add_js($module_path . '/js/jit.js');
   drupal_add_js($module_path . '/js/jit/jit-yc.js');
   drupal_add_js($module_path . '/js/papaparse.js');
+
+//  drupal_add_js($module_path . '/js/jit-2.0.1.js');
+//  drupal_add_js($module_path . '/js/papaparse.js');
+//  drupal_add_js($module_path . '/js/jquery.jgrowl.js');
+//  drupal_add_js($module_path . '/js/jquery.cookie.js');
+//  drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
+
   drupal_add_js($module_path . '/js/organogram.js');
 
   $ie_scripts = array(
