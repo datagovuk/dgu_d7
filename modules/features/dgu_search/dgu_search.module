@@ -251,7 +251,7 @@ class FacetApiDguSearch extends FacetapiUrlProcessorStandard {
     }
 
     //If we are sorting by bundle, make sure that solrsort is unset to allow the default sort to work.
-    if ($qstring['solrsort'] == 'bundle asc'){
+    if (!empty($qstring['solrsort']) && $qstring['solrsort'] == 'bundle asc') {
       foreach ($qstring['f'] as $facet){
         if (in_array($facet, $types) ){
           unset($qstring['solrsort']);
