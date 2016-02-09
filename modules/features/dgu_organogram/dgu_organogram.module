@@ -822,12 +822,12 @@ function dgu_organogram_after($element, $form_state) {
     }
   }
   else {
-    $dates = _dgu_organogram_get_next_dates();
+    $date_options = _dgu_organogram_get_dates();
 
     $element['deadline_date'] = array(
       '#label' => 'Choose date',
       '#type' => 'select',
-      '#options' => $dates,
+      '#options' => $date_options,
       '#default_value' => reset($dates),
     );
   }
@@ -837,25 +837,33 @@ function dgu_organogram_after($element, $form_state) {
 /**
  * @return array of dates for the next organogram publishing deadline.
  */
-function _dgu_organogram_get_next_dates() {
+function _dgu_organogram_get_dates() {
   $today = getdate();
   $next_year = $today['year'] + 1;
+  $dates = array();
   if ($today['mon'] <= 6) {
-    $date1 = new DateTime("${today['year']}-03-31");
-    $date2 = new DateTime("${today['year']}-09-30");
+    $dates[] = new DateTime("${today['year']}-09-30");
+    $dates[] = new DateTime("${today['year']}-03-31");
   }
   else {
     if ($today['mon'] <= 12) {
-      $date1 = new DateTime("${today['year']}-09-30");
-      $date2 = new DateTime("${next_year}-03-31");
+      $dates[] = new DateTime("${next_year}-03-31");
+      $dates[] = new DateTime("${today['year']}-09-30");
+      $dates[] = new DateTime("${today['year']}-03-31");
     }
   }
-  $dates = array(
-    $date1->getTimestamp() => $date1->format('d-m-Y'),
-    $date2->getTimestamp() => $date2->format('d-m-Y')
-  );
+  // > 2010 because organogram started in 2011
+  for ($year = $today['year'] - 1; $year > 2010; $year--) {
+    $dates[] = new DateTime("${year}-09-30");
+    $dates[] = new DateTime("${year}-03-31");
+  }
 
-  return $dates;
+  $date_options = array();
+  foreach ($dates as $date) {
+    $date_options[$date->getTimestamp()] = $date->format('d-m-Y');
+  }
+
+  return $date_options;
 }
 
 
@@ -934,7 +942,7 @@ function _dgu_organogram_package_json($group) {
 
 function dgu_organogram_organogram_signoff($form, &$form_state) {
   $fid = $form_state['triggering_element']['#attributes']['data-file-fid'];
-  $dates = _dgu_organogram_get_next_dates();
+  $dates = _dgu_organogram_get_dates();
   $organogram_date = reset($dates);
   if (!empty($form_state['organogram_dates'][$fid])) {
     $organogram_date = date('d-m-Y', $form_state['organogram_dates'][$fid]);
@@ -1003,7 +1011,7 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
     try {
       $file = file_load($fid);
       list($junior_csv, $senior_csv) = _dgu_organogram_get_csv_filenames(_dgu_organogram_read_index(_dgu_organogram_generate_csv_files($fid)));
-      $dates = _dgu_organogram_get_next_dates();
+      $dates = _dgu_organogram_get_dates();
       $organogram_date = reset($dates);
       if (!empty($form_state['organogram_dates'][$file->fid])) {
         $organogram_date = date('d-m-Y', $form_state['organogram_dates'][$file->fid]);
