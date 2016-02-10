@@ -253,9 +253,7 @@ function dgu_moderation_workbench_moderation_transition($node, $previous_state, 
   $wrapper = entity_metadata_wrapper('message', $message);
   $wrapper->field_node_reference->set($node);
 
-  // TODO - test this with two different emails - one for submitter second one for moderator
   message_subscribe_send_message('node', $node, $message, $options);
-
 
   if ($moderation_state_change_short == 'published' && dgu_moderation_is_published_first_time($node->nid)) {
 
