@@ -139,12 +139,8 @@ function dgu_glossary_new_definition_thanks_page() {
 
 function dgu_glossary_suggest_definition_page($term) {
   global $user;
-  $node = (object)array(
-    'uid' => $user->uid,
-    'name' => (isset($user->name) ? $user->name : ''),
-    'type' => 'suggested_definition',
-    'language' => LANGUAGE_NONE,
-  );
+  $node = dgu_glossary_get_node('suggested_definition');
+
   drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
   drupal_set_message('You are creating new content, this may be placed in moderation and may not be immediately visible on the site.');
   $form_state['build_info']['args'] = array($node);
@@ -457,12 +453,8 @@ function glossary_term_page($term) {
  */
 function dgu_glossary_suggest_new_page() {
   global $user;
-  $node = (object)array(
-    'uid' => $user->uid,
-    'name' => (isset($user->name) ? $user->name : ''),
-    'type' => 'suggested_term',
-    'language' => LANGUAGE_NONE,
-  );
+  $node = dgu_glossary_get_node('suggested_term');
+
   drupal_set_title(t('Suggest new term and definition'), PASS_THROUGH);
   drupal_set_message('You are creating new content, this may be placed in moderation and may not be immediately visible on the site.');
   $form_state['build_info']['args'] = array($node);
@@ -480,6 +472,16 @@ function dgu_glossary_suggest_new_page() {
 
 function dgu_suggested_term_node_form_submit($form, &$form_state) {
   $form_state['values']['title'] = $form_state['values']['field_term_name'][LANGUAGE_NONE][0]['value'];
+}
+
+function dgu_glossary_get_node($type) {
+  global $user;
+  return (object)array(
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'type' => $type,
+    'language' => LANGUAGE_NONE,
+  );
 }
 
 function dgu_glossary_query_alter(QueryAlterableInterface $query) {
