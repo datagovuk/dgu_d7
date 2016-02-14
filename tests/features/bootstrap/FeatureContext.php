@@ -239,8 +239,14 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       );
       $user->mail = $this->getMailAddress($user_name);
 
-      // Create a new user.
-      $this->getDriver()->userCreate($user);
+      try {
+        // Create a new user.
+        $this->getDriver()->userCreate($user);
+      }
+      catch (\Exception $e) {
+        throw new Exception("Can't create user account.\n" . $e->getMessage());
+        print_r($e);
+      }
 
       $this->users[$user_name] = $this->user = $user;
 
