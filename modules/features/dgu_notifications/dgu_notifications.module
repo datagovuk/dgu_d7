@@ -207,13 +207,6 @@ function dgu_notifications_entity_insert($entity, $type) {
 }
 
 /**
- * Implements hook_user_delete().
- */
-function dgu_notifications_user_delete($account) {
-  db_delete('users_auto_subscribe')->condition('uid', $account->uid)->execute();
-}
-
-/**
  * Implements hook_message_digest_view_mode_alter().
  *
  * This isn't intended to actually alter anything in the context but
