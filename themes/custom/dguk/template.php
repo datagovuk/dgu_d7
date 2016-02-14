@@ -371,7 +371,7 @@ function dguk_get_apps_menu($menu) {
   }
 
   foreach ($menu as $menu_item) {
-    if(isset($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
+    if(!empty($menu_item['attributes']['class']) && (in_array('active', $menu_item['attributes']['class']) || in_array('active-trail', $menu_item['attributes']['class']))) {
       $classes[] = 'active';
     }
   }
