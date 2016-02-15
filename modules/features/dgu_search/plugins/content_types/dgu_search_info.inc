@@ -47,9 +47,10 @@ function dgu_search_preprocess(&$variables, $hook){
                     $content_type = $filter['#value'];
                 }
             }
-
-            $search_types = dgu_site_feature_get_plural_content_types();
-            $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Content results';
+            if (isset($content_type)) {
+              $search_types = dgu_site_feature_get_plural_content_types();
+              $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Content results';
+            }
             break;
         default:
             # code...
@@ -77,4 +78,5 @@ function dgu_search_dgu_search_info_content_type_render($subtype, $conf, $panel_
 function dgu_search_info_content_type_edit_form($form, &$form_state) {
     return $form;
 }
+
 
