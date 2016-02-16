@@ -26,7 +26,8 @@ function dgu_print_menu() {
 }
 
 function dgu_print_header() {
-  $title = $_GET['title'];
+  $title = check_plain($_GET['title']);
+  $margin_top = check_plain($_GET['margin_top']);
 print <<<EOT
 <!DOCTYPE html><html>
   <body style="position: relative;">
@@ -42,10 +43,10 @@ EOT;
 }
 
 function dgu_print_footer() {
-  $url = $_GET['link'];
-  $updated = $_GET['updated'];
-  $page = $_GET['page'];
-  $total = $_GET['topage'];
+  $url = check_plain($_GET['link']);
+  $updated = check_plain($_GET['updated']);
+  $page = check_plain($_GET['page']);
+  $total = check_plain($_GET['topage']);
    print <<<EOT
 <!DOCTYPE html><html>
   <head>
@@ -67,7 +68,7 @@ function dgu_print_footer() {
 EOT;
 }
 function dgu_print_cover() {
-  $title = $_GET['title'];
+  $title = check_plain($_GET['title']);
   print <<<EOT
 <!DOCTYPE html><html>
   <head>
@@ -97,6 +98,4 @@ function dgu_print_cover() {
 </html>
 EOT;
 }
-
-
 

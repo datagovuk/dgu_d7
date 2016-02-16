@@ -87,7 +87,6 @@ function dgu_data_set_ckan_dataset_delete($ckan_dataset) {
   foreach (flag_get_flags('ckan_dataset') as $flag) {
     _flag_entity_delete('ckan_dataset', $ckan_dataset->id, $flag->fid);
   }
-  // TODO - remove entries from field_data_field_publisher_subscribe
 }
 
 function _dgu_data_set_get_publisher_subscribers($publisher_id) {

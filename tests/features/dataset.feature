@@ -8,6 +8,7 @@ Feature: Sync datasets from CKAN to Drupal
     And that the user "test_publisher_subscriber" is not registered
     And that the user "test_update_subscriber" is not registered
     And that the user "test_comment_subscriber" is not registered
+    And that the user "test_commenter" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
     # test if new user won't receive notification
     And that the dataset with name "test-dataset" doesn't exist in Drupal
@@ -29,7 +30,7 @@ Feature: Sync datasets from CKAN to Drupal
     And I check "Cabinet Office"
     And I press "Save"
     And I wait until the page loads
-    Then I should see "Bulk dataset updates can couse sending hundreds of notifications. We strongly recommend changing your preference to daily or weekly digest."
+    Then I should see "Bulk dataset updates can often trigger hundreds of notifications. We strongly recommend that you change your preference to daily or weekly update."
     And I press "Change to daily digest"
     Then I should see "You have changed your notification frequency to digest_day digest."
     And I should see "Cabinet Office"
@@ -56,7 +57,6 @@ Feature: Sync datasets from CKAN to Drupal
     Given I am logged in as a user "test_comment_subscriber" with the "authenticated user" role
     And I get comments of dataset named "test-dataset"
     And I click "Subscribe to comments"
-    # only "test_user_updates" user should be notified about dataset update
     When I attach "http://data.gov.uk/assets/img/ideas.png" resource to "test-dataset" dataset
     And I synchronise dataset with name "test-dataset"
     Then the "test_update_subscriber" user received an email 'Dataset "Test dataset" has been updated '
@@ -70,7 +70,7 @@ Feature: Sync datasets from CKAN to Drupal
     And the "test_user" user has not received an email 'Dataset "Test dataset" has been updated '
     And the "test_comment_subscriber" user has not received an email 'Dataset "Test dataset" has been updated '
     # all 3 users shouldn't receive emails about new dataset on next sync if resources are the same
-    # only "test_user_updates" user should be notified about dataset update when new resource attached
+    Given I am logged in as a user "test_commenter" with the "authenticated user" role
     When I open comment form for dataset with name "test-dataset"
     And I follow "Add reply"
     And I wait until the page loads
@@ -78,8 +78,8 @@ Feature: Sync datasets from CKAN to Drupal
     And I type "Test comment" in the "edit-field-reply-comment-und-0-value" WYSIWYG editor
     And I press "Submit"
     And I wait 5 second
-    Then I should see the link "test_comment_subscriber"
+    Then I should see the link "test_commenter"
     #And I should see "Test subject"
-    And the "test_comment_subscriber" user received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
-    And the "test_update_subscriber" user has not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
-    And the "test_user" user has not received an email 'User test_user_updates posted a comment on dataset "Test dataset" '
+    And the "test_comment_subscriber" user received an email 'User test_commenter posted a comment on dataset "Test dataset" '
+    And the "test_update_subscriber" user has not received an email 'User test_commenter posted a comment on dataset "Test dataset" '
+    And the "test_user" user has not received an email 'User test_commenter posted a comment on dataset "Test dataset" '

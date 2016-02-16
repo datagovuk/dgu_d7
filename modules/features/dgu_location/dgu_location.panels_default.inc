@@ -31,11 +31,11 @@ function dgu_location_default_panels_mini() {
   );
   $display->cache = array();
   $display->title = 'UK Location Infrastructure';
-  $display->uuid = '97b46b4e-d69b-4b18-9294-3895a7db4f18';
+  $display->uuid = '2dc993d8-9173-41e8-8c9d-3e46c0f8b686';
   $display->content = array();
   $display->panels = array();
     $pane = new stdClass();
-    $pane->pid = 'new-4d6926ec-0e5b-48b1-a518-483666526046';
+    $pane->pid = 'new-e5f45e85-1405-4523-b092-040c992be755';
     $pane->panel = 'middle';
     $pane->type = 'custom';
     $pane->subtype = 'custom';
@@ -56,11 +56,11 @@ function dgu_location_default_panels_mini() {
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $pane->uuid = '4d6926ec-0e5b-48b1-a518-483666526046';
-    $display->content['new-4d6926ec-0e5b-48b1-a518-483666526046'] = $pane;
-    $display->panels['middle'][0] = 'new-4d6926ec-0e5b-48b1-a518-483666526046';
+    $pane->uuid = 'e5f45e85-1405-4523-b092-040c992be755';
+    $display->content['new-e5f45e85-1405-4523-b092-040c992be755'] = $pane;
+    $display->panels['middle'][0] = 'new-e5f45e85-1405-4523-b092-040c992be755';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-4d6926ec-0e5b-48b1-a518-483666526046';
+  $display->title_pane = 'new-e5f45e85-1405-4523-b092-040c992be755';
   $mini->display = $display;
   $export['uk_location_infrastructure'] = $mini;
 

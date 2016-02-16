@@ -122,31 +122,27 @@ function dgu_glossary_theme($existing, $type, $theme, $path) {
 }
 
 function dgu_glossary_suggest_definition_thanks_page($term) {
-  $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
+  $thanks_text = t('Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.');
   $vid = $term->vid;
   $tid = $term->tid;
   $lex_path = variable_get('lexicon_path_' . $vid, 'lexicon/' . $vid);
-  $links = "Return to the " . l(t("Glossary"), "$lex_path") . " or to the term: " . l($term->name, "$lex_path/$tid");
-  return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
+  $links = 'Return to the ' . l(t('Glossary'), $lex_path) . ' or to the term: ' . l($term->name, $lex_path . '/' . $tid);
+  return theme('suggested_definition_thanks', array('thanks_text' => $thanks_text, 'links' => $links));
 }
 
 function dgu_glossary_new_definition_thanks_page() {
-  $thanks_text = t("Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.");
+  $thanks_text = t('Thank you for your suggestion.  We will normally respond to your suggestion within 5 working days.');
   $lex_path = 'glossary';
-  $links = "Return to the " . l(t("Glossary"), "$lex_path");
-  return theme("suggested_definition_thanks", array('thanks_text' => $thanks_text, 'links' => $links));
+  $links = 'Return to the ' . l(t('Glossary'), $lex_path);
+  return theme('suggested_definition_thanks', array('thanks_text' => $thanks_text, 'links' => $links));
 }
 
 function dgu_glossary_suggest_definition_page($term) {
   global $user;
-  $node = (object)array(
-    'uid' => $user->uid,
-    'name' => (isset($user->name) ? $user->name : ''),
-    'type' => 'suggested_definition',
-    'language' => LANGUAGE_NONE,
-  );
+  $node = dgu_glossary_get_node('suggested_definition');
+
   drupal_set_title(t('Suggest a better definition for @term.', array('@term' => $term->name)), PASS_THROUGH);
-  drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
+  drupal_set_message('You are creating new content, this may be placed in moderation and may not be immediately visible on the site.');
   $form_state['build_info']['args'] = array($node);
   form_load_include($form_state, 'inc', 'node', 'node.pages');
   $form = drupal_get_form('suggested_definition_node_form', $node);
@@ -171,7 +167,7 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id) {
     unset($form['actions']['preview']);
     $form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#attributes'] = array('placeholder' => $form['field_reason_for_change'][LANGUAGE_NONE][0]['#description']);
     unset($form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#description']);
-    $form['#attributes']['class'][] = "boxed";
+    $form['#attributes']['class'][] = 'boxed';
 
     if (!user_access(GLOSSARY_MODERATION_PERMISSION)) {
       dgu_moderation_node_forms_alter($form);
@@ -186,7 +182,7 @@ function dgu_glossary_form_alter(&$form, &$form_state, $form_id) {
     unset($form['actions']['preview']);
     $form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#attributes'] = array('placeholder' => $form['field_reason_for_change'][LANGUAGE_NONE][0]['#description']);
     unset($form['field_reason_for_change'][LANGUAGE_NONE][0]['value']['#description']);
-    $form['#attributes']['class'][] = "boxed";
+    $form['#attributes']['class'][] = 'boxed';
     $form['#submit'][] = 'dgu_suggested_term_node_form_submit';
 
     if (!user_access(GLOSSARY_MODERATION_PERMISSION)) {
@@ -245,7 +241,7 @@ function dgu_glossary_theme_registry_alter(&$theme_registry) {
 
   $module_path = drupal_get_path('module', 'dgu_glossary');
   $theme_registry_copy = $theme_registry;
-  _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path . "/templates");
+  _theme_process_registry($theme_registry_copy, 'phptemplate', 'theme_engine', $theme, $module_path . '/templates');
   $theme_registry += array_diff_key($theme_registry_copy, $theme_registry);
   $hooks = array('node');
   foreach ($hooks as $hook) {
@@ -254,11 +250,11 @@ function dgu_glossary_theme_registry_alter(&$theme_registry) {
   //Note that lexicon sets the theme path to the module's folder - if things don't
   //quite work, look into that first.
   $theme_registry['lexicon_overview_item']['template'] = 'lexicon-overview-item';
-  $theme_registry['lexicon_overview_item']['path'] = $module_path . "/templates";
+  $theme_registry['lexicon_overview_item']['path'] = $module_path . '/templates';
   $theme_registry['lexicon_overview']['template'] = 'lexicon-overview';
-  $theme_registry['lexicon_overview']['path'] = $module_path . "/templates";
+  $theme_registry['lexicon_overview']['path'] = $module_path . '/templates';
   $theme_registry['lexicon_alphabar']['template'] = 'lexicon-alphabar';
-  $theme_registry['lexicon_alphabar']['path'] = $module_path . "/templates";
+  $theme_registry['lexicon_alphabar']['path'] = $module_path . '/templates';
 }
 
 /**
@@ -276,7 +272,7 @@ function dgu_glossary_preprocess(&$variables, $hook) {
   drupal_add_css($path . '/css/dgu_glossary.css');
   switch ($hook) {
     case 'lexicon_overview_section':
-      $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . "<a href='#glossary'>go to top</a>";
+      $variables['lexicon_overview_items']=$variables['lexicon_overview_items'] . '<a href="#glossary">go to top</a>';
       break;
     case 'lexicon_overview':
       $variables['suggest_new_term_link'] = user_access('suggest new terms') ? 'glossary/suggest_new' : '/user/login?destination=glossary/suggest_new';
@@ -340,7 +336,7 @@ function dgu_glossary_preprocess(&$variables, $hook) {
       $suggest_better = t('Suggest a better definition');
       if(!user_access('suggest new definitions')){
         $suggest_better_path = $base_url . "/user/login?destination=$term_path/suggest_better";
-        $suggest_better = t("Log in to suggest a better definition");
+        $suggest_better = t('Log in to suggest a better definition');
 
       }
 
@@ -457,14 +453,10 @@ function glossary_term_page($term) {
  */
 function dgu_glossary_suggest_new_page() {
   global $user;
-  $node = (object)array(
-    'uid' => $user->uid,
-    'name' => (isset($user->name) ? $user->name : ''),
-    'type' => 'suggested_term',
-    'language' => LANGUAGE_NONE,
-  );
+  $node = dgu_glossary_get_node('suggested_term');
+
   drupal_set_title(t('Suggest new term and definition'), PASS_THROUGH);
-  drupal_set_message("You are creating new content, this may be placed in moderation and may not be immediately visible on the site.");
+  drupal_set_message('You are creating new content, this may be placed in moderation and may not be immediately visible on the site.');
   $form_state['build_info']['args'] = array($node);
   form_load_include($form_state, 'inc', 'node', 'node.pages');
   $form = drupal_get_form('suggested_term_node_form', $node);
@@ -472,7 +464,7 @@ function dgu_glossary_suggest_new_page() {
     array('@user' => $user->name));
   unset($form['additional_settings']);
 
-  $form['#attributes']['class'][] = "boxed";
+  $form['#attributes']['class'][] = 'boxed';
   dgu_moderation_node_forms_alter($form, GLOSSARY_MODERATION_PERMISSION);
 
   return $form;
@@ -480,6 +472,16 @@ function dgu_glossary_suggest_new_page() {
 
 function dgu_suggested_term_node_form_submit($form, &$form_state) {
   $form_state['values']['title'] = $form_state['values']['field_term_name'][LANGUAGE_NONE][0]['value'];
+}
+
+function dgu_glossary_get_node($type) {
+  global $user;
+  return (object)array(
+    'uid' => $user->uid,
+    'name' => (isset($user->name) ? $user->name : ''),
+    'type' => $type,
+    'language' => LANGUAGE_NONE,
+  );
 }
 
 function dgu_glossary_query_alter(QueryAlterableInterface $query) {
@@ -497,7 +499,7 @@ function dgu_glossary_fivestar_widgets() {
 }
 
 function dgu_glossary_vud_votes_alter(&$votes) {
-  drupal_set_message("Your vote has been recorded");
+  drupal_set_message('Your vote has been recorded');
 }
 
 /**
@@ -524,3 +526,4 @@ function dgu_glossary_node_access_records($node) {
 function dgu_glossary_node_grants($account, $op) {
   return dgu_moderation_get_account_grants($account, GLOSSARY_MODERATION_PERMISSION);
 }
+

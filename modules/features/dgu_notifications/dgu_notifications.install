@@ -55,4 +55,11 @@ function dgu_notifications_update_7000() {
   );
   db_create_table('users_auto_subscribe', $schema);
 }
-?>
+
+/**
+ * Drop database table {users_auto_subscribe}.
+ */
+function dgu_notifications_update_7001() {
+  drupal_uninstall_schema('dgu_notifications');
+}
+

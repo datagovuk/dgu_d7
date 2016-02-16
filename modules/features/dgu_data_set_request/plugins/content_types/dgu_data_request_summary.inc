@@ -17,9 +17,6 @@ $plugin = array(
  */
 function dgu_data_set_request_progress_render($subtype, $conf, $panel_args, $context) {
   $block = new stdClass();
-
-  // TODO include only published requests.
-
   $query = db_select('field_data_field_review_outcome', 'o');
   $query->join('field_data_field_review_status', 's', 's.entity_id = o.entity_id');
   $query->join('node', 'n', 's.entity_id = n.nid');
