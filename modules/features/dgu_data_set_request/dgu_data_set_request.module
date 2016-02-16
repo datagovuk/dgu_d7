@@ -169,13 +169,16 @@ function dgu_data_set_request_form_submit($form, &$form_state) {
 }
 
 function dgu_data_set_request_get_assignees($nid) {
-  // TODO add static cache
-  $query = db_select('field_revision_field_assignee', 'fpa')
-    ->distinct()
-    ->fields('fpa', array('field_assignee_uid'))
-    ->condition('entity_type', 'node')
-    ->condition('entity_id', $nid);
-  return $query->execute()->fetchCol();
+  $assignees = &drupal_static(__FUNCTION__);
+  if (empty($assignees)) {
+    $query = db_select('field_revision_field_assignee', 'fpa')
+      ->distinct()
+      ->fields('fpa', array('field_assignee_uid'))
+      ->condition('entity_type', 'node')
+      ->condition('entity_id', $nid);
+    $assignees = $query->execute()->fetchCol();
+  }
+  return $assignees;
 }
 
 function dgu_data_set_request_node_access($node, $op, $account) {
@@ -1782,3 +1785,4 @@ EOT;
   }
 
 }
+
