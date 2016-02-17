@@ -8,9 +8,8 @@ if (module_exists('apachesolr_search')) {
     'icon' => 'icon_search.png',
     'category' => t('Apache Solr Search'),
     'hook theme' => 'dgu_search_form_theme',
+    'no title override' => TRUE,
     'defaults' => array(
-      'title_override' => FALSE,
-      'title_override_text' => '',
       'content_type' => '',
       'show_counter' => TRUE,
     ),
@@ -36,7 +35,6 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   $block = new stdClass();
   $block->module  = 'apachesolr_panels';
   $block->delta   = 'dgu_search_form';
-  $block->title   = '';
 
   $search = array(
     'rows' => 0,
@@ -78,7 +76,6 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 
 
   try {
-
     if (apachesolr_has_searched($env_id)) {
       $query = apachesolr_current_query($env_id);
       $fq = $query->getParam('fq');
@@ -114,7 +111,7 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 
 
   } catch (Exception $e) {
-    error_log("Exception occurred talking to solr: ".$e->getMessage());
+    error_log('Exception occurred talking to solr: ' . $e->getMessage());
   }
 
   //If we are searching for data requests, we need to say how many private (unpublished requests) there are.
@@ -130,14 +127,12 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
   }
   $form_state['solrsort'] = $solrsort;
   $form_state['show_counter'] = $conf['show_counter'];
-  //print  "asdfasdfasf" . $conf['show_counter'];
   $form = drupal_build_form('dgu_search_form', $form_state);
 
   // Statcically cached keyword in dgu_search.module:dgu_search_apachesolr_query_prepare()
   if ($keyword = &drupal_static('dgu_search_keyword')) {
     $form['keyword']['#value'] = $keyword;
   }
-
 
   $block->content = drupal_render($form);
   return $block;
@@ -151,7 +146,6 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 function dgu_search_dgu_search_form_content_type_edit_form($form, &$form_state) {
   $config = $form_state['conf'];
   $form['content_type'] = array(
-    //'#prefix' => '<div class="container-inline">',
     '#type' => 'select',
     '#title' => t('Content Type to search for'),
     '#options' => array(
