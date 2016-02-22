@@ -460,15 +460,15 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   hide($form['ckan_id']);
 
   try {
-    $result = db_query("SELECT fid, deadline_date FROM dgu_organogram where id = " . $ckan_publisher->id);
-    $dates = $result->fetchAllKeyed();
-    $form_state['organogram_dates'] = $dates;
-    $result = db_query("SELECT fid, publish_date FROM dgu_organogram where id = " . $ckan_publisher->id);
-    $dates = $result->fetchAllKeyed();
-    $form_state['publish_dates'] = $dates;
-    $result = db_query("SELECT fid, signoff_date FROM dgu_organogram where id = " . $ckan_publisher->id);
-    $dates = $result->fetchAllKeyed();
-    $form_state['signoff_dates'] = $dates;
+    $deadline_query = db_select('dgu_organogram', 'o')
+      ->condition('id', $ckan_publisher->id);
+    $publish_query = clone $deadline_query;
+    $signoff_query = clone $deadline_query;
+
+    $form_state['organogram_dates'] = $deadline_query->fields('o', array('fid', 'deadline_date'))->execute()->fetchAllKeyed();
+    $form_state['publish_dates'] = $publish_query->fields('o', array('fid', 'publish_date'))->execute()->fetchAllKeyed();
+    $form_state['signoff_dates'] = $signoff_query->fields('o', array('fid', 'signoff_date'))->execute()->fetchAllKeyed();
+
     $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
     if ($group) {
       $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
