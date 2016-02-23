@@ -116,13 +116,13 @@ function dgu_search_dgu_search_form_content_type_render($subtype, $conf, $panel_
 
   //If we are searching for data requests, we need to say how many private (unpublished requests) there are.
   if($form_state['searchtype'] == 'dataset_request') {
-    $query = "SELECT count(distinct n.nid) count
-                  FROM node n
-                  LEFT JOIN field_data_field_publication_preference pp ON pp.entity_id = n.nid
-                  WHERE n.type = 'dataset_request'
-                  AND pp.field_publication_preference_value = 0";
-    $result = db_query($query);
-    $dr_count = $result->fetchField();
+    $query = db_select('node', 'n');
+    $query->leftJoin('field_data_field_publication_preference', 'pp', 'pp.entity_id = n.nid');
+    $query->addExpression('COUNT(distinct n.nid)', 'count');
+    $query->condition('n.type', 'dataset_request')
+          ->condition('pp.field_publication_preference_value', 0);
+    $dr_count = $query->execute()->fetchField();
+
     $form_state['dataset_request_count'] = $dr_count;
   }
   $form_state['solrsort'] = $solrsort;
@@ -174,4 +174,5 @@ function dgu_search_dgu_search_form_content_type_edit_form_submit(&$form, &$form
   }
   $form_state['conf']['show_counter'] = $form_state['input']['show_counter'];
 }
+
 
