@@ -159,7 +159,7 @@ function dgu_site_feature_user_last_visit($nid) {
     $history = &drupal_static(__FUNCTION__, array());
 
     if (empty($history)) {
-      $result = db_query('SELECT nid, timestamp FROM {history} WHERE uid = :uid', array(':uid' => $user->uid));
+      $result = db_select('history', 'h')->fields('h', array('nid', 'timestamp'))->condition('uid', $user->uid)->execute();
       foreach ($result as $t) {
         $history[$t->nid] = $t->timestamp > NODE_NEW_LIMIT ? $t->timestamp : NODE_NEW_LIMIT;
       }
