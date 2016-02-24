@@ -452,9 +452,6 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   $form['ckan_id']['#title'] = "Your  data catalogue ID";
   $form['field_organogram'][LANGUAGE_NONE]['#title'] = "Manage your Organogram uploads";
   $form['#submit'] = array('dgu_organogram_form_submit');
-  //$add_organogram = array_splice($form['field_organogram'][LANGUAGE_NONE], $form['field_organogram'][LANGUAGE_NONE]['#file_upload_delta'], 1);
-  //$add_organogram[0]['#weight'] = -10;
-  //array_splice($form['field_organogram'][LANGUAGE_NONE], 0, 0, $add_organogram);
   hide($form['redirect']);
   hide($form['title']);
   hide($form['ckan_id']);
@@ -478,7 +475,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
       }
     }
   } catch (Exception $e) {
-    drupal_set_message("An error ocurred while trying to display the organogram tool. " . $e->getMessage(), 'error');
+    drupal_set_message('An error ocurred while trying to display the organogram tool. ' . $e->getMessage(), 'error');
   }
 
   $form['#attached']['js'][] = array(
@@ -507,7 +504,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   $module_path = drupal_get_path('module', 'dgu_organogram');
   drupal_add_css($module_path . '/css/organogram.css',
     array('group' => CSS_THEME, 'every_page' => TRUE));
-  drupal_add_css("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css",
+  drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css',
     array('type' => 'external'));
   drupal_add_js($module_path . '/js/jit.js');
   drupal_add_js($module_path . '/js/jit/jit-yc.js');
@@ -942,18 +939,9 @@ function _dgu_organogram_package_json($group) {
 
 function dgu_organogram_organogram_signoff($form, &$form_state) {
   $fid = $form_state['triggering_element']['#attributes']['data-file-fid'];
-  $dates = _dgu_organogram_get_dates();
-  $organogram_date = reset($dates);
   if (!empty($form_state['organogram_dates'][$fid])) {
-    $organogram_date = date('d-m-Y', $form_state['organogram_dates'][$fid]);
+    db_update('dgu_organogram')->fields(array('signoff_date' => time()))->condition('fid', $fid)->execute();
   }
-  if (empty($form_state['organogram_dates'][$fid])) {
-    db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $fid . ", " . $organogram_date . ", 0, " . time() . ")");
-  }
-  else {
-    db_query("UPDATE dgu_organogram SET signoff_date = " . time() . " where fid = " . $fid);
-  }
-
 }
 
 
@@ -1048,10 +1036,6 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
 
 
     try {
-      //$resource->url = 'http://data.gov.uk/' . $files_dir . $file->filename;
-      //$resource->format = 'XLS';
-      //$resource->description = 'Organogram - XLS data';
-      //_dgu_organogram_create_or_update_resource($package, $resource, $organogram_date, 'XML');
       $uri = 'public://' . $organogram_path . $junior_csv;
       $resource->url = file_create_url($uri);
       $resource->format = 'CSV';
@@ -1070,7 +1054,7 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
     }
 
     try {
-      $response = _dgu_organogram_post_files_to_epimorphics($organogram_date, $organogram_file_location . $senior_csv, $organogram_file_location . $junior_csv);
+      _dgu_organogram_post_files_to_epimorphics($organogram_date, $organogram_file_location . $senior_csv, $organogram_file_location . $junior_csv);
       drupal_set_message("Triple-store updated.");
       if (empty($form_state['organogram_dates'][$file->fid])) {
         db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $fid . ", " . $organogram_date . ", " . time() . ", 0)");
