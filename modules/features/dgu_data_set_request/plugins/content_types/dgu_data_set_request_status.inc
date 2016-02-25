@@ -21,7 +21,7 @@ function dgu_data_set_request_status_render($subtype, $conf, $panel_args, $conte
   $query->join('node', 'n', 's.entity_id = n.nid');
   $query->fields('s', array('field_review_status_value'))
     ->groupBy('field_review_status_value')
-    ->condition('n.status', 1)
+    ->condition('n.status', NODE_PUBLISHED)
     ->condition('field_review_status_value', array(1, 2, 3, 4, 5), 'IN')
     ->addExpression('COUNT(s.entity_id)', 'status_count');
   $result = $query->execute();
@@ -52,4 +52,5 @@ function dgu_data_set_request_status_render($subtype, $conf, $panel_args, $conte
 function dgu_data_set_request_status_render_edit_form($form, &$form_state) {
   return $form;
 }
+
 
