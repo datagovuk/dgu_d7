@@ -825,7 +825,7 @@ function dgu_organogram_after($element, $form_state) {
       '#label' => 'Choose date',
       '#type' => 'select',
       '#options' => $date_options,
-      '#default_value' => reset($dates),
+      '#default_value' => reset($date_options),
     );
   }
   return $element;
