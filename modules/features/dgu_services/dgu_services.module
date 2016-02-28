@@ -40,6 +40,13 @@ function dgu_services_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['comment/issue/count/%'] = array(
+    'page callback' => 'dgu_services_count_issue_replies',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -70,9 +77,9 @@ function dgu_services_services_resources() {
   return $session_resource;
 }
 
-// TODO check security
+
 function dgu_services_session_access() {
-  return TRUE;
+  return TRUE; // XMLRPC endpoint is secured by HTTP Basic Auth.
 }
 
 function dgu_services_session_get($sid = null) {
@@ -259,6 +266,22 @@ function dgu_services_get_issue_replies($id) {
       drupal_exit();
     }
   }
+}
+
+
+function dgu_services_count_issue_replies($id) {
+  if (!empty($id) && is_numeric($id)) {
+    // TODO put duplicated code into a function
+    $issue = ckan_issue_load($id);
+    $count = 0;
+    if ($issue) {
+      // An issue with this id doesn't exist in Drupal.
+      $sql = "SELECT COUNT(*) as count FROM reply WHERE entity_type = 'ckan_issue' AND entity_id = " . $id;
+      $count = db_query($sql)->execute()->fetchField();
+    }
+    print $count;
+    drupal_exit();
+   }
 }
 
 function dgu_services_form_reply_add_form_alter(&$form, $form_state, $form_id) {
