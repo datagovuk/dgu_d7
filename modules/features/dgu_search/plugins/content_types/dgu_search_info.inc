@@ -41,7 +41,10 @@ function dgu_search_preprocess(&$variables, $hook) {
       }
       if (isset($content_type)) {
         $search_types = dgu_site_feature_get_plural_content_types();
-        $variables['type'] = $search_types[$content_type] ? $search_types[$content_type] : 'Content results';
+        $variables['type'] = $search_types[$content_type];
+      }
+      else {
+        $variables['type'] = 'Content results';
       }
     }
 
