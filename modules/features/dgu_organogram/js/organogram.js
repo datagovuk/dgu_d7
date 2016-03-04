@@ -13,7 +13,7 @@ var Orgvis = {
     },
     showSpaceTree: function(data, infovisId) {
         //$("#infovis").width($(window).width()-0);
-        //$("#infovis").height($(window).height()-30);
+        $(".infovis").height($(window).height()-250);
         this.vars['infovisId'] = infovisId;
         $jit.ST.Plot.NodeTypes.implement({
             'nodeline': {
@@ -42,7 +42,7 @@ var Orgvis = {
             Navigation: {
                 enable: true,
                 panning: 'avoid nodes',
-                zooming: 40
+                zooming: false
             },
             duration: 200,
             fps:30,
@@ -54,7 +54,7 @@ var Orgvis = {
             levelsToShow: 1,
             Node: {
                 height:80,
-                width: 177,
+                width: 170,
                 type: 'nodeline',
                 color:'#333333',
                 lineWidth: 2,
