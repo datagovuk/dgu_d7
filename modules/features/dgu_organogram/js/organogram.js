@@ -610,6 +610,9 @@ var OrgDataLoader = {
 
             // Preview
             previewButton.one('click', function(){
+
+                $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
+
                 var preview =  $(this).parent().parent().after(previewMarkup);
                 var previewPanel = $(this).parent().parent().next();
                 var previewPanelId = $(this).attr('id') + '-tr';
@@ -622,6 +625,7 @@ var OrgDataLoader = {
                     previewPanel.removeClass(previewShowClass);;
                 });
                 $(this).on('click', function(){
+                    $('html, body').animate({'scrollTop' : $(this).offset().top - 70},400, 'swing');
                     previewPanel.addClass(previewShowClass);
                 });
 
