@@ -631,7 +631,7 @@ var OrgDataLoader = {
 
 
                 var filename = $(this).attr('data-organogram-file');
-                $('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
+                $(this).parent().parent().next().find('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
                 OrgDataLoader.load(filename, infovisId, previewMarkup);
             });
         },
