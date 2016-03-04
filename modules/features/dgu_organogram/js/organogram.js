@@ -5,7 +5,7 @@ function log(info){
 var Orgvis = {
     vars: {
         debug: true,
-        visOffsetX:180,
+        visOffsetX:20,
         visOffsetY:0,
         transX:0,
         transY:0,
@@ -596,7 +596,6 @@ var OrgDataLoader = {
             '    <div class="chart">'+
             '      <div class="infovis">'+
             '      <div class="infobox">' +
-            '        <a class="close">x</a>' +
             '      </div></div>' +
             '    </div>'+
             '  </div>'+
