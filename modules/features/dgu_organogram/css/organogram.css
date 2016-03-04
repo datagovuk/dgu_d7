@@ -1,3 +1,4 @@
+.infovis,
 #infovis {
     background: #fff;
     border: 1px solid #ddd;
@@ -131,6 +132,7 @@ div.infovis
     overflow:hidden;
     width:100%;
 }
+.infobox,
 #infobox
 {
     -moz-box-shadow: 0 5px 24px #888888;
@@ -151,13 +153,18 @@ div.infovis
     width: 290px;
     z-index:999;
 }
+body.IE8 div.infobox,
 body.IE8 div#infobox {
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=8, Direction=225, Color='#777777')";
 }
+body.IE7 div.infobox,
 body.IE7 div#infobox {
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=8, Direction=225, Color='#777777');
 }
-#infobox .ui-accordion .ui-accordion-content, #infobox div.panel div.content {
+.infobox .ui-accordion .ui-accordion-content,
+.infobox div.panel div.content,
+#infobox .ui-accordion .ui-accordion-content,
+#infobox div.panel div.content {
     border-top:0 none;
     margin-bottom:2px;
     margin-top:-2px;
@@ -167,6 +174,7 @@ body.IE7 div#infobox {
     top:1px;
 }
 
+.infobox .ui-accordion .ui-accordion-header,
 #infobox .ui-accordion .ui-accordion-header
 {
     cursor:pointer;
@@ -174,12 +182,14 @@ body.IE7 div#infobox {
     position:relative;
 }
 
+.infobox .ui-accordion-header-icon,
 #infobox .ui-accordion-header-icon {
     display: none;
 }
 
 /* UI Overrides
  Infobox */
+.infobox .ui-accordion .ui-accordion-header a,
 #infobox .ui-accordion .ui-accordion-header a
 {
     font-size:0.8em !important;
@@ -188,6 +198,7 @@ body.IE7 div#infobox {
     color: #fff;
 }
 
+.infobox .ui-accordion-content,
 #infobox .ui-accordion-content
 {
     overflow:auto;
@@ -195,6 +206,7 @@ body.IE7 div#infobox {
     padding-top:0 !important;
 }
 
+.infobox h1,
 #infobox h1
 {
     border-bottom:1px solid #CCCCCC;
@@ -208,6 +220,7 @@ body.IE7 div#infobox {
     font-weight: bold;
 }
 
+.infobox h2,
 #infobox h2
 {
     color:#999999;
@@ -217,6 +230,7 @@ body.IE7 div#infobox {
     padding:0;
 }
 
+.infobox h3,
 #infobox h3
 {
     background: #8bc658;
@@ -225,6 +239,7 @@ body.IE7 div#infobox {
     border-radius: 0;
 }
 
+.infobox hr,
 #infobox hr
 {
     border-color:#-moz-use-text-color #-moz-use-text-color #EEEEEE;
@@ -233,6 +248,7 @@ body.IE7 div#infobox {
     padding-top:10px;
 }
 
+.infobox p a.expand,
 #infobox p a.expand
 {
     color:#333333;
@@ -240,23 +256,30 @@ body.IE7 div#infobox {
     text-decoration:none;
 }
 
+.infobox p a.expand:hover,
 #infobox p a.expand:hover
 {
     color:#3970AE;
     font-weight:bold;
 }
 
+.infobox p.comment,
 #infobox p.comment
 {
     padding-bottom: 0;
 }
 
+.infobox p.comment span,
 #infobox p.comment span
 {
     font-style:normal;
     margin-bottom: 0px;
 }
-#infobox p.comment span.text, #infobox p.notes span.text {
+
+.infobox p.comment span.text,
+.infobox p.notes span.text,
+#infobox p.comment span.text,
+#infobox p.notes span.text {
     background: none repeat scroll 0 0 transparent !important;
     border: medium none !important;
     color: #333333;
@@ -271,10 +294,14 @@ body.IE7 div#infobox {
     padding: 3px 0;
     height:expression( this.scrollHeight > 74 ? "75px" : "auto" );
 }
+
+.infobox p.type,
 #infobox p.type
 {
     text-transform:capitalize;
 }
+
+.infobox ul.members,
 #infobox ul.members
 {
     border-bottom:1px solid #EEEEEE;
@@ -288,11 +315,13 @@ body.IE7 div#infobox {
     text-align:left;
 }
 
+.infobox ul.members li,
 #infobox ul.members li
 {
     padding-bottom:15px;
 }
 
+.infobox ul.members li span.memberType,
 #infobox ul.members li span.memberType
 {
     color:#999999;
@@ -302,12 +331,14 @@ body.IE7 div#infobox {
     padding-top:1px;
 }
 
+.infobox ul.members li span.name,
 #infobox ul.members li span.name
 {
     display:block;
     font-weight:bold;
 }
 
+.infobox ul.members li span.salary,
 #infobox ul.members li span.salary
 {
     float:right;
@@ -315,6 +346,7 @@ body.IE7 div#infobox {
     margin-top:-20px;
 }
 
+.infobox ul.salaryMap,
 #infobox ul.salaryMap
 {
     display:block;
@@ -324,6 +356,7 @@ body.IE7 div#infobox {
     visibility:hidden;
 }
 
+.infobox a.close,
 #infobox a.close {
     background-color: #aaa;
     color: #333;
