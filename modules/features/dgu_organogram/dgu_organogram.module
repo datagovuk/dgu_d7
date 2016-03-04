@@ -506,15 +506,12 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     array('group' => CSS_THEME, 'every_page' => TRUE));
   drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css',
     array('type' => 'external'));
-  drupal_add_js($module_path . '/js/jit.js');
-  drupal_add_js($module_path . '/js/jit/jit-yc.js');
-  drupal_add_js($module_path . '/js/papaparse.js');
 
-//  drupal_add_js($module_path . '/js/jit-2.0.1.js');
-//  drupal_add_js($module_path . '/js/papaparse.js');
-//  drupal_add_js($module_path . '/js/jquery.jgrowl.js');
-//  drupal_add_js($module_path . '/js/jquery.cookie.js');
-//  drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
+  drupal_add_js($module_path . '/js/jit-2.0.1.js');
+  drupal_add_js($module_path . '/js/papaparse.js');
+  drupal_add_js($module_path . '/js/jquery.jgrowl.js');
+  drupal_add_js($module_path . '/js/jquery.cookie.js');
+  drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
 
   drupal_add_js($module_path . '/js/organogram.js');
 
