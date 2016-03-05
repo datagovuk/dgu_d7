@@ -162,6 +162,7 @@ var Orgvis = {
                             $('#'+infovisId + " div#"+node.id).addClass("selected");
                             $('#'+infovisId + " .infobox").hide(0,function(){
                                 Orgvis.loadPostInfobox(node, infovisId);
+                                Orgvis.fixInfovisSize();
                             });
 
                             spaceTree.onClick(node.id, {
@@ -225,6 +226,7 @@ var Orgvis = {
                                     $('#'+infovisId+ " div#"+node.id).addClass("selected");
                                     $('#'+infovisId+ " .infobox").hide(0,function(){
                                         Orgvis.loadJuniorPostInfoBox(node,infovisId);
+                                        Orgvis.fixInfovisSize();
                                     });
                                     if(Orgvis.vars.canvasPanned){
                                         spaceTree.canvas.resize($('#'+infovisId).width(), $('#'+infovisId).height());
@@ -268,8 +270,6 @@ var Orgvis = {
 
         });
         $(window).resize(function(){
-            //$("#infovis").width($(window).width()-0);
-            //$("#infovis").height($(window).height()-30);
             try{
                 spaceTree.canvas.resize($('#'+infovisId).width(), $('#'+infovisId).height());
             }
@@ -283,6 +283,14 @@ var Orgvis = {
     },
     init: function(filename){
         OrgDataLoader.load(filename)
+    },
+    fixInfovisSize: function() {
+        var infoBoxSize = $('.infobox').height();
+        var infoVisSize = $('.infovis').height();
+        if ((infoVisSize - 20) < infoBoxSize ) {
+          $('.infovis').height(infoBoxSize + 20);
+        }
+        $(window).trigger('resize');
     },
     loadPostInfobox:function(node, infovisId){
         var postID = node.data.id;
