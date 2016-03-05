@@ -8,6 +8,10 @@
     min-height: 700px;
 }
 
+.infovis {
+    min-height: 50px;
+}
+
 #dgu-organogram-viz-form .form-type-select {
     float: left;
 }
@@ -61,7 +65,6 @@ tr.preview--show {
 
 .organogram-preview {
     position: relative;
-    min-height: 100px;
 }
 .organogram-preview-close {
     border:0;
@@ -126,7 +129,7 @@ div.infovis
 {
     padding-top:32px;
     bottom:0;
-    height:800px;
+    height:50%;
     left:0;
     margin:auto;
     overflow:hidden;
@@ -930,4 +933,8 @@ a.categorydata:hover
 
 #edit-field-organogram-und-table .operations {
     text-align: right;
+}
+
+table.sticky-header {
+    display: none;
 }
