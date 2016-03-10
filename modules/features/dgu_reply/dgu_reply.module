@@ -86,7 +86,7 @@ function dgu_reply_menu_breadcrumb_alter(&$active_trail, $item) {
     }
 
     else {
-      $alias = $entity->path['alias'] ? $entity->path['alias'] : drupal_get_path_alias($entity_type . '/' . $id);
+      $alias = !empty($entity->path['alias']) ? $entity->path['alias'] : drupal_get_path_alias($entity_type . '/' . $id);
       $parts =  explode('/', $alias);
 
       if (count($parts) > 1) {

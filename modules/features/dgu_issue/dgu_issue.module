@@ -1,0 +1,18 @@
+<?php
+/**
+ * @file
+ * Code for the DGU Issue feature.
+ */
+
+include_once 'dgu_issue.features.inc';
+
+/**
+ * Implements hook_url_outbound_alter().
+ */
+function dgu_issue_url_outbound_alter(&$path, &$options, $original_path) {
+  if(substr($path, 0, 10) == 'ckan_issue') {
+    $issue = entity_load_single('ckan_issue', substr($path, 11));
+    $dataset = entity_load_single('ckan_dataset', $issue->dataset_id);
+    $path = 'dataset/' . $dataset->name . '/issues/' . $issue->number;
+  }
+}

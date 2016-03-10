@@ -1,0 +1,13 @@
+name = DGU Issue
+description = Contains the additions to dataset issue entity
+core = 7.x
+package = DGU Features
+dependencies[] = ctools
+dependencies[] = dgu_reply
+dependencies[] = features
+dependencies[] = reply
+dependencies[] = strongarm
+features[ctools][] = strongarm:strongarm:1
+features[features_api][] = api:2
+features[field_instance][] = ckan_issue-ckan_issue-field_comment
+features[variable][] = field_bundle_settings_ckan_issue__ckan_issue
