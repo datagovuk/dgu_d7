@@ -728,7 +728,8 @@ var OrgDataLoader = {
         attach: function(context, settings) {
             $("input[name$='upload_button']").unbind('mousedown');
             $("input[name$='upload_button']").mousedown(function (element) {
-                var ajax = Drupal.ajax[$(element.srcElement).attr('id')];
+                var target = element.target || element.srcElement;
+                var ajax = Drupal.ajax[$(target).attr('id')];
                 Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                 ajax.options.success = function(response, status) {
                     Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
@@ -738,7 +739,8 @@ var OrgDataLoader = {
             });
             $("input[name$='remove_button']").unbind('mousedown');
             $("input[name$='remove_button']").mousedown(function (element) {
-                var ajax = Drupal.ajax[$(element.srcElement).attr('id')];
+                var target = element.target || element.srcElement;
+                var ajax = Drupal.ajax[$(target).attr('id')];
                 if (confirm('Are you sure you want to remove this organogram?')) {
                     Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                     ajax.options.success = function(response, status) {
@@ -771,3 +773,4 @@ var OrgDataLoader = {
     };
 
 })(jQuery);
+
