@@ -617,7 +617,7 @@ var OrgDataLoader = {
             previewButton = $('.js-organogram-preview-btn');
 
             // Preview
-            previewButton.one('click', function(){
+            previewButton.click(function() {
 
                 $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
 
