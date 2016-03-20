@@ -294,7 +294,7 @@ def load_xls_and_verify(xls_filename):
         try:
             verify_graph(senior, junior, errors)
         except ValidationFatalError, e:
-            print "FATAL ERROR:", e
+            print "FATAL ERROR:", e.encode('utf8')  # encoding for Drupal exec()
             return
 
         # leniency
@@ -318,7 +318,7 @@ def load_xls_and_verify(xls_filename):
                 (num_errors_reduced, num_errors)
 
         for error in list(set(errors)):
-            print "ERROR:", error
+            print "ERROR:", error.encode('utf8')  # encoding for Drupal exec()
 
         if errors:
             print 'FATAL'
