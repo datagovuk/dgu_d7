@@ -8,7 +8,7 @@ default:
         authenticated_user:
           'pass'
         admin:
-          'pass'
+          'dgupass'
         editor:
           'pass'
         jamesashton:
