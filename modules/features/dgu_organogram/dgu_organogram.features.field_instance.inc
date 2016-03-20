@@ -41,7 +41,7 @@ function dgu_organogram_field_default_field_instances() {
       'description_field' => 0,
       'file_directory' => 'organogram/uploads',
       'file_extensions' => 'xls xlsx',
-      'max_filesize' => '10 MB',
+      'max_filesize' => '50 MB',
       'user_register_form' => FALSE,
     ),
     'widget' => array(
