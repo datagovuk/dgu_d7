@@ -23,9 +23,6 @@
           $interact_menu = dguk_get_interact_menu($main_menu);
 
           $active = 1;
-          if (strpos($data_menu, 'subnav-data active')) {
-            $active = 2;
-          }
           if (strpos($apps_menu, 'subnav-apps active')) {
             $active = 3;
           }
@@ -42,7 +39,7 @@
           <?php //print dguk_get_main_menu($main_menu);?>
           <div class="text-links">
             <a href="/" title="" class="trigger-subnav nav-home <?php if($active == 1) print 'active'; ?>">Home</a>
-            <a href="/data" class="trigger-subnav nav-data <?php if($active == 2) print 'active'; ?>">Data</a>
+            <a href="/data/search" class="nav-data">Data</a>
             <a href="/apps" class="trigger-subnav nav-apps <?php if($active == 3) print 'active'; ?>">Apps</a>
             <a href="/interact" class="trigger-subnav nav-interact <?php if($active == 4) print 'active'; ?>">Interact</a>
           </div>
