@@ -14,6 +14,10 @@ function dgu_organogram_menu() {
     'page callback' => 'dgu_organogram_viz',
     'access arguments' => array('access content'),
   );
+  $items['organogram/dashboard'] = array(
+    'page callback' => 'dgu_organogram_dashboard',
+    'access arguments' => array('access content'),
+  );
   $items['organogram/%'] = array(
     'page callback' => 'dgu_organogram_viz',
     'page arguments' => array(1),
@@ -353,7 +357,6 @@ function dgu_organogram_preview($fid) {
     drupal_add_http_header('Status', '500 Internal server error');
     print $e->getMessage();
     drupal_exit();
-
   }
 
   drupal_json_output(array('status' => 0, 'data' => $json[0]));
@@ -387,7 +390,7 @@ function _dgu_organogram_generate_csv_files($fid) {
     $filename = $wrapper->realpath();
   }
   $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
-  $command = "/usr/bin/python 2>&1 ${script} '${filename}' " . file_directory_temp();
+  $command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} '${filename}' " . file_directory_temp();
 
   exec($command, $output, $ret);
   if ($ret == 1) {
@@ -437,6 +440,49 @@ function dgu_organogram_preview_data($filename) {
   }
 }
 
+function dgu_organogram_get_user_publisher_tree() {
+  global $user;
+
+  $publishers = &drupal_static(__FUNCTION__);
+
+  if (!isset($publishers)) {
+    $account = user_load($user->uid);
+    $publishers = array();
+    if (!empty($account->field_publishers[LANGUAGE_NONE])) {
+      $publisher_ids = array();
+      foreach ($account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
+        $publisher_ids = array_merge($publisher_ids, dgu_user_get_publisher_with_children($publisher_ref['target_id']));
+      }
+
+      $query = db_select('ckan_publisher', 'p')
+        ->fields('p', array('id', 'title'));
+
+      $query->condition('id', $publisher_ids, 'IN');
+
+      $publishers = $query->execute()->fetchAllKeyed();
+    }
+  }
+
+  return $publishers;
+}
+
+function dgu_organogram_dashboard() {
+  drupal_set_title('Organogram dashboard');
+  drupal_set_breadcrumb(array(
+    '<a href="/">Home</a>',
+  ));
+  $publishers = dgu_organogram_get_user_publisher_tree();
+  if (!empty($publishers)) {
+    $content = '<ul>';
+    foreach ($publishers as $id => $title) {
+      $content .= '<li>' . l($title, 'ckan_publisher/' . $id . '/edit') . '</li>';
+    }
+    $content .= '</ul>';
+  }
+  return $content;
+}
+
+
 /**
  * @param $form
  * @param $form_state
@@ -445,8 +491,26 @@ function dgu_organogram_preview_data($filename) {
  * Implement Form Alter hook for ckan publisher form
  */
 function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $form_id) {
-  drupal_set_title("Organograms upload dashboard.");
+  drupal_set_title($form['title']['#value']);
+  drupal_set_breadcrumb(array(
+    '<a href="/">Home</a>',
+    '<a href="/organogram/dashboard">Organogram dashboard</a>',
+  ));
   $form['#theme'] = array('organogram_upload_form');
+
+  $options = dgu_organogram_get_user_publisher_tree();
+
+  if (!empty($options)) {
+    $form['publishers'] = array(
+      '#type' => 'select',
+      '#title' => t('Organogram for '),
+      '#options' =>  $options,
+      '#attributes' => array('class' => array('chosen-select')),
+      '#weight' => -100,
+      '#default_value' => arg(1),
+    );
+  }
+
   $ckan_publisher = ckan_publisher_load($form['id']['#value']);
   $form['title']['#title'] = "Your publisher details";
   $form['ckan_id']['#title'] = "Your  data catalogue ID";
@@ -478,8 +542,22 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     drupal_set_message('An error ocurred while trying to display the organogram tool. ' . $e->getMessage(), 'error');
   }
 
+  $module_path = drupal_get_path('module', 'dgu_organogram');
+
+  $form['#attached']['js'] = array($module_path . '/js/chosen.min.jquery.js');
+
   $form['#attached']['js'][] = array(
     'data' => '(function($) {
+
+      Drupal.behaviors.publisherSelect = {
+        attach: function (context, settings) {
+          jQuery(".chosen-select").chosen().change(function(){
+            var id = $(this).val();
+            window.location.href = "/ckan_publisher/" + id + "/edit";
+          });
+        }
+      }
+
       Drupal.behaviors.fileUpload = {
         attach: function(context, settings) {
              jQuery("body").ajaxComplete(function(event,request, settings){
@@ -501,9 +579,9 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     'type' => 'inline',
   );
 
-  $module_path = drupal_get_path('module', 'dgu_organogram');
-  drupal_add_css($module_path . '/css/organogram.css',
-    array('group' => CSS_THEME, 'every_page' => TRUE));
+  drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
+  drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
+
   drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css',
     array('type' => 'external'));
 

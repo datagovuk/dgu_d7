@@ -938,3 +938,8 @@ a.categorydata:hover
 table.sticky-header {
     display: none;
 }
+
+.form-item-publishers label {
+    vertical-align: top;
+    margin-top: 3px;
+}
