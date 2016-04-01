@@ -44,7 +44,7 @@ function dgu_site_feature_default_panels_mini() {
     $pane->configuration = array(
       'admin_title' => '',
       'title' => '',
-      'body' => '<p>Hear more about the Government\'s Transparency agenda from the Prime Minister.</p><div class="fluidVideo"><iframe width="220" height="240" src="http://www.youtube.com/embed/0stXV_fWWtU?wmode=transparent&rel=0" frameborder="0" allowfullscreen></iframe></div>',
+      'body' => '<p>Hear more about the Government\'s Transparency agenda from the Prime Minister.</p><div class="fluidVideo"><iframe allowfullscreen="" frameborder="0" height="240" src="https://www.youtube.com/embed/0stXV_fWWtU?wmode=transparent&amp;rel=0" width="220"></iframe></div>',
       'format' => 'full_html',
       'substitute' => TRUE,
     );
