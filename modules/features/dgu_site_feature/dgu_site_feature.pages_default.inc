@@ -229,7 +229,7 @@ function dgu_site_feature_default_page_manager_pages() {
       'title' => '',
       'body' => '<p><strong>What&#39;s data.gov.uk all about?</strong></p>
 
-<p>The Government is releasing public data to help people understand how government works and how policies are made. Some of this data is already available, but data.gov.uk brings it together in one searchable website. Making this data easily available means it will be easier for people to make decisions and suggestions about government policies based on detailed information. Hear more about the Government&#39;s Transparency agenda from the Prime Minister.</p>
+<p>The Government is releasing public data to become more transparent&nbsp;and foster&nbsp;innovation. Some of this data was available before, but data.gov.uk brings it together in one searchable website. Making this data easily available means it will be easier for people to make decisions and suggestions about government policies based on detailed information. Hear more about the Government&#39;s Transparency agenda from the Prime Minister in <a href="https://www.youtube.com/watch?v=0stXV_fWWtU" target="_blank">this video</a>.</p>
 
 <p><strong>What&#39;s available?</strong></p>
 
@@ -243,22 +243,23 @@ function dgu_site_feature_default_page_manager_pages() {
 
 <p><strong>How can I add my organisation&#39;s data?</strong></p>
 
-<p>There is a simple how-to guide that takes you through the steps needed to include your data in data.gov.uk&#39;s index.How can I find out more?You can find out more about the data.gov.uk project by following these links:<a href="http://data.gov.uk/library/user-guide-editors-and-administrators-v30"> Guidance document</a>.</p>
+<p>data.gov.uk provides a mini-site of&nbsp;guidance for publishers, including step-by-step process for including your data on data.gov.uk. Please see:</p>
 
-<p><strong>Who is involved in the project?</strong></p>
+<p><a href="http://guidance.data.gov.uk/" target="_blank">http://guidance.data.gov.uk/</a></p>
 
-<p>Data.gov.uk is a key part of the Government&#39;s work on Transparency which is being lead by the Transparency Board. Data.gov.uk implementation is being led by the Transparency and Open Data team in the Cabinet Office, working across government departments to ensure that data is released in a timely and accessible way.</p>
+<p><strong style="line-height: 1.6em;">Who is involved in the project?</strong></p>
 
-<p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the Comprehensive Knowledge Archive Network (CKAN): CKAN runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer&#39;s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/metadata-api-docs">http://data.gov.uk/datametadata-api-docs</a>.</p>
+<p>Data.gov.uk is a key part of the Government&#39;s work on Transparency and Data. The data.gov.uk implementation is being led by the Data team in the Cabinet Office, working across government departments to ensure that data is released in a timely and accessible way.</p>
+
+<p>This work is being supported by Sir Tim-Berners Lee &amp; Professor Nigel Shadbolt. There are a number of technical partners involved in the project to date. These include the <a href="http://ckan.org/" target="_blank">CKAN</a>, which&nbsp;runs the catalogue at data.gov.uk/data as well as a growing number of open data registries around the world. It is a project originally created by the Open Knowledge Foundation to make it easy to find, share and reuse open content and data. The CKAN software provides a web interface, programmer&#39;s API, feeds notifying of changes, and a browsable history of all changes. The API is documented here:&nbsp;<a href="http://data.gov.uk/data/metadata-api-docs">http://data.gov.uk/datametadata-api-docs</a>.</p>
 
 <p><strong>How can I get involved?</strong></p>
 
 <p>There are a number of ways of getting involved in the project, dependent on your background or interest. For example:</p>
 
 <ul>
-	<li>Applications: have you built something cool with our data?Share it with us through the Apps page. You never know who might get excited!</li>
-	<li>Visualisations: one of the challenges is making data come to life. Have you found a great way of displaying our data? Does it combine with other data to give a new insight? Show us your talent?</li>
-	<li>Architecture: would you like to help us make this site better? Get in touch! You can see some of the visualisations create by the data.gov.uk team and the code used to create them&nbsp;<a href="http://data.gov.uk/data/viz/social-investment-and-foundations">here</a> and <a href="http://data.gov.uk/data/viz/investment-readiness-programme">here</a>.</li>
+	<li>Applications: have you built something cool with our data? Share it with us through the Apps page. You never know who might get excited!</li>
+	<li>Visualisations: one of the challenges is making data come to life. Have you found a great way of displaying our data? Does it combine with other data to give a new insight? Show us your talent?&nbsp;You can see some of the visualisations create by the data.gov.uk team and the code used to create them&nbsp;<a href="http://data.gov.uk/data/viz/social-investment-and-foundations">here</a> and <a href="http://data.gov.uk/data/viz/investment-readiness-programme">here</a>.</li>
 	<li>Comments and feedback: You can provide comments on datasets and blogs&nbsp;as well as give feedback on the potential impact of a&nbsp;dataset.</li>
 </ul>
 
@@ -273,7 +274,7 @@ function dgu_site_feature_default_page_manager_pages() {
 <p>&nbsp;</p>
 ',
       'format' => 'filtered_html',
-      'substitute' => TRUE,
+      'substitute' => 1,
     );
     $pane->cache = array();
     $pane->style = array(
