@@ -467,7 +467,9 @@ function theme_organogram_file_widget($variables) {
       foreach (element_children($organogram) as $sub_key) {
         if (isset($organogram[$sub_key]['#type']) && ($organogram[$sub_key]['#type'] == 'submit' || $organogram[$sub_key]['#type'] == 'button')) {
           hide($organogram[$sub_key]);
-          $operations_elements[] = & $organogram[$sub_key];
+          if ($organogram[$sub_key]['#value'] != 'Upload') {
+            array_unshift($operations_elements, $organogram[$sub_key]);
+          }
         }
       }
 
@@ -501,7 +503,13 @@ function theme_organogram_file_widget($variables) {
       $status = 'Outstanding';
       $status_class .= ' outstanding';
       $view = '';
-      $operations = '';
+
+      $upload_buttton =array(
+        '#type' => 'button',
+        '#value' => 'Upload',
+        '#attributes' => array('class' => array('btn-primary')),
+      );
+      $operations =  drupal_render($upload_buttton);
     }
 
     $row = array(
@@ -544,12 +552,12 @@ function dgu_organogram_after($element, $form_state) {
     $element[$key]['#limit_validation_errors'] = array(array_slice($element['#parents'], 0, -1));
   }
   $element['upload_button']['#attributes'] = array('class' => array('btn-primary'));
+  $element['remove_button']['#value'] = 'Delete';
 
   if ($element['#file']) {
 
 
     $file = $element['#file'];
-
     $url = file_create_url($file->uri);
 
     $options = array(
@@ -609,24 +617,20 @@ function dgu_organogram_after($element, $form_state) {
       ),
     );
 
-    $btn_name = "publish_organogram_{$element['#language']}_{$element['#file']->fid}_button";
-    $element['publish'] = array(
-      '#id' => $btn_name,
-      '#name' => $btn_name,
+    $element['publish_button'] = array(
+      '#name' => "publish_organogram_{$element['#language']}_{$element['#file']->fid}_button",
       '#type' => 'submit',
       '#value' => t('Publish'),
       '#submit' => array('dgu_organogram_organogram_publish'),
-      '#attributes' => array('data-file-fid' => $element['#file']->fid ? : 0),
+      '#attributes' => array(
+        'data-file-fid' => $element['#file']->fid ? : 0,
+        'class' => array('btn-primary'),
+      ),
       '#disabled' => $published || (!$saved || !$signoff),
-      '#weight' => -3,
+      '#weight' => -100,
     );
 
-//    $element['preview']['#attached']['js'][] = array(
-//      'data' => array('file' => $element['#file']->filename),
-//      'type' => 'setting',
-//    );
-
-    $element['remove_button']['#weight'] = 10;
+    $element['remove_button']['#weight'] = 100;
 
     //finally remove the form-control class put on by the bootstrap module which is unaware of managed_files
     if (!empty($element['#attributes']['class'])) {
