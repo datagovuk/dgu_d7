@@ -15,6 +15,7 @@ import pandas
 import numpy
 import sys
 import os.path
+import json
 from xlrd import XLRDError
 import csv
 import re
@@ -441,6 +442,13 @@ def main(input_xls_filepath, output_folder):
     senior.to_csv(senior_filename, **csv_options)
     print "Writing", junior_filename
     junior.to_csv(junior_filename, **csv_options)
+    # Write index file - used by Drupal
+    index = [{'name': name, 'value': basename}]  # a list because of legacy
+    index = sorted(index, key=lambda x: x['name'])
+    index_filename = os.path.join(output_folder, 'index.json')
+    print "Writing index file:", index_filename
+    with open(index_filename, 'w') as f:
+        json.dump(index, f)
     print "Done."
 
 
