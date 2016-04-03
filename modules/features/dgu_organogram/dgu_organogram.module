@@ -507,7 +507,10 @@ function theme_organogram_file_widget($variables) {
       $upload_buttton =array(
         '#type' => 'button',
         '#value' => 'Upload',
-        '#attributes' => array('class' => array('btn-primary')),
+        '#attributes' => array(
+          'data-organogram-date' => $timestamp,
+          'class' => array('btn-primary', 'btn-organogram-upload')
+        ),
       );
       $operations =  drupal_render($upload_buttton);
     }
