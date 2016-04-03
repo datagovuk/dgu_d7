@@ -598,7 +598,7 @@ var OrgDataLoader = {
     var junior = null;
     var senior = null;
     var previewMarkup =
-        '<tr class="preview"><td colspan="3">'+
+        '<tr class="preview"><td colspan="6">'+
             '  <div class="organogram-preview">'+
             '    <input type="button" class="organogram-preview-close" value="&times;">'+
             '    <div class="chart">'+
@@ -614,11 +614,11 @@ var OrgDataLoader = {
     Drupal.behaviors.ckanPublisherTogglePreview = {
         attach: function (context, settings) {
             console.log(settings);
-            previewButton = $('.js-organogram-preview-btn');
+            previewLink = $('.organogram-preview');
 
             // Preview
-            previewButton.click(function() {
-
+            previewLink.click(function() {
+                $('.field-name-field-organogram tr.preview').remove();
                 $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
 
                 var preview =  $(this).parent().parent().after(previewMarkup);
@@ -630,7 +630,7 @@ var OrgDataLoader = {
                 previewPanel.addClass(previewShowClass);
 
                 previewPanel.find('.organogram-preview-close').on('click', function(){
-                    previewPanel.removeClass(previewShowClass);;
+                    previewPanel.remove();
                 });
                 $(this).on('click', function(){
                     $('html, body').animate({'scrollTop' : $(this).offset().top - 70},400, 'swing');
@@ -638,9 +638,9 @@ var OrgDataLoader = {
                 });
 
 
-                var filename = $(this).attr('data-organogram-file');
+                var fid = $(this).attr('data-organogram-fid');
                 $(this).parent().parent().next().find('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
-                OrgDataLoader.load(filename, infovisId, previewMarkup);
+                OrgDataLoader.load(fid, infovisId, previewMarkup);
             });
         },
 
@@ -723,6 +723,41 @@ var OrgDataLoader = {
             }
         }
     };
+
+    Drupal.behaviors.organogramSignOff = {
+        attach: function (context, settings) {
+            console.log(settings);
+            signOffCheckbox = $('.organogram-sign-off');
+
+            // Sign off
+            signOffCheckbox.change(function() {
+
+//                if (this.checked == true) {
+//                   var message = 'Are you sure to sign off?'
+//                }
+//                else {
+//                    var message = 'Are you sure to undo sign off?'
+//                }
+//
+//                var confirmation = confirm(message);
+//                if (confirmation == true) {
+//                    alert('done');
+//                }
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'signoff',
+                    value: $(this).attr('data-fid')
+
+                }).appendTo(this.form);
+                //this.form.submit();
+
+                $('#edit-submit').trigger('click');
+
+            });
+        }
+    };
+
 
     Drupal.behaviors.organogramConfirm = {
         attach: function(context, settings) {
