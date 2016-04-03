@@ -108,6 +108,24 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
 .field-name-field-organogram table.table {
     margin: 0 auto;
 }
+
+.field-name-field-organogram fieldset {
+    border: none;
+    box-shadow: none;
+}
+
+.field-name-field-organogram .panel-body {
+    padding: 0;
+}
+
+.field-name-field-organogram .outstanding {
+    color: #f00;
+}
+
+.sign-off .checkbox input {
+    margin: auto !important;
+}
+
 div.chart {
     position: relative;
     width: 100%;
@@ -911,7 +929,7 @@ a.categorydata:hover
 }
 #edit-field-organogram-und span.file a {
     color: #000;
-    font-weight: bold;
+
 }
 #edit-field-organogram-und td{
     vertical-align: inherit;
