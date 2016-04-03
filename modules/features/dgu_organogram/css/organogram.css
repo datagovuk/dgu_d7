@@ -48,13 +48,6 @@
     }
 }
 
-.file-widget div.form-type-select {
-    display: inline;
-}
-.file-widget div.form-type-select select.form-select {
-    display: inline;
-    width: 200px;
-}
 tr.preview {
     display: none;
 }
@@ -102,9 +95,7 @@ form#ckan-publisher-form fieldset {
 form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
     display: none;
 }
-.form-type-managed-file {
-    text-align: center;
-}
+
 .field-name-field-organogram table.table {
     margin: 0 auto;
 }
@@ -120,6 +111,33 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
 
 .field-name-field-organogram .outstanding {
     color: #f00;
+}
+
+.form-type-managed-file {
+    display: none;
+}
+
+.field-name-field-organogram .input-group .form-control {
+    width: inherit;
+}
+
+.field-name-field-organogram .input-group input.form-file {
+    box-sizing: border-box;
+    max-width: 100%;
+    width: 100%;
+    /*
+    background-color: #efefef;
+    border: none;
+    box-shadow: none;
+    */
+    display: block;
+    margin-bottom: 10px;
+}
+
+.field-name-field-organogram .btn-cancel {
+    height: 35px;
+    margin-top: 3px;
+    margin-left: 5px;
 }
 
 .sign-off .checkbox input {
@@ -933,10 +951,6 @@ a.categorydata:hover
 }
 #edit-field-organogram-und td{
     vertical-align: inherit;
-}
-
-#edit-field-organogram-und .form-type-managed-file .input-group {
-    margin: auto;
 }
 
 #edit-field-organogram-und .input-group .input-group-btn,
