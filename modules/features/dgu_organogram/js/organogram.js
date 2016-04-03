@@ -288,7 +288,7 @@ var Orgvis = {
         var infoBoxSize = $('.infobox').height();
         var infoVisSize = $('.infovis').height();
         if ((infoVisSize - 20) < infoBoxSize ) {
-          $('.infovis').height(infoBoxSize + 20);
+            $('.infovis').height(infoBoxSize + 20);
         }
         $(window).trigger('resize');
     },
@@ -371,42 +371,42 @@ var OrgDataLoader = {
     load: function (filename, infovisId, previewMarkup) {
         $.ajax({cache: false, dataType: "json", url: this.docBase+filename,
             success : function(ret) {
-            var data = ret.data;
-            $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-senior.csv",
-                success : function(seniorcsv){
-                    Papa.parse(seniorcsv, {
-                        header: true, delimiter: ',',
-                        complete: function(seniorrows) {
-                            senior = seniorrows.data;
-                            $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-junior.csv",
-                                success : function(juniorcsv){
-                                    Papa.parse(juniorcsv, {
-                                        header: true, delimiter: ',',
-                                        complete: function(juniorrows) {
-                                            junior = juniorrows.data;
-                                            $('.chart .ajax-progress').remove();
-                                            Orgvis.showSpaceTree(OrgDataLoader.buildTree(data.name), infovisId);
-                                        }
-                                    });
-                                },
-                                error: function() {
-                                    OrgDataLoader.errorMessage(ret.responseText);
-                                    $('tr.preview--show').hide();
-                                }
-                            });
-                        }
-                    });
-                },
-                error: function() {
-                    OrgDataLoader.errorMessage(ret.responseText);
-                    $('tr.preview--show').hide();
-                }
-            });
-        },
-        error: function(ret) {
-            OrgDataLoader.errorMessage(ret.responseText);
-            $('tr.preview--show').hide();
-        }
+                var data = ret.data;
+                $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-senior.csv",
+                    success : function(seniorcsv){
+                        Papa.parse(seniorcsv, {
+                            header: true, delimiter: ',',
+                            complete: function(seniorrows) {
+                                senior = seniorrows.data;
+                                $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-junior.csv",
+                                    success : function(juniorcsv){
+                                        Papa.parse(juniorcsv, {
+                                            header: true, delimiter: ',',
+                                            complete: function(juniorrows) {
+                                                junior = juniorrows.data;
+                                                $('.chart .ajax-progress').remove();
+                                                Orgvis.showSpaceTree(OrgDataLoader.buildTree(data.name), infovisId);
+                                            }
+                                        });
+                                    },
+                                    error: function() {
+                                        OrgDataLoader.errorMessage(ret.responseText);
+                                        $('tr.preview--show').hide();
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function() {
+                        OrgDataLoader.errorMessage(ret.responseText);
+                        $('tr.preview--show').hide();
+                    }
+                });
+            },
+            error: function(ret) {
+                OrgDataLoader.errorMessage(ret.responseText);
+                $('tr.preview--show').hide();
+            }
 
         });
     },
@@ -758,6 +758,25 @@ var OrgDataLoader = {
         }
     };
 
+    Drupal.behaviors.organogramUpload = {
+        attach: function (context, settings) {
+            $('.btn-organogram-upload').click(function() {
+                $('.field-name-field-organogram .form-type-managed-file').show();
+                $('.field-name-field-organogram table').hide();
+
+                var date = $(this).data('organogram-date');
+                $('.field-name-field-organogram .form-type-managed-file select').val(date);
+
+
+
+            });
+            $('.btn-cancel').click(function() {
+                $('.field-name-field-organogram .form-type-managed-file').hide();
+                $('.field-name-field-organogram table').show();
+            });
+
+        }
+    };
 
     Drupal.behaviors.organogramConfirm = {
         attach: function(context, settings) {

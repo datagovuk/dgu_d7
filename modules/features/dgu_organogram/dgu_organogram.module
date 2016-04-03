@@ -535,7 +535,7 @@ function theme_organogram_file_widget($variables) {
     'attributes' => array('id' => $element['#id'] . '-table')
   ));
 
-  $upload_widget['#title'] = 'Add new organogram';
+  $upload_widget['#title'] = 'Add organogram';
   $upload_widget['#description'] = $element['#file_upload_description'];
   $output .= drupal_render($upload_widget);
 
@@ -644,11 +644,24 @@ function dgu_organogram_after($element, $form_state) {
     // Upload widget.
     $date_options = _dgu_organogram_get_dates();
 
+    $element['cancel_button'] = array(
+      '#name' => 'cancel_button',
+      '#type' => 'button',
+      '#value' => t('Cancel'),
+      '#attributes' => array(
+        'class' => array('btn-cancel'),
+      ),
+      '#weight' => 100,
+    );
+
+
     $element['deadline_date'] = array(
       '#label' => 'Choose date',
       '#type' => 'select',
       '#options' => $date_options,
       '#default_value' => reset($date_options),
+      '#prefix' => '<strong>Choose date</strong>',
+      '#weight' => -10,
     );
   }
   return $element;
