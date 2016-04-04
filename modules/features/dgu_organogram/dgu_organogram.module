@@ -289,54 +289,19 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
 
-  $form['#attached']['js'] = array($module_path . '/js/chosen.min.jquery.js');
-
-  $form['#attached']['js'][] = array(
-    'data' => '(function($) {
-
-      Drupal.behaviors.publisherSelect = {
-        attach: function (context, settings) {
-          jQuery(".chosen-select").chosen().change(function(){
-            var id = $(this).val();
-            window.location.href = "/ckan_publisher/" + id + "/edit";
-          });
-        }
-      }
-
-      Drupal.behaviors.fileUpload = {
-        attach: function(context, settings) {
-             jQuery("body").ajaxComplete(function(event,request, settings){
-                if(window.location.pathname.match(/ckan_publisher\/\d+\/edit/)) {
-                    form_build_id = "ckan-publisher-form";
-                    //jQuery("#"+form_build_id).find("[id^=edit-submit]").click()
-                }
-            });
-        }
-      }
-
-      Drupal.behaviors.standardNodeForm = {
-        attach: function (context, settings) {
-          //   alert("attaching");
-        }
-      }
-    })(jQuery);
-    ',
-    'type' => 'inline',
-  );
 
   drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
   drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
-
-  drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css',
-    array('type' => 'external'));
+  drupal_add_css('//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', array('type' => 'external'));
 
   drupal_add_js($module_path . '/js/jit-2.0.1.js');
   drupal_add_js($module_path . '/js/papaparse.js');
   drupal_add_js($module_path . '/js/jquery.jgrowl.js');
   drupal_add_js($module_path . '/js/jquery.cookie.js');
   drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
-
   drupal_add_js($module_path . '/js/organogram.js');
+  $form['#attached']['js'] = array($module_path . '/js/chosen.min.jquery.js');
+
 
   $ie_scripts = array(
     '#type' => 'markup',
@@ -479,9 +444,9 @@ function theme_organogram_file_widget($variables) {
       hide($organogram['_weight']);
       $file_name = drupal_render($organogram);
 
-      $status = 'Done';
+      $status = $organogram['status']['#value'];
 
-      $view = l('Preview', NULL, array(
+      $view = l('▶ Preview', NULL, array(
         'fragment' => FALSE,
         'external' => TRUE,
         'attributes' => array(
@@ -500,19 +465,24 @@ function theme_organogram_file_widget($variables) {
     else {
       $file_name = '';
       $sign_off = '';
-      $status = 'Outstanding';
-      $status_class .= ' outstanding';
       $view = '';
+      $status = 'Outstanding';
 
       $upload_buttton =array(
         '#type' => 'button',
         '#value' => 'Upload',
         '#attributes' => array(
           'data-organogram-date' => $timestamp,
+          'data-organogram-date-display' => $date,
           'class' => array('btn-primary', 'btn-organogram-upload')
         ),
       );
       $operations =  drupal_render($upload_buttton);
+    }
+
+    if ($status != 'Done') {
+      $status_class .= ' outstanding';
+      $status = $timestamp < time() ? $status : 'Due soon';
     }
 
     $row = array(
@@ -535,7 +505,7 @@ function theme_organogram_file_widget($variables) {
     'attributes' => array('id' => $element['#id'] . '-table')
   ));
 
-  $upload_widget['#title'] = 'Add organogram';
+  $upload_widget['#title'] = 'Provide organogram spreadsheet for <span id="organogram-upload-date"></span>';
   $upload_widget['#description'] = $element['#file_upload_description'];
   $output .= drupal_render($upload_widget);
 
@@ -559,6 +529,13 @@ function dgu_organogram_after($element, $form_state) {
 
   if ($element['#file']) {
 
+    $saved = $element['#file']->status == 1;
+    $signoff = !empty($form_state['signoff_dates'][$element['#file']->fid]);
+    $published = !empty($form_state['publish_dates'][$element['#file']->fid]);
+
+    $deadline_date = !empty($form_state['organogram_dates'][$element['#file']->fid]) ? $form_state['organogram_dates'][$element['#file']->fid] : 0;
+    $signoff_date = !empty($form_state['signoff_dates'][$element['#file']->fid]) ? $form_state['signoff_dates'][$element['#file']->fid] : 0;
+    $publish_date = !empty($form_state['publish_dates'][$element['#file']->fid]) ? $form_state['publish_dates'][$element['#file']->fid] : 0;
 
     $file = $element['#file'];
     $url = file_create_url($file->uri);
@@ -574,25 +551,40 @@ function dgu_organogram_after($element, $form_state) {
       $filename = substr($filename, 0, 48) . '...';
     }
 
-    $organogram_link_text = $filename;
-    $options['attributes']['title'] = check_plain($file->filename);
+    $hover = check_plain($file->filename);
+    $hover .= "\n\nUploaded:   " . date('d M Y H:i', $element['#file']->timestamp);
+    if ($signoff) {
+      $hover .= "\nSigned off: " . date('d M Y H:i', $signoff_date);
+    }
+    if ($published) {
+      $hover .= "\nPublished:  " . date('d M Y H:i', $publish_date);
+      $status = 'Done';
+    }
+    else {
+      $element['publish_button'] = array(
+        '#name' => "publish_organogram_{$element['#language']}_{$element['#file']->fid}_button",
+        '#type' => 'submit',
+        '#value' => t('Publish'),
+        '#submit' => array('dgu_organogram_organogram_publish'),
+        '#attributes' => array(
+          'data-file-fid' => $element['#file']->fid ? : 0,
+          'class' => array('btn-primary'),
+        ),
+        '#disabled' => !$signoff,
+        '#weight' => -100,
+      );
+      $status = 'Outstanding';
+    }
+
+    $element['status'] = array(
+      '#type' => 'value',
+      '#value' => $status,
+    );
+
+
+    $organogram_link_text = '' . $filename;
+    $options['attributes']['title'] = $hover;
     $element['filename']['#markup'] = '<span class="file"> ' . l($organogram_link_text, $url, $options) . '</span>';
-
-    $saved = $element['#file']->status == 1;
-    $signoff = !empty($form_state['signoff_dates'][$element['#file']->fid]);
-    $published = !empty($form_state['publish_dates'][$element['#file']->fid]);
-
-    $deadline_date = !empty($form_state['organogram_dates'][$element['#file']->fid]) ? $form_state['organogram_dates'][$element['#file']->fid] : 0;
-    $signoff_date = !empty($form_state['signoff_dates'][$element['#file']->fid]) ? $form_state['signoff_dates'][$element['#file']->fid] : 0;
-    $publish_date = !empty($form_state['publish_dates'][$element['#file']->fid]) ? $form_state['publish_dates'][$element['#file']->fid] : 0;
-
-
-
-//    $element['filename']['#markup'] .= '<span class="file uploaded">' . "Uploaded " . date('d-m-Y H:i:s', $element['#file']->timestamp) . "</span>";
-//    if ($published) {
-//      $element['filename']['#markup'] .= "<span class='file published_date'>Published: " . date('d-m-Y', $published) . "<span> ";
-//    }
-
 
     $element['deadline_date'] = array(
       '#type' => 'hidden',
@@ -620,19 +612,6 @@ function dgu_organogram_after($element, $form_state) {
       ),
     );
 
-    $element['publish_button'] = array(
-      '#name' => "publish_organogram_{$element['#language']}_{$element['#file']->fid}_button",
-      '#type' => 'submit',
-      '#value' => t('Publish'),
-      '#submit' => array('dgu_organogram_organogram_publish'),
-      '#attributes' => array(
-        'data-file-fid' => $element['#file']->fid ? : 0,
-        'class' => array('btn-primary'),
-      ),
-      '#disabled' => $published || (!$saved || !$signoff),
-      '#weight' => -100,
-    );
-
     $element['remove_button']['#weight'] = 100;
 
     //finally remove the form-control class put on by the bootstrap module which is unaware of managed_files
@@ -642,8 +621,6 @@ function dgu_organogram_after($element, $form_state) {
   }
   else {
     // Upload widget.
-    $date_options = _dgu_organogram_get_dates();
-
     $element['cancel_button'] = array(
       '#name' => 'cancel_button',
       '#type' => 'button',
@@ -654,16 +631,15 @@ function dgu_organogram_after($element, $form_state) {
       '#weight' => 100,
     );
 
+    $date_options = _dgu_organogram_get_dates();
 
     $element['deadline_date'] = array(
-      '#label' => 'Choose date',
       '#type' => 'select',
       '#options' => $date_options,
       '#default_value' => reset($date_options),
-      '#prefix' => '<strong>Choose date</strong>',
-      '#weight' => -10,
     );
   }
+
   return $element;
 }
 
@@ -693,7 +669,7 @@ function _dgu_organogram_get_dates() {
 
   $all_dates = array();
   foreach ($dates as $date) {
-    $all_dates[$date->getTimestamp()] = $date->format('d-m-Y');
+    $all_dates[$date->getTimestamp()] = $date->format('d M Y');
   }
 
   return $all_dates;
@@ -708,6 +684,18 @@ function _dgu_organogram_get_dates() {
  * Submit handler for organogram files that adds extra data (publish date and deadline date) into a table.
  */
 function dgu_organogram_organogram_submit($form, &$form_state) {
+  drupal_set_message('The spreadsheet contains errors:', 'error');
+  return;
+
+//  try {
+//    $file = _dgu_organogram_generate_csv_files($fid);
+//    $json = _dgu_organogram_read_index($file);
+//  } catch (Exception $e) {
+//    drupal_add_http_header('Status', '500 Internal server error');
+//    print $e->getMessage();
+//    drupal_exit();
+//  }
+
   db_query("DELETE FROM dgu_organogram where id = " . $form['id']['#value']);
   foreach ($form_state['values']['field_organogram'][LANGUAGE_NONE] as $organogram) {
     if ($organogram['deadline_date']) {
@@ -881,17 +869,24 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
       return;
     }
 
-    try {
-      _dgu_organogram_post_files_to_epimorphics($organogram_date, $organogram_file_location . $senior_csv, $organogram_file_location . $junior_csv);
-      drupal_set_message("Triple-store updated.");
-      if (empty($form_state['organogram_dates'][$file->fid])) {
-        db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $fid . ", " . $organogram_date . ", " . time() . ", 0)");
-      }
-      else {
-        db_query("UPDATE dgu_organogram SET publish_date = " . time() . " where fid = " . $fid);
-      }
-    } catch (Exception $e) {
-      drupal_set_message("Unable to publish this dataset to the triple-store. Please try later.");
+//    try {
+//      _dgu_organogram_post_files_to_epimorphics($organogram_date, $organogram_file_location . $senior_csv, $organogram_file_location . $junior_csv);
+//      drupal_set_message("Triple-store updated.");
+//      if (empty($form_state['organogram_dates'][$file->fid])) {
+//        db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $fid . ", " . $organogram_date . ", " . time() . ", 0)");
+//      }
+//      else {
+//        db_query("UPDATE dgu_organogram SET publish_date = " . time() . " where fid = " . $fid);
+//      }
+//    } catch (Exception $e) {
+//      drupal_set_message("Unable to publish this dataset to the triple-store. Please try later.");
+//    }
+
+    if (empty($form_state['organogram_dates'][$file->fid])) {
+      db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $fid . ", " . $organogram_date . ", " . time() . ", 0)");
+    }
+    else {
+      db_query("UPDATE dgu_organogram SET publish_date = " . time() . " where fid = " . $fid);
     }
   }
 }

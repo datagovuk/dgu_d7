@@ -113,9 +113,12 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
     color: #f00;
 }
 
+.form-type-managed-file .form-type-select,
 .form-type-managed-file {
     display: none;
 }
+
+
 
 .field-name-field-organogram .input-group .form-control {
     width: inherit;

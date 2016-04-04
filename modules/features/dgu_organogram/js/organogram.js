@@ -527,6 +527,7 @@ var OrgDataLoader = {
         });
         //At this point hierarchy contains a map of senior posts with their reporting post and a list of
         //junior posts who report to them.
+        var topLevel;
         senior.forEach(function(post, index, array) {
             var postUR = post['Post Unique Reference'];
             var children = getChildren(postUR);
@@ -534,9 +535,15 @@ var OrgDataLoader = {
                 var seniorPost = createSeniorPostNode(post);
                 seniorPost.children = children;
                 tree.push(seniorPost);
+
+                if (isNaN(post['Reports to Senior Post'])) {
+                    topLevel = tree.length - 1;
+                }
+
             }
         });
-        return tree[0];
+        return tree[topLevel];
+        //return tree[0];
     },
     errorMessage: function (message){
         $('.field-name-field-organogram .form-type-managed-file').append('<div class="alert alert-block alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Error message</h4>'
@@ -750,7 +757,6 @@ var OrgDataLoader = {
                     value: $(this).attr('data-fid')
 
                 }).appendTo(this.form);
-                //this.form.submit();
 
                 $('#edit-submit').trigger('click');
 
@@ -760,12 +766,17 @@ var OrgDataLoader = {
 
     Drupal.behaviors.organogramUpload = {
         attach: function (context, settings) {
+
             $('.btn-organogram-upload').click(function() {
+
                 $('.field-name-field-organogram .form-type-managed-file').show();
                 $('.field-name-field-organogram table').hide();
+                $('.form-item-publishers').hide();
 
+                var dateDisplay = $(this).data('organogram-date-dispaly');
                 var date = $(this).data('organogram-date');
-                $('.field-name-field-organogram .form-type-managed-file select').val(date);
+                $('.field-name-field-organogram .form-type-managed-file .form-select').val(date);
+                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(dateDisplay);
 
 
 
@@ -773,6 +784,7 @@ var OrgDataLoader = {
             $('.btn-cancel').click(function() {
                 $('.field-name-field-organogram .form-type-managed-file').hide();
                 $('.field-name-field-organogram table').show();
+                $('.form-item-publishers').show();
             });
 
         }
@@ -786,8 +798,16 @@ var OrgDataLoader = {
                 var ajax = Drupal.ajax[$(target).attr('id')];
                 Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                 ajax.options.success = function(response, status) {
-                    Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
-                    $('input#edit-submit.btn.btn-primary.form-submit').click();
+                    if (response[1].data.indexOf('The spreadsheet contains errors') > -1) {
+                        Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('.field-name-field-organogram .form-type-managed-file').show();
+                        $('.field-name-field-organogram table').hide();
+                        $('.form-item-publishers').hide();
+                    }
+                    else {
+                        Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('input#edit-submit.btn.btn-primary.form-submit').click();
+                    }
                 }
                 ajax.form.ajaxSubmit(ajax.options);
             });
@@ -809,6 +829,27 @@ var OrgDataLoader = {
             });
         }
     };
+
+    Drupal.behaviors.publisherSelect = {
+        attach: function (context, settings) {
+            jQuery('.chosen-select').chosen().change(function(){
+                var id = $(this).val();
+                window.location.href = '/ckan_publisher/' + id + '/edit';
+            });
+        }
+    }
+
+//    Drupal.behaviors.fileUpload = {
+//        attach: function(context, settings) {
+//            jQuery('body').ajaxComplete(function(event,request, settings){
+//                if(window.location.pathname.match(/ckan_publisher\/\d+\/edit/)) {
+//                    form_build_id = 'ckan-publisher-form';
+//                    //jQuery("#"+form_build_id).find("[id^=edit-submit]").click()
+//                }
+//            });
+//        }
+//    }
+
     OrgDataLoader.docBase = '/organogram-ajax/preview/';
 
     $.fn.listHandlers = function(events, outputFunction) {
