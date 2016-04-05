@@ -773,7 +773,7 @@ var OrgDataLoader = {
                 $('.field-name-field-organogram table').hide();
                 $('.form-item-publishers').hide();
 
-                var dateDisplay = $(this).data('organogram-date-dispaly');
+                var dateDisplay = $(this).data('organogram-date-display');
                 var date = $(this).data('organogram-date');
                 $('.field-name-field-organogram .form-type-managed-file .form-select').val(date);
                 $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(dateDisplay);
