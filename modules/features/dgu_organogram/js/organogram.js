@@ -288,7 +288,7 @@ var Orgvis = {
         var infoBoxSize = $('.infobox').height();
         var infoVisSize = $('.infovis').height();
         if ((infoVisSize - 20) < infoBoxSize ) {
-          $('.infovis').height(infoBoxSize + 20);
+            $('.infovis').height(infoBoxSize + 20);
         }
         $(window).trigger('resize');
     },
@@ -371,42 +371,42 @@ var OrgDataLoader = {
     load: function (filename, infovisId, previewMarkup) {
         $.ajax({cache: false, dataType: "json", url: this.docBase+filename,
             success : function(ret) {
-            var data = ret.data;
-            $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-senior.csv",
-                success : function(seniorcsv){
-                    Papa.parse(seniorcsv, {
-                        header: true, delimiter: ',',
-                        complete: function(seniorrows) {
-                            senior = seniorrows.data;
-                            $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-junior.csv",
-                                success : function(juniorcsv){
-                                    Papa.parse(juniorcsv, {
-                                        header: true, delimiter: ',',
-                                        complete: function(juniorrows) {
-                                            junior = juniorrows.data;
-                                            $('.chart .ajax-progress').remove();
-                                            Orgvis.showSpaceTree(OrgDataLoader.buildTree(data.name), infovisId);
-                                        }
-                                    });
-                                },
-                                error: function() {
-                                    OrgDataLoader.errorMessage(ret.responseText);
-                                    $('tr.preview--show').hide();
-                                }
-                            });
-                        }
-                    });
-                },
-                error: function() {
-                    OrgDataLoader.errorMessage(ret.responseText);
-                    $('tr.preview--show').hide();
-                }
-            });
-        },
-        error: function(ret) {
-            OrgDataLoader.errorMessage(ret.responseText);
-            $('tr.preview--show').hide();
-        }
+                var data = ret.data;
+                $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-senior.csv",
+                    success : function(seniorcsv){
+                        Papa.parse(seniorcsv, {
+                            header: true, delimiter: ',',
+                            complete: function(seniorrows) {
+                                senior = seniorrows.data;
+                                $.ajax({url: OrgDataLoader.docBase + "data/" + data.value + "-junior.csv",
+                                    success : function(juniorcsv){
+                                        Papa.parse(juniorcsv, {
+                                            header: true, delimiter: ',',
+                                            complete: function(juniorrows) {
+                                                junior = juniorrows.data;
+                                                $('.chart .ajax-progress').remove();
+                                                Orgvis.showSpaceTree(OrgDataLoader.buildTree(data.name), infovisId);
+                                            }
+                                        });
+                                    },
+                                    error: function() {
+                                        OrgDataLoader.errorMessage(ret.responseText);
+                                        $('tr.preview--show').hide();
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function() {
+                        OrgDataLoader.errorMessage(ret.responseText);
+                        $('tr.preview--show').hide();
+                    }
+                });
+            },
+            error: function(ret) {
+                OrgDataLoader.errorMessage(ret.responseText);
+                $('tr.preview--show').hide();
+            }
 
         });
     },
@@ -527,6 +527,7 @@ var OrgDataLoader = {
         });
         //At this point hierarchy contains a map of senior posts with their reporting post and a list of
         //junior posts who report to them.
+        var topLevel;
         senior.forEach(function(post, index, array) {
             var postUR = post['Post Unique Reference'];
             var children = getChildren(postUR);
@@ -534,9 +535,15 @@ var OrgDataLoader = {
                 var seniorPost = createSeniorPostNode(post);
                 seniorPost.children = children;
                 tree.push(seniorPost);
+
+                if (isNaN(post['Reports to Senior Post'])) {
+                    topLevel = tree.length - 1;
+                }
+
             }
         });
-        return tree[0];
+        return tree[topLevel];
+        //return tree[0];
     },
     errorMessage: function (message){
         $('.field-name-field-organogram .form-type-managed-file').append('<div class="alert alert-block alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Error message</h4>'
@@ -598,7 +605,7 @@ var OrgDataLoader = {
     var junior = null;
     var senior = null;
     var previewMarkup =
-        '<tr class="preview"><td colspan="3">'+
+        '<tr class="preview"><td colspan="6">'+
             '  <div class="organogram-preview">'+
             '    <input type="button" class="organogram-preview-close" value="&times;">'+
             '    <div class="chart">'+
@@ -614,11 +621,11 @@ var OrgDataLoader = {
     Drupal.behaviors.ckanPublisherTogglePreview = {
         attach: function (context, settings) {
             console.log(settings);
-            previewButton = $('.js-organogram-preview-btn');
+            previewLink = $('.organogram-preview');
 
             // Preview
-            previewButton.click(function() {
-
+            previewLink.click(function() {
+                $('.field-name-field-organogram tr.preview').remove();
                 $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
 
                 var preview =  $(this).parent().parent().after(previewMarkup);
@@ -630,7 +637,7 @@ var OrgDataLoader = {
                 previewPanel.addClass(previewShowClass);
 
                 previewPanel.find('.organogram-preview-close').on('click', function(){
-                    previewPanel.removeClass(previewShowClass);;
+                    previewPanel.remove();
                 });
                 $(this).on('click', function(){
                     $('html, body').animate({'scrollTop' : $(this).offset().top - 70},400, 'swing');
@@ -638,9 +645,9 @@ var OrgDataLoader = {
                 });
 
 
-                var filename = $(this).attr('data-organogram-file');
+                var fid = $(this).attr('data-organogram-fid');
                 $(this).parent().parent().next().find('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
-                OrgDataLoader.load(filename, infovisId, previewMarkup);
+                OrgDataLoader.load(fid, infovisId, previewMarkup);
             });
         },
 
@@ -724,6 +731,65 @@ var OrgDataLoader = {
         }
     };
 
+    Drupal.behaviors.organogramSignOff = {
+        attach: function (context, settings) {
+            console.log(settings);
+            signOffCheckbox = $('.organogram-sign-off');
+
+            // Sign off
+            signOffCheckbox.change(function() {
+
+//                if (this.checked == true) {
+//                   var message = 'Are you sure to sign off?'
+//                }
+//                else {
+//                    var message = 'Are you sure to undo sign off?'
+//                }
+//
+//                var confirmation = confirm(message);
+//                if (confirmation == true) {
+//                    alert('done');
+//                }
+
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'signoff',
+                    value: $(this).attr('data-fid')
+
+                }).appendTo(this.form);
+
+                $('#edit-submit').trigger('click');
+
+            });
+        }
+    };
+
+    Drupal.behaviors.organogramUpload = {
+        attach: function (context, settings) {
+
+            $('.btn-organogram-upload').click(function() {
+
+                $('.field-name-field-organogram .form-type-managed-file').show();
+                $('.field-name-field-organogram table').hide();
+                $('.form-item-publishers').hide();
+
+                var dateDisplay = $(this).data('organogram-date-dispaly');
+                var date = $(this).data('organogram-date');
+                $('.field-name-field-organogram .form-type-managed-file .form-select').val(date);
+                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(dateDisplay);
+
+
+
+            });
+            $('.btn-cancel').click(function() {
+                $('.field-name-field-organogram .form-type-managed-file').hide();
+                $('.field-name-field-organogram table').show();
+                $('.form-item-publishers').show();
+            });
+
+        }
+    };
+
     Drupal.behaviors.organogramConfirm = {
         attach: function(context, settings) {
             $("input[name$='upload_button']").unbind('mousedown');
@@ -732,8 +798,16 @@ var OrgDataLoader = {
                 var ajax = Drupal.ajax[$(target).attr('id')];
                 Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                 ajax.options.success = function(response, status) {
-                    Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
-                    $('input#edit-submit.btn.btn-primary.form-submit').click();
+                    if (response[1].data.indexOf('The spreadsheet contains errors') > -1) {
+                        Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('.field-name-field-organogram .form-type-managed-file').show();
+                        $('.field-name-field-organogram table').hide();
+                        $('.form-item-publishers').hide();
+                    }
+                    else {
+                        Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('input#edit-submit.btn.btn-primary.form-submit').click();
+                    }
                 }
                 ajax.form.ajaxSubmit(ajax.options);
             });
@@ -755,6 +829,27 @@ var OrgDataLoader = {
             });
         }
     };
+
+    Drupal.behaviors.publisherSelect = {
+        attach: function (context, settings) {
+            jQuery('.chosen-select').chosen().change(function(){
+                var id = $(this).val();
+                window.location.href = '/ckan_publisher/' + id + '/edit';
+            });
+        }
+    }
+
+//    Drupal.behaviors.fileUpload = {
+//        attach: function(context, settings) {
+//            jQuery('body').ajaxComplete(function(event,request, settings){
+//                if(window.location.pathname.match(/ckan_publisher\/\d+\/edit/)) {
+//                    form_build_id = 'ckan-publisher-form';
+//                    //jQuery("#"+form_build_id).find("[id^=edit-submit]").click()
+//                }
+//            });
+//        }
+//    }
+
     OrgDataLoader.docBase = '/organogram-ajax/preview/';
 
     $.fn.listHandlers = function(events, outputFunction) {
