@@ -684,17 +684,13 @@ function _dgu_organogram_get_dates() {
  * Submit handler for organogram files that adds extra data (publish date and deadline date) into a table.
  */
 function dgu_organogram_organogram_submit($form, &$form_state) {
-  drupal_set_message('The spreadsheet contains errors:', 'error');
-  return;
-
-//  try {
-//    $file = _dgu_organogram_generate_csv_files($fid);
-//    $json = _dgu_organogram_read_index($file);
-//  } catch (Exception $e) {
-//    drupal_add_http_header('Status', '500 Internal server error');
-//    print $e->getMessage();
-//    drupal_exit();
-//  }
+  try {
+    $file = _dgu_organogram_generate_csv_files($fid);
+    $json = _dgu_organogram_read_index($file);
+  } catch (Exception $e) {
+    drupal_set_message('The spreadsheet contains errors:' . $e->getMessage(), 'error');
+    return;
+  }
 
   db_query("DELETE FROM dgu_organogram where id = " . $form['id']['#value']);
   foreach ($form_state['values']['field_organogram'][LANGUAGE_NONE] as $organogram) {
@@ -705,11 +701,7 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     }
   }
   $commands = array();
-
-// Add other commands
-
   $commands[] = ajax_command_prepend('div#ajax-status-messages-wrapper', theme('status_messages'));
-
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
