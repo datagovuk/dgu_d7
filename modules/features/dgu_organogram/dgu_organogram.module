@@ -685,10 +685,10 @@ function _dgu_organogram_get_dates() {
  */
 function dgu_organogram_organogram_submit($form, &$form_state) {
   try {
+    $fid = end($form_state['values']['field_organogram'][LANGUAGE_NONE])['fid'];
     $file = _dgu_organogram_generate_csv_files($fid);
-    $json = _dgu_organogram_read_index($file);
   } catch (Exception $e) {
-    drupal_set_message('The spreadsheet contains errors:' . $e->getMessage(), 'error');
+    drupal_set_message('<p><strong>The spreadsheet contains errors:</strong></p>' . $e->getMessage(), 'error');
     return;
   }
 
@@ -701,7 +701,11 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     }
   }
   $commands = array();
+
+// Add other commands
+
   $commands[] = ajax_command_prepend('div#ajax-status-messages-wrapper', theme('status_messages'));
+
   return array('#type' => 'ajax', '#commands' => $commands);
 }
 
@@ -1252,3 +1256,4 @@ function query ($endpoint, $query) {
   }
 
 }
+
