@@ -1509,74 +1509,130 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function iUploadOrganograms() {
 
-      $drush = $this->getDriver();
+    $drush = $this->getDriver();
 
-      ini_set('auto_detect_line_endings',TRUE);
-      $handle = fopen('/home/pawel/data/uploads_report_tidied.csv','r');
-      $ignore_this = fgetcsv($handle);
-      $i = 0;
-      while (($row = fgetcsv($handle)) !== FALSE ) {
-        if ($i++ >= 882) {
-          if (file_exists('/media/pawel/Data/organogram-data/dgu/xls/' . $row[6])) {
-            $title = str_replace("'", "\'", $row[1]);
+    ini_set('auto_detect_line_endings',TRUE);
+    $handle = fopen('/var/data/tso_combined.csv','r');
+    $ignore_this = fgetcsv($handle);
+    $messages = array();
+    $i = 0;
+    while (($row = fgetcsv($handle)) !== FALSE ) {
+      if ($i++ >= 0) {
 
-            // Trying to get publisher id 10 times.
-            for ($j = 0; $j <10; $j++) {
-              try {
-                $id = $drush->drush('ev', array('"\$id = db_select(\'ckan_publisher\', \'p\')->fields(\'p\', array(\'id\'))->condition(\'p.title\', \'' . $title . '\' )->execute()->fetchField(); print \$id;"'));
-                break;
-              }
-              catch (Exception $e) {}
+        $title = str_replace("'", "\'", $row[0]);
+        $version_array = explode('-', $row[1]);
+        $version = implode('-', array_reverse($version_array));
+        $xls_path = $row[2];
+
+        if (file_exists('/var/organogram-data/' . $xls_path)) {
+
+
+          // Trying to get publisher id 10 times.
+          for ($j = 0; $j <10; $j++) {
+            try {
+              $id = $drush->drush('ev', array('"\$id = db_select(\'ckan_publisher\', \'p\')->fields(\'p\', array(\'id\'))->condition(\'p.title\', \'' . $title . '\' )->execute()->fetchField(); print \$id;"'));
+              break;
             }
+            catch (Exception $e) {}
+          }
 
-            if (!$id) {
-              throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
-            }
+          if (!$id) {
+            throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
+          }
 
-            $version = str_replace('/', '-', $row[0]);
-            $session = $this->getSession();
+
+          $session = $this->getSession();
+          $session->visit($this->locatePath('/ckan_publisher/' . $id . '/edit'));
+          sleep(2);
+          $page = $session->getPage();
+
+          $xls_link = $page->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
+          if(!empty($xls_link)) {
+            print print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/ckan_publisher/' . $id . '/edit', 50, ' ') . "[$version] " . 'XLS file already uploaded';
+            continue;
+          }
+
+          $input = $page->find('css', '#ckan-publisher-form input.form-file');
+
+          if(empty($input)) {
+            sleep(20);
             $session->visit($this->locatePath('/ckan_publisher/' . $id . '/edit'));
-            sleep(2);
+            sleep(10);
             $page = $session->getPage();
             $input = $page->find('css', '#ckan-publisher-form input.form-file');
-
             if(empty($input)) {
-              sleep(20);
-              $session->visit($this->locatePath('/ckan_publisher/' . $id . '/edit'));
-              sleep(10);
-              $page = $session->getPage();
-              $input = $page->find('css', '#ckan-publisher-form input.form-file');
-              if(empty($input)) {
-                throw new Exception("Organogram upload input box not found");
-              }
+              throw new Exception("Organogram upload input box not found");
             }
-
-            $input->attachFile('/media/pawel/Data/organogram-data/dgu/xls/' . $row[6]);
-            sleep(1);
-            $select = $page->find('css', '#ckan-publisher-form .form-select');
-            if(empty($select)) {
-              throw new Exception("Organogram version dropdown not found");
-            }
-            $select->selectOption($version);
-            sleep(1);
-            $link = $page->find('css','#ckan-publisher-form input.form-submit');
-            if(empty($link)) {
-              throw new Exception("Organogram upload button not found");
-            }
-            $link->press();
-
-            print "\nhttp://test.data.gov.uk/ckan_publisher/" . $id . '/edit (version ' . $version . ') [' . $i . ']';
-
-            sleep(5);
           }
-          else {
-            print "\nfile not found: " . $row[6] . ' (version ' . $version . ') [' . $i . ']';
+
+          $input->attachFile('/var/data/organogram-data/' . $xls_path);
+          sleep(1);
+          $select = $page->find('css', '#ckan-publisher-form .form-select');
+          if(empty($select)) {
+            throw new Exception("Organogram version dropdown not found");
           }
+          $select->selectOption($version);
+          sleep(1);
+          $upload_button = $page->find('css','#ckan-publisher-form input.form-submit');
+          if(empty($upload_button)) {
+            throw new Exception("Organogram upload button not found");
+          }
+          $upload_button->press();
+
+          print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/ckan_publisher/' . $id . '/edit', 50, ' ') . "[$version] ";
+
+          sleep(7);
+
+          $xls_link = $page->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
+          if(empty($xls_link)) {
+            sleep(30);
+            $xls_link = $page->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
+            if(empty($xls_link)) {
+              print 'XLS file upload failed';
+              continue;
+            }
+          }
+
+          $table_row = $xls_link->getParent()->getParent()->getParent()->getParent();
+          $preview_button = $table_row->findButton('Preview');
+          if(empty($preview_button)) {
+            throw new Exception("Preview button for version $version not found.");
+          }
+          $preview_button->press();
+          sleep(7);
+          $vis_node = $page->find('css', '.organogram-preview .node');
+          $ok = ' OK';
+          if(empty($vis_node)) {
+            sleep(17);
+            $vis_node = $page->find('css', '.organogram-preview .node');
+            if(empty($vis_node)) {
+              print 'Missing top post ';
+              $ok = '';
+            }
+          }
+
+          $error_message = $page->find('css', '.form-type-managed-file .alert-danger');
+          if(!empty($error_message)) {
+            $message_text = substr($error_message->getText(), 24);
+            if (!in_array($message_text, $messages)) {
+              $messages[] = $message_text;
+            }
+            print ' | ' . $message_text;
+            $ok = '';
+          }
+          print $ok;
         }
-
+        else {
+          print "\nfile not found: " . $xls_path . ' (version ' . $version . ') [' . $i . ']';
+        }
       }
-      ini_set('auto_detect_line_endings',FALSE);
 
+    }
+    ini_set('auto_detect_line_endings',FALSE);
+    print "\n\n-----------------------------------------------\nERROR MESSAGES:";
+    foreach ($messages as $message) {
+      print "\n" . $message;
+    }
 
 
     //$scv = getcsv(file_get_contents('https://raw.githubusercontent.com/datagovuk/organograms/gh-pages/uploads_report_tidied.csv'),);
@@ -1590,7 +1646,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $drush = $this->getDriver();
 
     ini_set('auto_detect_line_endings',TRUE);
-    $handle = fopen('/home/pawel/organogram_upload.log','r');
+    $handle = fopen('/tmp/organogram_upload.log','r');
     $i = 0;
     $messages = array();
 
@@ -1654,3 +1710,4 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
 }
+
