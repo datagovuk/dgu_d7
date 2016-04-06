@@ -68,8 +68,9 @@ def load_excel_store_errors(filename, sheet_name, errors, input_columns, rename_
                            input_columns[i]))
     df.columns = output_columns
     # Filter null rows
-    column0 = df[ df.columns[0] ]
-    df = df[ column0.notnull() ]
+    # (defined as having the first two columns both blank. junior roles
+    # generated from triplestore don't have a parent organization set.)
+    df = df.dropna(subset=df.columns[0:2], how='all')
     # Softly cast to integer (or N/A or N/D)
     def validate_int_or_na(column_name):
         def _inner(x):
@@ -309,6 +310,13 @@ def verify_graph(senior, junior, errors):
                       % ref)
 
 
+def get_date_from_filename(filename):
+    match = re.search(r'(\d{4}-\d{2}-\d{2})', filename) or \
+        re.search(r'(\d{2}-\d{2}-\d{4})', filename)
+    assert match, 'Cannot find date in filename: %s' % filename
+    return match.groups()[0]
+
+
 def get_verify_level(graph):
     # parse graph date
     graph_match = re.match(
@@ -414,6 +422,9 @@ def main(input_xls_filepath, output_folder):
 
     if args.date:
         verify_level = get_verify_level(args.date)
+    elif args.date_from_filename:
+        date_ = get_date_from_filename(input_xls_filepath)
+        verify_level = get_verify_level(date_)
     else:
         verify_level = 'load, display and be valid'
     data = load_xls_and_print_errors(input_xls_filepath, verify_level)
@@ -462,6 +473,11 @@ if __name__ == '__main__':
     parser.add_argument('--date',
                         help='The strength of verify level picked according '
                              'to the date of the data (YYYY-MM-DD)')
+    parser.add_argument('--date-from-filename',
+                        action='store_true',
+                        help='The strength of verify level picked according '
+                             'to the date of the data, extracted from the '
+                             'filename (for manual tests only!)')
     parser.add_argument('input_xls_filepath')
     parser.add_argument('output_folder')
     args = parser.parse_args()
