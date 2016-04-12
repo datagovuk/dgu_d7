@@ -175,6 +175,7 @@ features[views_view][] = data_requests_administration
 features[views_view][] = dataset_request_extract
 features[views_view][] = dataset_requests
 features[views_view][] = minutes
+features[views_view][] = public_data_request_extract
 features_exclude[variable][comment_anonymous_dataset_request] = comment_anonymous_dataset_request
 features_exclude[variable][comment_dataset_request] = comment_dataset_request
 features_exclude[variable][comment_default_mode_dataset_request] = comment_default_mode_dataset_request
