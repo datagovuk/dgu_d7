@@ -136,6 +136,7 @@ function _dgu_organogram_generate_csv_files($fid) {
 
   $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
   $command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} --date $date_for_script '${filename}' " . file_directory_temp();
+  //$command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} '${filename}' " . file_directory_temp();
 
   exec($command, $output, $ret);
   if ($ret == 1) {
@@ -186,25 +187,22 @@ function dgu_organogram_preview_data($filename) {
 
 function dgu_organogram_get_user_publisher_tree() {
   global $user;
-
   $publishers = &drupal_static(__FUNCTION__);
-
   if (!isset($publishers)) {
-    $account = user_load($user->uid);
-    $publishers = array();
-    if (!empty($account->field_publishers[LANGUAGE_NONE])) {
-      $publisher_ids = array();
-      foreach ($account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
-        $publisher_ids = array_merge($publisher_ids, dgu_user_get_publisher_with_children($publisher_ref['target_id']));
+    $query = db_select('ckan_publisher', 'p')->fields('p', array('id', 'title'));
+
+    if (!user_access('administer CKAN publishers')) {
+      $account = user_load($user->uid);
+      $publishers = array();
+      if (!empty($account->field_publishers[LANGUAGE_NONE])) {
+        $publisher_ids = array();
+        foreach ($account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
+          $publisher_ids = array_merge($publisher_ids, dgu_user_get_publisher_with_children($publisher_ref['target_id']));
+        }
+        $query->condition('id', $publisher_ids, 'IN');
       }
-
-      $query = db_select('ckan_publisher', 'p')
-        ->fields('p', array('id', 'title'));
-
-      $query->condition('id', $publisher_ids, 'IN');
-
-      $publishers = $query->execute()->fetchAllKeyed();
     }
+    $publishers = $query->execute()->fetchAllKeyed();
   }
 
   return $publishers;
@@ -288,7 +286,6 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   }
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
-
 
   drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
   drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
@@ -1257,4 +1254,5 @@ function query ($endpoint, $query) {
   }
 
 }
+
 
