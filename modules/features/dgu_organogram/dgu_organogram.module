@@ -136,7 +136,6 @@ function _dgu_organogram_generate_csv_files($fid) {
 
   $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
   $command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} --date $date_for_script '${filename}' " . file_directory_temp();
-  //$command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} '${filename}' " . file_directory_temp();
 
   exec($command, $output, $ret);
   if ($ret == 1) {
