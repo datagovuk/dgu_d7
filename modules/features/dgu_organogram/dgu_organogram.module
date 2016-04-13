@@ -186,25 +186,22 @@ function dgu_organogram_preview_data($filename) {
 
 function dgu_organogram_get_user_publisher_tree() {
   global $user;
-
   $publishers = &drupal_static(__FUNCTION__);
-
   if (!isset($publishers)) {
-    $account = user_load($user->uid);
-    $publishers = array();
-    if (!empty($account->field_publishers[LANGUAGE_NONE])) {
-      $publisher_ids = array();
-      foreach ($account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
-        $publisher_ids = array_merge($publisher_ids, dgu_user_get_publisher_with_children($publisher_ref['target_id']));
+    $query = db_select('ckan_publisher', 'p')->fields('p', array('id', 'title'));
+
+    if (!user_access('administer CKAN publishers')) {
+      $account = user_load($user->uid);
+      $publishers = array();
+      if (!empty($account->field_publishers[LANGUAGE_NONE])) {
+        $publisher_ids = array();
+        foreach ($account->field_publishers[LANGUAGE_NONE] as $publisher_ref) {
+          $publisher_ids = array_merge($publisher_ids, dgu_user_get_publisher_with_children($publisher_ref['target_id']));
+        }
+        $query->condition('id', $publisher_ids, 'IN');
       }
-
-      $query = db_select('ckan_publisher', 'p')
-        ->fields('p', array('id', 'title'));
-
-      $query->condition('id', $publisher_ids, 'IN');
-
-      $publishers = $query->execute()->fetchAllKeyed();
     }
+    $publishers = $query->execute()->fetchAllKeyed();
   }
 
   return $publishers;
@@ -274,21 +271,20 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   $form_state['publish_dates'] = $publish_query->fields('o', array('fid', 'publish_date'))->execute()->fetchAllKeyed();
   $form_state['signoff_dates'] = $signoff_query->fields('o', array('fid', 'signoff_date'))->execute()->fetchAllKeyed();
 
-//  try {
-//    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
-//    if ($group) {
-//      $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-//      if (!empty($package) && $package['state'] == 'active') {
-//        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
-//        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
-//      }
-//    }
-//  } catch (Exception $e) {
-//    drupal_set_message('An error occurred while trying to read organogram dataset. ' . $e->getMessage(), 'error');
-//  }
+  try {
+    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
+    if ($group) {
+      $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+      if (!empty($package) && $package['state'] == 'active') {
+        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
+        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
+      }
+    }
+  } catch (Exception $e) {
+    drupal_set_message('An error occurred while trying to read organogram dataset. ' . $e->getMessage(), 'error');
+  }
 
   $module_path = drupal_get_path('module', 'dgu_organogram');
-
 
   drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
   drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
@@ -685,8 +681,9 @@ function _dgu_organogram_get_dates() {
  */
 function dgu_organogram_organogram_submit($form, &$form_state) {
   try {
-    $fid = end($form_state['values']['field_organogram'][LANGUAGE_NONE])['fid'];
-    $file = _dgu_organogram_generate_csv_files($fid);
+    $last_item = end($form_state['values']['field_organogram'][LANGUAGE_NONE]);
+    $fid = $last_item['fid'];
+    _dgu_organogram_generate_csv_files($fid);
   } catch (Exception $e) {
     drupal_set_message('<p><strong>The spreadsheet contains errors:</strong></p>' . $e->getMessage(), 'error');
     return;
@@ -1256,4 +1253,5 @@ function query ($endpoint, $query) {
   }
 
 }
+
 

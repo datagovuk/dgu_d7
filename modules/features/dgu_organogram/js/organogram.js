@@ -773,10 +773,10 @@ var OrgDataLoader = {
                 $('.field-name-field-organogram table').hide();
                 $('.form-item-publishers').hide();
 
-                var dateDisplay = $(this).data('organogram-date-dispaly');
-                var date = $(this).data('organogram-date');
-                $('.field-name-field-organogram .form-type-managed-file .form-select').val(date);
-                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(dateDisplay);
+                Drupal.settings.organogramDateDisplay = $(this).data('organogram-date-display');
+                Drupal.settings.organogramDate = $(this).data('organogram-date');
+                $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
+                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
 
 
 
@@ -800,6 +800,8 @@ var OrgDataLoader = {
                 ajax.options.success = function(response, status) {
                     if (response[1].data.indexOf('The spreadsheet contains errors') > -1) {
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
+                        $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
                         $('.field-name-field-organogram .form-type-managed-file').show();
                         $('.field-name-field-organogram table').hide();
                         $('.form-item-publishers').hide();
@@ -818,7 +820,9 @@ var OrgDataLoader = {
                 if (confirm('Are you sure you want to remove this organogram?')) {
                     Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                     ajax.options.success = function(response, status) {
+                        //read and store values from data drop down
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        //restore darte on date drop down and upload widget label
                         $('input#edit-submit.btn.btn-primary.form-submit').click();
                     }
                     ajax.form.ajaxSubmit(ajax.options);
@@ -868,4 +872,5 @@ var OrgDataLoader = {
     };
 
 })(jQuery);
+
 
