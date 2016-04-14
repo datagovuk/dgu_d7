@@ -625,6 +625,13 @@ var OrgDataLoader = {
 
             // Preview
             previewLink.click(function() {
+                if ($(this).html() == '▼ <span>Preview</span>') {
+                    var previewPanel = $(this).parent().parent().next();
+                    previewPanel.remove();
+                    $(this).html('▶ <span>Preview</span>');
+                    return;
+                }
+                $(this).html('▼ <span>Preview</span>');
                 $('.field-name-field-organogram tr.preview').remove();
                 $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
 
@@ -759,7 +766,6 @@ var OrgDataLoader = {
                 }).appendTo(this.form);
 
                 $('#edit-submit').trigger('click');
-
             });
         }
     };
@@ -777,16 +783,12 @@ var OrgDataLoader = {
                 Drupal.settings.organogramDate = $(this).data('organogram-date');
                 $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
                 $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
-
-
-
             });
             $('.btn-cancel').click(function() {
                 $('.field-name-field-organogram .form-type-managed-file').hide();
                 $('.field-name-field-organogram table').show();
                 $('.form-item-publishers').show();
             });
-
         }
     };
 

@@ -442,14 +442,7 @@ function theme_organogram_file_widget($variables) {
 
       $status = $organogram['status']['#value'];
 
-      $view = l('▶ Preview', NULL, array(
-        'fragment' => FALSE,
-        'external' => TRUE,
-        'attributes' => array(
-          'class' => array('organogram-preview'),
-          'data-organogram-fid' => $organogram['#file']->fid,
-        ),
-      ));
+      $view = '<a href="#" class="organogram-preview" data-organogram-fid="' . $organogram['#file']->fid . '">▶ <span>Preview</span></a>';
 
       $operations = '';
       foreach ($operations_elements as $operation_element) {
