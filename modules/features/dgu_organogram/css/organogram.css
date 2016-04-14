@@ -59,6 +59,11 @@ tr.preview--show {
 .organogram-preview {
     position: relative;
 }
+
+.organogram-preview > span {
+    text-decoration: underline;
+}
+
 .organogram-preview-close {
     border:0;
     position: absolute;
