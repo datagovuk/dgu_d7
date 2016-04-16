@@ -1,6 +1,4 @@
-<?php
-/**
- * @file
+le
  * DGU Organogram feature. Provides functionality to load preview and publish organograms for CKAN publishers. Uses
  * CKAN_PHP api to connect to the CKAN instance and publishes data to the triple store using the service developed by
  * Epimorphics.  Requires the correct setting for epimorphics_uri in a variable and uses the site wide CKAN api key and uri.
@@ -481,6 +479,10 @@ function theme_organogram_file_widget($variables) {
       }
     }
 
+    if(isset($organogram['status_hover']['#value'])) {
+      $status = '<span title="' . $organogram['status_hover']['#value'] . '">' . $status . '</span>';
+    }
+
     $row = array(
       array('data' => $date, 'class' => 'date'),
       array('data' => $file_name, 'class' => 'file'),
@@ -534,6 +536,7 @@ function dgu_organogram_after($element, $form_state) {
     $publish_date = !empty($form_state['publish_dates'][$element['#file']->fid]) ? $form_state['publish_dates'][$element['#file']->fid] : 0;
 
     $file = $element['#file'];
+
     $url = file_create_url($file->uri);
 
     $options = array(
@@ -547,16 +550,25 @@ function dgu_organogram_after($element, $form_state) {
       $filename = substr($filename, 0, 48) . '...';
     }
 
-    $hover = check_plain($file->filename);
-    $hover .= "\n\nUploaded:   " . date('d M Y H:i', $element['#file']->timestamp);
+    $hover_xls = check_plain($file->filename);
+    $user = user_load($file->uid);
+
+    $hover_xls .= "\n\nUploaded by " . $user->name . ' on ' . date('d M Y H:i', $element['#file']->timestamp);
+
     if ($signoff) {
-      $hover .= "\nSigned off: " . date('d M Y H:i', $signoff_date);
+      $hover_sign_off = "\nSigned off on " . date('d M Y H:i', $signoff_date);
     }
+
+    $status = 'Outstanding';
     if ($published) {
-      $hover .= "\nPublished:  " . date('d M Y H:i', $publish_date);
+      $hover_published = "\nPublished on  " . date('d M Y H:i', $publish_date);
       $status = 'Done';
+      $element['status_hover'] = array(
+        '#type' => 'value',
+        '#value' => $hover_published,
+      );
     }
-    else {
+    elseif($signoff) {
       $element['publish_button'] = array(
         '#name' => "publish_organogram_{$element['#language']}_{$element['#file']->fid}_button",
         '#type' => 'submit',
@@ -566,10 +578,8 @@ function dgu_organogram_after($element, $form_state) {
           'data-file-fid' => $element['#file']->fid ? : 0,
           'class' => array('btn-primary'),
         ),
-        '#disabled' => !$signoff,
         '#weight' => -100,
       );
-      $status = 'Outstanding';
     }
 
     $element['status'] = array(
@@ -579,7 +589,7 @@ function dgu_organogram_after($element, $form_state) {
 
 
     $organogram_link_text = '' . $filename;
-    $options['attributes']['title'] = $hover;
+    $options['attributes']['title'] = $hover_xls;
     $element['filename']['#markup'] = '<span class="file"> ' . l($organogram_link_text, $url, $options) . '</span>';
 
     $element['deadline_date'] = array(
@@ -605,6 +615,7 @@ function dgu_organogram_after($element, $form_state) {
       '#attributes' => array(
         'class' => array('organogram-sign-off'),
         'data-fid' => $element['#file']->fid,
+        'title' => isset($hover_sign_off) ? $hover_sign_off : '',
       ),
     );
 
