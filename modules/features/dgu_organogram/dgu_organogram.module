@@ -276,8 +276,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     if ($group) {
       $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
       if (!empty($package) && $package['state'] == 'active') {
-        $CkanUrl = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
-        drupal_set_message("Click here to see the published <a href=\"${CkanUrl}\" >organogram dataset</a>");
+        $ckan_publisher->organogram_dataset_url = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
       }
     }
   } catch (Exception $e) {
@@ -454,7 +453,7 @@ function theme_organogram_file_widget($variables) {
     else {
       $file_name = '';
       $sign_off = '';
-      $view = '';
+      $view = '<a href="' . $organogram['#entity']->organogram_dataset_url . '">View</a>';
       $status = 'Outstanding';
 
       $upload_buttton =array(
