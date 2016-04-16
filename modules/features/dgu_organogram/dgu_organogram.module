@@ -1,4 +1,6 @@
-le
+<?php
+/**
+ * @file
  * DGU Organogram feature. Provides functionality to load preview and publish organograms for CKAN publishers. Uses
  * CKAN_PHP api to connect to the CKAN instance and publishes data to the triple store using the service developed by
  * Epimorphics.  Requires the correct setting for epimorphics_uri in a variable and uses the site wide CKAN api key and uri.
