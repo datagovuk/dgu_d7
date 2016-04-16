@@ -469,8 +469,16 @@ function theme_organogram_file_widget($variables) {
     }
 
     if ($status != 'Done') {
-      $status_class .= ' outstanding';
-      $status = $timestamp < time() ? $status : 'Due soon';
+      if ($timestamp > time() + (30 * 24 * 60 * 60)) {
+        $status = 'Due next';
+      }
+      elseif($timestamp > time()) {
+        $status_class .= ' outstanding';
+        $status = 'Due soon';
+      }
+      else {
+        $status_class .= ' outstanding';
+      }
     }
 
     $row = array(
