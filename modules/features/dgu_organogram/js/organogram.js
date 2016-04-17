@@ -625,6 +625,13 @@ var OrgDataLoader = {
 
             // Preview
             previewLink.click(function() {
+                if ($(this).html() == '▼ <span>Preview</span>') {
+                    var previewPanel = $(this).parent().parent().next();
+                    previewPanel.remove();
+                    $(this).html('▶ <span>Preview</span>');
+                    return;
+                }
+                $(this).html('▼ <span>Preview</span>');
                 $('.field-name-field-organogram tr.preview').remove();
                 $('html, body').animate({'scrollTop' : $(this).offset().top - 50},400, 'swing');
 
@@ -759,7 +766,6 @@ var OrgDataLoader = {
                 }).appendTo(this.form);
 
                 $('#edit-submit').trigger('click');
-
             });
         }
     };
@@ -773,20 +779,16 @@ var OrgDataLoader = {
                 $('.field-name-field-organogram table').hide();
                 $('.form-item-publishers').hide();
 
-                var dateDisplay = $(this).data('organogram-date-display');
-                var date = $(this).data('organogram-date');
-                $('.field-name-field-organogram .form-type-managed-file .form-select').val(date);
-                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(dateDisplay);
-
-
-
+                Drupal.settings.organogramDateDisplay = $(this).data('organogram-date-display');
+                Drupal.settings.organogramDate = $(this).data('organogram-date');
+                $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
+                $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
             });
             $('.btn-cancel').click(function() {
                 $('.field-name-field-organogram .form-type-managed-file').hide();
                 $('.field-name-field-organogram table').show();
                 $('.form-item-publishers').show();
             });
-
         }
     };
 
@@ -800,6 +802,8 @@ var OrgDataLoader = {
                 ajax.options.success = function(response, status) {
                     if (response[1].data.indexOf('The spreadsheet contains errors') > -1) {
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
+                        $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
                         $('.field-name-field-organogram .form-type-managed-file').show();
                         $('.field-name-field-organogram table').hide();
                         $('.form-item-publishers').hide();
@@ -818,7 +822,9 @@ var OrgDataLoader = {
                 if (confirm('Are you sure you want to remove this organogram?')) {
                     Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                     ajax.options.success = function(response, status) {
+                        //read and store values from data drop down
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
+                        //restore darte on date drop down and upload widget label
                         $('input#edit-submit.btn.btn-primary.form-submit').click();
                     }
                     ajax.form.ajaxSubmit(ajax.options);
