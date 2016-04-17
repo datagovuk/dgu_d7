@@ -486,9 +486,6 @@ function theme_organogram_file_widget($variables) {
         $status_class .= ' outstanding';
       }
     }
-    else {
-
-    }
 
     if(isset($organogram['status_hover']['#value'])) {
       $status = '<span title="' . $organogram['status_hover']['#value'] . '">' . $status . '</span>';
