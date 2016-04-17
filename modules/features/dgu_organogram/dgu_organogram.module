@@ -441,7 +441,13 @@ function theme_organogram_file_widget($variables) {
 
       $status = $organogram['status']['#value'];
 
-      $view = '<a href="#" class="organogram-preview" data-organogram-fid="' . $organogram['#file']->fid . '">▶ <span>Preview</span></a>';
+      if ($status == 'Done') {
+        $view = '<a href="' . $organogram['#entity']->organogram_dataset_url . '">View</a>';
+      }
+      else {
+        $view = '<a href="#" class="organogram-preview" data-organogram-fid="' . $organogram['#file']->fid . '">▶ <span>Preview</span></a>';
+      }
+
 
       $operations = '';
       foreach ($operations_elements as $operation_element) {
@@ -453,7 +459,7 @@ function theme_organogram_file_widget($variables) {
     else {
       $file_name = '';
       $sign_off = '';
-      $view = '<a href="' . $organogram['#entity']->organogram_dataset_url . '">View</a>';
+      $view = '';
       $status = 'Outstanding';
 
       $upload_buttton =array(
@@ -479,6 +485,9 @@ function theme_organogram_file_widget($variables) {
       else {
         $status_class .= ' outstanding';
       }
+    }
+    else {
+
     }
 
     if(isset($organogram['status_hover']['#value'])) {
