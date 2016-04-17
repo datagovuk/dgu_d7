@@ -1,0 +1,107 @@
+diff -ur ckan/ckan_publisher/ckan_publisher.admin.inc ckan_hmm/ckan_publisher/ckan_publisher.admin.inc
+--- ckan/ckan_publisher/ckan_publisher.admin.inc        2014-12-17 17:22:34.000000000 +0000
++++ ckan_hmm/ckan_publisher/ckan_publisher.admin.inc    2014-12-17 16:35:13.000000000 +0000
+@@ -15,7 +15,7 @@
+    * parent class hook_menu() is optimized for entity type administration.
+    */
+   public function hook_menu() {
+-    $items = array();
++    $items = parent::hook_menu();
+     $wildcard = isset($this->entityInfo['admin ui']['menu wildcard']) ? $this->entityInfo['admin ui']['menu wildcard'] : '%' . $this->entityType;
+
+     // Menu item for viewing CKAN Publishers
+@@ -30,6 +30,15 @@
+       'type' => MENU_CALLBACK,
+     );
+
++    // Menu item for editing CKAN Publishers and managing their organograms
++    $items['organogram/manage/' . $wildcard]] = array(
++      'page callback' => 'drupal_get_form',
++      'page arguments' => array('ckan_publisher_form', 2),
++      'access callback' => 'ckan_publisher_access',
++      'access arguments' => array('edit', 2),
++      'type' => MENU_LOCAL_TASK,
++    );
++
+     $items['admin/structure/ckan_publisher'] = array(
+       'title' => 'Publishers',
+       'access arguments' => array('Administer CKAN'),
+diff -ur ckan/ckan_publisher/ckan_publisher.install ckan_hmm/ckan_publisher/ckan_publisher.install
+--- ckan/ckan_publisher/ckan_publisher.install  2014-12-17 17:22:34.000000000 +0000
++++ ckan_hmm/ckan_publisher/ckan_publisher.install      2014-12-17 16:35:13.000000000 +0000
+@@ -82,4 +82,4 @@
+   );
+
+   return $schema;
+-}
+\ No newline at end of file
++}
+diff -ur ckan/ckan_publisher/ckan_publisher.module ckan_hmm/ckan_publisher/ckan_publisher.module
+--- ckan/ckan_publisher/ckan_publisher.module   2014-12-17 17:22:34.000000000 +0000
++++ ckan_hmm/ckan_publisher/ckan_publisher.module       2014-12-17 16:35:13.000000000 +0000
+@@ -17,10 +17,19 @@
+     'entity class' => 'CKANPublisher',
+     'controller class' => 'CKANPublisherController',
+     'base table' => 'ckan_publisher',
+-    'fieldable' => FALSE,
++    'fieldable' => TRUE,
+     'entity keys' => array(
+-      'id' => 'id',
+-      'label' => 'title',
++        'id' => 'id',
++    ),
++    'bundles' => array(
++      'ckan_publisher' => array( // This is the bundle_key.
++        'label' => 'CKAN Publisher',
++        'admin' => array(
++          'path' => 'admin/structure/ckan_publisher',
++          'real path' => 'admin/structure/ckan_publisher',
++          'access arguments' => array('Administer CKAN'),
++        ),
++      ),
+     ),
+     'label callback' => 'entity_class_label',
+     'uri callback' => 'entity_class_uri',
+@@ -118,6 +127,42 @@
+   return reset($ckan_publishers);
+ }
+
++function ckan_publisher_form($form, &$form_state, $ckan_publisher) {
++
++  $form['id'] = array(
++    '#type' => 'hidden',
++    '#value' => $ckan_publisher->id,
++  );
++
++  $form['title'] = array (
++    '#type' => 'textfield',
++    '#title' => t('Publisher'),
++    '#value' => $ckan_publisher->title,
++    '#disabled' => TRUE,
++    '#weight' => -2,
++  );
++
++  $form['ckan_id'] = array(
++    '#type' => 'textfield',
++    '#title' => t('CKAN Identity'),
++    '#value' => $ckan_publisher->ckan_id,
++    '#disabled' => TRUE,
++    '#weight' => -1,
++  );
++
++  field_attach_form('ckan_publisher', $ckan_publisher, $form, $form_state);
++
++  $form['buttons']['#weight'] = 101;
++  $form['buttons']['submit'] = array(
++    '#type' => 'submit',
++    '#value' => t('Save')
++  );
++  $form['buttons']['cancel'] = array(
++    '#type' => 'submit',
++    '#value' => t('Cancel')
++  );
++  return $form;
++}
+
+ /**
+  * Load multiple CKAN Publishers based on certain conditions.
