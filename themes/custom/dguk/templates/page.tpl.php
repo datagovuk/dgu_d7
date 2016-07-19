@@ -68,9 +68,6 @@
           if (strpos($interact_menu, 'subnav-interact active')) {
             $active = 4;
           }
-          if (arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
-            $active = 6;
-          }
         ?>
 
       <div class="chevron position<?php print $active;?>"></div>
