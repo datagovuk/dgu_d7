@@ -4,15 +4,51 @@
     $user = user_load($user->uid);
   }
 ?>
+<?php $needs_admin_toolbar = ($user->uid == 1 || array_intersect(array('administrator', 'editor', 'blogger', 'data request administrator', 'moderator', 'CKAN sysadmin'), array_values($user->roles))) ?>
+<?php if(!$user->uid): ?>
+<?php $destination = drupal_get_destination(); ?>
+<div id="toolbar" class="toolbar overlay-displace-top clearfix toolbar-processed">
+  <div class="toolbar-menu clearfix">
+    <ul id="toolbar-user">
+      <li class="account first">
+        <?php print l('Register', 'user/register', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user')), 'html' => TRUE)); ?>            </li>
+      </li>
+      <li class="logout last">
+        <?php print l('Log in', 'user/login', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user')), 'html' => TRUE)); ?>            </li>
+      </li>
+    </ul>
 
+  </div>
+  <div class="toolbar-drawer clearfix">
+  </div>
+</div>
+  <?php global $user; elseif(!$needs_admin_toolbar): ?>
+  <div id="toolbar" class="toolbar overlay-displace-top clearfix toolbar-processed">
+    <div class="toolbar-menu clearfix">
+
+      <ul id="toolbar-user">
+        <li class="account first">
+          <a href="/user" title="User account"><strong><?php print $user->name; ?></strong></a>
+        </li>
+        <li class="path-admin-workbench first last">
+          <a href="/admin/workbench" id="toolbar-link-admin-workbench" title="My content">
+            <span class="icon"></span>
+            My content
+          </a>
+        </li>
+        <li class="logout last">
+          <a href="/user/logout">Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="toolbar-drawer clearfix">
+    </div>
+  </div>
+<?php endif; ?>
 <div id="blackbar" class="<?php print ($user->uid == 1 || in_array('data publisher', array_values($user->roles))) ? 'with' : 'without' ?>-publisher">
     <div class="container">
         <a class="brand" href="/" rel="home">
-          <!--
-            <div id="dgu-header" class="retina-img">
-                <img src="/assets/img/dgu-header-cropped.png" alt="DATA.GOV.UK - Opening up Government" />
-            </div>
-            -->
+          <img src="/assets/img/dgu-header-white.png" class="sysadmin-toolbar-<?php print ($needs_admin_toolbar) ? 'shown' : 'hidden' ?>">
         </a>
 
         <?php
@@ -31,9 +67,6 @@
           }
           if (strpos($interact_menu, 'subnav-interact active')) {
             $active = 4;
-          }
-          if (arg(0) == 'user' || (arg(0) == 'admin' && arg(1) == 'workbench')) {
-            $active = 6;
           }
         ?>
 
@@ -55,16 +88,16 @@
             </form>
           </div>
 
-          <?php $destination = drupal_get_destination(); ?>
-          <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
-
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
             <span class="dropdown">
-              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#"><i class="icon-wrench"></i></a>
+              <a class="nav-publisher btn btn-info dropdown-button" data-toggle="dropdown" href="#">
+                Publisher tools
+              </a>
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
                 <li role="presentation" class="dropdown-header">Tools</li>
                 <li><a href="/dataset/new">Add a Dataset</a></li>
                 <li><a href="/harvest">Dataset Harvesting</a></li>
+                <li><a href="http://guidance.data.gov.uk/" target="_blank">Guidance</a></li>
                 <li role="presentation" class="dropdown-header">My publishers</li>
                 <?php if (!empty($user->field_publishers)) foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
 
@@ -72,6 +105,9 @@
 
                   <li><a href="/publisher/<?php print $publisher->name?>"><?php print $publisher->title?></a></li>
                 <?php endforeach; ?>
+                <?php if ($user->uid == 1 || in_array('administrator', array_values($user->roles))): ?>
+                  <li><a href="/publisher">All publishers</a></li>
+                <?php endif; ?>
               </ul>
             </span>
           <?php endif; ?>
@@ -139,11 +175,7 @@
             </div>
         <?php endif; ?>
         <div class="clearfix"></div>
-    </div><!--/page-->
 
-
-
-</div><!--/.content-container-->
 
 <div class="footer">
   <footer role="contentinfo" class="container">
@@ -157,3 +189,4 @@
     ?>
   </footer>
 </div> <!-- /footer -->
+
