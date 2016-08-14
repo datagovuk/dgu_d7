@@ -466,8 +466,8 @@ var OrgDataLoader = {
                     'FTE': + post['FTE']*100/100,
                     'unit': post['Unit'],
                     'organisation': post['Organisation'],
-                    'payfloor': post['Actual Pay Floor (£)'],
-                    'payceiling': post['Actual Pay Ceiling (£)'],
+                    'payfloor': (post['Actual Pay Floor (£)'] * 100 / 100).formatMoney(0),
+                    'payceiling': (post['Actual Pay Ceiling (£)'] * 100 / 100).formatMoney(0),
                     'reportsto': post['Reports to Senior Post'],
                     'senior' : true,
                     'type': 'senior_posts'
