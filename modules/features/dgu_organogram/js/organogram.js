@@ -521,14 +521,18 @@ var OrgDataLoader = {
             if (null == hierarchy[reportsTo]){
                 hierarchy[reportsTo] = [];
             }
-            hierarchy[reportsTo].push(createSeniorPostNode(post));
+            if (post.Name != 'Eliminated') {
+                hierarchy[reportsTo].push(createSeniorPostNode(post));
+            }
         });
         junior.forEach(function(post, index, array) {
             reportsTo = post['Reporting Senior Post'];
             if (null == hierarchy[reportsTo]){
                 hierarchy[reportsTo] = [];
             }
-            hierarchy[reportsTo].push(createJuniorPostNode(post));
+            if (post.Name != 'Eliminated') {
+                hierarchy[reportsTo].push(createJuniorPostNode(post));
+            }
         });
         //At this point hierarchy contains a map of senior posts with their reporting post and a list of
         //junior posts who report to them.
