@@ -8,10 +8,11 @@ Feature: Upload organograms
   Scenario: Upload organograms
     Given I am on "/user"
     And I log in as "admin" user
+    #And I cleanup organograms
     And I upload organograms
 
-  @api
-  Scenario: Validate organograms
-    Given I am on "/user"
-    And I log in as "admin" user
-    And I validate organograms
+#  @api
+#  Scenario: Validate organograms
+#    Given I am on "/user"
+#    And I log in as "admin" user
+#    And I validate organograms
