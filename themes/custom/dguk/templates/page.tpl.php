@@ -5,6 +5,53 @@
   }
 ?>
 
+
+
+<?php if(!$user->uid): ?>
+<?php $destination = drupal_get_destination(); ?>
+<div id="toolbar" class="toolbar overlay-displace-top clearfix toolbar-processed">
+  <div class="toolbar-menu clearfix">
+    <ul id="toolbar-user">
+      <li class="account first">
+        <?php print l('Register', 'user/register', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user')), 'html' => TRUE)); ?>            </li>
+      </li>
+      <li class="logout last">
+        <?php print l('Login', 'user/login', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user')), 'html' => TRUE)); ?>            </li>
+      </li>
+    </ul>
+
+  </div>
+  <div class="toolbar-drawer clearfix">
+  </div>
+</div>
+  <?php global $user; elseif(count($user->roles) < 2): ?>
+  <div id="toolbar" class="toolbar overlay-displace-top clearfix toolbar-processed">
+    <div class="toolbar-menu clearfix">
+      <ul id="toolbar-home" style="display: none">
+        <li class="home first last">
+          <a href="/" title="Home"><span class="home-link">Home</span></a>
+        </li>
+      </ul>
+
+      <ul id="toolbar-user">
+        <li class="account first">
+          <a href="/user" title="User account"><strong><?php print $user->name; ?></strong></a>
+        </li>
+        <li class="path-admin-workbench first last">
+          <a href="/admin/workbench" id="toolbar-link-admin-workbench" title="My content">
+            <span class="icon"></span>
+            My content
+          </a>
+        </li>
+        <li class="logout last">
+          <a href="/user/logout">Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="toolbar-drawer clearfix">
+    </div>
+  </div>
+<?php endif; ?>
 <div id="blackbar" class="<?php print ($user->uid == 1 || in_array('data publisher', array_values($user->roles))) ? 'with' : 'without' ?>-publisher">
     <div class="container">
         <a class="brand" href="/" rel="home">
@@ -49,9 +96,6 @@
               </span>
             </form>
           </div>
-
-          <?php $destination = drupal_get_destination(); ?>
-          <?php print l('<i class="icon-user"></i>', 'user', array('query' => $destination['destination'] == 'home' ? '' : $destination, 'attributes' => array('class' => array('nav-user', 'btn-default', 'btn', 'btn-primary')), 'html' => TRUE)); ?>
 
           <?php if ($user->uid == 1 || in_array('data publisher', array_values($user->roles))): ?>
             <span class="dropdown">

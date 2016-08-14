@@ -194,14 +194,18 @@ function dguk_preprocess_reply(&$variables) {
  */
 function dguk_preprocess_replies(&$variables) {
   $options = array('attributes' => array('class' => array('btn-default', 'btn', 'btn-primary')));
-
   if ($variables['bundle'] == 'comment') {
-    if (($variables['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $variables['bundle'] .' reply')) {
-      $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0', $options);
+    if ($variables['access'] != REPLY_ACCESS_NONE) {
+      if (($variables['access'] == REPLY_ACCESS_FULL && user_access('administer replies')) ||  user_access('administer replies') || user_access('post '. $variables['bundle'] .' reply')) {
+        $variables['links']['add_reply']['#markup'] = l(t('Add new comment'), 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0', $options);
+      }
+      else {
+        $options['query'] = array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
+        $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login to make a comment'), 'user/login', $options);
+      }
     }
     else {
-      $options['query'] = array('destination' => 'reply/add/'. $variables['entity_id'] .'/'. $variables['instance_id'] .'/0');
-      $variables['links']['reply_post_forbidden']['#markup'] = l(t('Login to make a comment'), 'user/login', $options);
+      unset($variables['links']);
     }
   }
 }
