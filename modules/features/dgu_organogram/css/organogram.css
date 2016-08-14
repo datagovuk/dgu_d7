@@ -58,7 +58,13 @@ tr.preview--show {
 
 .organogram-preview {
     position: relative;
+    color: #33d !important;
 }
+
+.organogram-preview:hover {
+    color: #005;
+}
+
 
 .organogram-preview > span {
     text-decoration: underline;
@@ -971,7 +977,7 @@ a.categorydata:hover
     text-align: left;
 }
 
-#edit-field-organogram-und-table .operations {
+#edit-field-organogram-und-table td.operations {
     text-align: right;
 }
 
@@ -982,4 +988,8 @@ table.sticky-header {
 .form-item-publishers label {
     vertical-align: top;
     margin-top: 3px;
+}
+
+body.page-organogram-manage #block-system-main {
+    overflow: visible;
 }

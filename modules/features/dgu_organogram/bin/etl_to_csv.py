@@ -28,10 +28,12 @@ class ValidationFatalError(Exception):
     pass
 
 
-def load_excel_store_errors(filename, sheet_name, errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns):
+def load_excel_store_errors(filename, sheet_name, errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns):
     """Carefully load an Excel file, taking care to log errors and produce clean output.
     You'll always receive a dataframe with the expected columns, though it might contain 0 rows if
-    there are errors. Strings will be stored in the 'errors' array."""
+    there are errors. Strings will be stored in the 'errors' array.
+    If 'validation_errors' are inserted, it means some values are discarded, but you would not be prevented from displaying the rest of the data.
+    """
     # Output columns can be different. Update according to the rename_columns dict:
     output_columns = [rename_columns.get(x,x) for x in input_columns]
     try:
@@ -90,7 +92,7 @@ def load_excel_store_errors(filename, sheet_name, errors, input_columns, rename_
                         return 'N/A'
                     if text == 'ND':
                         return 'N/D'
-                    errors.append('Expected numeric values in column "%s" (or N/A or N/D), but got text="%s".' % (column_name, x))
+                    validation_errors.append('Expected numeric values in column "%s" (or N/A or N/D), but got text="%s".' % (column_name, x))
                     return 0
         return _inner
     # int type cannot store NaN, so use object type
@@ -115,7 +117,7 @@ def load_excel_store_errors(filename, sheet_name, errors, input_columns, rename_
     return df
 
 
-def load_senior(excel_filename, errors):
+def load_senior(excel_filename, errors, validation_errors):
     input_columns = [
       u'Post Unique Reference',
       u'Name',
@@ -155,13 +157,13 @@ def load_senior(excel_filename, errors):
     n_a_for_blanks_columns = [
       u'Contact Phone',
     ]
-    df = load_excel_store_errors(excel_filename, '(final data) senior-staff', errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns)
+    df = load_excel_store_errors(excel_filename, '(final data) senior-staff', errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns)
     if df.dtypes['Post Unique Reference']==numpy.float64:
         df['Post Unique Reference'] = df['Post Unique Reference'].astype('int')
     return df
 
 
-def load_junior(excel_filename,errors):
+def load_junior(excel_filename, errors, validation_errors):
     input_columns = [
       u'Parent Department',
       u'Organisation',
@@ -181,7 +183,7 @@ def load_junior(excel_filename,errors):
       u'Reporting Senior Post',
     ]
     n_a_for_blanks_columns = []
-    df = load_excel_store_errors(excel_filename, '(final data) junior-staff', errors, input_columns, {}, [], integer_columns, string_columns, n_a_for_blanks_columns)
+    df = load_excel_store_errors(excel_filename, '(final data) junior-staff', errors, validation_errors, input_columns, {}, [], integer_columns, string_columns, n_a_for_blanks_columns)
     if df.dtypes['Reporting Senior Post']==numpy.float64:
         df['Reporting Senior Post'] = df['Reporting Senior Post'].fillna(-1).astype('int')
     return df
@@ -332,6 +334,7 @@ def get_verify_level(graph):
         # because the data clearly wasn't validated at this time:
         # * some posts are orphaned
         # * some posts report to posts which don't exist
+        # * some post reporting loops (including roles reporting to himself)
         # * some job-shares are people of different grades so you get errors
         #   about duplicate post refs.
         return 'load'
@@ -354,14 +357,16 @@ def get_verify_level(graph):
 
 def load_xls_and_get_errors(xls_filename):
     '''
+    Used by etl_to_csv.py
     Returns: (senior, junior, errors, will_display)
     '''
     errors = []
-    senior = load_senior(xls_filename, errors)
-    junior = load_junior(xls_filename, errors)
+    validation_errors = []
+    senior = load_senior(xls_filename, errors, validation_errors)
+    junior = load_junior(xls_filename, errors, validation_errors)
 
-    if errors:
-        return None, None, errors, False
+    if errors or validation_errors:
+        return None, None, errors + validation_errors, False
 
     try:
         verify_graph(senior, junior, errors)
@@ -386,11 +391,19 @@ def load_xls_and_print_errors(xls_filename, verify_level):
     If errors are not acceptable, it prints them and returns None
     '''
     load_errors = []
-    senior = load_senior(xls_filename, load_errors)
-    junior = load_junior(xls_filename, load_errors)
+    validation_errors = []
+    senior = load_senior(xls_filename, load_errors, validation_errors)
+    junior = load_junior(xls_filename, load_errors, validation_errors)
 
     if load_errors:
+        print 'Critical error(s):'
         for error in load_errors:
+            print_error(error)
+        # errors mean no rows can be got from the file, so can't do anything
+        return
+    if validation_errors and verify_level == 'load, display and be valid':
+        print 'Validation error(s) during load:'
+        for error in validation_errors:
             print_error(error)
         return
 

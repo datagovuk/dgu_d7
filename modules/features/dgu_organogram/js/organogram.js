@@ -9,7 +9,8 @@ var Orgvis = {
         visOffsetY:0,
         transX:0,
         transY:0,
-        infovisId:''
+        infovisId:'',
+
     },
     showSpaceTree: function(data, infovisId) {
         //$("#infovis").width($(window).width()-0);
@@ -434,14 +435,17 @@ var OrgDataLoader = {
             if (hierarchy[postRef]){
                 hierarchy[postRef].forEach(function(post, index, array) {
                     if (post.data['senior']){
-                        processed.push(post.id);
-                        post['children'] = getChildren(post.id);
-                        children.push(post);
+                        if (post.data.reportsto != post.id) {
+                            processed.push(post.id);
+                            post['children'] = getChildren(post.id);
+                            children.push(post);
+                        }
                     } else {
                         post.data.FTE = Math.round(post.data.FTE*100)/100;
                         juniorPosts.children.push(post);
                         juniorPosts.data.fteTotal += post.data.FTE;
                     }
+
                 });
             }
             if (juniorPosts.children.length > 0){
@@ -492,11 +496,12 @@ var OrgDataLoader = {
         }
 
         function createJuniorPostNode(post){
+            var reportsto = seniorPosts[post['Reporting Senior Post']] != undefined ? seniorPosts[post['Reporting Senior Post']].name : '';
             return {
                 'name': post['Generic Job Title'],
-                'id': post['Reporting Senior Post']+"_"+post['Grade'],
+                'id': post['Reporting Senior Post'] + "_" + post['Grade'] + "_" + post['Generic Job Title'],
                 'data':{
-                    'reportsto': seniorPosts[post['Reporting Senior Post']].name,
+                    'reportsto': reportsto,
                     'grade': post['Grade'],
                     'FTE': + post['Number of Posts in FTE'],
                     'unit': post['Unit'],
@@ -527,7 +532,8 @@ var OrgDataLoader = {
         });
         //At this point hierarchy contains a map of senior posts with their reporting post and a list of
         //junior posts who report to them.
-        var topLevel;
+        var topLevel = [];
+
         senior.forEach(function(post, index, array) {
             var postUR = post['Post Unique Reference'];
             var children = getChildren(postUR);
@@ -536,14 +542,37 @@ var OrgDataLoader = {
                 seniorPost.children = children;
                 tree.push(seniorPost);
 
-                if (isNaN(post['Reports to Senior Post'])) {
-                    topLevel = tree.length - 1;
+                if (post['Reports to Senior Post'].toLowerCase() == 'xx') {
+                    topLevel.push(tree.length - 1);
                 }
-
             }
         });
-        return tree[topLevel];
-        //return tree[0];
+
+        if (topLevel.length == 1) {
+            return tree[topLevel[0]];
+        }
+        else if (topLevel.length > 1) {
+
+            var fake = {
+                "Post Unique Reference": "XX",
+                "Job Title": "Top Post",
+                "Unit": "This post exists to group all top level posts under a single organogram",
+                    "data" : {
+                    "heldBy" : "abc"
+                }
+            }
+
+            var fakeNode = createSeniorPostNode(fake);
+            fakeNode.children = [];
+
+            topLevel.forEach(function(id, index, array) {
+                fakeNode.children.push(tree[id]);
+            })
+
+            tree.push(fakeNode);
+
+            return tree[tree.length - 1]
+        }
     },
     errorMessage: function (message){
         $('.field-name-field-organogram .form-type-managed-file').append('<div class="alert alert-block alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Error message</h4>'
@@ -738,6 +767,98 @@ var OrgDataLoader = {
         }
     };
 
+
+    Drupal.behaviors.organogramView = {
+        attach: function (context, settings) {
+            console.log(settings);
+            var infovisId = 'infovis';
+            if (typeof Drupal.settings.dgu_organogram !== 'undefined' && typeof Drupal.settings.dgu_organogram.fid !== 'undefined') {
+                OrgDataLoader.load(Drupal.settings.dgu_organogram.fid, infovisId);
+            }
+        },
+
+        buildTree: function(department) {
+            var hierarchy = {};
+            var tree = [];
+            var processed = [];
+            function getChildren(postRef){
+                var children = [];
+                if (hierarchy[postRef]){
+                    hierarchy[postRef].forEach(function(post, index, array) {
+                        if (post['ref']){
+                            processed.push(post['ref']);
+                            post['children'] = getChildren(post['ref']);
+                        }
+                        children.push(post);
+                    });
+                }
+                return children;
+            }
+
+            senior.forEach(function(post, index, array) {
+                reportsTo = post['Reports to Senior Post'];
+                if (null == hierarchy[reportsTo]){
+                    hierarchy[reportsTo] = [];
+                }
+                hierarchy[reportsTo].push({
+                    'jobtitle' : post['Job Title'],
+                    'name' : post['Name'],
+                    'grade' : post['Grade'],
+                    'FTE': + post['FTE'],
+                    'unit': post['Unit'],
+                    'payfloor': post['Actual Pay Floor (£)'],
+                    'payceiling': post['Actual Pay Ceiling (£)'],
+                    'ref' : post['Post Unique Reference'],
+                    'reportsto': post['Reports to Senior Post'],
+                    'senior' : true
+                });
+            });
+            junior.forEach(function(post, index, array) {
+                reportsTo = post['Reporting Senior Post'];
+                if (null == hierarchy[reportsTo]){
+                    hierarchy[reportsTo] = [];
+                }
+                hierarchy[reportsTo].push({
+                    'jobtitle': post['Generic Job Title'],
+                    'reportsto': reportsTo,
+                    'grade': post['Grade'],
+                    'FTE': + post['Number of Posts in FTE'],
+                    'unit': post['Unit'],
+                    'payfloor': post['Payscale Minimum (£)'],
+                    'payceiling': post['Payscale Maximum (£)'],
+                    'junior': true
+                });
+            });
+            //At this point hierarchy contains a map of senior posts with their reporting post and a list of
+            //junior posts who report to them.
+            senior.forEach(function(post, index, array) {
+                var postUR = post['Post Unique Reference'];
+                var children = getChildren(postUR);
+                if (-1 == processed.indexOf(postUR)){
+                    tree.push({
+                        'jobtitle' : post['Job Title'],
+                        'name' : post['Name'],
+                        'grade' : post['Grade'],
+                        'FTE': + post['FTE'],
+                        'unit': post['Unit'],
+                        'payfloor': post['Actual Pay Floor (£)'],
+                        'payceiling': post['Actual Pay Ceiling (£)'],
+                        'ref' : post['Post Unique Reference'],
+                        'reportsto': post['Reports to Senior Post'],
+                        'children' : children,
+                        'senior' : true
+                    });
+                }
+            });
+            return  {
+                'jobtitle': department,
+                'children': tree
+            }
+        }
+    };
+
+
+
     Drupal.behaviors.organogramSignOff = {
         attach: function (context, settings) {
             console.log(settings);
@@ -839,22 +960,11 @@ var OrgDataLoader = {
     Drupal.behaviors.publisherSelect = {
         attach: function (context, settings) {
             jQuery('.chosen-select').chosen().change(function(){
-                var id = $(this).val();
-                window.location.href = '/ckan_publisher/' + id + '/edit';
+                var name = $(this).val();
+                window.location.href = '/organogram/manage/' + name;
             });
         }
     }
-
-//    Drupal.behaviors.fileUpload = {
-//        attach: function(context, settings) {
-//            jQuery('body').ajaxComplete(function(event,request, settings){
-//                if(window.location.pathname.match(/ckan_publisher\/\d+\/edit/)) {
-//                    form_build_id = 'ckan-publisher-form';
-//                    //jQuery("#"+form_build_id).find("[id^=edit-submit]").click()
-//                }
-//            });
-//        }
-//    }
 
     OrgDataLoader.docBase = '/organogram-ajax/preview/';
 
