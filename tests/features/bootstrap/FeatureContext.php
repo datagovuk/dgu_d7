@@ -1522,8 +1522,11 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $ignore_this = fgetcsv($handle);
     $messages = array();
     $i = 0;
+
+    $failed = array(9, 152, 326, 460, 584, 697, 790, 861, 915, 959);
+
     while (($row = fgetcsv($handle)) !== FALSE ) {
-      if ($i++ >= 216) {
+     if ($i++ >= 0) { // if (in_array(++$i, $failed)) {
 
         $title = str_replace("'", "\'", $row[0]);
         $version_array = explode('-', $row[1]);
@@ -1608,7 +1611,16 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           if(empty($xls_link)) {
             sleep(30);
             $xls_link = $current_row->find('css', 'td.file span.file a');
+
             if(empty($xls_link)) {
+
+              $error_message = $page->find('css', '.alert-danger');
+              if(!empty($error_message)) {
+                $message_text = substr($error_message->getText(), 24);
+                print "\n\n" . $message_text . "\n-------------------------------------------------------------------------\n";
+              }
+
+
               print 'XLS file upload failed';
               continue;
             }
@@ -1636,7 +1648,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
             throw new Exception("Signoff checkbox for version $version not found.");
           }
           $signoff_checkbox->click();
-          sleep(5);
+          sleep(15);
 
           $publish_button = $current_row->findButton('Publish');
           if(empty($publish_button)) {
@@ -1647,15 +1659,15 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
             }
           }
 
-//          $publish_button->press();
-//          sleep(5);
-//          $success_message = $page->find('css', '.drupal-messages #messages .alert-success');
-//          if(!empty($success_message)) {
-//            $message_text = $success_message->getText();
-//            if (strpos($message_text, 'Resource id:') === FALSE) {
-//              print " | Error publishing CSVs for version $version. ";
-//            }
-//          }
+          $publish_button->press();
+          sleep(10);
+          $success_message = $page->find('css', '.drupal-messages #messages .alert-success');
+          if(!empty($success_message)) {
+            $message_text = $success_message->getText();
+            if (strpos($message_text, 'Resource id:') === FALSE) {
+              print " | Error publishing CSVs for version $version. ";
+            }
+          }
 
           $error_message = $page->find('css', '.form-type-managed-file .alert-danger');
           if(!empty($error_message)) {
@@ -1769,7 +1781,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $publishers = array();
     while (($row = fgetcsv($handle)) !== FALSE ) {
       $title = str_replace("'", "\'", $row[0]);
-      if (!in_array($title, $publishers)) {
+      if (!in_array($title, $publishers)) { // && $title == 'Cabinet Office'
         // Trying to get publisher id 10 times.
         for ($j = 0; $j <10; $j++) {
           try {
