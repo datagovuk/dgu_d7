@@ -2,6 +2,17 @@ function log(info){
     Orgvis.vars.debug && window.console && console.log && console.log(info);
 }
 
+String.prototype.hashCode = function() {
+    var hash = 0, i, chr, len;
+    if (this.length === 0) return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
 var Orgvis = {
     vars: {
         debug: true,
@@ -9,7 +20,7 @@ var Orgvis = {
         visOffsetY:0,
         transX:0,
         transY:0,
-        infovisId:'',
+        infovisId:''
 
     },
     showSpaceTree: function(data, infovisId) {
@@ -192,7 +203,7 @@ var Orgvis = {
                                         Move: m
                                     });
                                     if(Orgvis.vars.canvasPanned){
-                                        spaceTree.canvas.resize($('#'+infovisId ).width(), $('#infovis').height());
+                                        spaceTree.canvas.resize($('#'+infovisId ).width(), $('#'+infovisId).height());
                                         Orgvis.vars.canvasPanned = false;
                                     }
                                     break;
@@ -302,7 +313,7 @@ var Orgvis = {
 
         // Construct the HTML for the infobox
         var html = '<h1>'+node.name+'</h1>';
-        if(node.data.heldBy.length > 0){
+        if(node.data.heldBy != undefined && node.data.heldBy.length > 0){
             var nd = node.data;
             html += '<div class="panel heldBy ui-accordion ui-widget ui-helper-reset ui-accordion-icons">';
             html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">'+node.data.heldBy+'</a></h3>';
@@ -317,6 +328,26 @@ var Orgvis = {
             if(typeof nd.combinedSalaryOfReports != 'undefined'){
                 html += '<p class="salaryReports"><span>Combined salary of reporting posts</span><span class="value">'+nd.stats.salaryCostOfReports.formatted+'</span><a class="data" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'/statistics" value="'+nd.stats.salaryCostOfReports.value+'">Data</a><span class="date">'+nd.stats.date.formatted+'</span></p>';
             }
+
+            if(typeof nd.role != 'undefined'){
+                html += '<p class="role"><span>Role</span><span class="value">' + nd.role + '</span></p>';
+            }
+            if(typeof nd.profession != 'undefined'){
+                html += '<p class="profession"><span>Profession</span><span class="value">' + nd.profession + '</span></p>';
+            }
+            if(typeof nd.FTE != 'undefined'){
+                html += '<p class="fte"><span>Fraction of a full time role</span><span class="value">' + nd.FTE + '</span></p>';
+            }
+            if(typeof nd.email != 'undefined'){
+                html += '<p class="email"><span>Email</span><span class="value">' + nd.email + '</span></p>';
+            }
+            if(typeof nd.phone != 'undefined'){
+                html += '<p class="phone"><span>Phone</span><span class="value">' + nd.phone + '</span></p>';
+            }
+            if(typeof nd.notes != 'undefined'){
+                html += '<p class="notes"><span>Notes</span><span class="value">' + nd.notes + '</span></p>';
+            }
+
             html += '</div><!-- end content -->';
             html+= '</div><!-- end panel -->';
             html+= '<a class="close">x</a>';
@@ -470,7 +501,12 @@ var OrgDataLoader = {
                     'payceiling': (post['Actual Pay Ceiling (£)'] * 100 / 100).formatMoney(0),
                     'reportsto': post['Reports to Senior Post'],
                     'senior' : true,
-                    'type': 'senior_posts'
+                    'type': 'senior_posts',
+                    'role' : post['Job/Team Function'],
+                    'profession' : post['Professional/Occupational Group'],
+                    'email' : post['Contact E-mail'],
+                    'phone' : post['Contact Phone'],
+                    'notes' : post['Notes']
                 }
             }
             seniorPosts[seniorPost.id] = seniorPost;
@@ -495,11 +531,11 @@ var OrgDataLoader = {
             return floor.formatMoney(0) + " - " + ceil.formatMoney(0);
         }
 
-        function createJuniorPostNode(post){
+        function createJuniorPostNode(post, index){
             var reportsto = seniorPosts[post['Reporting Senior Post']] != undefined ? seniorPosts[post['Reporting Senior Post']].name : '';
             return {
                 'name': post['Generic Job Title'],
-                'id': post['Reporting Senior Post'] + "_" + post['Grade'] + "_" + post['Generic Job Title'],
+                'id': (index + "_" + post['Reporting Senior Post'] + "_" + post['Grade'] + "_" + post['Generic Job Title']).hashCode(),
                 'data':{
                     'reportsto': reportsto,
                     'grade': post['Grade'],
@@ -531,7 +567,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo] = [];
             }
             if (post.Name != 'Eliminated') {
-                hierarchy[reportsTo].push(createJuniorPostNode(post));
+                hierarchy[reportsTo].push(createJuniorPostNode(post, index));
             }
         });
         //At this point hierarchy contains a map of senior posts with their reporting post and a list of
