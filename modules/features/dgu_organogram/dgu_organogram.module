@@ -123,7 +123,7 @@ function _dgu_organogram_read_index($index) {
  *
  * Runs a python ETL script to read and transform an XLS spreadsheet into a pair of CSV files.
  */
-function _dgu_organogram_generate_csv_files($fid) {
+function _dgu_organogram_generate_csv_files($fid, $deadline_date = FALSE) {
   $output = array();
   $ret = 0;
   $file = file_load($fid);
@@ -131,7 +131,9 @@ function _dgu_organogram_generate_csv_files($fid) {
     $filename = $wrapper->realpath();
   }
 
-  $deadline_date = db_select('dgu_organogram', 'o')->fields('o', array('deadline_date'))->condition('fid', $fid)->execute()->fetchField();
+  if (!$deadline_date) {
+    $deadline_date = db_select('dgu_organogram', 'o')->fields('o', array('deadline_date'))->condition('fid', $fid)->execute()->fetchField();
+  }
   $date_for_script = date('Y-m-d', $deadline_date);
 
   $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
@@ -726,7 +728,8 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
   try {
     $last_item = end($form_state['values']['field_organogram'][LANGUAGE_NONE]);
     $fid = $last_item['fid'];
-    _dgu_organogram_generate_csv_files($fid);
+    $deadline_date = $last_item['deadline_date'];
+    _dgu_organogram_generate_csv_files($fid, $deadline_date);
   } catch (Exception $e) {
     drupal_set_message('<p><strong>The spreadsheet contains errors:</strong></p>' . $e->getMessage(), 'error');
     return;
@@ -736,7 +739,7 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
   db_query("DELETE FROM dgu_organogram where id = " . $form['id']['#value']);
   foreach ($form_state['values']['field_organogram'][LANGUAGE_NONE] as $organogram) {
     if ($organogram['deadline_date']) {
-      $current_organogram_versions[] = date('d/n/Y', $organogram['deadline_date']);
+      $current_organogram_versions[] = date('d/m/Y', $organogram['deadline_date']);
       $publish_date = !empty($organogram['publish_date']) ? $organogram['publish_date'] : 0;
       $signoff_date = !empty($organogram['signoff_date']) ? $organogram['signoff_date'] : 0;
       db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $organogram['fid'] . ", " . $organogram['deadline_date'] . ", " . $publish_date . ", " . $signoff_date . ")");
@@ -889,10 +892,12 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
       $file = file_load($fid);
       list($junior_csv, $senior_csv) = _dgu_organogram_get_csv_filenames(_dgu_organogram_read_index(_dgu_organogram_generate_csv_files($fid)));
       $dates = _dgu_organogram_get_dates();
-      $organogram_date = reset($dates);
-      if (!empty($form_state['organogram_dates'][$file->fid])) {
-        $organogram_date = date('d-m-Y', $form_state['organogram_dates'][$file->fid]);
+
+      if (empty($form_state['organogram_dates'][$file->fid])) {
+        return;
       }
+      $organogram_date = date('d/m/Y', $form_state['organogram_dates'][$file->fid]);
+      $organogram_date_for_viewer_link = date('Y-m-d', $form_state['organogram_dates'][$file->fid]);
       $organogram_path = '/organogram/' . $group['name'] . '/' . $organogram_date . '/';
       $organogram_file_location = DRUPAL_ROOT . '/' . variable_get('file_public_path') . $organogram_path;
       if (!file_exists($organogram_file_location)) {
@@ -937,6 +942,13 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
       $resource->description = 'Organogram - Senior CSV data';
       _dgu_organogram_create_or_update_resource($package, $resource, $organogram_date, 'Senior');
 
+      $resource->url = url('organogram/' . $group['name'] . '/' . $organogram_date_for_viewer_link, array('absolute' => TRUE));
+      $resource->format = 'HTML';
+      $resource->description = 'Organogram viewer';
+      //$resource->date = $organogram_date;
+      $resource->type = 'file';
+      _dgu_organogram_create_or_update_resource($package, $resource, $organogram_date, 'viewer');
+
     } catch (Exception $e) {
       drupal_set_message("Unable to update {$resource->format} resource for dataset id: {$package['id']}. Try again later.");
       return;
@@ -973,7 +985,7 @@ function _dgu_organogram_find_resource_id($resources, $format, $organogram_date,
   foreach ($resources as $resource) {
     //because for inexpicable reasons, CKAN sometimes has a different date format,
     // and sometimes not at all.
-    $date1 = DateTime::createFromFormat('d-m-Y', $organogram_date);
+    $date1 = DateTime::createFromFormat('d/m/Y', $organogram_date);
     if (!empty($resource['date'])) {
       if (strstr($resource['date'], '/')) {
         $date1 = DateTime::createFromFormat('d/m/Y', $resource['date']);
@@ -982,14 +994,21 @@ function _dgu_organogram_find_resource_id($resources, $format, $organogram_date,
         $date1 = DateTime::createFromFormat('d-m-Y', $resource['date']);
       }
     }
-    $date2 = DateTime::createFromFormat('d-m-Y', $organogram_date);
-    if ($resource['format'] == $format && $date1->diff($date2)->days < 1) {
+    $date2 = DateTime::createFromFormat('d/m/Y', $organogram_date);
+
+    $date1 = $date1->format('Y-m-d');
+    $date2 = $date2->format('Y-m-d');
+
+    if ($resource['format'] == $format && $date1 == $date2) {
       if (strstr($resource['description'], $organogram_file_type)) {
         $resource_id = $resource['id'];
         break;
       }
     }
   }
+
+  //drupal_set_message("Find: " . $format . ' | ' . $organogram_date . ' | ' . $organogram_file_type  . ' | ' . $resource_id);
+
   return $resource_id;
 }
 
@@ -1211,7 +1230,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $form['infovis'] = array(
     '#type' => 'markup',
-    '#markup' => '<div id="infovis"><div id="infobox"></div></div>',
+    '#markup' => '<div id="infovis"><div class="infobox"></div></div>',
   );
 
   $form['api'] = array(
@@ -1226,21 +1245,5 @@ function dgu_organogram_viz_form_submit($form, &$form_state) {
   if (!empty($form_state['values']['version'])) {
     $form_state['redirect'] .= '/' . date('Y-m-d', $form_state['values']['version']);
   }
-}
-
-
-
-
-function getDataFromTriplestore() {
-
-  if ($cache = cache_get('organogram_departments')) {
-    $departmentsHierarchy = $cache->data['hierarchy'];
-    $arrDepts = $cache->data['depts'];
-  }
-  else {
-
-    cache_set('organogram_departments', array('depts' => $arrDepts, 'hierarchy' => $departmentsHierarchy), 'cache', 60); // Cache for 1 minute
-  }
-  return array('departmentsHierarchy' => $departmentsHierarchy, 'arrDepts' => $arrDepts);
 }
 
