@@ -316,8 +316,9 @@ var Orgvis = {
         if(node.data.heldBy != undefined && node.data.heldBy.length > 0){
             var nd = node.data;
             html += '<div class="panel heldBy ui-accordion ui-widget ui-helper-reset ui-accordion-icons">';
-            html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">'+node.data.heldBy+'</a></h3>';
+            html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">Name: '+node.data.heldBy+'</a></h3>';
             html += '<div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">';
+            html += '<p class="unit"><span>Unit</span><span class="value">'+nd.unit+ '</span></p>';
             html += '<p class="id"><span>Post ID</span><span class="value">'+node.id+ '</span></p>';
             if(typeof nd.grade != 'undefined'){
                 html += '<p class="grade"><span>Grade</span><span class="value">'+nd.grade+'</span></p>';
@@ -337,6 +338,9 @@ var Orgvis = {
             }
             if(typeof nd.FTE != 'undefined'){
                 html += '<p class="fte"><span>Fraction of a full time role</span><span class="value">' + nd.FTE + '</span></p>';
+            }
+            if(typeof nd.cost != 'undefined'){
+                html += '<p class="cost"><span>Combined salary of reporting posts</span><span class="value">' + nd.cost + '</span></p>';
             }
             if(typeof nd.email != 'undefined'){
                 html += '<p class="email"><span>Email</span><span class="value">' + nd.email + '</span></p>';
@@ -499,6 +503,7 @@ var OrgDataLoader = {
                     'organisation': post['Organisation'],
                     'payfloor': (post['Actual Pay Floor (£)'] * 100 / 100).formatMoney(0),
                     'payceiling': (post['Actual Pay Ceiling (£)'] * 100 / 100).formatMoney(0),
+                    'cost': (post['Salary Cost of Reports (£)'] * 100 / 100).formatMoney(0),
                     'reportsto': post['Reports to Senior Post'],
                     'senior' : true,
                     'type': 'senior_posts',
