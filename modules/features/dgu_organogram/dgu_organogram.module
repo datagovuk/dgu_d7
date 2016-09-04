@@ -67,14 +67,15 @@ function dgu_organogram_theme($existing, $type, $theme, $path) {
  * Implements hook_menu_breadcrumb_alter().
  */
 function dgu_organogram_menu_breadcrumb_alter(&$active_trail, $item) {
-  if ($item['path'] == 'organogram/%/%') {
+  if ($item['path'] == 'organogram/%/%' || $item['path'] == 'organogram/%') {
     $active_trail = array(
       current($active_trail),
       array('title' => 'Organogram', 'href' => 'organogram', 'localized_options' => array()),
     );
-    $data_from_triplestore = getDataFromTriplestore();
-    if (isset($item['map'][1]) && !empty($data_from_triplestore['arrDepts'][$item['map'][1]])) {
-      drupal_set_title($data_from_triplestore['arrDepts'][$item['map'][1]]['label']);
+
+    $publisher_for_breadcrumb = &drupal_static('publisher_for_breadcrumb');
+    if (isset($item['map'][1])) {
+      drupal_set_title($publisher_for_breadcrumb);
     }
   }
 }
@@ -1075,7 +1076,6 @@ function _dgu_organogram_get_ckan_api_client() {
 }
 
 function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
-
   $query = db_select('dgu_organogram', 'o');
   $query->join('ckan_publisher', 'p', 'o.id = p.id');
   $query->fields('p', array('id', 'parent_id', 'name', 'title'))
@@ -1116,6 +1116,8 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
     }
   }
 
+
+
   $department_options = array();
   foreach ($publishers_hierarchy as $id => $publisher) {
     if (isset($publishers[$id])) {
@@ -1135,7 +1137,11 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   }
 
   if (!empty($current_department_id)) {
-  $version_options = $publishers[$current_department_id]['versions'];
+
+    $publisher_for_breadcrumb = &drupal_static('publisher_for_breadcrumb');
+    $publisher_for_breadcrumb = $publishers[$current_department_id]['title'];
+
+    $version_options = $publishers[$current_department_id]['versions'];
     if (empty($currentVersion)) {
       $currentVersion = max(array_keys($version_options));
     }
