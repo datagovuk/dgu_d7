@@ -1,11 +1,11 @@
 .infovis,
 #infovis {
-    background: #fff;
     border: 1px solid #ddd;
     overflow: hidden;
     display: block;
     position: relative;
     min-height: 700px;
+    background: #fff url("/assets/img/ajax-loader.gif") no-repeat 10px 10px;
 }
 
 .infovis {
@@ -156,6 +156,8 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
 
 .sign-off .checkbox input {
     margin: auto !important;
+    float: none !important;
+    vertical-align: middle;
 }
 
 div.chart {
