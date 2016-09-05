@@ -193,7 +193,7 @@ function dgu_organogram_get_user_publisher_tree() {
   if (!isset($publishers)) {
     $query = db_select('ckan_publisher', 'p')->fields('p', array('name', 'title'));
 
-    if (!user_access('administer CKAN publishers')) {
+    if (!user_has_role(5)) {
       $account = user_load($user->uid);
       $publishers = array();
       if (!empty($account->field_publishers[LANGUAGE_NONE])) {
@@ -409,9 +409,9 @@ function theme_organogram_file_widget($variables) {
   $headers = array(
     array('data' => 'Date', 'class' => array('date')),
     array('data' => 'File', 'class' => array('file')),
-    array('data' => 'Signed off', 'class' => array('sign-off')),
     array('data' => 'Publish status', 'class' => array('publish-status')),
     array('data' => 'View', 'class' => array('view')),
+    array('data' => '', 'class' => array('sign-off')),
     array('data' => 'Operations', 'class' => array('operations')),
   );
 
@@ -510,9 +510,9 @@ function theme_organogram_file_widget($variables) {
     $row = array(
       array('data' => $date, 'class' => 'date'),
       array('data' => $file_name, 'class' => 'file'),
-      array('data' => $sign_off, 'class' => 'sign-off'),
       array('data' => $status, 'class' => $status_class),
       array('data' => $view, 'class' => 'view'),
+      array('data' => $sign_off, 'class' => 'sign-off'),
       array('data' => $operations, 'class' => 'operations'),
     );
 
@@ -647,6 +647,7 @@ function dgu_organogram_after($element, $form_state) {
       '#type' => 'checkbox',
       //'#return_value' => $element['#file']->fid,
       '#default_value' => $signoff,
+      '#title' => 'Sign off',
       '#attributes' => array(
         'class' => array('organogram-sign-off'),
         'data-fid' => $element['#file']->fid,
@@ -1096,7 +1097,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
 
     $publishers[$oranogram->id]['name'] = $oranogram->name;
     $publishers[$oranogram->id]['title'] = $oranogram->title;
-    $publishers[$oranogram->id]['versions'][$oranogram->deadline_date] = date('Y-m-d', $oranogram->deadline_date);
+    $publishers[$oranogram->id]['versions'][$oranogram->deadline_date] = date('d M Y', $oranogram->deadline_date);
     $publishers[$oranogram->id]['files'][$oranogram->deadline_date] = $oranogram->fid;
 
     if (empty($oranogram->parent_id)) {
@@ -1131,7 +1132,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
     $department_options[$name] = $title;
     if (!empty($publisher['sub_publishers'])) {
       foreach ($publisher['sub_publishers'] as $sub_publisher_id) {
-        $department_options[$publishers[$sub_publisher_id]['name']] = ' - ' . $publishers[$sub_publisher_id]['title'];
+        $department_options[$publishers[$sub_publisher_id]['name']] = ' ―― ' . $publishers[$sub_publisher_id]['title'];
       }
     }
   }
@@ -1213,7 +1214,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $form['department'] = array(
     '#type' => 'select',
-    '#title' => t('Department'),
+    '#title' => t('Public body'),
     '#options' => $departmentOptions,
     '#default_value' => $currentDepartment,
     '#attributes' => array('onChange' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
