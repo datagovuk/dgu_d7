@@ -981,6 +981,7 @@ var OrgDataLoader = {
                 Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                 ajax.options.success = function(response, status) {
                     if (response[1].data.indexOf('The spreadsheet contains errors') > -1) {
+                        $('.alert-danger').remove();
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
                         $('.field-name-field-organogram .form-type-managed-file .form-select').val(Drupal.settings.organogramDate);
                         $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
