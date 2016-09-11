@@ -21,10 +21,9 @@ var Orgvis = {
         transX:0,
         transY:0,
         infovisId:''
-
     },
     showSpaceTree: function(data, infovisId) {
-        //$("#infovis").width($(window).width()-0);
+        $("#infovis").css("background-image", "none");
         $(".infovis").height($(window).height()-250);
         this.vars['infovisId'] = infovisId;
         $jit.ST.Plot.NodeTypes.implement({
@@ -80,7 +79,7 @@ var Orgvis = {
                 overridable: true
             },
             request: function(nodeId, level, onComplete) {
-                console.log("request called, nodeId: " + nodeId  + " , level: " + level + "\n");
+                //console.log("request called, nodeId: " + nodeId  + " , level: " + level + "\n");
                 var ans = [];//getTree(nodeId, level);
                 onComplete.onComplete(nodeId, ans);
             },
@@ -337,7 +336,7 @@ var Orgvis = {
                 html += '<p class="profession"><span>Profession</span><span class="value">' + nd.profession + '</span></p>';
             }
             if(typeof nd.FTE != 'undefined'){
-                html += '<p class="fte"><span>Fraction of a full time role</span><span class="value">' + nd.FTE + '</span></p>';
+                html += '<p class="fte"><span>FTE (as a fraction of a full time role)</span><span class="value">' + nd.FTE + '</span></p>';
             }
             if(typeof nd.cost != 'undefined'){
                 html += '<p class="cost"><span>Combined salary of reporting posts</span><span class="value">' + nd.cost + '</span></p>';
@@ -694,7 +693,7 @@ var OrgDataLoader = {
 
     Drupal.behaviors.ckanPublisherTogglePreview = {
         attach: function (context, settings) {
-            console.log(settings);
+            //console.log(settings);
             previewLink = $('.organogram-preview');
 
             // Preview
@@ -728,7 +727,9 @@ var OrgDataLoader = {
 
                 var fid = $(this).attr('data-organogram-fid');
                 $(this).parent().parent().next().find('.chart').append('<div class="ajax-progress"><div class="throbber">&nbsp;</div></div>');
+                $('.infovis').css('background-image', 'none');
                 OrgDataLoader.load(fid, infovisId, previewMarkup);
+
             });
         },
 
@@ -815,7 +816,7 @@ var OrgDataLoader = {
 
     Drupal.behaviors.organogramView = {
         attach: function (context, settings) {
-            console.log(settings);
+            //console.log(settings);
             var infovisId = 'infovis';
             if (typeof Drupal.settings.dgu_organogram !== 'undefined' && typeof Drupal.settings.dgu_organogram.fid !== 'undefined') {
                 OrgDataLoader.load(Drupal.settings.dgu_organogram.fid, infovisId);
@@ -906,11 +907,16 @@ var OrgDataLoader = {
 
     Drupal.behaviors.organogramSignOff = {
         attach: function (context, settings) {
-            console.log(settings);
+            //console.log(settings);
             signOffCheckbox = $('.organogram-sign-off');
 
             // Sign off
             signOffCheckbox.change(function() {
+                $(this).parent().append('<div class="ajax-progress ajax-progress-throbber"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i></div>');
+                $('body').css('cursor', 'wait');
+                signOffCheckbox.css('cursor', 'wait');
+                $('.checkbox label').css('cursor', 'wait');
+
 
 //                if (this.checked == true) {
 //                   var message = 'Are you sure to sign off?'
@@ -940,7 +946,15 @@ var OrgDataLoader = {
         attach: function (context, settings) {
 
             $('.btn-organogram-upload').click(function() {
-
+                $('input.form-submit').addClass('disabled');
+                $('input.form-file').change(function () {
+                    if ($('.form-type-managed-file .messages.error').length == 0) {
+                        $('input.form-submit').removeClass('disabled');
+                    }
+                    else {
+                        $('input.form-submit').addClass('disabled');
+                    }
+                });
                 $('.field-name-field-organogram .form-type-managed-file').show();
                 $('.field-name-field-organogram table').hide();
                 $('.form-item-publishers').hide();
@@ -975,6 +989,8 @@ var OrgDataLoader = {
                         $('.form-item-publishers').hide();
                     }
                     else {
+                        $('.field-name-field-organogram').hide();
+                        $('.organogram-throbber').show();
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
                         $('input#edit-submit.btn.btn-primary.form-submit').click();
                     }
@@ -989,6 +1005,13 @@ var OrgDataLoader = {
                     Drupal.behaviors.organogramConfirm.originalSuccess = ajax.options.success;
                     ajax.options.success = function(response, status) {
                         //read and store values from data drop down
+
+
+
+$('.field-name-field-organogram').hide();
+                        $('.organogram-throbber').show();
+
+
                         Drupal.behaviors.organogramConfirm.originalSuccess(response, status);
                         //restore darte on date drop down and upload widget label
                         $('input#edit-submit.btn.btn-primary.form-submit').click();
@@ -1001,6 +1024,17 @@ var OrgDataLoader = {
             });
         }
     };
+
+    Drupal.behaviors.organogramPublish = {
+        attach: function (context, settings) {
+            $('.btn-publish').click(function() {
+                $(this).parent().append('<div class="ajax-progress ajax-progress-throbber"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i></div>');
+                $('body').css('cursor', 'wait');
+                $('.btn-publish').css('cursor', 'wait');
+            });
+        }
+    };
+
 
     Drupal.behaviors.publisherSelect = {
         attach: function (context, settings) {
