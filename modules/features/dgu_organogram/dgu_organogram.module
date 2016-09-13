@@ -101,7 +101,12 @@ function dgu_organogram_preview($fid) {
     drupal_exit();
   }
 
-  drupal_json_output(array('status' => 0, 'data' => $json[0]));
+  if (!empty($json)) {
+    drupal_json_output(array('status' => 0, 'data' => $json[0]));
+  }
+  else {
+    drupal_not_found();
+  }
 }
 
 /**
@@ -128,37 +133,38 @@ function _dgu_organogram_generate_csv_files($fid, $deadline_date = FALSE) {
   $output = array();
   $ret = 0;
   $file = file_load($fid);
-  if ($wrapper = file_stream_wrapper_get_instance_by_uri($file->uri)) {
-    $filename = $wrapper->realpath();
-  }
+  $wrapper = file_stream_wrapper_get_instance_by_uri($file->uri);
+  $filename = $wrapper->realpath();
 
-  if (!$deadline_date) {
-    $deadline_date = db_select('dgu_organogram', 'o')->fields('o', array('deadline_date'))->condition('fid', $fid)->execute()->fetchField();
-  }
-  $date_for_script = date('Y-m-d', $deadline_date);
-
-  $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
-  $command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} --date $date_for_script '${filename}' " . file_directory_temp();
-
-  exec($command, $output, $ret);
-  if ($ret == 1) {
-    watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
-    throw new Exception (implode('<br />', $output));
-  }
-
-  $errors = array();
-  foreach ($output as $output_row) {
-    if (substr($output_row, 0 , 5) == 'ERROR') {
-      $errors[] = $output_row;
+  if (file_exists($filename)) {
+    if (!$deadline_date) {
+      $deadline_date = db_select('dgu_organogram', 'o')->fields('o', array('deadline_date'))->condition('fid', $fid)->execute()->fetchField();
     }
-  }
+    $date_for_script = date('Y-m-d', $deadline_date);
 
-  if (!empty($errors)) {
-    watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
-    throw new Exception (implode('<br />', $errors));
-  }
+    $script = drupal_get_path('module', 'dgu_organogram') . '/bin/etl_to_csv.py';
+    $command = "LANG=en_GB.UTF-8; /usr/bin/python 2>&1 ${script} --date $date_for_script '${filename}' " . file_directory_temp();
 
-  return file_directory_temp() . '/index.json';
+    exec($command, $output, $ret);
+    if ($ret == 1) {
+      watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
+      throw new Exception (implode('<br />', $output));
+    }
+
+    $errors = array();
+    foreach ($output as $output_row) {
+      if (substr($output_row, 0 , 5) == 'ERROR') {
+        $errors[] = $output_row;
+      }
+    }
+
+    if (!empty($errors)) {
+      watchdog('organogram', print_r($output, TRUE), array(), WATCHDOG_ERROR);
+      throw new Exception (implode('<br />', $errors));
+    }
+
+    return file_directory_temp() . '/index.json';
+  }
 }
 
 
