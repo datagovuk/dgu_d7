@@ -20,6 +20,7 @@ from xlrd import XLRDError
 import csv
 import re
 import argparse
+import string
 
 
 args = None
@@ -60,9 +61,11 @@ def load_excel_store_errors(filename, sheet_name, errors, validation_errors, inp
     for i in range(len(df.columns)):
         # Check column names are as expected. Also allow them to be the renamed
         # version, since old XLS templates had "Grade" instead of "Grade (or
-        # equivalent)".
+        # equivalent)" for senior sheet. (And the CSVs follow the same pattern
+        # - during 2011 they had "Grade" and subsequently they were "Grade (or
+        # equivalent)")
         if df.columns[i] != input_columns[i] and \
-                df.columns[i] != output_columns[i]:
+                output_columns[i] != input_columns[i]:
             from string import uppercase
             errors.append("Wrong column title. "
                           "Sheet '%s' column %s: Title='%s' Expected='%s'" %
@@ -139,8 +142,8 @@ def load_senior(excel_filename, errors, validation_errors):
       u'Notes',
       u'Valid?']
     rename_columns = {
-      u'Total Pay (£)' : u'',
-      u'Grade (or equivalent)' : u'Grade',
+      u'Total Pay (£)': u'',
+      u'Grade': u'Grade (or equivalent)',
     }
     blank_columns = {
       u'Total Pay (£)' : u'',
@@ -157,9 +160,11 @@ def load_senior(excel_filename, errors, validation_errors):
     n_a_for_blanks_columns = [
       u'Contact Phone',
     ]
-    df = load_excel_store_errors(excel_filename, '(final data) senior-staff', errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns)
+    sheet_name = '(final data) senior-staff'
+    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns, n_a_for_blanks_columns)
     if df.dtypes['Post Unique Reference']==numpy.float64:
         df['Post Unique Reference'] = df['Post Unique Reference'].astype('int')
+    in_sheet_validation(df, validation_errors, sheet_name, 'senior')
     return df
 
 
@@ -174,7 +179,8 @@ def load_junior(excel_filename, errors, validation_errors):
       u'Payscale Maximum (£)',
       u'Generic Job Title',
       u'Number of Posts in FTE',
-      u'Professional/Occupational Group']
+      u'Professional/Occupational Group',
+      u'Valid?']
     integer_columns = [
       u'Payscale Minimum (£)',
       u'Payscale Maximum (£)'
@@ -183,9 +189,13 @@ def load_junior(excel_filename, errors, validation_errors):
       u'Reporting Senior Post',
     ]
     n_a_for_blanks_columns = []
-    df = load_excel_store_errors(excel_filename, '(final data) junior-staff', errors, validation_errors, input_columns, {}, [], integer_columns, string_columns, n_a_for_blanks_columns)
+    sheet_name = '(final data) junior-staff'
+    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, {}, [], integer_columns, string_columns, n_a_for_blanks_columns)
     if df.dtypes['Reporting Senior Post']==numpy.float64:
         df['Reporting Senior Post'] = df['Reporting Senior Post'].fillna(-1).astype('int')
+    in_sheet_validation(df, validation_errors, sheet_name, 'junior')
+    # 'Valid?'' column doesn't get written in the junior sheet
+    df.drop('Valid?', axis=1, inplace=True)
     return df
 
 
@@ -311,6 +321,34 @@ def verify_graph(senior, junior, errors):
         errors.append('Junior post reporting to unknown senior post "%s"'
                       % ref)
 
+def row_name(row_index):
+    '''
+    0 returns '2' (first value, after the header row)
+    '''
+    return row_index + 2
+
+def column_name(column_index):
+    '''
+    0 returns 'A' (left-most column)
+    '''
+    return string.ascii_uppercase[column_index]
+
+def cell_name(row_index, column_index):
+    '''
+    (0, 0) returns 'A2' (top-left value, after the header row)
+    (12, 2) returns 'B14'
+    '''
+    return '%s%d' % (column_name(column_index), row_name(row_index))
+
+def in_sheet_validation(df, validation_errors, sheet_name, junior_or_senior):
+    # Row validation indication
+    validation_column = df.columns.get_loc('Valid?') # equivalent to S
+    rows_marked_invalid = df[df['Valid?'] == 0]
+    if len(rows_marked_invalid):
+        row = rows_marked_invalid.head(1)
+        row_index = row.index[0]
+        err = 'Sheet "%s" has %d invalid row%s. The %sproblem is on row %d, as indicated by the red colour in cell %s.' % (sheet_name, len(rows_marked_invalid), 's' if len(rows_marked_invalid) > 1 else '', 'first ' if len(rows_marked_invalid) > 1 else '', row_name(row_index), cell_name(row_index, validation_column))
+        validation_errors.append(err)
 
 def get_date_from_filename(filename):
     match = re.search(r'(\d{4}-\d{2}-\d{2})', filename) or \
@@ -323,10 +361,15 @@ def get_verify_level(graph):
     # parse graph date
     graph_match = re.match(
         r'^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
+        graph) or \
+        re.match(
+        r'^(?P<day>\d{2})-(?P<month>\d{2})-(?P<year>\d{4})$',
         graph)
-    assert graph_match, 'Could not parse graph YYYY-MM-DD: %r' % graph
+    assert graph_match, \
+        'Could not parse graph YYYY-MM-DD / DD-MM-YYYY: %r' % graph
     graph = graph_match.groupdict()
     graph['year'] = int(graph['year'])
+    graph['month'] = int(graph['month'])
 
     # verify level based on the date
     if graph['year'] == 2011:
@@ -338,8 +381,9 @@ def get_verify_level(graph):
         # * some job-shares are people of different grades so you get errors
         #   about duplicate post refs.
         return 'load'
-    elif graph['year'] <= 2015:
-        # Be quite lenient. During 2012 - 2015 TSO did only basic validation
+    elif graph['year'] <= 2015 or \
+            (graph['year'] == 2016 and graph['month'] == 3):
+        # Be quite lenient. During 2012 - 2016/03 TSO did only basic validation
         # and we see errors:
         # * 'Senior post "Post Unique Reference" is not unique'
         # * u'Expected numeric values in column "Actual Pay '
@@ -357,7 +401,7 @@ def get_verify_level(graph):
 
 def load_xls_and_get_errors(xls_filename):
     '''
-    Used by etl_to_csv.py
+    Used by tso_combined.py
     Returns: (senior, junior, errors, will_display)
     '''
     errors = []
@@ -365,9 +409,10 @@ def load_xls_and_get_errors(xls_filename):
     senior = load_senior(xls_filename, errors, validation_errors)
     junior = load_junior(xls_filename, errors, validation_errors)
 
-    if errors or validation_errors:
+    if errors:
         return None, None, errors + validation_errors, False
 
+    errors = validation_errors
     try:
         verify_graph(senior, junior, errors)
     except ValidationFatalError, e:
@@ -474,6 +519,8 @@ def main(input_xls_filepath, output_folder):
     with open(index_filename, 'w') as f:
         json.dump(index, f)
     print "Done."
+    # return values are only for the tests
+    return senior_filename, junior_filename, senior, junior
 
 
 def usage():
