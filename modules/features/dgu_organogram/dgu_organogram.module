@@ -507,7 +507,7 @@ function theme_organogram_file_widget($variables) {
           'class' => array('btn-primary', 'btn-organogram-upload'),
         ),
       );
-      if ($timestamp > time()) {
+      if ($timestamp > time() && $timestamp != 1475190000) {
         $upload_buttton['#attributes']['disabled'] = 'disabled';
       }
       $operations =  drupal_render($upload_buttton);
