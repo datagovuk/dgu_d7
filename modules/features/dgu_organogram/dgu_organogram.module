@@ -639,7 +639,7 @@ function dgu_organogram_after($element, $form_state) {
     if (!$signoff) {
       $element['publish_button']['#disabled'] = TRUE;
       $element['publish_button']['#prefix'] = '<div title="Sign off required">';
-      $element['publish_button']['#sufdix'] = '</div>';
+      $element['publish_button']['#suffix'] = '</div>';
     }
 
     $element['status'] = array(
