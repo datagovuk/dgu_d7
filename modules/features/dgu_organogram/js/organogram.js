@@ -586,7 +586,7 @@ var OrgDataLoader = {
                 seniorPost.children = children;
                 tree.push(seniorPost);
 
-                if (post['Reports to Senior Post'].toLowerCase() == 'xx') {
+                if (post['Reports to Senior Post'].toLowerCase() == 'xx' && post.Name.toLowerCase() != 'eliminated') {
                     topLevel.push(tree.length - 1);
                 }
             }
