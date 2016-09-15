@@ -724,7 +724,7 @@ function _dgu_organogram_get_dates() {
     $dates[] = new DateTime("${today['year']}-03-31");
   }
   else {
-    $dates[] = new DateTime("${next_year}-03-31");
+    //$dates[] = new DateTime("${next_year}-03-31");
     $dates[] = new DateTime("${today['year']}-09-30");
     $dates[] = new DateTime("${today['year']}-03-31");
   }
