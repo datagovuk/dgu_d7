@@ -965,6 +965,7 @@ var OrgDataLoader = {
                 $('.field-name-field-organogram .form-type-managed-file #organogram-upload-date').text(Drupal.settings.organogramDateDisplay);
             });
             $('.btn-cancel').click(function() {
+                window.stop();
                 $('.field-name-field-organogram .form-type-managed-file').hide();
                 $('.field-name-field-organogram table').show();
                 $('.form-item-publishers').show();
