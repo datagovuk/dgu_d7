@@ -232,7 +232,7 @@ function dgu_organogram_dashboard() {
       '#type' => 'select',
       '#options' =>  $options,
       '#attributes' => array('class' => array('chosen-select')),
-      '#prefix' => '<h1>Manage Organogram publication</h1><p>To manage the publication of organogram data, select the relevant publisher:</p>',
+      '#prefix' => '<h1>Organogram publication</h1><p>To manage the publication of organogram data, select the relevant publisher:</p>',
       '#weight' => -100,
       '#default_value' => arg(2),
     );
@@ -278,7 +278,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
       '#type' => 'select',
       '#options' =>  $options,
       '#attributes' => array('class' => array('chosen-select')),
-      '#prefix' => '<h1>Manage Organogram publication</h1>',
+      '#prefix' => '<h1>Organogram publication</h1>',
       '#weight' => -100,
       '#default_value' => arg(2),
     );
