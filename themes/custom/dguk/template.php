@@ -313,10 +313,6 @@ function dguk_get_data_menu() {
         'title' => 'Harvest Sources',
         'href' => 'harvest',
       ),
-      'menu-feedback-moderation' => array(
-        'title' => 'Feedback moderation',
-        'href' => 'data/feedback/moderation',
-      ),
     );
     $menu = array_merge($menu, $admin_menu);
   }

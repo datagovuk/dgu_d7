@@ -96,8 +96,13 @@ if (in_array('data publisher', array_values($user->roles))) {
               <ul class="dropdown-menu dgu-user-dropdown" role="menu" aria-labelledby="dLabel">
                 <li role="presentation" class="dropdown-header">Tools</li>
                 <li><a href="/dataset/new">Add a Dataset</a></li>
+                <?php if ($user->uid == 1 || in_array('administrator', array_values($user->roles))): ?>
+                  <li><a href="/publisher/new">Add a Publisher</a></li>
+                <?php endif; ?>
                 <li><a href="/harvest">Dataset Harvesting</a></li>
                 <li><a href="http://guidance.data.gov.uk/" target="_blank">Guidance</a></li>
+                <li><a href="/organogram/manage">Organogram publication</a></li>
+
                 <li role="presentation" class="dropdown-header">My publishers</li>
                 <?php if (!empty($user->field_publishers)) foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
 
