@@ -133,6 +133,11 @@ function _dgu_organogram_generate_csv_files($fid, $deadline_date = FALSE) {
   $output = array();
   $ret = 0;
   $file = file_load($fid);
+
+  if (empty($file)) {
+    return;
+  }
+
   $wrapper = file_stream_wrapper_get_instance_by_uri($file->uri);
   $filename = $wrapper->realpath();
 
