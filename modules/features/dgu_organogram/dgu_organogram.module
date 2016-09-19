@@ -331,7 +331,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   drupal_add_js($module_path . '/js/jquery.cookie.js');
   drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
   drupal_add_js($module_path . '/js/organogram.js');
-  $form['#attached']['js'] = array($module_path . '/js/chosen.min.jquery.js');
+  $form['#attached']['js'] = array($module_path . '/js/chosen.jquery.min.js');
 
 
   $ie_scripts = array(
@@ -756,14 +756,6 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     $fid = $last_item['fid'];
     $deadline_date = $last_item['deadline_date'];
     _dgu_organogram_generate_csv_files($fid, $deadline_date);
-    if ($form_state['clicked_button']['#value'] == 'Delete') {
-      $_SESSION['message'] = '<p>Data deleted successfully</p>';
-      $_SESSION['message_countdown_requests'] = 2;
-    }
-    elseif ($form_state['clicked_button']['#value'] == 'Upload') {
-      $_SESSION['message'] = '<p>Data uploaded and validated successfully</p>';
-      $_SESSION['message_countdown_requests'] = 2;
-    }
   } catch (Exception $e) {
     drupal_set_message('<p><strong>The spreadsheet contains errors:</strong></p>' . $e->getMessage(), 'error');
     return;
@@ -796,10 +788,12 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
         $update_needed = TRUE;
       }
     }
-    foreach ($package['timeseries_resources'] as $index => $resource) {
-      if(!in_array($resource['date'], $current_organogram_versions)) {
-        unset($package['timeseries_resources'][$index]);
-        $update_needed = TRUE;
+    if (!empty($package['timeseries_resources'])) {
+      foreach ($package['timeseries_resources'] as $index => $resource) {
+        if(!in_array($resource['date'], $current_organogram_versions)) {
+          unset($package['timeseries_resources'][$index]);
+          $update_needed = TRUE;
+        }
       }
     }
 
@@ -814,11 +808,18 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     }
   }
 
-
-
-
   $commands = array();
   $commands[] = ajax_command_prepend('div#ajax-status-messages-wrapper', theme('status_messages'));
+
+
+  if ($form_state['clicked_button']['#value'] == 'Delete') {
+    $_SESSION['message'] = '<p>Data deleted successfully</p>';
+    $_SESSION['message_countdown_requests'] = 2;
+  }
+  elseif ($form_state['clicked_button']['#value'] == 'Upload') {
+    $_SESSION['message'] = '<p>Data uploaded and validated successfully</p>';
+    $_SESSION['message_countdown_requests'] = 2;
+  }
 
   return array('#type' => 'ajax', '#commands' => $commands);
 }
@@ -1209,7 +1210,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   drupal_add_js($module_path . '/js/jquery.cookie.js');
   drupal_add_js($module_path . '/js/jquery-ui-1.9.0.min.js');
   drupal_add_js($module_path . '/js/organogram.js');
-  $form['#attached']['js'] = array($module_path . '/js/chosen.min.jquery.js');
+  $form['#attached']['js'] = array($module_path . '/js/chosen.jquery.min.js');
 
 
   $ie_scripts = array(
