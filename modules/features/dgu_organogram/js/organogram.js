@@ -913,7 +913,6 @@ var OrgDataLoader = {
             // Sign off
             signOffCheckbox.change(function() {
                 if ($('.ajax-progress-throbber').length == 0) {
-                    $(this).attr('disabled', true);
                     $(this).parent().append('<div class="ajax-progress ajax-progress-throbber"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i></div>');
                     $('body').css('cursor', 'wait');
                     signOffCheckbox.css('cursor', 'wait');
@@ -940,6 +939,7 @@ var OrgDataLoader = {
                     }).appendTo(this.form);
 
                     $('#edit-submit').trigger('click');
+                    $(this).attr('disabled', true);
                 }
 
             });
