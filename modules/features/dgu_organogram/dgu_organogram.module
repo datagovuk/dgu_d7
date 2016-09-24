@@ -839,7 +839,7 @@ function _dgu_organogram_package_json($group) {
     'title' => 'Organogram of Staff Roles & Salaries',
     'owner_org' => $group['name'],
     'license_id' => 'uk-ogl',
-    'notes' => 'Organogram (organisation chart) showing all staff roles. Names and salaries are also listed for the Senior Civil Servants.\r\n\r\nOrganogram data is released by all central government departments and their agencies since 2010. Snapshots for 31st March and 30th September are published by 6th June and 6th December each year. The published data is validated and released in CSV format and OGL-licensed for reuse. For more information about this series, see: http://guidance.data.gov.uk/organogram-data.html',
+    'notes' => "Organogram (organisation chart) showing all staff roles. Names and salaries are also listed for the Senior Civil Servants.\r\n\r\nOrganogram data is released by all central government departments and their agencies since 2010. Snapshots for 31st March and 30th September are published by 6th June and 6th December each year. The published data is validated and released in CSV format and OGL-licensed for reuse. For more information about this series, see: http://guidance.data.gov.uk/organogram-data.html",
     'tags' =>
       array(
         0 => array(
