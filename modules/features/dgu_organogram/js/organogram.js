@@ -946,13 +946,13 @@ var OrgDataLoader = {
         attach: function (context, settings) {
 
             $('.btn-organogram-upload').click(function() {
-                $('input.form-submit').addClass('disabled');
+                $('.input-group-btn input.form-submit').addClass('disabled');
                 $('input.form-file').change(function () {
                     if ($('.form-type-managed-file .messages.error').length == 0) {
-                        $('input.form-submit').removeClass('disabled');
+                        $('.input-group-btn input.form-submit').removeClass('disabled');
                     }
                     else {
-                        $('input.form-submit').addClass('disabled');
+                        $('.input-group-btn input.form-submit').addClass('disabled');
                     }
                 });
                 $('.field-name-field-organogram .form-type-managed-file').show();
