@@ -111,6 +111,11 @@ form#ckan-publisher-form #edit-submit,  form#ckan-publisher-form #edit-cancel {
     margin: 0 auto;
 }
 
+.field-name-field-organogram .table tbody>tr>td {
+    vertical-align: middle;
+}
+
+
 .field-name-field-organogram fieldset {
     border: none;
     box-shadow: none;
