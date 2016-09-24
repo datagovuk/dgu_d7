@@ -958,23 +958,23 @@ a.categorydata:hover
 #live-link a {color: #fff; text-decoration: underline;}
 
 
-#edit-field-organogram-und span.file {
+fieldset.form-wrapper  span.file {
     display: block;
 }
-#edit-field-organogram-und span.file a {
+fieldset.form-wrapper  span.file a {
     color: #000;
 
 }
-#edit-field-organogram-und td{
+fieldset.form-wrapper  td{
     vertical-align: inherit;
 }
 
-#edit-field-organogram-und .input-group .input-group-btn,
-#edit-field-organogram-und .input-group .form-control {
+fieldset.form-wrapper .input-group .input-group-btn,
+fieldset.form-wrapper .input-group .form-control {
     display: inline;
 }
 
-#edit-field-organogram-und .alert,
+fieldset.form-wrapper  .alert,
 #edit-field-organogram-und-table .information {
     text-align: left;
 }
