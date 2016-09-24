@@ -1127,11 +1127,9 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $result = $query->execute();
   $oranograms = $result->fetchAll();
 
-  $publishers_hierarchy = array();
-  $publishers = array();
+  $publishers_hierarchy = $publishers = array();
 
   foreach ($oranograms as $oranogram) {
-
     if (!empty($currentDepartment) && $oranogram->name == $currentDepartment) {
       $current_department_id = $oranogram->id;
     }
@@ -1144,7 +1142,10 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
     if (empty($oranogram->parent_id)) {
       $publishers_hierarchy[$oranogram->id] = array();
     }
-    else {
+  }
+
+  foreach ($oranograms as $oranogram) {
+    if (!empty($oranogram->parent_id)) {
       if (isset($publishers_hierarchy[$oranogram->parent_id])) {
         $publishers_hierarchy[$oranogram->parent_id]['sub_publishers'][] = $oranogram->id;
       }
@@ -1157,8 +1158,6 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
       }
     }
   }
-
-
 
   $department_options = array();
   foreach ($publishers_hierarchy as $id => $publisher) {
