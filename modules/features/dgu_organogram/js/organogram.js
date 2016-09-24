@@ -912,10 +912,12 @@ var OrgDataLoader = {
 
             // Sign off
             signOffCheckbox.change(function() {
-                $(this).parent().append('<div class="ajax-progress ajax-progress-throbber"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i></div>');
-                $('body').css('cursor', 'wait');
-                signOffCheckbox.css('cursor', 'wait');
-                $('.checkbox label').css('cursor', 'wait');
+                if ($('.ajax-progress-throbber').length == 0) {
+                    $(this).attr('disabled', true);
+                    $(this).parent().append('<div class="ajax-progress ajax-progress-throbber"><i class="glyphicon glyphicon-refresh glyphicon-spin"></i></div>');
+                    $('body').css('cursor', 'wait');
+                    signOffCheckbox.css('cursor', 'wait');
+                    $('.checkbox label').css('cursor', 'wait');
 
 
 //                if (this.checked == true) {
@@ -930,14 +932,16 @@ var OrgDataLoader = {
 //                    alert('done');
 //                }
 
-                $('<input>').attr({
-                    type: 'hidden',
-                    name: 'signoff',
-                    value: $(this).attr('data-fid')
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'signoff',
+                        value: $(this).attr('data-fid')
 
-                }).appendTo(this.form);
+                    }).appendTo(this.form);
 
-                $('#edit-submit').trigger('click');
+                    $('#edit-submit').trigger('click');
+                }
+
             });
         }
     };
