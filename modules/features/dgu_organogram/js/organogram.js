@@ -393,9 +393,6 @@ var Orgvis = {
         //$('div.heldBy').accordion({clearStyle:true, navigation:true, autoHeight:false, collapsible:true, active:true});
         $('.ui-state-default').mouseout(function(){$(this).removeClass('ui-state-focus')});
         $('div.panel h3').eq(0).click();
-        if($.browser.msie){
-            $('#'+infovisId + " div.infobox").corner();
-        }
         return false;
     }
 
