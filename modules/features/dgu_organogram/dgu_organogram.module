@@ -976,7 +976,6 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
       $resource->format = 'CSV';
       $resource->description = 'Organogram - Junior CSV data';
       _dgu_organogram_create_or_update_resource($package, $resource, $organogram_date, 'Junior');
-      _dgu_organogram_create_or_update_resource($package, $resource, $organogram_date, 'Junior');
 
       $uri = 'public://' . $organogram_path . $senior_csv;
       $resource->url = file_create_url($uri);
