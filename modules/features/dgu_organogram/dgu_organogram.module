@@ -204,7 +204,7 @@ function dgu_organogram_get_user_publisher_tree() {
   if (!isset($publishers)) {
     $query = db_select('ckan_publisher', 'p')->fields('p', array('name', 'title'));
 
-    if (!user_has_role(5)) {
+    if (user_has_role(6)) {
       $account = user_load($user->uid);
       $publishers = array();
       if (!empty($account->field_publishers[LANGUAGE_NONE])) {
@@ -215,6 +215,9 @@ function dgu_organogram_get_user_publisher_tree() {
         }
         $query->condition('id', $publisher_ids, 'IN');
       }
+    }
+    elseif (!user_has_role(5) && !user_has_role(3) && $user->uid != 1) {
+      return array();
     }
     $publishers = $query->execute()->fetchAllKeyed();
   }
@@ -1253,10 +1256,11 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $current_user_publishers = dgu_organogram_get_user_publisher_tree();
   if (array_key_exists($currentDepartment, $current_user_publishers)) {
+    $destination = drupal_get_destination();
     $form['edit_link'] = array(
       '#markup' => '<div id="menu-tabs"><h2 class="element-invisible">Primary tabs</h2>
       <ul class="tabs--primary nav">
-      <li class="active"><a href="' . urlencode(drupal_get_destination()) . '" class="active">View<span class="element-invisible">(active tab)</span></a></li>
+      <li class="active"><a href="' . urlencode($destination['destination']) . '" class="active">View<span class="element-invisible">(active tab)</span></a></li>
      <li class=""><a href="/organogram/manage/' . $currentDepartment . '">Edit</a></ul>
      </div>'
     );
