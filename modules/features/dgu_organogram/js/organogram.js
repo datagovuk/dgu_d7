@@ -724,7 +724,7 @@ var OrgDataLoader = {
                 if ($.browser.msie && $.browser.version.substr(0,1)<9) {
                     $(".infovis").css("background-image", "none");
                     $(".infovis").height(70);
-                    var message = 'Unsupported Browser. Preview requires Internet Explorer 9 or newer.'
+                    var message = 'Unsupported browser. Requires Internet Explorer 9 or newer, or Chrome, Firefox, etc';
                     $(".infovis").append('<div class="alert alert-block alert-danger"><h4 class="element-invisible">Error message</h4>'
                         + message +'</div>');
                 }
@@ -832,7 +832,7 @@ var OrgDataLoader = {
                     $("#infovis").css("border", "1px solid #eee");
                     $("#infovis").css("min-height", "0");
                     $("#infovis").height(70);
-                    var message = 'Unsupported Browser. You need Internet Explorer 9 or newer to view organograms.'
+                    var message = 'Unsupported browser. Requires Internet Explorer 9 or newer, or Chrome, Firefox, etc';
                     $("#infovis").append('<div class="alert alert-block alert-danger"><a class="close" data-dismiss="alert" href="#">×</a><h4 class="element-invisible">Error message</h4>'
                         + message +'</div>');
                 }
