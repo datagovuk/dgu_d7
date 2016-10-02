@@ -871,7 +871,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo].push({
                     'jobtitle' : post['Job Title'],
                     'name' : post['Name'],
-                    'grade' : post['Grade'],
+                    'grade' : post['Grade (or equivalent)'],
                     'FTE': + post['FTE'],
                     'unit': post['Unit'],
                     'payfloor': post['Actual Pay Floor (£)'],
@@ -889,7 +889,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo].push({
                     'jobtitle': post['Generic Job Title'],
                     'reportsto': reportsTo,
-                    'grade': post['Grade'],
+                    'grade': post['Grade (or equivalent)'],
                     'FTE': + post['Number of Posts in FTE'],
                     'unit': post['Unit'],
                     'payfloor': post['Payscale Minimum (£)'],
