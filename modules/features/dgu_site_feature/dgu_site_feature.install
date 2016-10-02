@@ -47,3 +47,10 @@ function dgu_site_feature_install(){
     ->execute();
 
 }
+
+/**
+ * Enable dgu_issue module.
+ */
+function dgu_site_feature_update_7001() {
+  module_enable(array('dgu_issue'));
+}

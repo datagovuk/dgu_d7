@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Sets up the base table for CKAN Publishers
+ */
+
+
+/**
+ * Implements hook_schema().
+ */
+function dgu_organogram_schema() {
+  $schema = array();
+
+  $schema['dgu_organogram'] = array(
+    'description' => 'The CKAN Publisher organogram dates.',
+    'fields' => array(
+      'id' => array(
+        'description' => 'Drupal id for a CKAN Publisher to which this organogram relates.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'fid' => array(
+        'description' => 'CKAN GUID',
+        'type' => 'int',
+        'length' => 36,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'deadline_date' => array(
+        'description' => 'The Unix timestamp of the Publish date for this organogram.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'publish_date' => array(
+        'description' => 'The Unix timestamp of the Publish date for this organogram.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'signoff_date' => array(
+        'description' => 'The Unix timestamp of the Publish date for this organogram.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+  );
+
+  return $schema;
+}
+
+/**
+ * Set up the base table for organograms
+ */
+function dgu_organogram_update_7001() {
+  $schema = module_invoke('dgu_organogram', 'schema');
+  db_create_table('dgu_organogram', $schema['dgu_organogram']);
+}

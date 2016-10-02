@@ -1,26 +1,11 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-  Behat\Behat\Context\TranslatedContextInterface,
-  Behat\Behat\Context\BehatContext;
-
-use Behat\Behat\Event\SuiteEvent,
-  Behat\Behat\Event\FeatureEvent,
-  Behat\Behat\Event\ScenarioEvent,
-  Behat\Behat\Event\StepEvent;
-
-use Behat\Behat\Context\Step\Given,
-  Behat\Behat\Context\Step\When,
-  Behat\Behat\Context\Step\Then;
-
+use Behat\Behat\Context\Step\Given;
+use Behat\Behat\Context\Step\Then;
+use Behat\Behat\Event\FeatureEvent;
 use Behat\Behat\Exception\PendingException;
-
-use Behat\Mink\Exception\ElementException,
-  Behat\Mink\Exception\ElementNotFoundException;
-
-use Behat\Gherkin\Node\PyStringNode,
-  Behat\Gherkin\Node\TableNode;
-
+use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception\ElementNotFoundException;
 use Drupal\Component\Utility\Random;
 
 
@@ -1180,15 +1165,17 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   /**
    * @Given /^that dataset with titled "([^"]*)" with name "([^"]*)" published by "([^"]*)" exists and has no resources$/
    */
-  public function thatDatasetWithTitledWithNamePublishedByExistsAndHasNoResources($title, $name, $publisher) {
+  public function thatDatasetWithTitledWithNamePublishedByExistsAndHasNoResources($title, $name, $publisher, $package_json = NULL) {
 
     try {
       $client = $this->ckan_get_client();
 
-      $response = $client->PackageSearch(array('fq' => "name: $name"));
+      $response = $client->PackageSearch(array('fq' => "name:$name"));
       $result = $response->toArray();
 
-      $package_json = $this->get_json_package($title, $name, $publisher);
+      if (empty($package_json)) {
+        $package_json = $this->get_json_package($title, $name, $publisher);
+      }
 
       if (empty($result['result']['results'])) {
         $response = $client->PackageCreate(array('data'=>$package_json));
@@ -1518,4 +1505,354 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
       new Given("I should see \"View published\""),
     );
   }
+
+
+
+  //drush sqlq 'truncate field_data_field_organogram; truncate field_revision_field_organogram; truncate dgu_organogram; delete from file_managed where filemime="application/vnd.ms-excel";'; rm -f /var/www/drupal/dgud7/current/sites/default/files/organogram/uploads/*
+
+  /**
+   * @Given /^I upload organograms$/
+   */
+  public function iUploadOrganograms() {
+
+    $drush = $this->getDriver();
+
+    ini_set('auto_detect_line_endings',TRUE);
+    $handle = fopen('/home/pawel/data/tso_combined.csv','r');
+    $ignore_this = fgetcsv($handle);
+    $messages = array();
+    $i = 0;
+
+    $failed = array(9, 152, 326, 460, 584, 697, 790, 861, 915, 959);
+
+    while (($row = fgetcsv($handle)) !== FALSE ) {
+     if ($i++ >= 0) { // if (in_array(++$i, $failed)) {
+
+        $title = str_replace("'", "\'", $row[0]);
+        $version_array = explode('-', $row[1]);
+        $version = implode('-', array_reverse($version_array));
+        $xls_path = $row[2];
+
+        if (file_exists('/media/pawel/Data/organogram-data/' . $xls_path)) {
+
+
+          // Trying to get publisher id 10 times.
+          for ($j = 0; $j <10; $j++) {
+            try {
+              $name = $drush->drush('ev', array('"\$name = db_select(\'ckan_publisher\', \'p\')->fields(\'p\', array(\'name\'))->condition(\'p.title\', \'' . $title . '\' )->execute()->fetchField(); print \$name;"'));
+              break;
+            }
+            catch (Exception $e) {}
+          }
+
+          if (!$name) {
+            throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
+          }
+
+          $session = $this->getSession();
+          $session->visit($this->locatePath('/organogram/manage/' . $name));
+          sleep(2);
+          $page = $session->getPage();
+
+          // Find current row in the table
+          $date = date('d M Y', strtotime($version));
+          $date_cell = $page->find('named', array('content', $date));
+
+          if(empty($date_cell)) {
+            sleep(20);
+            $page = $session->getPage();
+            $date_cell = $page->find('named', array('content', $date));
+            if(empty($date_cell)) {
+              print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/organogram/manage/' . $name, 100, ' ') . "[$version] " . 'Date ' . $date . 'not found';
+              continue;
+            }
+          }
+
+          $current_row = $date_cell->getParent();
+
+          $xls_link = $current_row->find('css', 'td.file span.file a');
+          if(!empty($xls_link)) {
+            print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/organogram/manage/' . $name, 100, ' ') . "[$version] " . 'XLS file already uploaded';
+            continue;
+          }
+
+          $upload_button = $current_row->findButton('Upload');
+          if(!$upload_button) {
+            throw new Exception("Upload button for version $version not found.");
+          }
+          $upload_button->press();
+          sleep(1);
+
+          $input = $page->find('css', '#ckan-publisher-form input.form-file');
+          if(empty($input)) {
+            sleep(20);
+            $page = $session->getPage();
+            $input = $page->find('css', '#ckan-publisher-form input.form-file');
+            if(empty($input)) {
+              throw new Exception("Organogram upload input box not found");
+            }
+          }
+
+          $input->attachFile('/media/pawel/Data/organogram-data/' . $xls_path);
+          sleep(1);
+          $upload_submit_button = $page->find('css','#ckan-publisher-form input.form-submit');
+          if(empty($upload_submit_button)) {
+            throw new Exception("Organogram upload button not found");
+          }
+          $upload_submit_button->press();
+
+          print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/organogram/manage/' . $name, 100, ' ') . "[$version] ";
+
+          sleep(7);
+
+          //->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
+          $xls_link = $current_row->find('css', 'td.file span.file a');
+
+          if(empty($xls_link)) {
+            sleep(30);
+            $xls_link = $current_row->find('css', 'td.file span.file a');
+
+            if(empty($xls_link)) {
+
+              $error_message = $page->find('css', '.alert-danger');
+              if(!empty($error_message)) {
+                $message_text = substr($error_message->getText(), 24);
+                print "\n\n" . $message_text . "\n-------------------------------------------------------------------------\n";
+              }
+
+
+              print 'XLS file upload failed';
+              continue;
+            }
+          }
+
+          $preview_link = $current_row->find('css', '.organogram-preview');
+          if(empty($preview_link)) {
+            throw new Exception("Preview link for version $version not found.");
+          }
+          $preview_link->click();
+          sleep(7);
+          $vis_node = $page->find('css', '.organogram-preview .node');
+          $ok = ' OK';
+          if(empty($vis_node)) {
+            sleep(17);
+            $vis_node = $page->find('css', '.organogram-preview .node');
+            if(empty($vis_node)) {
+              print 'Missing top post ';
+              $ok = '';
+            }
+          }
+
+          $signoff_checkbox = $current_row->find('css', '.organogram-sign-off');
+          if(empty($signoff_checkbox)) {
+            throw new Exception("Signoff checkbox for version $version not found.");
+          }
+          $signoff_checkbox->click();
+          sleep(15);
+
+          $publish_button = $current_row->findButton('Publish');
+          if(empty($publish_button)) {
+            sleep(15);
+            $publish_button = $current_row->findButton('Publish');
+            if(empty($publish_button)) {
+              throw new Exception("Publish button for version $version not found.");
+            }
+          }
+
+          $publish_button->press();
+          sleep(10);
+          $success_message = $page->find('css', '.drupal-messages #messages .alert-success');
+          if(!empty($success_message)) {
+            $message_text = $success_message->getText();
+            if (strpos($message_text, 'Resource id:') === FALSE) {
+              print " | Error publishing CSVs for version $version. ";
+            }
+          }
+
+          $error_message = $page->find('css', '.form-type-managed-file .alert-danger');
+          if(!empty($error_message)) {
+            $message_text = substr($error_message->getText(), 24);
+            if (!in_array($message_text, $messages)) {
+              $messages[] = $message_text;
+            }
+            print ' | ' . $message_text;
+            $ok = '';
+          }
+          print $ok;
+        }
+        else {
+          print "\nfile not found: " . $xls_path . ' (version ' . $version . ') [' . $i . ']';
+        }
+      }
+
+    }
+    ini_set('auto_detect_line_endings',FALSE);
+    print "\n\n-----------------------------------------------\nERROR MESSAGES:";
+    foreach ($messages as $message) {
+      print "\n" . $message;
+    }
+
+
+    //$scv = getcsv(file_get_contents('https://raw.githubusercontent.com/datagovuk/organograms/gh-pages/uploads_report_tidied.csv'),);
+  }
+
+  /**
+   * @Given /^I validate organograms$/
+   */
+  public function iValidateOrganograms() {
+
+    $drush = $this->getDriver();
+
+    ini_set('auto_detect_line_endings',TRUE);
+    $handle = fopen('/home/pawel/organogram_upload.log','r');
+    $i = 0;
+    $messages = array();
+
+    while (($row = fgets($handle)) !== FALSE ) {
+      if ($i++ >= 0) {
+        $matches = [];
+        preg_match_all('/http:\/\/[\w|.]*\/\w*\/(\d*)\/\w* \(version ([0-9-]*)/i', $row, $matches);
+
+        $publisher_id = $matches[1][0];
+        $version = $matches[2][0];
+
+        $id_str = (string) $publisher_id;
+        $extra_space = 4 - strlen($id_str);
+
+        $session = $this->getSession();
+        $session->visit($this->locatePath('/ckan_publisher/' . $publisher_id . '/edit'));
+        sleep(2);
+        $page = $session->getPage();
+
+
+        print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/ckan_publisher/' . $publisher_id . '/edit', 50, ' ') . "[$version] ";
+
+        $xls_link = $page->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
+        if(empty($xls_link)) {
+          print 'Missing XLS file';
+          continue;
+        }
+
+        $table_row = $xls_link->getParent()->getParent()->getParent()->getParent();
+        $preview_button = $table_row->findButton('Preview');
+        if(empty($preview_button)) {
+          throw new Exception("Preview button for version $version not found.");
+        }
+        $preview_button->press();
+        sleep(5);
+        $vis_node = $page->find('css', '.organogram-preview .node');
+        $ok = 'OK';
+        if(empty($vis_node)) {
+          print 'Missing top post ';
+          $ok = '';
+        }
+
+        $error_message = $page->find('css', '.form-type-managed-file .alert-danger');
+        if(!empty($error_message)) {
+          $message_text = substr($error_message->getText(), 24);
+          if (!in_array($message_text, $messages)) {
+            $messages[] = $message_text;
+          }
+          print ' | ' . $message_text;
+          $ok = '';
+        }
+        print $ok;
+      }
+
+    }
+    ini_set('auto_detect_line_endings',FALSE);
+    print "\n\n-----------------------------------------------\nERROR MESSAGES:";
+    foreach ($messages as $message) {
+      print "\n" . $message;
+    }
+  }
+
+
+  /**
+   * @Given /^I cleanup organograms$/
+   */
+  public function iCleanupOrganograms() {
+
+    $drush = $this->getDriver();
+
+    ini_set('auto_detect_line_endings',TRUE);
+    $handle = fopen('/home/pawel/data/tso_combined.csv','r');
+    $ignore_this = fgetcsv($handle);
+    $publishers = array();
+    while (($row = fgetcsv($handle)) !== FALSE ) {
+      $title = str_replace("'", "\'", $row[0]);
+      if (!in_array($title, $publishers)) { // && $title == 'Cabinet Office'
+        // Trying to get publisher id 10 times.
+        for ($j = 0; $j <10; $j++) {
+          try {
+            $name = $drush->drush('ev', array('"\$name = db_select(\'ckan_publisher\', \'p\')->fields(\'p\', array(\'name\'))->condition(\'p.title\', \'' . $title . '\' )->execute()->fetchField(); print \$name;"'));
+            break;
+          }
+          catch (Exception $e) {}
+        }
+
+        if (!$name) {
+          throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
+        }
+        $publishers[$name] = $title;
+        print "\nAdded: " . $name;
+      }
+    }
+
+    $package = array(
+      //'name' => 'organogram-' . $group['name'],
+      'title' => 'Organogram of Staff Roles & Salaries',
+      //'owner_org' => $group['name'],
+      'license_id' => 'uk-ogl',
+      'notes' => "Organogram (organisation chart) showing all staff roles. Names and salaries are also listed for the Senior Civil Servants.\r\n\r\nOrganogram data is released by all central government departments and their agencies since 2010. Snapshots for 31st March and 30th September are published by 6th June and 6th December each year. The published data is validated and released in CSV format and OGL-licensed for reuse. For more information about this series, see: http://guidance.data.gov.uk/organogram-data.html",
+      'tags' =>
+        array(
+          0 => array(
+            'name' => 'organograms',
+          ),
+        ),
+      'schema' => array('d3c0b23f-6979-45e4-88ed-d2ab59b005d0'),
+      'extras' =>
+        array(
+          0 => array(
+            'key' => 'geographic_coverage',
+            'value' => '111100: United Kingdom (England, Scotland, Wales, Northern Ireland)',
+          ),
+          1 => array(
+            'key' => 'mandate',
+            'value' => 'https://www.gov.uk/government/news/letter-to-government-departments-on-opening-up-data',
+          ),
+          2 => array(
+            'key' => 'update_frequency',
+            'value' => 'biannually',
+          ),
+          3 => array(
+            'key' => 'temporal_coverage-from',
+            'value' => '2010',
+          ),
+          4 => array(
+            'key' => 'theme-primary',
+            'value' => 'Government Spending',
+          ),
+          5 => array(
+            'key' => 'import_source',
+            'value' => 'organograms_v2',
+          ),
+        ),
+    );
+
+    print "\n\nCleaning datasets.\n";
+
+    foreach ($publishers as $name => $title) {
+      $package['name'] = 'organogram-' . $name;
+      $package['owner_org'] = $name;
+      $package_json = json_encode($package);
+      $this->thatDatasetWithTitledWithNamePublishedByExistsAndHasNoResources($package['title'], $package['name'], $name, $package_json);
+      print "\nCleaned: " . $name;
+    }
+
+    ini_set('auto_detect_line_endings',FALSE);
+
+  }
+
 }

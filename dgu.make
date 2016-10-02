@@ -176,6 +176,7 @@ projects[ckan][download][type] = "git"
 projects[ckan][download][url] = "http://git.drupal.org/project/ckan.git"
 projects[ckan][download][branch] = "ckan_dgu_7.x-1.x"
 projects[ckan][subdir] = "contrib"
+projects[ckan][patch][] = "https://raw.githubusercontent.com/pawelr/dgu_d7/organograms_release/patches/organograms.patch"
 
 projects[ckan_publisher_tree][type] = "module"
 projects[ckan_publisher_tree][download][type] = "git"
