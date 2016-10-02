@@ -721,7 +721,8 @@ var OrgDataLoader = {
                     previewPanel.addClass(previewShowClass);
                 });
 
-                if ($.browser.msie && $.browser.version.substr(0,1)<9) {
+
+                if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
                     $(".infovis").css("background-image", "none");
                     $(".infovis").height(70);
                     var message = 'Unsupported browser. Requires Internet Explorer 9 or newer, or Chrome, Firefox, etc';
@@ -827,7 +828,7 @@ var OrgDataLoader = {
 
 
 
-                if ($.browser.msie && $.browser.version.substr(0,1)<9) {
+                if ($.browser.msie && parseInt($.browser.version, 10) < 9) {
                     $("#infovis").css("background", "none");
                     $("#infovis").css("border", "1px solid #eee");
                     $("#infovis").css("min-height", "0");
