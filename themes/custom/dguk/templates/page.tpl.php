@@ -102,7 +102,6 @@ if (in_array('data publisher', array_values($user->roles))) {
                 <li><a href="/harvest">Dataset Harvesting</a></li>
                 <li><a href="http://guidance.data.gov.uk/" target="_blank">Guidance</a></li>
                 <li><a href="/organogram/manage">Organogram publication</a></li>
-
                 <li role="presentation" class="dropdown-header">My publishers</li>
                 <?php if (!empty($user->field_publishers)) foreach ($user->field_publishers[LANGUAGE_NONE] as $publisher_ref): ?>
 

@@ -472,7 +472,7 @@ function dguk_breadcrumb($variables) {
     $a = 0;
     foreach($variables['breadcrumb'] as $value) {
       if ($a==0){
-        $crumbs .= '<li>' . l('<i class="icon-home"></i>', '<front>', array('html' => TRUE)) . '</li>';
+        $crumbs .= '<li>Home</li>';
       }
       else {
         if ($value != '*:*' && $title != 'Library'){

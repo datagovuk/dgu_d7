@@ -261,7 +261,10 @@ function dgu_location_default_page_manager_pages() {
     $pane->configuration = array(
       'admin_title' => 'List of Location Data',
       'title' => '',
-      'body' => '<div class="item-list"><p><a href="/data/search?ext_bbox=-20.48,48.79,3.11,62.66">See the list of location data</a></p></div>',
+      'body' => '<div class="item-list">
+	<p><a href="/data/search?UKLP=True">See the list of location data</a></p>
+</div>
+',
       'format' => 'filtered_html',
       'substitute' => TRUE,
     );
