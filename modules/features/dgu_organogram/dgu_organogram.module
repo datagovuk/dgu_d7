@@ -501,6 +501,7 @@ function theme_organogram_file_widget($variables) {
 
     }
     else {
+      $organogram = array();
       $file_name = '';
       $sign_off = '';
       $view = '';
