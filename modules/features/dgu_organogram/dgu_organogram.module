@@ -1158,12 +1158,37 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
         if (isset($publishers_hierarchy[$grand_parent_id])) {
           $publishers_hierarchy[$grand_parent_id]['sub_publishers'][] = $oranogram->id;
         }
+        else {
+          $grand_grand_parent_id = db_select('ckan_publisher', 'p')->fields('p', array('parent_id'))->condition('id', $grand_parent_id)->execute()->fetchField();
+          if (isset($publishers_hierarchy[$grand_grand_parent_id])) {
+            $publishers_hierarchy[$grand_grand_parent_id]['sub_publishers'][] = $oranogram->id;
+          }
+          else {
+            $grand_grand_grand_parent_id = db_select('ckan_publisher', 'p')->fields('p', array('parent_id'))->condition('id', $grand_grand_parent_id)->execute()->fetchField();
+            if (isset($publishers_hierarchy[$grand_grand_grand_parent_id])) {
+              $publishers_hierarchy[$grand_grand_grand_parent_id]['sub_publishers'][] = $oranogram->id;
+            }
+            else {
+              $publishers_hierarchy[$oranogram->id] = array();
+            }
+          }
+        }
       }
     }
   }
 
+  $keyed_by_title = array();
+  foreach ($publishers_hierarchy as $id => $ignore_this) {
+    if (isset($publishers[$id])) {
+      $keyed_by_title[$publishers[$id]['title']] = $id;
+    }
+  }
+  ksort($keyed_by_title);
+
+
+
   $department_options = array();
-  foreach ($publishers_hierarchy as $id => $publisher) {
+  foreach ($keyed_by_title as $id) {
     if (isset($publishers[$id])) {
       $name = $publishers[$id]['name'];
       $title = $publishers[$id]['title'];
@@ -1173,8 +1198,8 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
       $title = $currentDepartment;
     }
     $department_options[$name] = $title;
-    if (!empty($publisher['sub_publishers'])) {
-      foreach ($publisher['sub_publishers'] as $sub_publisher_id) {
+    if (!empty($publishers_hierarchy[$id]['sub_publishers'])) {
+      foreach ($publishers_hierarchy[$id]['sub_publishers'] as $sub_publisher_id) {
         $department_options[$publishers[$sub_publisher_id]['name']] = ' ―― ' . $publishers[$sub_publisher_id]['title'];
       }
     }
