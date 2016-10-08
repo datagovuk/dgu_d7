@@ -315,18 +315,6 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
   $form_state['publish_dates'] = $publish_query->fields('o', array('fid', 'publish_date'))->execute()->fetchAllKeyed();
   $form_state['signoff_dates'] = $signoff_query->fields('o', array('fid', 'signoff_date'))->execute()->fetchAllKeyed();
 
-  try {
-    $group = _dgu_organogram_get_ckan_group($form['ckan_id']['#value']);
-    if ($group) {
-      $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-      if (!empty($package) && $package['state'] == 'active') {
-        $ckan_publisher->organogram_dataset_url = substr_replace(variable_get('ckan_url', ''), '', -4) . "dataset/{$package['name']}";
-      }
-    }
-  } catch (Exception $e) {
-    drupal_set_message('An error occurred while trying to read organogram dataset. ' . $e->getMessage(), 'error');
-  }
-
   $module_path = drupal_get_path('module', 'dgu_organogram');
 
   drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
@@ -486,7 +474,7 @@ function theme_organogram_file_widget($variables) {
       $status = $organogram['status']['#value'];
 
       if ($status == 'Done') {
-        $view = '<a href="' . $organogram['#entity']->organogram_dataset_url . '">View</a>';
+        $view = '<a href="/dataset/organogram-' . $organogram['#entity']->name . '">View</a>';
       }
       else {
         $view = '<a href="#" class="organogram-preview" data-organogram-fid="' . $organogram['#file']->fid . '">▶ <span>Preview</span></a>';
