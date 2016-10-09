@@ -204,7 +204,11 @@ function dgu_organogram_get_user_publisher_tree() {
   if (!isset($publishers)) {
     $query = db_select('ckan_publisher', 'p')->fields('p', array('name', 'title'));
 
-    if (user_has_role(6)) {
+    if (user_has_role(3) || user_has_role(5) || $user->uid != 1) {
+      $publishers = $query->execute()->fetchAllKeyed();
+
+    }
+    elseif (user_has_role(6)) {
       $account = user_load($user->uid);
       $publishers = array();
       if (!empty($account->field_publishers[LANGUAGE_NONE])) {
@@ -216,10 +220,9 @@ function dgu_organogram_get_user_publisher_tree() {
         $query->condition('id', $publisher_ids, 'IN');
       }
     }
-    elseif (!user_has_role(5) && !user_has_role(3) && $user->uid != 1) {
+    else {
       return array();
     }
-    $publishers = $query->execute()->fetchAllKeyed();
   }
 
   return $publishers;
@@ -268,7 +271,19 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     '<a href="/">Home</a>',
     '<a href="/organogram/manage">Organogram dashboard</a>',
   ));
+
+  $ckan_publisher = ckan_publisher_load($form['id']['#value']);
+
   $form['#theme'] = array('organogram_upload_form');
+
+  $form['view_link'] = array(
+    '#markup' => '<div id="menu-tabs"><h2 class="element-invisible">Primary tabs</h2>
+      <ul class="tabs--primary nav">
+      <li class=""><a href="/organogram/' . $ckan_publisher->name . '" >View</a></li>
+     <li class="active"><a href="/organogram/manage/' . $ckan_publisher->name . '" class="active">Edit<span class="element-invisible">(active tab)</span></a></ul>
+     </div>',
+    '#weight' => -100,
+  );
 
   if (!empty($_SESSION['message'])) {
     if (!$_SESSION['message_countdown_requests']--) {
@@ -296,7 +311,7 @@ function dgu_organogram_form_ckan_publisher_form_alter(&$form, &$form_state, $fo
     '#markup' => '<img class="organogram-throbber" style="display: none;" src="/assets/img/ajax-loader.gif" />'
   );
 
-  $ckan_publisher = ckan_publisher_load($form['id']['#value']);
+
   $form['title']['#title'] = "Your publisher details";
   $form['ckan_id']['#title'] = "Your  data catalogue ID";
   $form['field_organogram'][LANGUAGE_NONE]['#title'] = "Manage your Organogram uploads";
