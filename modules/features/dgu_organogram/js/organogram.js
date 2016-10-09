@@ -492,7 +492,7 @@ var OrgDataLoader = {
                 'name': post['Job Title'],
                 'data':{
                     'heldBy': post['Name'],
-                    'grade': post['Grade'],
+                    'grade': post['Grade (or equivalent)'],
                     'function': post['Job/Team Function'],
                     'FTE': + post['FTE']*100/100,
                     'unit': post['Unit'],
@@ -765,7 +765,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo].push({
                     'jobtitle' : post['Job Title'],
                     'name' : post['Name'],
-                    'grade' : post['Grade'],
+                    'grade' : post['Grade (or equivalent)'],
                     'FTE': + post['FTE'],
                     'unit': post['Unit'],
                     'payfloor': post['Actual Pay Floor (£)'],
@@ -800,7 +800,7 @@ var OrgDataLoader = {
                     tree.push({
                         'jobtitle' : post['Job Title'],
                         'name' : post['Name'],
-                        'grade' : post['Grade'],
+                        'grade' : post['Grade (or equivalent)'],
                         'FTE': + post['FTE'],
                         'unit': post['Unit'],
                         'payfloor': post['Actual Pay Floor (£)'],
@@ -890,7 +890,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo].push({
                     'jobtitle': post['Generic Job Title'],
                     'reportsto': reportsTo,
-                    'grade': post['Grade (or equivalent)'],
+                    'grade': post['Grade'],
                     'FTE': + post['Number of Posts in FTE'],
                     'unit': post['Unit'],
                     'payfloor': post['Payscale Minimum (£)'],
@@ -907,7 +907,7 @@ var OrgDataLoader = {
                     tree.push({
                         'jobtitle' : post['Job Title'],
                         'name' : post['Name'],
-                        'grade' : post['Grade'],
+                        'grade' : post['Grade (or equivalent)'],
                         'FTE': + post['FTE'],
                         'unit': post['Unit'],
                         'payfloor': post['Actual Pay Floor (£)'],
