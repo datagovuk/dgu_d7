@@ -1290,8 +1290,8 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
       '#markup' => '<div id="menu-tabs"><h2 class="element-invisible">Primary tabs</h2>
       <ul class="tabs--primary nav">
       <li class="active"><a href="' . urlencode($destination['destination']) . '" class="active">View<span class="element-invisible">(active tab)</span></a></li>
-     <li class=""><a href="/organogram/manage/' . $currentDepartment . '">Edit</a></ul>
-     </div>'
+      <li class=""><a href="/organogram/manage/' . $currentDepartment . '">Edit</a></ul>
+      </div>'
     );
   }
 
@@ -1320,7 +1320,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
 
   $form['infovis'] = array(
     '#type' => 'markup',
-    '#markup' => '<div id="infovis"><div class="infobox"></div></div>',
+    '#markup' => '<div id="infovis"><div class="infobox"></div></div><p><a href="/dataset/organogram-' . $currentDepartment . '">Source data</a></p>',
   );
 
   $form['api'] = array(
