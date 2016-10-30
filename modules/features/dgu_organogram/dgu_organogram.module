@@ -36,6 +36,19 @@ function dgu_organogram_menu() {
     'page callback' => 'dgu_organogram_preview',
     'access arguments' => array('access content'),
   );
+  $items['organogram-ajax/preview'] = array(
+    'page callback' => 'dgu_organogram_preview',
+    'access arguments' => array('access content'),
+  );
+  $items['services/rest/organogram'] = array(
+    'page callback' => 'dgu_organogram_api_index',
+    'access arguments' => array('access content'),
+  );
+  $items['services/rest/organogram/%'] = array(
+    'page callback' => 'dgu_organogram_api_organogram',
+    'page arguments' => array(3),
+    'access arguments' => array('access content'),
+  );
   return $items;
 }
 
@@ -1337,3 +1350,20 @@ function dgu_organogram_viz_form_submit($form, &$form_state) {
   }
 }
 
+
+function dgu_organogram_api_index() {
+  $query = db_select('dgu_organogram', 'o');
+  $query->join('ckan_publisher', 'p', 'o.id = p.id');
+  $query->fields('o', array('fid', 'deadline_date', 'publish_date', 'signoff_date'))
+    ->fields('p', array('name'));
+  $result = $query->execute()->fetchAll();
+  drupal_json_output($result);
+  drupal_exit();
+
+}
+
+function dgu_organogram_api_organogram($fid) {
+  $file = file_load(6809);
+  drupal_json_output($file);
+  drupal_exit();
+}

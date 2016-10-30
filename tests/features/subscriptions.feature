@@ -9,8 +9,8 @@ Feature: Subscribe to content updates
     # Create a blog
     Given that the user "test_editor" is not registered
     And I am logged in as a user "test_editor" with the "editor" role
-    And user "test_editor" created "blog" titled "Test blog"
-    And the cache has been cleared
+    And user "test_editor" created "page" titled "Test page"
+    #And the cache has been cleared
     # Set daily notifications for test_daily_subscriber and subscribe to Test blog
     And that the user "test_daily_subscriber" is not registered
     And I am logged in as a user "test_daily_subscriber" with the "authenticated user" role
@@ -22,9 +22,7 @@ Feature: Subscribe to content updates
     And I wait until the page loads
     And I select the radio button "Daily"
     And I press "Save"
-    And I visit "/blog"
-    And I wait until the page loads
-    And I click "Test blog"
+    And I visit "/test-page"
     And I wait until the page loads
     When I click "Subscribe"
     And I wait 1 second
@@ -40,9 +38,7 @@ Feature: Subscribe to content updates
     And I wait until the page loads
     And I select the radio button "Weekly"
     And I press "Save"
-    And I visit "/blog"
-    And I wait until the page loads
-    And I click "Test blog"
+    And I visit "/test-page"
     And I wait until the page loads
     When I click "Subscribe"
     And I wait 1 second
@@ -50,7 +46,7 @@ Feature: Subscribe to content updates
     Given I am logged in as a user "test_editor" with the "editor" role
     And I visit "/user"
     And I wait until the page loads
-    And I click "Test blog"
+    And I click "Test page"
     And I wait until the page loads
     And I follow "Add new comment"
     And I fill in "Subject" with "Test subject"

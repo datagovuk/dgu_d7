@@ -250,18 +250,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^I follow login link$/
-   */
-  public function iFollowLoginLink() {
-    $page = $this->getSession()->getPage();
-    $link = $page->find('css','#dgu-nav a.nav-user');
-    if(empty($link)) {
-      throw new Exception("Login link on the top black bar not found");
-    }
-    $link->click();
-  }
-
-  /**
    * @Given /^I click RSS icon in "([^"]*)" column in "([^"]*)" row$/
    */
   public function iClickRssIconInColumnInRow($column, $row) {
@@ -431,7 +419,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $items = $breadcrumbs_element->findAll('css', 'li');
 
     $home = array_shift($items);
-    if ($home->find('css', 'a')->getHtml() != '<i class="icon-home"></i>') {
+
+    if ($home->getHtml() != 'Home') {
       throw new Exception('First breadcrumb is not the homepage.');
     }
 
@@ -1523,15 +1512,18 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $messages = array();
     $i = 0;
 
-    $failed = array(9, 152, 326, 460, 584, 697, 790, 861, 915, 959);
+    $failed = array(822,823,824,825,826,827,828,829,830); // array(338, 426, 716, 750, 981, 1000, 1058, 1062, 1066, 1101);
 
     while (($row = fgetcsv($handle)) !== FALSE ) {
-     if ($i++ >= 0) { // if (in_array(++$i, $failed)) {
+     if (in_array(++$i, $failed)) { // if ($i++ >= 971) {
 
         $title = str_replace("'", "\'", $row[0]);
         $version_array = explode('-', $row[1]);
         $version = implode('-', array_reverse($version_array));
         $xls_path = $row[2];
+
+        //published, signed off, uploaded
+        $status = $row[7];
 
         if (file_exists('/media/pawel/Data/organogram-data/' . $xls_path)) {
 
@@ -1546,12 +1538,13 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           }
 
           if (!$name) {
-            throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
+            print 'Can\'t get publisher id for "' . $title;
+            continue;
           }
 
           $session = $this->getSession();
           $session->visit($this->locatePath('/organogram/manage/' . $name));
-          sleep(2);
+          sleep(3);
           $page = $session->getPage();
 
           // Find current row in the table
@@ -1559,7 +1552,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
           $date_cell = $page->find('named', array('content', $date));
 
           if(empty($date_cell)) {
-            sleep(20);
+            sleep(25);
             $page = $session->getPage();
             $date_cell = $page->find('named', array('content', $date));
             if(empty($date_cell)) {
@@ -1578,10 +1571,11 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
           $upload_button = $current_row->findButton('Upload');
           if(!$upload_button) {
-            throw new Exception("Upload button for version $version not found.");
+            print "Upload button for version $version not found.";
+            continue;
           }
           $upload_button->press();
-          sleep(1);
+          sleep(2);
 
           $input = $page->find('css', '#ckan-publisher-form input.form-file');
           if(empty($input)) {
@@ -1589,27 +1583,28 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
             $page = $session->getPage();
             $input = $page->find('css', '#ckan-publisher-form input.form-file');
             if(empty($input)) {
-              throw new Exception("Organogram upload input box not found");
+              print "Organogram upload input box not found";
+              continue;
             }
           }
 
           $input->attachFile('/media/pawel/Data/organogram-data/' . $xls_path);
-          sleep(1);
+          sleep(2);
           $upload_submit_button = $page->find('css','#ckan-publisher-form input.form-submit');
           if(empty($upload_submit_button)) {
-            throw new Exception("Organogram upload button not found");
+            print "Organogram upload button not found";
+            continue;
           }
           $upload_submit_button->press();
-
           print "\n" . str_pad($i, 5) . str_pad('http://test.data.gov.uk/organogram/manage/' . $name, 100, ' ') . "[$version] ";
 
-          sleep(7);
+          sleep(10);
 
           //->find('css', '#edit-field-organogram-und-table a:contains("Organogram date ' . $version . '")');
           $xls_link = $current_row->find('css', 'td.file span.file a');
 
           if(empty($xls_link)) {
-            sleep(30);
+            sleep(35);
             $xls_link = $current_row->find('css', 'td.file span.file a');
 
             if(empty($xls_link)) {
@@ -1626,16 +1621,22 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
             }
           }
 
+          if ($status == 'uploaded') {
+            print " Uploaded";
+            continue;
+          }
+
           $preview_link = $current_row->find('css', '.organogram-preview');
           if(empty($preview_link)) {
-            throw new Exception("Preview link for version $version not found.");
+            print "Preview link for version $version not found.";
+            continue;
           }
           $preview_link->click();
-          sleep(7);
+          sleep(8);
           $vis_node = $page->find('css', '.organogram-preview .node');
-          $ok = ' OK';
+          $ok = ' PUBLISHED';
           if(empty($vis_node)) {
-            sleep(17);
+            sleep(20);
             $vis_node = $page->find('css', '.organogram-preview .node');
             if(empty($vis_node)) {
               print 'Missing top post ';
@@ -1645,26 +1646,33 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
 
           $signoff_checkbox = $current_row->find('css', '.organogram-sign-off');
           if(empty($signoff_checkbox)) {
-            throw new Exception("Signoff checkbox for version $version not found.");
+            print "Signoff checkbox for version $version not found.";
+            continue;
           }
           $signoff_checkbox->click();
           sleep(15);
 
+          if ($status == 'signed off') {
+            print " Signed off";
+            continue;
+          }
+
           $publish_button = $current_row->findButton('Publish');
           if(empty($publish_button)) {
-            sleep(15);
+            sleep(25);
             $publish_button = $current_row->findButton('Publish');
             if(empty($publish_button)) {
-              throw new Exception("Publish button for version $version not found.");
+              print "Publish button for version $version not found.";
+              continue;
             }
           }
 
           $publish_button->press();
-          sleep(10);
+          sleep(12);
           $success_message = $page->find('css', '.drupal-messages #messages .alert-success');
           if(!empty($success_message)) {
             $message_text = $success_message->getText();
-            if (strpos($message_text, 'Resource id:') === FALSE) {
+            if (strpos($message_text, 'Data published successfully') === FALSE) {
               print " | Error publishing CSVs for version $version. ";
             }
           }
@@ -1691,7 +1699,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     foreach ($messages as $message) {
       print "\n" . $message;
     }
-
 
     //$scv = getcsv(file_get_contents('https://raw.githubusercontent.com/datagovuk/organograms/gh-pages/uploads_report_tidied.csv'),);
   }
@@ -1792,7 +1799,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
         }
 
         if (!$name) {
-          throw new \Exception('Can\'t get publisher id for "' . $title . '" '. $e->getMessage());
+          print "\n" . 'Can\'t get publisher id for "' . $title;
+          continue;
         }
         $publishers[$name] = $title;
         print "\nAdded: " . $name;

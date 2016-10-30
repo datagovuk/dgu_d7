@@ -4,15 +4,26 @@ Feature: Upload organograms
   As an administrator
   I should be able to upload organograms
 
-  @api
-  Scenario: Upload organograms
-    Given I am on "/user"
-    And I log in as "admin" user
-    #And I cleanup organograms
-    And I upload organograms
+  @anon
+  Scenario: View organograms
+    Given I am not logged in
+    And I am on the homepage
+    And I click "Data"
+    When I follow "Organograms"
+    Then I should be on "/organogram/cabinet-office"
+    And I should see the following <breadcrumbs>
+      | Organogram     |
+      | Cabinet Office |
+    And I should see "Public body"
+    And I should see "Version"
+    And I should see the link "Source data"
 
-#  @api
-#  Scenario: Validate organograms
-#    Given I am on "/user"
-#    And I log in as "admin" user
-#    And I validate organograms
+  @api
+  Scenario: Edit organograms
+    Given that the user "test_admin" is not registered
+    And I am logged in as a user "test_admin" with the "administrator" role
+    And I am on "/organogram/cabinet-office"
+    When I follow "Edit"
+    Then I should see the link "Guidance: Preparing the data"
+    And I should see "Organogram publication"
+    And I should see "31 Mar 2011"

@@ -6,9 +6,9 @@ Feature: Make comments as a regular site user
 
   @anon
   Scenario: Make sure that comments can not be posted by anonymous users
-    Given I am on "/blog"
+    Given I am on "/forum"
     And I wait until the page loads
-    When I click "title" field in row "1" of "latest_blog_posts" view
+    When I click "title" field in row "1" of "panel_pane_latest_forum" view
     And I wait until the page loads
     Then I should see the link "Login to make a comment"
 

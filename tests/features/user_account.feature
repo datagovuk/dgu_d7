@@ -7,7 +7,7 @@ Feature: Register an account on data.gov.uk with valid username and email
   Background:
     Given I am on the homepage
     And I am not logged in
-    And I follow login link
+    And I follow "Log in"
     And I wait until the page loads
 
   Scenario: Login form
@@ -68,7 +68,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     And I should not be logged in
     # Message for unverified users.
     Given I am on the homepage
-    And I follow login link
+    And I follow "Log in"
     And I log in as the "test_user" with the password "Password1"
     Then I should see "You will now receive an email to verify your email address. In order to activate your data.gov.uk account just follow the simple step requested in this email."
     And I should see "tab to add more detail to your profile."
@@ -134,7 +134,7 @@ Feature: Register an account on data.gov.uk with valid username and email
     Given that the user "test_user" is not registered
     And I am logged in as a user "test_user" with the "authenticated user" role
     And I am on the homepage
-    And I follow "Hello test_user"
+    And I follow "test_user"
     And I wait until the page loads
     Then I should be on "/user"
     And I should see the following <links>
