@@ -59,7 +59,7 @@ projects[features][version] = "2.0"
 projects[features][subdir] = "contrib"
 projects[features][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/features_dont_convert_strings_to_integers.patch"
 
-projects[views][version] = "3.11"
+projects[views][version] = "3.14"
 projects[views][subdir] = "contrib"
 
 projects[views_data_export][version] = "3.0-beta6"
