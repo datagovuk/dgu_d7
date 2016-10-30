@@ -52,14 +52,14 @@ projects[admin_menu][subdir] = "contrib"
 projects[module_filter][version] = "2.0"
 projects[module_filter][subdir] = "contrib"
 
-projects[ctools][version] = "1.9"
+projects[ctools][version] = "1.11"
 projects[ctools][subdir] = "contrib"
 
 projects[features][version] = "2.0"
 projects[features][subdir] = "contrib"
 projects[features][patch][] = "http://raw.github.com/datagovuk/dgu_d7/master/patches/features_dont_convert_strings_to_integers.patch"
 
-projects[views][version] = "3.11"
+projects[views][version] = "3.14"
 projects[views][subdir] = "contrib"
 
 projects[views_data_export][version] = "3.0-beta6"
@@ -187,7 +187,7 @@ projects[ckan_publisher_tree][subdir] = "contrib"
 projects[composer_manager][version] = "1.8"
 projects[composer_manager][subdir] = "contrib"
 
-projects[panels][version] = "3.5"
+projects[panels][version] = "3.8"
 projects[panels][subdir] = "contrib"
 
 projects[fieldable_panels_panes][version] = "1.7"
