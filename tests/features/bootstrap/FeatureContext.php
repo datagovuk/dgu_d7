@@ -250,18 +250,6 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
   }
 
   /**
-   * @Given /^I follow login link$/
-   */
-  public function iFollowLoginLink() {
-    $page = $this->getSession()->getPage();
-    $link = $page->find('css','#dgu-nav a.nav-user');
-    if(empty($link)) {
-      throw new Exception("Login link on the top black bar not found");
-    }
-    $link->click();
-  }
-
-  /**
    * @Given /^I click RSS icon in "([^"]*)" column in "([^"]*)" row$/
    */
   public function iClickRssIconInColumnInRow($column, $row) {
@@ -431,7 +419,8 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
     $items = $breadcrumbs_element->findAll('css', 'li');
 
     $home = array_shift($items);
-    if ($home->find('css', 'a')->getHtml() != '<i class="icon-home"></i>') {
+
+    if ($home->getHtml() != 'Home') {
       throw new Exception('First breadcrumb is not the homepage.');
     }
 
