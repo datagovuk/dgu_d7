@@ -168,7 +168,7 @@ class FeatureContext extends Drupal\DrupalExtension\Context\DrupalContext
    */
   public function loggedIn() {
     $session = $this->getSession();
-    $session->visit($this->locatePath('/'));
+    $session->visit($this->locatePath('/user'));
     // If a logout link is found, we are logged in. While not perfect, this is
     // how Drupal SimpleTests currently work as well.
     $element = $session->getPage();
