@@ -4,6 +4,11 @@ if (in_array('data publisher', array_values($user->roles))) {
   $user = user_load($user->uid);
 }
 ?>
+
+<div style="background-color: #128400; color: white; text-align: center; font-size: 1.3em; font-weight: 600; height: 1.5em">
+  We're improving data.gov.uk and we'd like your <a href="https://www.surveymonkey.co.uk/r/F9LLHFS" target="_blank" style="color:white; text-decoration: underline;">feedback</a>
+</div>
+
 <?php $needs_admin_toolbar = ($user->uid == 1 || array_intersect(array('administrator', 'editor', 'blogger', 'data request administrator', 'moderator', 'CKAN sysadmin'), array_values($user->roles))) ?>
 <?php if(!$user->uid): ?>
   <?php $destination = drupal_get_destination(); ?>
