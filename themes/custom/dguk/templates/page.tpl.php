@@ -5,7 +5,7 @@ if (in_array('data publisher', array_values($user->roles))) {
 }
 ?>
 
-<div style="background-color: #128400; color: white; text-align: center; font-size: 1.3em; font-weight: 600; height: 1.5em">
+<div style="background-color: #128400; color: white; text-align: center; font-size: 1.3em; font-weight: 600; padding-top: 4px; padding-bottom: 4px;">
   We're improving data.gov.uk and we'd like your <a href="https://www.surveymonkey.co.uk/r/F9LLHFS" target="_blank" style="color:white; text-decoration: underline;">feedback</a>
 </div>
 
