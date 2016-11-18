@@ -1313,7 +1313,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
     '#title' => t('Public body'),
     '#options' => $departmentOptions,
     '#default_value' => $currentDepartment,
-    //'#attributes' => array('onSelect' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
+    '#attributes' => array('onSelect' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
   );
 
   if (!empty($versionOptions)) {
@@ -1322,7 +1322,7 @@ function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $curre
       '#title' => t('Version'),
       '#options' => $versionOptions,
       '#default_value' => $currentVersion,
-      //'#attributes' => array('onSelect' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
+      '#attributes' => array('onSelect' => 'document.getElementById("dgu-organogram-viz-form").submit();'),
     );
   }
   $form['submit'] = array(
