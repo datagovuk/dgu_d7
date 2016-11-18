@@ -216,10 +216,9 @@ function dgu_organogram_get_user_publisher_tree() {
   $publishers = &drupal_static(__FUNCTION__);
   if (!isset($publishers)) {
     $query = db_select('ckan_publisher', 'p')->fields('p', array('name', 'title'));
-
-    if (user_has_role(3) || user_has_role(5) || $user->uid != 1) {
+    $publishers = array();
+    if (user_has_role(3) || user_has_role(5)) {
       $publishers = $query->execute()->fetchAllKeyed();
-
     }
     elseif (user_has_role(6)) {
       $account = user_load($user->uid);
@@ -231,10 +230,8 @@ function dgu_organogram_get_user_publisher_tree() {
           $publisher_ids[] = $publisher_ref['target_id'];
         }
         $query->condition('id', $publisher_ids, 'IN');
+        $publishers = $query->execute()->fetchAllKeyed();
       }
-    }
-    else {
-      return array();
     }
   }
 
@@ -265,6 +262,9 @@ function dgu_organogram_dashboard() {
     drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
     drupal_add_js($module_path . '/js/chosen.min.jquery.js');
     drupal_add_js($module_path . '/js/organogram.js');
+  }
+  else {
+    drupal_access_denied();
   }
 
   return $content;
