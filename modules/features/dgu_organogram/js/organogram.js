@@ -1064,12 +1064,18 @@ $('.field-name-field-organogram').hide();
         }
     };
 
-
     Drupal.behaviors.publisherSelect = {
         attach: function (context, settings) {
             jQuery('.chosen-select').chosen().change(function(){
                 var name = $(this).val();
                 window.location.href = '/organogram/manage/' + name;
+            });
+
+            jQuery('.chosen-select').chosen().on('chosen:showing_dropdown', function() {
+                jQuery('.chosen-results .result-selected').click(function() {
+                    var name = jQuery('.chosen-select').chosen().val();
+                    window.location.href = '/organogram/manage/' + name;
+                })
             });
         }
     }
