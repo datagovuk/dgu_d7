@@ -1290,6 +1290,7 @@ function dgu_organogram_js_alter(&$javascript) {
 
 function dgu_organogram_viz_form($form, &$form_state, $departmentOptions, $currentDepartment, $versionOptions = array(), $currentVersion = NULL) {
 
+  ksort ($versionOptions);
 
   $form['ie_message'] = array(
     '#type' => 'markup',
