@@ -1140,7 +1140,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $query->join('ckan_publisher', 'p', 'o.id = p.id');
   $query->fields('p', array('id', 'parent_id', 'name', 'title'))
         ->fields('o', array('fid', 'deadline_date'))
-        ->isNotNull('publish_date')
+        ->condition('publish_date', 0, '<>')
         //->orderBy('parent_id');
         ->orderBy('title');
   $result = $query->execute();
