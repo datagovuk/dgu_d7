@@ -448,6 +448,7 @@ var OrgDataLoader = {
         var tree = [];
         var processed = [];
         var seniorPosts = {};
+        jobshare = [];
         function getChildren(postRef){
             var children = [];
             var juniorPosts = {
@@ -462,6 +463,10 @@ var OrgDataLoader = {
                 },
                 children:[]
             };
+
+            if (jobshare[postRef]) {
+                postRef = jobshare[postRef];
+            }
 
             if (hierarchy[postRef]){
                 hierarchy[postRef].forEach(function(post, index, array) {
@@ -510,6 +515,13 @@ var OrgDataLoader = {
                     'notes' : post['Notes']
                 }
             }
+
+            if(seniorPosts[seniorPost.id]) {
+                var newid = seniorPost.id + Date.now();
+                jobshare[newid] = seniorPost.id;
+                seniorPost.id = newid;
+            }
+
             seniorPosts[seniorPost.id] = seniorPost;
             return seniorPost;
         }
@@ -554,7 +566,7 @@ var OrgDataLoader = {
         }
 
         senior.forEach(function(post, index, array) {
-            reportsTo = post['Reports to Senior Post'];
+            var reportsTo = post['Reports to Senior Post'];
             if (null == hierarchy[reportsTo]){
                 hierarchy[reportsTo] = [];
             }
@@ -563,7 +575,7 @@ var OrgDataLoader = {
             }
         });
         junior.forEach(function(post, index, array) {
-            reportsTo = post['Reporting Senior Post'];
+            var reportsTo = post['Reporting Senior Post'];
             if (null == hierarchy[reportsTo]){
                 hierarchy[reportsTo] = [];
             }
@@ -598,7 +610,7 @@ var OrgDataLoader = {
                 "Post Unique Reference": "XX",
                 "Job Title": "Top Post",
                 "Unit": "This post exists to group all top level posts under a single organogram",
-                    "data" : {
+                "data" : {
                     "heldBy" : "abc"
                 }
             }
@@ -1037,7 +1049,7 @@ var OrgDataLoader = {
 
 
 
-$('.field-name-field-organogram').hide();
+                        $('.field-name-field-organogram').hide();
                         $('.organogram-throbber').show();
 
 
@@ -1066,7 +1078,7 @@ $('.field-name-field-organogram').hide();
 
     Drupal.behaviors.publisherSelect = {
         attach: function (context, settings) {
-            jQuery('.chosen-select').chosen().change(function(){
+            jQuery('.chosen-select').chosen().change(function() {
                 var name = $(this).val();
                 window.location.href = '/organogram/manage/' + name;
             });
@@ -1098,4 +1110,3 @@ $('.field-name-field-organogram').hide();
     };
 
 })(jQuery);
-
