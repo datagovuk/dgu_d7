@@ -32,7 +32,7 @@ class ValidationFatalError(Exception):
     pass
 
 
-def load_excel_store_errors(filename, sheet_name, errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns):
+def load_excel_store_errors(filename, sheet_name, errors, validation_errors, input_columns, rename_columns, integer_columns, string_columns):
     """Carefully load an Excel file, taking care to log errors and produce clean output.
     You'll always receive a dataframe with the expected columns, though it might contain 0 rows if
     there are errors. Strings will be stored in the 'errors' array.
@@ -57,11 +57,6 @@ def load_excel_store_errors(filename, sheet_name, errors, validation_errors, inp
     if len(df.columns)!=len(input_columns):
         errors.append("Sheet '%s' contains %d columns. I expect at least %d columns." % (sheet_name, len(df.columns), len(input_columns)))
         return pandas.DataFrame(columns=output_columns)
-    # Blank out columns
-    for column_name in blank_columns:
-        col_index = df.columns.tolist().index(column_name)
-        df.drop(df.columns[col_index], axis=1, inplace=True)
-        df.insert(col_index, column_name, '')
     # Softly correct column names
     for i in range(len(df.columns)):
         # Check column names are as expected. Also allow them to be the renamed
@@ -121,6 +116,14 @@ def load_excel_store_errors(filename, sheet_name, errors, validation_errors, inp
             df[column_name] = df[column_name].str.strip()
     return df
 
+def blank_out_columns(df, blank_columns):
+    # Blank out the given columns, given by name
+    for column_name in blank_columns:
+        col_index = df.columns.tolist().index(column_name)
+        df.drop(df.columns[col_index], axis=1, inplace=True)
+        df.insert(col_index, column_name, '')
+        df.rename(columns={column_name: ''}, inplace=True)
+    return df
 
 def load_senior(excel_filename, errors, validation_errors, references):
     input_columns = [
@@ -144,7 +147,6 @@ def load_senior(excel_filename, errors, validation_errors, references):
       u'Notes',
       u'Valid?']
     rename_columns = {
-      u'Total Pay (£)': u'',
       u'Grade': u'Grade (or equivalent)',
     }
     blank_columns = {
@@ -160,10 +162,11 @@ def load_senior(excel_filename, errors, validation_errors, references):
       u'Reports to Senior Post',
     ]
     sheet_name = SENIOR_SHEET_NAME
-    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, rename_columns, blank_columns, integer_columns, string_columns)
+    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, rename_columns, integer_columns, string_columns)
     if df.dtypes['Post Unique Reference']==numpy.float64:
         df['Post Unique Reference'] = df['Post Unique Reference'].astype('int')
     in_sheet_validation(df, validation_errors, sheet_name, 'senior', references)
+    df = blank_out_columns(df, blank_columns)
     return df
 
 
@@ -188,7 +191,7 @@ def load_junior(excel_filename, errors, validation_errors, references):
       u'Reporting Senior Post',
     ]
     sheet_name = JUNIOR_SHEET_NAME
-    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, {}, [], integer_columns, string_columns)
+    df = load_excel_store_errors(excel_filename, sheet_name, errors, validation_errors, input_columns, {}, integer_columns, string_columns)
     if df.dtypes['Reporting Senior Post']==numpy.float64:
         df['Reporting Senior Post'] = df['Reporting Senior Post'].fillna(-1).astype('int')
     in_sheet_validation(df, validation_errors, sheet_name, 'junior', references)
@@ -427,12 +430,20 @@ def verify_graph(senior, junior, errors):
     eliminated_posts = set(senior[senior['Name'].astype(unicode) == "Eliminated"]['Post Unique Reference'])
     bad_junior_refs = junior_report_to_refs - senior_post_refs
     for ref in bad_junior_refs:
-        if ref in eliminated_posts:
-            errors.append('Junior post reporting to Eliminated senior post "%s"'
-                          % ref)
-        else:
-            errors.append('Junior post reporting to unknown senior post "%s"'
-                          % ref)
+        posts = junior[junior['Reporting Senior Post'].astype(unicode) == ref]
+        for post_index, post in posts.iterrows():
+            if ref == 'nan' or ref is None or pandas.isnull(ref):
+                problem = 'You must not leave this cell blank - all junior posts must report to a senior post.'
+            elif ref in eliminated_posts:
+                problem = 'Post reporting to senior post "{ref}" that is Eliminated'.format(ref=ref)
+            else:
+                problem = 'Post reporting to unknown senior post "{ref}"'.format(ref=ref)
+            params = dict(
+                cell=cell_name(post_index, column_index('d')),
+                problem=problem,
+            )
+            # Sheet "(final data) junior-staff" cell D9: Post reporting to Eliminated senior post "OLD"
+            errors.append('Sheet "(final data) junior-staff" cell {cell}: {problem}'.format(**params))
 
 def row_name(row_index):
     '''
@@ -510,6 +521,7 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
         elif ' ' in a:
             validation_errors.append('%s: You cannot have spaces in the "Post Unique Reference" column.' % cell_ref)
         elif re.search(r'[¬!\"£$%^&()+=\{\}\[\]:;@\'#<>,.\\/]', a):
+            # NB Should we disallow "_" though? The in-sheet validation message says it was allowed...
             validation_errors.append('%s: You cannot have punctuation/symbols in the "Post Unique Reference" column.' % cell_ref)
 
     # senior column B is invalid if:
@@ -536,6 +548,7 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
             if b != 'N/D':
                 validation_errors.append('%s: Because the "Post Unique Reference" is "0" (individual is paid but not in post) the name must be "N/D".' % cell_ref)
         else:
+            # NB seems a bit crazy to use "Total Pay" as it is only filled in if the total package is over £150k, and gets blanked out anyway? Should this test not be based on Actual Pay Floor instead?
             try:
                 p_is_greater_than_zero_or_a_string = int(p) > 0
             except ValueError:
@@ -732,7 +745,7 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
             if (is_number(i) or isinstance(i, basestring)) and \
                 (i != 'N/D' or j != 'N/D'):
                 if a in (0, '0') or b in ('Vacant', 'VACANT', 'vacant', 'Eliminated', 'ELIMINATED', 'eliminated'):
-                    ref_value = '"Post Unique Reference" is "0" (individual is paid but not in post)' if a in (0, '0') else '"Name" is Vacant" or "Eliminated"'
+                    ref_value = '"Post Unique Reference" is "0" (individual is paid but not in post)' if a in (0, '0') else '"Name" is "Vacant" or "Eliminated"'
                     if i != 'N/A':
                         validation_errors.append(u'%s: Because the %s, the "Contact Phone" must be "N/A".' % (cell_ref, ref_value))
                 else:
@@ -834,7 +847,19 @@ def in_sheet_validation_row_colours(df, validation_errors, sheet_name):
     if len(rows_marked_invalid):
         row = rows_marked_invalid.head(1)
         row_index = row.index[0]
-        err = 'Sheet "%s" has %d invalid row%s. The %sproblem is on row %d, as indicated by the red colour in cell %s.' % (sheet_name, len(rows_marked_invalid), 's' if len(rows_marked_invalid) > 1 else '', 'first ' if len(rows_marked_invalid) > 1 else '', row_name(row_index), cell_name(row_index, validation_column))
+        params = dict(
+            sheet=sheet_name,
+            first_cell=cell_name(row_index, validation_column),
+            first_row=row_name(row_index),
+            all_rows=', '.join(str(row_name(r))
+                              for r in rows_marked_invalid.index),
+            validation_column=column_name(validation_column),
+            num_rows=len(rows_marked_invalid),
+            )
+        if len(rows_marked_invalid) == 1:
+            err = 'Sheet "{sheet}" cell {first_cell}: Invalid row, as indicated by the red colour in cell {first_cell}.'.format(**params)
+        else:
+            err = 'Sheet "{sheet}" cell {first_cell} etc: Multiple invalid rows. They are indicated by the red colour in column {validation_column}. Rows affected: {all_rows}.'.format(**params)
         validation_errors.append(err)
     return True
 
