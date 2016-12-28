@@ -1000,3 +1000,7 @@ table.sticky-header {
 body.page-organogram-manage #block-system-main {
     overflow: visible;
 }
+
+.jobshare-scroll {
+    height: 500px;
+}
