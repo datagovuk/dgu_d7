@@ -268,10 +268,6 @@ function dguk_get_data_menu() {
       'title' => 'Map Search',
       'href' => 'data/map-based-search',
     ),
-    'menu-data-requests' => array(
-      'title' => 'Data Requests',
-      'href' => 'data-request',
-    ),
     'menu-publishers' => array(
       'title' => 'Publishers',
       'href' => 'publisher',
