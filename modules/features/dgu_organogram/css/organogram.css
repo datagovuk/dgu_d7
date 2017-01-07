@@ -210,7 +210,7 @@ div.infovis
     position:absolute;
     right:25px;
     top: 25px;
-    width: 290px;
+    width: 305px;
     z-index:999;
 }
 body.IE8 div.infobox,
@@ -502,7 +502,7 @@ div.panel
     color:#333333;
     font-size:0.9em;
     padding:5px !important;
-    width:280px !important;
+    width:300px !important;
 }
 
 div.panel div.content img
@@ -537,7 +537,7 @@ div.panel div.content p
     overflow: hidden;
     padding:0 0 5px 5px;
     text-align:left;
-    width:273px !important;
+    width: 100%;
     word-wrap:break-word;
 }
 
@@ -999,4 +999,10 @@ table.sticky-header {
 
 body.page-organogram-manage #block-system-main {
     overflow: visible;
+}
+
+div.jobshare-scroll {
+    height: 500px;
+    overflow: scroll;
+    width: 300px !important;
 }

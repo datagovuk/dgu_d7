@@ -314,8 +314,9 @@ var Orgvis = {
         var html = '<h1>'+node.name+'</h1>';
         if(node.data.heldBy != undefined && node.data.heldBy.length > 0){
             var nd = node.data;
-            html += '<div class="panel heldBy ui-accordion ui-widget ui-helper-reset ui-accordion-icons">';
-            html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">Name: '+node.data.heldBy+'</a></h3>';
+            var scroll = jobshare[node.id] ? ' jobshare-scroll' : '';
+            html += '<div class="panel heldBy ui-accordion ui-widget ui-helper-reset ui-accordion-icons' + scroll + '">';
+            html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">Name: '+nd.heldBy+'</a></h3>';
             html += '<div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">';
             html += '<p class="unit"><span>Unit</span><span class="value">'+nd.unit+ '</span></p>';
             html += '<p class="id"><span>Post ID</span><span class="value">'+node.id+ '</span></p>';
@@ -350,8 +351,51 @@ var Orgvis = {
             if(typeof nd.notes != 'undefined'){
                 html += '<p class="notes"><span>Notes</span><span class="value">' + nd.notes + '</span></p>';
             }
-
             html += '</div><!-- end content -->';
+
+            if (jobshare[node.id]) {
+                jobshare[node.id].forEach(function(sharedJob) {
+                    var nd = sharedJob.data;
+                    html += '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"><a class="name infobox_'+node.id+'">Name: '+nd.heldBy+'</a></h3>';
+                    html += '<div class="content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom">';
+                    html += '<p class="unit"><span>Unit</span><span class="value">'+nd.unit+ '</span></p>';
+                    html += '<p class="id"><span>Post ID</span><span class="value">'+node.id+ '</span></p>';
+                    if(typeof nd.grade != 'undefined'){
+                        html += '<p class="grade"><span>Grade</span><span class="value">'+nd.grade+'</span></p>';
+                    }
+                    if(typeof nd.payfloor != 'undefined' && typeof nd.payceiling != 'undefined'){
+                        html += '<p class="salary"><span>Salary</span><span class="value">'+nd.payfloor+' - '+nd.payceiling+'</span></p>';
+                    }
+                    if(typeof nd.combinedSalaryOfReports != 'undefined'){
+                        html += '<p class="salaryReports"><span>Combined salary of reporting posts</span><span class="value">'+nd.stats.salaryCostOfReports.formatted+'</span><a class="data" target="_blank" href="http://'+Orgvis.vars.apiBase+'/doc/'+Orgvis.vars.global_typeOfOrg+'/'+Orgvis.vars.global_postOrg+'/post/'+tempID+'/statistics" value="'+nd.stats.salaryCostOfReports.value+'">Data</a><span class="date">'+nd.stats.date.formatted+'</span></p>';
+                    }
+
+                    if(typeof nd.role != 'undefined'){
+                        html += '<p class="role"><span>Role</span><span class="value">' + nd.role + '</span></p>';
+                    }
+                    if(typeof nd.profession != 'undefined'){
+                        html += '<p class="profession"><span>Profession</span><span class="value">' + nd.profession + '</span></p>';
+                    }
+                    if(typeof nd.FTE != 'undefined'){
+                        html += '<p class="fte"><span>FTE (as a fraction of a full time role)</span><span class="value">' + nd.FTE + '</span></p>';
+                    }
+                    if(typeof nd.cost != 'undefined'){
+                        html += '<p class="cost"><span>Combined salary of reporting posts</span><span class="value">' + nd.cost + '</span></p>';
+                    }
+                    if(typeof nd.email != 'undefined'){
+                        html += '<p class="email"><span>Email</span><span class="value">' + nd.email + '</span></p>';
+                    }
+                    if(typeof nd.phone != 'undefined'){
+                        html += '<p class="phone"><span>Phone</span><span class="value">' + nd.phone + '</span></p>';
+                    }
+                    if(typeof nd.notes != 'undefined'){
+                        html += '<p class="notes"><span>Notes</span><span class="value">' + nd.notes + '</span></p>';
+                    }
+                    html += '</div><!-- end content -->';
+                });
+            }
+
+
             html+= '</div><!-- end panel -->';
             html+= '<a class="close">x</a>';
         }
@@ -464,10 +508,6 @@ var OrgDataLoader = {
                 children:[]
             };
 
-            if (jobshare[postRef]) {
-                postRef = jobshare[postRef];
-            }
-
             if (hierarchy[postRef]){
                 hierarchy[postRef].forEach(function(post, index, array) {
                     if (post.data['senior']){
@@ -517,9 +557,11 @@ var OrgDataLoader = {
             }
 
             if(seniorPosts[seniorPost.id]) {
-                var newid = seniorPost.id + Date.now();
-                jobshare[newid] = seniorPost.id;
-                seniorPost.id = newid;
+                if(jobshare[seniorPost.id] == undefined) {
+                    jobshare[seniorPost.id] = [];
+                }
+                jobshare[seniorPost.id].push(seniorPost);
+                return seniorPost;
             }
 
             seniorPosts[seniorPost.id] = seniorPost;
