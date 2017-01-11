@@ -94,6 +94,7 @@ function dgu_organogram_menu_breadcrumb_alter(&$active_trail, $item) {
 }
 
 function dgu_organogram_preprocess(&$variables, $hook) {
+
   if ('organogram_upload_form' == $hook) {
     $variables['orgname'] = $variables['form']['title']['#value'];
   }
@@ -260,7 +261,7 @@ function dgu_organogram_dashboard() {
 
     drupal_add_css($module_path . '/css/organogram.css', array('group' => CSS_THEME, 'every_page' => TRUE));
     drupal_add_css($module_path . '/css/chosen.css', array('group' => CSS_THEME, 'every_page' => TRUE));
-    drupal_add_js($module_path . '/js/chosen.min.jquery.js');
+    drupal_add_js($module_path . '/js/chosen.jquery.min.js');
     drupal_add_js($module_path . '/js/organogram.js');
   }
   else {
@@ -825,6 +826,7 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     if ($update_needed) {
       $client = _dgu_organogram_get_ckan_api_client();
       try {
+        watchdog('organogram-update-submit', json_encode($package), array(), WATCHDOG_NOTICE);
         $client->packageUpdate(array('data' => json_encode($package)));
       } catch (Exception $e) {
         drupal_set_message("An error ocurred while trying to update an organogram dataset. " . $e->getMessage(), 'error');
@@ -922,6 +924,8 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
   if (empty($package)) {
     try {
       $response = $client->PackageCreate(array('data' => $packageJson));
+
+      watchdog('organogram-package-create', $packageJson, array(), WATCHDOG_NOTICE);
       $createPackageResponse = $response->toArray();
       $package = $createPackageResponse['result'];
       drupal_set_message("Package id: {$package['id']} created.");
@@ -934,6 +938,7 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
     if ($package['state'] == 'deleted') {
       try {
         $package['name'] = uniqid('deleted_') . $package['name'];
+        watchdog('organogram-update-publish', json_encode($package), array(), WATCHDOG_NOTICE);
         $client->packageUpdate(array('data' => json_encode($package)));
         drupal_set_message("Deleted package id: {$package['id']} updated.");
         $response = $client->PackageCreate(array('data' => $packageJson));
@@ -1032,10 +1037,13 @@ function _dgu_organogram_create_or_update_resource($package, $resource, $organog
     //Update resource
     $resource->id = $resource_id;
     $response = $client->ResourceUpdate(array('data' => json_encode($resource)));
+
+    watchdog('organogram-resource-update', json_encode($resource), array(), WATCHDOG_NOTICE);
   }
   else {
     //create resource
     $response = $client->ResourceCreate(array('data' => json_encode($resource)));
+    watchdog('organogram-resource-create', json_encode($resource), array(), WATCHDOG_NOTICE);
 
   }
   return $response;
@@ -1047,7 +1055,7 @@ function _dgu_organogram_find_resource_id($resources, $format, $organogram_date,
     //because for inexpicable reasons, CKAN sometimes has a different date format,
     // and sometimes not at all.
     $date1 = DateTime::createFromFormat('d/m/Y', $organogram_date);
-    if (!empty($resource['date'])) {
+    if (!empty($resource['date']) && strlen($resource['date']) > 9) {
       if (strstr($resource['date'], '/')) {
         $date1 = DateTime::createFromFormat('d/m/Y', $resource['date']);
       }
@@ -1139,10 +1147,10 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $query = db_select('dgu_organogram', 'o');
   $query->join('ckan_publisher', 'p', 'o.id = p.id');
   $query->fields('p', array('id', 'parent_id', 'name', 'title'))
-        ->fields('o', array('fid', 'deadline_date'))
-        ->condition('publish_date', 0, '<>')
-        //->orderBy('parent_id');
-        ->orderBy('title');
+    ->fields('o', array('fid', 'deadline_date'))
+    ->condition('publish_date', 0, '<>')
+    //->orderBy('parent_id');
+    ->orderBy('title');
   $result = $query->execute();
   $oranograms = $result->fetchAll();
 
@@ -1364,7 +1372,8 @@ function dgu_organogram_api_index() {
 }
 
 function dgu_organogram_api_organogram($fid) {
-  $file = file_load(6809);
+  $file = file_load($fid);
   drupal_json_output($file);
   drupal_exit();
 }
+
