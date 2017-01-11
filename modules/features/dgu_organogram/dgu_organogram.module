@@ -825,6 +825,7 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     if ($update_needed) {
       $client = _dgu_organogram_get_ckan_api_client();
       try {
+        watchdog('organogram-package-update', json_encode($package), array(), WATCHDOG_NOTICE);
         $client->packageUpdate(array('data' => json_encode($package)));
       } catch (Exception $e) {
         drupal_set_message("An error ocurred while trying to update an organogram dataset. " . $e->getMessage(), 'error');
@@ -934,6 +935,7 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
     if ($package['state'] == 'deleted') {
       try {
         $package['name'] = uniqid('deleted_') . $package['name'];
+        watchdog('organogram-package-update', json_encode($package), array(), WATCHDOG_NOTICE);
         $client->packageUpdate(array('data' => json_encode($package)));
         drupal_set_message("Deleted package id: {$package['id']} updated.");
         $response = $client->PackageCreate(array('data' => $packageJson));
@@ -1364,7 +1366,7 @@ function dgu_organogram_api_index() {
 }
 
 function dgu_organogram_api_organogram($fid) {
-  $file = file_load(6809);
+  $file = file_load($fid);
   drupal_json_output($file);
   drupal_exit();
 }
