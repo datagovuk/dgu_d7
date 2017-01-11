@@ -1055,7 +1055,7 @@ function _dgu_organogram_find_resource_id($resources, $format, $organogram_date,
     //because for inexpicable reasons, CKAN sometimes has a different date format,
     // and sometimes not at all.
     $date1 = DateTime::createFromFormat('d/m/Y', $organogram_date);
-    if (!empty($resource['date'])) {
+    if (!empty($resource['date']) && strlen($resource['date']) > 9) {
       if (strstr($resource['date'], '/')) {
         $date1 = DateTime::createFromFormat('d/m/Y', $resource['date']);
       }
@@ -1376,3 +1376,4 @@ function dgu_organogram_api_organogram($fid) {
   drupal_json_output($file);
   drupal_exit();
 }
+
