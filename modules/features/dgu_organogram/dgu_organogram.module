@@ -791,7 +791,7 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
   db_query("DELETE FROM dgu_organogram where id = " . $form['id']['#value']);
   foreach ($form_state['values']['field_organogram'][LANGUAGE_NONE] as $organogram) {
     if ($organogram['deadline_date']) {
-      $current_organogram_versions[] = date('d/m/Y', $organogram['deadline_date']);
+      $current_organogram_versions[] = date('d/n/Y', $organogram['deadline_date']);
       $publish_date = !empty($organogram['publish_date']) ? $organogram['publish_date'] : 0;
       $signoff_date = !empty($organogram['signoff_date']) ? $organogram['signoff_date'] : 0;
       db_query("INSERT INTO dgu_organogram VALUES (" . $form['id']['#value'] . ", " . $organogram['fid'] . ", " . $organogram['deadline_date'] . ", " . $publish_date . ", " . $signoff_date . ")");
@@ -805,41 +805,46 @@ function dgu_organogram_organogram_submit($form, &$form_state) {
     return;
   }
 
-  $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
-  if ($package) {
-    $update_needed = FALSE;
-    foreach ($package['resources'] as $index => $resource) {
-      if(!in_array($resource['date'], $current_organogram_versions)) {
-        unset($package['resources'][$index]);
-        $update_needed = TRUE;
-      }
-    }
-    if (!empty($package['timeseries_resources'])) {
-      foreach ($package['timeseries_resources'] as $index => $resource) {
-        if(!in_array($resource['date'], $current_organogram_versions)) {
-          unset($package['timeseries_resources'][$index]);
-          $update_needed = TRUE;
-        }
-      }
-    }
-
-    if ($update_needed) {
-      $client = _dgu_organogram_get_ckan_api_client();
-      try {
-        watchdog('organogram-update-submit', json_encode($package), array(), WATCHDOG_NOTICE);
-        $client->packageUpdate(array('data' => json_encode($package)));
-      } catch (Exception $e) {
-        drupal_set_message("An error ocurred while trying to update an organogram dataset. " . $e->getMessage(), 'error');
-      }
-
-    }
-  }
-
   $commands = array();
   $commands[] = ajax_command_prepend('div#ajax-status-messages-wrapper', theme('status_messages'));
 
+//$package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+//$package['timeseries_resources']=array();
+//$package['resources']=array();
+//$client = _dgu_organogram_get_ckan_api_client();
+//$client->packageUpdate(array('data' => json_encode($package)));
 
   if ($form_state['clicked_button']['#value'] == 'Delete') {
+    $package = _dgu_organogram_get_organogram_package_for_publisher($group['name']);
+    if ($package) {
+      $update_needed = FALSE;
+      foreach ($package['resources'] as $index => $resource) {
+        if (strlen($resource['date']) > 7 && !in_array($resource['date'], $current_organogram_versions)) {
+          unset($package['resources'][$index]);
+          $update_needed = TRUE;
+        }
+      }
+      if (!empty($package['timeseries_resources'])) {
+        foreach ($package['timeseries_resources'] as $index => $resource) {
+          if (strlen($resource['date']) > 7 && !in_array($resource['date'], $current_organogram_versions)) {
+            unset($package['timeseries_resources'][$index]);
+            $update_needed = TRUE;
+          }
+        }
+      }
+
+      if ($update_needed) {
+        $client = _dgu_organogram_get_ckan_api_client();
+        try {
+          watchdog('organogram-update-submit', json_encode($package), array(), WATCHDOG_NOTICE);
+          $client->packageUpdate(array('data' => json_encode($package)));
+        } catch (Exception $e) {
+          drupal_set_message("An error ocurred while trying to update an organogram dataset. " . $e->getMessage(), 'error');
+        }
+
+      }
+    }
+
     $_SESSION['message'] = '<p>Data deleted successfully</p>';
     $_SESSION['message_countdown_requests'] = 2;
   }
@@ -962,7 +967,7 @@ function dgu_organogram_organogram_publish($form, &$form_state) {
       if (empty($form_state['organogram_dates'][$file->fid])) {
         return;
       }
-      $organogram_date = date('d/m/Y', $form_state['organogram_dates'][$file->fid]);
+      $organogram_date = date('d/n/Y', $form_state['organogram_dates'][$file->fid]);
       $organogram_date_for_viewer_link = date('Y-m-d', $form_state['organogram_dates'][$file->fid]);
       $organogram_path = '/organogram/' . $group['name'] . '/' . $organogram_date . '/';
       $organogram_file_location = DRUPAL_ROOT . '/' . variable_get('file_public_path') . $organogram_path;
@@ -1054,19 +1059,19 @@ function _dgu_organogram_find_resource_id($resources, $format, $organogram_date,
   foreach ($resources as $resource) {
     //because for inexpicable reasons, CKAN sometimes has a different date format,
     // and sometimes not at all.
-    $date1 = DateTime::createFromFormat('d/m/Y', $organogram_date);
-    if (!empty($resource['date']) && strlen($resource['date']) > 9) {
+    $date1 = DateTime::createFromFormat('d/n/Y', $organogram_date);
+    if (!empty($resource['date']) && strlen($resource['date']) > 8) {
       if (strstr($resource['date'], '/')) {
-        $date1 = DateTime::createFromFormat('d/m/Y', $resource['date']);
+        $date1 = DateTime::createFromFormat('d/n/Y', $resource['date']);
       }
       else {
         $date1 = DateTime::createFromFormat('d-m-Y', $resource['date']);
       }
     }
-    $date2 = DateTime::createFromFormat('d/m/Y', $organogram_date);
+    $date2 = DateTime::createFromFormat('d/n/Y', $organogram_date);
 
-    $date1 = $date1->format('Y-m-d');
-    $date2 = $date2->format('Y-m-d');
+    $date1 = $date1->format('Y-n-d');
+    $date2 = $date2->format('Y-n-d');
 
     if ($resource['format'] == $format && $date1 == $date2) {
       if (strstr($resource['description'], $organogram_file_type)) {
