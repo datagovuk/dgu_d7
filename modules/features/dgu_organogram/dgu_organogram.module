@@ -1368,6 +1368,7 @@ function dgu_organogram_viz_form_submit($form, &$form_state) {
 function dgu_organogram_api_index() {
   $query = db_select('dgu_organogram', 'o');
   $query->join('ckan_publisher', 'p', 'o.id = p.id');
+  $query->join('file_managed', 'fm', 'o.fid = fm.fid');
   $query->fields('o', array('fid', 'deadline_date', 'publish_date', 'signoff_date'))
     ->fields('p', array('name'));
   $result = $query->execute()->fetchAll();
