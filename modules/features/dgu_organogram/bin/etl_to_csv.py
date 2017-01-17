@@ -537,9 +537,8 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
     a = row.iloc[0]
     b = row.iloc[1]
     p = row.iloc[column_index('P')]
-    def is_blank(value):
-        return value in (None, '')
     # valid if A is blank (i.e. as if the row is empty)
+    is_blank = Excel.is_blank
     if not is_blank(a):
         cell_ref = 'Sheet "%s" cell %s' % \
             (sheet_name, cell_name(row.name, 1))
@@ -576,17 +575,7 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
     #            FALSE,
     #            IF(ISNA(MATCH($C2,listSeniorGrades,0)),
     #               FALSE,TRUE))))
-    def not_match(value, list_):
-        # Excel's MATCH is case insensitive and numbers are the same whether int or strings
-        # NB it also allows wildcards ?* and escape char ~ so it would be worth checking
-        # there are none of those
-        if value == '*' and list_.any():
-            return False
-        value_ = unicode(value).lower()
-        for item in list_:
-            if value_ == unicode(item).lower():
-                return False
-        return True
+    not_match = Excel.not_match
     c = row.iloc[column_index('C')]
     # valid if A is blank (i.e. as if the row is empty)
     if not is_blank(a):
@@ -730,8 +719,7 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
     #                  IF($I2="N/A",TRUE,FALSE),
     #                  IF($I2="N/A",FALSE,TRUE)),
     #               FALSE))))
-    def is_number(value):
-        return isinstance(value, int) or isinstance(value, float)
+    is_number = Excel.is_number
     i = row.iloc[column_index('I')]
     j = row.iloc[column_index('J')]
     # valid if A is blank (i.e. as if the row is empty)
@@ -829,9 +817,79 @@ def in_sheet_validation_senior_columns(row, df, validation_errors, sheet_name, r
                     validation_errors.append(u'%s: The "Reports to Senior Post" value must match one of the values in "Post Unique Reference" (column A) or be "XX" (which is a top level post - reports to no-one in this sheet).' % cell_ref)
 
 def in_sheet_validation_junior_columns(row, df, validation_errors, sheet_name, references):
-    # to do
+    # plenty of columns TODO
+
+    # junior column A is valid if:
+    # =IF(ISNA(MATCH($A2,core24,0)),FALSE,TRUE)
+    # where core24 is:
+    # =OFFSET('core-24-depts'!$A$2,0,0,COUNTA('core-24-depts'!$A$2:$A$212),1)
+
+    # junior column B is valid if:
+    # =IF(ISNA(MATCH($B2,seniorOrganisation,0)),FALSE,TRUE)
+    # where seniorOrganogisation is:
+    # ='(final data) senior-staff'!$G$2:$G$2000
+
+    # junior column C is valid if:
+    # =IF(ISNA(MATCH($C2,listUnits,0)),FALSE,TRUE)
+    # where listUnits is:
+    # ='(reference) units'!$A$2:$A$2000
+
+    # junior column D is valid if:
+    # =IF(ISNA(MATCH(TEXT($D2,0),strSeniorPostUniqueRef,0)),FALSE,TRUE)
+    # where strSeniorPostUniqueRef is a 'name' defined as:
+    # ='(final data) senior-staff'!$AP$2:$AP$2000
+    # i.e. which is the senior column A (via: =TEXT(A2,0))
+    #strSeniorPostUniqueRef =
+    #d = row.iloc[column_index('D')]
+    # NB it would be good if the spreadsheet also disallowed blank value
+
+    # junior column E is valid if:
+    # =IF(ISNA(MATCH($E2,listJuniorGrades,0)),FALSE,TRUE)
+    # where listJuniorGrades is:
+    # ='(reference) junior-grades'!$A$2:$A$2000
+
+    # junior column F is valid if:
+    # =IF(F2<>"",IF(ISERROR(F2),FALSE,TRUE),TRUE)
+
+    # junior column G is valid if:
+    # =IF(G2<>"",IF(ISERROR(G2),FALSE,TRUE),TRUE)
+
+    # junior column H is valid if:
+    # =IF(ISNA(MATCH($H2,listJobTitle,0)),FALSE,TRUE)
+    # where listJobTitle is:
+    # ='(reference) generic-job-titles'!$A$2:$A$2000
+
+    # junior column I is valid if:
+    # =IF(ISNUMBER($I2),IF($I2>0,IF($I2*100=ROUND($I2*100,0),TRUE,FALSE),FALSE),FALSE)
+
+    # junior column J is valid if:
+    # =IF(ISNA(MATCH($J2,listProfessions,0)),FALSE,TRUE)
+    # where listProfessions is:
+    # ='(reference) professions'!$A$2:$A$51
     pass
 
+class Excel(object):
+    '''Functions analogous to Excel ones'''
+    @classmethod
+    def is_blank(cls, value):
+        return value in (None, '')
+
+    @classmethod
+    def is_number(cls, value):
+        return isinstance(value, int) or isinstance(value, float)
+
+    @classmethod
+    def not_match(cls, value, list_):
+        # Excel's MATCH is case insensitive and numbers are the same whether int or strings
+        # NB it also allows wildcards ?* and escape char ~ so it would be worth checking
+        # there are none of those
+        if value == '*' and list_.any():
+            return False
+        value_ = unicode(value).lower()
+        for item in list_:
+            if value_ == unicode(item).lower():
+                return False
+        return True
 
 def in_sheet_validation_row_colours(df, validation_errors, sheet_name):
     '''
@@ -870,7 +928,7 @@ def get_date_from_filename(filename):
     return match.groups()[0]
 
 
-def get_verify_level(graph):
+def get_verify_level(graph, xls_filepath):
     # parse graph date
     graph_match = re.match(
         r'^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$',
@@ -906,6 +964,10 @@ def get_verify_level(graph):
         # * 'ended up in a loop'
         # * 'Post reports to unknown post'
         return 'load and display'
+    elif graph['year'] == 2016 and \
+            xls_filepath.split('/')[-1] == 'Organogram Tool FINAL - Sep 2016.xls':
+        # Special leniency for Health Education England for this one
+        return 'load'
     else:
         # Drupal-based workflow actually displays the problems to the user, so
         # we can enforce all errors
@@ -1002,10 +1064,10 @@ def main(input_xls_filepath, output_folder):
     print "Loading", input_xls_filepath
 
     if args.date:
-        verify_level = get_verify_level(args.date)
+        verify_level = get_verify_level(args.date, input_xls_filepath)
     elif args.date_from_filename:
         date_ = get_date_from_filename(input_xls_filepath)
-        verify_level = get_verify_level(date_)
+        verify_level = get_verify_level(date_, input_xls_filepath)
     else:
         verify_level = 'load, display and be valid'
     failure_stage, senior_df, junior_df, errors, warnings = \
