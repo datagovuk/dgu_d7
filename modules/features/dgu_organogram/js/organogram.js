@@ -556,7 +556,7 @@ var OrgDataLoader = {
                 }
             }
 
-            if(seniorPosts[seniorPost.id]) {
+            if (seniorPosts[seniorPost.id] && seniorPosts[seniorPost.id].data.heldBy != seniorPost.data.heldBy) {
                 if(jobshare[seniorPost.id] == undefined) {
                     jobshare[seniorPost.id] = [];
                 }
