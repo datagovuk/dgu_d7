@@ -1151,7 +1151,7 @@ function _dgu_organogram_get_ckan_api_client() {
 function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
   $query = db_select('dgu_organogram', 'o');
   $query->join('ckan_publisher', 'p', 'o.id = p.id');
-  $query->fields('p', array('id', 'parent_id', 'name', 'title'))
+  $query->fields('p', array('id', 'parent_id', 'name', 'title', 'closed'))
     ->fields('o', array('fid', 'deadline_date'))
     ->condition('publish_date', 0, '<>')
     //->orderBy('parent_id');
@@ -1168,6 +1168,7 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
 
     $publishers[$oranogram->id]['name'] = $oranogram->name;
     $publishers[$oranogram->id]['title'] = $oranogram->title;
+    $publishers[$oranogram->id]['closed'] = $oranogram->closed;
     $publishers[$oranogram->id]['versions'][$oranogram->deadline_date] = date('d M Y', $oranogram->deadline_date);
     $publishers[$oranogram->id]['files'][$oranogram->deadline_date] = $oranogram->fid;
 
@@ -1227,9 +1228,13 @@ function dgu_organogram_viz($currentDepartment = NULL, $currentVersion = NULL) {
       $title = $currentDepartment;
     }
     $department_options[$name] = $title;
+    $department_options[$name] .= $publishers[$id]['closed'] ? ' (closed)' : '';
     if (!empty($publishers_hierarchy[$id]['sub_publishers'])) {
       foreach ($publishers_hierarchy[$id]['sub_publishers'] as $sub_publisher_id) {
         $department_options[$publishers[$sub_publisher_id]['name']] = ' ―― ' . $publishers[$sub_publisher_id]['title'];
+
+        $department_options[$publishers[$sub_publisher_id]['name']] .= $publishers[$sub_publisher_id]['closed'] ? ' (closed)' : '';
+
       }
     }
   }
@@ -1374,7 +1379,6 @@ function dgu_organogram_api_index() {
   $result = $query->execute()->fetchAll();
   drupal_json_output($result);
   drupal_exit();
-
 }
 
 function dgu_organogram_api_organogram($fid) {
