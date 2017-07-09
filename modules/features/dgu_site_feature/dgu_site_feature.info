@@ -12,7 +12,6 @@ dependencies[] = email
 dependencies[] = emptyparagraphkiller
 dependencies[] = entityreference
 dependencies[] = features
-dependencies[] = fieldable_panels_panes
 dependencies[] = file
 dependencies[] = filter
 dependencies[] = fivestar
