@@ -531,7 +531,7 @@ var OrgDataLoader = {
             return children;
         }
 
-        function createSeniorPostNode(post){
+        function createSeniorPostNode(post, detectJobshare){
             var seniorPost = {
                 'id':post['Post Unique Reference'],
                 'name': post['Job Title'],
@@ -556,7 +556,7 @@ var OrgDataLoader = {
                 }
             }
 
-            if (seniorPosts[seniorPost.id]) {
+            if(detectJobshare && seniorPosts[seniorPost.id]) {
                 if(jobshare[seniorPost.id] == undefined) {
                     jobshare[seniorPost.id] = [];
                 }
@@ -613,7 +613,7 @@ var OrgDataLoader = {
                 hierarchy[reportsTo] = [];
             }
             if (post.Name != 'Eliminated') {
-                hierarchy[reportsTo].push(createSeniorPostNode(post));
+                hierarchy[reportsTo].push(createSeniorPostNode(post, true));
             }
         });
         junior.forEach(function(post, index, array) {
@@ -633,7 +633,7 @@ var OrgDataLoader = {
             var postUR = post['Post Unique Reference'];
             var children = getChildren(postUR);
             if (-1 == processed.indexOf(postUR)){
-                var seniorPost = createSeniorPostNode(post);
+                var seniorPost = createSeniorPostNode(post, false);
                 seniorPost.children = children;
                 tree.push(seniorPost);
 
@@ -730,15 +730,15 @@ var OrgDataLoader = {
     var senior = null;
     var previewMarkup =
         '<tr class="preview"><td colspan="6">'+
-            '  <div class="organogram-preview">'+
-            '    <input type="button" class="organogram-preview-close" value="&times;">'+
-            '    <div class="chart">'+
-            '      <div class="infovis">'+
-            '      <div class="infobox">' +
-            '      </div></div>' +
-            '    </div>'+
-            '  </div>'+
-            '</td></tr>';
+        '  <div class="organogram-preview">'+
+        '    <input type="button" class="organogram-preview-close" value="&times;">'+
+        '    <div class="chart">'+
+        '      <div class="infovis">'+
+        '      <div class="infobox">' +
+        '      </div></div>' +
+        '    </div>'+
+        '  </div>'+
+        '</td></tr>';
 
 //    TODO make stuff like the render size be defined up here
 
