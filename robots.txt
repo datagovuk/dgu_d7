@@ -45,6 +45,7 @@ Disallow: /user/login/
 Disallow: /user/logout/
 Disallow: /user
 Disallow: /flag/
+Disallow: /metoffice-data-archive
 # Paths (no clean URLs)
 Disallow: /?q=admin/
 Disallow: /?q=reply/add/
