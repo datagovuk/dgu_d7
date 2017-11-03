@@ -6,7 +6,7 @@ if (in_array('data publisher', array_values($user->roles))) {
 ?>
 
 <div style="background-color: #128400; color: white; text-align: center; font-size: 1.3em; font-weight: 600; padding-top: 4px; padding-bottom: 4px;">
-<a href="http://www.smartsurvey.co.uk/s/Z06XA/" target="_blank" style="color:white; text-decoration: underline;">Take a short survey</a> to share your feedback and tell us if you'd like to help us to test the new data.gov.uk site.
+<a href="http://www.smartsurvey.co.uk/s/Z06XA/" target="_blank" style="color:white; text-decoration: underline;">Complete a short survey</a> to share your feedback and tell us if you'd like to help us to test the new data.gov.uk site.
 </div>
 
 <?php $needs_admin_toolbar = ($user->uid == 1 || array_intersect(array('administrator', 'editor', 'blogger', 'data request administrator', 'moderator', 'CKAN sysadmin'), array_values($user->roles))) ?>
