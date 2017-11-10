@@ -45,7 +45,7 @@ function dguk_preprocess_page(&$variables) {
 function dguk_preprocess_node(&$variables) {
   $variables['classes_array'][] = 'boxed';
   $full_node = node_load($variables['node']->nid);
-  $variables['title'] = $full_node->title;
+  $variables['title'] = check_plain($full_node->title);
 
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['node']->type . '__' . $variables['view_mode'];
@@ -467,7 +467,7 @@ function dguk_breadcrumb($variables) {
     $title = drupal_get_title();
     $node = menu_get_object();
     if ($node){
-      $title = $node->title;
+      $title = check_plain($node->title);
     }
     $a = 0;
     foreach($variables['breadcrumb'] as $value) {
